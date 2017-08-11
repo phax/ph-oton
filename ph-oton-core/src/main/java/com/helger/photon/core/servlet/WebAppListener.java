@@ -431,6 +431,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     return !StringParser.parseBool (aSC.getInitParameter (INIT_PARAMETER_NO_CHECK_FILE_ACCESS));
   }
 
+  /**
+   * This method is supposed to call
+   * {@link WebFileIO#initPaths(File, String, boolean)} with parameters from
+   * {@link #getServletContextPath(ServletContext)},
+   * {@link #getDataPath(ServletContext)} and
+   * {@link #shouldCheckFileAccess(ServletContext)}.
+   *
+   * @param aSC
+   *        The servlet context to be initialized. Never <code>null</code>.
+   */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
   protected void initPaths (@Nonnull final ServletContext aSC)
@@ -513,7 +523,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // begin global context
     if (isOnlyOneInstanceAllowed () || !WebScopeManager.isGlobalScopePresent ())
     {
+      // Create scopes
       WebScopeManager.onGlobalBegin (aSC);
+
+      // right order?
+      PhotonBasic.startUp ();
 
       // Init IO
       initPaths (aSC);
@@ -521,9 +535,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       // Set persistent ID provider - must be done after IO is setup
       initGlobalIDFactory ();
     }
-
-    // right order?
-    PhotonBasic.startUp ();
 
     // Callback
     afterContextInitialized (aSC);

@@ -40,6 +40,8 @@ public final class PhotonBasicTestInit
 
   public static void init (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
   {
+    PhotonBasic.startUp ();
+
     // Init the base path once
     // don't check access rights in test, for performance reasons
     WebFileIO.initPaths (aDataPath, sServletContextPath, false);
@@ -47,10 +49,5 @@ public final class PhotonBasicTestInit
     // Init the IDs
     if (!GlobalIDFactory.hasPersistentIntIDFactory ())
       GlobalIDFactory.setPersistentIntIDFactory (new WebIOIntIDFactory ("ph-oton-basic.id"));
-  }
-
-  public static void shutdown ()
-  {
-    PhotonBasic.shutDown ();
   }
 }

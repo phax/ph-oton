@@ -38,6 +38,8 @@ import com.helger.xservlet.requesttrack.TrackedRequest;
  */
 public class AuditingParallelRunningRequestCallback implements IParallelRunningRequestCallback
 {
+  public static final AuditingParallelRunningRequestCallback INSTANCE = new AuditingParallelRunningRequestCallback ();
+
   public AuditingParallelRunningRequestCallback ()
   {}
 

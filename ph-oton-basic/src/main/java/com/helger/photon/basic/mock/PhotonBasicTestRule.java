@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.photon.basic.PhotonBasic;
 import com.helger.scope.mock.ScopeTestRule;
 
 /**
@@ -87,7 +88,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
   @Override
   public void after ()
   {
-    PhotonBasicTestInit.shutdown ();
+    PhotonBasic.shutDown ();
     super.after ();
   }
 }

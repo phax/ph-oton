@@ -35,6 +35,8 @@ import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
  */
 public class AuditingLongRunningRequestCallback implements ILongRunningRequestCallback
 {
+  public static final AuditingLongRunningRequestCallback INSTANCE = new AuditingLongRunningRequestCallback ();
+
   public AuditingLongRunningRequestCallback ()
   {}
 

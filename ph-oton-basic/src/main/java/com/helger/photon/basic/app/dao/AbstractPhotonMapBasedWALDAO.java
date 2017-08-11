@@ -10,6 +10,16 @@ import com.helger.dao.DAOException;
 import com.helger.dao.wal.AbstractMapBasedWALDAO;
 import com.helger.photon.basic.app.io.WebFileIO;
 
+/**
+ * Special {@link AbstractMapBasedWALDAO} that uses the
+ * {@link WebFileIO#getDataIO()} for read/write.
+ *
+ * @author Philip Helger
+ * @param <INTERFACETYPE>
+ *        Interface type to be handled
+ * @param <IMPLTYPE>
+ *        Implementation type to be handled
+ */
 public abstract class AbstractPhotonMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
                                                    extends
                                                    AbstractMapBasedWALDAO <INTERFACETYPE, IMPLTYPE>

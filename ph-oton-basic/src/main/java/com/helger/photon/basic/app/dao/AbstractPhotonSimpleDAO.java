@@ -8,6 +8,12 @@ import com.helger.commons.io.relative.FileRelativeIO;
 import com.helger.dao.simple.AbstractSimpleDAO;
 import com.helger.photon.basic.app.io.WebFileIO;
 
+/**
+ * Special {@link AbstractSimpleDAO} that uses the {@link WebFileIO#getDataIO()}
+ * for read/write.
+ * 
+ * @author Philip Helger
+ */
 public abstract class AbstractPhotonSimpleDAO extends AbstractSimpleDAO
 {
   protected AbstractPhotonSimpleDAO (@Nullable final String sFilename)

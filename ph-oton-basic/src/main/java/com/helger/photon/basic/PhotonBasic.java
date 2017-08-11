@@ -25,13 +25,19 @@ public final class PhotonBasic
     // Ensure this is done only once
     if (!s_aRegisteredRequestTracker.getAndSet (true))
     {
-      RequestTracker.longRunningRequestCallbacks ().add (new AuditingLongRunningRequestCallback ());
-      RequestTracker.parallelRunningRequestCallbacks ().add (new AuditingParallelRunningRequestCallback ());
+      RequestTracker.longRunningRequestCallbacks ().add (AuditingLongRunningRequestCallback.INSTANCE);
+      RequestTracker.parallelRunningRequestCallbacks ().add (AuditingParallelRunningRequestCallback.INSTANCE);
     }
   }
 
   public static void shutDown ()
   {
+    if (s_aRegisteredRequestTracker.getAndSet (false))
+    {
+      RequestTracker.longRunningRequestCallbacks ().removeObject (AuditingLongRunningRequestCallback.INSTANCE);
+      RequestTracker.parallelRunningRequestCallbacks ().removeObject (AuditingParallelRunningRequestCallback.INSTANCE);
+    }
+
     // Init the base path once
     WebFileIO.resetPaths ();
 

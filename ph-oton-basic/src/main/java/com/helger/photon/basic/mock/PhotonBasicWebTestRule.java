@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FileOperationManager;
+import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.web.scope.mock.WebScopeTestRule;
@@ -105,7 +106,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   @Override
   public void after ()
   {
-    PhotonBasicTestInit.shutdown ();
+    PhotonBasic.shutDown ();
     super.after ();
   }
 }
