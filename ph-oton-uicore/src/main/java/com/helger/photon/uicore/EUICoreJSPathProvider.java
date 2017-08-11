@@ -53,6 +53,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   /** Edit placeholder fix for IE &lt; 10 */
   @Deprecated
   PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.js", "if lt IE 10"),
+  POPPER ("uicore/popper/1.11.1/popper.js"),
   /**
    * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it
    * only in a conditional comment!
