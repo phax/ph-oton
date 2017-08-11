@@ -304,9 +304,11 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
     final IRequestParameterManager aRPM = RequestParameterManager.getInstance ();
 
-    return m_aRWLock.readLocked ( () -> {
-      int nCount = 0;
-      int nErrors = 0;
+    int nCount = 0;
+    int nErrors = 0;
+    m_aRWLock.readLock ().lock ();
+    try
+    {
       for (final GoMappingItem aItem : m_aMap.values ())
         if (aItem.isInternal ())
         {
@@ -322,16 +324,16 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
             }
           }
         }
-      if (nErrors == 0)
-        s_aLogger.info ("Successfully checked " + nCount + " internal go-mappings for consistency");
-      else
-        s_aLogger.warn ("Checked " +
-                        nCount +
-                        " internal go-mappings for consistency and found " +
-                        nErrors +
-                        " errors!");
-      return nErrors;
-    });
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+    if (nErrors == 0)
+      s_aLogger.info ("Successfully checked " + nCount + " internal go-mappings for consistency");
+    else
+      s_aLogger.warn ("Checked " + nCount + " internal go-mappings for consistency and found " + nErrors + " errors!");
+    return nErrors;
   }
 
   @Override
@@ -370,7 +372,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     ValueEnforcer.notEmpty (sKey, "Key");
 
     if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
-      s_aLogger.warn ("Building URL from non-existing go-mapping item '" + sKey + "'");
+      s_aLogger.warn ("Building URI from non-existing go-mapping item '" + sKey + "'");
 
     return LinkHelper.getURIWithContext (GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
   }
