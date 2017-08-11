@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.http.CHttp;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.mime.EMimeContentType;
 import com.helger.commons.state.EContinue;
@@ -123,7 +123,7 @@ public abstract class AbstractStreamServlet extends AbstractObjectDeliveryServle
       final long nLastModified = aFile.lastModified ();
       if (nLastModified > 0)
       {
-        return PDTFactory.createLocalDateTime (getUnifiedMillis (nLastModified));
+        return CHttp.convertMillisToLocalDateTime (nLastModified);
       }
     }
     return null;
