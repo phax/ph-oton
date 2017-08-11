@@ -26,7 +26,7 @@ import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
 
-public class Main_AbstractJQueryInvocationExtendedTest extends AbstractCreateJQueryAPIList
+public class Main_JQueryInvocationExtendedFuncTest extends AbstractCreateJQueryAPIList
 {
   public static void main (final String [] args) throws Exception
   {
@@ -199,20 +199,19 @@ public class Main_AbstractJQueryInvocationExtendedTest extends AbstractCreateJQu
                                                    "import com.helger.xml.microdom.MicroQName;\n" +
                                                    "\n" +
                                                    "/**\n" +
-                                                   " * Unit test class for class @{link AbstractJQueryInvocation}\n" +
+                                                   " * Unit test class for class @{link IJQueryInvocationExtended}\n" +
                                                    " *\n" +
                                                    " * This file is generated - do NOT edit!\n" +
                                                    " * @author " +
-                                                   Main_AbstractJQueryInvocationExtendedTest.class.getName () +
+                                                   Main_JQueryInvocationExtendedFuncTest.class.getName () +
                                                    "\n" +
                                                    "*/\n" +
-                                                   "@SuppressWarnings (\"deprecation\")\n" +
-                                                   "public final class AbstractJQueryInvocationExtendedTest\n" +
+                                                   "public final class JQueryInvocationExtendedFuncTest\n" +
                                                    "{\n");
     for (final String sEntry : aLines)
       aFull.append (sEntry).append ("\n\n");
     aFull.append ("}\n");
-    SimpleFileIO.writeFile (new File ("src/test/java/com/helger/html/jquery/AbstractJQueryInvocationExtendedTest.java"),
+    SimpleFileIO.writeFile (new File ("src/test/java/com/helger/html/jquery/JQueryInvocationExtendedFuncTest.java"),
                             aFull.toString (),
                             StandardCharsets.UTF_8);
     s_aLogger.info ("Done");

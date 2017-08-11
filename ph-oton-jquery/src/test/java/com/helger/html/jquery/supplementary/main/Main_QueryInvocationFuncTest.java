@@ -25,16 +25,16 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.io.file.SimpleFileIO;
 
-public class Main_AbstractJQueryInvocationTest extends AbstractCreateJQueryAPIList
+public class Main_QueryInvocationFuncTest extends AbstractCreateJQueryAPIList
 {
   public static void main (final String [] args) throws Exception
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList<> ();
+    final ICommonsList <String> aLines = new CommonsArrayList <> ();
 
     // Collect all methods with the same name
-    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased<> ();
+    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
         aUsed.putSingle (aEntry.getName (), aEntry);
@@ -80,14 +80,14 @@ public class Main_AbstractJQueryInvocationTest extends AbstractCreateJQueryAPILi
                                                    "import org.junit.Test;\n" +
                                                    "\n" +
                                                    "/**\n" +
-                                                   " * Unit test class for class @{link AbstractJQueryInvocation}\n" +
+                                                   " * Unit test class for interface @{link IJQueryInvocation}\n" +
                                                    " * \n" +
                                                    " * This file is generated - do NOT edit!\n" +
                                                    " * @author " +
-                                                   Main_AbstractJQueryInvocationTest.class.getName () +
+                                                   Main_QueryInvocationFuncTest.class.getName () +
                                                    "\n" +
                                                    " */\n" +
-                                                   "public final class AbstractJQueryInvocationTest\n" +
+                                                   "public final class JQueryInvocationFuncTest\n" +
                                                    "{\n" +
                                                    "  // Methods start here\n" +
                                                    "\n");
@@ -98,7 +98,7 @@ public class Main_AbstractJQueryInvocationTest extends AbstractCreateJQueryAPILi
       else
         aFull.append ('\n');
     aFull.append ("}\n");
-    SimpleFileIO.writeFile (new File ("src/test/java/com/helger/html/jquery/AbstractJQueryInvocationTest.java"),
+    SimpleFileIO.writeFile (new File ("src/test/java/com/helger/html/jquery/JQueryInvocationFuncTest.java"),
                             aFull.toString (),
                             StandardCharsets.UTF_8);
     s_aLogger.info ("Done");

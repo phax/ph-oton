@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.html.jscode.AbstractJSInvocation;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFunction;
@@ -29,7 +30,8 @@ import com.helger.html.jscode.JSFunction;
  *
  * @author Philip Helger
  */
-public class JQueryInvocation extends AbstractJQueryInvocationExtended <JQueryInvocation>
+public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> implements
+                              IJQueryInvocationExtended <JQueryInvocation>
 {
   public JQueryInvocation (@Nonnull final JSFunction aFunction)
   {

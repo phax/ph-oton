@@ -57,7 +57,6 @@ public final class JQueryInvocationTest
     assertEquals ("$(document).clone(5);", JQuery.jQueryDocument ()._clone ().arg (5).getJSCode ());
     assertEquals ("$(document).closest(5);", JQuery.jQueryDocument ().closest ().arg (5).getJSCode ());
     assertEquals ("$(document).contents(5);", JQuery.jQueryDocument ().contents ().arg (5).getJSCode ());
-    assertEquals ("$(document).context", JQuery.jQueryDocument ().context ().getJSCode ());
     assertEquals ("$(document).css(5);", JQuery.jQueryDocument ().css ().arg (5).getJSCode ());
     assertEquals ("$(document).data(5);", JQuery.jQueryDocument ().data ().arg (5).getJSCode ());
     assertEquals ("$(document).dblclick(5);", JQuery.jQueryDocument ().dblclick ().arg (5).getJSCode ());

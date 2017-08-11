@@ -42,135 +42,138 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
         if (aEntry.isStaticMethod ())
           continue;
 
+        // XXX test
+        if (aEntry.isDeprecated ())
+          continue;
+
         final String sUsedSignaturePrefix = aEntry.getName () + ":";
         for (final Signature aSignature : aEntry.getAllSignatures ())
         {
           final int nArgCount = aSignature.getArgumentCount ();
-
-          String sRealPrefix = "@Nonnull THISTYPE " + aEntry.getIdentifier ();
-
-          // Build comment
-          String sComment = "";
-          for (final Argument aArg : aSignature.getAllArguments ())
-          {
-            String sDesc = aArg.getDescription ();
-            if (StringHelper.hasNoText (sDesc))
-              sDesc = "parameter value";
-            sComment += "* @param " + aArg.getIdentifier () + " " + sDesc + "\n";
-          }
-          if (aSignature.getArgumentCount () > 0)
-            sComment += '\n';
-          sComment += "* @return this\n";
-          if (aEntry.isDeprecated ())
-          {
-            sComment += "* @deprecated Deprecated since jQuery " + aEntry.getDeprecated ().getAsString (false) + "\n";
-            sRealPrefix = "@Deprecated\n" + sRealPrefix;
-          }
-          sComment += "* @since jQuery " + aSignature.getAdded ().getAsString (false) + "\n";
-          if (sComment.length () > 0)
-            sComment = "/**\n" + sComment + "*/\n";
-
           if (nArgCount == 0)
           {
-            // Only one argument - overwrite comment from parent class, as the
-            // @since may be different
-            if (aUsedJavaSignatures.add (sUsedSignaturePrefix))
-              aLines.add (sComment + sRealPrefix + "();");
+            // No need to implement it as it is already in the base class!
+            continue;
+          }
+
+          String sRealPrefix = "@Nonnull\ndefault THISTYPE " + aEntry.getIdentifier ();
+          if (aEntry.isDeprecated ())
+            sRealPrefix = "@Deprecated\n" + sRealPrefix;
+
+          if (nArgCount == 1)
+          {
+            // Only one argument
+            final Argument aArg = aSignature.getArgumentAtIndex (0);
+            for (final String sJavaType : aArg.getAllJavaTypes ())
+              if (aUsedJavaSignatures.add (sUsedSignaturePrefix + sJavaType))
+              {
+                aLines.add (sRealPrefix +
+                            "(" +
+                            _getAnnotation (sJavaType) +
+                            "final " +
+                            sJavaType +
+                            " " +
+                            aArg.getIdentifier () +
+                            ") { return " +
+                            aEntry.getIdentifier () +
+                            " ().arg (" +
+                            aArg.getIdentifier () +
+                            "); }");
+              }
           }
           else
-            if (nArgCount == 1)
+          {
+            // More than one argument
+            final int nMultiJavaTypeArgs = aSignature.getArgumentsWithMultipleJavaTypesCount ();
+            if (nMultiJavaTypeArgs == 0)
             {
-              // Only one argument
-              final Argument aArg = aSignature.getArgumentAtIndex (0);
-              for (final String sJavaType : aArg.getAllJavaTypes ())
-                if (aUsedJavaSignatures.add (sUsedSignaturePrefix + sJavaType))
-                  aLines.add (sComment +
-                              sRealPrefix +
-                              "(" +
-                              _getAnnotation (sJavaType) +
-                              sJavaType +
-                              " " +
-                              aArg.getIdentifier () +
-                              ");");
+              String sParams = "";
+              final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
+              for (final Argument aArg : aSignature.getAllArguments ())
+              {
+                if (sParams.length () > 0)
+                  sParams += ", ";
+
+                final String sJavaType = aArg.getFirstJavaType ();
+                sParams += _getAnnotation (sJavaType) + sJavaType + " " + aArg.getIdentifier ();
+                aJavaTypeKey.add (sJavaType);
+              }
+              if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringHelper.getImploded (',', aJavaTypeKey)))
+              {
+                String sLine = sRealPrefix + "(" + sParams + ") { return " + aEntry.getIdentifier () + " ()";
+                for (final Argument aArg : aSignature.getAllArguments ())
+                  sLine += ".arg (" + aArg.getIdentifier () + ")";
+                aLines.add (sLine + "; }");
+              }
             }
             else
             {
-              // More than one argument
-              final int nMultiJavaTypeArgs = aSignature.getArgumentsWithMultipleJavaTypesCount ();
-              if (nMultiJavaTypeArgs == 0)
-              {
-                String sParams = "";
-                final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
-                for (final Argument aArg : aSignature.getAllArguments ())
-                {
-                  if (sParams.length () > 0)
-                    sParams += ", ";
+              // At least one multi java-type argument
+              final Argument [] aMultiJavaTypeArgs = new Argument [nArgCount];
 
-                  final String sJavaType = aArg.getFirstJavaType ();
-                  sParams += _getAnnotation (sJavaType) + sJavaType + " " + aArg.getIdentifier ();
+              // Build template
+              String sTemplate = "";
+              final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
+              int nArgIndex = 0;
+              for (final Argument aArg : aSignature.getAllArguments ())
+              {
+                if (sTemplate.length () > 0)
+                  sTemplate += ", ";
+
+                if (aArg.getJavaTypeCount () > 1)
+                {
+                  final String sJavaType = "{" + nArgIndex + "}";
+                  aMultiJavaTypeArgs[nArgIndex] = aArg;
+                  sTemplate += sJavaType + " " + aArg.getIdentifier ();
                   aJavaTypeKey.add (sJavaType);
                 }
-                if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringHelper.getImploded (',', aJavaTypeKey)))
-                  aLines.add (sComment + sRealPrefix + "(" + sParams + ");");
-              }
-              else
-              {
-                // At least one multi java-type argument
-                final Argument [] aMultiJavaTypeArgs = new Argument [nArgCount];
-
-                // Build template
-                String sTemplate = "";
-                final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
-                int nArgIndex = 0;
-                for (final Argument aArg : aSignature.getAllArguments ())
+                else
                 {
-                  if (sTemplate.length () > 0)
-                    sTemplate += ", ";
+                  final String sJavaType = aArg.getFirstJavaType ();
+                  sTemplate += _getAnnotation (sJavaType) + sJavaType + " " + aArg.getIdentifier ();
+                  aJavaTypeKey.add (sJavaType);
+                }
+                ++nArgIndex;
+              }
 
-                  if (aArg.getJavaTypeCount () > 1)
+              ICommonsList <String> aAllParams = new CommonsArrayList <> (sTemplate);
+              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
+                                                                                                      aJavaTypeKey));
+
+              for (int i = 0; i < nArgCount; ++i)
+                if (aMultiJavaTypeArgs[i] != null)
+                {
+                  final ICommonsList <String> aNewParams = new CommonsArrayList <> ();
+                  final ICommonsList <String> aNewJavaKeys = new CommonsArrayList <> ();
+                  final String sSearch = "{" + i + "}";
+                  for (final String sJavaType : aMultiJavaTypeArgs[i].getAllJavaTypes ())
                   {
-                    final String sJavaType = "{" + nArgIndex + "}";
-                    aMultiJavaTypeArgs[nArgIndex] = aArg;
-                    sTemplate += sJavaType + " " + aArg.getIdentifier ();
-                    aJavaTypeKey.add (sJavaType);
+                    for (final String sParam : aAllParams)
+                      aNewParams.add (StringHelper.replaceAll (sParam,
+                                                               sSearch,
+                                                               _getAnnotation (sJavaType) + sJavaType));
+                    for (final String sJavaKey : aAllJavaKeys)
+                      aNewJavaKeys.add (StringHelper.replaceAll (sJavaKey, sSearch, sJavaType));
                   }
-                  else
-                  {
-                    final String sJavaType = aArg.getFirstJavaType ();
-                    sTemplate += _getAnnotation (sJavaType) + sJavaType + " " + aArg.getIdentifier ();
-                    aJavaTypeKey.add (sJavaType);
-                  }
-                  ++nArgIndex;
+                  aAllParams = aNewParams;
+                  aAllJavaKeys = aNewJavaKeys;
                 }
 
-                ICommonsList <String> aAllParams = new CommonsArrayList <> (sTemplate);
-                ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
-                                                                                                        aJavaTypeKey));
-
-                for (int i = 0; i < nArgCount; ++i)
-                  if (aMultiJavaTypeArgs[i] != null)
-                  {
-                    final ICommonsList <String> aNewParams = new CommonsArrayList <> ();
-                    final ICommonsList <String> aNewJavaKeys = new CommonsArrayList <> ();
-                    final String sSearch = "{" + i + "}";
-                    for (final String sJavaType : aMultiJavaTypeArgs[i].getAllJavaTypes ())
-                    {
-                      for (final String sParam : aAllParams)
-                        aNewParams.add (StringHelper.replaceAll (sParam,
-                                                                 sSearch,
-                                                                 _getAnnotation (sJavaType) + sJavaType));
-                      for (final String sJavaKey : aAllJavaKeys)
-                        aNewJavaKeys.add (StringHelper.replaceAll (sJavaKey, sSearch, sJavaType));
-                    }
-                    aAllParams = aNewParams;
-                    aAllJavaKeys = aNewJavaKeys;
-                  }
-
-                for (int i = 0; i < aAllParams.size (); ++i)
-                  if (aUsedJavaSignatures.add (sUsedSignaturePrefix + aAllJavaKeys.get (i)))
-                    aLines.add (sComment + sRealPrefix + "(" + aAllParams.get (i) + ");");
-              }
+              for (int i = 0; i < aAllParams.size (); ++i)
+                if (aUsedJavaSignatures.add (sUsedSignaturePrefix + aAllJavaKeys.get (i)))
+                {
+                  String sLine = sRealPrefix +
+                                 "(" +
+                                 aAllParams.get (i) +
+                                 ") { return " +
+                                 aEntry.getIdentifier () +
+                                 " ()";
+                  for (final Argument aArg : aSignature.getAllArguments ())
+                    sLine += ".arg (" + aArg.getIdentifier () + ")";
+                  aLines.add (sLine + "; }");
+                }
             }
+          }
         }
       }
 

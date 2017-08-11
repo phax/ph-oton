@@ -18,17 +18,12 @@ package com.helger.html.jquery.supplementary.main;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.Comparator;
 
 import com.helger.collection.multimap.IMultiMapListBased;
 import com.helger.collection.multimap.MultiTreeMapArrayListBased;
 import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.version.Version;
 
 public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
 {
@@ -36,74 +31,43 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
-    final ICommonsList <String> aLines = new CommonsArrayList<> ();
+    final ICommonsList <String> aLines = new CommonsArrayList <> ();
 
     // Collect all methods with the same name
-    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased<> ();
+    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
         aUsed.putSingle (aEntry.getName (), aEntry);
 
-    // non static methods for IJQueryInvocation
+    // non static methods for AbstractJQueryInvocation
     for (final ICommonsList <Entry> aEntries : aUsed.values ())
     {
       boolean bIsDeprecated = true;
-      boolean bIsPartiallyDeprecated = false;
-      final ICommonsOrderedSet <String> aReturnTypes = new CommonsLinkedHashSet<> ();
-      final ICommonsOrderedSet <String> aDeprecatedVersions = new CommonsLinkedHashSet<> ();
       for (final Entry aEntry : aEntries)
-      {
-        aReturnTypes.add (aEntry.getReturnOrVoid ());
-        if (aEntry.isDeprecated ())
+        if (!aEntry.isDeprecated ())
         {
-          aDeprecatedVersions.add (aEntry.getDeprecated ().getAsString (false));
-          bIsPartiallyDeprecated = true;
-        }
-        else
           bIsDeprecated = false;
-      }
+          break;
+        }
 
-      final Entry aEntry = aEntries.getFirst ();
+      final Entry aEntry = aEntries.get (0);
 
       // Static methods are handled in class jQuery
       if (!aEntry.isStaticMethod ())
       {
         // Remove implicit prefixes for non-static names
-        String sPrefix = "";
         String sRealName = aEntry.getName ();
         final int i = sRealName.indexOf ('.');
         if (i > 0)
-        {
-          sPrefix = sRealName.substring (0, i) + " ";
           sRealName = sRealName.substring (i + 1);
-        }
 
-        final Version aSmallestVersion = aEntry.getAllSignatures ()
-                                               .getSortedInline (Comparator.comparing (Signature::getAdded))
-                                               .getFirst ()
-                                               .getAdded ();
-        final String sSince = aSmallestVersion.getAsString (false);
-
-        aLines.add ("/**");
-        if (!bIsDeprecated && bIsPartiallyDeprecated)
-          aLines.add ("* Certain versions of this method are deprecated since jQuery " +
-                      StringHelper.getImploded (" or ", aDeprecatedVersions));
-        aLines.add (" * @return The invocation of the jQuery " +
-                    sPrefix +
-                    "function <code>" +
-                    sRealName +
-                    "()</code> with return type " +
-                    StringHelper.getImploded (" or ", aReturnTypes));
-        if (bIsDeprecated)
-          aLines.add (" * @deprecated Deprecated since jQuery " +
-                      StringHelper.getImploded (" or ", aDeprecatedVersions));
-        if (sSince != null)
-          aLines.add (" * @since jQuery " + sSince);
-        aLines.add (" */");
         if (bIsDeprecated)
           aLines.add ("@Deprecated");
         aLines.add ("@Nonnull");
-        aLines.add ("THISTYPE " + aEntry.getIdentifier () + " ();");
+        aLines.add ("default THISTYPE " + aEntry.getIdentifier () + " ()");
+        aLines.add ("{");
+        aLines.add ("  return jqinvoke (\"" + sRealName + "\");");
+        aLines.add ("}");
         aLines.add ("");
       }
     }
@@ -115,6 +79,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "\n" +
                                                    "import com.helger.commons.annotation.Nonempty;\n" +
                                                    "import com.helger.html.css.ICSSClassProvider;\n" +
+                                                   "import com.helger.html.jscode.IJSInvocation;\n" +
                                                    "import com.helger.html.jscode.JSFieldRef;\n" +
                                                    "\n" +
                                                    "/**\n" +
@@ -124,7 +89,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "\n" +
                                                    " * @param <THISTYPE> Implementation type\n" +
                                                    "*/\n" +
-                                                   "public interface IJQueryInvocation <THISTYPE extends IJQueryInvocation <THISTYPE>>\n" +
+                                                   "public interface IJQueryInvocation <THISTYPE extends IJQueryInvocation <THISTYPE>> extends IJSInvocation <THISTYPE>\n" +
                                                    "{\n" +
                                                    "  /**\n" +
                                                    "   * Invoke an arbitrary function on this jQuery object.\n" +
@@ -145,7 +110,10 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   * @return this\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  THISTYPE arg (@Nullable ICSSClassProvider aArgument);\n" +
+                                                   "  default THISTYPE arg (@Nullable ICSSClassProvider aArgument)\n" +
+                                                   "  {\n" +
+                                                   "    return aArgument == null ? argNull () : arg (aArgument.getCSSClass ());\n" +
+                                                   "  }\n" +
                                                    "\n" +
                                                    "  /**\n" +
                                                    "   * Adds a JQuery selector as a string argument.\n" +
@@ -155,7 +123,10 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   * @return this\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  THISTYPE arg (@Nullable IJQuerySelector aArgument);\n" +
+                                                   "  default THISTYPE arg (@Nullable IJQuerySelector aArgument)\n" +
+                                                   "  {\n" +
+                                                   "    return aArgument == null ? argNull () : arg (aArgument.getExpression ());\n" +
+                                                   "  }\n" +
                                                    "\n" +
                                                    "  /**\n" +
                                                    "   * Adds a JQuery selector list as a string argument.\n" +
@@ -165,30 +136,30 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   * @return this\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  THISTYPE arg (@Nullable JQuerySelectorList aArgument);\n" +
+                                                   "  default THISTYPE arg (@Nullable JQuerySelectorList aArgument)\n" +
+                                                   "  {\n" +
+                                                   "    return aArgument == null ? argNull () : arg (aArgument.getAsExpression ());\n" +
+                                                   "  }\n" +
                                                    "\n" +
                                                    "  // Properties of jQuery Object Instances\n" +
-                                                   "\n" +
-                                                   "  /**\n" +
-                                                   "   * @return The invocation of the jQuery function <code>context()</code>\n" +
-                                                   "   * @since jQuery 1.3\n" +
-                                                   "   * @deprecated Deprecated since jQuery 1.10\n" +
-                                                   "   */\n" +
-                                                   "  @Deprecated\n" +
-                                                   "  @Nonnull\n" +
-                                                   "  JSFieldRef context ();\n" +
                                                    "\n" +
                                                    "  /**\n" +
                                                    "   * @return The invocation of the jQuery field <code>jquery</code>\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  JSFieldRef jquery ();\n" +
+                                                   "  default JSFieldRef jquery ()\n" +
+                                                   "  {\n" +
+                                                   "    return ref (\"jquery\");\n" +
+                                                   "  }\n" +
                                                    "\n" +
                                                    "  /**\n" +
                                                    "   * @return The invocation of the jQuery field <code>length()</code>\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  JSFieldRef length ();\n");
+                                                   "  default JSFieldRef length ()\n" +
+                                                   "  {\n" +
+                                                   "    return ref (\"length\");\n" +
+                                                   "  }\n");
 
     for (final String sLine : aLines)
       if (sLine.length () > 0)
