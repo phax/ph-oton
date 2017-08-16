@@ -3,6 +3,7 @@ package com.helger.photon.uicore.html;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.annotation.OutOfBandNode;
@@ -114,10 +115,12 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
                                         @Nullable final ETheme eTheme,
                                         @Nonnull final String sPopupBackgroundColor,
                                         @Nullable final String sPopupTextColor,
-                                        @Nonnull final String sButtonBackgroundColor,
+                                        @Nullable final String sButtonBackgroundColor,
                                         @Nullable final String sButtonTextColor,
                                         @Nullable final ISimpleURL aPolicyLink)
   {
+    ValueEnforcer.notEmpty (sPopupBackgroundColor, "PopupBackgroundColor");
+
     final JSAssocArray aInitOptions = new JSAssocArray ();
     if (ePos != null)
       aInitOptions.add ("position", ePos.getValue ());
