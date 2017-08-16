@@ -25,12 +25,12 @@ import com.helger.xservlet.AbstractXServlet;
  *
  * @author Philip Helger
  */
-public class DefaultCSPReportingServlet extends AbstractXServlet
+public class CSPReportingServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "cspreporting";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  public DefaultCSPReportingServlet ()
+  public CSPReportingServlet ()
   {
     super ( () -> "none");
     handlerRegistry ().registerHandler (EHttpMethod.POST, new CSPReportingXServletHandler ());

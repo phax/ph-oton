@@ -25,7 +25,7 @@ import com.helger.xservlet.handler.IXServletHandler;
 
 /**
  * Default Servlet handler for CSP reporting. Used in
- * {@link DefaultCSPReportingServlet}.
+ * {@link CSPReportingServlet}.
  *
  * @author Philip Helger
  */
