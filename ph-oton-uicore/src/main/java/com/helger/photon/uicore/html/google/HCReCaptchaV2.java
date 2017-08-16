@@ -16,11 +16,15 @@
  */
 package com.helger.photon.uicore.html.google;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.url.SimpleURL;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -41,13 +45,15 @@ import com.helger.photon.core.app.html.PhotonJS;
 public class HCReCaptchaV2 extends AbstractHCDiv <HCReCaptchaV2>
 {
   public static final ICSSClassProvider CSS_G_RECAPTCHA = DefaultCSSClassProvider.create ("g-recaptcha");
+  private final String m_sDisplayLanguage;
 
-  public HCReCaptchaV2 (@Nonnull @Nonempty final String sSiteKey)
+  public HCReCaptchaV2 (@Nonnull @Nonempty final String sSiteKey, @Nullable final String sDisplayLanguage)
   {
     ValueEnforcer.notEmpty (sSiteKey, "SiteKey");
 
     addClass (CSS_G_RECAPTCHA);
     setDataAttr ("sitekey", sSiteKey);
+    m_sDisplayLanguage = sDisplayLanguage;
   }
 
   @Override
@@ -62,13 +68,18 @@ public class HCReCaptchaV2 extends AbstractHCDiv <HCReCaptchaV2>
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.createExternal ("https://www.google.com/recaptcha/api.js"));
+
+    final SimpleURL aURL = new SimpleURL ("https://www.google.com/recaptcha/api.js");
+    if (m_sDisplayLanguage != null)
+      aURL.add ("hl", m_sDisplayLanguage);
+    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.createExternal (aURL.getAsStringWithEncodedParameters ()));
   }
 
   @Nonnull
-  public static HCReCaptchaV2 create (@Nonnull @Nonempty final String sSiteKey)
+  public static HCReCaptchaV2 create (@Nonnull @Nonempty final String sSiteKey, @Nullable final Locale aDisplayLocale)
   {
-    final HCReCaptchaV2 ret = new HCReCaptchaV2 (sSiteKey);
+    final HCReCaptchaV2 ret = new HCReCaptchaV2 (sSiteKey,
+                                                 aDisplayLocale == null ? null : aDisplayLocale.getLanguage ());
     return ret;
   }
 }

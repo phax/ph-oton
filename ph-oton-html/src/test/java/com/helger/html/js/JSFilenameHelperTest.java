@@ -38,10 +38,23 @@ public final class JSFilenameHelperTest
 
     assertTrue (JSFilenameHelper.isJSFilename (s1));
     assertTrue (JSFilenameHelper.isJSFilename (s2));
+    assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js"));
+    assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js?"));
+    assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js?x=y"));
+    assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js?x=y&a=b"));
+    assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js#"));
+    assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js#anchor"));
     assertFalse (JSFilenameHelper.isJSFilename ("anydir/otherfile.txt"));
+    assertFalse (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.txt"));
 
     assertFalse (JSFilenameHelper.isMinifiedJSFilename (s1));
     assertTrue (JSFilenameHelper.isMinifiedJSFilename (s2));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js"));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js?"));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js?x=y"));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js?x=y&a=b"));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js#"));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js#anchor"));
     assertFalse (JSFilenameHelper.isMinifiedJSFilename ("anydir/otherfile.txt"));
 
     assertTrue (JSFilenameHelper.isRegularJSFilename (s1));
@@ -50,6 +63,20 @@ public final class JSFilenameHelperTest
 
     assertEquals (s2, JSFilenameHelper.getMinifiedJSFilename (s1));
     assertEquals (s2, JSFilenameHelper.getMinifiedJSFilename (s2));
+    assertEquals ("http://any.url.com/path/to.min.js",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
+    assertEquals ("http://any.url.com/path/to.min.js",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
+    assertEquals ("http://any.url.com/path/to.min.js?",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?"));
+    assertEquals ("http://any.url.com/path/to.min.js?x=y",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y"));
+    assertEquals ("http://any.url.com/path/to.min.js?x=y&a=b",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y&a=b"));
+    assertEquals ("http://any.url.com/path/to.min.js#",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#"));
+    assertEquals ("http://any.url.com/path/to.min.js#anchor",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#anchor"));
     try
     {
       JSFilenameHelper.getMinifiedJSFilename ("anydir/otherfile.txt");
