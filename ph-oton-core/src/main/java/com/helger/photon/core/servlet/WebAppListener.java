@@ -675,7 +675,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       handleStatisticsOnEnd ();
 
     // Clean commons stuff etc
-    PhotonBasic.shutDown ();
+    PhotonBasic.shutdown ();
 
     if (isOnlyOneInstanceAllowed ())
     {

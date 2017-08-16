@@ -88,7 +88,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
   @Override
   public void after ()
   {
-    PhotonBasic.shutDown ();
+    PhotonBasic.shutdown ();
     super.after ();
   }
 }

@@ -32,6 +32,7 @@ public class DefaultCSPReportingServlet extends AbstractXServlet
 
   public DefaultCSPReportingServlet ()
   {
+    super ( () -> "none");
     handlerRegistry ().registerHandler (EHttpMethod.POST, new CSPReportingXServletHandler ());
   }
 }

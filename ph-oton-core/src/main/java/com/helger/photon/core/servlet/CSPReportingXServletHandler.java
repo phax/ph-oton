@@ -26,7 +26,7 @@ import com.helger.xservlet.handler.IXServletHandler;
 /**
  * Default Servlet handler for CSP reporting. Used in
  * {@link DefaultCSPReportingServlet}.
- * 
+ *
  * @author Philip Helger
  */
 public class CSPReportingXServletHandler implements IXServletHandler
@@ -37,13 +37,17 @@ public class CSPReportingXServletHandler implements IXServletHandler
 
   public CSPReportingXServletHandler ()
   {
-    this (aJson -> s_aLogger.warn ("CSP report: " +
-                                   aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true))));
+    this (CSPReportingXServletHandler::logCSPReport);
   }
 
   public CSPReportingXServletHandler (final Consumer <? super IJson> aJsonHandler)
   {
     m_aJsonHandler = ValueEnforcer.notNull (aJsonHandler, "JsonHandler");
+  }
+
+  public static void logCSPReport (@Nonnull final IJson aJson)
+  {
+    s_aLogger.warn ("CSP report: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
   }
 
   public void onRequest (@Nonnull final HttpServletRequest aHttpRequest,

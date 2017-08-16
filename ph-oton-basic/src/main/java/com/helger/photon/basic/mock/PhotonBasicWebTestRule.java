@@ -106,7 +106,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   @Override
   public void after ()
   {
-    PhotonBasic.shutDown ();
+    PhotonBasic.shutdown ();
     super.after ();
   }
 }

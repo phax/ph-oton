@@ -16,9 +16,6 @@
  */
 package com.helger.photon.core.userdata;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
 import com.helger.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
@@ -36,19 +33,12 @@ public class UserStreamServlet extends AbstractSimpleHttpServlet
 
   public UserStreamServlet ()
   {
+    super ( () -> CApplicationID.APP_ID_PUBLIC);
     registerSyncHandler (EHttpMethod.GET, new UserDataDeliveryHttpHandler ());
   }
 
   public static boolean isServletRegisteredInServletContext ()
   {
     return ServletStatusManager.getInstance ().isServletRegistered (UserStreamServlet.class);
-  }
-
-  @Override
-  @Nonnull
-  @Nonempty
-  protected String getInitApplicationID ()
-  {
-    return CApplicationID.APP_ID_PUBLIC;
   }
 }

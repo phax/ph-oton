@@ -30,7 +30,7 @@ public final class PhotonBasic
     }
   }
 
-  public static void shutDown ()
+  public static void shutdown ()
   {
     if (s_aRegisteredRequestTracker.getAndSet (false))
     {
