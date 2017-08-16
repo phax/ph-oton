@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -152,6 +153,14 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   }
 
   @Nonnull
+  public JSAssocArray addIfNotNull (@Nonnull final String sKey, @Nullable final String sValue)
+  {
+    if (sValue != null)
+      return add (sKey, JSExpr.lit (sValue));
+    return this;
+  }
+
+  @Nonnull
   public JSAssocArray add (@Nonnull final String sKey, @Nullable final IJson aValue)
   {
     return add (sKey, aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
@@ -195,6 +204,16 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   public JSAssocArray add (@Nonnull final String sKey, @Nonnull final IJSExpression aValue)
   {
     return add (getKey (sKey), aValue);
+  }
+
+  @Nonnull
+  public <T extends IJSExpression> JSAssocArray addIf (@Nonnull final String sKey,
+                                                       @Nonnull final T aValue,
+                                                       @Nonnull final Predicate <? super T> aFilter)
+  {
+    if (aFilter.test (aValue))
+      return add (getKey (sKey), aValue);
+    return this;
   }
 
   /**

@@ -53,14 +53,14 @@ public class HCScriptInlineOnDocumentReady extends AbstractHCScriptInline <HCScr
   }
 
   @Nonnull
-  public HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@Nonnull final IHasJSCode aOnDocumentReadyCode)
+  public final HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@Nonnull final IHasJSCode aOnDocumentReadyCode)
   {
     return setOnDocumentReadyCode (HCSettings.getOnDocumentReadyProvider (), aOnDocumentReadyCode);
   }
 
   @Nonnull
-  public HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@Nonnull final IHCOnDocumentReadyProvider aODRProvider,
-                                                               @Nonnull final IHasJSCode aOnDocumentReadyCode)
+  public final HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@Nonnull final IHCOnDocumentReadyProvider aODRProvider,
+                                                                     @Nonnull final IHasJSCode aOnDocumentReadyCode)
   {
     ValueEnforcer.notNull (aODRProvider, "OnDocumentReadyProvider");
     ValueEnforcer.notNull (aOnDocumentReadyCode, "OnDocumentReadyCode");

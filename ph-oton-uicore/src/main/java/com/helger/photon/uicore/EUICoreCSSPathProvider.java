@@ -32,6 +32,12 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EUICoreCSSPathProvider implements ICSSPathProvider
 {
+  COOKIE_CONSENT_ANIMATION ("uicore/cookieconsent/3.0.4/styles/animation.css"),
+  COOKIE_CONSENT_BASE ("uicore/cookieconsent/3.0.4/styles/base.css"),
+  COOKIE_CONSENT_LAYOUT ("uicore/cookieconsent/3.0.4/styles/layout.css"),
+  COOKIE_CONSENT_MEDIA ("uicore/cookieconsent/3.0.4/styles/media.css"),
+  COOKIE_CONSENT_THEMES_CLASSIC ("uicore/cookieconsent/3.0.4/styles/themes/classic.css"),
+  COOKIE_CONSENT_THEMES_EDGELESS ("uicore/cookieconsent/3.0.4/styles/themes/edgeless.css"),
   JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/jquery.placeholder.css", "if lt IE 10"),
   /** Edit placeholder fix for IE &lt; 10 */
   @Deprecated

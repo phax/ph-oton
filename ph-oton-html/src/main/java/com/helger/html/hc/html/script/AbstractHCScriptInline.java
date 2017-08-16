@@ -41,8 +41,9 @@ import com.helger.xml.microdom.MicroText;
  * @param <THISTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptInline <THISTYPE>>
-                                             extends AbstractHCScript <THISTYPE> implements IHCScriptInline <THISTYPE>
+public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptInline <THISTYPE>> extends
+                                             AbstractHCScript <THISTYPE> implements
+                                             IHCScriptInline <THISTYPE>
 {
   /** By default place inline JS after script files */
   public static final boolean DEFAULT_EMIT_AFTER_FILES = true;
@@ -65,7 +66,7 @@ public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptI
   }
 
   @Nonnull
-  public THISTYPE setJSCodeProvider (@Nonnull final IHasJSCode aProvider)
+  public final THISTYPE setJSCodeProvider (@Nonnull final IHasJSCode aProvider)
   {
     m_aJSProvider = ValueEnforcer.notNull (aProvider, "Provider");
     return thisAsT ();

@@ -90,6 +90,7 @@
             <exclude>**/*.min.css</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>**/LICENSE</exclude>
+            <exclude>src/main/resources/uicore/cookieconsent/**</exclude>
             <exclude>src/main/resources/uicore/html5shiv/**</exclude>
             <exclude>src/main/resources/uicore/jquery/**</exclude>
             <exclude>src/main/resources/uicore/jqueryplaceholder/**</exclude>
