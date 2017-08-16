@@ -56,7 +56,7 @@ public class ResourceBundleServlet extends AbstractSimpleHttpServlet
   public static final String SERVLET_DEFAULT_NAME = "resbundle";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleServlet.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleServlet.class);
   private static final AtomicBoolean s_bIsEnabled = new AtomicBoolean (isServletRegisteredInServletContext () &&
                                                                        GlobalDebug.isProductionMode ());
 

@@ -8,6 +8,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.CGlobal;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.state.EContinue;
@@ -18,6 +21,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHttpHandler
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleDeliveryHttpHandler.class);
+
   @Nonnull
   private static String _getBundleIDFromFilename (@Nonnull final String sFilename)
   {
@@ -38,7 +43,7 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
                                                                     .getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
     if (!PhotonCoreManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
     {
-      ResourceBundleServlet.s_aLogger.info ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
+      s_aLogger.info ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
       return EContinue.BREAK;
     }
