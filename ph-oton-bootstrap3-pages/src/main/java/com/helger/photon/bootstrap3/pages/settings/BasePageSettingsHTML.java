@@ -36,6 +36,7 @@ import com.helger.photon.bootstrap3.form.BootstrapCheckBox;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
+import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -69,6 +70,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     MSG_OUT_OF_BAND_DEBUGGING ("Out-of-band Knoten debuggen?", "Debug out-of-band nodes?"),
     MSG_SCRIPTS_IN_BODY ("<script>-Element in <body>?", "Put <script> elements in <body>?"),
     MSG_USE_REGULAR_RESOURCES ("Nicht-optimierte JS/CSS inkludieren?", "Include non-minified JS/CSS?"),
+    MSG_BUTTON_WEBRESBUNDLE ("ResourceBundle Einstellungen", "ResourceBundle settings"),
     MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
     private final IMultilingualText m_aTP;
@@ -220,6 +222,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
       aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_SAVE);
       aToolbar.addSubmitButtonSave (aDisplayLocale);
+      aToolbar.addButton (EText.MSG_BUTTON_WEBRESBUNDLE.getDisplayText (aDisplayLocale),
+                          aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_APPINFO_WEBRESBUNDLE));
     }
   }
 }
