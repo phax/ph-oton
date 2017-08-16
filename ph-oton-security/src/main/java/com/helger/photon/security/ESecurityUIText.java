@@ -14,41 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uicore.facebook.xfbml;
+package com.helger.photon.security;
+
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.lang.EnumHelper;
+import com.helger.commons.annotation.Translatable;
+import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 
-public enum EFBFont implements IHasID <String>
+@Translatable
+public enum ESecurityUIText implements IHasDisplayText
 {
-  ARIAL ("arial"),
-  LUCIDA ("lucida grande"),
-  SEGOE ("segoe ui"),
-  TAHOMA ("tahoma"),
-  TREBUCHET ("trebuchet ms"),
-  VERDANA ("verdana");
+  GUEST ("Gast", "Guest");
 
-  private final String m_sID;
+  private final IMultilingualText m_aTP;
 
-  private EFBFont (@Nonnull @Nonempty final String sID)
+  private ESecurityUIText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_sID = sID;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getID ()
-  {
-    return m_sID;
+    m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
   @Nullable
-  public static EFBFont getFromID (@Nullable final String sID)
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return EnumHelper.getFromIDOrNull (EFBFont.class, sID);
+    return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 }
