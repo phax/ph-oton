@@ -1,4 +1,6 @@
 language: java
+
+# Required to avoid timeout!
 sudo: true
 
 env:
@@ -16,8 +18,7 @@ jdk:
   - oraclejdk8
   
 install:
-#  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U -P jdeps
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U -P jdeps
 
 script:
   - mvn test -B -P coverage
