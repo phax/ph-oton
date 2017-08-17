@@ -46,5 +46,6 @@ public class JSAssocArrayTest
                   sEOL +
                   "}",
                   a.getJSCode ());
+    assertEquals ("{}", new JSAssocArray ().getJSCode ());
   }
 }

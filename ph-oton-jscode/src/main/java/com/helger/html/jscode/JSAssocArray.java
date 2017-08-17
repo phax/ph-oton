@@ -290,9 +290,10 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
 
   public void generate (@Nonnull final JSFormatter aFormatter)
   {
-    aFormatter.plain ('{').nl ().indent ();
-    if (m_aExprs != null)
+    aFormatter.plain ('{');
+    if (m_aExprs != null && m_aExprs.isNotEmpty ())
     {
+      aFormatter.nl ().indent ();
       boolean bFirst = true;
       for (final Map.Entry <IJSExpression, IJSExpression> aEntry : m_aExprs.entrySet ())
       {
@@ -302,8 +303,9 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
           aFormatter.plain (',').nl ();
         aFormatter.generatable (aEntry.getKey ()).plain (':').generatable (aEntry.getValue ());
       }
+      aFormatter.nl ().outdent ();
     }
-    aFormatter.nl ().outdent ().plain ('}');
+    aFormatter.plain ('}');
   }
 
   @Override
