@@ -21,7 +21,6 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdownMenu;
 
@@ -73,45 +72,6 @@ public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
     // Overwrite default "menu" role
     aDDM.setRole (null);
     return aDDM;
-  }
-
-  /**
-   * Add a button and convert it to a dropdown menu
-   *
-   * @param aButton
-   *        The button to be added. May not be <code>null</code>.
-   * @return The created drop down button
-   */
-  @Nonnull
-  @Deprecated
-  public BootstrapDropdownMenu addButtonAsDropDownMenu (@Nonnull final BootstrapButton aButton)
-  {
-    // Add caret to button
-    BootstrapDropdown.makeDropdownToggle (aButton);
-
-    addClass (CBootstrapCSS.DROPDOWN);
-    addChild (aButton);
-    return addDropDownMenu ();
-  }
-
-  /**
-   * Add a button and convert it to a dropdown menu
-   *
-   * @param aButton
-   *        The button to be added. May not be <code>null</code>.
-   * @return The created drop down button
-   */
-  @Nonnull
-  @Deprecated
-  public BootstrapDropdownMenu addButtonAsDropDownMenuWithSeparateCaret (@Nonnull final BootstrapButton aButton)
-  {
-    addChild (aButton);
-
-    final BootstrapButton aCaret = new BootstrapButton (aButton.getButtonType (), aButton.getButtonSize ());
-    BootstrapDropdown.makeDropdownToggle (aCaret);
-    addChild (aCaret);
-
-    return addDropDownMenu ();
   }
 
   /**
