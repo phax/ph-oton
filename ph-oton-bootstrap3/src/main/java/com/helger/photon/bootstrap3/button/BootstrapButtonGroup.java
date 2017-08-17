@@ -85,6 +85,29 @@ public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
    * @return The created button group. Never <code>null</code>.
    */
   @Nonnull
+  public static BootstrapButtonGroup createButtonAsDropDownMenu (@Nonnull final BootstrapButton aButton,
+                                                                 @Nonnull final Consumer <? super BootstrapDropdownMenu> aMenuItemProvider)
+  {
+    final BootstrapButtonGroup aBG = new BootstrapButtonGroup ();
+    BootstrapDropdown.makeDropdownToggle (aButton);
+    aBG.addChild (aButton);
+
+    final BootstrapDropdownMenu aMenu = aBG.addDropDownMenu ();
+    aMenuItemProvider.accept (aMenu);
+    return aBG;
+  }
+
+  /**
+   * Create a new button group with a default button and an additional drop down
+   * part.
+   *
+   * @param aButton
+   *        The button to be added. May not be <code>null</code>.
+   * @param aMenuItemProvider
+   *        The drop down menu item provider.
+   * @return The created button group. Never <code>null</code>.
+   */
+  @Nonnull
   public static BootstrapButtonGroup createButtonAsDropDownMenuWithSeparateCaret (@Nonnull final BootstrapButton aButton,
                                                                                   @Nonnull final Consumer <? super BootstrapDropdownMenu> aMenuItemProvider)
   {
