@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
+import com.helger.commons.collection.attr.IAttributeContainerAny;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.display.IHasDisplayText;
 
@@ -50,5 +50,5 @@ public interface IPage extends IHasID <String>, IHasDisplayText
    */
   @Nonnull
   @ReturnsMutableObject
-  IMutableAttributeContainerAny <String> attrs ();
+  IAttributeContainerAny <String> attrs ();
 }

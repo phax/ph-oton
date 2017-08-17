@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
+import com.helger.commons.collection.attr.IAttributeContainerAny;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.IAjaxExecutor;
@@ -48,7 +48,7 @@ public abstract class AbstractAjaxExecutor implements IAjaxExecutor
   {}
 
   @OverrideOnDemand
-  protected void modifyRequestParamMap (@Nonnull final IMutableAttributeContainerAny <String> aParams)
+  protected void modifyRequestParamMap (@Nonnull final IAttributeContainerAny <String> aParams)
   {
     // Remove the jQuery time stamp parameter
     aParams.remove (REQUEST_PARAM_JQUERY_NO_CACHE);

@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IMutableAttributeContainerAny;
+import com.helger.commons.collection.attr.IAttributeContainerAny;
 import com.helger.commons.id.IHasID;
 
 /**
@@ -65,5 +65,5 @@ public interface IMenuObject extends IHasID <String>
    */
   @Nonnull
   @ReturnsMutableObject
-  IMutableAttributeContainerAny <String> attrs ();
+  IAttributeContainerAny <String> attrs ();
 }
