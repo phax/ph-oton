@@ -14,19 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.base;
+package com.helger.photon.bootstrap4.grid;
+
+import com.helger.html.css.ICSSClassProvider;
 
 /**
- * A full width container, spanning the entire width of your viewport.
+ * Bootstrap3 grid element
  *
  * @author Philip Helger
- * @deprecated Use {@link BootstrapContainer} with setFluid directly
  */
-@Deprecated
-public class BootstrapContainerFluid extends BootstrapContainer
+public interface IBootstrapGridElement extends ICSSClassProvider
 {
-  public BootstrapContainerFluid ()
-  {
-    super (true);
-  }
+  int PARTS_NONE = -1;
+  int PARTS_AUTO = -2;
+  int PARTS_EVENLY = -3;
+
+  /**
+   * @return When in the range 1-12, the parts to span.
+   */
+  int getParts ();
 }
