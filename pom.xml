@@ -209,6 +209,11 @@
         <artifactId>ph-oton-bootstrap4</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-bootstrap4-stub</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.jcraft</groupId>
@@ -310,5 +315,6 @@
     <module>ph-oton-bootstrap3-stub</module>
     <module>ph-oton-bootstrap3-demo</module>
     <module>ph-oton-bootstrap4</module>
+    <module>ph-oton-bootstrap4-stub</module>
   </modules>
 </project>
