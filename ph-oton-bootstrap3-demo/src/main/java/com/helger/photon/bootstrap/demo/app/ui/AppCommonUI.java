@@ -24,6 +24,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.css.property.CCSSProperties;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCEditPassword;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -40,44 +42,21 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.EBootstrapFormType;
-import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.login.CLogin;
-import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
-import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
-import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
-import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
-import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 @Immutable
 public final class AppCommonUI
 {
-  private static final DataTablesLengthMenu LENGTH_MENU = new DataTablesLengthMenu ().addItem (25)
-                                                                                     .addItem (50)
-                                                                                     .addItem (100)
-                                                                                     .addItemAll ();
+  // Logo parts
+  public static final ICSSClassProvider CSS_CLASS_LOGO1 = DefaultCSSClassProvider.create ("logo1");
+  public static final ICSSClassProvider CSS_CLASS_LOGO2 = DefaultCSSClassProvider.create ("logo2");
 
   private AppCommonUI ()
   {}
-
-  public static void init ()
-  {
-    BootstrapDataTables.setConfigurator ( (aLEC, aTable, aDataTables) -> {
-      final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
-      aDataTables.setAutoWidth (false)
-                 .setLengthMenu (LENGTH_MENU)
-                 .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
-                                                          .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
-                                                                                          aTable.getID ())))
-                 .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
-                 .setTextLoadingURL (CAjaxPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
-                                     AjaxExecutorDataTablesI18N.LANGUAGE_ID)
-                 .addPlugin (new DataTablesPluginSearchHighlight ());
-    });
-  }
 
   @Nonnull
   public static BootstrapForm createViewLoginForm (@Nonnull final ILayoutExecutionContext aLEC,

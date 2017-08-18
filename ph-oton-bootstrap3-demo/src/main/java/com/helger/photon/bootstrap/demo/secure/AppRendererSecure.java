@@ -30,7 +30,7 @@ import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.app.ui.CAppCSS;
+import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap.demo.pub.AppRendererPublic;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.base.BootstrapContainer;
@@ -71,9 +71,9 @@ public final class AppRendererSecure implements ILayoutAreaContentProvider <Layo
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
     aNavbar.getContainer ().setFluid (true);
-    aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1)
+    aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1)
                                                                .addChild (CApp.getApplicationTitle ()))
-                                       .addChild (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO2)
+                                       .addChild (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO2)
                                                                .addChild (" Administration")),
                       aLinkToStartPage);
 

@@ -77,7 +77,7 @@ public final class AppSettings extends AbstractGlobalSingleton
 
   public static boolean isCheckFileAccess ()
   {
-    return s_aCF.getAsBoolean ("webapp.checkfileaccess", true);
+    return s_aCF.getAsBoolean ("webapp.checkfileaccess", false);
   }
 
   public static boolean isTestVersion ()

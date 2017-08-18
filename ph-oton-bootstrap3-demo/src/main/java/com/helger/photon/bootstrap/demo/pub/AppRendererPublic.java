@@ -48,7 +48,6 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
-import com.helger.photon.bootstrap.demo.app.ui.CAppCSS;
 import com.helger.photon.bootstrap.demo.pub.menu.CMenuPublic;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
@@ -138,7 +137,7 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
     aNavbar.getContainer ().setFluid (true);
-    aNavbar.addBrand (new HCSpan ().addClass (CAppCSS.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
+    aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
                       aLinkToStartPage);
 
     _addNavbarLoginLogout (aLEC, aNavbar);
