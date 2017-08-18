@@ -38,8 +38,8 @@ import com.helger.html.hc.html.IHCElement;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstrapObject <THISTYPE>>
-                                              implements IHCHasID <THISTYPE>
+public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstrapObject <THISTYPE>> implements
+                                              IHCHasID <THISTYPE>
 {
   private String m_sID;
   private HCHasCSSClasses m_aCSSClasses;
@@ -90,8 +90,8 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public final HCHasCSSClasses getCSSClasses ()
+  @ReturnsMutableObject
+  public final HCHasCSSClasses cssClasses ()
   {
     if (m_aCSSClasses == null)
       m_aCSSClasses = new HCHasCSSClasses ();
@@ -104,8 +104,8 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
   }
 
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public final HCHasCSSStyles getCSSStyles ()
+  @ReturnsMutableObject
+  public final HCHasCSSStyles cssStyles ()
   {
     if (m_aCSSStyles == null)
       m_aCSSStyles = new HCHasCSSStyles ();
@@ -116,7 +116,7 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
   public final THISTYPE setHidden (final boolean bHidden)
   {
     if (bHidden)
-      getCSSStyles ().addStyle (CCSSProperties.DISPLAY_NONE);
+      cssStyles ().addStyle (CCSSProperties.DISPLAY_NONE);
     else
       if (m_aCSSStyles != null)
         m_aCSSStyles.removeStyle (ECSSProperty.DISPLAY);
