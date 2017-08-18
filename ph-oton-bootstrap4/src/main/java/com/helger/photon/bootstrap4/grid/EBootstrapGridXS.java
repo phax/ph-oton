@@ -54,6 +54,12 @@ public enum EBootstrapGridXS implements IBootstrapGridElement
     m_aCSSClass = aCSSClass;
   }
 
+  @Nonnull
+  public EBootstrapGridType getGridType ()
+  {
+    return EBootstrapGridType.XS;
+  }
+
   public int getParts ()
   {
     return m_nParts;
@@ -102,6 +108,8 @@ public enum EBootstrapGridXS implements IBootstrapGridElement
         return XS_12;
       case PARTS_AUTO:
         return AUTO;
+      case PARTS_EVENLY:
+        return EVENLY;
       default:
         return null;
     }

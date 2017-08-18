@@ -55,6 +55,12 @@ public enum EBootstrapGridSM implements IBootstrapGridElement
     m_aCSSClass = aCSSClass;
   }
 
+  @Nonnull
+  public EBootstrapGridType getGridType ()
+  {
+    return EBootstrapGridType.SM;
+  }
+
   @Nonnegative
   public int getParts ()
   {
@@ -104,6 +110,8 @@ public enum EBootstrapGridSM implements IBootstrapGridElement
         return SM_12;
       case PARTS_AUTO:
         return AUTO;
+      case PARTS_EVENLY:
+        return EVENLY;
       default:
         return null;
     }

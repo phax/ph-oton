@@ -16,47 +16,38 @@
  */
 package com.helger.photon.bootstrap4.grid;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Bootstrap4 grid columns. Medium (&ge;768px)
+ * Bootstrap4 grid order.
  *
  * @author Philip Helger
  */
-public enum EBootstrapGridMD implements IBootstrapGridElement
+public enum EBootstrapColOrder implements ICSSClassProvider
 {
-  MD_1 (1, CBootstrapCSS.COL_MD_1),
-  MD_2 (2, CBootstrapCSS.COL_MD_2),
-  MD_3 (3, CBootstrapCSS.COL_MD_3),
-  MD_4 (4, CBootstrapCSS.COL_MD_4),
-  MD_5 (5, CBootstrapCSS.COL_MD_5),
-  MD_6 (6, CBootstrapCSS.COL_MD_6),
-  MD_7 (7, CBootstrapCSS.COL_MD_7),
-  MD_8 (8, CBootstrapCSS.COL_MD_8),
-  MD_9 (9, CBootstrapCSS.COL_MD_9),
-  MD_10 (10, CBootstrapCSS.COL_MD_10),
-  MD_11 (11, CBootstrapCSS.COL_MD_11),
-  MD_12 (12, CBootstrapCSS.COL_MD_12),
-  AUTO (PARTS_AUTO, CBootstrapCSS.COL_MD_AUTO),
-  EVENLY (PARTS_EVENLY, CBootstrapCSS.COL_MD);
+  ORDER_1 (1, CBootstrapCSS.ORDER_1),
+  ORDER_2 (2, CBootstrapCSS.ORDER_2),
+  ORDER_3 (3, CBootstrapCSS.ORDER_3),
+  ORDER_4 (4, CBootstrapCSS.ORDER_4),
+  ORDER_5 (5, CBootstrapCSS.ORDER_5),
+  ORDER_6 (6, CBootstrapCSS.ORDER_6),
+  ORDER_7 (7, CBootstrapCSS.ORDER_7),
+  ORDER_8 (8, CBootstrapCSS.ORDER_8),
+  ORDER_9 (9, CBootstrapCSS.ORDER_9),
+  ORDER_10 (10, CBootstrapCSS.ORDER_10),
+  ORDER_11 (11, CBootstrapCSS.ORDER_11),
+  ORDER_12 (12, CBootstrapCSS.ORDER_12);
 
   private final int m_nParts;
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapGridMD (final int nParts, @Nullable final ICSSClassProvider aCSSClass)
+  private EBootstrapColOrder (final int nParts, @Nullable final ICSSClassProvider aCSSClass)
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;
-  }
-
-  @Nonnull
-  public EBootstrapGridType getGridType ()
-  {
-    return EBootstrapGridType.MD;
   }
 
   public int getParts ()
@@ -70,44 +61,35 @@ public enum EBootstrapGridMD implements IBootstrapGridElement
     return m_aCSSClass == null ? null : m_aCSSClass.getCSSClass ();
   }
 
-  public boolean isMax ()
-  {
-    return this == MD_12;
-  }
-
   @Nullable
-  public static EBootstrapGridMD getFromParts (final int nParts)
+  public static EBootstrapColOrder getFromParts (final int nParts)
   {
     switch (nParts)
     {
       case 1:
-        return MD_1;
+        return ORDER_1;
       case 2:
-        return MD_2;
+        return ORDER_2;
       case 3:
-        return MD_3;
+        return ORDER_3;
       case 4:
-        return MD_4;
+        return ORDER_4;
       case 5:
-        return MD_5;
+        return ORDER_5;
       case 6:
-        return MD_6;
+        return ORDER_6;
       case 7:
-        return MD_7;
+        return ORDER_7;
       case 8:
-        return MD_8;
+        return ORDER_8;
       case 9:
-        return MD_9;
+        return ORDER_9;
       case 10:
-        return MD_10;
+        return ORDER_10;
       case 11:
-        return MD_11;
+        return ORDER_11;
       case 12:
-        return MD_12;
-      case PARTS_AUTO:
-        return AUTO;
-      case PARTS_EVENLY:
-        return EVENLY;
+        return ORDER_12;
       default:
         return null;
     }

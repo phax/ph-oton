@@ -36,21 +36,36 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 public class BootstrapRow extends AbstractHCDiv <BootstrapRow>
 {
   private EBootstrapRowVerticalAlign m_eVertAlign;
+  private boolean m_bWithPadding = true;
 
   public BootstrapRow ()
   {
     addClass (CBootstrapCSS.ROW);
   }
 
-  public void setVerticalAlign (@Nullable final EBootstrapRowVerticalAlign eVertAlign)
+  @Nonnull
+  public BootstrapRow setVerticalAlign (@Nullable final EBootstrapRowVerticalAlign eVertAlign)
   {
     m_eVertAlign = eVertAlign;
+    return this;
   }
 
   @Nullable
   public EBootstrapRowVerticalAlign getVertAlign ()
   {
     return m_eVertAlign;
+  }
+
+  @Nonnull
+  public BootstrapRow setWithPadding (final boolean bWithPadding)
+  {
+    m_bWithPadding = bWithPadding;
+    return this;
+  }
+
+  public boolean isWithPadding ()
+  {
+    return m_bWithPadding;
   }
 
   @Nonnull
@@ -130,5 +145,7 @@ public class BootstrapRow extends AbstractHCDiv <BootstrapRow>
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClass (m_eVertAlign);
+    if (!m_bWithPadding)
+      addClass (CBootstrapCSS.NO_GUTTERS);
   }
 }

@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap4.grid;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.css.ICSSClassProvider;
@@ -50,6 +51,12 @@ public enum EBootstrapGridXL implements IBootstrapGridElement
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;
+  }
+
+  @Nonnull
+  public EBootstrapGridType getGridType ()
+  {
+    return EBootstrapGridType.XL;
   }
 
   public int getParts ()
@@ -99,6 +106,8 @@ public enum EBootstrapGridXL implements IBootstrapGridElement
         return XL_12;
       case PARTS_AUTO:
         return AUTO;
+      case PARTS_EVENLY:
+        return EVENLY;
       default:
         return null;
     }

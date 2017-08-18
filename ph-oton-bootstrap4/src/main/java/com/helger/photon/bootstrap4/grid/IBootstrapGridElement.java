@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap4.grid;
 
+import javax.annotation.Nonnull;
+
 import com.helger.html.css.ICSSClassProvider;
 
 /**
@@ -30,7 +32,18 @@ public interface IBootstrapGridElement extends ICSSClassProvider
   int PARTS_EVENLY = -3;
 
   /**
+   * @return The grid type. Never <code>null</code>.
+   */
+  @Nonnull
+  EBootstrapGridType getGridType ();
+
+  /**
    * @return When in the range 1-12, the parts to span.
    */
   int getParts ();
+
+  /**
+   * @return <code>true</code> if this is element for part 12
+   */
+  boolean isMax ();
 }

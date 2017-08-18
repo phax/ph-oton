@@ -29,4 +29,9 @@ public interface IBootstrapGridElement extends ICSSClassProvider
 {
   @Nonnegative
   int getParts ();
+
+  /**
+   * @return <code>true</code> if this is element for part 12
+   */
+  boolean isMax ();
 }
