@@ -316,5 +316,6 @@
     <module>ph-oton-bootstrap3-demo</module>
     <module>ph-oton-bootstrap4</module>
     <module>ph-oton-bootstrap4-stub</module>
+    <module>ph-oton-bootstrap4-demo</module>
   </modules>
 </project>

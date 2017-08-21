@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+  <display-name>ph-oton-bootstrap3-demo</display-name>
+  <description>Demo application for ph-oton stack</description>
+  
+  <session-config>
+    <session-timeout>60</session-timeout>
+  </session-config>
+  
+  <!-- In case of page not found - goto error page
+       This is relative to the web application context.
+   -->
+  <error-page><error-code>403</error-code><location>/error/403</location></error-page>
+  <error-page><error-code>404</error-code><location>/error/404</location></error-page>
+ 
+  
+  <!-- Application specific stuff -->  
+
+  <listener>
+    <listener-class>com.helger.photon.bootstrap.demo.servlet.AppWebAppListener</listener-class>
+  </listener>
+  
+  <filter>
+    <filter-name>SecureLoginFilter</filter-name>
+    <filter-class>com.helger.photon.bootstrap.demo.servlet.SecureLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecureLoginFilter</filter-name>
+    <url-pattern>/secure/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecureLoginFilter</filter-name>
+    <url-pattern>/secureajax/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecureLoginFilter</filter-name>
+    <url-pattern>/secureaction/*</url-pattern>
+  </filter-mapping>
+  
+  <servlet>
+    <servlet-name>SecureApplicationServlet</servlet-name>
+    <servlet-class>com.helger.photon.bootstrap.demo.servlet.SecureApplicationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SecureApplicationServlet</servlet-name>
+    <url-pattern>/secure/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PublicApplicationServlet</servlet-name>
+    <servlet-class>com.helger.photon.bootstrap.demo.servlet.PublicApplicationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PublicApplicationServlet</servlet-name>
+    <url-pattern>/public/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AppRootServlet</servlet-name>
+    <servlet-class>com.helger.photon.bootstrap.demo.servlet.AppRootServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AppRootServlet</servlet-name>
+    <url-pattern></url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AppErrorServlet</servlet-name>
+    <servlet-class>com.helger.photon.bootstrap.demo.servlet.AppErrorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AppErrorServlet</servlet-name>
+    <url-pattern>/error/*</url-pattern>
+  </servlet-mapping>
+</web-app>
