@@ -7,7 +7,7 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
-import com.helger.photon.bootstrap4.spacing.BootstrapSpacingBuilder;
+import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
 
 public class BootstrapCol extends AbstractHCDiv <BootstrapCol>
 {

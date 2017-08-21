@@ -1,4 +1,4 @@
-package com.helger.photon.bootstrap4.spacing;
+package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 

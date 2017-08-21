@@ -1,5 +1,6 @@
 package com.helger.photon.bootstrap4.spacing;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
@@ -13,12 +14,18 @@ import com.helger.commons.system.EOperatingSystem;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
+import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
+import com.helger.photon.bootstrap4.utils.ESpacingPropertyType;
+import com.helger.photon.bootstrap4.utils.ESpacingSideType;
 
 public final class BootstrapSpacingBuilderTest
 {
   @Test
   public void testMargin () throws Exception
   {
+    // Default value
+    assertEquals ("m-auto", new BootstrapSpacingBuilder ().getCSSClass ());
+
     final ICommonsSet <String> aNames = new CommonsLinkedHashSet <> ();
     final BootstrapSpacingBuilder aBuilder = new BootstrapSpacingBuilder ();
     for (final ESpacingPropertyType eProp : ESpacingPropertyType.values ())

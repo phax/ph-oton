@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.base;
+package com.helger.photon.bootstrap4.utils;
 
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.html.forms.AbstractHCButton;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCEntityNode;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 public class BootstrapCloseIcon extends AbstractHCButton <BootstrapCloseIcon>
 {

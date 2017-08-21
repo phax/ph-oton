@@ -146,4 +146,13 @@ public class HCEntityNode extends AbstractHCNode
   {
     return new HCEntityNode (EHTMLEntity.permil, "‰");
   }
+
+  /**
+   * @return "times" sign
+   */
+  @Nonnull
+  public static HCEntityNode times ()
+  {
+    return new HCEntityNode (EHTMLEntity.times, "x");
+  }
 }

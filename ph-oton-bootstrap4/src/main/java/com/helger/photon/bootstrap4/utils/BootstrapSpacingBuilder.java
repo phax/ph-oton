@@ -1,4 +1,4 @@
-package com.helger.photon.bootstrap4.spacing;
+package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -8,7 +8,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
 
 /**
- * Utility class to build a column margin.
+ * Utility class to build a generic spacing.
  *
  * @author Philip Helger
  */
@@ -25,15 +25,15 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider
   /**
    * Set the property type. Default is "margin".
    *
-   * @param ePropertyType
+   * @param eProperty
    *        Property type. May not be <code>null</code>.
    * @return this for chaining
    */
   @Nullable
-  public BootstrapSpacingBuilder property (@Nonnull final ESpacingPropertyType ePropertyType)
+  public BootstrapSpacingBuilder property (@Nonnull final ESpacingPropertyType eProperty)
   {
-    ValueEnforcer.notNull (ePropertyType, "ePropertyType");
-    m_eProperty = ePropertyType;
+    ValueEnforcer.notNull (eProperty, "Property");
+    m_eProperty = eProperty;
     return this;
   }
 
@@ -62,7 +62,7 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider
   @Nullable
   public BootstrapSpacingBuilder grid (@Nonnull final EBootstrapGridType eGrid)
   {
-    ValueEnforcer.notNull (eGrid, "GridType");
+    ValueEnforcer.notNull (eGrid, "Grid");
     m_eGrid = eGrid;
     return this;
   }
@@ -99,9 +99,10 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider
   @Nonnull
   public String getCSSClass ()
   {
-    String ret = m_eProperty.getCSSClassNamePart ();
-    ret += m_eSide.getCSSClassNamePart ();
-    ret += m_eGrid.getCSSClassNamePart () + "-";
+    String ret = m_eProperty.getCSSClassNamePart () +
+                 m_eSide.getCSSClassNamePart () +
+                 m_eGrid.getCSSClassNamePart () +
+                 '-';
     if (m_nSize == -1)
       ret += "auto";
     else
