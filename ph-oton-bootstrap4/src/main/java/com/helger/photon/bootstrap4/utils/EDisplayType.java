@@ -2,7 +2,9 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
-public enum EDisplayType
+import com.helger.html.css.ICSSClassProvider;
+
+public enum EDisplayType implements ICSSClassProvider
 {
   NONE ("none"),
   INLINE ("inline"),
@@ -24,5 +26,11 @@ public enum EDisplayType
   public String getCSSClassNamePart ()
   {
     return m_sCSSClassNamePart;
+  }
+
+  @Nonnull
+  public String getCSSClass ()
+  {
+    return "d-" + m_sCSSClassNamePart;
   }
 }
