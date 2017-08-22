@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
@@ -243,6 +244,12 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   public IJSExpression method ()
   {
     return m_aMethod;
+  }
+
+  @Nonnull
+  public JQueryAjaxBuilder method (@Nullable final EHttpMethod eMethod)
+  {
+    return method (eMethod == null ? null : JSExpr.lit (eMethod.getName ()));
   }
 
   @Nonnull

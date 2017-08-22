@@ -22,9 +22,9 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
-import com.helger.http.EHttpMethod;
 
 /**
  * This class contains a combination of path and HTTP method.

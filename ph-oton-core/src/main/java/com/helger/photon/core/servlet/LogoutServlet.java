@@ -24,8 +24,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.http.EHttpMethod;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;

@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.servlet;
 
-import com.helger.http.EHttpMethod;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.xservlet.AbstractXServlet;
 
 /**

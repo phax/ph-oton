@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.userdata;
 
-import com.helger.http.EHttpMethod;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
 import com.helger.xservlet.simple.AbstractSimpleHttpServlet;

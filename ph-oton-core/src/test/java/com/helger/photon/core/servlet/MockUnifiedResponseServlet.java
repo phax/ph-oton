@@ -22,8 +22,8 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.mime.CMimeType;
-import com.helger.http.EHttpMethod;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;

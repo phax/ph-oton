@@ -26,10 +26,10 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.http.EHttpMethod;
 
 /**
  * Wrapper for Fine Uploader 5.x deleteFile part

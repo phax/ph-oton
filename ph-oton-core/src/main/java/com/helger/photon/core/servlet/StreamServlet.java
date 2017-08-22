@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.servlet;
 
-import com.helger.http.EHttpMethod;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.xservlet.servletstatus.ServletStatusManager;

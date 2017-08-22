@@ -24,7 +24,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.url.SMap;
+import com.helger.commons.collection.attr.StringMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.object.StubObject;
 import com.helger.xml.microdom.IMicroElement;
@@ -51,7 +51,8 @@ public final class UserGroupTest
   @Test
   public void testMicroConversion ()
   {
-    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID ("id1", new SMap ("key", "value")),
+    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID ("id1",
+                                                                                      new StringMap ("key", "value")),
                                                 "User group 5",
                                                 "bla");
     aUserGroup.assignUser ("user1");

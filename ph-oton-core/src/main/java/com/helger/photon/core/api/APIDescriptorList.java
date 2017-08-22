@@ -31,8 +31,8 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsEnumMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.http.EHttpMethod;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptorHelper;
 import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
 

@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.functional.ISupplier;
-import com.helger.http.EHttpMethod;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
 
 /**

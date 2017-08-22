@@ -971,7 +971,7 @@ public enum EFontAwesomeIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }
 
-  public static void registerResources ()
+  public static void registerResourcesForThisRequest ()
   {
     PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.FONT_AWESOME4);
   }

@@ -42,7 +42,7 @@ public final class PagePublicIconFontAwesome extends AbstractPagePublicIcon
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
-    EFontAwesomeIcon.registerResources ();
+    EFontAwesomeIcon.registerResourcesForThisRequest ();
     for (final EFontAwesomeIcon eIcon : EFontAwesomeIcon.values ())
       aNodeList.addChild (new HCDiv ().addClass (CSS_CLASS_ICON_CONTAINER)
                                       .addChild (new HCDiv ().addChild (eIcon.getAsNode4x ()))

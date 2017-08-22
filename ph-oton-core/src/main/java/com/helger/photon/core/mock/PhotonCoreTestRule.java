@@ -23,9 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
-import com.helger.commons.url.SMap;
 import com.helger.photon.core.servlet.WebAppListener;
 import com.helger.servlet.mock.MockHttpListener;
 import com.helger.servlet.mock.MockServletContext;
@@ -46,10 +46,10 @@ public class PhotonCoreTestRule extends WebScopeTestRule
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SMap createDefaultServletContextInitParameters ()
+  public static StringMap createDefaultServletContextInitParameters ()
   {
-    return new SMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, true)
-                      .add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, true);
+    return new StringMap ().add (WebAppListener.INIT_PARAMETER_NO_STARTUP_INFO, true)
+                           .add (WebAppListener.INIT_PARAMETER_NO_CHECK_FILE_ACCESS, true);
   }
 
   public PhotonCoreTestRule ()

@@ -27,8 +27,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
+import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.SMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
@@ -82,7 +82,7 @@ public final class UserTokenTest
                                                        false);
     assertNotNull (aUser);
 
-    final UserToken aUserToken = new UserToken (null, new SMap ("key", "value"), aUser);
+    final UserToken aUserToken = new UserToken (null, new StringMap ("key", "value"), aUser);
     assertTrue (StringHelper.hasText (aUserToken.getActiveTokenString ()));
     assertEquals (1, aUserToken.customAttrs ().size ());
     assertEquals ("value", aUserToken.customAttrs ().getAsString ("key"));

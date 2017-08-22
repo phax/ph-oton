@@ -25,11 +25,11 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.collection.map.LRUSet;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.SMap;
 import com.helger.dao.AbstractDAO;
 import com.helger.dao.IDAOReadExceptionCallback;
 import com.helger.dao.IDAOWriteExceptionCallback;
@@ -100,7 +100,7 @@ public abstract class AbstractErrorCallback implements
     final String sErrorCode = "ajax-error-" +
                               (StringHelper.hasText (sAjaxFunctionName) ? sAjaxFunctionName + "-" : "") +
                               InternalErrorHandler.createNewErrorID ();
-    onError (t, aRequestScope, sErrorCode, new SMap ().add ("ajax-function-name", sAjaxFunctionName));
+    onError (t, aRequestScope, sErrorCode, new StringMap ().add ("ajax-function-name", sAjaxFunctionName));
   }
 
   public void onAPIExecutionException (@Nullable final IAPIInvoker aAPIInvoker,
@@ -109,7 +109,7 @@ public abstract class AbstractErrorCallback implements
                                        @Nonnull final Throwable t)
   {
     final String sErrorCode = "api-error-" + InternalErrorHandler.createNewErrorID () + "-" + aDescriptor.getPath ();
-    onError (t, aRequestScope, sErrorCode, new SMap ().add ("api-path", aDescriptor.getPath ()));
+    onError (t, aRequestScope, sErrorCode, new StringMap ().add ("api-path", aDescriptor.getPath ()));
   }
 
   public void onDAOReadException (@Nonnull final Throwable t,
@@ -123,7 +123,8 @@ public abstract class AbstractErrorCallback implements
     onError (t,
              null,
              sErrorCode,
-             new SMap ().add ("action", bInit ? "init" : "read").add ("path", aRes == null ? null : aRes.getPath ()));
+             new StringMap ().add ("action", bInit ? "init" : "read").add ("path",
+                                                                           aRes == null ? null : aRes.getPath ()));
   }
 
   public void onDAOWriteException (@Nonnull final Throwable t,
@@ -134,7 +135,7 @@ public abstract class AbstractErrorCallback implements
     onError (t,
              null,
              sErrorCode,
-             new SMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
+             new StringMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
   }
 
   public void onScheduledJobException (@Nonnull final Throwable t,
@@ -144,9 +145,9 @@ public abstract class AbstractErrorCallback implements
     onError (t,
              (IRequestWebScopeWithoutResponse) null,
              "Error executing background job " + sJobClassName,
-             new SMap ().addIfNotNull ("job-class", sJobClassName)
-                        .add ("job-object", aJob)
-                        .add ("long-running", aJob instanceof ILongRunningJob));
+             new StringMap ().addIfNotNull ("job-class", sJobClassName)
+                             .add ("job-object", aJob)
+                             .add ("long-running", aJob instanceof ILongRunningJob));
   }
 
   public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
@@ -158,9 +159,9 @@ public abstract class AbstractErrorCallback implements
       onError ((Throwable) null,
                aRequestScope,
                "Long running request.",
-               new SMap ().add ("request-id", sUniqueRequestID)
-                          .add ("millisecconds", nRunningMilliseconds)
-                          .add ("URL", RequestHelper.getURL (aRequestScope.getRequest ())));
+               new StringMap ().add ("request-id", sUniqueRequestID)
+                               .add ("millisecconds", nRunningMilliseconds)
+                               .add ("URL", RequestHelper.getURL (aRequestScope.getRequest ())));
     }
   }
 
@@ -173,7 +174,7 @@ public abstract class AbstractErrorCallback implements
     onError ((Throwable) null,
              (IRequestWebScopeWithoutResponse) null,
              "Currently " + nParallelRequests + " parallel requests are active: " + aURLs.toString (),
-             new SMap ().add ("parallel-requests", nParallelRequests));
+             new StringMap ().add ("parallel-requests", nParallelRequests));
   }
 
   public void onParallelRunningRequestsBelowLimit ()

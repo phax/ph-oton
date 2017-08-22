@@ -27,8 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.CodingStyleguideUnaware;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.http.EHttpMethod;
 import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIInvoker;

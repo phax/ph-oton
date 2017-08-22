@@ -23,7 +23,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.url.SMap;
+import com.helger.commons.collection.attr.StringMap;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.object.StubObject;
 import com.helger.xml.microdom.IMicroElement;
@@ -50,7 +50,7 @@ public final class RoleTest
   @Test
   public void testMicroConversion ()
   {
-    final Role aRole = new Role (StubObject.createForCurrentUserAndID ("id1", new SMap ("key", "value")),
+    final Role aRole = new Role (StubObject.createForCurrentUserAndID ("id1", new StringMap ("key", "value")),
                                  "Role 1",
                                  "bla");
 

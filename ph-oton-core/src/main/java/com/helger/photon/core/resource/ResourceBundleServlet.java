@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.http.EHttpMethod;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
 import com.helger.xservlet.simple.AbstractSimpleHttpServlet;

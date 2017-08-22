@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.ajax.response;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import com.helger.commons.state.ISuccessIndicator;
@@ -26,7 +28,7 @@ import com.helger.servlet.response.UnifiedResponse;
  *
  * @author Philip Helger
  */
-public interface IAjaxResponse extends ISuccessIndicator
+public interface IAjaxResponse extends ISuccessIndicator, Serializable
 {
   /**
    * Apply the AJAX response onto the passed {@link UnifiedResponse}. This

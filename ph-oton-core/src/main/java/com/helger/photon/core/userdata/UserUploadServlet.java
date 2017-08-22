@@ -27,11 +27,11 @@ import javax.servlet.ServletException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
-import com.helger.http.EHttpMethod;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
