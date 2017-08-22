@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.form;
+package com.helger.photon.bootstrap4.form;
 
 import java.util.Locale;
 
@@ -46,9 +46,9 @@ import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCInput;
 import com.helger.html.hc.html.forms.IHCTextArea;
 import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.photon.bootstrap3.BootstrapHelper;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
+import com.helger.photon.bootstrap4.BootstrapHelper;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 
@@ -281,18 +281,15 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
       // Check box or radio button
       final HCDiv aCtrlDiv = new HCDiv ();
-      if (bFirstControlIsCheckBox)
-        aCtrlDiv.addClass (CBootstrapCSS.CHECKBOX);
-      else
-        if (bFirstControlIsRadioButton)
-          aCtrlDiv.addClass (CBootstrapCSS.RADIO);
+      aCtrlDiv.addClass (CBootstrapCSS.FORM_CHECK);
 
-      if (aLabel == null || !aLabel.hasChildren ())
+      if (aLabel == null || aLabel.hasNoChildren ())
       {
-        aCtrlDiv.addChild (new HCLabel ().addChild (aCtrls));
+        aCtrlDiv.addChild (new HCLabel ().addClass (CBootstrapCSS.FORM_CHECK_LABEL).addChild (aCtrls));
       }
       else
       {
+        aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
         if (aLabel.isTextLabel ())
         {
           // Use only the text
@@ -305,15 +302,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         aCtrlDiv.addChild (aLabel);
       }
 
-      if (eFormType == EBootstrapFormType.HORIZONTAL)
-      {
-        final HCDiv aCtrlParent = new HCDiv ();
-        aLeftGrid.applyOffsetTo (aCtrlParent);
-        aRightGrid.applyTo (aCtrlParent);
-        aFinalNode = new HCDiv ().addClass (CBootstrapCSS.FORM_GROUP).addChild (aCtrlParent.addChild (aCtrlDiv));
-      }
-      else
-        aFinalNode = aCtrlDiv;
+      aFinalNode = aCtrlDiv;
     }
     else
     {
@@ -321,8 +310,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       bUseIcons = isUseIcons () && eState.isNotNone () && aFirstControl instanceof IHCInput <?>;
 
       // Set static class for all direct children which are not controls
-      final boolean bContainsFormControlStatic = aAllCtrls.isEmpty () &&
-                                                 BootstrapHelper.containsFormControlStatic (aCtrls);
+      final boolean bContainsFormControlPlaintext = aAllCtrls.isEmpty () &&
+                                                    BootstrapHelper.containsFormControlPlaintext (aCtrls);
 
       // Other control - add in form group
       aFinalNode = new HCDiv ().addClass (CBootstrapCSS.FORM_GROUP);
@@ -334,12 +323,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         // Screen reader only....
         if (eFormType == EBootstrapFormType.INLINE)
           aLabel.addClass (CBootstrapCSS.SR_ONLY);
-        else
-          if (eFormType == EBootstrapFormType.HORIZONTAL)
-          {
-            aLabel.addClass (CBootstrapCSS.CONTROL_LABEL);
-            aLeftGrid.applyTo (aLabel);
-          }
 
         if (aFirstControl != null)
         {
@@ -349,49 +332,20 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
           modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
         }
 
-        if (eFormType == EBootstrapFormType.HORIZONTAL)
-        {
-          final HCDiv aCtrlParent = new HCDiv ();
-          aRightGrid.applyTo (aCtrlParent);
-          if (bUseIcons)
-            aCtrlParent.addChild (eState.getIconAsNode ());
-          if (bContainsFormControlStatic)
-            aCtrlParent.addClass (CBootstrapCSS.FORM_CONTROL_STATIC);
-          aCtrlParent.addChild (aCtrls);
-          aFinalNode.addChildren (aLabel, aCtrlParent);
-        }
-        else
-        {
-          if (bContainsFormControlStatic)
-            BootstrapHelper.makeFormControlStatic (aCtrls);
-          aFinalNode.addChildren (aLabel, aCtrls);
-          if (bUseIcons)
-            aFinalNode.addChild (eState.getIconAsNode ());
-        }
+        if (bContainsFormControlPlaintext)
+          BootstrapHelper.makeFormControlPlaintext (aCtrls);
+        aFinalNode.addChildren (aLabel, aCtrls);
+        if (bUseIcons)
+          aFinalNode.addChild (eState.getIconAsNode ());
       }
       else
       {
         // No label - just add controls
-        if (eFormType == EBootstrapFormType.HORIZONTAL)
-        {
-          final HCDiv aCtrlParent = new HCDiv ();
-          aLeftGrid.applyOffsetTo (aCtrlParent);
-          aRightGrid.applyTo (aCtrlParent);
-          if (bUseIcons)
-            aCtrlParent.addChild (eState.getIconAsNode ());
-          if (bContainsFormControlStatic)
-            aCtrlParent.addClass (CBootstrapCSS.FORM_CONTROL_STATIC);
-          aCtrlParent.addChild (aCtrls);
-          aFinalNode.addChild (aCtrlParent);
-        }
-        else
-        {
-          if (bContainsFormControlStatic)
-            BootstrapHelper.makeFormControlStatic (aCtrls);
-          aFinalNode.addChild (aCtrls);
-          if (bUseIcons)
-            aFinalNode.addChild (eState.getIconAsNode ());
-        }
+        if (bContainsFormControlPlaintext)
+          BootstrapHelper.makeFormControlPlaintext (aCtrls);
+        aFinalNode.addChild (aCtrls);
+        if (bUseIcons)
+          aFinalNode.addChild (eState.getIconAsNode ());
       }
     }
 
@@ -403,10 +357,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       if (eFormType == EBootstrapFormType.INLINE)
         aHelpTextNode.addClass (CBootstrapCSS.SR_ONLY);
 
-      if (eFormType == EBootstrapFormType.HORIZONTAL)
-        ((HCDiv) aFinalNode.getLastChild ()).addChild (aHelpTextNode);
-      else
-        aFinalNode.addChild (aHelpTextNode);
+      aFinalNode.addChild (aHelpTextNode);
     }
 
     // set specified highlighting state
@@ -420,11 +371,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         final IHCElement <?> aErrorNode = createSingleErrorNode (aError, aDisplayLocale);
         if (aErrorNode != null)
         {
-          if (eFormType == EBootstrapFormType.HORIZONTAL)
-          {
-            aLeftGrid.applyOffsetTo (aErrorNode);
-            aRightGrid.applyTo (aErrorNode);
-          }
           aFinalNode.addChild (aErrorNode);
         }
       }

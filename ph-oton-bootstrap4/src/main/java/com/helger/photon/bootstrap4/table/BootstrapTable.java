@@ -14,31 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.form;
+package com.helger.photon.bootstrap4.table;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.helger.html.hc.html.forms.AbstractHCCheckBox;
-import com.helger.html.request.IHCRequestFieldBoolean;
-import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.html.hc.html.tabular.IHCCol;
 
-public class BootstrapCheckBox extends AbstractHCCheckBox <BootstrapCheckBox>
+public class BootstrapTable extends AbstractBootstrapTable <BootstrapTable>
 {
-  private void _init ()
+  public BootstrapTable ()
+  {}
+
+  public BootstrapTable (@Nullable final IHCCol <?> aCol)
   {
-    addClass (CBootstrapCSS.FORM_CHECK_INPUT);
+    super (aCol);
   }
 
-  public BootstrapCheckBox (@Nonnull final IHCRequestFieldBoolean aRF)
+  public BootstrapTable (@Nullable final IHCCol <?>... aCols)
   {
-    super (aRF);
-    _init ();
+    super (aCols);
   }
 
-  public BootstrapCheckBox (@Nonnull final IHCRequestFieldBooleanMultiValue aRF)
+  public BootstrapTable (@Nullable final Iterable <? extends IHCCol <?>> aCols)
   {
-    super (aRF);
-    _init ();
+    super (aCols);
   }
 }

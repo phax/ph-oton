@@ -14,12 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3;
+package com.helger.photon.bootstrap4;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.commons.state.EChange;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.forms.EHCInputType;
@@ -37,11 +40,12 @@ public final class BootstrapHelper
   private BootstrapHelper ()
   {}
 
-  public static void markAsFormControl (@Nullable final IHCControl <?> aCtrl)
+  @Nonnull
+  public static EChange markAsFormControl (@Nullable final IHCControl <?> aCtrl)
   {
     if (aCtrl != null)
     {
-      boolean bAddClass = true;
+      ICSSClassProvider aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL;
       if (aCtrl instanceof IHCInput <?>)
       {
         // all except for checkbox, radio button and
@@ -50,16 +54,28 @@ public final class BootstrapHelper
 
         // May be null!
         final EHCInputType eType = aInput.getType ();
-        if (eType == EHCInputType.CHECKBOX || eType == EHCInputType.RADIO || eType == EHCInputType.HIDDEN)
+        switch (eType)
         {
-          // Do not add the class!
-          bAddClass = false;
+          case CHECKBOX:
+          case RADIO:
+            aCSSClassToAdd = CBootstrapCSS.FORM_CHECK_INPUT;
+            break;
+          case FILE:
+            aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL_FILE;
+            break;
+          case HIDDEN:
+            aCSSClassToAdd = null;
+            break;
         }
       }
 
-      if (bAddClass)
-        aCtrl.addClass (CBootstrapCSS.FORM_CONTROL);
+      if (aCSSClassToAdd != null)
+      {
+        aCtrl.addClass (aCSSClassToAdd);
+        return EChange.CHANGED;
+      }
     }
+    return EChange.UNCHANGED;
   }
 
   public static void markAsFormControls (@Nullable final Iterable <? extends IHCControl <?>> aCtrls)
@@ -75,7 +91,7 @@ public final class BootstrapHelper
       aParent.forAllChildren (aChild -> markAsFormControls (HCCtrlHelper.getAllHCControls (aChild)));
   }
 
-  public static boolean containsFormControlStatic (@Nullable final IHCNode aNode)
+  public static boolean containsFormControlPlaintext (@Nullable final IHCNode aNode)
   {
     if (aNode instanceof IHCElement <?>)
     {
@@ -86,25 +102,25 @@ public final class BootstrapHelper
     if (aNode != null)
     {
       // E.g. HCNodeList
-      return aNode.findFirstChild (aChild -> containsFormControlStatic (aChild)) != null;
+      return aNode.findFirstChild (aChild -> containsFormControlPlaintext (aChild)) != null;
     }
 
     return false;
   }
 
-  public static void makeFormControlStatic (@Nullable final IHCNode aNode)
+  public static void makeFormControlPlaintext (@Nullable final IHCNode aNode)
   {
     if (aNode != null)
     {
       if (aNode instanceof IHCElement <?>)
       {
         if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>))
-          ((IHCElement <?>) aNode).addClass (CBootstrapCSS.FORM_CONTROL_STATIC);
+          ((IHCElement <?>) aNode).addClass (CBootstrapCSS.FORM_CONTROL_PLAINTEXT);
       }
       else
       {
         // Descend only in non-elements - e.g. HCNodeList
-        aNode.forAllChildren (aChild -> makeFormControlStatic (aChild));
+        aNode.forAllChildren (aChild -> makeFormControlPlaintext (aChild));
       }
     }
   }
