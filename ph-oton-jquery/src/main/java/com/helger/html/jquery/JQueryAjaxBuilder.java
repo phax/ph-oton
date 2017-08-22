@@ -52,7 +52,6 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   private IJSExpression m_aProcessData;
   private IJSExpression m_aURL;
   private IJSExpression m_aTraditional;
-  private IJSExpression m_aType;
   private IJSExpression m_aMethod;
 
   // Callbacks
@@ -79,7 +78,6 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     m_aProcessData = aOther.m_aProcessData;
     m_aURL = aOther.m_aURL;
     m_aTraditional = aOther.m_aTraditional;
-    m_aType = aOther.m_aType;
     m_aMethod = aOther.m_aMethod;
 
     m_aCallbackContext = aOther.m_aCallbackContext;
@@ -213,25 +211,6 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   public JQueryAjaxBuilder traditional (@Nullable final IJSExpression aTraditional)
   {
     m_aTraditional = aTraditional;
-    return this;
-  }
-
-  @Nullable
-  public IJSExpression type ()
-  {
-    return m_aType;
-  }
-
-  @Nonnull
-  public JQueryAjaxBuilder type (@Nullable final String sType)
-  {
-    return type (sType == null ? null : JSExpr.lit (sType));
-  }
-
-  @Nonnull
-  public JQueryAjaxBuilder type (@Nullable final IJSExpression aType)
-  {
-    m_aType = aType;
     return this;
   }
 
@@ -403,8 +382,6 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
       aSettings.add ("processData", m_aProcessData);
     if (m_aTraditional != null)
       aSettings.add ("traditional", m_aTraditional);
-    if (m_aType != null)
-      aSettings.add ("type", m_aType);
     if (m_aMethod != null)
       aSettings.add ("method", m_aMethod);
     if (m_aURL != null)
