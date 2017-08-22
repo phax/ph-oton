@@ -14,23 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.form;
+package com.helger.photon.bootstrap4.form;
 
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.xml.microdom.IMicroElement;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 public class BootstrapCheckBox extends AbstractHCCheckBox <BootstrapCheckBox>
 {
   private void _init ()
   {
-    addClass (CBootstrapCSS.CHECKBOX);
+    addClass (CBootstrapCSS.FORM_CHECK_INPUT);
   }
 
   public BootstrapCheckBox (@Nonnull final IHCRequestFieldBoolean aRF)
@@ -43,26 +40,5 @@ public class BootstrapCheckBox extends AbstractHCCheckBox <BootstrapCheckBox>
   {
     super (aRF);
     _init ();
-  }
-
-  @Nonnull
-  public BootstrapCheckBox setInline (final boolean bInline)
-  {
-    if (bInline)
-      addClass (CBootstrapCSS.CHECKBOX_INLINE);
-    else
-      removeClass (CBootstrapCSS.CHECKBOX_INLINE);
-    return this;
-  }
-
-  @Override
-  @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
-  {
-    // Before calling super
-    if (isDisabled ())
-      addClass (CBootstrapCSS.DISABLED);
-
-    super.fillMicroElement (aElement, aConversionSettings);
   }
 }

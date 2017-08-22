@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.button;
+package com.helger.photon.bootstrap4.button;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +27,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.AbstractHCButton;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**
@@ -37,13 +37,14 @@ import com.helger.photon.uicore.icon.IIcon;
  */
 public class BootstrapButton extends AbstractHCButton <BootstrapButton>
 {
-  private EBootstrapButtonType m_eButtonType = EBootstrapButtonType.DEFAULT;
+  private EBootstrapButtonType m_eButtonType = EBootstrapButtonType.NONE;
   private EBootstrapButtonSize m_eButtonSize = EBootstrapButtonSize.DEFAULT;
   private IIcon m_aIcon;
+  private boolean m_bBlockLevel = false;
 
   public BootstrapButton ()
   {
-    this (EBootstrapButtonType.DEFAULT, EBootstrapButtonSize.DEFAULT);
+    this (EBootstrapButtonType.NONE, EBootstrapButtonSize.DEFAULT);
   }
 
   public BootstrapButton (@Nonnull final EBootstrapButtonType eButtonType)
@@ -53,7 +54,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
 
   public BootstrapButton (@Nonnull final EBootstrapButtonSize eButtonSize)
   {
-    this (EBootstrapButtonType.DEFAULT, eButtonSize);
+    this (EBootstrapButtonType.NONE, eButtonSize);
   }
 
   public BootstrapButton (@Nonnull final EBootstrapButtonType eButtonType,
@@ -90,6 +91,18 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
     return this;
   }
 
+  public boolean isBlockLevel ()
+  {
+    return m_bBlockLevel;
+  }
+
+  @Nonnull
+  public BootstrapButton setBlockLevel (final boolean bBlockLevel)
+  {
+    m_bBlockLevel = bBlockLevel;
+    return this;
+  }
+
   @Nullable
   public IIcon getIcon ()
   {
@@ -112,6 +125,9 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     // apply type and size
     addClasses (getButtonType (), getButtonSize ());
+
+    if (m_bBlockLevel)
+      addClass (CBootstrapCSS.BTN_BLOCK);
 
     // apply icon
     if (getIcon () != null)
