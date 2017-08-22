@@ -32,7 +32,8 @@ public enum ELabelType implements IHasID <String>
 {
   OPTIONAL ("optional"),
   MANDATORY ("mandatory"),
-  ALTERNATIVE ("alternative");
+  ALTERNATIVE ("alternative"),
+  NONE ("none");
 
   public static final ELabelType DEFAULT = OPTIONAL;
 

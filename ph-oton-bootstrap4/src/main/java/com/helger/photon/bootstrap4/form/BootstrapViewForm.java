@@ -35,7 +35,8 @@ import com.helger.photon.bootstrap4.CBootstrap;
 import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 
 @NotThreadSafe
-public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> implements IMutableBootstrapFormGroupContainer
+public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> implements
+                               IBootstrapFormGroupContainer <BootstrapViewForm>
 {
   public static final ICSSClassProvider CSS_CLASS_VIEW_FORM = DefaultCSSClassProvider.create ("view-form");
   public static final int DEFAULT_LEFT_PART = 3;

@@ -17,11 +17,13 @@
 package com.helger.photon.uicore.html.formlabel;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -53,9 +55,25 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
       case ALTERNATIVE:
         aElement.addClass (CSS_CLASS_FORM_LABEL_ALTERNATIVE);
         break;
+      case NONE:
       default:
         break;
     }
+  }
+
+  /**
+   * This constructor is only meant for internal use because it does not apply
+   * form styles.
+   *
+   * @param aNode
+   *        The node to add. May be <code>null</code>.
+   */
+  public HCFormLabel (@Nullable final IHCNode aNode)
+  {
+    m_eType = ELabelType.NONE;
+    m_bTextLabel = false;
+    m_sPlainText = aNode != null ? aNode.getPlainText () : "";
+    addChild (aNode);
   }
 
   public HCFormLabel (@Nonnull final String sText, @Nonnull final ELabelType eType)
@@ -63,6 +81,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     ValueEnforcer.notNull (sText, "Text");
     ValueEnforcer.notNull (eType, "Type");
     assignFormLabelClasses (this, eType);
+
     addChild (new HCTextNode (HCFormLabelHelper.getTextWithState (sText, eType)));
     m_eType = eType;
     m_bTextLabel = true;
@@ -74,6 +93,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     ValueEnforcer.notNull (aNode, "Node");
     ValueEnforcer.notNull (eType, "Type");
     assignFormLabelClasses (this, eType);
+
     // Set the label text, before the signs are appended!
     m_sPlainText = aNode.getPlainText ();
     addChild (HCFormLabelHelper.getNodeWithState (aNode, eType));
@@ -103,9 +123,9 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("labelText", m_sPlainText)
-                            .append ("isTextLabel", m_bTextLabel)
-                            .append ("type", m_eType)
+                            .append ("PlainText", m_sPlainText)
+                            .append ("TextLabel", m_bTextLabel)
+                            .append ("Type", m_eType)
                             .getToString ();
   }
 

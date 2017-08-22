@@ -44,7 +44,7 @@ public interface IBootstrapFormGroupRenderer
    * @return Never <code>null</code>.
    */
   @Nonnull
-  IHCElementWithChildren <?> renderFormGroup (@Nonnull IBootstrapFormGroupContainer aForm,
+  IHCElementWithChildren <?> renderFormGroup (@Nonnull IBootstrapFormGroupContainer <?> aForm,
                                               @Nonnull BootstrapFormGroup aFormGroup,
                                               @Nonnull Locale aDisplayLocale);
 }

@@ -41,7 +41,6 @@ import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.hc.html.forms.AbstractHCRadioButton;
 import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCCtrlHelper;
-import com.helger.html.hc.html.forms.HCLabel;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCInput;
 import com.helger.html.hc.html.forms.IHCTextArea;
@@ -155,34 +154,11 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
    */
   @Nonnull
   @OverrideOnDemand
-  protected IHCElement <?> createHelpTextNode (@Nonnull final IHCNode aHelpText)
+  protected BootstrapInvalidFeedback createHelpTextNode (@Nonnull final IHCNode aHelpText)
   {
-    final BootstrapHelpBlock aHelpBlock = new BootstrapHelpBlock ().addClass (CSS_CLASS_FORM_GROUP_HELP_TEXT);
+    final BootstrapInvalidFeedback aHelpBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_HELP_TEXT);
     aHelpBlock.addChild (aHelpText);
     return aHelpBlock;
-  }
-
-  /**
-   * Retrieve an optional CSS class that is provided to the final node. This
-   * method is only called if a non-<code>null</code> and non-empty error list
-   * is present.
-   *
-   * @param aErrorList
-   *        The error list. May be <code>null</code>.
-   * @return May be <code>null</code> to indicate no CSS class.
-   */
-  @Nullable
-  @OverrideOnDemand
-  protected EBootstrapFormGroupState getFormGroupStateFromErrorList (@Nullable final IErrorList aErrorList)
-  {
-    if (aErrorList != null && !aErrorList.isEmpty ())
-    {
-      if (aErrorList.containsAtLeastOneError ())
-        return EBootstrapFormGroupState.ERROR;
-      if (aErrorList.containsAtLeastOneFailure ())
-        return EBootstrapFormGroupState.WARNING;
-    }
-    return null;
   }
 
   /**
@@ -206,7 +182,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     if (StringHelper.hasText (sErrorID))
       sErrorText = "[" + sErrorID + "] " + sErrorText;
 
-    final BootstrapHelpBlock aErrorBlock = new BootstrapHelpBlock ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
+    final BootstrapInvalidFeedback aErrorBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
     // Display it, even if it is empty (because of non-translation)
     aErrorBlock.addChild (sErrorText);
     return aErrorBlock;
@@ -224,28 +200,24 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
    *        The created node so far. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void modifyFinalNode (@Nonnull final IBootstrapFormGroupContainer aForm,
+  protected void modifyFinalNode (@Nonnull final IBootstrapFormGroupContainer <?> aForm,
                                   @Nonnull final BootstrapFormGroup aFormGroup,
                                   @Nonnull final HCDiv aFinalNode)
   {}
 
   @Override
   @Nonnull
-  public HCDiv renderFormGroup (@Nonnull final IBootstrapFormGroupContainer aForm,
+  public HCDiv renderFormGroup (@Nonnull final IBootstrapFormGroupContainer <?> aForm,
                                 @Nonnull final BootstrapFormGroup aFormGroup,
                                 @Nonnull final Locale aDisplayLocale)
   {
     final EBootstrapFormType eFormType = aForm.getFormType ();
     final BootstrapGridSpec aLeftGrid = aForm.getLeft ();
     final BootstrapGridSpec aRightGrid = aForm.getRight ();
-    final HCFormLabel aLabel = aFormGroup.getLabel ();
+    HCFormLabel aLabel = aFormGroup.getLabel ();
     final IHCNode aCtrls = aFormGroup.getCtrl ();
     final IHCNode aHelpText = aFormGroup.getHelpText ();
     final IErrorList aErrorList = aFormGroup.getErrorList ();
-
-    EBootstrapFormGroupState eState = getFormGroupStateFromErrorList (aErrorList);
-    if (eState == null)
-      eState = aFormGroup.getState ();
 
     final ICommonsList <IHCControl <?>> aAllCtrls = HCCtrlHelper.getAllHCControls (aCtrls);
 
@@ -261,6 +233,15 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     }
 
     final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);
+
+    if (aErrorList != null && aFirstControl != null)
+    {
+      if (aErrorList.containsAtLeastOneError ())
+        aFirstControl.addClass (CBootstrapCSS.IS_INVALID);
+      else
+        aFirstControl.addClass (CBootstrapCSS.IS_VALID);
+    }
+
     HCDiv aFinalNode;
     boolean bFirstControlIsCheckBox;
     boolean bFirstControlIsRadioButton;
@@ -274,7 +255,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       bFirstControlIsCheckBox = aFirstControl instanceof AbstractHCCheckBox <?>;
       bFirstControlIsRadioButton = aFirstControl instanceof AbstractHCRadioButton <?>;
     }
-    boolean bUseIcons = false;
     if (bFirstControlIsCheckBox || bFirstControlIsRadioButton)
     {
       // Never icons for check box/radio button
@@ -285,7 +265,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
       if (aLabel == null || aLabel.hasNoChildren ())
       {
-        aCtrlDiv.addChild (new HCLabel ().addClass (CBootstrapCSS.FORM_CHECK_LABEL).addChild (aCtrls));
+        aLabel = new HCFormLabel (aCtrls).addClass (CBootstrapCSS.FORM_CHECK_LABEL);
+        aCtrlDiv.addChild (aLabel);
       }
       else
       {
@@ -306,9 +287,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     }
     else
     {
-      // Icons for edits?
-      bUseIcons = isUseIcons () && eState.isNotNone () && aFirstControl instanceof IHCInput <?>;
-
       // Set static class for all direct children which are not controls
       final boolean bContainsFormControlPlaintext = aAllCtrls.isEmpty () &&
                                                     BootstrapHelper.containsFormControlPlaintext (aCtrls);
@@ -316,7 +294,14 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       // Other control - add in form group
       aFinalNode = new HCDiv ().addClass (CBootstrapCSS.FORM_GROUP);
 
-      if (aLabel != null && aLabel.hasChildren ())
+      if (aLabel == null || aLabel.hasNoChildren ())
+      {
+        // No label - just add controls
+        if (bContainsFormControlPlaintext)
+          BootstrapHelper.makeFormControlPlaintext (aCtrls);
+        aFinalNode.addChild (aCtrls);
+      }
+      else
       {
         // We have a label
 
@@ -335,17 +320,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         if (bContainsFormControlPlaintext)
           BootstrapHelper.makeFormControlPlaintext (aCtrls);
         aFinalNode.addChildren (aLabel, aCtrls);
-        if (bUseIcons)
-          aFinalNode.addChild (eState.getIconAsNode ());
-      }
-      else
-      {
-        // No label - just add controls
-        if (bContainsFormControlPlaintext)
-          BootstrapHelper.makeFormControlPlaintext (aCtrls);
-        aFinalNode.addChild (aCtrls);
-        if (bUseIcons)
-          aFinalNode.addChild (eState.getIconAsNode ());
       }
     }
 
@@ -360,9 +334,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       aFinalNode.addChild (aHelpTextNode);
     }
 
-    // set specified highlighting state
-    aFinalNode.addClass (eState);
-
     // Check form errors - highlighting
     if (aErrorList != null && !aErrorList.isEmpty ())
     {
@@ -375,9 +346,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         }
       }
     }
-
-    if (bUseIcons)
-      aFinalNode.addClass (CBootstrapCSS.HAS_FEEDBACK);
 
     // Set ID, class and style
     aFormGroup.applyBasicHTMLTo (aFinalNode);
