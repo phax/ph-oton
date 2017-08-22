@@ -36,6 +36,7 @@ import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -49,9 +50,10 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAjaxServlet.class);
 
-  private static final String SCOPE_ATTR_NAME = "$ph-ajaxservlet.name";
-  private static final String SCOPE_ATTR_INVOKER = "$ph-ajaxservlet.invoker";
-  private static final String SCOPE_ATTR_EXECUTOR = "$ph-ajaxservlet.executor";
+  private static final String SCOPE_ATTR_NAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.name";
+  private static final String SCOPE_ATTR_INVOKER = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.invoker";
+  private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                                    "ajaxservlet.executor";
 
   protected AbstractAjaxServlet ()
   {}

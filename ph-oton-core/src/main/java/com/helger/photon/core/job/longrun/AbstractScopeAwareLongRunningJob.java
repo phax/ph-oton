@@ -30,6 +30,7 @@ import com.helger.photon.basic.longrun.LongRunningJobResult;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
 
 /**
@@ -42,7 +43,8 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractScopeAwareLongRunningJob.class);
 
   /** Predefined key into the job data map */
-  private static final String KEY_LONG_RUNNING_JOB_ID = "$ph-scope-longrunningjobid";
+  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                                        "scope.longrunning.job.id";
 
   /**
    * Get the ID of the current user who executes the job.

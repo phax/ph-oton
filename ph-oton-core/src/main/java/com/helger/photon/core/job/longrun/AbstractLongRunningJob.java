@@ -31,6 +31,7 @@ import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
 import com.helger.schedule.job.AbstractJob;
+import com.helger.scope.mgr.ScopeManager;
 
 /**
  * Abstract long running job.
@@ -42,7 +43,8 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractLongRunningJob.class);
 
   /** Predefined key into the job data map */
-  private static final String KEY_LONG_RUNNING_JOB_ID = "$ph-longrunningjobid";
+  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                                        "longrunning.job.id";
 
   /**
    * Get the ID of the current user who executes the job.

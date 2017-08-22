@@ -83,8 +83,12 @@ public final class CPageParam
   public static final String ACTION_UNDELETE = "undelete";
   public static final String ACTION_UNDELETE_ALL = "undelete-all";
 
+  // Don't use ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL because of the
+  // trailing dot!
+  public static final String FIELD_ATTRIBUTE_PREFIX_INTERNAL = "$ph_";
+
   // CSRF nonce field
-  public static final String FIELD_NONCE = "$ph_nonce";
+  public static final String FIELD_NONCE = FIELD_ATTRIBUTE_PREFIX_INTERNAL + "nonce";
 
   private CPageParam ()
   {}

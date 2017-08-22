@@ -23,6 +23,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.StringHelper;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
+import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
 
 /**
@@ -38,7 +39,8 @@ public abstract class AbstractPhotonJob extends AbstractScopeAwareJob
    *
    * @since 7.0.4
    */
-  public static final String JOB_DATA_ATTR_APPLICATION_ID = "$ph-oton.job.appid";
+  public static final String JOB_DATA_ATTR_APPLICATION_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                                            "photon.job.appid";
 
   private final String m_sFixedAppID;
 
