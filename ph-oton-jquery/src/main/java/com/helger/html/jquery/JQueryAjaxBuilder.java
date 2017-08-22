@@ -405,6 +405,8 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
       aSettings.add ("traditional", m_aTraditional);
     if (m_aType != null)
       aSettings.add ("type", m_aType);
+    if (m_aMethod != null)
+      aSettings.add ("method", m_aMethod);
     if (m_aURL != null)
       aSettings.add ("url", m_aURL);
 
