@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+ * Copyright (C) 2015-2017 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,15 +21,15 @@ import javax.annotation.Nonnull;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 
 /**
  * A responsive fixed width container.
  *
  * @author Philip Helger
  */
-public class BootstrapContainer extends AbstractHCDiv <BootstrapContainer>
+public class BootstrapContainer extends AbstractBootstrapDiv <BootstrapContainer>
 {
   private boolean m_bFluid;
 

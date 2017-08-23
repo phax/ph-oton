@@ -16,32 +16,43 @@
  */
 package com.helger.photon.bootstrap4.button;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
-import com.helger.html.css.ICSSClassProvider;
-import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.html.hc.html.forms.EHCButtonType;
 
 /**
- * Button size
+ * Bootstrap reset button.
  *
  * @author Philip Helger
  */
-public enum EBootstrapButtonSize implements ICSSClassProvider
+public class BootstrapResetButton extends BootstrapButton
 {
-  LARGE (CBootstrapCSS.BTN_LG),
-  DEFAULT (null),
-  SMALL (CBootstrapCSS.BTN_SM);
-
-  private final ICSSClassProvider m_aCSSClass;
-
-  private EBootstrapButtonSize (@Nullable final ICSSClassProvider aCSSClass)
+  private void _init ()
   {
-    m_aCSSClass = aCSSClass;
+    setType (EHCButtonType.RESET);
   }
 
-  @Nullable
-  public String getCSSClass ()
+  public BootstrapResetButton ()
   {
-    return m_aCSSClass == null ? null : m_aCSSClass.getCSSClass ();
+    _init ();
+  }
+
+  public BootstrapResetButton (@Nonnull final EBootstrapButtonType eButtonType)
+  {
+    super (eButtonType);
+    _init ();
+  }
+
+  public BootstrapResetButton (@Nonnull final EBootstrapButtonSize eButtonSize)
+  {
+    super (eButtonSize);
+    _init ();
+  }
+
+  public BootstrapResetButton (@Nonnull final EBootstrapButtonType eButtonType,
+                               @Nonnull final EBootstrapButtonSize eButtonSize)
+  {
+    super (eButtonType, eButtonSize);
+    _init ();
   }
 }

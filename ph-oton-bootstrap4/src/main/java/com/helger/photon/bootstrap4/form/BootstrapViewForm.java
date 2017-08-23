@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+ * Copyright (C) 2015-2017 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,12 +30,12 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElementWithChildren;
-import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrap;
+import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 
 @NotThreadSafe
-public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> implements
+public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> implements
                                IBootstrapFormGroupContainer <BootstrapViewForm>
 {
   public static final ICSSClassProvider CSS_CLASS_VIEW_FORM = DefaultCSSClassProvider.create ("view-form");

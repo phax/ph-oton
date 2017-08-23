@@ -14,34 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.grid;
+package com.helger.photon.bootstrap4.buttongroup;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Bootstrap row vertical align
+ * Button group size
  *
  * @author Philip Helger
  */
-public enum EBootstrapRowVerticalAlign implements ICSSClassProvider
+public enum EBootstrapButtonGroupSize implements ICSSClassProvider
 {
-  TOP (CBootstrapCSS.ALIGN_ITEMS_START),
-  MIDDLE (CBootstrapCSS.ALIGN_ITEMS_CENTER),
-  BOTTOM (CBootstrapCSS.ALIGN_ITEMS_END);
+  LARGE (CBootstrapCSS.BTN_GROUP_LG),
+  DEFAULT (null),
+  SMALL (CBootstrapCSS.BTN_GROUP_SM);
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapRowVerticalAlign (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapButtonGroupSize (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }
 
-  @Nonnull
+  @Nullable
   public String getCSSClass ()
   {
-    return m_aCSSClass.getCSSClass ();
+    return m_aCSSClass == null ? null : m_aCSSClass.getCSSClass ();
   }
 }

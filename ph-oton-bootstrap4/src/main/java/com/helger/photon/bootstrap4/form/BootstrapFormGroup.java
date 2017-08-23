@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+ * Copyright (C) 2015-2017 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,7 @@ import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.bootstrap4.AbstractBootstrapObject;
+import com.helger.photon.bootstrap4.base.AbstractBootstrapObject;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;

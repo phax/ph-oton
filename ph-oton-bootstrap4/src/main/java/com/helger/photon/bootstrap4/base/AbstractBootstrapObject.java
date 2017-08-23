@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+ * Copyright (C) 2015-2017 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4;
+package com.helger.photon.bootstrap4.base;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,12 +34,12 @@ import com.helger.html.hc.html.IHCElement;
  * Base class for common bootstrap objects.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstrapObject <THISTYPE>> implements
-                                              IHCHasID <THISTYPE>
+public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstrapObject <IMPLTYPE>> implements
+                                              IHCHasID <IMPLTYPE>
 {
   private String m_sID;
   private HCHasCSSClasses m_aCSSClasses;
@@ -55,14 +55,14 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
   }
 
   @Nonnull
-  public final THISTYPE setID (@Nullable final String sID)
+  public final IMPLTYPE setID (@Nullable final String sID)
   {
     // Check for existing ID
     return setID (sID, false);
   }
 
   @Nonnull
-  public final THISTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
+  public final IMPLTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
   {
     if (!bImSureToOverwriteAnExistingID && m_sID != null)
       if (StringHelper.hasText (sID))
@@ -113,7 +113,7 @@ public abstract class AbstractBootstrapObject <THISTYPE extends AbstractBootstra
   }
 
   @Nonnull
-  public final THISTYPE setHidden (final boolean bHidden)
+  public final IMPLTYPE setHidden (final boolean bHidden)
   {
     if (bHidden)
       cssStyles ().addStyle (CCSSProperties.DISPLAY_NONE);
