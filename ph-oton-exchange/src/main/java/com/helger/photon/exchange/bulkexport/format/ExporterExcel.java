@@ -318,7 +318,7 @@ public class ExporterExcel implements IExporterFile
         return ESuccess.FAILURE;
 
       aWBCH.autoSizeAllColumns ();
-      return aWBCH.write (aOS);
+      return aWBCH.writeTo (aOS);
     }
     finally
     {
