@@ -38,12 +38,12 @@ import com.helger.xml.microdom.MicroText;
  * This class represents an HTML &lt;script&gt; element with inline JS content.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptInline <THISTYPE>> extends
-                                             AbstractHCScript <THISTYPE> implements
-                                             IHCScriptInline <THISTYPE>
+public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptInline <IMPLTYPE>> extends
+                                             AbstractHCScript <IMPLTYPE> implements
+                                             IHCScriptInline <IMPLTYPE>
 {
   /** By default place inline JS after script files */
   public static final boolean DEFAULT_EMIT_AFTER_FILES = true;
@@ -66,7 +66,7 @@ public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptI
   }
 
   @Nonnull
-  public final THISTYPE setJSCodeProvider (@Nonnull final IHasJSCode aProvider)
+  public final IMPLTYPE setJSCodeProvider (@Nonnull final IHasJSCode aProvider)
   {
     m_aJSProvider = ValueEnforcer.notNull (aProvider, "Provider");
     return thisAsT ();
@@ -116,7 +116,7 @@ public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptI
    * @return this
    */
   @Nonnull
-  public THISTYPE setMode (@Nonnull final EHCScriptInlineMode eMode)
+  public IMPLTYPE setMode (@Nonnull final EHCScriptInlineMode eMode)
   {
     m_eScriptMode = ValueEnforcer.notNull (eMode, "Mode");
     return thisAsT ();
@@ -128,7 +128,7 @@ public abstract class AbstractHCScriptInline <THISTYPE extends AbstractHCScriptI
   }
 
   @Nonnull
-  public THISTYPE setEmitAfterFiles (final boolean bEmitAfterFiles)
+  public IMPLTYPE setEmitAfterFiles (final boolean bEmitAfterFiles)
   {
     m_bEmitAfterFiles = bEmitAfterFiles;
     return thisAsT ();

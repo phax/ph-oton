@@ -25,39 +25,39 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for METERs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
 @SinceHTML5
-public interface IHCMeter <THISTYPE extends IHCMeter <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCMeter <IMPLTYPE extends IHCMeter <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   double getValue ();
 
   @Nonnull
-  THISTYPE setValue (double dValue);
+  IMPLTYPE setValue (double dValue);
 
   double getMin ();
 
   @Nonnull
-  THISTYPE setMin (double dMin);
+  IMPLTYPE setMin (double dMin);
 
   double getMax ();
 
   @Nonnull
-  THISTYPE setMax (double dMax);
+  IMPLTYPE setMax (double dMax);
 
   double getLow ();
 
   @Nonnull
-  THISTYPE setLow (double dLow);
+  IMPLTYPE setLow (double dLow);
 
   double getHigh ();
 
   @Nonnull
-  THISTYPE setHigh (double dHigh);
+  IMPLTYPE setHigh (double dHigh);
 
   double getOptimum ();
 
   @Nonnull
-  THISTYPE setOptimum (double dOptimum);
+  IMPLTYPE setOptimum (double dOptimum);
 }

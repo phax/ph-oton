@@ -22,11 +22,11 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for definition items
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCDefinitionItem <THISTYPE extends IHCDefinitionItem <THISTYPE>>
-                                   extends IHCElementWithChildren <THISTYPE>
+public interface IHCDefinitionItem <IMPLTYPE extends IHCDefinitionItem <IMPLTYPE>>
+                                   extends IHCElementWithChildren <IMPLTYPE>
 {
   /* empty */
 }

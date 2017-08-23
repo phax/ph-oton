@@ -32,11 +32,11 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;table&gt; element with open semantics.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        The implementing type
  */
-public abstract class AbstractHCTable <THISTYPE extends AbstractHCTable <THISTYPE>>
-                                      extends AbstractHCBaseTable <THISTYPE>
+public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>>
+                                      extends AbstractHCBaseTable <IMPLTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractHCTable.class);
 

@@ -26,11 +26,11 @@ import com.helger.html.hc.html.IHCElementWithInternalChildren;
  * having rows.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCTablePart <THISTYPE extends IHCTablePart <THISTYPE>>
-                              extends IHCElementWithInternalChildren <THISTYPE, HCRow>
+public interface IHCTablePart <IMPLTYPE extends IHCTablePart <IMPLTYPE>>
+                              extends IHCElementWithInternalChildren <IMPLTYPE, HCRow>
 {
   /**
    * @return <code>true</code> if this is a header or footer part,

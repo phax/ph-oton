@@ -29,38 +29,38 @@ import com.helger.html.hc.html.embedded.EHCCORSSettings;
  * Interface for SCRIPTs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCScript <THISTYPE extends IHCScript <THISTYPE>> extends IHCElement <THISTYPE>
+public interface IHCScript <IMPLTYPE extends IHCScript <IMPLTYPE>> extends IHCElement <IMPLTYPE>
 {
   @Nonnull
   IMimeType getType ();
 
   @Nonnull
-  THISTYPE setType (@Nonnull IMimeType aType);
+  IMPLTYPE setType (@Nonnull IMimeType aType);
 
   @Nullable
   String getCharset ();
 
   @Nonnull
-  default THISTYPE setCharset (@Nullable final Charset aCharset)
+  default IMPLTYPE setCharset (@Nullable final Charset aCharset)
   {
     return setCharset (aCharset == null ? null : aCharset.name ());
   }
 
   @Nonnull
-  THISTYPE setCharset (@Nullable String sCharset);
+  IMPLTYPE setCharset (@Nullable String sCharset);
 
   @Nullable
   EHCCORSSettings getCrossOrigin ();
 
   @Nonnull
-  THISTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
+  IMPLTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
 
   @Nullable
   String getIntegrity ();
 
   @Nonnull
-  THISTYPE setIntegrity (@Nullable String sIntegrity);
+  IMPLTYPE setIntegrity (@Nullable String sIntegrity);
 }

@@ -26,10 +26,10 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for LABELs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCLabel <THISTYPE extends IHCLabel <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCLabel <IMPLTYPE extends IHCLabel <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   @Nullable
   String getFor ();
@@ -42,7 +42,7 @@ public interface IHCLabel <THISTYPE extends IHCLabel <THISTYPE>> extends IHCElem
    * @return this
    */
   @Nonnull
-  THISTYPE setFor (@Nullable String sFor);
+  IMPLTYPE setFor (@Nullable String sFor);
 
   /**
    * Indicates that this label is used as the description for another object.
@@ -52,7 +52,7 @@ public interface IHCLabel <THISTYPE extends IHCLabel <THISTYPE>> extends IHCElem
    * @return this
    */
   @Nonnull
-  THISTYPE setFor (@Nullable IHCHasID <?> aFor);
+  IMPLTYPE setFor (@Nullable IHCHasID <?> aFor);
 
   @Nullable
   String getForm ();
@@ -66,5 +66,5 @@ public interface IHCLabel <THISTYPE extends IHCLabel <THISTYPE>> extends IHCElem
    * @return this
    */
   @Nonnull
-  THISTYPE setForm (@Nullable String sForm);
+  IMPLTYPE setForm (@Nullable String sForm);
 }

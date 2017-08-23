@@ -23,14 +23,14 @@ import javax.annotation.Nullable;
  * Interface for ULs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCUL <THISTYPE extends IHCUL <THISTYPE>> extends IHCList <THISTYPE, HCLI>
+public interface IHCUL <IMPLTYPE extends IHCUL <IMPLTYPE>> extends IHCList <IMPLTYPE, HCLI>
 {
   @Nullable
   EHCULType getType ();
 
   @Nonnull
-  THISTYPE setType (@Nullable EHCULType eType);
+  IMPLTYPE setType (@Nullable EHCULType eType);
 }

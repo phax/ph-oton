@@ -24,8 +24,15 @@ import com.helger.html.hc.html.tabular.AbstractHCTable;
 import com.helger.html.hc.html.tabular.IHCCol;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 
-public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <THISTYPE>>
-                                             extends AbstractHCTable <THISTYPE>
+/**
+ * Abstract table with basic Bootstrap styling.
+ *
+ * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Implementation type
+ */
+public abstract class AbstractBootstrapTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>> extends
+                                             AbstractHCTable <IMPLTYPE>
 {
   private void _init ()
   {
@@ -58,7 +65,7 @@ public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <
   }
 
   @Nonnull
-  public THISTYPE setStriped (final boolean bStriped)
+  public IMPLTYPE setStriped (final boolean bStriped)
   {
     if (bStriped)
       addClass (CBootstrapCSS.TABLE_STRIPED);
@@ -68,7 +75,7 @@ public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <
   }
 
   @Nonnull
-  public THISTYPE setBordered (final boolean bBordered)
+  public IMPLTYPE setBordered (final boolean bBordered)
   {
     if (bBordered)
       addClass (CBootstrapCSS.TABLE_BORDERED);
@@ -78,7 +85,7 @@ public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <
   }
 
   @Nonnull
-  public THISTYPE setHover (final boolean bHover)
+  public IMPLTYPE setHover (final boolean bHover)
   {
     if (bHover)
       addClass (CBootstrapCSS.TABLE_HOVER);
@@ -88,7 +95,7 @@ public abstract class AbstractBootstrapTable <THISTYPE extends AbstractHCTable <
   }
 
   @Nonnull
-  public THISTYPE setCondensed (final boolean bCondensed)
+  public IMPLTYPE setCondensed (final boolean bCondensed)
   {
     if (bCondensed)
       addClass (CBootstrapCSS.TABLE_CONDENSED);

@@ -24,12 +24,12 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * Represents an HTML &lt;nav&gt; element with open semantics.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
 @SinceHTML5
-public abstract class AbstractHCNav <THISTYPE extends AbstractHCNav <THISTYPE>>
-                                    extends AbstractHCElementWithChildren <THISTYPE> implements IHCNav <THISTYPE>
+public abstract class AbstractHCNav <IMPLTYPE extends AbstractHCNav <IMPLTYPE>>
+                                    extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCNav <IMPLTYPE>
 {
   public AbstractHCNav ()
   {

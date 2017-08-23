@@ -30,45 +30,45 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for IFRAMEs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCIFrame <THISTYPE extends IHCIFrame <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCIFrame <IMPLTYPE extends IHCIFrame <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   @Nullable
   ISimpleURL getSrc ();
 
   @Nonnull
-  THISTYPE setSrc (@Nullable ISimpleURL aSrc);
+  IMPLTYPE setSrc (@Nullable ISimpleURL aSrc);
 
   @Nullable
   String getName ();
 
   @Nonnull
-  THISTYPE setName (@Nullable String sName);
+  IMPLTYPE setName (@Nullable String sName);
 
   @Nullable
   String getLongDesc ();
 
   @Nonnull
-  THISTYPE setLongDesc (@Nullable String sLongDesc);
+  IMPLTYPE setLongDesc (@Nullable String sLongDesc);
 
   @Nullable
   EHCScrolling getScrolling ();
 
   @Nonnull
-  THISTYPE setScrolling (@Nullable EHCScrolling eScrolling);
+  IMPLTYPE setScrolling (@Nullable EHCScrolling eScrolling);
 
   @Nullable
   EHCIFrameAlign getAlign ();
 
   @Nonnull
-  THISTYPE setAlign (@Nullable EHCIFrameAlign eAlign);
+  IMPLTYPE setAlign (@Nullable EHCIFrameAlign eAlign);
 
   boolean isFrameBorder ();
 
   @Nonnull
-  THISTYPE setFrameBorder (boolean bFrameBorder);
+  IMPLTYPE setFrameBorder (boolean bFrameBorder);
 
   @Nullable
   String getWidth ();
@@ -81,29 +81,29 @@ public interface IHCIFrame <THISTYPE extends IHCIFrame <THISTYPE>> extends IHCEl
    * @return this
    */
   @Nonnull
-  THISTYPE setWidth (int nWidth);
+  IMPLTYPE setWidth (int nWidth);
 
   @Nonnull
-  THISTYPE setWidthPercentage (double dPercentage);
+  IMPLTYPE setWidthPercentage (double dPercentage);
 
   @Nullable
   String getHeight ();
 
   @Nonnull
-  THISTYPE setHeight (int nHeight);
+  IMPLTYPE setHeight (int nHeight);
 
   @Nonnull
-  THISTYPE setHeightPercentage (double dPercentage);
+  IMPLTYPE setHeightPercentage (double dPercentage);
 
   int getMarginWidth ();
 
   @Nonnull
-  THISTYPE setMarginWidth (int nMarginWidth);
+  IMPLTYPE setMarginWidth (int nMarginWidth);
 
   int getMarginHeight ();
 
   @Nonnull
-  THISTYPE setMarginHeight (int nMarginHeight);
+  IMPLTYPE setMarginHeight (int nMarginHeight);
 
   boolean isSandbox ();
 
@@ -112,5 +112,5 @@ public interface IHCIFrame <THISTYPE extends IHCIFrame <THISTYPE>> extends IHCEl
   EnumSet <EHCSandboxAllow> getSandboxAllow ();
 
   @Nonnull
-  THISTYPE setSandbox (boolean bSandbox, @Nullable EHCSandboxAllow... aSandboxAllows);
+  IMPLTYPE setSandbox (boolean bSandbox, @Nullable EHCSandboxAllow... aSandboxAllows);
 }

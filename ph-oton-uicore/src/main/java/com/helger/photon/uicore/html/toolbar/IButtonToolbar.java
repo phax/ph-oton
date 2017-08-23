@@ -23,9 +23,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.forms.IHCButton;
 import com.helger.html.hc.html.grouping.IHCDiv;
 import com.helger.html.js.IHasJSCode;
+import com.helger.html.jscode.html.JSHtml;
+import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**
@@ -38,82 +42,175 @@ import com.helger.photon.uicore.icon.IIcon;
 public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> extends IHCDiv <IMPLTYPE>
 {
   @Nonnull
-  IMPLTYPE addHiddenField (@Nullable String sName, int nValue);
+  ISimpleURL getSelfHref ();
 
   @Nonnull
-  IMPLTYPE addHiddenField (@Nullable String sName, @Nullable String sValue);
+  default IMPLTYPE addHiddenField (@Nullable final String sName, final int nValue)
+  {
+    return addHiddenField (sName, Integer.toString (nValue));
+  }
 
   @Nonnull
-  IMPLTYPE addHiddenFields (@Nullable Map <String, String> aValues);
+  default IMPLTYPE addHiddenField (@Nullable final String sName, @Nullable final String sValue)
+  {
+    addChild (new HCHiddenField (sName, sValue));
+    return thisAsT ();
+  }
 
   @Nonnull
-  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IHasJSCode aJSCode);
+  default IMPLTYPE addHiddenFields (@Nullable final Map <String, String> aValues)
+  {
+    if (aValues != null)
+      for (final Map.Entry <String, String> aEntry : aValues.entrySet ())
+        addChild (new HCHiddenField (aEntry.getKey (), aEntry.getValue ()));
+    return thisAsT ();
+  }
 
   @Nonnull
-  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull IHasJSCode aJSCode, @Nullable IIcon aIcon);
+  default IMPLTYPE addButton (@Nullable final String sCaption, @Nonnull final IHasJSCode aOnClick)
+  {
+    return addButton (sCaption, aOnClick, (IIcon) null);
+  }
 
   @Nonnull
-  IHCButton <?> addAndReturnButton (@Nullable String sCaption, @Nullable ISimpleURL aURL, @Nullable IIcon aIcon);
+  default IMPLTYPE addButton (@Nullable final String sCaption,
+                              @Nonnull final IHasJSCode aOnClick,
+                              @Nullable final IIcon aIcon)
+  {
+    addAndReturnButton (sCaption, aOnClick, aIcon);
+    return thisAsT ();
+  }
 
   @Nonnull
-  IHCButton <?> addAndReturnButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick, @Nullable IIcon aIcon);
+  IHCButton <?> addAndReturnButton (@Nullable final String sCaption,
+                                    @Nullable final IHasJSCode aOnClick,
+                                    @Nullable final IIcon aIcon);
 
   @Nonnull
-  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull ISimpleURL aURL);
+  default IMPLTYPE addButton (@Nullable final String sCaption, @Nullable final ISimpleURL aURL)
+  {
+    return addButton (sCaption, aURL, (IIcon) null);
+  }
 
   @Nonnull
-  IMPLTYPE addButton (@Nullable String sCaption, @Nonnull ISimpleURL aURL, @Nullable IIcon aIcon);
+  default IMPLTYPE addButton (@Nullable final String sCaption,
+                              @Nullable final ISimpleURL aURL,
+                              @Nullable final IIcon aIcon)
+  {
+    addAndReturnButton (sCaption, aURL, aIcon);
+    return thisAsT ();
+  }
 
   @Nonnull
-  IMPLTYPE addButtonBack (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
+  default IHCButton <?> addAndReturnButton (@Nullable final String sCaption,
+                                            @Nullable final ISimpleURL aURL,
+                                            @Nullable final IIcon aIcon)
+  {
+    return addAndReturnButton (sCaption, aURL == null ? null : JSHtml.windowLocationHref (aURL), aIcon);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonBack (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnBack);
+  default IMPLTYPE addButtonBack (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
+  {
+    return addButton (EPhotonCoreText.BUTTON_BACK.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.BACK);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonBack (@Nonnull Locale aDisplayLocale);
+  default IMPLTYPE addButtonBack (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnBack)
+  {
+    return addButton (EPhotonCoreText.BUTTON_BACK.getDisplayText (aDisplayLocale), aOnBack, EDefaultIcon.BACK);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonCancel (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
+  default IMPLTYPE addButtonBack (@Nonnull final Locale aDisplayLocale)
+  {
+    return addButtonBack (aDisplayLocale, getSelfHref ());
+  }
 
   @Nonnull
-  IMPLTYPE addButtonCancel (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnCancel);
+  default IMPLTYPE addButtonCancel (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
+  {
+    return addButton (EPhotonCoreText.BUTTON_CANCEL.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.CANCEL);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonCancel (@Nonnull Locale aDisplayLocale);
+  default IMPLTYPE addButtonCancel (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnCancel)
+  {
+    return addButton (EPhotonCoreText.BUTTON_CANCEL.getDisplayText (aDisplayLocale), aOnCancel, EDefaultIcon.CANCEL);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonNo (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
+  default IMPLTYPE addButtonCancel (@Nonnull final Locale aDisplayLocale)
+  {
+    return addButtonCancel (aDisplayLocale, getSelfHref ());
+  }
 
   @Nonnull
-  IMPLTYPE addButtonNo (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnNo);
+  default IMPLTYPE addButtonNo (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
+  {
+    return addButton (EPhotonCoreText.BUTTON_NO.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.NO);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonNo (@Nonnull Locale aDisplayLocale);
+  default IMPLTYPE addButtonNo (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnNo)
+  {
+    return addButton (EPhotonCoreText.BUTTON_NO.getDisplayText (aDisplayLocale), aOnNo, EDefaultIcon.NO);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonEdit (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
+  default IMPLTYPE addButtonNo (@Nonnull final Locale aDisplayLocale)
+  {
+    return addButtonNo (aDisplayLocale, getSelfHref ());
+  }
 
   @Nonnull
-  IMPLTYPE addButtonEdit (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnEdit);
+  default IMPLTYPE addButtonEdit (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
+  {
+    return addButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.EDIT);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonSave (@Nonnull Locale aDisplayLocale, @Nonnull ISimpleURL aURL);
+  default IMPLTYPE addButtonEdit (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnEdit)
+  {
+    return addButton (EPhotonCoreText.BUTTON_EDIT.getDisplayText (aDisplayLocale), aOnEdit, EDefaultIcon.EDIT);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonSave (@Nonnull Locale aDisplayLocale, @Nonnull IHasJSCode aOnSave);
+  default IMPLTYPE addButtonSave (@Nonnull final Locale aDisplayLocale, @Nonnull final ISimpleURL aURL)
+  {
+    return addButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), aURL, EDefaultIcon.SAVE);
+  }
 
   @Nonnull
-  IMPLTYPE addButtonNew (@Nullable String sCaption, @Nonnull ISimpleURL aURL);
+  default IMPLTYPE addButtonSave (@Nonnull final Locale aDisplayLocale, @Nonnull final IHasJSCode aOnSave)
+  {
+    return addButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), aOnSave, EDefaultIcon.SAVE);
+  }
 
   @Nonnull
-  IMPLTYPE addSubmitButton (@Nullable String sCaption);
+  default IMPLTYPE addButtonNew (@Nullable final String sCaption, @Nonnull final ISimpleURL aURL)
+  {
+    return addButton (sCaption, aURL, EDefaultIcon.NEW);
+  }
 
   @Nonnull
-  IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick);
+  default IMPLTYPE addSubmitButton (@Nullable final String sCaption)
+  {
+    return addSubmitButton (sCaption, (IHasJSCode) null, (IIcon) null);
+  }
 
   @Nonnull
-  IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IIcon aIcon);
+  default IMPLTYPE addSubmitButton (@Nullable final String sCaption, @Nullable final IHasJSCode aOnClick)
+  {
+    return addSubmitButton (sCaption, aOnClick, (IIcon) null);
+  }
+
+  @Nonnull
+  default IMPLTYPE addSubmitButton (@Nullable final String sCaption, @Nullable final IIcon aIcon)
+  {
+    addAndReturnSubmitButton (sCaption, (IHasJSCode) null, aIcon);
+    return thisAsT ();
+  }
 
   @Nonnull
   IHCButton <?> addAndReturnSubmitButton (@Nullable String sCaption,
@@ -121,11 +218,23 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
                                           @Nullable IIcon aIcon);
 
   @Nonnull
-  IMPLTYPE addSubmitButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick, @Nullable IIcon aIcon);
+  default IMPLTYPE addSubmitButton (@Nullable final String sCaption,
+                                    @Nullable final IHasJSCode aOnClick,
+                                    @Nullable final IIcon aIcon)
+  {
+    addAndReturnSubmitButton (sCaption, aOnClick, aIcon);
+    return thisAsT ();
+  }
 
   @Nonnull
-  IMPLTYPE addSubmitButtonSave (@Nonnull Locale aDisplayLocale);
+  default IMPLTYPE addSubmitButtonSave (@Nonnull final Locale aDisplayLocale)
+  {
+    return addSubmitButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), EDefaultIcon.SAVE);
+  }
 
   @Nonnull
-  IMPLTYPE addSubmitButtonYes (@Nonnull Locale aDisplayLocale);
+  default IMPLTYPE addSubmitButtonYes (@Nonnull final Locale aDisplayLocale)
+  {
+    return addSubmitButton (EPhotonCoreText.BUTTON_YES.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
+  }
 }

@@ -28,28 +28,28 @@ import com.helger.html.hc.html.IHCMediaElementChild;
  * Interface for IMGs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCImg <THISTYPE extends IHCImg <THISTYPE>> extends IHCMediaElementChild <THISTYPE>
+public interface IHCImg <IMPLTYPE extends IHCImg <IMPLTYPE>> extends IHCMediaElementChild <IMPLTYPE>
 {
   @Nullable
   ISimpleURL getSrc ();
 
   @Nonnull
-  THISTYPE setSrc (@Nonnull ISimpleURL aSrc);
+  IMPLTYPE setSrc (@Nonnull ISimpleURL aSrc);
 
   @Nullable
   String getSrcSet ();
 
   @Nonnull
-  THISTYPE setSrcSet (@Nullable String sSrcSet);
+  IMPLTYPE setSrcSet (@Nullable String sSrcSet);
 
   @Nullable
   String getSizes ();
 
   @Nonnull
-  THISTYPE setSizes (@Nullable String sSizes);
+  IMPLTYPE setSizes (@Nullable String sSizes);
 
   boolean hasExtent ();
 
@@ -61,16 +61,16 @@ public interface IHCImg <THISTYPE extends IHCImg <THISTYPE>> extends IHCMediaEle
   SizeInt getExtent ();
 
   @Nonnull
-  THISTYPE setExtent (@Nullable SizeInt aImageData);
+  IMPLTYPE setExtent (@Nullable SizeInt aImageData);
 
   @Nonnull
-  THISTYPE setExtent (@Nonnegative int nWidth, @Nonnegative int nHeight);
+  IMPLTYPE setExtent (@Nonnegative int nWidth, @Nonnegative int nHeight);
 
   @Nonnull
-  THISTYPE scaleToWidth (@Nonnegative int nNewWidth);
+  IMPLTYPE scaleToWidth (@Nonnegative int nNewWidth);
 
   @Nonnull
-  THISTYPE scaleToHeight (@Nonnegative int nNewHeight);
+  IMPLTYPE scaleToHeight (@Nonnegative int nNewHeight);
 
   /**
    * Scales the image so that neither with nor height are exceeded, keeping the
@@ -83,17 +83,17 @@ public interface IHCImg <THISTYPE extends IHCImg <THISTYPE>> extends IHCMediaEle
    * @return the correctly resized image tag
    */
   @Nonnull
-  THISTYPE scaleBestMatching (@Nonnegative int nMaxWidth, @Nonnegative int nMaxHeight);
+  IMPLTYPE scaleBestMatching (@Nonnegative int nMaxWidth, @Nonnegative int nMaxHeight);
 
   @Nullable
   String getAlt ();
 
   @Nonnull
-  THISTYPE setAlt (@Nullable String sAlt);
+  IMPLTYPE setAlt (@Nullable String sAlt);
 
   @Nullable
   EHCCORSSettings getCrossOrigin ();
 
   @Nonnull
-  THISTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
+  IMPLTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
 }

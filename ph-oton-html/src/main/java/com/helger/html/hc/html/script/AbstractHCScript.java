@@ -37,11 +37,11 @@ import com.helger.xml.microdom.IMicroElement;
  * @author Philip Helger
  * @see HCScriptInline
  * @see HCScriptFile
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCScript <THISTYPE extends AbstractHCScript <THISTYPE>>
-                                       extends AbstractHCElement <THISTYPE> implements IHCScript <THISTYPE>
+public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLTYPE>>
+                                       extends AbstractHCElement <IMPLTYPE> implements IHCScript <IMPLTYPE>
 {
   /** Default MIME type: text/javascript */
   public static final IMimeType DEFAULT_TYPE = CMimeType.TEXT_JAVASCRIPT;
@@ -63,7 +63,7 @@ public abstract class AbstractHCScript <THISTYPE extends AbstractHCScript <THIST
   }
 
   @Nonnull
-  public THISTYPE setType (@Nonnull final IMimeType aType)
+  public IMPLTYPE setType (@Nonnull final IMimeType aType)
   {
     m_aType = ValueEnforcer.notNull (aType, "Type");
     return thisAsT ();
@@ -76,7 +76,7 @@ public abstract class AbstractHCScript <THISTYPE extends AbstractHCScript <THIST
   }
 
   @Nonnull
-  public THISTYPE setCharset (@Nullable final String sCharset)
+  public IMPLTYPE setCharset (@Nullable final String sCharset)
   {
     m_sCharset = sCharset;
     return thisAsT ();
@@ -89,7 +89,7 @@ public abstract class AbstractHCScript <THISTYPE extends AbstractHCScript <THIST
   }
 
   @Nonnull
-  public THISTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
+  public IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
     return thisAsT ();
@@ -102,7 +102,7 @@ public abstract class AbstractHCScript <THISTYPE extends AbstractHCScript <THIST
   }
 
   @Nonnull
-  public THISTYPE setIntegrity (@Nullable final String sIntegrity)
+  public IMPLTYPE setIntegrity (@Nullable final String sIntegrity)
   {
     m_sIntegrity = sIntegrity;
     return thisAsT ();

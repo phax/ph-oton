@@ -30,8 +30,9 @@ import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
 
 @SinceHTML5
-public abstract class AbstractHCProgress <THISTYPE extends AbstractHCProgress <THISTYPE>> extends
-                                         AbstractHCElementWithChildren <THISTYPE> implements IHCProgress <THISTYPE>
+public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <IMPLTYPE>> extends
+                                         AbstractHCElementWithChildren <IMPLTYPE> implements
+                                         IHCProgress <IMPLTYPE>
 {
   private double m_dValue = CGlobal.ILLEGAL_DOUBLE;
   private double m_dMax = CGlobal.ILLEGAL_DOUBLE;
@@ -47,7 +48,7 @@ public abstract class AbstractHCProgress <THISTYPE extends AbstractHCProgress <T
   }
 
   @Nonnull
-  public THISTYPE setValue (final double dValue)
+  public IMPLTYPE setValue (final double dValue)
   {
     m_dValue = dValue;
     return thisAsT ();
@@ -59,7 +60,7 @@ public abstract class AbstractHCProgress <THISTYPE extends AbstractHCProgress <T
   }
 
   @Nonnull
-  public THISTYPE setMax (final double dMax)
+  public IMPLTYPE setMax (final double dMax)
   {
     m_dMax = dMax;
     return thisAsT ();

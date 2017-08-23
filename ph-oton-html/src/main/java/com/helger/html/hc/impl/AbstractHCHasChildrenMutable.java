@@ -52,15 +52,15 @@ import com.helger.xml.microdom.MicroContainer;
  * creating an HTML element by itself.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  * @param <CHILDTYPE>
  *        Child type
  */
 @NotThreadSafe
-public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCHasChildrenMutable <THISTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
+public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
                                                    extends AbstractHCNode
-                                                   implements IHCHasChildrenMutable <THISTYPE, CHILDTYPE>
+                                                   implements IHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>
 {
   private ICommonsList <CHILDTYPE> m_aChildren;
 
@@ -122,14 +122,14 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   }
 
   @Nonnull
-  public final THISTYPE addChild (@Nullable final CHILDTYPE aChild)
+  public final IMPLTYPE addChild (@Nullable final CHILDTYPE aChild)
   {
     _internalAddChild (CGlobal.ILLEGAL_UINT, aChild);
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE addChildAt (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aChild)
+  public final IMPLTYPE addChildAt (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aChild)
   {
     ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, getChildCount ());
     _internalAddChild (nIndex, aChild);
@@ -151,7 +151,7 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   {}
 
   @Nonnull
-  public final THISTYPE removeChild (@Nullable final CHILDTYPE aChild)
+  public final IMPLTYPE removeChild (@Nullable final CHILDTYPE aChild)
   {
     if (aChild != null && m_aChildren != null)
     {
@@ -163,7 +163,7 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   }
 
   @Nonnull
-  public final THISTYPE removeChildAt (@Nonnegative final int nIndex)
+  public final IMPLTYPE removeChildAt (@Nonnegative final int nIndex)
   {
     final CHILDTYPE aRemovedChild = CollectionHelper.removeAndReturnElementAtIndex (m_aChildren, nIndex);
     if (aRemovedChild != null)
@@ -172,7 +172,7 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   }
 
   @Nonnull
-  public final THISTYPE removeAllChildren ()
+  public final IMPLTYPE removeAllChildren ()
   {
     if (m_aChildren != null)
     {
@@ -283,7 +283,7 @@ public abstract class AbstractHCHasChildrenMutable <THISTYPE extends AbstractHCH
   }
 
   @Nonnull
-  public final THISTYPE sortAllChildren (@Nonnull final Comparator <? super CHILDTYPE> aComparator)
+  public final IMPLTYPE sortAllChildren (@Nonnull final Comparator <? super CHILDTYPE> aComparator)
   {
     ValueEnforcer.notNull (aComparator, "Comparator");
     if (m_aChildren != null)

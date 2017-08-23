@@ -27,22 +27,22 @@ import com.helger.html.hc.html.IHCHasState;
  * area.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCControl <THISTYPE extends IHCControl <THISTYPE>> extends
-                            IHCElement <THISTYPE>,
-                            IHCHasFocus <THISTYPE>,
-                            IHCHasState <THISTYPE>,
-                            IHCHasName <THISTYPE>
+public interface IHCControl <IMPLTYPE extends IHCControl <IMPLTYPE>> extends
+                            IHCElement <IMPLTYPE>,
+                            IHCHasFocus <IMPLTYPE>,
+                            IHCHasState <IMPLTYPE>,
+                            IHCHasName <IMPLTYPE>
 {
   boolean isReadOnly ();
 
   @Nonnull
-  THISTYPE setReadOnly (boolean bReadOnly);
+  IMPLTYPE setReadOnly (boolean bReadOnly);
 
   boolean isRequired ();
 
   @Nonnull
-  THISTYPE setRequired (boolean bRequired);
+  IMPLTYPE setRequired (boolean bRequired);
 }

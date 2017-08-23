@@ -30,31 +30,31 @@ import com.helger.html.hc.impl.HCTextNode;
  * Interface for definition items
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCSelect <THISTYPE extends IHCSelect <THISTYPE>> extends IHCControl <THISTYPE>
+public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCControl <IMPLTYPE>
 {
   boolean isAutoFocus ();
 
   @Nonnull
-  THISTYPE setAutoFocus (final boolean bAutoFocus);
+  IMPLTYPE setAutoFocus (final boolean bAutoFocus);
 
   @Nullable
   String getForm ();
 
   @Nonnull
-  THISTYPE setForm (@Nullable String sForm);
+  IMPLTYPE setForm (@Nullable String sForm);
 
   boolean isMultiple ();
 
   @Nonnull
-  THISTYPE setMultiple (final boolean bMultiple);
+  IMPLTYPE setMultiple (final boolean bMultiple);
 
   int getSize ();
 
   @Nonnull
-  THISTYPE setSize (final int nSize);
+  IMPLTYPE setSize (final int nSize);
 
   @Nonnull
   @ReturnsMutableCopy
@@ -131,13 +131,13 @@ public interface IHCSelect <THISTYPE extends IHCSelect <THISTYPE>> extends IHCCo
   }
 
   @Nonnull
-  THISTYPE addOptionGroup (@Nullable HCOptGroup aOptGroup);
+  IMPLTYPE addOptionGroup (@Nullable HCOptGroup aOptGroup);
 
   @Nonnull
-  THISTYPE removeAllOptions ();
+  IMPLTYPE removeAllOptions ();
 
   @Nonnull
-  THISTYPE removeAllOptionGroups ();
+  IMPLTYPE removeAllOptionGroups ();
 
   /**
    * Remove the option at the specified index.
@@ -147,7 +147,7 @@ public interface IHCSelect <THISTYPE extends IHCSelect <THISTYPE>> extends IHCCo
    * @return this for chaining
    */
   @Nonnull
-  THISTYPE removeOptionAt (@Nonnegative int nIndex);
+  IMPLTYPE removeOptionAt (@Nonnegative int nIndex);
 
   /**
    * Remove the option group at the specified index.
@@ -157,7 +157,7 @@ public interface IHCSelect <THISTYPE extends IHCSelect <THISTYPE>> extends IHCCo
    * @return this for chaining
    */
   @Nonnull
-  THISTYPE removeOptionGroupAt (@Nonnegative int nIndex);
+  IMPLTYPE removeOptionGroupAt (@Nonnegative int nIndex);
 
   /**
    * @return The number of available options.

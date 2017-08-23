@@ -19,9 +19,12 @@ package com.helger.photon.uicore.html.toolbar;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.forms.HCButton;
 import com.helger.html.hc.html.forms.HCButton_Submit;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.icon.IIcon;
@@ -31,8 +34,11 @@ import com.helger.photon.uicore.icon.IIcon;
  *
  * @author Philip Helger
  */
-public class SimpleButtonToolbar extends AbstractButtonToolbar <SimpleButtonToolbar>
+public class SimpleButtonToolbar extends AbstractHCDiv <SimpleButtonToolbar> implements
+                                 IButtonToolbar <SimpleButtonToolbar>
 {
+  private final SimpleURL m_aSelfHref;
+
   public SimpleButtonToolbar (@Nonnull final ILayoutExecutionContext aLEC)
   {
     this (aLEC.getSelfHref ());
@@ -40,7 +46,14 @@ public class SimpleButtonToolbar extends AbstractButtonToolbar <SimpleButtonTool
 
   public SimpleButtonToolbar (@Nonnull final SimpleURL aSelfHref)
   {
-    super (aSelfHref);
+    m_aSelfHref = ValueEnforcer.notNull (aSelfHref, "SelfHref");
+  }
+
+  @Override
+  @Nonnull
+  public ISimpleURL getSelfHref ()
+  {
+    return m_aSelfHref;
   }
 
   @Nonnull

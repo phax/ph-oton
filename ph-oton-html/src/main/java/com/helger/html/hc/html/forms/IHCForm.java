@@ -34,17 +34,17 @@ import com.helger.html.js.IHasJSCodeWithSettings;
  * Interface for FORMs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCForm <THISTYPE extends IHCForm <THISTYPE>>
-                         extends IHCElementWithChildren <THISTYPE>, IHCHasName <THISTYPE>
+public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>>
+                         extends IHCElementWithChildren <IMPLTYPE>, IHCHasName <IMPLTYPE>
 {
   @Nullable
   String getAcceptCharset ();
 
   @Nonnull
-  THISTYPE setAcceptCharset (@Nullable String sAcceptCharset);
+  IMPLTYPE setAcceptCharset (@Nullable String sAcceptCharset);
 
   @Nullable
   ISimpleURL getActionURL ();
@@ -53,10 +53,10 @@ public interface IHCForm <THISTYPE extends IHCForm <THISTYPE>>
   IHasJSCode getActionJS ();
 
   @Nonnull
-  THISTYPE setAction (@Nullable ISimpleURL aAction);
+  IMPLTYPE setAction (@Nullable ISimpleURL aAction);
 
   @Nonnull
-  THISTYPE setAction (@Nullable IHasJSCodeWithSettings aAction);
+  IMPLTYPE setAction (@Nullable IHasJSCodeWithSettings aAction);
 
   boolean isAutoCompleteOn ();
 
@@ -65,13 +65,13 @@ public interface IHCForm <THISTYPE extends IHCForm <THISTYPE>>
   boolean isAutoCompleteUndefined ();
 
   @Nonnull
-  default THISTYPE setAutoComplete (final boolean bAutoComplete)
+  default IMPLTYPE setAutoComplete (final boolean bAutoComplete)
   {
     return setAutoComplete (ETriState.valueOf (bAutoComplete));
   }
 
   @Nonnull
-  THISTYPE setAutoComplete (@Nonnull ETriState eAutoComplete);
+  IMPLTYPE setAutoComplete (@Nonnull ETriState eAutoComplete);
 
   @Nullable
   IMimeType getEncType ();
@@ -82,7 +82,7 @@ public interface IHCForm <THISTYPE extends IHCForm <THISTYPE>>
    * @return this
    */
   @Nonnull
-  default THISTYPE setEncTypeFileUpload ()
+  default IMPLTYPE setEncTypeFileUpload ()
   {
     return setEncType (CMimeType.MULTIPART_FORMDATA);
   }
@@ -93,41 +93,41 @@ public interface IHCForm <THISTYPE extends IHCForm <THISTYPE>>
    * @return this
    */
   @Nonnull
-  default THISTYPE setEncTypeTextPlain ()
+  default IMPLTYPE setEncTypeTextPlain ()
   {
     return setEncType (CMimeType.TEXT_PLAIN);
   }
 
   @Nonnull
-  THISTYPE setEncType (@Nullable IMimeType aEncType);
+  IMPLTYPE setEncType (@Nullable IMimeType aEncType);
 
   @Nullable
   EHCFormMethod getMethod ();
 
   @Nonnull
-  THISTYPE setMethod (@Nullable EHCFormMethod eMethod);
+  IMPLTYPE setMethod (@Nullable EHCFormMethod eMethod);
 
   boolean isNoValidate ();
 
   @Nonnull
-  THISTYPE setNoValidate (boolean bNoValidate);
+  IMPLTYPE setNoValidate (boolean bNoValidate);
 
   @Nullable
   HC_Target getTarget ();
 
   @Nonnull
-  THISTYPE setTarget (@Nullable HC_Target aTarget);
+  IMPLTYPE setTarget (@Nullable HC_Target aTarget);
 
   boolean isSubmitPressingEnter ();
 
   int getSubmitButtonTabIndex ();
 
   @Nonnull
-  default THISTYPE setSubmitPressingEnter (final boolean bSubmitPressingEnter)
+  default IMPLTYPE setSubmitPressingEnter (final boolean bSubmitPressingEnter)
   {
     return setSubmitPressingEnter (bSubmitPressingEnter, CGlobal.ILLEGAL_UINT);
   }
 
   @Nonnull
-  THISTYPE setSubmitPressingEnter (boolean bSubmitPressingEnter, int nSubmitButtonTabIndex);
+  IMPLTYPE setSubmitPressingEnter (boolean bSubmitPressingEnter, int nSubmitButtonTabIndex);
 }

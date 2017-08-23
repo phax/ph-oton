@@ -32,17 +32,17 @@ import com.helger.html.js.IHasJSCode;
  * Interface for As
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCA <THISTYPE extends IHCA <THISTYPE>>
-                      extends IHCElementWithChildren <THISTYPE>, IHCHasMedia <THISTYPE>, IHCHasName <THISTYPE>
+public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>>
+                      extends IHCElementWithChildren <IMPLTYPE>, IHCHasMedia <IMPLTYPE>, IHCHasName <IMPLTYPE>
 {
   @Nullable
   ISimpleURL getHref ();
 
   @Nonnull
-  THISTYPE setHref (@Nonnull ISimpleURL aHref);
+  IMPLTYPE setHref (@Nonnull ISimpleURL aHref);
 
   @Nullable
   HC_Target getTarget ();
@@ -53,10 +53,10 @@ public interface IHCA <THISTYPE extends IHCA <THISTYPE>>
   }
 
   @Nonnull
-  THISTYPE setTarget (@Nullable HC_Target aTarget);
+  IMPLTYPE setTarget (@Nullable HC_Target aTarget);
 
   @Nonnull
-  default THISTYPE setTargetBlank ()
+  default IMPLTYPE setTargetBlank ()
   {
     return setTarget (HC_Target.BLANK);
   }
@@ -65,7 +65,7 @@ public interface IHCA <THISTYPE extends IHCA <THISTYPE>>
   IMimeType getType ();
 
   @Nonnull
-  THISTYPE setType (@Nullable IMimeType aType);
+  IMPLTYPE setType (@Nullable IMimeType aType);
 
   /**
    * Shortcut for <code>setEventHandler(EJSEvent.ONCLICK, aOnClick)</code>
@@ -75,7 +75,7 @@ public interface IHCA <THISTYPE extends IHCA <THISTYPE>>
    * @return this
    */
   @Nonnull
-  default THISTYPE setOnClick (@Nullable final IHasJSCode aOnClick)
+  default IMPLTYPE setOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return setEventHandler (EJSEvent.CLICK, aOnClick);
   }
@@ -88,7 +88,7 @@ public interface IHCA <THISTYPE extends IHCA <THISTYPE>>
    * @return this
    */
   @Nonnull
-  default THISTYPE addOnClick (@Nullable final IHasJSCode aOnClick)
+  default IMPLTYPE addOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return addEventHandler (EJSEvent.CLICK, aOnClick);
   }

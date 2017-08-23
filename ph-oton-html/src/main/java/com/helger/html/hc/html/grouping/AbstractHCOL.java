@@ -30,11 +30,11 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;ol&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCOL <THISTYPE extends AbstractHCOL <THISTYPE>> extends AbstractHCListLI <THISTYPE>
-                                   implements IHCOL <THISTYPE>
+public abstract class AbstractHCOL <IMPLTYPE extends AbstractHCOL <IMPLTYPE>> extends AbstractHCListLI <IMPLTYPE>
+                                   implements IHCOL <IMPLTYPE>
 {
   private Integer m_aStart;
   private boolean m_bReversed = false;
@@ -52,7 +52,7 @@ public abstract class AbstractHCOL <THISTYPE extends AbstractHCOL <THISTYPE>> ex
   }
 
   @Nonnull
-  public final THISTYPE setStart (@Nullable final Integer aStart)
+  public final IMPLTYPE setStart (@Nullable final Integer aStart)
   {
     m_aStart = aStart;
     return thisAsT ();
@@ -64,7 +64,7 @@ public abstract class AbstractHCOL <THISTYPE extends AbstractHCOL <THISTYPE>> ex
   }
 
   @Nonnull
-  public final THISTYPE setReversed (final boolean bReversed)
+  public final IMPLTYPE setReversed (final boolean bReversed)
   {
     m_bReversed = bReversed;
     return thisAsT ();
@@ -77,7 +77,7 @@ public abstract class AbstractHCOL <THISTYPE extends AbstractHCOL <THISTYPE>> ex
   }
 
   @Nonnull
-  public final THISTYPE setType (@Nullable final EHCOLType eType)
+  public final IMPLTYPE setType (@Nullable final EHCOLType eType)
   {
     m_eType = eType;
     return thisAsT ();

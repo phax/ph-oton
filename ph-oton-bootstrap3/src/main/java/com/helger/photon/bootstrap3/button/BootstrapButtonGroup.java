@@ -20,6 +20,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
+import com.helger.html.EHTMLRole;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdown;
 import com.helger.photon.bootstrap3.dropdown.BootstrapDropdownMenu;
@@ -49,6 +50,7 @@ public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
   {
     addClasses (eType.getAllCSSClasses ());
     addClass (eSize);
+    setRole (EHTMLRole.GROUP);
     m_eType = eType;
     m_eSize = eSize;
   }

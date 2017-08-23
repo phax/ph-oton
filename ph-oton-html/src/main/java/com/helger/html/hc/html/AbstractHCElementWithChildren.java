@@ -23,9 +23,9 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
 
 @NotThreadSafe
-public abstract class AbstractHCElementWithChildren <THISTYPE extends AbstractHCElementWithChildren <THISTYPE>>
-                                                    extends AbstractHCElementWithInternalChildren <THISTYPE, IHCNode>
-                                                    implements IHCElementWithChildren <THISTYPE>
+public abstract class AbstractHCElementWithChildren <IMPLTYPE extends AbstractHCElementWithChildren <IMPLTYPE>>
+                                                    extends AbstractHCElementWithInternalChildren <IMPLTYPE, IHCNode>
+                                                    implements IHCElementWithChildren <IMPLTYPE>
 {
   protected AbstractHCElementWithChildren (@Nonnull final EHTMLElement eElement)
   {

@@ -56,7 +56,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
             continue;
           }
 
-          String sRealPrefix = "@Nonnull\ndefault THISTYPE " + aEntry.getIdentifier ();
+          String sRealPrefix = "@Nonnull\ndefault IMPLTYPE " + aEntry.getIdentifier ();
           if (aEntry.isDeprecated ())
             sRealPrefix = "@Deprecated\n" + sRealPrefix;
 
@@ -198,9 +198,9 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                                                    " * @author " +
                                                    Main_IJQueryInvocationExtended.class.getName () +
                                                    "\n" +
-                                                   " * @param <THISTYPE> Implementation type\n" +
+                                                   " * @param <IMPLTYPE> Implementation type\n" +
                                                    "*/\n" +
-                                                   "public interface IJQueryInvocationExtended <THISTYPE extends IJQueryInvocationExtended <THISTYPE>> extends IJQueryInvocation <THISTYPE>\n" +
+                                                   "public interface IJQueryInvocationExtended <IMPLTYPE extends IJQueryInvocationExtended <IMPLTYPE>> extends IJQueryInvocation <IMPLTYPE>\n" +
                                                    "{\n");
     for (final String sEntry : aLines)
       aFull.append (sEntry).append ("\n\n");

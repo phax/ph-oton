@@ -25,10 +25,10 @@ import com.helger.commons.state.ETriState;
  * Interface for TEXTAREAs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCTextArea <THISTYPE extends IHCTextArea <THISTYPE>> extends IHCControl <THISTYPE>
+public interface IHCTextArea <IMPLTYPE extends IHCTextArea <IMPLTYPE>> extends IHCControl <IMPLTYPE>
 {
   boolean isAutoCompleteOn ();
 
@@ -37,35 +37,35 @@ public interface IHCTextArea <THISTYPE extends IHCTextArea <THISTYPE>> extends I
   boolean isAutoCompleteUndefined ();
 
   @Nonnull
-  default THISTYPE setAutoComplete (final boolean bAutoComplete)
+  default IMPLTYPE setAutoComplete (final boolean bAutoComplete)
   {
     return setAutoComplete (ETriState.valueOf (bAutoComplete));
   }
 
   @Nonnull
-  THISTYPE setAutoComplete (@Nonnull ETriState eAutoComplete);
+  IMPLTYPE setAutoComplete (@Nonnull ETriState eAutoComplete);
 
   boolean isAutoFocus ();
 
   @Nonnull
-  THISTYPE setAutoFocus (boolean bAutoFocus);
+  IMPLTYPE setAutoFocus (boolean bAutoFocus);
 
   int getCols ();
 
   @Nonnull
-  THISTYPE setCols (int nCols);
+  IMPLTYPE setCols (int nCols);
 
   @Nullable
   String getDirName ();
 
   @Nonnull
-  THISTYPE setDirName (@Nullable String sDirName);
+  IMPLTYPE setDirName (@Nullable String sDirName);
 
   @Nullable
   String getForm ();
 
   @Nonnull
-  THISTYPE setForm (@Nullable String sForm);
+  IMPLTYPE setForm (@Nullable String sForm);
 
   /**
    * @return The currently set max length or -1.
@@ -80,7 +80,7 @@ public interface IHCTextArea <THISTYPE extends IHCTextArea <THISTYPE>> extends I
    * @return this
    */
   @Nonnull
-  THISTYPE setMaxLength (int nMaxLength);
+  IMPLTYPE setMaxLength (int nMaxLength);
 
   /**
    * @return The currently set min length or -1.
@@ -95,7 +95,7 @@ public interface IHCTextArea <THISTYPE extends IHCTextArea <THISTYPE>> extends I
    * @return this
    */
   @Nonnull
-  THISTYPE setMinLength (int nMinLength);
+  IMPLTYPE setMinLength (int nMinLength);
 
   /**
    * @return The current value of the HTML <code>placeholder</code> attribute.
@@ -123,22 +123,22 @@ public interface IHCTextArea <THISTYPE extends IHCTextArea <THISTYPE>> extends I
    * @return this
    */
   @Nonnull
-  THISTYPE setPlaceholder (@Nullable String sPlaceholder);
+  IMPLTYPE setPlaceholder (@Nullable String sPlaceholder);
 
   int getRows ();
 
   @Nonnull
-  THISTYPE setRows (int nRows);
+  IMPLTYPE setRows (int nRows);
 
   @Nullable
   String getValue ();
 
   @Nonnull
-  THISTYPE setValue (@Nullable String sValue);
+  IMPLTYPE setValue (@Nullable String sValue);
 
   @Nullable
   EHCTextAreaWrap getWrap ();
 
   @Nonnull
-  THISTYPE setWrap (@Nullable EHCTextAreaWrap eWrap);
+  IMPLTYPE setWrap (@Nullable EHCTextAreaWrap eWrap);
 }

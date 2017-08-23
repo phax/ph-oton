@@ -32,11 +32,12 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;label&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCLabel <THISTYPE extends AbstractHCLabel <THISTYPE>>
-                                      extends AbstractHCElementWithChildren <THISTYPE> implements IHCLabel <THISTYPE>
+public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYPE>> extends
+                                      AbstractHCElementWithChildren <IMPLTYPE> implements
+                                      IHCLabel <IMPLTYPE>
 {
   private String m_sFor;
   private String m_sForm;
@@ -53,14 +54,14 @@ public abstract class AbstractHCLabel <THISTYPE extends AbstractHCLabel <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setFor (@Nullable final String sFor)
+  public IMPLTYPE setFor (@Nullable final String sFor)
   {
     m_sFor = sFor;
     return thisAsT ();
   }
 
   @Nonnull
-  public THISTYPE setFor (@Nullable final IHCHasID <?> aFor)
+  public IMPLTYPE setFor (@Nullable final IHCHasID <?> aFor)
   {
     if (aFor == null)
       m_sFor = null;
@@ -76,7 +77,7 @@ public abstract class AbstractHCLabel <THISTYPE extends AbstractHCLabel <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setForm (@Nullable final String sForm)
+  public IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
     return thisAsT ();

@@ -34,7 +34,8 @@ public class BootstrapSubmitButton extends BootstrapButton
 
   public BootstrapSubmitButton ()
   {
-    this (EBootstrapButtonType.PRIMARY);
+    super (EBootstrapButtonType.PRIMARY);
+    _init ();
   }
 
   public BootstrapSubmitButton (@Nonnull final EBootstrapButtonType eButtonType)
@@ -45,7 +46,8 @@ public class BootstrapSubmitButton extends BootstrapButton
 
   public BootstrapSubmitButton (@Nonnull final EBootstrapButtonSize eButtonSize)
   {
-    this (EBootstrapButtonType.PRIMARY, eButtonSize);
+    super (EBootstrapButtonType.PRIMARY, eButtonSize);
+    _init ();
   }
 
   public BootstrapSubmitButton (@Nonnull final EBootstrapButtonType eButtonType,

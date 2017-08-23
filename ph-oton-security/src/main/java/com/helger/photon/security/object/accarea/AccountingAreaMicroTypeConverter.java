@@ -29,26 +29,28 @@ import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.basic.object.tenant.ITenantResolver;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <AccountingArea>
 {
-  private static final String ATTR_CLIENTID = "clientid";
-  private static final String ATTR_DISPLAYNAME = "displayname";
-  private static final String ATTR_COMPANY_TYPE = "companytype";
-  private static final String ATTR_COMPANY_VATIN = "companyvatin";
-  private static final String ATTR_COMPANY_NUMBER = "companynumber";
-  private static final String ATTR_CUSTOMER_NUMBER = "customernumber";
+  private static final IMicroQName ATTR_CLIENTID = new MicroQName ("clientid");
+  private static final IMicroQName ATTR_DISPLAYNAME = new MicroQName ("displayname");
+  private static final IMicroQName ATTR_COMPANY_TYPE = new MicroQName ("companytype");
+  private static final IMicroQName ATTR_COMPANY_VATIN = new MicroQName ("companyvatin");
+  private static final IMicroQName ATTR_COMPANY_NUMBER = new MicroQName ("companynumber");
+  private static final IMicroQName ATTR_CUSTOMER_NUMBER = new MicroQName ("customernumber");
   private static final String ELEMENT_ADDRESS = "address";
-  private static final String ATTR_TELEPHONE = "telephone";
-  private static final String ATTR_FAX = "fax";
-  private static final String ATTR_EMAILADDRESS = "emailaddress";
-  private static final String ATTR_WEBSITE = "website";
-  private static final String ATTR_DEFAULTCURRENCY = "defaultcurrency";
-  private static final String ATTR_OFFICE_LOCATION = "officelocation";
-  private static final String ATTR_COMMERCIAL_REGISTRATION_NUMBER = "commregno";
-  private static final String ATTR_COMMERCIAL_COURT = "commcourt";
+  private static final IMicroQName ATTR_TELEPHONE = new MicroQName ("telephone");
+  private static final IMicroQName ATTR_FAX = new MicroQName ("fax");
+  private static final IMicroQName ATTR_EMAILADDRESS = new MicroQName ("emailaddress");
+  private static final IMicroQName ATTR_WEBSITE = new MicroQName ("website");
+  private static final IMicroQName ATTR_DEFAULTCURRENCY = new MicroQName ("defaultcurrency");
+  private static final IMicroQName ATTR_OFFICE_LOCATION = new MicroQName ("officelocation");
+  private static final IMicroQName ATTR_COMMERCIAL_REGISTRATION_NUMBER = new MicroQName ("commregno");
+  private static final IMicroQName ATTR_COMMERCIAL_COURT = new MicroQName ("commcourt");
 
   private final ITenantResolver m_aClientResolver;
 
@@ -99,7 +101,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
     final String sCompanyNumber = aElement.getAttributeValue (ATTR_COMPANY_NUMBER);
     final String sCustomerNumber = aElement.getAttributeValue (ATTR_CUSTOMER_NUMBER);
     final PostalAddress aAddress = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_ADDRESS),
-                                                                 PostalAddress.class);
+                                                                       PostalAddress.class);
     final String sTelephone = aElement.getAttributeValue (ATTR_TELEPHONE);
     final String sFax = aElement.getAttributeValue (ATTR_FAX);
     final String sEmailAddress = aElement.getAttributeValue (ATTR_EMAILADDRESS);

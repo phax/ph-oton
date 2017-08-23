@@ -24,18 +24,18 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for CANVASs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCCanvas <THISTYPE extends IHCCanvas <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCCanvas <IMPLTYPE extends IHCCanvas <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   long getHeight ();
 
   @Nonnull
-  THISTYPE setHeight (long nHeight);
+  IMPLTYPE setHeight (long nHeight);
 
   long getWidth ();
 
   @Nonnull
-  THISTYPE setWidth (long nWidth);
+  IMPLTYPE setWidth (long nWidth);
 }

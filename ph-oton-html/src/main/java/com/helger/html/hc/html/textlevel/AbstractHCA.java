@@ -38,11 +38,11 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;a&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCA <THISTYPE extends AbstractHCA <THISTYPE>>
-                                  extends AbstractHCElementWithChildren <THISTYPE> implements IHCA <THISTYPE>
+public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>>
+                                  extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCA <IMPLTYPE>
 {
   private ISimpleURL m_aHref;
   private HC_Target m_aTarget;
@@ -68,7 +68,7 @@ public abstract class AbstractHCA <THISTYPE extends AbstractHCA <THISTYPE>>
   }
 
   @Nonnull
-  public final THISTYPE setHref (@Nonnull final ISimpleURL aHref)
+  public final IMPLTYPE setHref (@Nonnull final ISimpleURL aHref)
   {
     ValueEnforcer.notNull (aHref, "href");
 
@@ -83,7 +83,7 @@ public abstract class AbstractHCA <THISTYPE extends AbstractHCA <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setTarget (@Nullable final HC_Target aTarget)
+  public IMPLTYPE setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;
     return thisAsT ();
@@ -96,7 +96,7 @@ public abstract class AbstractHCA <THISTYPE extends AbstractHCA <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setName (@Nullable final String sName)
+  public IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
@@ -109,7 +109,7 @@ public abstract class AbstractHCA <THISTYPE extends AbstractHCA <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setType (@Nullable final IMimeType aType)
+  public IMPLTYPE setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
     return thisAsT ();
@@ -122,7 +122,7 @@ public abstract class AbstractHCA <THISTYPE extends AbstractHCA <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setMedia (@Nullable final String sMediaQuery)
+  public IMPLTYPE setMedia (@Nullable final String sMediaQuery)
   {
     m_sMediaQuery = sMediaQuery;
     return thisAsT ();

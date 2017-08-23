@@ -64,7 +64,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
         if (bIsDeprecated)
           aLines.add ("@Deprecated");
         aLines.add ("@Nonnull");
-        aLines.add ("default THISTYPE " + aEntry.getIdentifier () + " ()");
+        aLines.add ("default IMPLTYPE " + aEntry.getIdentifier () + " ()");
         aLines.add ("{");
         aLines.add ("  return jqinvoke (\"" + sRealName + "\");");
         aLines.add ("}");
@@ -87,9 +87,9 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    " * @author " +
                                                    Main_IJQueryInvocation.class.getName () +
                                                    "\n" +
-                                                   " * @param <THISTYPE> Implementation type\n" +
+                                                   " * @param <IMPLTYPE> Implementation type\n" +
                                                    "*/\n" +
-                                                   "public interface IJQueryInvocation <THISTYPE extends IJQueryInvocation <THISTYPE>> extends IJSInvocation <THISTYPE>\n" +
+                                                   "public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE>> extends IJSInvocation <IMPLTYPE>\n" +
                                                    "{\n" +
                                                    "  /**\n" +
                                                    "   * Invoke an arbitrary function on this jQuery object.\n" +
@@ -100,7 +100,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   * @return A new jQuery invocation object. Never <code>null</code>.\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  THISTYPE jqinvoke (@Nonnull @Nonempty String sMethod);\n" +
+                                                   "  IMPLTYPE jqinvoke (@Nonnull @Nonempty String sMethod);\n" +
                                                    "\n" +
                                                    "  /**\n" +
                                                    "   * Adds a CSSClassProvider selector as a string argument.\n" +
@@ -110,7 +110,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   * @return this\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  default THISTYPE arg (@Nullable ICSSClassProvider aArgument)\n" +
+                                                   "  default IMPLTYPE arg (@Nullable ICSSClassProvider aArgument)\n" +
                                                    "  {\n" +
                                                    "    return aArgument == null ? argNull () : arg (aArgument.getCSSClass ());\n" +
                                                    "  }\n" +
@@ -123,7 +123,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   * @return this\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  default THISTYPE arg (@Nullable IJQuerySelector aArgument)\n" +
+                                                   "  default IMPLTYPE arg (@Nullable IJQuerySelector aArgument)\n" +
                                                    "  {\n" +
                                                    "    return aArgument == null ? argNull () : arg (aArgument.getExpression ());\n" +
                                                    "  }\n" +
@@ -136,7 +136,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   * @return this\n" +
                                                    "   */\n" +
                                                    "  @Nonnull\n" +
-                                                   "  default THISTYPE arg (@Nullable JQuerySelectorList aArgument)\n" +
+                                                   "  default IMPLTYPE arg (@Nullable JQuerySelectorList aArgument)\n" +
                                                    "  {\n" +
                                                    "    return aArgument == null ? argNull () : arg (aArgument.getAsExpression ());\n" +
                                                    "  }\n" +

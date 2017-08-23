@@ -29,11 +29,11 @@ import com.helger.html.hc.html.IHCElement;
  * Represents an HTML &lt;pre&gt; element with open semantics.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCPre <THISTYPE extends AbstractHCPre <THISTYPE>>
-                                    extends AbstractHCElementWithChildren <THISTYPE> implements IHCPre <THISTYPE>
+public abstract class AbstractHCPre <IMPLTYPE extends AbstractHCPre <IMPLTYPE>>
+                                    extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCPre <IMPLTYPE>
 {
   public AbstractHCPre ()
   {

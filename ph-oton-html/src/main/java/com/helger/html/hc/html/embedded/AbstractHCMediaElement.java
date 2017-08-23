@@ -34,9 +34,10 @@ import com.helger.html.hc.html.IHCMediaElementChild;
 import com.helger.xml.microdom.IMicroElement;
 
 @SinceHTML5
-public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaElement <THISTYPE>> extends
-                                             AbstractHCElementWithInternalChildren <THISTYPE, IHCMediaElementChild <?>>
-                                             implements IHCMediaElement <THISTYPE>
+public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaElement <IMPLTYPE>> extends
+                                             AbstractHCElementWithInternalChildren <IMPLTYPE, IHCMediaElementChild <?>>
+                                             implements
+                                             IHCMediaElement <IMPLTYPE>
 {
   /** By default auto play is disabled */
   public static final boolean DEFAULT_AUTOPLAY = false;
@@ -66,7 +67,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public THISTYPE setAutoPlay (final boolean bAutoPlay)
+  public IMPLTYPE setAutoPlay (final boolean bAutoPlay)
   {
     m_bAutoPlay = bAutoPlay;
     return thisAsT ();
@@ -79,7 +80,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public THISTYPE setPreload (@Nullable final EHCPreload ePreload)
+  public IMPLTYPE setPreload (@Nullable final EHCPreload ePreload)
   {
     m_ePreload = ePreload;
     return thisAsT ();
@@ -91,7 +92,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public THISTYPE setControls (final boolean bControls)
+  public IMPLTYPE setControls (final boolean bControls)
   {
     m_bControls = bControls;
     return thisAsT ();
@@ -103,7 +104,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public THISTYPE setLoop (final boolean bLoop)
+  public IMPLTYPE setLoop (final boolean bLoop)
   {
     m_bLoop = bLoop;
     return thisAsT ();
@@ -115,7 +116,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public THISTYPE setMuted (final boolean bMuted)
+  public IMPLTYPE setMuted (final boolean bMuted)
   {
     m_bMuted = bMuted;
     return thisAsT ();
@@ -128,7 +129,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public THISTYPE setSrc (@Nullable final ISimpleURL aSrc)
+  public IMPLTYPE setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
     return thisAsT ();
@@ -141,14 +142,14 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public THISTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
+  public IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE addSource (@Nullable final HCSource aSource)
+  public final IMPLTYPE addSource (@Nullable final HCSource aSource)
   {
     if (aSource != null)
       addChild (aSource);
@@ -156,7 +157,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   }
 
   @Nonnull
-  public final THISTYPE addTrack (@Nullable final HCTrack aTrack)
+  public final IMPLTYPE addTrack (@Nullable final HCTrack aTrack)
   {
     if (aTrack != null)
       addChild (aTrack);
@@ -168,7 +169,7 @@ public abstract class AbstractHCMediaElement <THISTYPE extends AbstractHCMediaEl
   @Nonempty
   protected ICommonsList <IHCMediaElementChild <?>> getChildrenFormEmitting (@Nonnull @Nonempty final ICommonsList <IHCMediaElementChild <?>> aChildren)
   {
-    final ICommonsList <IHCMediaElementChild <?>> ret = new CommonsArrayList<> (aChildren.size ());
+    final ICommonsList <IHCMediaElementChild <?>> ret = new CommonsArrayList <> (aChildren.size ());
     // <source> must be first
     aChildren.findAll (c -> c.getElement ().equals (EHTMLElement.SOURCE), ret::add);
     // Add <track> and <img>

@@ -47,11 +47,12 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;form&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>>
-                                     extends AbstractHCElementWithChildren <THISTYPE> implements IHCForm <THISTYPE>
+public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>> extends
+                                     AbstractHCElementWithChildren <IMPLTYPE> implements
+                                     IHCForm <IMPLTYPE>
 {
   /** By default no auto complete setting is active */
   public static final ETriState DEFAULT_AUTO_COMPLETE = ETriState.UNDEFINED;
@@ -105,7 +106,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setAcceptCharset (@Nullable final String sAcceptCharset)
+  public final IMPLTYPE setAcceptCharset (@Nullable final String sAcceptCharset)
   {
     m_sAcceptCharset = sAcceptCharset;
     return thisAsT ();
@@ -124,14 +125,14 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setAction (@Nullable final ISimpleURL aAction)
+  public final IMPLTYPE setAction (@Nullable final ISimpleURL aAction)
   {
     m_aAction.setAction (aAction);
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE setAction (@Nullable final IHasJSCodeWithSettings aAction)
+  public final IMPLTYPE setAction (@Nullable final IHasJSCodeWithSettings aAction)
   {
     m_aAction.setAction (aAction);
     return thisAsT ();
@@ -153,7 +154,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
+  public final IMPLTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
   {
     m_eAutoComplete = ValueEnforcer.notNull (eAutoComplete, "AutoComplete");
     return thisAsT ();
@@ -166,7 +167,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public THISTYPE setEncType (@Nullable final IMimeType aEncType)
+  public IMPLTYPE setEncType (@Nullable final IMimeType aEncType)
   {
     m_aEncType = aEncType;
     return thisAsT ();
@@ -179,7 +180,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setMethod (@Nullable final EHCFormMethod eMethod)
+  public final IMPLTYPE setMethod (@Nullable final EHCFormMethod eMethod)
   {
     m_eMethod = eMethod;
     return thisAsT ();
@@ -192,7 +193,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
@@ -204,7 +205,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setNoValidate (final boolean bNoValidate)
+  public final IMPLTYPE setNoValidate (final boolean bNoValidate)
   {
     m_bNoValidate = bNoValidate;
     return thisAsT ();
@@ -217,7 +218,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setTarget (@Nullable final HC_Target aTarget)
+  public final IMPLTYPE setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;
     return thisAsT ();
@@ -234,7 +235,7 @@ public abstract class AbstractHCForm <THISTYPE extends AbstractHCForm <THISTYPE>
   }
 
   @Nonnull
-  public final THISTYPE setSubmitPressingEnter (final boolean bSubmitPressingEnter, final int nSubmitButtonTabIndex)
+  public final IMPLTYPE setSubmitPressingEnter (final boolean bSubmitPressingEnter, final int nSubmitButtonTabIndex)
   {
     m_bSubmitPressingEnter = bSubmitPressingEnter;
     m_nSubmitButtonTabIndex = nSubmitButtonTabIndex;

@@ -32,11 +32,11 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;div&gt; element with open semantics.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCDiv <THISTYPE extends AbstractHCDiv <THISTYPE>>
-                                    extends AbstractHCElementWithChildren <THISTYPE> implements IHCDiv <THISTYPE>
+public abstract class AbstractHCDiv <IMPLTYPE extends AbstractHCDiv <IMPLTYPE>>
+                                    extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCDiv <IMPLTYPE>
 {
   private String m_sName;
 
@@ -52,7 +52,7 @@ public abstract class AbstractHCDiv <THISTYPE extends AbstractHCDiv <THISTYPE>>
   }
 
   @Nonnull
-  public final THISTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();

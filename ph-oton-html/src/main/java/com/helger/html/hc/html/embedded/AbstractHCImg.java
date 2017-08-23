@@ -35,11 +35,12 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;img&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        The implementation type.
  */
-public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
-                                    extends AbstractHCMediaElementChild <THISTYPE> implements IHCImg <THISTYPE>
+public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> extends
+                                    AbstractHCMediaElementChild <IMPLTYPE> implements
+                                    IHCImg <IMPLTYPE>
 {
   // Inline images can be SimpleURLs as well!
   private ISimpleURL m_aSrc;
@@ -61,7 +62,7 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setSrc (@Nonnull final ISimpleURL aSrc)
+  public IMPLTYPE setSrc (@Nonnull final ISimpleURL aSrc)
   {
     ValueEnforcer.notNull (aSrc, "src");
 
@@ -76,7 +77,7 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setSrcSet (@Nullable final String sSrcSet)
+  public IMPLTYPE setSrcSet (@Nullable final String sSrcSet)
   {
     m_sSrcSet = sSrcSet;
     return thisAsT ();
@@ -89,7 +90,7 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setSizes (@Nullable final String sSizes)
+  public IMPLTYPE setSizes (@Nullable final String sSizes)
   {
     m_sSizes = sSizes;
     return thisAsT ();
@@ -117,20 +118,20 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
   }
 
   @Nonnull
-  public final THISTYPE setExtent (@Nullable final SizeInt aImageData)
+  public final IMPLTYPE setExtent (@Nullable final SizeInt aImageData)
   {
     m_aExtent = aImageData;
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE setExtent (@Nonnegative final int nWidth, @Nonnegative final int nHeight)
+  public final IMPLTYPE setExtent (@Nonnegative final int nWidth, @Nonnegative final int nHeight)
   {
     return setExtent (new SizeInt (nWidth, nHeight));
   }
 
   @Nonnull
-  public final THISTYPE scaleToWidth (@Nonnegative final int nNewWidth)
+  public final IMPLTYPE scaleToWidth (@Nonnegative final int nNewWidth)
   {
     if (m_aExtent != null)
       m_aExtent = m_aExtent.getScaledToWidth (nNewWidth);
@@ -138,7 +139,7 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
   }
 
   @Nonnull
-  public final THISTYPE scaleToHeight (@Nonnegative final int nNewHeight)
+  public final IMPLTYPE scaleToHeight (@Nonnegative final int nNewHeight)
   {
     if (m_aExtent != null)
       m_aExtent = m_aExtent.getScaledToHeight (nNewHeight);
@@ -156,7 +157,7 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
    * @return the correctly resized image tag
    */
   @Nonnull
-  public final THISTYPE scaleBestMatching (@Nonnegative final int nMaxWidth, @Nonnegative final int nMaxHeight)
+  public final IMPLTYPE scaleBestMatching (@Nonnegative final int nMaxWidth, @Nonnegative final int nMaxHeight)
   {
     if (m_aExtent != null)
       m_aExtent = m_aExtent.getBestMatchingSize (nMaxWidth, nMaxHeight);
@@ -170,7 +171,7 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
   }
 
   @Nonnull
-  public final THISTYPE setAlt (@Nullable final String sAlt)
+  public final IMPLTYPE setAlt (@Nullable final String sAlt)
   {
     m_sAlt = sAlt;
     return thisAsT ();
@@ -183,7 +184,7 @@ public abstract class AbstractHCImg <THISTYPE extends AbstractHCImg <THISTYPE>>
   }
 
   @Nonnull
-  public THISTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
+  public IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
     return thisAsT ();

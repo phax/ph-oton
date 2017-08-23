@@ -22,10 +22,10 @@ import javax.annotation.Nonnull;
  * Base interface for focusable objects. Must not necessarily be an IHCElement!
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCHasFocus <THISTYPE extends IHCHasFocus <THISTYPE>>
+public interface IHCHasFocus <IMPLTYPE extends IHCHasFocus <IMPLTYPE>>
 {
   /**
    * @return <code>true</code> if this element is focused, <code>false</code>
@@ -42,5 +42,5 @@ public interface IHCHasFocus <THISTYPE extends IHCHasFocus <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE setAutoFocus (boolean bAutoFocus);
+  IMPLTYPE setAutoFocus (boolean bAutoFocus);
 }

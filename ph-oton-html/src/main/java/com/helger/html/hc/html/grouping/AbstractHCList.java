@@ -32,14 +32,14 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Abstract base class for UL and OL elements.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        The real implementation type.
  * @param <ITEMTYPE>
  *        The item type
  */
-public abstract class AbstractHCList <THISTYPE extends AbstractHCList <THISTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>>
-                                     extends AbstractHCElementWithInternalChildren <THISTYPE, ITEMTYPE>
-                                     implements IHCList <THISTYPE, ITEMTYPE>
+public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>>
+                                     extends AbstractHCElementWithInternalChildren <IMPLTYPE, ITEMTYPE>
+                                     implements IHCList <IMPLTYPE, ITEMTYPE>
 {
   private final Class <ITEMTYPE> m_aItemClass;
 
@@ -134,7 +134,7 @@ public abstract class AbstractHCList <THISTYPE extends AbstractHCList <THISTYPE,
 
   @Nonnull
   @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
-  public final THISTYPE addItem (@Nullable final String sChild)
+  public final IMPLTYPE addItem (@Nullable final String sChild)
   {
     addAndReturnItem (sChild);
     return thisAsT ();
@@ -142,7 +142,7 @@ public abstract class AbstractHCList <THISTYPE extends AbstractHCList <THISTYPE,
 
   @Nonnull
   @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
-  public final THISTYPE addItem (@Nullable final String... aChildren)
+  public final IMPLTYPE addItem (@Nullable final String... aChildren)
   {
     addAndReturnItem (aChildren);
     return thisAsT ();
@@ -150,7 +150,7 @@ public abstract class AbstractHCList <THISTYPE extends AbstractHCList <THISTYPE,
 
   @Nonnull
   @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
-  public final THISTYPE addItem (@Nullable final IHCNode aChild)
+  public final IMPLTYPE addItem (@Nullable final IHCNode aChild)
   {
     addAndReturnItem (aChild);
     return thisAsT ();
@@ -158,7 +158,7 @@ public abstract class AbstractHCList <THISTYPE extends AbstractHCList <THISTYPE,
 
   @Nonnull
   @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
-  public final THISTYPE addItem (@Nullable final IHCNode... aChildren)
+  public final IMPLTYPE addItem (@Nullable final IHCNode... aChildren)
   {
     addAndReturnItem (aChildren);
     return thisAsT ();
@@ -166,14 +166,14 @@ public abstract class AbstractHCList <THISTYPE extends AbstractHCList <THISTYPE,
 
   @Nonnull
   @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
-  public final THISTYPE addItem (@Nullable final Iterable <? extends IHCNode> aChildren)
+  public final IMPLTYPE addItem (@Nullable final Iterable <? extends IHCNode> aChildren)
   {
     addAndReturnItem (aChildren);
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE addItem (@Nullable final ITEMTYPE aItem)
+  public final IMPLTYPE addItem (@Nullable final ITEMTYPE aItem)
   {
     _addItem (aItem);
     return thisAsT ();

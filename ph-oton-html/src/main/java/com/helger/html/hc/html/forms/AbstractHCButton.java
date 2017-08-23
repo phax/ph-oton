@@ -42,11 +42,12 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;button&gt; element with type "button"
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THISTYPE>>
-                                       extends AbstractHCElementWithChildren <THISTYPE> implements IHCButton <THISTYPE>
+public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLTYPE>> extends
+                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+                                       IHCButton <IMPLTYPE>
 {
   /** By default auto focus is disabled */
   public static final boolean DEFAULT_AUTO_FOCUS = false;
@@ -92,7 +93,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setAutoFocus (final boolean bAutoFocus)
+  public final IMPLTYPE setAutoFocus (final boolean bAutoFocus)
   {
     m_bAutoFocus = bAutoFocus;
     return thisAsT ();
@@ -104,7 +105,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setDisabled (final boolean bDisabled)
+  public final IMPLTYPE setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
     return thisAsT ();
@@ -117,7 +118,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setForm (@Nullable final String sForm)
+  public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
     return thisAsT ();
@@ -136,14 +137,14 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setFormAction (@Nullable final ISimpleURL aAction)
+  public final IMPLTYPE setFormAction (@Nullable final ISimpleURL aAction)
   {
     m_aFormAction.setAction (aAction);
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE setFormAction (@Nullable final IHasJSCodeWithSettings aAction)
+  public final IMPLTYPE setFormAction (@Nullable final IHasJSCodeWithSettings aAction)
   {
     m_aFormAction.setAction (aAction);
     return thisAsT ();
@@ -156,7 +157,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public THISTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
+  public IMPLTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
   {
     m_aFormEncType = aFormEncType;
     return thisAsT ();
@@ -169,7 +170,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setFormMethod (@Nullable final EHCFormMethod eFormMethod)
+  public final IMPLTYPE setFormMethod (@Nullable final EHCFormMethod eFormMethod)
   {
     m_eFormMethod = eFormMethod;
     return thisAsT ();
@@ -181,7 +182,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setFormNoValidate (final boolean bFormNoValidate)
+  public final IMPLTYPE setFormNoValidate (final boolean bFormNoValidate)
   {
     m_bFormNoValidate = bFormNoValidate;
     return thisAsT ();
@@ -194,7 +195,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setFormTarget (@Nullable final HC_Target aFormTarget)
+  public final IMPLTYPE setFormTarget (@Nullable final HC_Target aFormTarget)
   {
     m_aFormTarget = aFormTarget;
     return thisAsT ();
@@ -206,7 +207,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
@@ -219,7 +220,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public THISTYPE setType (@Nonnull final EHCButtonType eType)
+  public IMPLTYPE setType (@Nonnull final EHCButtonType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
     return thisAsT ();
@@ -231,7 +232,7 @@ public abstract class AbstractHCButton <THISTYPE extends AbstractHCButton <THIST
   }
 
   @Nonnull
-  public final THISTYPE setValue (@Nullable final String sValue)
+  public final IMPLTYPE setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
     return thisAsT ();

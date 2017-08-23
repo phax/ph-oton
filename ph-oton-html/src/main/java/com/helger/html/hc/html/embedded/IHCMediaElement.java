@@ -27,53 +27,53 @@ import com.helger.html.hc.html.IHCMediaElementChild;
  * Interface for media elements
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCMediaElement <THISTYPE extends IHCMediaElement <THISTYPE>>
-                                 extends IHCElementWithInternalChildren <THISTYPE, IHCMediaElementChild <?>>
+public interface IHCMediaElement <IMPLTYPE extends IHCMediaElement <IMPLTYPE>> extends
+                                 IHCElementWithInternalChildren <IMPLTYPE, IHCMediaElementChild <?>>
 {
   boolean isAutoPlay ();
 
   @Nonnull
-  THISTYPE setAutoPlay (final boolean bAutoPlay);
+  IMPLTYPE setAutoPlay (final boolean bAutoPlay);
 
   @Nullable
   EHCPreload getPreload ();
 
   @Nonnull
-  THISTYPE setPreload (@Nullable EHCPreload ePreload);
+  IMPLTYPE setPreload (@Nullable EHCPreload ePreload);
 
   boolean isControls ();
 
   @Nonnull
-  THISTYPE setControls (final boolean bControls);
+  IMPLTYPE setControls (final boolean bControls);
 
   boolean isLoop ();
 
   @Nonnull
-  THISTYPE setLoop (final boolean bLoop);
+  IMPLTYPE setLoop (final boolean bLoop);
 
   boolean isMuted ();
 
   @Nonnull
-  THISTYPE setMuted (final boolean bMuted);
+  IMPLTYPE setMuted (final boolean bMuted);
 
   @Nullable
   ISimpleURL getSrc ();
 
   @Nonnull
-  THISTYPE setSrc (@Nullable ISimpleURL aSrc);
+  IMPLTYPE setSrc (@Nullable ISimpleURL aSrc);
 
   @Nullable
   EHCCORSSettings getCrossOrigin ();
 
   @Nonnull
-  THISTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
+  IMPLTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
 
   @Nonnull
-  THISTYPE addSource (@Nullable HCSource aSource);
+  IMPLTYPE addSource (@Nullable HCSource aSource);
 
   @Nonnull
-  THISTYPE addTrack (@Nullable HCTrack aTrack);
+  IMPLTYPE addTrack (@Nullable HCTrack aTrack);
 }

@@ -22,10 +22,10 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for PREs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCPre <THISTYPE extends IHCPre <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCPre <IMPLTYPE extends IHCPre <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   /* empty */
 }

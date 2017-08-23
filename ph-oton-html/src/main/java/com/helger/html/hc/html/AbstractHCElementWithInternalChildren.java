@@ -51,15 +51,15 @@ import com.helger.xml.microdom.IMicroElement;
  * Base class for elements with special children.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  * @param <CHILDTYPE>
  *        Contained child type
  */
 @NotThreadSafe
-public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends AbstractHCElementWithInternalChildren <THISTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
-                                                            extends AbstractHCElement <THISTYPE> implements
-                                                            IHCElementWithInternalChildren <THISTYPE, CHILDTYPE>
+public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends AbstractHCElementWithInternalChildren <IMPLTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
+                                                            extends AbstractHCElement <IMPLTYPE> implements
+                                                            IHCElementWithInternalChildren <IMPLTYPE, CHILDTYPE>
 {
   private ICommonsList <CHILDTYPE> m_aChildren;
 
@@ -123,14 +123,14 @@ public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends Ab
   }
 
   @Nonnull
-  public final THISTYPE addChild (@Nullable final CHILDTYPE aChild)
+  public final IMPLTYPE addChild (@Nullable final CHILDTYPE aChild)
   {
     _internalAddChild (CGlobal.ILLEGAL_UINT, aChild);
     return thisAsT ();
   }
 
   @Nonnull
-  public final THISTYPE addChildAt (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aChild)
+  public final IMPLTYPE addChildAt (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aChild)
   {
     ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, getChildCount ());
     _internalAddChild (nIndex, aChild);
@@ -152,7 +152,7 @@ public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends Ab
   {}
 
   @Nonnull
-  public final THISTYPE removeChild (@Nullable final CHILDTYPE aChild)
+  public final IMPLTYPE removeChild (@Nullable final CHILDTYPE aChild)
   {
     if (aChild != null && m_aChildren != null)
     {
@@ -164,7 +164,7 @@ public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends Ab
   }
 
   @Nonnull
-  public final THISTYPE removeChildAt (@Nonnegative final int nIndex)
+  public final IMPLTYPE removeChildAt (@Nonnegative final int nIndex)
   {
     final CHILDTYPE aRemovedChild = CollectionHelper.removeAndReturnElementAtIndex (m_aChildren, nIndex);
     if (aRemovedChild != null)
@@ -173,7 +173,7 @@ public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends Ab
   }
 
   @Nonnull
-  public final THISTYPE removeAllChildren ()
+  public final IMPLTYPE removeAllChildren ()
   {
     if (m_aChildren != null)
     {
@@ -289,7 +289,7 @@ public abstract class AbstractHCElementWithInternalChildren <THISTYPE extends Ab
   }
 
   @Nonnull
-  public final THISTYPE sortAllChildren (@Nonnull final Comparator <? super CHILDTYPE> aComparator)
+  public final IMPLTYPE sortAllChildren (@Nonnull final Comparator <? super CHILDTYPE> aComparator)
   {
     ValueEnforcer.notNull (aComparator, "Comparator");
     if (m_aChildren != null)

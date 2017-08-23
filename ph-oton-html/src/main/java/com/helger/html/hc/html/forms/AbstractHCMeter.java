@@ -30,8 +30,9 @@ import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
 
 @SinceHTML5
-public abstract class AbstractHCMeter <THISTYPE extends AbstractHCMeter <THISTYPE>>
-                                      extends AbstractHCElementWithChildren <THISTYPE> implements IHCMeter <THISTYPE>
+public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYPE>> extends
+                                      AbstractHCElementWithChildren <IMPLTYPE> implements
+                                      IHCMeter <IMPLTYPE>
 {
   private double m_dValue = CGlobal.ILLEGAL_DOUBLE;
   private double m_dMin = CGlobal.ILLEGAL_DOUBLE;
@@ -51,7 +52,7 @@ public abstract class AbstractHCMeter <THISTYPE extends AbstractHCMeter <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setValue (final double dValue)
+  public IMPLTYPE setValue (final double dValue)
   {
     m_dValue = dValue;
     return thisAsT ();
@@ -63,7 +64,7 @@ public abstract class AbstractHCMeter <THISTYPE extends AbstractHCMeter <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setMin (final double dMin)
+  public IMPLTYPE setMin (final double dMin)
   {
     m_dMin = dMin;
     return thisAsT ();
@@ -75,7 +76,7 @@ public abstract class AbstractHCMeter <THISTYPE extends AbstractHCMeter <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setMax (final double dMax)
+  public IMPLTYPE setMax (final double dMax)
   {
     m_dMax = dMax;
     return thisAsT ();
@@ -87,7 +88,7 @@ public abstract class AbstractHCMeter <THISTYPE extends AbstractHCMeter <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setLow (final double dLow)
+  public IMPLTYPE setLow (final double dLow)
   {
     m_dLow = dLow;
     return thisAsT ();
@@ -99,7 +100,7 @@ public abstract class AbstractHCMeter <THISTYPE extends AbstractHCMeter <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setHigh (final double dHigh)
+  public IMPLTYPE setHigh (final double dHigh)
   {
     m_dHigh = dHigh;
     return thisAsT ();
@@ -111,7 +112,7 @@ public abstract class AbstractHCMeter <THISTYPE extends AbstractHCMeter <THISTYP
   }
 
   @Nonnull
-  public THISTYPE setOptimum (final double dOptimum)
+  public IMPLTYPE setOptimum (final double dOptimum)
   {
     m_dOptimum = dOptimum;
     return thisAsT ();

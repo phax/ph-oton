@@ -38,11 +38,12 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;iframe&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THISTYPE>>
-                                       extends AbstractHCElementWithChildren <THISTYPE> implements IHCIFrame <THISTYPE>
+public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLTYPE>> extends
+                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+                                       IHCIFrame <IMPLTYPE>
 {
   /** Default scrolling is auto */
   public static final EHCScrolling DEFAULT_SCROLLING = EHCScrolling.AUTO;
@@ -76,7 +77,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setSrc (@Nullable final ISimpleURL aSrc)
+  public final IMPLTYPE setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
     return thisAsT ();
@@ -89,7 +90,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
@@ -102,7 +103,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setLongDesc (@Nullable final String sLongDesc)
+  public final IMPLTYPE setLongDesc (@Nullable final String sLongDesc)
   {
     m_sLongDesc = sLongDesc;
     return thisAsT ();
@@ -115,7 +116,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setScrolling (@Nullable final EHCScrolling eScrolling)
+  public final IMPLTYPE setScrolling (@Nullable final EHCScrolling eScrolling)
   {
     m_eScrolling = eScrolling;
     return thisAsT ();
@@ -128,7 +129,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setAlign (@Nullable final EHCIFrameAlign eAlign)
+  public final IMPLTYPE setAlign (@Nullable final EHCIFrameAlign eAlign)
   {
     m_eAlign = eAlign;
     return thisAsT ();
@@ -140,7 +141,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setFrameBorder (final boolean bFrameBorder)
+  public final IMPLTYPE setFrameBorder (final boolean bFrameBorder)
   {
     m_bFrameBorder = bFrameBorder;
     return thisAsT ();
@@ -160,7 +161,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
    * @return this
    */
   @Nonnull
-  public final THISTYPE setWidth (final int nWidth)
+  public final IMPLTYPE setWidth (final int nWidth)
   {
     if (nWidth >= 0)
       m_sWidth = Integer.toString (nWidth);
@@ -168,7 +169,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setWidthPercentage (final double dPercentage)
+  public final IMPLTYPE setWidthPercentage (final double dPercentage)
   {
     m_sWidth = ECSSUnit.perc (dPercentage);
     return thisAsT ();
@@ -181,7 +182,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setHeight (final int nHeight)
+  public final IMPLTYPE setHeight (final int nHeight)
   {
     if (nHeight >= 0)
       m_sHeight = Integer.toString (nHeight);
@@ -189,7 +190,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setHeightPercentage (final double dPercentage)
+  public final IMPLTYPE setHeightPercentage (final double dPercentage)
   {
     m_sHeight = ECSSUnit.perc (dPercentage);
     return thisAsT ();
@@ -201,7 +202,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setMarginWidth (final int nMarginWidth)
+  public final IMPLTYPE setMarginWidth (final int nMarginWidth)
   {
     m_nMarginWidth = nMarginWidth;
     return thisAsT ();
@@ -213,7 +214,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setMarginHeight (final int nMarginHeight)
+  public final IMPLTYPE setMarginHeight (final int nMarginHeight)
   {
     m_nMarginHeight = nMarginHeight;
     return thisAsT ();
@@ -232,7 +233,7 @@ public abstract class AbstractHCIFrame <THISTYPE extends AbstractHCIFrame <THIST
   }
 
   @Nonnull
-  public final THISTYPE setSandbox (final boolean bSandbox, @Nullable final EHCSandboxAllow... aSandboxAllows)
+  public final IMPLTYPE setSandbox (final boolean bSandbox, @Nullable final EHCSandboxAllow... aSandboxAllows)
   {
     m_bSandbox = bSandbox;
     m_aSandboxAllows.clear ();

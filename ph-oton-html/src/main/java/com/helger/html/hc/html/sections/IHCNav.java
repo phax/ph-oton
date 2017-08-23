@@ -22,10 +22,10 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for NAVs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCNav <THISTYPE extends IHCNav <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCNav <IMPLTYPE extends IHCNav <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   /* empty */
 }

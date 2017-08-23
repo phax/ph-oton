@@ -37,11 +37,11 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;textarea&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        The implementing type
  */
-public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <THISTYPE>>
-                                         extends AbstractHCControl <THISTYPE> implements IHCTextArea <THISTYPE>
+public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <IMPLTYPE>>
+                                         extends AbstractHCControl <IMPLTYPE> implements IHCTextArea <IMPLTYPE>
 {
   /** By default no auto complete setting is active */
   public static final ETriState DEFAULT_AUTO_COMPLETE = ETriState.UNDEFINED;
@@ -100,7 +100,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
+  public final IMPLTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
   {
     m_eAutoComplete = ValueEnforcer.notNull (eAutoComplete, "AutoComplete");
     return thisAsT ();
@@ -112,7 +112,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setCols (final int nCols)
+  public final IMPLTYPE setCols (final int nCols)
   {
     m_nCols = nCols;
     return thisAsT ();
@@ -125,7 +125,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setDirName (@Nullable final String sDirName)
+  public final IMPLTYPE setDirName (@Nullable final String sDirName)
   {
     m_sDirName = sDirName;
     return thisAsT ();
@@ -138,7 +138,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setForm (@Nullable final String sForm)
+  public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
     return thisAsT ();
@@ -150,7 +150,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setMaxLength (final int nMaxLength)
+  public final IMPLTYPE setMaxLength (final int nMaxLength)
   {
     m_nMaxLength = nMaxLength;
     return thisAsT ();
@@ -162,7 +162,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setMinLength (final int nMinLength)
+  public final IMPLTYPE setMinLength (final int nMinLength)
   {
     m_nMinLength = nMinLength;
     return thisAsT ();
@@ -175,7 +175,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setPlaceholder (@Nullable final String sPlaceholder)
+  public final IMPLTYPE setPlaceholder (@Nullable final String sPlaceholder)
   {
     m_sPlaceholder = sPlaceholder;
     return thisAsT ();
@@ -187,7 +187,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setRows (final int nRows)
+  public final IMPLTYPE setRows (final int nRows)
   {
     m_nRows = nRows;
     return thisAsT ();
@@ -200,7 +200,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setValue (@Nullable final String sValue)
+  public final IMPLTYPE setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
     return thisAsT ();
@@ -213,7 +213,7 @@ public abstract class AbstractHCTextArea <THISTYPE extends AbstractHCTextArea <T
   }
 
   @Nonnull
-  public final THISTYPE setWrap (@Nullable final EHCTextAreaWrap eWrap)
+  public final IMPLTYPE setWrap (@Nullable final EHCTextAreaWrap eWrap)
   {
     m_eWrap = eWrap;
     return thisAsT ();

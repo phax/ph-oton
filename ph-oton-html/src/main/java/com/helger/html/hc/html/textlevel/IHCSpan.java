@@ -22,10 +22,10 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for SPANs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCSpan <THISTYPE extends IHCSpan <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCSpan <IMPLTYPE extends IHCSpan <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   /* empty */
 }

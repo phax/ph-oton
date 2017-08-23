@@ -23,8 +23,8 @@ import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 @SinceHTML5
-public abstract class AbstractHCRubyChild <THISTYPE extends AbstractHCRubyChild <THISTYPE>> extends
-                                          AbstractHCElementWithChildren <THISTYPE> implements IHCRubyChild <THISTYPE>
+public abstract class AbstractHCRubyChild <IMPLTYPE extends AbstractHCRubyChild <IMPLTYPE>> extends
+                                          AbstractHCElementWithChildren <IMPLTYPE> implements IHCRubyChild <IMPLTYPE>
 {
   public AbstractHCRubyChild (@Nonnull final EHTMLElement aElement)
   {

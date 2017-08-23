@@ -37,11 +37,11 @@ import com.helger.html.hc.impl.AbstractHCNodeList;
  * Represent a single tab box
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>> extends AbstractHCNodeList <THISTYPE>
-                                     implements ITabBox <THISTYPE>
+public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>> extends AbstractHCNodeList <IMPLTYPE>
+                                     implements ITabBox <IMPLTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractTabBox.class);
 
@@ -57,7 +57,7 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
   }
 
   @Nonnull
-  public THISTYPE setActiveTabID (@Nullable final String sID)
+  public IMPLTYPE setActiveTabID (@Nullable final String sID)
   {
     m_sActiveTabID = sID;
     if (StringHelper.hasText (sID) && !m_aTabs.containsKey (sID))
@@ -78,7 +78,7 @@ public abstract class AbstractTabBox <THISTYPE extends AbstractTabBox <THISTYPE>
   }
 
   @Nonnull
-  public THISTYPE addTab (@Nonnull final Tab aTab, final boolean bActive)
+  public IMPLTYPE addTab (@Nonnull final Tab aTab, final boolean bActive)
   {
     ValueEnforcer.notNull (aTab, "Tab");
 

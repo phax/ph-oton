@@ -27,13 +27,13 @@ import com.helger.html.js.IJSWriterSettings;
  * Interface for inline SCRIPTs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCScriptInline <THISTYPE extends IHCScriptInline <THISTYPE>> extends IHCScript <THISTYPE>
+public interface IHCScriptInline <IMPLTYPE extends IHCScriptInline <IMPLTYPE>> extends IHCScript <IMPLTYPE>
 {
   @Nonnull
-  THISTYPE setJSCodeProvider (@Nonnull IHasJSCode aProvider);
+  IMPLTYPE setJSCodeProvider (@Nonnull IHasJSCode aProvider);
 
   /**
    * @return The JS code passed in the constructor. Never <code>null</code>.
@@ -65,10 +65,10 @@ public interface IHCScriptInline <THISTYPE extends IHCScriptInline <THISTYPE>> e
    * @return this
    */
   @Nonnull
-  THISTYPE setMode (@Nonnull EHCScriptInlineMode eMode);
+  IMPLTYPE setMode (@Nonnull EHCScriptInlineMode eMode);
 
   boolean isEmitAfterFiles ();
 
   @Nonnull
-  THISTYPE setEmitAfterFiles (boolean bEmitAfterFiles);
+  IMPLTYPE setEmitAfterFiles (boolean bEmitAfterFiles);
 }

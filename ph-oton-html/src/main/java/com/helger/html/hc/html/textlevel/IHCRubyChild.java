@@ -22,10 +22,10 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Base interface for children of RUBY
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCRubyChild <THISTYPE extends IHCRubyChild <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCRubyChild <IMPLTYPE extends IHCRubyChild <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   /* empty */
 }

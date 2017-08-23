@@ -26,10 +26,10 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Base interface for a table cell.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCCell <THISTYPE extends IHCCell <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCCell <IMPLTYPE extends IHCCell <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   /**
    * @return The owning parent row.
@@ -44,7 +44,7 @@ public interface IHCCell <THISTYPE extends IHCCell <THISTYPE>> extends IHCElemen
   int getColspan ();
 
   @Nonnull
-  THISTYPE setColspan (@Nonnegative int nColspan);
+  IMPLTYPE setColspan (@Nonnegative int nColspan);
 
   /**
    * @return Current row spanning. Defaults to 1.
@@ -53,7 +53,7 @@ public interface IHCCell <THISTYPE extends IHCCell <THISTYPE>> extends IHCElemen
   int getRowspan ();
 
   @Nonnull
-  THISTYPE setRowspan (@Nonnegative int nRowspan);
+  IMPLTYPE setRowspan (@Nonnegative int nRowspan);
 
   /**
    * @return The cell content alignment. Defaults to <code>null</code>.
@@ -62,5 +62,5 @@ public interface IHCCell <THISTYPE extends IHCCell <THISTYPE>> extends IHCElemen
   EHCCellAlign getAlign ();
 
   @Nonnull
-  THISTYPE setAlign (@Nullable EHCCellAlign eAlign);
+  IMPLTYPE setAlign (@Nullable EHCCellAlign eAlign);
 }

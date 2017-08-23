@@ -30,10 +30,10 @@ import com.helger.html.hc.impl.HCTextNode;
  * Base interface for a tab box
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface ITabBox <THISTYPE extends ITabBox <THISTYPE>> extends IHCNodeList <THISTYPE>
+public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeList <IMPLTYPE>
 {
   /** By default a tab is not active */
   boolean DEFAULT_ACTIVE = false;
@@ -44,7 +44,7 @@ public interface ITabBox <THISTYPE extends ITabBox <THISTYPE>> extends IHCNodeLi
   String getActiveTabID ();
 
   @Nonnull
-  THISTYPE setActiveTabID (@Nullable String sID);
+  IMPLTYPE setActiveTabID (@Nullable String sID);
 
   @Nonnull
   default Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent)
@@ -84,7 +84,7 @@ public interface ITabBox <THISTYPE extends ITabBox <THISTYPE>> extends IHCNodeLi
               boolean bDisabled);
 
   @Nonnull
-  THISTYPE addTab (Tab aTab, boolean bActive);
+  IMPLTYPE addTab (Tab aTab, boolean bActive);
 
   @Nonnull
   @ReturnsMutableCopy

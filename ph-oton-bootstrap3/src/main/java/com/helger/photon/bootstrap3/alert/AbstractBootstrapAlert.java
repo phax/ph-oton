@@ -30,11 +30,11 @@ import com.helger.photon.bootstrap3.base.BootstrapCloseIcon;
  * Bootstrap alert box
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractBootstrapAlert <THISTYPE extends AbstractBootstrapAlert <THISTYPE>>
-                                             extends AbstractHCDiv <THISTYPE>
+public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrapAlert <IMPLTYPE>>
+                                             extends AbstractHCDiv <IMPLTYPE>
 {
   /**
    * This event fires immediately when the close instance method is called.
@@ -65,7 +65,7 @@ public abstract class AbstractBootstrapAlert <THISTYPE extends AbstractBootstrap
   }
 
   @Nonnull
-  public THISTYPE setType (@Nonnull final EBootstrapAlertType eType)
+  public IMPLTYPE setType (@Nonnull final EBootstrapAlertType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
     return thisAsT ();
@@ -77,7 +77,7 @@ public abstract class AbstractBootstrapAlert <THISTYPE extends AbstractBootstrap
   }
 
   @Nonnull
-  public THISTYPE setShowClose (final boolean bShowClose)
+  public IMPLTYPE setShowClose (final boolean bShowClose)
   {
     m_bShowClose = bShowClose;
     return thisAsT ();

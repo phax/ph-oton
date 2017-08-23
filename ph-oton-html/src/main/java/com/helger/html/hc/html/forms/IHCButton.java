@@ -31,17 +31,17 @@ import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
 
-public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
-                           IHCElementWithChildren <THISTYPE>,
-                           IHCHasState <THISTYPE>,
-                           IHCHasName <THISTYPE>,
-                           IHCHasFocus <THISTYPE>
+public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
+                           IHCElementWithChildren <IMPLTYPE>,
+                           IHCHasState <IMPLTYPE>,
+                           IHCHasName <IMPLTYPE>,
+                           IHCHasFocus <IMPLTYPE>
 {
   @Nullable
   String getForm ();
 
   @Nonnull
-  THISTYPE setForm (@Nullable String sForm);
+  IMPLTYPE setForm (@Nullable String sForm);
 
   @Nullable
   ISimpleURL getFormActionURL ();
@@ -50,10 +50,10 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
   IHasJSCode getFormActionJS ();
 
   @Nonnull
-  THISTYPE setFormAction (@Nullable ISimpleURL aAction);
+  IMPLTYPE setFormAction (@Nullable ISimpleURL aAction);
 
   @Nonnull
-  THISTYPE setFormAction (@Nullable IHasJSCodeWithSettings aAction);
+  IMPLTYPE setFormAction (@Nullable IHasJSCodeWithSettings aAction);
 
   @Nullable
   IMimeType getFormEncType ();
@@ -64,7 +64,7 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  default THISTYPE setFormEncTypeFileUpload ()
+  default IMPLTYPE setFormEncTypeFileUpload ()
   {
     return setFormEncType (CMimeType.MULTIPART_FORMDATA);
   }
@@ -75,36 +75,36 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  default THISTYPE setFormEncTypeTextPlain ()
+  default IMPLTYPE setFormEncTypeTextPlain ()
   {
     return setFormEncType (CMimeType.TEXT_PLAIN);
   }
 
   @Nonnull
-  THISTYPE setFormEncType (@Nullable IMimeType aFormEncType);
+  IMPLTYPE setFormEncType (@Nullable IMimeType aFormEncType);
 
   @Nullable
   EHCFormMethod getFormMethod ();
 
   @Nonnull
-  THISTYPE setFormMethod (@Nullable EHCFormMethod eFormMethod);
+  IMPLTYPE setFormMethod (@Nullable EHCFormMethod eFormMethod);
 
   boolean isFormNoValidate ();
 
   @Nonnull
-  THISTYPE setFormNoValidate (boolean bFormNoValidate);
+  IMPLTYPE setFormNoValidate (boolean bFormNoValidate);
 
   @Nullable
   HC_Target getFormTarget ();
 
   @Nonnull
-  default THISTYPE setFormTargetBlank ()
+  default IMPLTYPE setFormTargetBlank ()
   {
     return setFormTarget (HC_Target.BLANK);
   }
 
   @Nonnull
-  THISTYPE setFormTarget (@Nullable HC_Target aFormTarget);
+  IMPLTYPE setFormTarget (@Nullable HC_Target aFormTarget);
 
   /**
    * @return The value of the button. May be <code>null</code>.
@@ -120,7 +120,7 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  THISTYPE setValue (@Nullable String sValue);
+  IMPLTYPE setValue (@Nullable String sValue);
 
   /**
    * @return The type of the button (button, submit or reset). Never
@@ -137,7 +137,7 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  THISTYPE setType (@Nonnull EHCButtonType eType);
+  IMPLTYPE setType (@Nonnull EHCButtonType eType);
 
   /**
    * Shortcut for <code>setEventHandler(EJSEvent.ONCLICK, aOnClick)</code>
@@ -147,7 +147,7 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  default THISTYPE setOnClick (@Nullable final IHasJSCode aOnClick)
+  default IMPLTYPE setOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return setEventHandler (EJSEvent.CLICK, aOnClick);
   }
@@ -160,7 +160,7 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  default THISTYPE setOnClick (@Nonnull final ISimpleURL aURL)
+  default IMPLTYPE setOnClick (@Nonnull final ISimpleURL aURL)
   {
     return setOnClick (FakeJS.windowLocationHref (aURL));
   }
@@ -173,7 +173,7 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  default THISTYPE addOnClick (@Nullable final IHasJSCode aOnClick)
+  default IMPLTYPE addOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return addEventHandler (EJSEvent.CLICK, aOnClick);
   }
@@ -186,7 +186,7 @@ public interface IHCButton <THISTYPE extends IHCButton <THISTYPE>> extends
    * @return this
    */
   @Nonnull
-  default THISTYPE addOnClick (@Nonnull final ISimpleURL aURL)
+  default IMPLTYPE addOnClick (@Nonnull final ISimpleURL aURL)
   {
     return addOnClick (FakeJS.windowLocationHref (aURL));
   }

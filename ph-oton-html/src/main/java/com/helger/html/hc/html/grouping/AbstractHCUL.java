@@ -31,11 +31,11 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;ul&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCUL <THISTYPE extends AbstractHCUL <THISTYPE>> extends AbstractHCListLI <THISTYPE>
-                                   implements IHCUL <THISTYPE>
+public abstract class AbstractHCUL <IMPLTYPE extends AbstractHCUL <IMPLTYPE>> extends AbstractHCListLI <IMPLTYPE>
+                                   implements IHCUL <IMPLTYPE>
 {
   private EHCULType m_eType;
 
@@ -51,7 +51,7 @@ public abstract class AbstractHCUL <THISTYPE extends AbstractHCUL <THISTYPE>> ex
   }
 
   @Nonnull
-  public final THISTYPE setType (@Nullable final EHCULType eType)
+  public final IMPLTYPE setType (@Nullable final EHCULType eType)
   {
     m_eType = eType;
     return thisAsT ();

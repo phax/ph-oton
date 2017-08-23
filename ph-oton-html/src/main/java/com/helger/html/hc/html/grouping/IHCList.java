@@ -27,13 +27,13 @@ import com.helger.html.hc.html.IHCElementWithInternalChildren;
  * Interface for OLs and ULs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  * @param <ITEMTYPE>
  *        List item type
  */
-public interface IHCList <THISTYPE extends IHCList <THISTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>>
-                         extends IHCElementWithInternalChildren <THISTYPE, ITEMTYPE>
+public interface IHCList <IMPLTYPE extends IHCList <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>>
+                         extends IHCElementWithInternalChildren <IMPLTYPE, ITEMTYPE>
 {
   @Nonnull
   ITEMTYPE addItem ();
@@ -63,22 +63,22 @@ public interface IHCList <THISTYPE extends IHCList <THISTYPE, ITEMTYPE>, ITEMTYP
   ITEMTYPE addAndReturnItem (@Nullable ITEMTYPE aItem);
 
   @Nonnull
-  THISTYPE addItem (@Nullable String sChild);
+  IMPLTYPE addItem (@Nullable String sChild);
 
   @Nonnull
-  THISTYPE addItem (@Nullable String... aChildren);
+  IMPLTYPE addItem (@Nullable String... aChildren);
 
   @Nonnull
-  THISTYPE addItem (@Nullable IHCNode aChild);
+  IMPLTYPE addItem (@Nullable IHCNode aChild);
 
   @Nonnull
-  THISTYPE addItem (@Nullable IHCNode... aChildren);
+  IMPLTYPE addItem (@Nullable IHCNode... aChildren);
 
   @Nonnull
-  THISTYPE addItem (@Nullable Iterable <? extends IHCNode> aChildren);
+  IMPLTYPE addItem (@Nullable Iterable <? extends IHCNode> aChildren);
 
   @Nonnull
-  THISTYPE addItem (@Nullable ITEMTYPE aItem);
+  IMPLTYPE addItem (@Nullable ITEMTYPE aItem);
 
   @Nullable
   ITEMTYPE getFirstItem ();

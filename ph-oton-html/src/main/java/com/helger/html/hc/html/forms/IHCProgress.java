@@ -25,19 +25,19 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for METERs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
 @SinceHTML5
-public interface IHCProgress <THISTYPE extends IHCProgress <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCProgress <IMPLTYPE extends IHCProgress <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   double getValue ();
 
   @Nonnull
-  THISTYPE setValue (double dValue);
+  IMPLTYPE setValue (double dValue);
 
   double getMax ();
 
   @Nonnull
-  THISTYPE setMax (double dMax);
+  IMPLTYPE setMax (double dMax);
 }

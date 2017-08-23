@@ -38,8 +38,9 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.xml.microdom.IMicroElement;
 
 @NotThreadSafe
-public abstract class AbstractHCControl <THISTYPE extends AbstractHCControl <THISTYPE>>
-                                        extends AbstractHCElement <THISTYPE> implements IHCControl <THISTYPE>
+public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMPLTYPE>> extends
+                                        AbstractHCElement <IMPLTYPE> implements
+                                        IHCControl <IMPLTYPE>
 {
   public static final boolean DEFAULT_DISABLED = false;
   public static final boolean DEFAULT_READ_ONLY = false;
@@ -69,7 +70,7 @@ public abstract class AbstractHCControl <THISTYPE extends AbstractHCControl <THI
   }
 
   @Nonnull
-  public final THISTYPE setDisabled (final boolean bDisabled)
+  public final IMPLTYPE setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
     return thisAsT ();
@@ -81,7 +82,7 @@ public abstract class AbstractHCControl <THISTYPE extends AbstractHCControl <THI
   }
 
   @Nonnull
-  public final THISTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
@@ -93,7 +94,7 @@ public abstract class AbstractHCControl <THISTYPE extends AbstractHCControl <THI
   }
 
   @Nonnull
-  public final THISTYPE setReadOnly (final boolean bReadOnly)
+  public final IMPLTYPE setReadOnly (final boolean bReadOnly)
   {
     m_bReadOnly = bReadOnly;
     return thisAsT ();
@@ -105,7 +106,7 @@ public abstract class AbstractHCControl <THISTYPE extends AbstractHCControl <THI
   }
 
   @Nonnull
-  public final THISTYPE setRequired (final boolean bRequired)
+  public final IMPLTYPE setRequired (final boolean bRequired)
   {
     m_bRequired = bRequired;
     return thisAsT ();
@@ -117,7 +118,7 @@ public abstract class AbstractHCControl <THISTYPE extends AbstractHCControl <THI
   }
 
   @Nonnull
-  public final THISTYPE setAutoFocus (final boolean bAutoFocus)
+  public final IMPLTYPE setAutoFocus (final boolean bAutoFocus)
   {
     m_bAutoFocus = bAutoFocus;
     return thisAsT ();

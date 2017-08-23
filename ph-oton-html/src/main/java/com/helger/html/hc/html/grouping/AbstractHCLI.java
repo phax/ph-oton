@@ -23,11 +23,11 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * Represents an HTML &lt;LI&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        implementation type
  */
-public abstract class AbstractHCLI <THISTYPE extends AbstractHCLI <THISTYPE>>
-                                   extends AbstractHCElementWithChildren <THISTYPE> implements IHCLI <THISTYPE>
+public abstract class AbstractHCLI <IMPLTYPE extends AbstractHCLI <IMPLTYPE>>
+                                   extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCLI <IMPLTYPE>
 {
   /**
    * Create a new LI element

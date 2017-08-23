@@ -24,11 +24,11 @@ import com.helger.html.EHTMLElement;
  * Abstract HTML list element that uses {@link HCLI} as the item.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        The real implementation type.
  */
-public abstract class AbstractHCListLI <THISTYPE extends AbstractHCList <THISTYPE, HCLI>>
-                                       extends AbstractHCList <THISTYPE, HCLI>
+public abstract class AbstractHCListLI <IMPLTYPE extends AbstractHCList <IMPLTYPE, HCLI>>
+                                       extends AbstractHCList <IMPLTYPE, HCLI>
 {
   public AbstractHCListLI (@Nonnull final EHTMLElement eElement)
   {

@@ -23,31 +23,31 @@ import javax.annotation.Nullable;
  * Interface for OLs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCOL <THISTYPE extends IHCOL <THISTYPE>> extends IHCList <THISTYPE, HCLI>
+public interface IHCOL <IMPLTYPE extends IHCOL <IMPLTYPE>> extends IHCList <IMPLTYPE, HCLI>
 {
   @Nullable
   Integer getStart ();
 
   @Nonnull
-  default THISTYPE setStart (final int nStart)
+  default IMPLTYPE setStart (final int nStart)
   {
     return setStart (Integer.valueOf (nStart));
   }
 
   @Nonnull
-  THISTYPE setStart (@Nullable Integer aStart);
+  IMPLTYPE setStart (@Nullable Integer aStart);
 
   boolean isReversed ();
 
   @Nonnull
-  THISTYPE setReversed (boolean bReversed);
+  IMPLTYPE setReversed (boolean bReversed);
 
   @Nullable
   EHCOLType getType ();
 
   @Nonnull
-  THISTYPE setType (@Nullable EHCOLType eType);
+  IMPLTYPE setType (@Nullable EHCOLType eType);
 }

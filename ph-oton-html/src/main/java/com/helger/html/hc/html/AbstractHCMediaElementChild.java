@@ -25,13 +25,13 @@ import com.helger.html.annotation.SinceHTML5;
  * Base class for &lt;source&gt; and &lt;track
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
 @SinceHTML5
-public abstract class AbstractHCMediaElementChild <THISTYPE extends AbstractHCMediaElementChild <THISTYPE>>
-                                                  extends AbstractHCElement <THISTYPE>
-                                                  implements IHCMediaElementChild <THISTYPE>
+public abstract class AbstractHCMediaElementChild <IMPLTYPE extends AbstractHCMediaElementChild <IMPLTYPE>>
+                                                  extends AbstractHCElement <IMPLTYPE>
+                                                  implements IHCMediaElementChild <IMPLTYPE>
 {
   public AbstractHCMediaElementChild (@Nonnull final EHTMLElement eElement)
   {

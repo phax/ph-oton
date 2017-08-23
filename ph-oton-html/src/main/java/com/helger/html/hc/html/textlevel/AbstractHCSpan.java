@@ -23,11 +23,11 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * Represents an HTML &lt;span&gt; element with open semantics.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCSpan <THISTYPE extends AbstractHCSpan <THISTYPE>>
-                                     extends AbstractHCElementWithChildren <THISTYPE> implements IHCSpan <THISTYPE>
+public abstract class AbstractHCSpan <IMPLTYPE extends AbstractHCSpan <IMPLTYPE>>
+                                     extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCSpan <IMPLTYPE>
 {
   public AbstractHCSpan ()
   {

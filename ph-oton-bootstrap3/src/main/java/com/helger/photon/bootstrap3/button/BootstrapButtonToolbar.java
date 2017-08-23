@@ -19,12 +19,15 @@ package com.helger.photon.bootstrap3.button;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.EHTMLRole;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.uicore.html.toolbar.AbstractButtonToolbar;
+import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.IIcon;
 
 /**
@@ -33,8 +36,11 @@ import com.helger.photon.uicore.icon.IIcon;
  *
  * @author Philip Helger
  */
-public class BootstrapButtonToolbar extends AbstractButtonToolbar <BootstrapButtonToolbar>
+public class BootstrapButtonToolbar extends AbstractHCDiv <BootstrapButtonToolbar> implements
+                                    IButtonToolbar <BootstrapButtonToolbar>
 {
+  private final SimpleURL m_aSelfHref;
+
   public BootstrapButtonToolbar (@Nonnull final ILayoutExecutionContext aLEC)
   {
     this (aLEC.getSelfHref ());
@@ -42,9 +48,15 @@ public class BootstrapButtonToolbar extends AbstractButtonToolbar <BootstrapButt
 
   public BootstrapButtonToolbar (@Nonnull final SimpleURL aSelfHref)
   {
-    super (aSelfHref);
+    m_aSelfHref = ValueEnforcer.notNull (aSelfHref, "SelfHref");
     addClass (CBootstrapCSS.BTN_TOOLBAR);
     setRole (EHTMLRole.TOOLBAR);
+  }
+
+  @Nonnull
+  public ISimpleURL getSelfHref ()
+  {
+    return m_aSelfHref;
   }
 
   @Nonnull

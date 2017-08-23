@@ -27,101 +27,101 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for OBJECTs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCObject <THISTYPE extends IHCObject <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCObject <IMPLTYPE extends IHCObject <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   int getWidth ();
 
   @Nonnull
-  THISTYPE setWidth (int nWidth);
+  IMPLTYPE setWidth (int nWidth);
 
   int getHeight ();
 
   @Nonnull
-  THISTYPE setHeight (int nHeight);
+  IMPLTYPE setHeight (int nHeight);
 
   @Nullable
   String getHSpace ();
 
   @Nonnull
-  THISTYPE setHSpace (@Nullable String sHSpace);
+  IMPLTYPE setHSpace (@Nullable String sHSpace);
 
   @Nullable
   String getVSpace ();
 
   @Nonnull
-  THISTYPE setVSpace (@Nullable String sVSpace);
+  IMPLTYPE setVSpace (@Nullable String sVSpace);
 
   @Nullable
   EHCObjectAlign getAlign ();
 
   @Nonnull
-  THISTYPE setAlign (@Nullable EHCObjectAlign eAlign);
+  IMPLTYPE setAlign (@Nullable EHCObjectAlign eAlign);
 
   @Nullable
   String getArchive ();
 
   @Nonnull
-  THISTYPE setArchive (@Nullable String sArchive);
+  IMPLTYPE setArchive (@Nullable String sArchive);
 
   @Nullable
   String getBorder ();
 
   @Nonnull
-  THISTYPE setBorder (@Nullable String sBorder);
+  IMPLTYPE setBorder (@Nullable String sBorder);
 
   @Nullable
   String getClassID ();
 
   @Nonnull
-  THISTYPE setClassID (@Nullable String sClassID);
+  IMPLTYPE setClassID (@Nullable String sClassID);
 
   @Nullable
   ISimpleURL getCodeBase ();
 
   @Nonnull
-  THISTYPE setCodeBase (@Nullable ISimpleURL aCodeBase);
+  IMPLTYPE setCodeBase (@Nullable ISimpleURL aCodeBase);
 
   @Nullable
   IMimeType getCodeType ();
 
   @Nonnull
-  THISTYPE setCodeType (@Nullable IMimeType aCodeType);
+  IMPLTYPE setCodeType (@Nullable IMimeType aCodeType);
 
   @Nullable
   ISimpleURL getData ();
 
   @Nonnull
-  THISTYPE setData (@Nullable ISimpleURL aData);
+  IMPLTYPE setData (@Nullable ISimpleURL aData);
 
   boolean isDeclare ();
 
   @Nonnull
-  THISTYPE setDeclare (boolean bDeclare);
+  IMPLTYPE setDeclare (boolean bDeclare);
 
   @Nullable
   String getName ();
 
   @Nonnull
-  THISTYPE setName (@Nullable String sName);
+  IMPLTYPE setName (@Nullable String sName);
 
   @Nullable
   String getStandBy ();
 
   @Nonnull
-  THISTYPE setStandBy (@Nullable String sStandBy);
+  IMPLTYPE setStandBy (@Nullable String sStandBy);
 
   @Nullable
   IMimeType getType ();
 
   @Nonnull
-  THISTYPE setType (@Nullable IMimeType aType);
+  IMPLTYPE setType (@Nullable IMimeType aType);
 
   @Nullable
   String getUseMap ();
 
   @Nonnull
-  THISTYPE setUseMap (@Nullable String sUseMap);
+  IMPLTYPE setUseMap (@Nullable String sUseMap);
 }

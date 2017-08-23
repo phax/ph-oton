@@ -36,11 +36,12 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;object&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THISTYPE>>
-                                       extends AbstractHCElementWithChildren <THISTYPE> implements IHCObject <THISTYPE>
+public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLTYPE>> extends
+                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+                                       IHCObject <IMPLTYPE>
 {
   /** By default declare is disabled */
   public static final boolean DEFAULT_DECLARE = false;
@@ -73,7 +74,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setWidth (final int nWidth)
+  public final IMPLTYPE setWidth (final int nWidth)
   {
     m_nWidth = nWidth;
     return thisAsT ();
@@ -85,7 +86,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setHeight (final int nHeight)
+  public final IMPLTYPE setHeight (final int nHeight)
   {
     m_nHeight = nHeight;
     return thisAsT ();
@@ -98,7 +99,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setHSpace (@Nullable final String sHSpace)
+  public final IMPLTYPE setHSpace (@Nullable final String sHSpace)
   {
     m_sHSpace = sHSpace;
     return thisAsT ();
@@ -111,7 +112,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setVSpace (@Nullable final String sVSpace)
+  public final IMPLTYPE setVSpace (@Nullable final String sVSpace)
   {
     m_sVSpace = sVSpace;
     return thisAsT ();
@@ -124,7 +125,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setAlign (@Nullable final EHCObjectAlign eAlign)
+  public final IMPLTYPE setAlign (@Nullable final EHCObjectAlign eAlign)
   {
     m_eAlign = eAlign;
     return thisAsT ();
@@ -137,7 +138,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setArchive (@Nullable final String sArchive)
+  public final IMPLTYPE setArchive (@Nullable final String sArchive)
   {
     m_sArchive = sArchive;
     return thisAsT ();
@@ -150,7 +151,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setBorder (@Nullable final String sBorder)
+  public final IMPLTYPE setBorder (@Nullable final String sBorder)
   {
     m_sBorder = sBorder;
     return thisAsT ();
@@ -163,7 +164,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setClassID (@Nullable final String sClassID)
+  public final IMPLTYPE setClassID (@Nullable final String sClassID)
   {
     m_sClassID = sClassID;
     return thisAsT ();
@@ -176,7 +177,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setCodeBase (@Nullable final ISimpleURL aCodeBase)
+  public final IMPLTYPE setCodeBase (@Nullable final ISimpleURL aCodeBase)
   {
     m_aCodeBase = aCodeBase;
     return thisAsT ();
@@ -189,7 +190,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setCodeType (@Nullable final IMimeType aCodeType)
+  public final IMPLTYPE setCodeType (@Nullable final IMimeType aCodeType)
   {
     m_aCodeType = aCodeType;
     return thisAsT ();
@@ -202,7 +203,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setData (@Nullable final ISimpleURL aData)
+  public final IMPLTYPE setData (@Nullable final ISimpleURL aData)
   {
     m_aData = aData;
     return thisAsT ();
@@ -214,7 +215,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setDeclare (final boolean bDeclare)
+  public final IMPLTYPE setDeclare (final boolean bDeclare)
   {
     m_bDeclare = bDeclare;
     return thisAsT ();
@@ -227,7 +228,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
@@ -240,7 +241,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setStandBy (@Nullable final String sStandBy)
+  public final IMPLTYPE setStandBy (@Nullable final String sStandBy)
   {
     m_sStandBy = sStandBy;
     return thisAsT ();
@@ -253,7 +254,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setType (@Nullable final IMimeType aType)
+  public final IMPLTYPE setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
     return thisAsT ();
@@ -266,7 +267,7 @@ public abstract class AbstractHCObject <THISTYPE extends AbstractHCObject <THIST
   }
 
   @Nonnull
-  public final THISTYPE setUseMap (@Nullable final String sUseMap)
+  public final IMPLTYPE setUseMap (@Nullable final String sUseMap)
   {
     m_sUseMap = sUseMap;
     return thisAsT ();

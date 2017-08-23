@@ -22,10 +22,10 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * Interface for LIs
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCLI <THISTYPE extends IHCLI <THISTYPE>> extends IHCElementWithChildren <THISTYPE>
+public interface IHCLI <IMPLTYPE extends IHCLI <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   /* empty */
 }

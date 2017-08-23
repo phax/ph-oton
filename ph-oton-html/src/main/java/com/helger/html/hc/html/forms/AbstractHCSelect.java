@@ -46,11 +46,12 @@ import com.helger.xml.microdom.IMicroElement;
  * Represents an HTML &lt;select&gt; element
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        the implementation type
  */
-public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THISTYPE>>
-                                       extends AbstractHCControl <THISTYPE> implements IHCSelect <THISTYPE>
+public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends
+                                       AbstractHCControl <IMPLTYPE> implements
+                                       IHCSelect <IMPLTYPE>
 {
   /** By default multi select is disabled */
   public static final boolean DEFAULT_MULTIPLE = false;
@@ -90,7 +91,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE setForm (@Nullable final String sForm)
+  public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
     return thisAsT ();
@@ -102,7 +103,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE setMultiple (final boolean bMultiple)
+  public final IMPLTYPE setMultiple (final boolean bMultiple)
   {
     m_bMultiple = bMultiple;
     return thisAsT ();
@@ -114,7 +115,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE setSize (final int nSize)
+  public final IMPLTYPE setSize (final int nSize)
   {
     m_nSize = nSize;
     return thisAsT ();
@@ -171,7 +172,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE addOptionGroup (@Nullable final HCOptGroup aOptGroup)
+  public final IMPLTYPE addOptionGroup (@Nullable final HCOptGroup aOptGroup)
   {
     if (aOptGroup != null)
       m_aOptions.add (aOptGroup);
@@ -179,7 +180,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE removeAllOptions ()
+  public final IMPLTYPE removeAllOptions ()
   {
     final ICommonsList <IHCNode> aRest = new CommonsArrayList <> ();
     for (final IHCNode aChild : m_aOptions)
@@ -190,7 +191,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE removeAllOptionGroups ()
+  public final IMPLTYPE removeAllOptionGroups ()
   {
     final ICommonsList <IHCNode> aRest = new CommonsArrayList <> ();
     for (final IHCNode aChild : m_aOptions)
@@ -201,7 +202,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE removeOptionAt (@Nonnegative final int nIndex)
+  public final IMPLTYPE removeOptionAt (@Nonnegative final int nIndex)
   {
     int nMatch = 0;
     int nTotalIndex = 0;
@@ -219,7 +220,7 @@ public abstract class AbstractHCSelect <THISTYPE extends AbstractHCSelect <THIST
   }
 
   @Nonnull
-  public final THISTYPE removeOptionGroupAt (@Nonnegative final int nIndex)
+  public final IMPLTYPE removeOptionGroupAt (@Nonnegative final int nIndex)
   {
     int nMatch = 0;
     int nTotalIndex = 0;

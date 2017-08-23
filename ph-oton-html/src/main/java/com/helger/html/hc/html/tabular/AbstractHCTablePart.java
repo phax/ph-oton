@@ -32,12 +32,12 @@ import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
  * This is the base class for thead, tbody and tfoot
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCTablePart <THISTYPE extends AbstractHCTablePart <THISTYPE>>
-                                          extends AbstractHCElementWithInternalChildren <THISTYPE, HCRow>
-                                          implements IHCTablePart <THISTYPE>
+public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart <IMPLTYPE>>
+                                          extends AbstractHCElementWithInternalChildren <IMPLTYPE, HCRow>
+                                          implements IHCTablePart <IMPLTYPE>
 {
   private final boolean m_bHeaderOrFooter;
 

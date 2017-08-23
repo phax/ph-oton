@@ -30,12 +30,12 @@ import com.helger.xml.microdom.IMicroElement;
  * BAse class for HTML &lt;canvas&gt; elements.
  *
  * @author Philip Helger
- * @param <THISTYPE>
+ * @param <IMPLTYPE>
  *        Implementation type
  */
 @SinceHTML5
-public abstract class AbstractHCCanvas <THISTYPE extends AbstractHCCanvas <THISTYPE>>
-                                       extends AbstractHCElementWithChildren <THISTYPE> implements IHCCanvas <THISTYPE>
+public abstract class AbstractHCCanvas <IMPLTYPE extends AbstractHCCanvas <IMPLTYPE>>
+                                       extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCCanvas <IMPLTYPE>
 {
   private long m_nHeight = CGlobal.ILLEGAL_ULONG;
   private long m_nWidth = CGlobal.ILLEGAL_ULONG;
@@ -51,7 +51,7 @@ public abstract class AbstractHCCanvas <THISTYPE extends AbstractHCCanvas <THIST
   }
 
   @Nonnull
-  public THISTYPE setHeight (final long nHeight)
+  public IMPLTYPE setHeight (final long nHeight)
   {
     m_nHeight = nHeight;
     return thisAsT ();
@@ -63,7 +63,7 @@ public abstract class AbstractHCCanvas <THISTYPE extends AbstractHCCanvas <THIST
   }
 
   @Nonnull
-  public THISTYPE setWidth (final long nWidth)
+  public IMPLTYPE setWidth (final long nWidth)
   {
     m_nWidth = nWidth;
     return thisAsT ();
