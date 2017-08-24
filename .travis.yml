@@ -1,7 +1,8 @@
 language: java
 
 # Required to avoid timeout!
-sudo: true
+# Is it still needed when "travis_wait" is used?
+# sudo: true
 
 env:
   global:
