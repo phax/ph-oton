@@ -60,8 +60,8 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
   @Nonnull
   public HCYouTubeIFrame setAutoPlay (final boolean bAutoplay)
   {
-    m_aVideoURL.remove ("autoplay");
-    m_aVideoURL.add ("autoplay", bAutoplay ? "1" : "0");
+    m_aVideoURL.params ().remove ("autoplay");
+    m_aVideoURL.params ().add ("autoplay", bAutoplay ? "1" : "0");
     setSrc (m_aVideoURL);
     return this;
   }
@@ -69,8 +69,8 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
   @Nonnull
   public HCYouTubeIFrame setAllowFullscreen (final boolean bAllowFullscreen)
   {
-    m_aVideoURL.remove ("fs");
-    m_aVideoURL.add ("fs", bAllowFullscreen ? "1" : "0");
+    m_aVideoURL.params ().remove ("fs");
+    m_aVideoURL.params ().add ("fs", bAllowFullscreen ? "1" : "0");
     setSrc (m_aVideoURL);
     return this;
   }
@@ -78,8 +78,8 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
   @Nonnull
   public HCYouTubeIFrame setShowRelated (final boolean bShowRelated)
   {
-    m_aVideoURL.remove ("rel");
-    m_aVideoURL.add ("rel", bShowRelated ? "1" : "0");
+    m_aVideoURL.params ().remove ("rel");
+    m_aVideoURL.params ().add ("rel", bShowRelated ? "1" : "0");
     setSrc (m_aVideoURL);
     return this;
   }
@@ -90,7 +90,7 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
     ValueEnforcer.notNull (aLocale, "Locale");
     ValueEnforcer.notEmpty (aLocale.getLanguage (), "Locale.getLanguage");
 
-    m_aVideoURL.remove ("hl");
+    m_aVideoURL.params ().remove ("hl");
     m_aVideoURL.add ("hl", aLocale.getLanguage ());
     setSrc (m_aVideoURL);
     return this;

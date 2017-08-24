@@ -58,8 +58,8 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
   public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
-    ret.setLocaleFromString (aURL.getParam (getRequestParamNameLocale ()));
-    ret.setMenuItemFromString (aURL.getParam (getRequestParamNameMenuItem ()));
+    ret.setLocaleFromString (aURL.params ().getFirstParamValue (getRequestParamNameLocale ()));
+    ret.setMenuItemFromString (aURL.params ().getFirstParamValue (getRequestParamNameMenuItem ()));
     return ret;
   }
 
