@@ -24,9 +24,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.photon.basic.auth.subject.IAuthSubject;
 import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
+import com.helger.security.authentication.subject.IAuthSubject;
 
 /**
  * Base interface for all kind of access tokens.

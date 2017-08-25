@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.photon.basic.auth.credentials.IAuthCredentials;
-import com.helger.photon.basic.auth.subject.IAuthCredentialToSubjectResolverSPI;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.credentials.IUserPasswordCredentials;
+import com.helger.security.authentication.credentials.IAuthCredentialToSubjectResolverSPI;
+import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting

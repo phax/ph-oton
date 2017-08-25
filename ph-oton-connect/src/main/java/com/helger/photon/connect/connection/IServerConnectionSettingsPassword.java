@@ -18,7 +18,7 @@ package com.helger.photon.connect.connection;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.basic.auth.credentials.userpw.IUserNamePasswordCredentials;
+import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
 
 /**
  * Interface having all required fields required for connecting to a server via

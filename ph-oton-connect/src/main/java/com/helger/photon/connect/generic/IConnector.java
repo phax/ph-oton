@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.state.EChange;
-import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.security.authentication.credentials.IAuthCredentials;
 
 public interface IConnector <HANDLETYPE>
 {

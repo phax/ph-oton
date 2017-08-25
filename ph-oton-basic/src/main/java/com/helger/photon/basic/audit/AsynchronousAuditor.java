@@ -35,7 +35,7 @@ import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.state.EChange;
-import com.helger.photon.basic.auth.ICurrentUserIDProvider;
+import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
  * The class handles audit items asynchronously. If a new audit item is to be

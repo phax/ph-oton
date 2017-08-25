@@ -20,7 +20,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
  * Interface having the basic fields required for connecting to a server via

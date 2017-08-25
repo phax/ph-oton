@@ -22,10 +22,10 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.auth.CBasicSecurity;
 import com.helger.photon.basic.object.AbstractBusinessObject;
 import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.security.authentication.subject.user.CUserID;
 
 /**
  * Helper class to work with {@link IBusinessObject} implementations.
@@ -44,7 +44,7 @@ public final class BusinessObjectHelper
     if (StringHelper.hasNoText (sCurrentUserID))
     {
       // No user is logged in- use the internal guest user ID
-      sCurrentUserID = CBasicSecurity.USER_ID_NONE_LOGGED_IN;
+      sCurrentUserID = CUserID.USER_ID_GUEST;
     }
     aObj.setLastModification (PDTFactory.getCurrentLocalDateTime (), sCurrentUserID);
   }

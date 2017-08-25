@@ -21,9 +21,9 @@ import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.login.AbstractLoginManager;
+import com.helger.security.authentication.credentials.ICredentialValidationResult;
 
 public class BootstrapLoginManager extends AbstractLoginManager
 {

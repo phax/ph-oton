@@ -26,21 +26,15 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
+import com.helger.security.authentication.subject.user.IHasUserID;
 
 /**
  * Base interface for a single favorite bookmark.
  *
  * @author Philip Helger
  */
-public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializable
+public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializable, IHasUserID
 {
-  /**
-   * @return The ID of the user owning the favorite.
-   */
-  @Nonnull
-  @Nonempty
-  String getUserID ();
-
   /**
    * @return The internal application ID to which this favorite belongs.
    */

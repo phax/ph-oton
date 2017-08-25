@@ -32,8 +32,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
-import com.helger.photon.basic.auth.credentials.IAuthCredentials;
 import com.helger.photon.connect.generic.IConnectorFileBased;
+import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
 

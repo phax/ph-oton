@@ -34,7 +34,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.dao.DAOException;
 import com.helger.dao.EDAOActionType;
 import com.helger.photon.basic.app.dao.AbstractPhotonWALDAO;
-import com.helger.photon.basic.auth.ICurrentUserIDProvider;
+import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;

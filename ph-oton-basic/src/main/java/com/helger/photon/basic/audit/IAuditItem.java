@@ -25,7 +25,7 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.state.ISuccessIndicator;
-import com.helger.photon.basic.auth.CBasicSecurity;
+import com.helger.security.authentication.subject.user.IHasUserID;
 
 /**
  * Base interface for a single audit item
@@ -33,29 +33,13 @@ import com.helger.photon.basic.auth.CBasicSecurity;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IAuditItem extends ISuccessIndicator, Serializable
+public interface IAuditItem extends IHasUserID, ISuccessIndicator, Serializable
 {
   /**
    * @return The date and time when the audit item was created
    */
   @Nonnull
   LocalDateTime getDateTime ();
-
-  /**
-   * @return The ID of the user who triggered the action that resulted in this
-   *         audit item.
-   */
-  @Nonnull
-  String getUserID ();
-
-  /**
-   * @return <code>true</code> if the user ID equals
-   *         {@link com.helger.photon.basic.auth.CBasicSecurity#USER_ID_NONE_LOGGED_IN}
-   */
-  default boolean isAnonymousUser ()
-  {
-    return CBasicSecurity.USER_ID_NONE_LOGGED_IN.equals (getUserID ());
-  }
 
   /**
    * @return The audit action type. Never <code>null</code>.

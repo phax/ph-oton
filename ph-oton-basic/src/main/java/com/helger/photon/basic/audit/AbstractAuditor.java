@@ -23,7 +23,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.ESuccess;
-import com.helger.photon.basic.auth.ICurrentUserIDProvider;
+import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
  * Abstract base class for interface {@link IAuditor}.

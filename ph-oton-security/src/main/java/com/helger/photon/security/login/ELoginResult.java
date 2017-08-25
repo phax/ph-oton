@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
+import com.helger.security.authentication.credentials.ICredentialValidationResult;
 
 /**
  * Represents the different login results.

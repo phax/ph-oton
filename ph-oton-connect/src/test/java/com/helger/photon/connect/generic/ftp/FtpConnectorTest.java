@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.helger.photon.basic.auth.credentials.userpw.UserNamePasswordCredentials;
+import com.helger.security.authentication.credentials.usernamepw.UserNamePasswordCredentials;
 
 public final class FtpConnectorTest
 {

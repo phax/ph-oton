@@ -18,7 +18,7 @@ package com.helger.photon.security.token.credentials;
 
 import javax.annotation.Nullable;
 
-import com.helger.photon.basic.auth.credentials.IAuthCredentials;
+import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
  * This interface represents app token credentials passed via an API.

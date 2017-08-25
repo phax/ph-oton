@@ -23,11 +23,11 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.photon.basic.auth.credentials.ICredentialValidationResult;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.html.AbstractHTMLProvider;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.WebPageCSRFHandler;
+import com.helger.security.authentication.credentials.ICredentialValidationResult;
 
 /**
  * Abstract base class for providing an HTML login screen.

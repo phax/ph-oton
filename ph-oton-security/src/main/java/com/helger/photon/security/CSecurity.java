@@ -18,8 +18,6 @@ package com.helger.photon.security;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.photon.basic.auth.CBasicSecurity;
-
 /**
  * Constants for user handling
  *
@@ -90,9 +88,6 @@ public final class CSecurity
   public static final String USER_GUEST_EMAIL = "guest@helger.com";
   public static final String USER_GUEST_NAME = "Guest";
   public static final String USER_GUEST_PASSWORD = "guest";
-
-  /** The user ID to be used, if no user is logged in */
-  public static final String USER_ID_NONE_LOGGED_IN = CBasicSecurity.USER_ID_NONE_LOGGED_IN;
 
   // Default roles
   public static final String ROLE_ADMINISTRATOR_ID = "radmin";
