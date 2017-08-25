@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
+import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
-import com.helger.xservlet.simple.AbstractSimpleHttpServlet;
 
 /**
  * Special servlet to stream JS and CSS bundles.<br>
@@ -48,7 +48,7 @@ import com.helger.xservlet.simple.AbstractSimpleHttpServlet;
  *
  * @author philip
  */
-public class ResourceBundleServlet extends AbstractSimpleHttpServlet
+public class ResourceBundleServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "resbundle";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
@@ -60,7 +60,7 @@ public class ResourceBundleServlet extends AbstractSimpleHttpServlet
   public ResourceBundleServlet ()
   {
     super ( () -> CApplicationID.APP_ID_PUBLIC);
-    registerSyncHandler (EHttpMethod.GET, new ResourceBundleDeliveryHttpHandler ());
+    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new ResourceBundleDeliveryHttpHandler ());
   }
 
   public static boolean isServletRegisteredInServletContext ()

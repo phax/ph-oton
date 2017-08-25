@@ -75,6 +75,7 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  * @author Philip Helger
  * @since 3.7.0
  */
+@Deprecated
 public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareHttpServlet
 {
   /** Default allowed methods: HEAD, GET and POST */

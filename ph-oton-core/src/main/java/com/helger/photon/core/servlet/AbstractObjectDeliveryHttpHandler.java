@@ -44,7 +44,7 @@ import com.helger.commons.url.URLHelper;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.xservlet.simple.IXServletSimpleHandler;
+import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
  * Base class for stream and download servlet.

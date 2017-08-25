@@ -19,15 +19,15 @@ package com.helger.photon.core.servlet;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.url.LinkHelper;
+import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
-import com.helger.xservlet.simple.AbstractSimpleHttpServlet;
 
 /**
  * Stream arbitrary resources available in JAR files via HTTP to a client.
  *
  * @author Philip Helger
  */
-public class StreamServlet extends AbstractSimpleHttpServlet
+public class StreamServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = LinkHelper.DEFAULT_STREAM_SERVLET_NAME;
   public static final String SERVLET_DEFAULT_PATH = "/" + SERVLET_DEFAULT_NAME;
@@ -35,7 +35,7 @@ public class StreamServlet extends AbstractSimpleHttpServlet
   public StreamServlet ()
   {
     super ( () -> CApplicationID.APP_ID_PUBLIC);
-    registerSyncHandler (EHttpMethod.GET, new ClassPathResourceHttpHandler ());
+    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new ClassPathResourceHttpHandler ());
   }
 
   public static boolean isServletRegisteredInServletContext ()
