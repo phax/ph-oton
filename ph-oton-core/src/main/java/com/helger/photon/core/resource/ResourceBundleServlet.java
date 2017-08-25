@@ -48,7 +48,7 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  *
  * @author philip
  */
-public class ResourceBundleServlet extends AbstractXServlet
+public final class ResourceBundleServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "resbundle";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
@@ -60,7 +60,7 @@ public class ResourceBundleServlet extends AbstractXServlet
   public ResourceBundleServlet ()
   {
     super ( () -> CApplicationID.APP_ID_PUBLIC);
-    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new ResourceBundleDeliveryHttpHandler ());
+    handlerRegistry ().registerHandler (EHttpMethod.GET, new ResourceBundleDeliveryHttpHandler ());
   }
 
   public static boolean isServletRegisteredInServletContext ()

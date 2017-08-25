@@ -46,6 +46,7 @@ import com.helger.servlet.response.StatusAwareHttpResponseWrapper;
  *
  * @author Philip Helger
  */
+@Deprecated
 public class CheckResponseFilter extends AbstractHttpServletFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckResponseFilter.class);

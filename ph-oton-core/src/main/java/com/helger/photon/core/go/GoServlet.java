@@ -19,7 +19,6 @@ package com.helger.photon.core.go;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.AbstractXServlet;
-import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Default servlet that performs URL redirects based on {@link GoMappingManager}
@@ -27,7 +26,7 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  *
  * @author Philip Helger
  */
-public class GoServlet extends AbstractXServlet
+public final class GoServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "go";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
@@ -35,11 +34,6 @@ public class GoServlet extends AbstractXServlet
   public GoServlet ()
   {
     super ( () -> CApplicationID.APP_ID_PUBLIC);
-    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new GoXServletHandler ());
-  }
-
-  public static boolean isServletRegisteredInServletContext ()
-  {
-    return ServletStatusManager.getInstance ().isServletRegistered (GoServlet.class);
+    handlerRegistry ().registerHandler (EHttpMethod.GET, new GoXServletHandler ());
   }
 }

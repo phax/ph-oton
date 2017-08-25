@@ -39,6 +39,7 @@ import com.helger.web.servlets.scope.AbstractScopeAwareFilter;
  * @author Philip Helger
  * @since 3.7.0
  */
+@Deprecated
 public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFilter
 {
   protected AbstractUnifiedResponseFilter ()

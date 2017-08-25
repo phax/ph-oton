@@ -18,7 +18,6 @@ package com.helger.photon.core.servlet;
 
 import com.helger.commons.http.EHttpMethod;
 import com.helger.xservlet.AbstractXServlet;
-import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * A simple availability-check servlet that responds with a "pong" text message.
@@ -33,12 +32,6 @@ public final class PingPongServlet extends AbstractXServlet
 
   public PingPongServlet ()
   {
-    super ( () -> "pingpong");
-    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new PingPongXServletHandler ());
-  }
-
-  public static boolean isServletRegisteredInServletContext ()
-  {
-    return ServletStatusManager.getInstance ().isServletRegistered (PingPongServlet.class);
+    handlerRegistry ().registerHandler (EHttpMethod.GET, new PingPongXServletHandler ());
   }
 }

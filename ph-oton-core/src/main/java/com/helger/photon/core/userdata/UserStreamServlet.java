@@ -19,14 +19,13 @@ package com.helger.photon.core.userdata;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.AbstractXServlet;
-import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Stream user provided resources available on disk via HTTP to a client.
  *
  * @author Philip Helger
  */
-public class UserStreamServlet extends AbstractXServlet
+public final class UserStreamServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "user";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
@@ -34,11 +33,6 @@ public class UserStreamServlet extends AbstractXServlet
   public UserStreamServlet ()
   {
     super ( () -> CApplicationID.APP_ID_PUBLIC);
-    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new UserDataDeliveryHttpHandler ());
-  }
-
-  public static boolean isServletRegisteredInServletContext ()
-  {
-    return ServletStatusManager.getInstance ().isServletRegistered (UserStreamServlet.class);
+    handlerRegistry ().registerHandler (EHttpMethod.GET, new UserDataDeliveryHttpHandler ());
   }
 }

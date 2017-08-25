@@ -38,6 +38,7 @@ import com.helger.servlet.request.RequestLogger;
  *
  * @author Philip Helger
  */
+@Deprecated
 public class HttpoxyFilter extends AbstractHttpServletFilter
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (HttpoxyFilter.class);

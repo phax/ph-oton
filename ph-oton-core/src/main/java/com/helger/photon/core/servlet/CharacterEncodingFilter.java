@@ -44,6 +44,7 @@ import com.helger.servlet.filter.AbstractHttpServletFilter;
  *
  * @author Philip Helger
  */
+@Deprecated
 public class CharacterEncodingFilter extends AbstractHttpServletFilter
 {
   /** Name of the init parameter for the encoding */

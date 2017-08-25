@@ -46,6 +46,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * Show web site go-mappings.
@@ -134,7 +135,8 @@ public class BasePageAppInfoGo <WPECTYPE extends IWebPageExecutionContext> exten
     aNodeList.addChild (aToolbar);
 
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_GO_SERVLET.getDisplayText (aDisplayLocale) +
-                                               EPhotonCoreText.getYesOrNo (GoServlet.isServletRegisteredInServletContext (),
+                                               EPhotonCoreText.getYesOrNo (ServletStatusManager.getInstance ()
+                                                                                               .isServletRegistered (GoServlet.class),
                                                                            aDisplayLocale)));
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),

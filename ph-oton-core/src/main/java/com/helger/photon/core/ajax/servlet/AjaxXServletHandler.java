@@ -31,6 +31,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
+import com.helger.photon.core.ajax.ApplicationAjaxManager;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
@@ -46,16 +47,16 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
  * @author Philip Helger
  */
 @ThreadSafe
-public abstract class AbstractAjaxXServletHandler implements IXServletSimpleHandler
+public class AjaxXServletHandler implements IXServletSimpleHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAjaxXServletHandler.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxXServletHandler.class);
 
   private static final String SCOPE_ATTR_NAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.name";
   private static final String SCOPE_ATTR_INVOKER = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.invoker";
   private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                     "ajaxservlet.executor";
 
-  public AbstractAjaxXServletHandler ()
+  public AjaxXServletHandler ()
   {}
 
   /**
@@ -66,7 +67,11 @@ public abstract class AbstractAjaxXServletHandler implements IXServletSimpleHand
    * @return Never <code>null</code>.
    */
   @Nonnull
-  protected abstract IAjaxInvoker getAjaxInvoker (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
+  @OverrideOnDemand
+  protected IAjaxInvoker getAjaxInvoker (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return ApplicationAjaxManager.getInstance ();
+  }
 
   @Override
   @OverrideOnDemand

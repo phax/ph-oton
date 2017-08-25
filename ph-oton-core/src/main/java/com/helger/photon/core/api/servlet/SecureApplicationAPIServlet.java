@@ -18,18 +18,14 @@ package com.helger.photon.core.api.servlet;
 
 import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
-import com.helger.photon.core.api.ApplicationAPIManager;
-import com.helger.photon.core.api.IAPIInvoker;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.AbstractXServlet;
-import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
  * This class handles the API functions for the secure application
  *
  * @author Philip Helger
  */
-public class SecureApplicationAPIServlet extends AbstractXServlet
+public final class SecureApplicationAPIServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "secureapi";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
@@ -37,23 +33,11 @@ public class SecureApplicationAPIServlet extends AbstractXServlet
   public SecureApplicationAPIServlet ()
   {
     super ( () -> CApplicationID.APP_ID_SECURE);
-    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new AbstractAPIXServletHandler ()
-    {
-      @Override
-      protected IAPIInvoker getAPIInvoker (final IRequestWebScopeWithoutResponse aRequestScope)
-      {
-        return ApplicationAPIManager.getInstance ();
-      }
-    });
+    handlerRegistry ().registerHandler (EHttpMethod.GET, new APIXServletHandler ());
     handlerRegistry ().copyHandler (EHttpMethod.GET,
                                     EHttpMethod.POST,
                                     EHttpMethod.PUT,
                                     EHttpMethod.DELETE,
                                     EHttpMethod.PATCH);
-  }
-
-  public static boolean isServletRegisteredInServletContext ()
-  {
-    return ServletStatusManager.getInstance ().isServletRegistered (SecureApplicationAPIServlet.class);
   }
 }

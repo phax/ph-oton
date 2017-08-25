@@ -67,8 +67,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext>
-                                                   extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext> extends
+                                                   AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
