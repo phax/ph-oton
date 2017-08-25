@@ -35,10 +35,10 @@ import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
-import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
  * Abstract implementation of a servlet that invokes AJAX functions.
@@ -46,16 +46,16 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @ThreadSafe
-public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
+public abstract class AbstractAjaxXServletHandler implements IXServletSimpleHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAjaxServlet.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAjaxXServletHandler.class);
 
   private static final String SCOPE_ATTR_NAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.name";
   private static final String SCOPE_ATTR_INVOKER = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.invoker";
   private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                     "ajaxservlet.executor";
 
-  protected AbstractAjaxServlet ()
+  public AbstractAjaxXServletHandler ()
   {}
 
   /**
@@ -71,8 +71,8 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final UnifiedResponse aUnifiedResponse)
+  public EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
     String sFunctionName = aRequestScope.getPathWithinServlet ();
@@ -119,8 +119,8 @@ public abstract class AbstractAjaxServlet extends AbstractUnifiedResponseServlet
   }
 
   @Override
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     // Action is present
     final String sAjaxFunctionName = aRequestScope.attrs ().getAsString (SCOPE_ATTR_NAME);

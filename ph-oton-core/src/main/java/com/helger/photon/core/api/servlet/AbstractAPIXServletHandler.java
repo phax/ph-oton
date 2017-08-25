@@ -17,7 +17,6 @@
 package com.helger.photon.core.api.servlet;
 
 import java.io.IOException;
-import java.util.EnumSet;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
@@ -26,16 +25,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.ApplicationAPIManager;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
-import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
  * Abstract API servlet. Use {@link ApplicationAPIManager} to register API
@@ -43,21 +41,12 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
+public abstract class AbstractAPIXServletHandler implements IXServletSimpleHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAPIServlet.class);
-  private static final EnumSet <EHttpMethod> ALL = EnumSet.allOf (EHttpMethod.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractAPIXServletHandler.class);
 
-  protected AbstractAPIServlet ()
+  protected AbstractAPIXServletHandler ()
   {}
-
-  @Override
-  @Nonnull
-  @CodingStyleguideUnaware
-  protected EnumSet <EHttpMethod> getAllowedHTTPMethods ()
-  {
-    return ALL;
-  }
 
   /**
    * Get the API invoker matching the passed request
@@ -70,8 +59,8 @@ public abstract class AbstractAPIServlet extends AbstractUnifiedResponseServlet
   protected abstract IAPIInvoker getAPIInvoker (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
 
   @Override
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     // ensure leading "/"
     final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());

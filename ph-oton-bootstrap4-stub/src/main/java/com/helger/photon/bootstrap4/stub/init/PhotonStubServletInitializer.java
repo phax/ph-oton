@@ -160,6 +160,7 @@ public final class PhotonStubServletInitializer
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("StreamServlet", StreamServlet.class);
         if (aServlet != null)
         {
+          aServlet.setAsyncSupported (true);
           aServlet.setInitParameter (AbstractObjectDeliveryHttpHandler.INITPARAM_ALLOWED_EXTENSIONS,
                                      AbstractObjectDeliveryHttpHandler.EXTENSION_MACRO_WEB_DEFAULT);
           aServlet.addMapping (StreamServlet.SERVLET_DEFAULT_PATH + "/*");
@@ -170,6 +171,7 @@ public final class PhotonStubServletInitializer
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("UserStreamServlet", UserStreamServlet.class);
         if (aServlet != null)
         {
+          aServlet.setAsyncSupported (true);
           aServlet.setInitParameter (AbstractObjectDeliveryHttpHandler.INITPARAM_ALLOWED_EXTENSIONS,
                                      AbstractObjectDeliveryHttpHandler.EXTENSION_MACRO_WEB_DEFAULT);
           aServlet.addMapping (UserStreamServlet.SERVLET_DEFAULT_PATH + "/*");
@@ -179,13 +181,17 @@ public final class PhotonStubServletInitializer
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("UserUploadServlet", UserUploadServlet.class);
         if (aServlet != null)
+        {
+          aServlet.setAsyncSupported (true);
           aServlet.addMapping (UserUploadServlet.SERVLET_DEFAULT_PATH + "/*");
+        }
       }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("LogoutServlet", LogoutServlet.class);
         if (aServlet != null)
         {
+          aServlet.setAsyncSupported (true);
           aServlet.addMapping (LogoutServlet.SERVLET_DEFAULT_PATH + "/*");
         }
       }
@@ -195,6 +201,7 @@ public final class PhotonStubServletInitializer
                                                                      ResourceBundleServlet.class);
         if (aServlet != null)
         {
+          aServlet.setAsyncSupported (true);
           aServlet.setInitParameter (AbstractObjectDeliveryHttpHandler.INITPARAM_ALLOWED_EXTENSIONS, "js,css");
           aServlet.addMapping (ResourceBundleServlet.SERVLET_DEFAULT_PATH + "/*");
         }
@@ -204,6 +211,7 @@ public final class PhotonStubServletInitializer
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("GoServlet", GoServlet.class);
         if (aServlet != null)
         {
+          aServlet.setAsyncSupported (true);
           aServlet.addMapping (GoServlet.SERVLET_DEFAULT_PATH + "/*");
         }
       }

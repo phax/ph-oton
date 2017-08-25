@@ -16,10 +16,12 @@
  */
 package com.helger.photon.core.api.servlet;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
+import com.helger.photon.core.api.ApplicationAPIManager;
+import com.helger.photon.core.api.IAPIInvoker;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
@@ -27,24 +29,31 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  *
  * @author Philip Helger
  */
-public class PublicApplicationAPIServlet extends AbstractApplicationAPIServlet
+public class PublicApplicationAPIServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "publicapi";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
   public PublicApplicationAPIServlet ()
-  {}
+  {
+    super ( () -> CApplicationID.APP_ID_PUBLIC);
+    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new AbstractAPIXServletHandler ()
+    {
+      @Override
+      protected IAPIInvoker getAPIInvoker (final IRequestWebScopeWithoutResponse aRequestScope)
+      {
+        return ApplicationAPIManager.getInstance ();
+      }
+    });
+    handlerRegistry ().copyHandler (EHttpMethod.GET,
+                                    EHttpMethod.POST,
+                                    EHttpMethod.PUT,
+                                    EHttpMethod.DELETE,
+                                    EHttpMethod.PATCH);
+  }
 
   public static boolean isServletRegisteredInServletContext ()
   {
     return ServletStatusManager.getInstance ().isServletRegistered (PublicApplicationAPIServlet.class);
-  }
-
-  @Override
-  @Nonnull
-  @Nonempty
-  protected String getApplicationID ()
-  {
-    return CApplicationID.APP_ID_PUBLIC;
   }
 }

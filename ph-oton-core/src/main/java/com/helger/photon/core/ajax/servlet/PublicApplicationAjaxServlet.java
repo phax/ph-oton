@@ -16,10 +16,12 @@
  */
 package com.helger.photon.core.ajax.servlet;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.CApplicationID;
+import com.helger.photon.core.ajax.ApplicationAjaxManager;
+import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
@@ -27,24 +29,31 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  *
  * @author Philip Helger
  */
-public class PublicApplicationAjaxServlet extends AbstractApplicationAjaxServlet
+public class PublicApplicationAjaxServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "publicajax";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
   public PublicApplicationAjaxServlet ()
-  {}
+  {
+    super ( () -> CApplicationID.APP_ID_PUBLIC);
+    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new AbstractAjaxXServletHandler ()
+    {
+      @Override
+      protected IAjaxInvoker getAjaxInvoker (final IRequestWebScopeWithoutResponse aRequestScope)
+      {
+        return ApplicationAjaxManager.getInstance ();
+      }
+    });
+    handlerRegistry ().copyHandler (EHttpMethod.GET,
+                                    EHttpMethod.POST,
+                                    EHttpMethod.PUT,
+                                    EHttpMethod.DELETE,
+                                    EHttpMethod.PATCH);
+  }
 
   public static boolean isServletRegisteredInServletContext ()
   {
     return ServletStatusManager.getInstance ().isServletRegistered (PublicApplicationAjaxServlet.class);
-  }
-
-  @Override
-  @Nonnull
-  @Nonempty
-  protected String getApplicationID ()
-  {
-    return CApplicationID.APP_ID_PUBLIC;
   }
 }

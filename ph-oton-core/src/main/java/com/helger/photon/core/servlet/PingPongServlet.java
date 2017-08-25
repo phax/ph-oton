@@ -16,18 +16,8 @@
  */
 package com.helger.photon.core.servlet;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
-import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
-
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
-import com.helger.commons.statistics.StatisticsManager;
-import com.helger.servlet.response.UnifiedResponse;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.commons.http.EHttpMethod;
+import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
 
 /**
@@ -36,37 +26,19 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  *
  * @author Philip Helger
  */
-public final class PingPongServlet extends AbstractUnifiedResponseServlet
+public final class PingPongServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "ping";
   public static final String SERVLET_DEFAULT_PATH = "/" + SERVLET_DEFAULT_NAME;
 
-  /** The response string to send. */
-  public static final String RESPONSE_TEXT = "pong";
-
-  /** The response charset */
-  public static final Charset RESPONSE_CHARSET = StandardCharsets.ISO_8859_1;
-
-  /** The response MIME type */
-  public static final IMimeType RESPONSE_MIMETYPE = CMimeType.TEXT_PLAIN;
-
-  private static final IMutableStatisticsHandlerCounter s_aStatsPingPong = StatisticsManager.getCounterHandler (PingPongServlet.class);
-
   public PingPongServlet ()
-  {}
+  {
+    super ( () -> "pingpong");
+    handlerRegistry ().registerSyncHandler (EHttpMethod.GET, new PingPongXServletHandler ());
+  }
 
   public static boolean isServletRegisteredInServletContext ()
   {
     return ServletStatusManager.getInstance ().isServletRegistered (PingPongServlet.class);
-  }
-
-  @Override
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException
-  {
-    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET)
-                    .setMimeType (RESPONSE_MIMETYPE)
-                    .disableCaching ();
-    s_aStatsPingPong.increment ();
   }
 }

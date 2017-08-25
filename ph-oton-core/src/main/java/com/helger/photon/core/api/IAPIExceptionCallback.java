@@ -19,12 +19,10 @@ package com.helger.photon.core.api;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.photon.core.ajax.servlet.AbstractAjaxServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to handle thrown exception objects from the
- * {@link AbstractAjaxServlet}.
+ * Callback interface to handle thrown exception objects from the API servlet.
  *
  * @author Philip Helger
  */
