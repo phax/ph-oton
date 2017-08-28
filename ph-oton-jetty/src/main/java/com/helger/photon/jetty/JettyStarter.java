@@ -404,12 +404,13 @@ public class JettyStarter
       aServer.setDumpBeforeStop (true);
     }
 
-    // Starting shutdown listener thread
-    if (m_bRunStopMonitor)
-      new InternalJettyStopMonitorThread (m_nStopPort, m_sStopKey, () -> aServer.stop ()).start ();
-
     try
     {
+      // Starting shutdown listener thread
+      // May fail if port is in use
+      if (m_bRunStopMonitor)
+        new InternalJettyStopMonitorThread (m_nStopPort, m_sStopKey, () -> aServer.stop ()).start ();
+
       // Starting the engines:
       aServer.start ();
       s_aLogger.info ("Started Jetty" + ":" + m_nPort + ":" + m_nStopPort + " " + m_sAppName);
