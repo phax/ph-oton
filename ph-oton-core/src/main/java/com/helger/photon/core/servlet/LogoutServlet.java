@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.servlet;
 
+import java.util.EnumSet;
+
 import com.helger.commons.http.EHttpMethod;
 import com.helger.xservlet.AbstractXServlet;
 
@@ -32,6 +34,6 @@ public final class LogoutServlet extends AbstractXServlet
   public LogoutServlet ()
   {
     handlerRegistry ().registerHandler (EHttpMethod.GET, new LogoutXServletHandler ());
-    handlerRegistry ().copyHandler (EHttpMethod.GET, EHttpMethod.POST);
+    handlerRegistry ().copyHandler (EHttpMethod.GET, EnumSet.of (EHttpMethod.POST));
   }
 }

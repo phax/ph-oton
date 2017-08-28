@@ -34,10 +34,6 @@ public final class SecureApplicationAjaxServlet extends AbstractXServlet
   {
     super ( () -> CApplicationID.APP_ID_SECURE);
     handlerRegistry ().registerHandler (EHttpMethod.GET, new AjaxXServletHandler ());
-    handlerRegistry ().copyHandler (EHttpMethod.GET,
-                                    EHttpMethod.POST,
-                                    EHttpMethod.PUT,
-                                    EHttpMethod.DELETE,
-                                    EHttpMethod.PATCH);
+    handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }
 }

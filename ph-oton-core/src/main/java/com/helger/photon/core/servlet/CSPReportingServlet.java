@@ -32,6 +32,6 @@ public final class CSPReportingServlet extends AbstractXServlet
 
   public CSPReportingServlet ()
   {
-    handlerRegistry ().registerHandler (EHttpMethod.POST, new CSPReportingXServletHandler ());
+    handlerRegistry ().registerHandler (EHttpMethod.POST, new CSPReportingXServletHandler (), false);
   }
 }

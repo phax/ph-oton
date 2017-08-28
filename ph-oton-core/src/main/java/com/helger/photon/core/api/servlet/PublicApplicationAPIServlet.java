@@ -34,10 +34,6 @@ public final class PublicApplicationAPIServlet extends AbstractXServlet
   {
     super ( () -> CApplicationID.APP_ID_PUBLIC);
     handlerRegistry ().registerHandler (EHttpMethod.GET, new APIXServletHandler ());
-    handlerRegistry ().copyHandler (EHttpMethod.GET,
-                                    EHttpMethod.POST,
-                                    EHttpMethod.PUT,
-                                    EHttpMethod.DELETE,
-                                    EHttpMethod.PATCH);
+    handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }
 }
