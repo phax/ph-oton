@@ -1,7 +1,6 @@
 package com.helger.photon.uicore.html.google;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,13 +14,15 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.string.StringHelper;
+import com.helger.commons.url.SimpleURL;
 import com.helger.httpclient.HttpClientFactory;
 import com.helger.httpclient.HttpClientHelper;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
 
-public class ReCaptchaServerSideValidator
+public final class ReCaptchaServerSideValidator
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ReCaptchaServerSideValidator.class);
 
@@ -44,14 +45,24 @@ public class ReCaptchaServerSideValidator
   {
     ValueEnforcer.notEmpty (sServerSideKey, "ServerSideKey");
 
+    if (StringHelper.hasNoText (sReCaptchaResponse))
+      return ESuccess.SUCCESS;
+
     final HttpClientFactory aHCFactory = new HttpClientFactory ();
+    aHCFactory.setUseSystemProperties (true);
     // For proxy etc
 
     try (HttpClientManager aMgr = new HttpClientManager (aHCFactory))
     {
-      final HttpPost aPost = new HttpPost ("https://www.google.com/recaptcha/api/siteverify");
-      aPost.setEntity (HttpClientHelper.createParameterEntity (new StringMap ().add ("secret", sServerSideKey)
-                                                                               .add ("response", sReCaptchaResponse)));
+      final HttpPost aPost = new HttpPost (new SimpleURL ("https://www.google.com/recaptcha/api/siteverify").add ("secret",
+                                                                                                                  sServerSideKey)
+                                                                                                            .add ("response",
+                                                                                                                  sReCaptchaResponse)
+                                                                                                            .getAsURI ());
+      if (false)
+        aPost.setEntity (HttpClientHelper.createParameterEntity (new StringMap ().add ("secret", sServerSideKey)
+                                                                                 .add ("response",
+                                                                                       sReCaptchaResponse)));
       final ResponseHandlerJson aRH = new ResponseHandlerJson ();
       final IJson aJson = aMgr.execute (aPost, aRH);
       if (aJson != null && aJson.isObject ())
@@ -59,15 +70,15 @@ public class ReCaptchaServerSideValidator
         final boolean bSuccess = aJson.getAsObject ().getAsBoolean ("success", false);
 
         if (GlobalDebug.isDebugMode ())
-          s_aLogger.info ("ReCpatcha Response: " + aJson.getAsJsonString ());
+          s_aLogger.info ("ReCpatcha Response for '" + sReCaptchaResponse + "': " + aJson.getAsJsonString ());
 
         return ESuccess.valueOf (bSuccess);
       }
-      return ESuccess.FAILURE;
     }
     catch (final IOException ex)
     {
-      throw new UncheckedIOException (ex);
+      s_aLogger.warn ("Error checking ReCaptcha response", ex);
     }
+    return ESuccess.FAILURE;
   }
 }
