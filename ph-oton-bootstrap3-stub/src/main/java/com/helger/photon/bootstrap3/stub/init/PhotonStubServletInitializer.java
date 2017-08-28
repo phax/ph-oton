@@ -93,6 +93,7 @@ public final class PhotonStubServletInitializer
 
       s_aLogger.info ("Registering default ph-oton listeners and servlets");
 
+      if (false)
       {
         final FilterRegistration.Dynamic aFilter = aSC.addFilter ("HttpoxyFilter", HttpoxyFilter.class);
         if (aFilter != null)
@@ -103,6 +104,7 @@ public final class PhotonStubServletInitializer
         }
       }
 
+      if (false)
       {
         final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter",
                                                                   CharacterEncodingFilter.class);

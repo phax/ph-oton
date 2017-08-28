@@ -63,8 +63,8 @@ public class HCReCaptchaInvisible extends AbstractHCButton <HCReCaptchaInvisible
   @Override
   public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    // Render "tweet" nodes only in production mode
-    return true || GlobalDebug.isProductionMode ();
+    // Render nodes only in production mode
+    return GlobalDebug.isProductionMode ();
   }
 
   @Override

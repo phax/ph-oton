@@ -17,40 +17,25 @@
 package com.helger.photon.core.servlet;
 
 import java.nio.charset.StandardCharsets;
-import java.util.EnumSet;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
 
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.mime.CMimeType;
-import com.helger.servlet.response.UnifiedResponse;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
+import com.helger.xservlet.AbstractXServlet;
 
-public final class MockUnifiedResponseServlet extends AbstractUnifiedResponseServlet
+public final class MockUnifiedResponseServlet extends AbstractXServlet
 {
   public static final String RESPONSE_TEXT = "mock";
 
-  @Override
-  protected String getApplicationID ()
+  public MockUnifiedResponseServlet ()
   {
-    return MockServletRequestListenerScopeAware.MOCK_APPLICATION_ID;
-  }
-
-  @Override
-  @Nonnull
-  protected Set <EHttpMethod> getAllowedHTTPMethods ()
-  {
-    return EnumSet.allOf (EHttpMethod.class);
-  }
-
-  @Override
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
-  {
-    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, StandardCharsets.UTF_8)
-                    .setMimeType (CMimeType.TEXT_PLAIN)
-                    .disableCaching ();
+    super ( () -> MockServletRequestListenerScopeAware.MOCK_APPLICATION_ID);
+    handlerRegistry ().registerHandler (EHttpMethod.GET,
+                                        (aRequestScope,
+                                         aUnifiedResponse) -> aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT,
+                                                                                                     StandardCharsets.UTF_8)
+                                                                              .setMimeType (CMimeType.TEXT_PLAIN)
+                                                                              .disableCaching ());
+    handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }
 }

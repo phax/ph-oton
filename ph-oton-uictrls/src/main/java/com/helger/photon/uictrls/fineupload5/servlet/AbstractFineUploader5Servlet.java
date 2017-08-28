@@ -17,8 +17,6 @@
 package com.helger.photon.uictrls.fineupload5.servlet;
 
 import java.nio.charset.StandardCharsets;
-import java.util.EnumSet;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,9 +24,6 @@ import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.CodingStyleguideUnaware;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.state.ETriState;
@@ -36,9 +31,9 @@ import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
-import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
  * <p>
@@ -72,7 +67,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedResponseServlet
+public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHandler
 {
   @Immutable
   public static class Response
@@ -192,19 +187,8 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
     }
   }
 
-  @CodingStyleguideUnaware
-  public static final Set <EHttpMethod> ALLOWED_METHDOS = CollectionHelper.makeUnmodifiable (EnumSet.of (EHttpMethod.POST,
-                                                                                                         EHttpMethod.DELETE));
-
   public AbstractFineUploader5Servlet ()
   {}
-
-  @Override
-  @Nonnull
-  protected Set <EHttpMethod> getAllowedHTTPMethods ()
-  {
-    return ALLOWED_METHDOS;
-  }
 
   /**
    * Handle the uploaded or deleted file.
@@ -217,8 +201,8 @@ public abstract class AbstractFineUploader5Servlet extends AbstractUnifiedRespon
   protected abstract Response handleUploadedFile (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
 
   @Override
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     try
     {

@@ -59,7 +59,8 @@ public class HCReCaptchaV2 extends AbstractHCDiv <HCReCaptchaV2>
   @Override
   public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    // Render "tweet" nodes only in production mode
+    // Render nodes only in production mode
+    // FIXME dev mode captcha!
     return true || GlobalDebug.isProductionMode ();
   }
 

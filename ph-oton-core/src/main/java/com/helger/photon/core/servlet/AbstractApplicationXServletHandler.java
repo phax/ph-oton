@@ -22,31 +22,36 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.ServletException;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
- * Base servlet for the main application.
+ * Base XServlet handler for the main application.
  *
  * @author Philip Helger
  */
-@Deprecated
-public abstract class AbstractApplicationServlet extends AbstractUnifiedResponseServlet
+public abstract class AbstractApplicationXServletHandler implements IXServletSimpleHandler
 {
-  protected AbstractApplicationServlet ()
+  protected AbstractApplicationXServletHandler ()
   {}
 
-  @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                              @Nonnull @Nonempty final String sApplicationID)
   {
+    // Set the last application ID in the session
+    PhotonSessionState.getInstance ().setLastApplicationID (sApplicationID);
+
     // Run default request initialization (menu item and locale)
-    RequestParameterManager.getInstance ().onRequestBegin (aRequestScope, getApplicationID ());
+    RequestParameterManager.getInstance ().onRequestBegin (aRequestScope, sApplicationID);
   }
 
   /**
@@ -58,10 +63,9 @@ public abstract class AbstractApplicationServlet extends AbstractUnifiedResponse
   @Nonnull
   protected abstract IHTMLProvider createHTMLProvider (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
 
-  @Override
   @OverridingMethodsMustInvokeSuper
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
   {
     // Who is responsible for creating the HTML?
     final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);

@@ -29,11 +29,11 @@ import com.helger.web.scope.mock.WebScopeAwareTestSetup;
 import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
- * Test class for class {@link AbstractUnifiedResponseServlet}.
+ * Test class for class MockHttpServletResponse.
  *
  * @author Philip Helger
  */
-public final class AbstractUnifiedResponseServletTest
+public final class UnifiedResponseServletFuncTest
 {
   @Rule
   public WebScopeTestRule m_aRule = new WebScopeTestRule ()
