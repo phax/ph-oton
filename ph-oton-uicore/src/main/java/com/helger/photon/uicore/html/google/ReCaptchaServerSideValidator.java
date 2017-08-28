@@ -11,13 +11,11 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.httpclient.HttpClientFactory;
-import com.helger.httpclient.HttpClientHelper;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
@@ -49,8 +47,8 @@ public final class ReCaptchaServerSideValidator
       return ESuccess.SUCCESS;
 
     final HttpClientFactory aHCFactory = new HttpClientFactory ();
-    aHCFactory.setUseSystemProperties (true);
     // For proxy etc
+    aHCFactory.setUseSystemProperties (true);
 
     try (HttpClientManager aMgr = new HttpClientManager (aHCFactory))
     {
@@ -59,10 +57,6 @@ public final class ReCaptchaServerSideValidator
                                                                                                             .add ("response",
                                                                                                                   sReCaptchaResponse)
                                                                                                             .getAsURI ());
-      if (false)
-        aPost.setEntity (HttpClientHelper.createParameterEntity (new StringMap ().add ("secret", sServerSideKey)
-                                                                                 .add ("response",
-                                                                                       sReCaptchaResponse)));
       final ResponseHandlerJson aRH = new ResponseHandlerJson ();
       final IJson aJson = aMgr.execute (aPost, aRH);
       if (aJson != null && aJson.isObject ())
