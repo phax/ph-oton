@@ -139,7 +139,7 @@ public class CheckResponseFilter extends AbstractHttpServletFilter
                             @Nonnull final FilterChain aChain) throws IOException, ServletException
   {
     // Create a response wrapper
-    final StatusAwareHttpResponseWrapper aWrapper = new StatusAwareHttpResponseWrapper (aResponse);
+    final StatusAwareHttpResponseWrapper aWrapper = StatusAwareHttpResponseWrapper.wrap (aResponse);
     try
     {
       aChain.doFilter (aRequest, aWrapper);

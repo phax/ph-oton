@@ -19,7 +19,7 @@ package com.helger.html.hc.ext;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.state.EFinish;
+import com.helger.commons.state.EContinue;
 import com.helger.commons.wrapper.Wrapper;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
@@ -54,7 +54,7 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
         {
           // No need to continue because an existing control already has the
           // focus
-          return EFinish.FINISHED;
+          return EContinue.BREAK;
         }
 
         if (!aFirstCtrl.isSet ())
@@ -73,7 +73,7 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
         }
       }
 
-      return EFinish.UNFINISHED;
+      return EContinue.CONTINUE;
     });
 
     // Anything to focus?

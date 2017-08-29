@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.commons.state.EFinish;
+import com.helger.commons.state.EContinue;
 
 /**
  * Callback interface to be used when iterating an HC tree.
@@ -38,9 +38,9 @@ public interface IHCIteratorCallback extends ICallback
    *        element.
    * @param aChildNode
    *        The current child node. Never <code>null</code>.
-   * @return {@link EFinish#FINISHED} to break iteration and
-   *         {@link EFinish#UNFINISHED} to continue iteration.
+   * @return {@link EContinue#BREAK} to break iteration and
+   *         {@link EContinue#CONTINUE} to continue iteration.
    */
   @Nonnull
-  EFinish call (@Nullable IHCNode aParentNode, @Nonnull IHCNode aChildNode);
+  EContinue call (@Nullable IHCNode aParentNode, @Nonnull IHCNode aChildNode);
 }

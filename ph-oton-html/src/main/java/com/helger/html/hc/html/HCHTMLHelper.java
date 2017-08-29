@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EFinish;
+import com.helger.commons.state.EContinue;
 import com.helger.commons.wrapper.Wrapper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.HCHelper;
@@ -69,7 +69,7 @@ public final class HCHTMLHelper
             break;
           }
       }
-      return EFinish.UNFINISHED;
+      return EContinue.CONTINUE;
     });
     return ret;
   }
@@ -108,10 +108,10 @@ public final class HCHTMLHelper
         if (!bFound)
         {
           ret.set (aCurrentElement);
-          return EFinish.FINISHED;
+          return EContinue.BREAK;
         }
       }
-      return EFinish.UNFINISHED;
+      return EContinue.CONTINUE;
     });
     return ret.get ();
   }
@@ -150,10 +150,10 @@ public final class HCHTMLHelper
           if (sCurrentTagName.equalsIgnoreCase (aElement.getElementName ()))
           {
             ret.set (aCurrentElement);
-            return EFinish.FINISHED;
+            return EContinue.BREAK;
           }
       }
-      return EFinish.UNFINISHED;
+      return EContinue.CONTINUE;
     });
     return ret.get ();
   }

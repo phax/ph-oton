@@ -24,7 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.stream.NonBlockingStringWriter;
-import com.helger.commons.state.EFinish;
+import com.helger.commons.state.EContinue;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCConversionSettings;
@@ -162,7 +162,7 @@ public final class HCRenderer
         prepareForConversion (aRealTargetNode, aRealTargetNode, aConversionSettings);
       }
 
-      return EFinish.UNFINISHED;
+      return EContinue.CONTINUE;
     });
   }
 

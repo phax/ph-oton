@@ -16,12 +16,10 @@
  */
 package com.helger.photon.bootstrap3.stub.init;
 
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
@@ -38,8 +36,6 @@ import com.helger.photon.core.api.servlet.SecureApplicationAPIServlet;
 import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
-import com.helger.photon.core.servlet.CharacterEncodingFilter;
-import com.helger.photon.core.servlet.HttpoxyFilter;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.servlet.StreamServlet;
 import com.helger.photon.core.userdata.UserStreamServlet;
@@ -92,31 +88,6 @@ public final class PhotonStubServletInitializer
                                          aSC.getMinorVersion ());
 
       s_aLogger.info ("Registering default ph-oton listeners and servlets");
-
-      if (false)
-      {
-        final FilterRegistration.Dynamic aFilter = aSC.addFilter ("HttpoxyFilter", HttpoxyFilter.class);
-        if (aFilter != null)
-        {
-          // Filter is new
-          aFilter.setAsyncSupported (true);
-          aFilter.addMappingForUrlPatterns (null, false, "/*");
-        }
-      }
-
-      if (false)
-      {
-        final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter",
-                                                                  CharacterEncodingFilter.class);
-        if (aFilter != null)
-        {
-          // Filter is new
-          aFilter.setAsyncSupported (true);
-          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_ENCODING, StandardCharsets.UTF_8.name ());
-          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_FORCE_ENCODING, Boolean.TRUE.toString ());
-          aFilter.addMappingForUrlPatterns (null, false, "/*");
-        }
-      }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAjaxServlet",

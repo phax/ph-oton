@@ -27,7 +27,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.mutable.MutableBoolean;
-import com.helger.commons.state.EFinish;
+import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.xml.microdom.IMicroElement;
@@ -56,16 +56,16 @@ public final class HCHelper
       if (aChildNode instanceof IHCTextNode <?>)
       {
         ret.set (true);
-        return EFinish.FINISHED;
+        return EContinue.BREAK;
       }
-      return EFinish.UNFINISHED;
+      return EContinue.CONTINUE;
     });
     return ret.booleanValue ();
   }
 
   @Nonnull
-  private static EFinish _recursiveIterateTree (@Nonnull final IHCNode aNode,
-                                                @Nonnull final IHCIteratorCallback aCallback)
+  private static EContinue _recursiveIterateTree (@Nonnull final IHCNode aNode,
+                                                  @Nonnull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -74,20 +74,20 @@ public final class HCHelper
       for (final IHCNode aChild : aNode.getAllChildren ())
       {
         // call callback
-        if (aCallback.call (aNode, aChild).isFinished ())
-          return EFinish.FINISHED;
+        if (aCallback.call (aNode, aChild).isBreak ())
+          return EContinue.BREAK;
 
         // does the node has children
-        if (_recursiveIterateTree (aChild, aCallback).isFinished ())
-          return EFinish.FINISHED;
+        if (_recursiveIterateTree (aChild, aCallback).isBreak ())
+          return EContinue.BREAK;
       }
     }
-    return EFinish.UNFINISHED;
+    return EContinue.CONTINUE;
   }
 
   @Nonnull
-  private static EFinish _recursiveIterateTreeNoCopy (@Nonnull final IHCNode aNode,
-                                                      @Nonnull final IHCIteratorCallback aCallback)
+  private static EContinue _recursiveIterateTreeNoCopy (@Nonnull final IHCNode aNode,
+                                                        @Nonnull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -96,15 +96,15 @@ public final class HCHelper
       for (final IHCNode aChild : aNode.getChildren ())
       {
         // call callback
-        if (aCallback.call (aNode, aChild).isFinished ())
-          return EFinish.FINISHED;
+        if (aCallback.call (aNode, aChild).isBreak ())
+          return EContinue.BREAK;
 
         // does the node has children
-        if (_recursiveIterateTreeNoCopy (aChild, aCallback).isFinished ())
-          return EFinish.FINISHED;
+        if (_recursiveIterateTreeNoCopy (aChild, aCallback).isBreak ())
+          return EContinue.BREAK;
       }
     }
-    return EFinish.UNFINISHED;
+    return EContinue.CONTINUE;
   }
 
   /**
@@ -123,7 +123,7 @@ public final class HCHelper
     ValueEnforcer.notNull (aCallback, "callback");
 
     // call callback on start node
-    if (aCallback.call (null, aNode).isUnfinished ())
+    if (aCallback.call (null, aNode).isContinue ())
       _recursiveIterateTree (aNode, aCallback);
   }
 
@@ -143,7 +143,7 @@ public final class HCHelper
     ValueEnforcer.notNull (aCallback, "callback");
 
     // call callback on start node
-    if (aCallback.call (null, aNode).isUnfinished ())
+    if (aCallback.call (null, aNode).isContinue ())
       _recursiveIterateTreeNoCopy (aNode, aCallback);
   }
 
