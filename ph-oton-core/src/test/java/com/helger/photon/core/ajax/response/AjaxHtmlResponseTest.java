@@ -34,10 +34,7 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
-import com.helger.servlet.mock.MockHttpServletResponse;
-import com.helger.servlet.mock.OfflineHttpServletRequest;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.web.scope.mgr.WebScoped;
 
 /**
  * Test class for class {@link AjaxHtmlResponse}.
@@ -54,10 +51,7 @@ public final class AjaxHtmlResponseTest
   @Test
   public void testFullHtml ()
   {
-    final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.onRequestBegin ("dummy",
-                                                                                          new OfflineHttpServletRequest (),
-                                                                                          new MockHttpServletResponse ());
-    try
+    try (final WebScoped aWebScoped = new WebScoped ())
     {
       final HCHtml aHtml = new HCHtml ();
       aHtml.getHead ().addCSS (new HCStyle ("*{font-family:Helvetica;}"));
@@ -67,16 +61,12 @@ public final class AjaxHtmlResponseTest
       aHtml.getBody ().addChild (new HCH1 ().addChild ("Test H1"));
       aHtml.getBody ().addChild (new HCStyle ("h1{color:red;}"));
       aHtml.getBody ().addChild (new HCScriptInline (new UnparsedJSCodeProvider ("var y = x;")));
-      final AjaxHtmlResponse aResponse = AjaxHtmlResponse.createSuccess (aRequestScope, aHtml);
+      final AjaxHtmlResponse aResponse = AjaxHtmlResponse.createSuccess (aWebScoped.getRequestScope (), aHtml);
       assertNotNull (aResponse);
       assertNotNull (aResponse.getSuccessValue ());
       assertNotNull (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML));
       assertTrue (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML).isValue ());
       s_aLogger.info (aResponse.getSuccessValue ().getAsString (AjaxHtmlResponse.PROPERTY_HTML));
-    }
-    finally
-    {
-      WebScopeManager.onRequestEnd ();
     }
   }
 }

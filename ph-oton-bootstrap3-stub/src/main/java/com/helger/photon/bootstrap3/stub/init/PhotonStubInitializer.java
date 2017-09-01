@@ -47,7 +47,6 @@ import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.scope.ScopeHelper;
 import com.helger.servlet.response.UnifiedResponseDefaultSettings;
-import com.helger.web.scope.mgr.ThrowingScopeFactory;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xservlet.requesttrack.RequestTracker;
 
@@ -101,9 +100,6 @@ public final class PhotonStubInitializer
     // Logging: JUL to SLF4J
     SLF4JBridgeHandler.removeHandlersForRootLogger ();
     SLF4JBridgeHandler.install ();
-
-    // Ensure that only web scopes are created and never non-web scopes
-    ThrowingScopeFactory.installToMetaScopeFactory ();
 
     if (GlobalDebug.isDebugMode ())
     {

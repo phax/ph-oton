@@ -188,8 +188,9 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     if (aScope instanceof ISessionWebScope)
     {
       final ISessionWebScope aWebScope = (ISessionWebScope) aScope;
-      final LocalDateTime aCreationDT = PDTFactory.createLocalDateTime (aWebScope.getCreationTime ());
-      final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTime (aWebScope.getLastAccessedTime ());
+      final LocalDateTime aCreationDT = PDTFactory.createLocalDateTime (aWebScope.getSession ().getCreationTime ());
+      final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTime (aWebScope.getSession ()
+                                                                                   .getLastAccessedTime ());
 
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_CREATION_DT.getDisplayText (aDisplayLocale))
                                                          .setCtrl (PDTToString.getAsString (aCreationDT,
@@ -203,14 +204,18 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                                            .toString ()));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_TIMEOUT.getDisplayText (aDisplayLocale))
                                                          .setCtrl (EText.MSG_SCOPE_SESSION_TIMEOUT_TEXT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                Long.toString (aWebScope.getMaxInactiveInterval ()),
-                                                                                                                                Long.toString (aWebScope.getMaxInactiveInterval () /
+                                                                                                                                Long.toString (aWebScope.getSession ()
+                                                                                                                                                        .getMaxInactiveInterval ()),
+                                                                                                                                Long.toString (aWebScope.getSession ()
+                                                                                                                                                        .getMaxInactiveInterval () /
                                                                                                                                                CGlobal.SECONDS_PER_MINUTE))));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_EXPIRATION_DT.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (PDTToString.getAsString (aLastAccessDT.plusSeconds ((int) aWebScope.getMaxInactiveInterval ()),
+                                                         .setCtrl (PDTToString.getAsString (aLastAccessDT.plusSeconds (aWebScope.getSession ()
+                                                                                                                                .getMaxInactiveInterval ()),
                                                                                             aDisplayLocale)));
       aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IS_NEW.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (EPhotonCoreText.getYesOrNo (aWebScope.isNew (),
+                                                         .setCtrl (EPhotonCoreText.getYesOrNo (aWebScope.getSession ()
+                                                                                                        .isNew (),
                                                                                                aDisplayLocale)));
     }
 
@@ -355,7 +360,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                                 : "")));
       aRow.addCell (Integer.toString (aSessionScope.attrs ().size ()));
       if (aWebScope != null)
-        aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTime (aWebScope.getLastAccessedTime ()),
+        aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTime (aWebScope.getSession ()
+                                                                                        .getLastAccessedTime ()),
                                                aDisplayLocale));
       else
         aRow.addCell ();

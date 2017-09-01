@@ -42,11 +42,10 @@ import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.security.password.constraint.PasswordConstraintMinLength;
-import com.helger.servlet.mock.MockHttpServletResponse;
-import com.helger.servlet.mock.OfflineHttpServletRequest;
 import com.helger.smtp.EmailGlobalSettings;
 import com.helger.smtp.transport.listener.LoggingConnectionListener;
 import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.web.scope.mgr.WebScoped;
 
 /**
  * Callbacks for the application server
@@ -121,10 +120,7 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
     for (final Map.Entry <String, IApplicationInitializer <LECTYPE>> aEntry : aIniter.entrySet ())
     {
       final String sAppID = aEntry.getKey ();
-      WebScopeManager.onRequestBegin (sAppID,
-                                      new OfflineHttpServletRequest (aSC, false),
-                                      new MockHttpServletResponse ());
-      try
+      try (final WebScoped aWebScoped = new WebScoped (sAppID))
       {
         final IApplicationInitializer <LECTYPE> aInitializer = aEntry.getValue ();
 
@@ -156,10 +152,6 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
 
         // re-throw
         throw ex;
-      }
-      finally
-      {
-        WebScopeManager.onRequestEnd ();
       }
     }
 
