@@ -19,12 +19,10 @@ package com.helger.photon.jetty;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import org.eclipse.jetty.server.Server;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.exception.InitializationException;
 
@@ -34,49 +32,35 @@ import com.helger.commons.exception.InitializationException;
  * @author Philip Helger
  * @since 7.0.2
  */
-public class JettyRunner
+public class JettyRunner extends JettyStarter
 {
-  private final int m_nPort;
-  private final int m_nStopPort;
-  private String m_sAppName = "JettyRunner";
   private Thread m_aThread;
+  private final Semaphore m_aServerStartedSem = new Semaphore (0);
+  private final AtomicBoolean m_aServerStartupSuccess = new AtomicBoolean (true);
 
   public JettyRunner ()
   {
-    this (JettyStarter.DEFAULT_PORT, JettyStarter.DEFAULT_STOP_PORT);
+    this ("JettyRunner");
   }
 
-  public JettyRunner (@Nonnegative final int nPort, @Nonnegative final int nStopPort)
+  public JettyRunner (@Nonnull @Nonempty final String sAppName)
   {
-    m_nPort = nPort;
-    m_nStopPort = nStopPort;
+    super (sAppName);
   }
 
-  @Nonnegative
-  public int getPort ()
+  @Override
+  protected void onServerStarted (@Nonnull final Server aServer)
   {
-    return m_nPort;
+    // Notify that server started
+    m_aServerStartedSem.release ();
   }
 
-  @Nonnegative
-  public int getStopPort ()
+  @Override
+  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t)
   {
-    return m_nStopPort;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getAppName ()
-  {
-    return m_sAppName;
-  }
-
-  @Nonnull
-  public JettyRunner setAppName (@Nonnull @Nonempty final String sAppName)
-  {
-    ValueEnforcer.notEmpty (sAppName, "AppName");
-    m_sAppName = sAppName;
-    return this;
+    // Server start failed - remember that
+    m_aServerStartupSuccess.set (false);
+    m_aServerStartedSem.release ();
   }
 
   public synchronized void startServer () throws Exception
@@ -84,29 +68,11 @@ public class JettyRunner
     if (m_aThread != null)
       throw new IllegalStateException ("Jetty is already running!");
 
-    final AtomicBoolean aSuccess = new AtomicBoolean (true);
-    final Semaphore s = new Semaphore (0);
+    m_aServerStartupSuccess.set (true);
     m_aThread = new Thread ( () -> {
       try
       {
-        new JettyStarter (m_sAppName)
-        {
-          @Override
-          protected void onServerStarted (@Nonnull final Server aServer)
-          {
-            // Notify that server started
-            s.release ();
-          }
-
-          @Override
-          protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t)
-          {
-            // Server start failed - remember that
-            aSuccess.set (false);
-            s.release ();
-          }
-
-        }.setPort (m_nPort).setStopPort (m_nStopPort).run ();
+        run ();
       }
       catch (final Exception ex)
       {
@@ -117,17 +83,21 @@ public class JettyRunner
     m_aThread.start ();
 
     // Wait until server started
-    s.acquire ();
+    m_aServerStartedSem.acquire ();
 
-    if (!aSuccess.get ())
-      throw new InitializationException ("Failed to start Jetty:" + m_nPort + ":" + m_nStopPort + " - see log files");
+    if (!m_aServerStartupSuccess.get ())
+      throw new InitializationException ("Failed to start Jetty:" +
+                                         getPort () +
+                                         ":" +
+                                         getStopPort () +
+                                         " - see log files");
   }
 
   public synchronized void shutDownServer () throws Exception
   {
     if (m_aThread != null)
     {
-      new JettyStopper ().setStopPort (m_nStopPort).run ();
+      new JettyStopper ().setStopPort (getStopPort ()).setStopKey (getStopKey ()).run ();
       m_aThread.join ();
       m_aThread = null;
     }

@@ -78,6 +78,7 @@ public class JettyStarter
   private String m_sWebXmlResource;
   private String m_sContextPath = DEFAULT_CONTEXT_PATH;
   private ThreadPool m_aThreadPool;
+  private boolean m_bAllowAnnotationBasedConfig = true;
 
   @Nonnull
   private static Resource _asRes (@Nonnull final String sPath)
@@ -103,7 +104,7 @@ public class JettyStarter
     m_sAppName = sAppName;
     m_sDirBaseName = FilenameHelper.getAsSecureValidFilename (sAppName);
     if (StringHelper.hasNoText (m_sDirBaseName))
-      throw new IllegalStateException ("FolderName is empty.");
+      throw new IllegalStateException ("FolderName for application name '" + sAppName + "' is empty.");
 
     // Must be directly called on System to have an effect!
     System.setProperty ("log4j2.disable.jmx", "true");
@@ -126,6 +127,15 @@ public class JettyStarter
   }
 
   /**
+   * @return Port to run on.
+   */
+  @Nonnegative
+  public int getPort ()
+  {
+    return m_nPort;
+  }
+
+  /**
    * Enable or disable the "stop monitor" that listens for the graceful
    * shutdown. By default this is enabled.
    *
@@ -138,6 +148,11 @@ public class JettyStarter
   {
     m_bRunStopMonitor = bRunStopMonitor;
     return this;
+  }
+
+  public boolean isRunStopMonitor ()
+  {
+    return m_bRunStopMonitor;
   }
 
   /**
@@ -157,6 +172,12 @@ public class JettyStarter
     return this;
   }
 
+  @Nonnull
+  public String getStopKey ()
+  {
+    return m_sStopKey;
+  }
+
   /**
    * Set the port on which the "stop monitor" should be running. Defaults to
    * {@link #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each
@@ -173,6 +194,11 @@ public class JettyStarter
     ValueEnforcer.isGT0 (nStopPort, "StopPort");
     m_nStopPort = nStopPort;
     return this;
+  }
+
+  public int getStopPort ()
+  {
+    return m_nStopPort;
   }
 
   /**
@@ -219,6 +245,12 @@ public class JettyStarter
     return this;
   }
 
+  @Nonnull
+  public Resource getResourceBase ()
+  {
+    return m_aResourceBase;
+  }
+
   /**
    * Set the path to WEB-INF/web.xml. If unspecified, the default relative to
    * the resource base is used.
@@ -232,6 +264,12 @@ public class JettyStarter
   {
     m_sWebXmlResource = sWebXmlResource;
     return this;
+  }
+
+  @Nullable
+  public String getWebXmlResource ()
+  {
+    return m_sWebXmlResource;
   }
 
   /**
@@ -251,6 +289,13 @@ public class JettyStarter
     return this;
   }
 
+  @Nonnull
+  @Nonempty
+  public String getContextPath ()
+  {
+    return m_sContextPath;
+  }
+
   /**
    * Set the thread pool to use.
    *
@@ -265,6 +310,33 @@ public class JettyStarter
   {
     m_aThreadPool = aThreadPool;
     return this;
+  }
+
+  @Nullable
+  public ThreadPool getThreadPool ()
+  {
+    return m_aThreadPool;
+  }
+
+  /**
+   * Enable or disable annotation based scanning. By default it is enabled.
+   * Disable it for better performance.
+   *
+   * @param bAllowAnnotationBasedConfig
+   *        <code>false</code> to disable it.
+   * @return this
+   * @since 8.0.0
+   */
+  @Nonnull
+  public JettyStarter setAllowAnnotationBasedConfig (final boolean bAllowAnnotationBasedConfig)
+  {
+    m_bAllowAnnotationBasedConfig = bAllowAnnotationBasedConfig;
+    return this;
+  }
+
+  public boolean isAllowAnnotationBasedConfig ()
+  {
+    return m_bAllowAnnotationBasedConfig;
   }
 
   /**
@@ -363,13 +435,17 @@ public class JettyStarter
       // https://github.com/eclipse/jetty.project/issues/680
       aWebAppCtx.setAttribute (WebInfConfiguration.CONTAINER_JAR_PATTERN, ".*\\.jar$|.*/classes/.*");
 
-      // Important to add the AnnotationConfiguration!
-      aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
-                                                           new WebXmlConfiguration (),
-                                                           new MetaInfConfiguration (),
-                                                           new FragmentConfiguration (),
-                                                           new AnnotationConfiguration (),
-                                                           new JettyWebXmlConfiguration () });
+      if (m_bAllowAnnotationBasedConfig)
+      {
+        // Important to add the AnnotationConfiguration!
+        aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
+                                                             new WebXmlConfiguration (),
+                                                             new MetaInfConfiguration (),
+                                                             new FragmentConfiguration (),
+                                                             new AnnotationConfiguration (),
+                                                             new JettyWebXmlConfiguration () });
+      }
+      // else leave default
     }
 
     // Set session store directory to passivate/activate sessions
