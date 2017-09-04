@@ -41,7 +41,6 @@ import com.helger.photon.security.user.credentials.UserPasswordCredentials;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
 import com.helger.security.authentication.result.AuthIdentificationManager;
 import com.helger.security.authentication.result.AuthIdentificationResult;
-import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -201,8 +200,7 @@ public abstract class AbstractLoginManager
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REMOTE_HOST, aRequestScope.getRemoteHost ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURI ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
-    aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT,
-                               RequestHelper.getHttpUserAgentStringFromRequest (aRequestScope.getRequest ()));
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT, aRequestScope.getUserAgent ().getAsString ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_COUNT,
                                Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
   }

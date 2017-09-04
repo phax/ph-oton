@@ -407,9 +407,9 @@ public abstract class AbstractUnifiedResponseServlet extends AbstractScopeAwareH
     if (s_aFirstRequest.getAndSet (false) && !StaticServerInfo.isSet ())
     {
       // First set the default web server info
-      StaticServerInfo.init (aRequestScope.getRequest ().getScheme (),
-                             aRequestScope.getRequest ().getServerName (),
-                             aRequestScope.getRequest ().getServerPort (),
+      StaticServerInfo.init (aRequestScope.getScheme (),
+                             aRequestScope.getServerName (),
+                             aRequestScope.getServerPort (),
                              ServletContextPathHolder.getContextPath ());
     }
 
