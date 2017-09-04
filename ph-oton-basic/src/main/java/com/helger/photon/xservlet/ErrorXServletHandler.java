@@ -38,7 +38,7 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
     aURL.addIf ("httpRequestUri",
                 StringHelper.getToString (aRequestScope.getRequest ().getAttribute ("javax.servlet.error.request_uri")),
                 Objects::nonNull);
-    aURL.addIf ("httpReferrer", aRequestScope.getRequestHeader (CHttpHeader.REFERER), Objects::nonNull);
+    aURL.addIf ("httpReferrer", aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER), Objects::nonNull);
     aUnifiedResponse.setRedirect (aURL);
   }
 }
