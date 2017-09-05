@@ -34,17 +34,13 @@ import com.helger.commons.string.StringHelper;
  */
 public enum ETinyMCE4Language
 {
+  /* Note: this is not a valid Java locale! */
+  AF_ZA ("af_ZA"),
   AR ("ar"),
-  AR_SA ("ar_SA"),
-  AZ ("az"),
   BE ("be"),
   BG_BG ("bg_BG"),
-  /* Note: this is not a valid Java locale! */
-  BN_BD ("bn_BD"),
-  BS ("bs"),
   CA ("ca"),
   CS ("cs"),
-  CS_CZ ("cs_CZ"),
   CY ("cy"),
   DA ("da"),
   DE ("de"),
@@ -53,28 +49,17 @@ public enum ETinyMCE4Language
   EL ("el"),
   EN_CA ("en_CA"),
   EN_GB ("en_GB"),
-  EO ("eo"),
   ES ("es"),
   ES_MX ("es_MX"),
   ET ("et"),
-  EU ("eu"),
-  FA ("fa"),
   /* Note: this is not a valid Java locale! */
   FA_IR ("fa_IR"),
-  FI ("fi"),
-  FO ("fo"),
   FR_FR ("fr_FR"),
-  GD ("gd"),
-  GL ("gl"),
+  GA ("ga"),
   /* Note: this is not a valid Java locale! */
   HE_IL ("he_IL"),
-  HI_IN ("hi_IN"),
   HR ("hr"),
   HU_HU ("hu_HU"),
-  HY ("hy"),
-  /* Note: this is not a valid Java locale! */
-  ID ("id"),
-  IS_IS ("is_IS"),
   IT ("it"),
   JA ("ja"),
   /* Note: this is not a valid Java locale! */
@@ -84,19 +69,6 @@ public enum ETinyMCE4Language
   KK ("kk"),
   /* Note: this is not a valid Java locale! */
   KM_KH ("km_KH"),
-  KO ("ko"),
-  KO_KR ("ko_KR"),
-  KU ("ku"),
-  /* Note: this is not a valid Java locale! */
-  KU_IQ ("ku_IQ"),
-  LB ("lb"),
-  LT ("lt"),
-  LV ("lv"),
-  ML ("ml"),
-  /* Note: this is not a valid Java locale! */
-  ML_IN ("ml_IN"),
-  /* Note: this is not a valid Java locale! */
-  MN_MN ("mn_MN"),
   /* Note: this is not a valid Java locale! */
   NB_NO ("nb_NO"),
   NL ("nl"),
@@ -105,24 +77,17 @@ public enum ETinyMCE4Language
   PT_PT ("pt_PT"),
   RO ("ro"),
   RU ("ru"),
-  /* Note: this is not a valid Java locale! */
-  SI_LK ("si_LK"),
   SK ("sk"),
   SL_SI ("sl_SI"),
-  SR ("sr"),
   SV_SE ("sv_SE"),
   TA ("ta"),
   /* Note: this is not a valid Java locale! */
   TA_IN ("ta_IN"),
-  TG ("tg"),
   TH_TH ("th_TH"),
   TR ("tr"),
   TR_TR ("tr_TR"),
-  TT ("tt"),
-  UG ("ug"),
   UK ("uk"),
   UK_UA ("uk_UA"),
-  VI ("vi"),
   VI_VN ("vi_VN"),
   ZH_CN ("zh_CN"),
   ZH_TW ("zh_TW");
