@@ -21,6 +21,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,11 +31,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.string.StringHelper;
 import com.helger.http.EHttpVersion;
 import com.helger.json.IJson;
+import com.helger.json.IJsonObject;
 import com.helger.json.serialize.JsonReader;
 import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.web.scope.IRequestWebScope;
@@ -45,23 +53,49 @@ import com.helger.xservlet.handler.IXServletHandler;
  *
  * @author Philip Helger
  */
+@ThreadSafe
 public class CSPReportingXServletHandler implements IXServletHandler
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
 
-  private final Consumer <? super IJson> m_aJsonHandler;
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+  private final Consumer <? super IJsonObject> m_aJsonHandler;
+  private boolean m_bFilterDuplicates = true;
+  @GuardedBy ("m_aRWLock")
+  private final ICommonsSet <String> m_aBlockedURIs = new CommonsHashSet <> ();
 
   public CSPReportingXServletHandler ()
   {
     this (CSPReportingXServletHandler::logCSPReport);
   }
 
-  public CSPReportingXServletHandler (final Consumer <? super IJson> aJsonHandler)
+  public CSPReportingXServletHandler (@Nonnull final Consumer <? super IJsonObject> aJsonHandler)
   {
     m_aJsonHandler = ValueEnforcer.notNull (aJsonHandler, "JsonHandler");
   }
 
-  public static void logCSPReport (@Nonnull final IJson aJson)
+  /**
+   * @return <code>true</code> if duplicate filtering is enabled (default),
+   *         <code>false</code> if not.
+   */
+  public final boolean isFilterDuplicates ()
+  {
+    return m_bFilterDuplicates;
+  }
+
+  /**
+   * Enable or disable duplicate filtering.
+   *
+   * @param bFilterDuplicates
+   *        <code>true</code> to filter duplicates, <code>false</code> to
+   *        disable it.
+   */
+  public final void setFilterDuplicates (final boolean bFilterDuplicates)
+  {
+    m_bFilterDuplicates = bFilterDuplicates;
+  }
+
+  public static void logCSPReport (@Nonnull final IJsonObject aJson)
   {
     s_aLogger.warn ("CSP report: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
   }
@@ -78,8 +112,39 @@ public class CSPReportingXServletHandler implements IXServletHandler
     // Try to parse as JSON
     final IJson aJson = JsonReader.readFromStream (new NonBlockingByteArrayInputStream (aBytes));
     if (aJson != null)
-      m_aJsonHandler.accept (aJson);
+    {
+      if (aJson.isObject ())
+      {
+        final IJsonObject aJsonObj = aJson.getAsObject ();
+        final String sBlockedURI = aJsonObj.getAsString ("blocked-uri");
+
+        final boolean bIsDuplicate = m_bFilterDuplicates &&
+                                     StringHelper.hasText (sBlockedURI) &&
+                                     m_aRWLock.writeLocked ( () -> !m_aBlockedURIs.add (sBlockedURI));
+
+        if (bIsDuplicate)
+        {
+          // Avoid too many reports
+          s_aLogger.info ("Ignoring already blocked URI '" + sBlockedURI + "'");
+        }
+        else
+        {
+          // Unique URL
+          m_aJsonHandler.accept (aJson.getAsObject ());
+        }
+      }
+      else
+        s_aLogger.error ("Weird JSON received: " +
+                         aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
+    }
     else
       s_aLogger.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsSet <String> getAllBlockedURIs ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aBlockedURIs.getClone ());
   }
 }

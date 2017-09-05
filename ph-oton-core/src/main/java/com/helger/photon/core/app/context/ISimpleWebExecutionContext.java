@@ -26,9 +26,6 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.servlet.request.IRequestParamMap;
-import com.helger.servlet.request.RequestHelper;
-import com.helger.useragent.IUserAgent;
-import com.helger.useragent.browser.BrowserInfo;
 import com.helger.web.scope.IRequestParamContainer;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -78,27 +75,6 @@ public interface ISimpleWebExecutionContext
    */
   @Nonnull
   IMenuTree getMenuTree ();
-
-  /**
-   * Get the user agent object of this HTTP request.
-   *
-   * @return A non-<code>null</code> user agent object.
-   */
-  @Nonnull
-  default IUserAgent getUserAgent ()
-  {
-    return RequestHelper.getUserAgent (getRequestScope ().getRequest ());
-  }
-
-  /**
-   * @return The information about the matching browser or <code>null</code> if
-   *         no known browser was detected.
-   */
-  @Nullable
-  default BrowserInfo getBrowserInfo ()
-  {
-    return getUserAgent ().getBrowserInfo ();
-  }
 
   /**
    * Get the URL to the specified menu item using the current display locale.

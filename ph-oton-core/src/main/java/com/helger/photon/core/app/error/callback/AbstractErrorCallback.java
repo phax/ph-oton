@@ -46,7 +46,6 @@ import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.quartz.IJob;
 import com.helger.schedule.job.AbstractJob;
 import com.helger.schedule.job.IJobExceptionCallback;
-import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
@@ -161,7 +160,7 @@ public abstract class AbstractErrorCallback implements
                "Long running request.",
                new StringMap ().add ("request-id", sUniqueRequestID)
                                .add ("millisecconds", nRunningMilliseconds)
-                               .add ("URL", RequestHelper.getURL (aRequestScope.getRequest ())));
+                               .add ("URL", aRequestScope.getURL ()));
     }
   }
 

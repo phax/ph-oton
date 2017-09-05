@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
 
@@ -47,7 +46,7 @@ public class AuditingLongRunningRequestCallback implements ILongRunningRequestCa
     AuditHelper.onAuditExecuteSuccess ("long-running-request",
                                        sUniqueRequestID,
                                        Long.valueOf (nRunningMilliseconds),
-                                       RequestHelper.getURL (aRequestScope.getRequest ()));
+                                       aRequestScope.getURL ());
   }
 
   @Override

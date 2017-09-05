@@ -117,7 +117,7 @@ public final class InvokableAPIDescriptor
     // Check required headers
     if (m_aDescriptor.hasRequiredHeaders ())
       for (final String sRequiredHeader : m_aDescriptor.getAllRequiredHeaders ())
-        if (aRequestScope.getRequestHeader (sRequiredHeader) == null)
+        if (aRequestScope.headers ().getFirstHeaderValue (sRequiredHeader) == null)
         {
           s_aLogger.warn ("Request '" + m_sPath + "' is missing required HTTP header '" + sRequiredHeader + "'");
           return false;

@@ -3,6 +3,7 @@ package com.helger.photon.xservlet;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
+import javax.servlet.http.HttpServletRequest;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.http.CHttpHeader;
@@ -27,18 +28,19 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
+    final HttpServletRequest aRequest = aRequestScope.getRequest ();
     final SimpleURL aURL = new SimpleURL (aRequestScope.getContextPath () + m_sServletPath);
     aURL.add ("httpError", true);
     aURL.addIf ("httpStatusCode",
-                StringHelper.getToString (aRequestScope.getRequest ().getAttribute ("javax.servlet.error.status_code")),
+                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.status_code")),
                 Objects::nonNull);
     aURL.addIf ("httpStatusMessage",
-                StringHelper.getToString (aRequestScope.getRequest ().getAttribute ("javax.servlet.error.message")),
+                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.message")),
                 Objects::nonNull);
     aURL.addIf ("httpRequestUri",
-                StringHelper.getToString (aRequestScope.getRequest ().getAttribute ("javax.servlet.error.request_uri")),
+                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.request_uri")),
                 Objects::nonNull);
-    aURL.addIf ("httpReferrer", aRequestScope.getRequestHeader (CHttpHeader.REFERER), Objects::nonNull);
+    aURL.addIf ("httpReferrer", aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER), Objects::nonNull);
     aUnifiedResponse.setRedirect (aURL);
   }
 }

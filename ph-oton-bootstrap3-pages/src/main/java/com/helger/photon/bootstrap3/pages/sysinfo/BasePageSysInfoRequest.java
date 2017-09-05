@@ -44,7 +44,6 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.servlet.cookie.CookieHelper;
-import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -55,8 +54,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
-                                    extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -127,7 +126,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext>
       aTable.setID (getID () + "http");
       aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
                                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
-      for (final Map.Entry <String, ICommonsList <String>> aEntry : RequestHelper.getRequestHeaderMap (aHttpRequest)
+      for (final Map.Entry <String, ICommonsList <String>> aEntry : aRequestScope.headers ()
                                                                                  .getAllHeaders ()
                                                                                  .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
                                                                                  .entrySet ())

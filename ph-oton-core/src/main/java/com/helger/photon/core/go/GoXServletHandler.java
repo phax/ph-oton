@@ -165,6 +165,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
 
     // Append all request parameters of this request
     // Don't use the request attributes, as there might be more of them
+    // FIXME crash with multipart request?
     final Enumeration <?> aEnum = aRequestScope.getRequest ().getParameterNames ();
     while (aEnum.hasMoreElements ())
     {
