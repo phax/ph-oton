@@ -87,15 +87,20 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return JSExpr.lit (sKey);
   }
 
+  @Nonnegative
+  public int size ()
+  {
+    return m_aExprs == null ? 0 : m_aExprs.size ();
+  }
+
   public boolean isEmpty ()
   {
     return m_aExprs == null || m_aExprs.isEmpty ();
   }
 
-  @Nonnegative
-  public int getSize ()
+  public boolean isNotEmpty ()
   {
-    return m_aExprs == null ? 0 : m_aExprs.size ();
+    return m_aExprs != null && m_aExprs.isNotEmpty ();
   }
 
   @Nonnull
@@ -280,12 +285,6 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   public ICommonsOrderedMap <IJSExpression, IJSExpression> getAll ()
   {
     return new CommonsLinkedHashMap <> (m_aExprs);
-  }
-
-  @Nonnegative
-  public int getCount ()
-  {
-    return m_aExprs.size ();
   }
 
   public void generate (@Nonnull final JSFormatter aFormatter)

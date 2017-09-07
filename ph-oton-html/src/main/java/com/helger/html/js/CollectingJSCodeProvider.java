@@ -155,15 +155,15 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
     m_aList.clear ();
   }
 
+  @Nonnegative
+  public int size ()
+  {
+    return m_aList.size ();
+  }
+
   public boolean isEmpty ()
   {
     return m_aList.isEmpty ();
-  }
-
-  @Nonnegative
-  public int getSize ()
-  {
-    return m_aList.size ();
   }
 
   @Nonnull

@@ -57,8 +57,8 @@ import com.helger.xml.util.changelog.ChangeLogSerializer;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContext>
-                                       extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContext> extends
+                                       AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -114,7 +114,7 @@ public class BasePageAppInfoChangeLogs <WPECTYPE extends IWebPageExecutionContex
   {
     String ret = aEntry.getText (aDisplayLocale);
     if (StringHelper.hasNoText (ret))
-      if (aEntry.getAllTexts ().getSize () == 1)
+      if (aEntry.getAllTexts ().size () == 1)
         ret = aEntry.getAllTexts ().getAllTexts ().getFirstValue ();
     return ret;
   }

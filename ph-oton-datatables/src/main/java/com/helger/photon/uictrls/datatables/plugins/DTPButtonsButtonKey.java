@@ -131,7 +131,7 @@ public class DTPButtonsButtonKey
       ret.add ("ctrlKey", m_eCtrlKey.getAsBooleanValue (false));
     if (m_eMetaKey.isDefined ())
       ret.add ("metaKey", m_eMetaKey.getAsBooleanValue (false));
-    if (ret.getSize () == 1)
+    if (ret.size () == 1)
     {
       // Only the key present
       return JSExpr.lit (m_cKey);

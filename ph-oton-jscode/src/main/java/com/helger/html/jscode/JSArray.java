@@ -48,15 +48,20 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   public JSArray ()
   {}
 
+  @Nonnegative
+  public int size ()
+  {
+    return m_aExprs == null ? 0 : m_aExprs.size ();
+  }
+
   public boolean isEmpty ()
   {
     return m_aExprs == null || m_aExprs.isEmpty ();
   }
 
-  @Nonnegative
-  public int getSize ()
+  public boolean isNotEmpty ()
   {
-    return m_aExprs == null ? 0 : m_aExprs.size ();
+    return m_aExprs != null && m_aExprs.isNotEmpty ();
   }
 
   @Nonnull

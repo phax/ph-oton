@@ -135,7 +135,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   }
 
   @Nonnegative
-  public int getSize ()
+  public int size ()
   {
     return m_aRWLock.readLocked ( () -> m_aMap.size ());
   }

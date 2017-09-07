@@ -64,9 +64,7 @@ public final class HTMLEntityResolverTest
     assertTrue (_testResolve (CHTMLDocTypes.DOCTYPE_XHTML10_STRICT));
     assertTrue (_testResolve (CHTMLDocTypes.DOCTYPE_XHTML10_TRANS));
     assertTrue (_testResolve (CHTMLDocTypes.DOCTYPE_XHTML11));
-    assertTrue (_testResolve ("<?xml version=\"1.0\" encoding=\"" +
-                              XMLWriterSettings.DEFAULT_XML_CHARSET +
-                              "\"?>",
+    assertTrue (_testResolve ("<?xml version=\"1.0\" encoding=\"" + XMLWriterSettings.DEFAULT_XML_CHARSET + "\"?>",
                               CHTMLDocTypes.DOCTYPE_XHTML11));
   }
 
@@ -95,14 +93,14 @@ public final class HTMLEntityResolverTest
     assertNotNull (aIS1);
     final NonBlockingByteArrayOutputStream aBAOS1 = new NonBlockingByteArrayOutputStream ();
     StreamHelper.copyInputStreamToOutputStream (aIS1.getByteStream (), aBAOS1);
-    assertTrue (aBAOS1.getSize () > 0);
+    assertTrue (aBAOS1.size () > 0);
 
     // read 2.
     final InputSource aIS2 = HTMLEntityResolver.getInstance ().resolveEntity ("-//W3C//ENTITIES Latin 1 for XHTML//EN");
     assertNotNull (aIS2);
     final NonBlockingByteArrayOutputStream aBAOS2 = new NonBlockingByteArrayOutputStream ();
     StreamHelper.copyInputStreamToOutputStream (aIS2.getByteStream (), aBAOS2);
-    assertTrue (aBAOS2.getSize () > 0);
+    assertTrue (aBAOS2.size () > 0);
 
     assertArrayEquals (aBAOS1.toByteArray (), aBAOS2.toByteArray ());
   }

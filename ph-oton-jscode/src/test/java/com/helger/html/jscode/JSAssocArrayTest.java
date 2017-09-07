@@ -41,7 +41,7 @@ public class JSAssocArrayTest
                                                      .add (new JsonObject ().add ("c", 1)
                                                                             .add ("d",
                                                                                   new BigDecimal ("123456789123456789123456789")))));
-    assertEquals (2, a.getCount ());
+    assertEquals (2, a.size ());
     assertNotNull (a.get ("a"));
     assertTrue (a.get ("a") instanceof JSAtomInt);
     assertNotNull (a.get ("b"));
