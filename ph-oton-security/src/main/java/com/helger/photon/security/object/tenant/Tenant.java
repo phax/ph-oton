@@ -43,7 +43,7 @@ public class Tenant extends AbstractBusinessObject implements ITenant
   private String m_sDisplayName;
 
   /**
-   * Constructor for new client
+   * Constructor for new Tenant
    *
    * @param sID
    *        ID

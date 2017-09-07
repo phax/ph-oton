@@ -48,13 +48,13 @@ public abstract class AbstractTenantObject extends AbstractBusinessObject implem
     // passed implementation class
   }
 
-  public AbstractTenantObject (@Nonnull final ITenant aClient, @Nonnull final StubObject aObject)
+  public AbstractTenantObject (@Nonnull final ITenant aTenant, @Nonnull final StubObject aObject)
   {
     super (aObject);
-    m_aTenant = ValueEnforcer.notNull (aClient, "Client");
+    m_aTenant = ValueEnforcer.notNull (aTenant, "Tenant");
   }
 
-  public AbstractTenantObject (@Nonnull final ITenant aClient,
+  public AbstractTenantObject (@Nonnull final ITenant aTenant,
                                @Nonnull @Nonempty final String sID,
                                @Nonnull final LocalDateTime aCreationDT,
                                @Nullable final String sCreationUserID,
@@ -71,7 +71,7 @@ public abstract class AbstractTenantObject extends AbstractBusinessObject implem
            aDeletionDT,
            sDeletionUserID,
            (Map <String, String>) null);
-    m_aTenant = ValueEnforcer.notNull (aClient, "Client");
+    m_aTenant = ValueEnforcer.notNull (aTenant, "Tenant");
   }
 
   @Nonnull

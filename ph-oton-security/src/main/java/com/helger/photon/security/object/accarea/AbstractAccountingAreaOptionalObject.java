@@ -45,7 +45,7 @@ import com.helger.photon.security.object.StubObject;
 public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusinessObject implements
                                                            IAccountingAreaObject
 {
-  private final ITenant m_aClient;
+  private final ITenant m_aTenant;
   private final IAccountingArea m_aAccountingArea;
   // Status vars
   private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
@@ -53,7 +53,7 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   protected AbstractAccountingAreaOptionalObject (@Nonnull final IAccountingAreaObject aOther)
   {
     super (aOther);
-    m_aClient = aOther.getTenant ();
+    m_aTenant = aOther.getTenant ();
     m_aAccountingArea = aOther.getAccountingArea ();
   }
 
@@ -63,24 +63,24 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
     this (aAccountingArea.getTenant (), aAccountingArea, aObject);
   }
 
-  public AbstractAccountingAreaOptionalObject (@Nonnull final ITenant aClient,
+  public AbstractAccountingAreaOptionalObject (@Nonnull final ITenant aTenant,
                                                @Nullable final IAccountingArea aAccountingArea,
                                                @Nonnull final StubObject aObject)
   {
     super (aObject);
-    ValueEnforcer.notNull (aClient, "Client");
-    if (aAccountingArea != null && !aAccountingArea.hasSameTenant (aClient))
+    ValueEnforcer.notNull (aTenant, "Tenant");
+    if (aAccountingArea != null && !aAccountingArea.hasSameTenant (aTenant))
       throw new IllegalArgumentException ("The passed accounting area '" +
                                           aAccountingArea.getID () +
-                                          "' does not belong to the passed client '" +
-                                          aClient.getID () +
+                                          "' does not belong to the passed tenant '" +
+                                          aTenant.getID () +
                                           "'!");
 
-    m_aClient = aClient;
+    m_aTenant = aTenant;
     m_aAccountingArea = aAccountingArea;
   }
 
-  public AbstractAccountingAreaOptionalObject (@Nonnull final ITenant aClient,
+  public AbstractAccountingAreaOptionalObject (@Nonnull final ITenant aTenant,
                                                @Nullable final IAccountingArea aAccountingArea,
                                                @Nonnull @Nonempty final String sID,
                                                @Nonnull final LocalDateTime aCreationDT,
@@ -98,22 +98,22 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
            aDeletionDT,
            sDeletionUserID,
            (Map <String, String>) null);
-    ValueEnforcer.notNull (aClient, "Client");
-    if (aAccountingArea != null && !aAccountingArea.hasSameTenant (aClient))
+    ValueEnforcer.notNull (aTenant, "Tenant");
+    if (aAccountingArea != null && !aAccountingArea.hasSameTenant (aTenant))
       throw new IllegalArgumentException ("The passed accounting area '" +
                                           aAccountingArea.getID () +
-                                          "' does not belong to the passed client '" +
-                                          aClient.getID () +
+                                          "' does not belong to the passed tenant '" +
+                                          aTenant.getID () +
                                           "'!");
 
-    m_aClient = aClient;
+    m_aTenant = aTenant;
     m_aAccountingArea = aAccountingArea;
   }
 
   @Nonnull
   public final ITenant getTenant ()
   {
-    return m_aClient;
+    return m_aTenant;
   }
 
   @Nullable
@@ -151,7 +151,7 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AbstractAccountingAreaOptionalObject rhs = (AbstractAccountingAreaOptionalObject) o;
-    return m_aClient.equals (rhs.m_aClient) &&
+    return m_aTenant.equals (rhs.m_aTenant) &&
            EqualsHelper.equals (m_aAccountingArea, rhs.m_aAccountingArea) &&
            getID ().equals (rhs.getID ());
   }
@@ -161,7 +161,7 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   {
     int ret = m_nHashCode;
     if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
-      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aClient)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aTenant)
                                                       .append (m_aAccountingArea)
                                                       .append (getID ())
                                                       .getHashCode ();
@@ -172,8 +172,8 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("client", m_aClient)
-                            .append ("accoutingArea", m_aAccountingArea)
+                            .append ("Tenant", m_aTenant)
+                            .append ("AccoutingArea", m_aAccountingArea)
                             .getToString ();
   }
 }

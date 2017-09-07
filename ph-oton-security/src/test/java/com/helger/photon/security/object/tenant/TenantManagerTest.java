@@ -49,7 +49,7 @@ public final class TenantManagerTest
   {
     PhotonSecurityManager.getUserMgr ().createDefaults ();
 
-    final TenantManager aMgr = new TenantManager ("dummy-client.xml");
+    final TenantManager aMgr = new TenantManager ("dummy-tenant.xml");
 
     // Login required for deletion
     final LoggedInUserManager aLUM = LoggedInUserManager.getInstance ();
@@ -57,16 +57,16 @@ public final class TenantManagerTest
                   aLUM.loginUser (CSecurity.USER_ADMINISTRATOR_LOGIN, CSecurity.USER_ADMINISTRATOR_PASSWORD));
     try
     {
-      final String sClientID = Long.toString (Clock.systemUTC ().millis ());
-      final ITenant aClient = aMgr.createClient (sClientID, "Name1");
-      assertNotNull (aClient);
+      final String sTenantID = Long.toString (Clock.systemUTC ().millis ());
+      final ITenant aTenant = aMgr.createTenant (sTenantID, "Name1");
+      assertNotNull (aTenant);
       try
       {
-        assertNull (aMgr.createClient (sClientID, "Was anderes"));
+        assertNull (aMgr.createTenant (sTenantID, "Was anderes"));
       }
       finally
       {
-        aMgr.deleteClient (sClientID);
+        aMgr.deleteTenant (sTenantID);
       }
     }
     finally

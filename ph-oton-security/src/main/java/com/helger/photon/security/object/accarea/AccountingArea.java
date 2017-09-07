@@ -28,8 +28,8 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.masterdata.address.PostalAddress;
 import com.helger.masterdata.address.IPostalAddress;
+import com.helger.masterdata.address.PostalAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.basic.object.accarea.IAccountingArea;
 import com.helger.photon.basic.object.tenant.ITenant;
@@ -64,8 +64,8 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
   /**
    * Constructor for new accounting area
    *
-   * @param aClient
-   *        Client
+   * @param aTenant
+   *        Tenant
    * @param sDisplayName
    *        display name
    * @param sCompanyType
@@ -97,7 +97,7 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
    * @param aDisplayLocale
    *        The display locale to use. May not be <code>null</code>.
    */
-  public AccountingArea (@Nonnull final ITenant aClient,
+  public AccountingArea (@Nonnull final ITenant aTenant,
                          @Nonnull @Nonempty final String sDisplayName,
                          @Nullable final String sCompanyType,
                          @Nullable final String sCompanyVATIN,
@@ -114,7 +114,7 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
                          @Nullable final String sCommercialCourt,
                          @Nonnull final Locale aDisplayLocale)
   {
-    this (aClient,
+    this (aTenant,
           StubObject.createForCurrentUser (),
           sDisplayName,
           sCompanyType,
@@ -133,7 +133,7 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
           aDisplayLocale);
   }
 
-  AccountingArea (@Nonnull final ITenant aClient,
+  AccountingArea (@Nonnull final ITenant aTenant,
                   @Nonnull final StubObject aStubObject,
                   @Nonnull @Nonempty final String sDisplayName,
                   @Nullable final String sCompanyType,
@@ -151,7 +151,7 @@ public class AccountingArea extends AbstractTenantObject implements IAccountingA
                   @Nullable final String sCommercialCourt,
                   @Nonnull final Locale aDisplayLocale)
   {
-    super (aClient, aStubObject);
+    super (aTenant, aStubObject);
     setDisplayName (sDisplayName);
     setCompanyType (sCompanyType);
     setCompanyVATIN (sCompanyVATIN);

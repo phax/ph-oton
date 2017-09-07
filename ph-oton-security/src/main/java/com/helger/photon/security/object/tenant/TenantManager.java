@@ -16,14 +16,10 @@
  */
 package com.helger.photon.security.object.tenant;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.dao.DAOException;
 import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
@@ -34,7 +30,7 @@ import com.helger.photon.basic.object.tenant.ITenantResolver;
 import com.helger.photon.security.object.BusinessObjectHelper;
 
 /**
- * Manages all available clients.
+ * Manages all available tenants (before v8 called client).
  *
  * @author Philip Helger
  */
@@ -49,33 +45,33 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
   @Nonnull
   protected EChange onInit ()
   {
-    internalCreateItem (new Tenant (CTenant.GLOBAL_TENANT_ID, CTenant.GLOBAL_CLIENT_NAME));
+    internalCreateItem (new Tenant (CTenant.GLOBAL_TENANT_ID, CTenant.GLOBAL_TENANT_NAME));
     return EChange.CHANGED;
   }
 
   @Nullable
-  public ITenant createClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
+  public ITenant createTenant (@Nonnull @Nonempty final String sTenantID, @Nonnull @Nonempty final String sDisplayName)
   {
-    if (containsWithID (sClientID))
+    if (containsWithID (sTenantID))
       return null;
 
-    final Tenant aClient = new Tenant (sClientID, sDisplayName);
+    final Tenant aTenant = new Tenant (sTenantID, sDisplayName);
 
     m_aRWLock.writeLocked ( () -> {
-      internalCreateItem (aClient);
+      internalCreateItem (aTenant);
     });
-    AuditHelper.onAuditCreateSuccess (Tenant.OT, aClient.getID (), sDisplayName);
+    AuditHelper.onAuditCreateSuccess (Tenant.OT, aTenant.getID (), sDisplayName);
 
-    return aClient;
+    return aTenant;
   }
 
   @Nonnull
-  public EChange updateClient (@Nonnull @Nonempty final String sClientID, @Nonnull @Nonempty final String sDisplayName)
+  public EChange updateTenant (@Nonnull @Nonempty final String sTenantID, @Nonnull @Nonempty final String sDisplayName)
   {
-    final Tenant aClient = getOfID (sClientID);
-    if (aClient == null)
+    final Tenant aTenant = getOfID (sTenantID);
+    if (aTenant == null)
     {
-      AuditHelper.onAuditModifyFailure (Tenant.OT, sClientID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (Tenant.OT, sTenantID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -83,79 +79,54 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
     try
     {
       EChange eChange = EChange.UNCHANGED;
-      eChange = eChange.or (aClient.setDisplayName (sDisplayName));
+      eChange = eChange.or (aTenant.setDisplayName (sDisplayName));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
-      BusinessObjectHelper.setLastModificationNow (aClient);
-      internalUpdateItem (aClient);
+      BusinessObjectHelper.setLastModificationNow (aTenant);
+      internalUpdateItem (aTenant);
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Tenant.OT, "all", sClientID, sDisplayName);
+    AuditHelper.onAuditModifySuccess (Tenant.OT, "all", sTenantID, sDisplayName);
 
     return EChange.CHANGED;
   }
 
   @Nonnull
-  public EChange deleteClient (@Nullable final String sClientID)
+  public EChange deleteTenant (@Nullable final String sTenantID)
   {
-    final Tenant aDeletedClient = getOfID (sClientID);
-    if (aDeletedClient == null)
+    final Tenant aDeletedObject = getOfID (sTenantID);
+    if (aDeletedObject == null)
     {
-      AuditHelper.onAuditDeleteFailure (Tenant.OT, "no-such-object-id", sClientID);
+      AuditHelper.onAuditDeleteFailure (Tenant.OT, "no-such-object-id", sTenantID);
       return EChange.UNCHANGED;
     }
 
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (BusinessObjectHelper.setDeletionNow (aDeletedClient).isUnchanged ())
+      if (BusinessObjectHelper.setDeletionNow (aDeletedObject).isUnchanged ())
       {
-        AuditHelper.onAuditDeleteFailure (Tenant.OT, "already-deleted", sClientID);
+        AuditHelper.onAuditDeleteFailure (Tenant.OT, "already-deleted", sTenantID);
         return EChange.UNCHANGED;
       }
-      internalMarkItemDeleted (aDeletedClient);
+      internalMarkItemDeleted (aDeletedObject);
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditDeleteSuccess (Tenant.OT, sClientID);
+    AuditHelper.onAuditDeleteSuccess (Tenant.OT, sTenantID);
 
     return EChange.CHANGED;
   }
 
-  public boolean hasAnyClient ()
-  {
-    return containsAny ();
-  }
-
-  public boolean hasAnyClientExceptGlobal ()
+  public boolean containsAnyExceptGlobal ()
   {
     return containsAny (x -> !x.isGlobalTenant ());
-  }
-
-  @Nonnegative
-  public int getClientCount ()
-  {
-    return getCount ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <ITenant> getAllClients ()
-  {
-    return getAll ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsSet <String> getAllClientIDs ()
-  {
-    return getAllIDs ();
   }
 
   @Nullable

@@ -46,18 +46,18 @@ public final class AccountingAreaTest
   @Test
   public void testBasic ()
   {
-    final ITenant aClient = new Tenant ("anyid", "Mock client");
+    final ITenant aTenant = new Tenant ("anyid", "Mock tenant");
     final PostalAddress aAddress = new PostalAddress (EPostalAddressType.PERSONAL,
-                                          "AT",
-                                          "Wien",
-                                          "1234",
-                                          "Vienna",
-                                          "Test street",
-                                          "123",
-                                          "PO1",
-                                          "co",
-                                          Locale.GERMANY);
-    final AccountingArea a = new AccountingArea (aClient,
+                                                      "AT",
+                                                      "Wien",
+                                                      "1234",
+                                                      "Vienna",
+                                                      "Test street",
+                                                      "123",
+                                                      "PO1",
+                                                      "co",
+                                                      Locale.GERMANY);
+    final AccountingArea a = new AccountingArea (aTenant,
                                                  "Accounting area 1",
                                                  "GmbH",
                                                  "ATU00000000",
@@ -73,7 +73,7 @@ public final class AccountingAreaTest
                                                  "ABC",
                                                  "Wien2",
                                                  Locale.GERMANY);
-    assertSame (aClient, a.getTenant ());
+    assertSame (aTenant, a.getTenant ());
     assertEquals ("Accounting area 1", a.getDisplayName ());
     assertEquals ("GmbH", a.getCompanyType ());
     assertEquals ("ATU00000000", a.getCompanyVATIN ());

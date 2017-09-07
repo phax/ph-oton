@@ -29,7 +29,7 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 public final class CTenant
 {
   public static final String GLOBAL_TENANT_ID = "$";
-  public static final String GLOBAL_CLIENT_NAME = "$system tenant$";
+  public static final String GLOBAL_TENANT_NAME = "$system tenant$";
 
   @PresentForCodeCoverage
   private static final CTenant s_aInstance = new CTenant ();

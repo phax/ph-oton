@@ -36,7 +36,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <AccountingArea>
 {
-  private static final IMicroQName ATTR_CLIENTID = new MicroQName ("clientid");
+  private static final IMicroQName ATTR_TENANT_ID = new MicroQName ("clientid");
   private static final IMicroQName ATTR_DISPLAYNAME = new MicroQName ("displayname");
   private static final IMicroQName ATTR_COMPANY_TYPE = new MicroQName ("companytype");
   private static final IMicroQName ATTR_COMPANY_VATIN = new MicroQName ("companyvatin");
@@ -52,11 +52,11 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
   private static final IMicroQName ATTR_COMMERCIAL_REGISTRATION_NUMBER = new MicroQName ("commregno");
   private static final IMicroQName ATTR_COMMERCIAL_COURT = new MicroQName ("commcourt");
 
-  private final ITenantResolver m_aClientResolver;
+  private final ITenantResolver m_aTenantResolver;
 
-  public AccountingAreaMicroTypeConverter (@Nonnull final ITenantResolver aClientResolver)
+  public AccountingAreaMicroTypeConverter (@Nonnull final ITenantResolver aTenantResolver)
   {
-    m_aClientResolver = aClientResolver;
+    m_aTenantResolver = aTenantResolver;
   }
 
   @Nonnull
@@ -65,7 +65,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
                                               @Nonnull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
-    aElement.setAttribute (ATTR_CLIENTID, aValue.getTenantID ());
+    aElement.setAttribute (ATTR_TENANT_ID, aValue.getTenantID ());
     setObjectFields (aValue, aElement);
     aElement.setAttribute (ATTR_DISPLAYNAME, aValue.getDisplayName ());
     aElement.setAttribute (ATTR_COMPANY_TYPE, aValue.getCompanyType ());
@@ -90,10 +90,10 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
   public AccountingArea convertToNative (@Nonnull final IMicroElement aElement)
   {
     final Locale aLocale = SystemHelper.getSystemLocale ();
-    final String sClientID = aElement.getAttributeValue (ATTR_CLIENTID);
-    final ITenant aClient = m_aClientResolver.getTenantOfID (sClientID);
-    if (aClient == null)
-      throw new IllegalStateException ("Failed to resolve client ID '" + sClientID + "'");
+    final String sTenantID = aElement.getAttributeValue (ATTR_TENANT_ID);
+    final ITenant aTenant = m_aTenantResolver.getTenantOfID (sTenantID);
+    if (aTenant == null)
+      throw new IllegalStateException ("Failed to resolve tenant ID '" + sTenantID + "'");
 
     final String sDisplayName = aElement.getAttributeValue (ATTR_DISPLAYNAME);
     final String sCompanyType = aElement.getAttributeValue (ATTR_COMPANY_TYPE);
@@ -113,7 +113,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
     final String sCommercialRegistrationNumber = aElement.getAttributeValue (ATTR_COMMERCIAL_REGISTRATION_NUMBER);
     final String sCommercialCourt = aElement.getAttributeValue (ATTR_COMMERCIAL_COURT);
 
-    return new AccountingArea (aClient,
+    return new AccountingArea (aTenant,
                                getStubObject (aElement),
                                sDisplayName,
                                sCompanyType,
