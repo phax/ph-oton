@@ -22,8 +22,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.cleanup.CommonsCleanup;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.xservlet.AuditingLongRunningRequestCallback;
-import com.helger.photon.xservlet.AuditingParallelRunningRequestCallback;
+import com.helger.photon.basic.xservlet.AuditingLongRunningRequestCallback;
+import com.helger.photon.basic.xservlet.AuditingParallelRunningRequestCallback;
 import com.helger.scope.ScopeCleanup;
 import com.helger.xml.util.XMLCleanup;
 import com.helger.xservlet.requesttrack.RequestTracker;

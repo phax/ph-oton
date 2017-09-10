@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.xservlet;
+package com.helger.photon.basic.xservlet;
 
 import java.util.Objects;
 
