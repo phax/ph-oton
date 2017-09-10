@@ -24,10 +24,10 @@ import com.helger.commons.state.EChange;
 import com.helger.dao.DAOException;
 import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
-import com.helger.photon.basic.object.tenant.CTenant;
-import com.helger.photon.basic.object.tenant.ITenant;
-import com.helger.photon.basic.object.tenant.ITenantResolver;
 import com.helger.photon.security.object.BusinessObjectHelper;
+import com.helger.tenancy.tenant.CTenant;
+import com.helger.tenancy.tenant.ITenant;
+import com.helger.tenancy.tenant.ITenantResolver;
 
 /**
  * Manages all available tenants (before v8 called client).

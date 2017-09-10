@@ -27,9 +27,9 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractBusinessObject;
-import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.tenancy.AbstractBusinessObject;
+import com.helger.tenancy.IBusinessObject;
 
 /**
  * The most simple {@link IBusinessObject} implementation. Used for

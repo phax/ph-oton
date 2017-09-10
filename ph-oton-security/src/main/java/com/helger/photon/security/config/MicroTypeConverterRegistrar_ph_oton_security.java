@@ -19,7 +19,6 @@ package com.helger.photon.security.config;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.photon.basic.object.tenant.ITenantResolver;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
 import com.helger.photon.security.object.tenant.Tenant;
@@ -36,6 +35,7 @@ import com.helger.photon.security.user.User;
 import com.helger.photon.security.user.UserMicroTypeConverter;
 import com.helger.photon.security.usergroup.UserGroup;
 import com.helger.photon.security.usergroup.UserGroupMicroTypeConverter;
+import com.helger.tenancy.tenant.ITenantResolver;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
 

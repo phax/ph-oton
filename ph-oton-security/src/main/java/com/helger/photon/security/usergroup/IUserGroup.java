@@ -19,9 +19,9 @@ package com.helger.photon.security.usergroup;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.text.IHasDescription;
-import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.security.role.IRoleContainer;
 import com.helger.photon.security.user.IUserContainer;
+import com.helger.tenancy.IBusinessObject;
 
 /**
  * Represents a single user group encapsulating 0-n users.

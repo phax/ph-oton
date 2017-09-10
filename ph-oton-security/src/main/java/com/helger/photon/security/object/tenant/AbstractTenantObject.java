@@ -28,10 +28,10 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.object.AbstractBusinessObject;
-import com.helger.photon.basic.object.tenant.ITenant;
-import com.helger.photon.basic.object.tenant.ITenantObject;
 import com.helger.photon.security.object.StubObject;
+import com.helger.tenancy.AbstractBusinessObject;
+import com.helger.tenancy.tenant.ITenant;
+import com.helger.tenancy.tenant.ITenantObject;
 
 @Immutable
 public abstract class AbstractTenantObject extends AbstractBusinessObject implements ITenantObject

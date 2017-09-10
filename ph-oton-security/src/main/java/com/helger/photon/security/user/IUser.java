@@ -27,9 +27,9 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IHasDescription;
-import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.security.authentication.subject.IAuthSubject;
 import com.helger.security.password.hash.PasswordHash;
+import com.helger.tenancy.IBusinessObject;
 
 /**
  * Interface for a single user

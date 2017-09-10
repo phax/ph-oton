@@ -26,9 +26,9 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractBusinessObject;
-import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.object.StubObject;
+import com.helger.tenancy.AbstractBusinessObject;
+import com.helger.tenancy.tenant.ITenant;
 
 /**
  * Default implementation of {@link ITenant}

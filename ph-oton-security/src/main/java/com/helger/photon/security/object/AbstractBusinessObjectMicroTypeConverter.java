@@ -27,7 +27,7 @@ import com.helger.commons.annotation.ContainsSoftMigration;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.photon.basic.object.IBusinessObject;
+import com.helger.tenancy.IBusinessObject;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;

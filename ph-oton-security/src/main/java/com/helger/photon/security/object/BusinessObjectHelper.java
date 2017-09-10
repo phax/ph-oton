@@ -22,10 +22,10 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.object.AbstractBusinessObject;
-import com.helger.photon.basic.object.IBusinessObject;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.security.authentication.subject.user.CUserID;
+import com.helger.tenancy.AbstractBusinessObject;
+import com.helger.tenancy.IBusinessObject;
 
 /**
  * Helper class to work with {@link IBusinessObject} implementations.

@@ -32,10 +32,10 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.object.AbstractBusinessObject;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.StubObject;
 import com.helger.security.password.hash.PasswordHash;
+import com.helger.tenancy.AbstractBusinessObject;
 
 /**
  * Default implementation of the {@link IUser} interface.

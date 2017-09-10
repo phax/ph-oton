@@ -28,11 +28,11 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.object.AbstractBusinessObject;
-import com.helger.photon.basic.object.accarea.IAccountingArea;
-import com.helger.photon.basic.object.accarea.IAccountingAreaObject;
-import com.helger.photon.basic.object.tenant.ITenant;
 import com.helger.photon.security.object.StubObject;
+import com.helger.tenancy.AbstractBusinessObject;
+import com.helger.tenancy.accarea.IAccountingArea;
+import com.helger.tenancy.accarea.IAccountingAreaObject;
+import com.helger.tenancy.tenant.ITenant;
 
 @Immutable
 public abstract class AbstractAccountingAreaObject extends AbstractBusinessObject implements IAccountingAreaObject
