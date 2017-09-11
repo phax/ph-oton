@@ -16,10 +16,12 @@
  */
 package com.helger.photon.bootstrap4.stub.init;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
@@ -40,6 +42,7 @@ import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.servlet.StreamServlet;
 import com.helger.photon.core.userdata.UserStreamServlet;
 import com.helger.photon.core.userdata.UserUploadServlet;
+import com.helger.servlet.filter.CharacterEncodingFilter;
 
 /**
  * This class dynamically registers the ph-oton servlets into the
@@ -88,6 +91,19 @@ public final class PhotonStubServletInitializer
                                          aSC.getMinorVersion ());
 
       s_aLogger.info ("Registering default ph-oton listeners and servlets");
+
+      {
+        final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter",
+                                                                  CharacterEncodingFilter.class);
+        if (aFilter != null)
+        {
+          // Filter is new
+          aFilter.setAsyncSupported (true);
+          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_ENCODING, StandardCharsets.UTF_8.name ());
+          aFilter.setInitParameter (CharacterEncodingFilter.INITPARAM_FORCE_ENCODING, Boolean.TRUE.toString ());
+          aFilter.addMappingForUrlPatterns (null, false, "/*");
+        }
+      }
 
       {
         final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAjaxServlet",
