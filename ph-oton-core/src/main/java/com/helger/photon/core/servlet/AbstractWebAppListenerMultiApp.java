@@ -73,8 +73,7 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
    * @param aLocaleMgr
    *        Locale manager to use
    */
-  public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
-  {}
+  protected abstract void initLocales (@Nonnull final ILocaleManager aLocaleMgr);
 
   /**
    * Register all ajax functions
