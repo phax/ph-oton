@@ -47,16 +47,15 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContext>
-                                       extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContext> extends
+                                       AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
     MSG_APPID ("Application ID", "Application ID"),
     MSG_IS_DEFAULT (" [Standard]", " [default]"),
-    MSG_APP_SERVLET_PATH ("App-Servlet Pfad", "App servlet path"),
-    MSG_AJAX_SERVLET_PATH ("Ajax-Servlet Pfad", "Ajax servlet path");
+    MSG_APP_SERVLET_PATH ("App-Servlet Pfad", "App servlet path");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -104,8 +103,7 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_APPID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                        new DTCol (EText.MSG_APP_SERVLET_PATH.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_AJAX_SERVLET_PATH.getDisplayText (aDisplayLocale))).setID (getID ());
+                                        new DTCol (EText.MSG_APP_SERVLET_PATH.getDisplayText (aDisplayLocale))).setID (getID ());
 
     final String sDefaultAppID = PhotonPathMapper.getDefaultApplicationID ();
     for (final Map.Entry <String, PhotonPathMapper.PathEntry> aEntry : PhotonPathMapper.getApplicationIDToPathEntryMap ()
@@ -117,7 +115,6 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (sAppID + (bIsDefault ? EText.MSG_IS_DEFAULT.getDisplayText (aDisplayLocale) : ""));
       aRow.addCell (aEntry.getValue ().getApplicationServletPath ());
-      aRow.addCell (aEntry.getValue ().getAjaxServletPath ());
     }
     aNodeList.addChild (aTable);
 
