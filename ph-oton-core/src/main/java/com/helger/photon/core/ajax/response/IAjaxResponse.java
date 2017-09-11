@@ -24,7 +24,7 @@ import com.helger.commons.state.ISuccessIndicator;
 import com.helger.servlet.response.UnifiedResponse;
 
 /**
- * Base interface for an Ajax response with a JSON representation.
+ * Base interface for an Ajax response without a specific representation.
  *
  * @author Philip Helger
  */
