@@ -32,8 +32,6 @@ import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.basic.app.PhotonPathMapper;
 import com.helger.photon.bootstrap3.BootstrapCustomConfig;
 import com.helger.photon.bootstrap3.servlet.BootstrapCustomizer;
-import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
-import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.app.html.PhotonMetaElements;
@@ -145,12 +143,8 @@ public final class PhotonStubInitializer
       // Add default mapping from Application ID to path
       PhotonPathMapper.setApplicationServletPathMapping (CApplicationID.APP_ID_PUBLIC,
                                                          AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setAjaxServletPathMapping (CApplicationID.APP_ID_PUBLIC,
-                                                  PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH);
       PhotonPathMapper.setApplicationServletPathMapping (CApplicationID.APP_ID_SECURE,
                                                          AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setAjaxServletPathMapping (CApplicationID.APP_ID_SECURE,
-                                                  SecureApplicationAjaxServlet.SERVLET_DEFAULT_PATH);
       PhotonPathMapper.setDefaultApplicationID (CApplicationID.APP_ID_PUBLIC);
     }
   }

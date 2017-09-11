@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.ajax;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import com.helger.photon.core.ajax.response.IAjaxResponse;
@@ -26,7 +28,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public interface IAjaxExecutor
+public interface IAjaxExecutor extends Serializable
 {
   /**
    * Initialization method that is called before the main execution is called.

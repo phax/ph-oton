@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.pub.ajax;
+package com.helger.photon.bootstrap.demo.ajax;
 
 import java.util.Locale;
 
@@ -43,12 +43,12 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public final class AjaxExecutorPublicLogin extends AbstractAjaxExecutor
+public final class AjaxExecutorLogin extends AbstractAjaxExecutor
 {
   public static final String JSON_LOGGEDIN = "loggedin";
   public static final String JSON_HTML = "html";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorPublicLogin.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorLogin.class);
 
   @Override
   @Nonnull

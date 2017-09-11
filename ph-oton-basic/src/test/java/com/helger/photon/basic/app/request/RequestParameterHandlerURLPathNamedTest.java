@@ -30,7 +30,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.page.AbstractPage;
@@ -82,12 +82,7 @@ public final class RequestParameterHandlerURLPathNamedTest
 
     // Locale and menu item
     aURL = h.buildURL (aRequestScope, sBasePath, LOCALE, aMenuItem.getID ());
-    assertEquals (sBasePath +
-                  "/" +
-                  sParamLocale +
-                  "-de_AT/" +
-                  sParamMenuItem +
-                  "-test",
+    assertEquals (sBasePath + "/" + sParamLocale + "-de_AT/" + sParamMenuItem + "-test",
                   aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromURL (aURL);
     assertTrue (aParams.hasLocale ());
@@ -99,7 +94,7 @@ public final class RequestParameterHandlerURLPathNamedTest
   @Test
   public void testBasic ()
   {
-    ApplicationLocaleManager.getLocaleMgr ().registerLocale (LOCALE);
+    GlobalLocaleManager.getInstance ().registerLocale (LOCALE);
     final IMenuItemPage aMenuItem = ApplicationMenuTree.getTree ().createRootItem (new AbstractPage ("test")
     {});
 

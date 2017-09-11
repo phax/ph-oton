@@ -25,11 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.photon.core.api.APIPath;
-import com.helger.photon.core.api.ApplicationAPIManager;
+import com.helger.photon.core.api.GlobalAPIInvoker;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.servlet.response.UnifiedResponse;
@@ -37,8 +38,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
- * Abstract API servlet. Use {@link ApplicationAPIManager} to register API
- * functions dynamically.
+ * Abstract API servlet. Use {@link GlobalAPIInvoker} to register API functions
+ * dynamically.
  *
  * @author Philip Helger
  */
@@ -46,21 +47,16 @@ public class APIXServletHandler implements IXServletSimpleHandler
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (APIXServletHandler.class);
 
-  protected APIXServletHandler ()
-  {}
+  private final ISupplier <? extends IAPIInvoker> m_aFactory;
 
-  /**
-   * Get the API invoker matching the passed request
-   *
-   * @param aRequestScope
-   *        The request scope to use. May not be <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  @OverrideOnDemand
-  protected IAPIInvoker getAPIInvoker (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public APIXServletHandler ()
   {
-    return ApplicationAPIManager.getInstance ();
+    this ( () -> GlobalAPIInvoker.getInstance ());
+  }
+
+  public APIXServletHandler (@Nonnull final ISupplier <? extends IAPIInvoker> aFactory)
+  {
+    m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
   }
 
   @Override
@@ -70,7 +66,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
     // ensure leading "/"
     final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
     final EHttpMethod eHTTPMethod = aRequestScope.getHttpMethod ();
-    final IAPIInvoker aAPIMgr = getAPIInvoker (aRequestScope);
+    final IAPIInvoker aAPIMgr = m_aFactory.get ();
     final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (new APIPath (eHTTPMethod, sAPIPath));
     if (aInvokableDescriptor == null)
     {

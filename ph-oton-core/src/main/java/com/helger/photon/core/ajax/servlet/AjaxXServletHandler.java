@@ -27,11 +27,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
-import com.helger.photon.core.ajax.ApplicationAjaxManager;
+import com.helger.photon.core.ajax.GlobalAjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
@@ -56,21 +58,16 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                     "ajaxservlet.executor";
 
-  public AjaxXServletHandler ()
-  {}
+  private final ISupplier <? extends IAjaxInvoker> m_aFactory;
 
-  /**
-   * Get the AJAX invoker matching the passed request
-   *
-   * @param aRequestScope
-   *        The request scope to use. May not be <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  @OverrideOnDemand
-  protected IAjaxInvoker getAjaxInvoker (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public AjaxXServletHandler ()
   {
-    return ApplicationAjaxManager.getInstance ();
+    this ( () -> GlobalAjaxInvoker.getInstance ());
+  }
+
+  public AjaxXServletHandler (@Nonnull final ISupplier <? extends IAjaxInvoker> aFactory)
+  {
+    m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
   }
 
   @Override
@@ -84,7 +81,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     if (StringHelper.startsWith (sFunctionName, '/'))
       sFunctionName = sFunctionName.substring (1);
 
-    final IAjaxInvoker aAjaxInvoker = getAjaxInvoker (aRequestScope);
+    final IAjaxInvoker aAjaxInvoker = m_aFactory.get ();
     final IAjaxFunctionDeclaration aAjaxDeclaration = aAjaxInvoker.getRegisteredFunction (sFunctionName);
     if (aAjaxDeclaration == null)
     {
@@ -104,13 +101,17 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     }
 
     // Create the executor itself
-    final IAjaxExecutor aAjaxExecutor = aAjaxDeclaration.getExecutorFactory ().get ();
+    final IAjaxExecutor aAjaxExecutor = aAjaxDeclaration.getExecutor ();
     if (aAjaxExecutor == null)
     {
-      s_aLogger.warn ("No AjaxExecutor created for action " + aAjaxDeclaration);
+      s_aLogger.warn ("No AjaxExecutor created for declaration " + aAjaxDeclaration);
       aUnifiedResponse.setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return EContinue.BREAK;
     }
+
+    // Explicitly set the application ID per declaration invocation
+    if (aAjaxDeclaration.hasSpecialApplicationID ())
+      ScopeManager.internalSetRequestApplicationID (aRequestScope, aAjaxDeclaration.getSpecialApplicationID ());
 
     // Call the initialization of the action executor
     aAjaxExecutor.initExecution (aRequestScope);

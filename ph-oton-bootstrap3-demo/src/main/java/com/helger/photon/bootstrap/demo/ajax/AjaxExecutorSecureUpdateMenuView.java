@@ -14,23 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.pub.ajax;
+package com.helger.photon.bootstrap.demo.ajax;
 
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCNode;
-import com.helger.photon.bootstrap.demo.pub.AppRendererPublic;
+import com.helger.photon.bootstrap.demo.secure.AppRendererSecure;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Ajax executor to get the update content the view application's menu.
+ * Ajax executor to get the update content the config application's menu.
  *
  * @author Philip Helger
  */
-public final class AjaxExecutorPublicUpdateMenuView extends AbstractAjaxExecutor
+public final class AjaxExecutorSecureUpdateMenuView extends AbstractAjaxExecutor
 {
   @Override
   @Nonnull
@@ -39,7 +39,7 @@ public final class AjaxExecutorPublicUpdateMenuView extends AbstractAjaxExecutor
     final LayoutExecutionContext aLEC = LayoutExecutionContext.createForAjaxOrAction (aRequestScope);
 
     // Get the rendered content of the menu area
-    final IHCNode aRoot = AppRendererPublic.getMenuContent (aLEC);
+    final IHCNode aRoot = AppRendererSecure.getMenuContent (aLEC);
 
     // Set as result property
     return AjaxHtmlResponse.createSuccess (aRequestScope, aRoot);

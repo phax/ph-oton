@@ -20,23 +20,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
-import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
+import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
- * A per-application AJAX manager.
+ * Global AJAX invoker
  *
  * @author Philip Helger
  */
 @ThreadSafe
-public final class ApplicationAjaxManager extends AbstractApplicationWebSingleton implements IAjaxInvoker
+public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton implements IAjaxInvoker
 {
   private final IAjaxInvoker m_aInvoker = new AjaxInvoker ();
 
@@ -45,19 +43,13 @@ public final class ApplicationAjaxManager extends AbstractApplicationWebSingleto
    */
   @Deprecated
   @UsedViaReflection
-  public ApplicationAjaxManager ()
+  public GlobalAjaxInvoker ()
   {}
 
   @Nonnull
-  public static ApplicationAjaxManager getInstance ()
+  public static GlobalAjaxInvoker getInstance ()
   {
-    return getApplicationSingleton (ApplicationAjaxManager.class);
-  }
-
-  @Nonnull
-  public static ApplicationAjaxManager getInstanceOfScope (@Nonnull @Nonempty final String sApplicationID)
-  {
-    return getSingleton (ScopeManager.getApplicationScope (sApplicationID), ApplicationAjaxManager.class);
+    return getGlobalSingleton (GlobalAjaxInvoker.class);
   }
 
   @Nonnull
@@ -94,6 +86,6 @@ public final class ApplicationAjaxManager extends AbstractApplicationWebSingleto
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("invoker", m_aInvoker).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Invoker", m_aInvoker).getToString ();
   }
 }

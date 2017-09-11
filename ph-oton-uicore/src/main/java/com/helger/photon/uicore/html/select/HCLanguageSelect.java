@@ -26,7 +26,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.IComparator;
 import com.helger.commons.text.display.IDisplayTextProvider;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 
 public class HCLanguageSelect extends HCExtSelect
 {
@@ -63,7 +63,7 @@ public class HCLanguageSelect extends HCExtSelect
   {
     return new HCLanguageSelect (aRF,
                                  aDisplayLocale,
-                                 ApplicationLocaleManager.getLocaleMgr ().getAllAvailableLocales (),
+                                 GlobalLocaleManager.getInstance ().getAllAvailableLocales (),
                                  null,
                                  bAlwaysShowPleaseSelect);
   }

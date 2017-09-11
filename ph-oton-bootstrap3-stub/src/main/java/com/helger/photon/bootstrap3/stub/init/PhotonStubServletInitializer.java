@@ -31,10 +31,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.photon.bootstrap3.stub.PhotonStubServletContextListener;
-import com.helger.photon.core.ajax.servlet.PublicApplicationAjaxServlet;
-import com.helger.photon.core.ajax.servlet.SecureApplicationAjaxServlet;
-import com.helger.photon.core.api.servlet.PublicApplicationAPIServlet;
-import com.helger.photon.core.api.servlet.SecureApplicationAPIServlet;
+import com.helger.photon.core.ajax.servlet.PhotonAjaxServlet;
+import com.helger.photon.core.api.servlet.PhotonAPIServlet;
 import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
@@ -106,42 +104,20 @@ public final class PhotonStubServletInitializer
       }
 
       {
-        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAjaxServlet",
-                                                                     SecureApplicationAjaxServlet.class);
+        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PhotonAjaxServlet", PhotonAjaxServlet.class);
         if (aServlet != null)
         {
           aServlet.setAsyncSupported (true);
-          aServlet.addMapping (SecureApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
+          aServlet.addMapping (PhotonAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
         }
       }
 
       {
-        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationAjaxServlet",
-                                                                     PublicApplicationAjaxServlet.class);
+        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PhotonAPIServlet", PhotonAPIServlet.class);
         if (aServlet != null)
         {
           aServlet.setAsyncSupported (true);
-          aServlet.addMapping (PublicApplicationAjaxServlet.SERVLET_DEFAULT_PATH + "/*");
-        }
-      }
-
-      {
-        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("SecureApplicationAPIServlet",
-                                                                     SecureApplicationAPIServlet.class);
-        if (aServlet != null)
-        {
-          aServlet.setAsyncSupported (true);
-          aServlet.addMapping (SecureApplicationAPIServlet.SERVLET_DEFAULT_PATH + "/*");
-        }
-      }
-
-      {
-        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("PublicApplicationAPIServlet",
-                                                                     PublicApplicationAPIServlet.class);
-        if (aServlet != null)
-        {
-          aServlet.setAsyncSupported (true);
-          aServlet.addMapping (PublicApplicationAPIServlet.SERVLET_DEFAULT_PATH + "/*");
+          aServlet.addMapping (PhotonAPIServlet.SERVLET_DEFAULT_PATH + "/*");
         }
       }
 

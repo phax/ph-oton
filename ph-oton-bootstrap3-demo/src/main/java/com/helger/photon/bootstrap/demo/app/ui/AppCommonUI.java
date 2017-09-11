@@ -36,8 +36,8 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSVar;
 import com.helger.html.jscode.html.JSHtml;
-import com.helger.photon.bootstrap.demo.pub.ajax.AjaxExecutorPublicLogin;
-import com.helger.photon.bootstrap.demo.pub.ajax.CAjaxPublic;
+import com.helger.photon.bootstrap.demo.ajax.AjaxExecutorLogin;
+import com.helger.photon.bootstrap.demo.ajax.CAjax;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
@@ -96,10 +96,10 @@ public final class AppCommonUI
       final JSAnonymousFunction aJSSuccess = new JSAnonymousFunction ();
       final JSVar aJSData = aJSSuccess.param ("data");
       aJSSuccess.body ()
-                ._if (aJSData.ref (AjaxExecutorPublicLogin.JSON_LOGGEDIN),
+                ._if (aJSData.ref (AjaxExecutorLogin.JSON_LOGGEDIN),
                       JSHtml.windowLocationReload (),
-                      JQuery.idRef (sIDErrorField).empty ().append (aJSData.ref (AjaxExecutorPublicLogin.JSON_HTML)));
-      aOnClick.add (new JQueryAjaxBuilder ().url (CAjaxPublic.LOGIN.getInvocationURI (aRequestScope))
+                      JQuery.idRef (sIDErrorField).empty ().append (aJSData.ref (AjaxExecutorLogin.JSON_HTML)));
+      aOnClick.add (new JQueryAjaxBuilder ().url (CAjax.LOGIN.getInvocationURI (aRequestScope))
                                             .data (new JSAssocArray ().add (CLogin.REQUEST_ATTR_USERID,
                                                                             JQuery.idRef (sIDUserName).val ())
                                                                       .add (CLogin.REQUEST_ATTR_PASSWORD,

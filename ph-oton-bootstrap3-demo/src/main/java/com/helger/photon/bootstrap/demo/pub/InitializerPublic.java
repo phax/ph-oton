@@ -18,12 +18,8 @@ package com.helger.photon.bootstrap.demo.pub;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.pub.ajax.CAjaxPublic;
 import com.helger.photon.bootstrap.demo.pub.menu.MenuPublic;
-import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.CLayout;
@@ -37,13 +33,6 @@ import com.helger.photon.core.app.layout.ILayoutManager;
 public final class InitializerPublic implements IApplicationInitializer <LayoutExecutionContext>
 {
   @Override
-  public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
-  {
-    aLocaleMgr.registerLocale (CApp.DEFAULT_LOCALE);
-    aLocaleMgr.setDefaultLocale (CApp.DEFAULT_LOCALE);
-  }
-
-  @Override
   public void initLayout (@Nonnull final ILayoutManager <LayoutExecutionContext> aLayoutMgr)
   {
     // Register all layout area handler (order is important for SEO!)
@@ -54,14 +43,5 @@ public final class InitializerPublic implements IApplicationInitializer <LayoutE
   public void initMenu (@Nonnull final IMenuTree aMenuTree)
   {
     MenuPublic.init (aMenuTree);
-  }
-
-  @Override
-  public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
-  {
-    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES);
-    aAjaxInvoker.registerFunction (CAjaxPublic.LOGIN);
-    aAjaxInvoker.registerFunction (CAjaxPublic.UPDATE_MENU_VIEW);
-    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES_I18N);
   }
 }

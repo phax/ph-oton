@@ -17,6 +17,7 @@
 package com.helger.photon.basic.app.menu;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
@@ -55,6 +56,13 @@ public final class ApplicationMenuTree extends AbstractApplicationSingleton
   public static IMenuTree getTree ()
   {
     return getInstance ().m_aProxy;
+  }
+
+  @Nullable
+  public static IMenuTree getTree (@Nonnull @Nonempty final String sApplicationID)
+  {
+    final ApplicationMenuTree aTree = getInstanceOfScope (sApplicationID);
+    return aTree == null ? null : aTree.m_aProxy;
   }
 
   @Nonnull

@@ -30,7 +30,7 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.PhotonPathMapper;
 import com.helger.photon.basic.app.PhotonSessionState;
-import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -143,8 +143,8 @@ public class RequestParameterManager extends AbstractGlobalWebSingleton implemen
     if (aSessionDisplayLocale != null)
       return aSessionDisplayLocale;
 
-    // Nothing specified - use application default locale
-    return ApplicationLocaleManager.getLocaleMgr ().getDefaultLocale ();
+    // Nothing specified - use default locale
+    return GlobalLocaleManager.getInstance ().getDefaultLocale ();
   }
 
   @Nonnull

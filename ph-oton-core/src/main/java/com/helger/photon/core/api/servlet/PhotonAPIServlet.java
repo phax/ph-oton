@@ -17,7 +17,6 @@
 package com.helger.photon.core.api.servlet;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
@@ -25,14 +24,13 @@ import com.helger.xservlet.AbstractXServlet;
  *
  * @author Philip Helger
  */
-public final class PublicApplicationAPIServlet extends AbstractXServlet
+public final class PhotonAPIServlet extends AbstractXServlet
 {
-  public static final String SERVLET_DEFAULT_NAME = "publicapi";
+  public static final String SERVLET_DEFAULT_NAME = "api";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  public PublicApplicationAPIServlet ()
+  public PhotonAPIServlet ()
   {
-    super ( () -> CApplicationID.APP_ID_PUBLIC);
     handlerRegistry ().registerHandler (EHttpMethod.GET, new APIXServletHandler ());
     handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }

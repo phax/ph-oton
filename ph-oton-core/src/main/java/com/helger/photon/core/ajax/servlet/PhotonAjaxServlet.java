@@ -14,26 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.api.servlet;
+package com.helger.photon.core.ajax.servlet;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
- * This class handles the API functions for the secure application
+ * This class handles the AJAX functions
  *
  * @author Philip Helger
  */
-public final class SecureApplicationAPIServlet extends AbstractXServlet
+public final class PhotonAjaxServlet extends AbstractXServlet
 {
-  public static final String SERVLET_DEFAULT_NAME = "secureapi";
+  public static final String SERVLET_DEFAULT_NAME = "ajax";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  public SecureApplicationAPIServlet ()
+  public PhotonAjaxServlet ()
   {
-    super ( () -> CApplicationID.APP_ID_SECURE);
-    handlerRegistry ().registerHandler (EHttpMethod.GET, new APIXServletHandler ());
+    handlerRegistry ().registerHandler (EHttpMethod.GET, new AjaxXServletHandler ());
     handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }
 }

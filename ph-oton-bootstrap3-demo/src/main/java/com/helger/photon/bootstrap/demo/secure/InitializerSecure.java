@@ -19,14 +19,10 @@ package com.helger.photon.bootstrap.demo.secure;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.secure.ajax.CAjaxSecure;
 import com.helger.photon.bootstrap.demo.secure.menu.MenuSecure;
 import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
 import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
-import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.CLayout;
@@ -41,13 +37,6 @@ import com.helger.photon.uictrls.prism.EPrismLanguage;
 public final class InitializerSecure implements IApplicationInitializer <LayoutExecutionContext>
 {
   @Override
-  public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
-  {
-    aLocaleMgr.registerLocale (CApp.DEFAULT_LOCALE);
-    aLocaleMgr.setDefaultLocale (CApp.DEFAULT_LOCALE);
-  }
-
-  @Override
   public void initLayout (@Nonnull final ILayoutManager <LayoutExecutionContext> aLayoutMgr)
   {
     aLayoutMgr.registerAreaContentProvider (CLayout.LAYOUT_AREAID_VIEWPORT, new AppRendererSecure ());
@@ -57,13 +46,6 @@ public final class InitializerSecure implements IApplicationInitializer <LayoutE
   public void initMenu (@Nonnull final IMenuTree aMenuTree)
   {
     MenuSecure.init (aMenuTree);
-  }
-
-  @Override
-  public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
-  {
-    aAjaxInvoker.registerFunction (CAjaxSecure.SAVE_FORM_STATE);
-    aAjaxInvoker.registerFunction (CAjaxSecure.UPDATE_MENU_VIEW);
   }
 
   @Override

@@ -35,7 +35,7 @@ import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.api.APISettings;
-import com.helger.photon.core.api.ApplicationAPIManager;
+import com.helger.photon.core.api.GlobalAPIInvoker;
 import com.helger.photon.core.api.IAPIAfterExecutionCallback;
 import com.helger.photon.core.api.IAPIBeforeExecutionCallback;
 import com.helger.photon.core.api.IAPIDescriptor;
@@ -119,8 +119,8 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
     for (final IApplicationScope aAppScope : WebScopeManager.getGlobalScope ().getAllApplicationScopes ().values ())
     {
       final String sAppScopeID = aAppScope.getID ();
-      final ApplicationAPIManager aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
-                                                                                       ApplicationAPIManager.class);
+      final GlobalAPIInvoker aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
+                                                                                       GlobalAPIInvoker.class);
       if (aMgr != null)
       {
         final HCNodeList aTab = new HCNodeList ();

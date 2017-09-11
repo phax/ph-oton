@@ -27,6 +27,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
+import com.helger.photon.basic.app.PhotonSessionState;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
@@ -100,8 +101,15 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     final IRequestParameterManager aRequestMgr = RequestParameterManager.getInstance ();
     // Get the locale from the session
     final Locale aDisplayLocale = aRequestMgr.getRequestDisplayLocale ();
-    final IMenuTree aMenuTree = ApplicationMenuTree.getTree ();
-    // Since no menu item is selected, use the default menu item
+    IMenuTree aMenuTree = ApplicationMenuTree.getTree ();
+    if (aMenuTree.getRootItem ().hasNoChildren ())
+    {
+      final String sLastApplicationID = PhotonSessionState.getInstance ().getLastApplicationID ();
+      final IMenuTree aMenuTree2 = ApplicationMenuTree.getTree (sLastApplicationID);
+      if (aMenuTree2 != null && aMenuTree2.getRootItem ().hasChildren ())
+        aMenuTree = aMenuTree2;
+    }
+    // vSince no menu item is selected, use the default menu item
     return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree),
                                        aMenuTree.getDefaultMenuItem ());
   }

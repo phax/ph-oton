@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.api;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -30,7 +32,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public interface IAPIInvoker
+public interface IAPIInvoker extends Serializable
 {
   /**
    * Register a new API.
@@ -53,7 +55,7 @@ public interface IAPIInvoker
 
   /**
    * Invoke the specified API
-   * 
+   *
    * @param aInvokableDescriptor
    *        The invokable descriptor. Never <code>null</code>.
    * @param aRequestScope

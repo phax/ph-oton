@@ -36,7 +36,7 @@ import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.AjaxSettings;
-import com.helger.photon.core.ajax.ApplicationAjaxManager;
+import com.helger.photon.core.ajax.GlobalAjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxAfterExecutionCallback;
 import com.helger.photon.core.ajax.IAjaxBeforeExecutionCallback;
 import com.helger.photon.core.ajax.IAjaxExceptionCallback;
@@ -123,8 +123,8 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
     for (final IApplicationScope aAppScope : WebScopeManager.getGlobalScope ().getAllApplicationScopes ().values ())
     {
       final String sAppScopeID = aAppScope.getID ();
-      final ApplicationAjaxManager aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
-                                                                                        ApplicationAjaxManager.class);
+      final GlobalAjaxInvoker aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
+                                                                                        GlobalAjaxInvoker.class);
       if (aMgr != null)
       {
         final HCNodeList aTab = new HCNodeList ();

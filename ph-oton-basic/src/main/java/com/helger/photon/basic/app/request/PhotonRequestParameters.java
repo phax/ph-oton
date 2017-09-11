@@ -25,7 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -94,7 +94,7 @@ public class PhotonRequestParameters implements Serializable
       {
         // Check if the locale is present in the locale manager of the current
         // application
-        if (ApplicationLocaleManager.getLocaleMgr ().isSupportedLocale (aDisplayLocale))
+        if (GlobalLocaleManager.getInstance ().isSupportedLocale (aDisplayLocale))
           ret = aDisplayLocale;
       }
     }

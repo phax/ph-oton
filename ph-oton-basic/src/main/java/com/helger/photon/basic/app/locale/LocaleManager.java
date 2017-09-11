@@ -38,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class LocaleManager implements ILocaleManager
 {
-  private final ICommonsOrderedSet <Locale> m_aLocales = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <Locale> m_aLocales = new CommonsLinkedHashSet <> ();
   private Locale m_aDefaultLocale;
 
   public LocaleManager ()
@@ -64,10 +64,11 @@ public class LocaleManager implements ILocaleManager
   public EChange setDefaultLocale (@Nonnull final Locale aDefaultLocale)
   {
     ValueEnforcer.notNull (aDefaultLocale, "DefaultLocale");
-    if (!m_aLocales.contains (aDefaultLocale))
-      throw new IllegalArgumentException ("The supposed default locale " +
-                                          aDefaultLocale +
-                                          " is not a valid application locale! It needs to be registered before it can be set as a default.");
+    ValueEnforcer.isTrue (m_aLocales.contains (aDefaultLocale),
+                          () -> "The supposed default locale " +
+                                aDefaultLocale +
+                                " is not a valid application locale! It needs to be registered before it can be set as a default.");
+
     if (aDefaultLocale.equals (m_aDefaultLocale))
       return EChange.UNCHANGED;
     m_aDefaultLocale = aDefaultLocale;
@@ -100,8 +101,8 @@ public class LocaleManager implements ILocaleManager
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("locales", m_aLocales)
-                                       .append ("defaultLocale", m_aDefaultLocale)
+    return new ToStringGenerator (this).append ("Locales", m_aLocales)
+                                       .append ("DefaultLocale", m_aDefaultLocale)
                                        .getToString ();
   }
 }

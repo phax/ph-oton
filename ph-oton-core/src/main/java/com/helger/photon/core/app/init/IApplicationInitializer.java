@@ -18,10 +18,7 @@ package com.helger.photon.core.app.init;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.layout.ILayoutManager;
 
@@ -35,22 +32,6 @@ import com.helger.photon.core.app.layout.ILayoutManager;
  */
 public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContext>
 {
-  /**
-   * Init all application specific settings. This method is called before all
-   * named methods afterwards.
-   */
-  default void initApplicationSettings ()
-  {}
-
-  /**
-   * Init all application locales
-   *
-   * @param aLocaleMgr
-   *        Locale manager to use
-   */
-  default void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
-  {}
-
   /**
    * Register all layout handler
    *
@@ -67,24 +48,6 @@ public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContex
    *        The menu tree to init
    */
   default void initMenu (@Nonnull final IMenuTree aMenuTree)
-  {}
-
-  /**
-   * Register all ajax functions
-   *
-   * @param aAjaxInvoker
-   *        The ajax invoker to use
-   */
-  default void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
-  {}
-
-  /**
-   * Register all API functions
-   *
-   * @param aAPIInvoker
-   *        The API invoker to use
-   */
-  default void initAPI (@Nonnull final IAPIInvoker aAPIInvoker)
   {}
 
   /**

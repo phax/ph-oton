@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.ajax;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -34,7 +35,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public interface IAjaxFunctionDeclaration extends IHasName
+public interface IAjaxFunctionDeclaration extends IHasName, Serializable
 {
   /**
    * @return The executor factory to be used. May not be <code>null</code>.
@@ -43,11 +44,21 @@ public interface IAjaxFunctionDeclaration extends IHasName
   ISupplier <? extends IAjaxExecutor> getExecutorFactory ();
 
   /**
+   * @return Amn Ajax executor from the executor factory.
+   * @see #getExecutorFactory()
+   */
+  @Nullable
+  default IAjaxExecutor getExecutor ()
+  {
+    return getExecutorFactory ().get ();
+  }
+
+  /**
    * @return The optional filter to be invoked before the main AJAX invocation.
    *         May be <code>null</code>.
    */
   @Nullable
-  IPredicate <IRequestWebScopeWithoutResponse> getExecutionFilter ();
+  IPredicate <? super IRequestWebScopeWithoutResponse> getExecutionFilter ();
 
   /**
    * @return The path to the AJAX servlet. Must start with a slash and end with
@@ -130,4 +141,20 @@ public interface IAjaxFunctionDeclaration extends IHasName
    *         <code>false</code> otherwise.
    */
   boolean canExecute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+
+  /**
+   * @return A special application ID that is needed for the execution of the
+   *         Ajax function. May be <code>null</code>.
+   */
+  @Nullable
+  String getSpecialApplicationID ();
+
+  /**
+   * @return <code>true</code> if a special application ID is present,
+   *         <code>false</code> if not.
+   */
+  default boolean hasSpecialApplicationID ()
+  {
+    return getSpecialApplicationID () != null;
+  }
 }

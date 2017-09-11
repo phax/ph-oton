@@ -31,10 +31,13 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.css.propertyvalue.CSSValue;
 import com.helger.html.hc.config.HCSettings;
-import com.helger.photon.basic.app.locale.ApplicationLocaleManager;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
+import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.ApplicationMenuTree;
-import com.helger.photon.core.ajax.ApplicationAjaxManager;
-import com.helger.photon.core.api.ApplicationAPIManager;
+import com.helger.photon.core.ajax.GlobalAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.api.GlobalAPIInvoker;
+import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.ApplicationLayoutManager;
@@ -63,6 +66,33 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
   @Nonnull
   @Nonempty
   protected abstract ICommonsMap <String, IApplicationInitializer <LECTYPE>> getAllInitializers ();
+
+  /**
+   * Init all locales
+   *
+   * @param aLocaleMgr
+   *        Locale manager to use
+   */
+  public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
+  {}
+
+  /**
+   * Register all ajax functions
+   *
+   * @param aAjaxInvoker
+   *        The ajax invoker to use
+   */
+  public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  {}
+
+  /**
+   * Register all API functions
+   *
+   * @param aAPIInvoker
+   *        The API invoker to use
+   */
+  public void initAPI (@Nonnull final IAPIInvoker aAPIInvoker)
+  {}
 
   /**
    * Set global system properties, after the content was initialized but before
@@ -124,23 +154,11 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
       {
         final IApplicationInitializer <LECTYPE> aInitializer = aEntry.getValue ();
 
-        // Set per-application settings
-        aInitializer.initApplicationSettings ();
-
-        // Register application locales
-        aInitializer.initLocales (ApplicationLocaleManager.getLocaleMgr ());
-
         // Create all menu items
         aInitializer.initMenu (ApplicationMenuTree.getTree ());
 
         // Create the application layouts - after the menus!
         aInitializer.initLayout (ApplicationLayoutManager.<LECTYPE> getInstance ());
-
-        // Register all Ajax functions here
-        aInitializer.initAjax (ApplicationAjaxManager.getInstance ());
-
-        // Register all API functions here
-        aInitializer.initAPI (ApplicationAPIManager.getInstance ());
 
         // All other things come last
         aInitializer.initRest ();
@@ -154,6 +172,15 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
         throw ex;
       }
     }
+
+    // Register application locales
+    initLocales (GlobalLocaleManager.getInstance ());
+
+    // Register all Ajax functions here
+    initAjax (GlobalAjaxInvoker.getInstance ());
+
+    // Register all API functions here
+    initAPI (GlobalAPIInvoker.getInstance ());
 
     // Call final callback
     afterContextAndInitializersDone (aSC);

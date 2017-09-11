@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.ajax;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -30,7 +32,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public interface IAjaxInvoker
+public interface IAjaxInvoker extends Serializable
 {
   @Nonnull
   @ReturnsMutableCopy

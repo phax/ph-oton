@@ -36,7 +36,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
+import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
  * Central API manager. Runs in an application scope.
@@ -44,14 +44,14 @@ import com.helger.web.scope.singleton.AbstractApplicationWebSingleton;
  * @author Philip Helger
  */
 @ThreadSafe
-public class ApplicationAPIManager extends AbstractApplicationWebSingleton implements IAPIInvoker
+public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPIInvoker
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ApplicationAPIManager.class);
-  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (ApplicationAPIManager.class.getName () +
+  private static final Logger s_aLogger = LoggerFactory.getLogger (GlobalAPIInvoker.class);
+  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (GlobalAPIInvoker.class.getName () +
                                                                                                                     "$invocations");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (ApplicationAPIManager.class.getName () +
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (GlobalAPIInvoker.class.getName () +
                                                                                                                                 "$func");
-  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (ApplicationAPIManager.class.getName () +
+  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (GlobalAPIInvoker.class.getName () +
                                                                                                                            "$timer");
 
   @GuardedBy ("m_aRWLock")
@@ -59,13 +59,13 @@ public class ApplicationAPIManager extends AbstractApplicationWebSingleton imple
 
   @Deprecated
   @UsedViaReflection
-  public ApplicationAPIManager ()
+  public GlobalAPIInvoker ()
   {}
 
   @Nonnull
-  public static ApplicationAPIManager getInstance ()
+  public static GlobalAPIInvoker getInstance ()
   {
-    return getApplicationSingleton (ApplicationAPIManager.class);
+    return getGlobalSingleton (GlobalAPIInvoker.class);
   }
 
   public void registerAPI (@Nonnull final APIDescriptor aDescriptor)

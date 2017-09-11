@@ -27,13 +27,15 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.basic.app.CApplicationID;
+import com.helger.photon.basic.app.locale.ILocaleManager;
+import com.helger.photon.bootstrap.demo.ajax.CAjax;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.pub.InitializerPublic;
-import com.helger.photon.bootstrap.demo.pub.ajax.CAjaxPublic;
 import com.helger.photon.bootstrap.demo.secure.InitializerSecure;
 import com.helger.photon.bootstrap3.servlet.AbstractWebAppListenerMultiAppBootstrap;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -165,11 +167,11 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
       final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
       aDataTables.setAutoWidth (false)
                  .setLengthMenu (LENGTH_MENU)
-                 .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
+                 .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjax.DATATABLES.getInvocationURL (aRequestScope))
                                                           .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
                                                                                           aTable.getID ())))
                  .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
-                 .setTextLoadingURL (CAjaxPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
+                 .setTextLoadingURL (CAjax.DATATABLES_I18N.getInvocationURL (aRequestScope),
                                      AjaxExecutorDataTablesI18N.LANGUAGE_ID)
                  .addPlugin (new DataTablesPluginSearchHighlight ());
     });
@@ -191,5 +193,22 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
 
     // Set all security related stuff
     _initSecurity ();
+  }
+
+  @Override
+  public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
+  {
+    aLocaleMgr.registerLocale (CApp.DEFAULT_LOCALE);
+    aLocaleMgr.setDefaultLocale (CApp.DEFAULT_LOCALE);
+  }
+
+  @Override
+  public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  {
+    aAjaxInvoker.registerFunction (CAjax.DATATABLES);
+    aAjaxInvoker.registerFunction (CAjax.LOGIN);
+    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_PUB);
+    aAjaxInvoker.registerFunction (CAjax.DATATABLES_I18N);
+    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_SEC);
   }
 }
