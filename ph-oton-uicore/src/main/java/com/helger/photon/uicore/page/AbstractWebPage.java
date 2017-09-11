@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.page;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -27,6 +29,9 @@ import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.basic.app.page.AbstractPage;
+import com.helger.photon.core.ajax.GlobalAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxExecutor;
+import com.helger.photon.core.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.uicore.css.CUICoreCSS;
 
 /**
@@ -36,8 +41,8 @@ import com.helger.photon.uicore.css.CUICoreCSS;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractPage
-                                      implements IWebPage <WPECTYPE>
+public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractPage implements
+                                      IWebPage <WPECTYPE>
 {
   // Commonly used CSS classes
   protected static final ICSSClassProvider CSS_CLASS_LEFT = CUICoreCSS.CSS_CLASS_LEFT;
@@ -163,5 +168,26 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
       // Invalid to display page
       onInvalidToDisplayPage (aWPEC);
     }
+  }
+
+  private static final AtomicInteger s_aAjaxCounter = new AtomicInteger (0);
+
+  /**
+   * Add a per-page AJAX executor, with an automatically generated name. It is
+   * automatically generated with the global AjaxInvoker.
+   *
+   * @param aExecutor
+   *        The executor to be executed. May not be <code>null</code>.
+   * @return The create {@link AjaxFunctionDeclaration} to be invoked.
+   */
+  @Nonnull
+  public final AjaxFunctionDeclaration addAjax (@Nonnull final IAjaxExecutor aExecutor)
+  {
+    final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder ("pagecall" +
+                                                                               s_aAjaxCounter.getAndIncrement ())
+                                                                     .withExecutor (aExecutor)
+                                                                     .build ();
+    GlobalAjaxInvoker.getInstance ().registerFunction (aFunction);
+    return aFunction;
   }
 }
