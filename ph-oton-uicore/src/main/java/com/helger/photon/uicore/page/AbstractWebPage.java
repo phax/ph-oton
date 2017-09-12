@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uicore.page;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -170,8 +168,6 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     }
   }
 
-  private static final AtomicInteger s_aAjaxCounter = new AtomicInteger (0);
-
   /**
    * Add a per-page AJAX executor, with an automatically generated name. It is
    * automatically generated with the global AjaxInvoker.
@@ -181,12 +177,9 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    * @return The create {@link AjaxFunctionDeclaration} to be invoked.
    */
   @Nonnull
-  public final AjaxFunctionDeclaration addAjax (@Nonnull final IAjaxExecutor aExecutor)
+  public static final AjaxFunctionDeclaration addAjax (@Nonnull final IAjaxExecutor aExecutor)
   {
-    final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder ("pagecall" +
-                                                                               s_aAjaxCounter.getAndIncrement ())
-                                                                     .withExecutor (aExecutor)
-                                                                     .build ();
+    final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder ().withExecutor (aExecutor).build ();
     GlobalAjaxInvoker.getInstance ().registerFunction (aFunction);
     return aFunction;
   }

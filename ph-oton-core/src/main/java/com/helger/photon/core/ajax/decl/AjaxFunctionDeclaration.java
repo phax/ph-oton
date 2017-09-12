@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.ajax.decl;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -112,6 +114,23 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
                                        .appendIfNotNull ("ExecutorFilter", m_aExecutionFilter)
                                        .appendIfNotNull ("SpecialApplicationID", m_sApplicationID)
                                        .getToString ();
+  }
+
+  private static final AtomicInteger s_aFunCounter = new AtomicInteger (0);
+
+  /**
+   * Create a function that is not named. The created name is ensured to be
+   * unique. The registration is removed once the global context is shutdown so
+   * the created path is not durable, as the next time the context is
+   * initialized a different number might be assigned. Use
+   * {@link #builder(String)} for a permanent name.
+   * 
+   * @return A new function declaration builder. Never <code>null</code>.
+   */
+  @Nonnull
+  public static Builder builder ()
+  {
+    return builder ("fun" + s_aFunCounter.incrementAndGet ());
   }
 
   @Nonnull
