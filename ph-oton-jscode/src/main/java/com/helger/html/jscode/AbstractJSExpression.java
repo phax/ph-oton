@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -112,6 +115,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression plus (@Nonnull final BigInteger aValue)
+  {
+    return plus (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression plus (@Nonnull final BigDecimal aValue)
+  {
+    return plus (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression plus (@Nonnull final String sValue)
   {
     return plus (JSExpr.lit (sValue));
@@ -148,6 +163,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression minus (@Nonnull final BigInteger aValue)
+  {
+    return minus (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression minus (@Nonnull final BigDecimal aValue)
+  {
+    return minus (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression minus (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.minus (this, aExpr);
@@ -175,6 +202,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression mul (final long nValue)
   {
     return mul (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression mul (@Nonnull final BigInteger aValue)
+  {
+    return mul (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression mul (@Nonnull final BigDecimal aValue)
+  {
+    return mul (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -208,6 +247,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression div (@Nonnull final BigInteger aValue)
+  {
+    return div (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression div (@Nonnull final BigDecimal aValue)
+  {
+    return div (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression div (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.div (this, aExpr);
@@ -223,6 +274,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression mod (final long nValue)
   {
     return mod (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression mod (@Nonnull final BigInteger aValue)
+  {
+    return mod (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -244,6 +301,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression shl (@Nonnull final BigInteger aValue)
+  {
+    return shl (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression shl (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.shl (this, aExpr);
@@ -259,6 +322,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression shr (final long nValue)
   {
     return shr (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression shr (@Nonnull final BigInteger aValue)
+  {
+    return shr (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -280,6 +349,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression shrz (@Nonnull final BigInteger aValue)
+  {
+    return shrz (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression shrz (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.shrz (this, aExpr);
@@ -298,6 +373,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression band (@Nonnull final BigInteger aValue)
+  {
+    return band (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression band (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.band (this, aExpr);
@@ -313,6 +394,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression bor (final long nValue)
   {
     return bor (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression bor (@Nonnull final BigInteger aValue)
+  {
+    return bor (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -346,6 +433,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression xor (@Nonnull final BigInteger aValue)
+  {
+    return xor (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression xor (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.xor (this, aExpr);
@@ -373,6 +466,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression lt (final long nValue)
   {
     return lt (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression lt (@Nonnull final BigInteger aValue)
+  {
+    return lt (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression lt (@Nonnull final BigDecimal aValue)
+  {
+    return lt (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -406,6 +511,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression lte (@Nonnull final BigInteger aValue)
+  {
+    return lte (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression lte (@Nonnull final BigDecimal aValue)
+  {
+    return lte (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression lte (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.lte (this, aExpr);
@@ -436,6 +553,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression gt (@Nonnull final BigInteger aValue)
+  {
+    return gt (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression gt (@Nonnull final BigDecimal aValue)
+  {
+    return gt (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression gt (@Nonnull final IJSExpression aExpr)
   {
     return JSOp.gt (this, aExpr);
@@ -463,6 +592,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression gte (final long nValue)
   {
     return gte (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression gte (@Nonnull final BigInteger aValue)
+  {
+    return gte (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression gte (@Nonnull final BigDecimal aValue)
+  {
+    return gte (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -505,6 +646,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression eq (final long nValue)
   {
     return eq (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression eq (@Nonnull final BigInteger aValue)
+  {
+    return eq (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression eq (@Nonnull final BigDecimal aValue)
+  {
+    return eq (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -562,6 +715,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
+  public final AbstractJSExpression eeq (@Nonnull final BigInteger aValue)
+  {
+    return eeq (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression eeq (@Nonnull final BigDecimal aValue)
+  {
+    return eeq (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
   public final AbstractJSExpression eeq (@Nonnull final String sValue)
   {
     return eeq (JSExpr.lit (sValue));
@@ -613,6 +778,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression ne (final long nValue)
   {
     return ne (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression ne (@Nonnull final BigInteger aValue)
+  {
+    return ne (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression ne (@Nonnull final BigDecimal aValue)
+  {
+    return ne (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -668,6 +845,18 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression ene (final long nValue)
   {
     return ene (JSExpr.lit (nValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression ene (@Nonnull final BigInteger aValue)
+  {
+    return ene (JSExpr.lit (aValue));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression ene (@Nonnull final BigDecimal aValue)
+  {
+    return ene (JSExpr.lit (aValue));
   }
 
   @Nonnull
@@ -773,6 +962,12 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final JSArrayCompRef component (final long nIndex)
   {
     return component (JSExpr.lit (nIndex));
+  }
+
+  @Nonnull
+  public final AbstractJSExpression component (@Nonnull final BigInteger aValue)
+  {
+    return component (JSExpr.lit (aValue));
   }
 
   @Nonnull
