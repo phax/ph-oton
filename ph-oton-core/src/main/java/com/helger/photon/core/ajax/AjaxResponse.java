@@ -15,6 +15,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.http.EHttpMethod;
+import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.MimeType;
 import com.helger.commons.url.ISimpleURL;
@@ -314,9 +315,15 @@ public class AjaxResponse extends UnifiedResponse
     json (ret);
   }
 
+  /**
+   * Create a simple HTML response without JSON structuring
+   * 
+   * @param aNode
+   *        The node to be renderered. May be <code>null</code>.
+   */
   public void htmlSimple (@Nullable final IHCNode aNode)
   {
-    setContentAndCharset (HCRenderer.getAsHTMLString (aNode), HCSettings.getHTMLCharset ());
+    setContentAndCharset (HCRenderer.getAsHTMLStringWithoutNamespaces (aNode), HCSettings.getHTMLCharset ());
     setMimeType (PhotonHTMLHelper.getMimeType (m_aRequestScope));
   }
 
@@ -382,6 +389,17 @@ public class AjaxResponse extends UnifiedResponse
     setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
   }
 
+  public void setContent (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
+  {
+    setContent (aBAOS.directGetBuffer (), 0, aBAOS.size ());
+  }
+
+  public void pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
+  {
+    setContent (aBAOS);
+    setMimeType (CMimeType.APPLICATION_PDF);
+  }
+
   public void attachment (@Nonnull @Nonempty final String sFilename)
   {
     setContentDispositionFilename (sFilename);
@@ -401,6 +419,7 @@ public class AjaxResponse extends UnifiedResponse
     final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
     if (aHttpRequest instanceof MockHttpServletRequest)
     {
+      // No version and no method present
       return new AjaxResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, aHttpRequest, aRequestScope);
     }
     return new AjaxResponse (RequestHelper.getHttpVersion (aHttpRequest),
