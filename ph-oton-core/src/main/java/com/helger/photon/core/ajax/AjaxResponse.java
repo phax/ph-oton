@@ -59,6 +59,7 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
 public class AjaxResponse extends UnifiedResponse
 {
   private final IRequestWebScopeWithoutResponse m_aRequestScope;
+  private IXMLWriterSettings m_aXWS = XMLWriterSettings.DEFAULT_XML_SETTINGS;
 
   public AjaxResponse (@Nonnull final EHttpVersion eHttpVersion,
                        @Nonnull final EHttpMethod eHttpMethod,
@@ -67,6 +68,23 @@ public class AjaxResponse extends UnifiedResponse
   {
     super (eHttpVersion, eHttpMethod, aHttpRequest);
     m_aRequestScope = aRequestScope;
+  }
+
+  protected final IRequestWebScopeWithoutResponse getRequestScope ()
+  {
+    return m_aRequestScope;
+  }
+
+  @Nonnull
+  public final IXMLWriterSettings getXMLWriterSettings ()
+  {
+    return m_aXWS;
+  }
+
+  public final void setXMLWriterSettings (@Nonnull final IXMLWriterSettings aXWS)
+  {
+    ValueEnforcer.notNull (aXWS, "XWS");
+    m_aXWS = aXWS;
   }
 
   public void jsonEmpty ()
@@ -93,7 +111,7 @@ public class AjaxResponse extends UnifiedResponse
 
   public void xml (@Nullable final IMicroNode aNode)
   {
-    xml (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+    xml (aNode, m_aXWS);
   }
 
   public void xml (@Nullable final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
@@ -103,7 +121,7 @@ public class AjaxResponse extends UnifiedResponse
 
   public void xml (@Nullable final Node aNode)
   {
-    xml (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+    xml (aNode, m_aXWS);
   }
 
   public void xml (@Nullable final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
@@ -113,7 +131,7 @@ public class AjaxResponse extends UnifiedResponse
 
   public void text (@Nullable final String sValue)
   {
-    setContentAndCharset (sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+    setContentAndCharset (sValue, StandardCharsets.UTF_8);
     setMimeType (CMimeType.TEXT_PLAIN);
   }
 
