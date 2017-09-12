@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.servlet.response.UnifiedResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -159,7 +159,7 @@ public final class InvokableAPIDescriptor
    *         In case the executor factory creates a <code>null</code> executor.
    */
   public void invokeAPI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                         @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+                         @Nonnull final PhotonUnifiedResponse aUnifiedResponse) throws Exception
   {
     final IAPIExecutor aExecutor = m_aDescriptor.getExecutorFactory ().get ();
     if (aExecutor == null)

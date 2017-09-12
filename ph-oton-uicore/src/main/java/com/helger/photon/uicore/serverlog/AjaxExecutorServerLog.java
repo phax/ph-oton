@@ -26,7 +26,7 @@ import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -60,7 +60,7 @@ public class AjaxExecutorServerLog implements IAjaxExecutor
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final String sSeverity = aRequestScope.params ().getAsString (PARAM_SEVERITY);
     final String sMessage = aRequestScope.params ().getAsString (PARAM_MESSAGE);

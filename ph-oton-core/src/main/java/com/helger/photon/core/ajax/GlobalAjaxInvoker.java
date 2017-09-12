@@ -24,6 +24,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
@@ -77,7 +78,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton implemen
   public void invokeFunction (@Nonnull final String sFunctionName,
                               @Nonnull final IAjaxExecutor aAjaxExecutor,
                               @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                              @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     m_aInvoker.invokeFunction (sFunctionName, aAjaxExecutor, aRequestScope, aAjaxResponse);
   }

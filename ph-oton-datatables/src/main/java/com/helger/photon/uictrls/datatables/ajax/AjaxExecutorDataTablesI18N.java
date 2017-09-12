@@ -25,7 +25,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.servlet.response.ResponseHelperSettings;
@@ -57,7 +57,7 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     // Resolve language
     final String sLanguage = aRequestScope.params ().getAsString (LANGUAGE_ID);

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
@@ -55,7 +55,7 @@ public class AjaxExecutorSaveFormState implements IAjaxExecutor
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     // Extract page ID
     final String sPageID = aRequestScope.attrs ().getAsString (ATTR_PAGE_ID);

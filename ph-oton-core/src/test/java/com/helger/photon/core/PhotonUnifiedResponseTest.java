@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.ajax;
+package com.helger.photon.core;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,14 +29,15 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.mgr.WebScoped;
 
 /**
- * Test class for class {@link AjaxResponse}.
+ * Test class for class {@link PhotonUnifiedResponse}.
  *
  * @author Philip Helger
  */
-public final class AjaxResponseTest
+public final class PhotonUnifiedResponseTest
 {
   @Rule
   public final TestRule m_aRule = new PhotonBasicWebTestRule ();
@@ -54,7 +55,7 @@ public final class AjaxResponseTest
       aHtml.getBody ().addChild (new HCH1 ().addChild ("Test H1"));
       aHtml.getBody ().addChild (new HCStyle ("h1{color:red;}"));
       aHtml.getBody ().addChild (new HCScriptInline (new UnparsedJSCodeProvider ("var y = x;")));
-      final AjaxResponse aResponse = AjaxResponse.createSimple (aWebScoped.getRequestScope ());
+      final PhotonUnifiedResponse aResponse = PhotonUnifiedResponse.createSimple (aWebScoped.getRequestScope ());
       aResponse.html (aHtml);
     }
   }

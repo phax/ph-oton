@@ -37,6 +37,7 @@ import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -117,7 +118,7 @@ public class AjaxInvoker implements IAjaxInvoker
   public void invokeFunction (@Nonnull final String sFunctionName,
                               @Nonnull final IAjaxExecutor aAjaxExecutor,
                               @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                              @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     ValueEnforcer.notNull (sFunctionName, "FunctionName");
     ValueEnforcer.notNull (aAjaxExecutor, "AjaxExecutor");

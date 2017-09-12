@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -36,7 +36,7 @@ public final class AjaxExecutorKeepAlive implements IAjaxExecutor
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorKeepAlive.class);
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     if (GlobalDebug.isDebugMode ())
       s_aLogger.info ("AJAX Keep alive!");

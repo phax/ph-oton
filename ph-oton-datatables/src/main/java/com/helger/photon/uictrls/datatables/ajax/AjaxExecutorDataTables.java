@@ -33,7 +33,7 @@ import com.helger.commons.string.StringParser;
 import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.json.JsonObject;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
@@ -308,7 +308,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("DataTables AJAX request: " + CollectionHelper.getSortedByKey (aRequestScope.params ()));
@@ -404,7 +404,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
       final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
 
       // Convert the response to JSON and add the special nodes
-      aAjaxResponse.json (AjaxResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
+      aAjaxResponse.json (PhotonUnifiedResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
                                                                      aResponseData.getSpecialNodes ()));
     }
   }

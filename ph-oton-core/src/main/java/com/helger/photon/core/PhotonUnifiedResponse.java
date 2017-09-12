@@ -1,4 +1,4 @@
-package com.helger.photon.core.ajax;
+package com.helger.photon.core;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -57,12 +57,12 @@ import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
-public class AjaxResponse extends UnifiedResponse
+public class PhotonUnifiedResponse extends UnifiedResponse
 {
   private final IRequestWebScopeWithoutResponse m_aRequestScope;
   private IXMLWriterSettings m_aXWS = XMLWriterSettings.DEFAULT_XML_SETTINGS;
 
-  public AjaxResponse (@Nonnull final EHttpVersion eHttpVersion,
+  public PhotonUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
                        @Nonnull final EHttpMethod eHttpMethod,
                        @Nonnull final HttpServletRequest aHttpRequest,
                        @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
@@ -429,18 +429,18 @@ public class AjaxResponse extends UnifiedResponse
    *
    * @param aRequestScope
    *        The current request scope. May not be <code>null</code>.
-   * @return New {@link AjaxResponse}. Never <code>null</code>.
+   * @return New {@link PhotonUnifiedResponse}. Never <code>null</code>.
    */
   @Nonnull
-  public static AjaxResponse createSimple (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static PhotonUnifiedResponse createSimple (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
     if (aHttpRequest instanceof MockHttpServletRequest)
     {
       // No version and no method present
-      return new AjaxResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, aHttpRequest, aRequestScope);
+      return new PhotonUnifiedResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, aHttpRequest, aRequestScope);
     }
-    return new AjaxResponse (RequestHelper.getHttpVersion (aHttpRequest),
+    return new PhotonUnifiedResponse (RequestHelper.getHttpVersion (aHttpRequest),
                              RequestHelper.getHttpMethod (aHttpRequest),
                              aHttpRequest,
                              aRequestScope);

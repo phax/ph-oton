@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsCollection;
-import com.helger.servlet.response.UnifiedResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -68,5 +68,5 @@ public interface IAPIInvoker extends Serializable
    */
   void invoke (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-               @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;
+               @Nonnull PhotonUnifiedResponse aUnifiedResponse) throws Exception;
 }

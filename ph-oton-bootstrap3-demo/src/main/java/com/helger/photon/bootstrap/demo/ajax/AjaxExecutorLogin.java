@@ -30,7 +30,7 @@ import com.helger.json.JsonObject;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.login.CLogin;
@@ -51,7 +51,7 @@ public final class AjaxExecutorLogin implements IAjaxExecutor
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorLogin.class);
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final LayoutExecutionContext aLEC = LayoutExecutionContext.createForAjaxOrAction (aRequestScope);
     final String sLoginName = aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_USERID);

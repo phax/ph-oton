@@ -34,7 +34,7 @@ import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.servlet.response.UnifiedResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
@@ -88,7 +88,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
 
   public void invoke (@Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                      @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+                      @Nonnull final PhotonUnifiedResponse aUnifiedResponse) throws Exception
   {
     ValueEnforcer.notNull (aInvokableDescriptor, "InvokableDescriptor");
     ValueEnforcer.notNull (aRequestScope, "RequestScope");

@@ -36,7 +36,7 @@ import com.helger.commons.timing.StopWatch;
 import com.helger.photon.basic.atom.Feed;
 import com.helger.photon.basic.atom.FeedGenerator;
 import com.helger.photon.basic.atom.FeedLink;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -88,7 +88,7 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
 
   @Override
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     // Increment statistics counter
     final StopWatch aSW = StopWatch.createdStarted ();

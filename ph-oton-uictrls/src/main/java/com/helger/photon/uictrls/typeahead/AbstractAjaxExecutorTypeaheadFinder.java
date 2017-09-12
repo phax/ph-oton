@@ -33,7 +33,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
@@ -242,7 +242,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
 
   @Override
   protected void mainHandleRequest (@Nonnull final LECTYPE aLEC,
-                                    @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                                    @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);
     if (StringHelper.hasNoTextAfterTrim (sOriginalQuery))

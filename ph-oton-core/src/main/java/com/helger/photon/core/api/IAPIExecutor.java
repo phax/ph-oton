@@ -16,12 +16,13 @@
  */
 package com.helger.photon.core.api;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.servlet.response.UnifiedResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -31,7 +32,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @FunctionalInterface
-public interface IAPIExecutor
+public interface IAPIExecutor extends Serializable
 {
   /**
    * @param aAPIDescriptor
@@ -55,5 +56,5 @@ public interface IAPIExecutor
                   @Nonnull @Nonempty String sPath,
                   @Nonnull Map <String, String> aPathVariables,
                   @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                  @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;
+                  @Nonnull PhotonUnifiedResponse aUnifiedResponse) throws Exception;
 }

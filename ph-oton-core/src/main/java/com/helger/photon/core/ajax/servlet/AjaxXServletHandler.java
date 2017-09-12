@@ -36,7 +36,7 @@ import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
 import com.helger.http.EHttpVersion;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
@@ -81,12 +81,12 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   }
 
   @Nonnull
-  public AjaxResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
-                                             @Nonnull final EHttpMethod eHttpMethod,
-                                             @Nonnull final HttpServletRequest aHttpRequest,
-                                             @Nonnull final IRequestWebScope aRequestScope)
+  public PhotonUnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
+                                                      @Nonnull final EHttpMethod eHttpMethod,
+                                                      @Nonnull final HttpServletRequest aHttpRequest,
+                                                      @Nonnull final IRequestWebScope aRequestScope)
   {
-    return new AjaxResponse (eHttpVersion, eHttpMethod, aHttpRequest, aRequestScope);
+    return new PhotonUnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest, aRequestScope);
   }
 
   @Override
@@ -164,7 +164,10 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     try
     {
       // Invoke function
-      aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope, (AjaxResponse) aUnifiedResponse);
+      aAjaxInvoker.invokeFunction (sAjaxFunctionName,
+                                   aAjaxExecutor,
+                                   aRequestScope,
+                                   (PhotonUnifiedResponse) aUnifiedResponse);
 
       if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
       {

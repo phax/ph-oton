@@ -19,7 +19,7 @@ package com.helger.photon.core.ajax.executor;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -58,10 +58,10 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
    */
   @OverrideOnDemand
   protected abstract void mainHandleRequest (@Nonnull LECTYPE aLEC,
-                                             @Nonnull AjaxResponse aAjaxResponse) throws Exception;
+                                             @Nonnull PhotonUnifiedResponse aAjaxResponse) throws Exception;
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
+                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final LECTYPE aLEC = createLayoutExecutionContext (aRequestScope);
     if (aLEC == null)

@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -29,11 +30,14 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FilenameHelper;
+import com.helger.http.EHttpVersion;
+import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.GlobalAPIInvoker;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
@@ -57,6 +61,15 @@ public class APIXServletHandler implements IXServletSimpleHandler
   public APIXServletHandler (@Nonnull final ISupplier <? extends IAPIInvoker> aFactory)
   {
     m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
+  }
+
+  @Nonnull
+  public PhotonUnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
+                                                      @Nonnull final EHttpMethod eHttpMethod,
+                                                      @Nonnull final HttpServletRequest aHttpRequest,
+                                                      @Nonnull final IRequestWebScope aRequestScope)
+  {
+    return new PhotonUnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest, aRequestScope);
   }
 
   @Override
@@ -92,7 +105,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
         try
         {
           // Main API invocation
-          aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, aUnifiedResponse);
+          aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, (PhotonUnifiedResponse) aUnifiedResponse);
 
           if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
           {
