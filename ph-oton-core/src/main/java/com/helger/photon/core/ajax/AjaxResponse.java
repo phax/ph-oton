@@ -283,11 +283,6 @@ public class AjaxResponse extends UnifiedResponse
     }
   }
 
-  public void htmlEmpty ()
-  {
-    html (null, null, null);
-  }
-
   @SuppressWarnings ("unchecked")
   public void html (@Nullable final IHCNode aNode)
   {
@@ -317,6 +312,12 @@ public class AjaxResponse extends UnifiedResponse
 
     final IJsonObject ret = HtmlHelper.getResponseAsJSON (aObj, aSpecialNodes);
     json (ret);
+  }
+
+  public void htmlSimple (@Nullable final IHCNode aNode)
+  {
+    setContentAndCharset (HCRenderer.getAsHTMLString (aNode), HCSettings.getHTMLCharset ());
+    setMimeType (PhotonHTMLHelper.getMimeType (m_aRequestScope));
   }
 
   /**
