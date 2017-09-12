@@ -25,10 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.CMimeType;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
@@ -95,14 +92,11 @@ public class AjaxHtmlResponse implements IAjaxResponse
   public static final String PROPERTY_INLINE_JS_BEFORE_EXTERNAL = "inlinejsBeforeExternal";
   /** Additional inline JS - only in case of success - contains a string */
   public static final String PROPERTY_INLINE_JS_AFTER_EXTERNAL = "inlinejsAfterExternal";
-  /** Error message property - only in case of error */
-  public static final String PROPERTY_ERRORMESSAGE = "errormessage";
   /** Default property for HTML content */
   public static final String PROPERTY_HTML = "html";
 
   private final IJsonObject m_aSuccessValue;
   private final HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
-  private final String m_sErrorMessage;
 
   @Nonnull
   public static String getHTMLString (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -191,8 +185,6 @@ public class AjaxHtmlResponse implements IAjaxResponse
   /**
    * Success constructor for HC nodes
    *
-   * @param bSuccess
-   *        Success indicator
    * @param aRequestScope
    *        The source request scope. May not be <code>null</code> in case of
    *        success.
@@ -208,31 +200,26 @@ public class AjaxHtmlResponse implements IAjaxResponse
    *        document ready" provider.
    * @param aCustomJson
    *        Custom JSON object data structure. May be <code>null</code>.
-   * @param sErrorMessage
-   *        Optional error message if success if <code>false</code>
+   * @param bSuccess
+   *        Success indicator
    */
   protected AjaxHtmlResponse (@Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                               @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                               @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider,
-                              @Nullable final IJsonObject aCustomJson,
-                              @Nullable final String sErrorMessage)
+                              @Nullable final IJsonObject aCustomJson)
   {
     // Now decompose the HCNode itself and set it in "html" property
     final JsonObject aObj = new JsonObject ();
-    // XXX success
-    if (true)
-    {
-      // First extract the HTML
-      aObj.add (PROPERTY_HTML, getHTMLString (aRequestScope, aNode, m_aSpecialNodes, aOnDocumentReadyProvider));
 
-      // Do it after all nodes were finalized etc
-      addCSSAndJS (aRequestScope, m_aSpecialNodes);
-    }
-    if (aCustomJson != null)
-      aCustomJson.forEach ( (k, v) -> aObj.add (k, v));
+    // First extract the HTML
+    aObj.add (PROPERTY_HTML, getHTMLString (aRequestScope, aNode, m_aSpecialNodes, aOnDocumentReadyProvider));
+
+    // Do it after all nodes were finalized etc
+    addCSSAndJS (aRequestScope, m_aSpecialNodes);
+
+    aObj.addAll (aCustomJson);
 
     m_aSuccessValue = aObj;
-    m_sErrorMessage = sErrorMessage;
   }
 
   /**
@@ -258,73 +245,54 @@ public class AjaxHtmlResponse implements IAjaxResponse
     return this;
   }
 
-  /**
-   * @return In case this is a failure, this field contains the error message.
-   *         May be <code>null</code>.
-   */
-  @Nullable
-  public String getErrorMessage ()
-  {
-    return m_sErrorMessage;
-  }
-
   @Nonnull
   public static JsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue,
-                                              @Nonnull final HCSpecialNodes aSpecialNodes,
-                                              @Nullable final String sErrorMessage)
+                                              @Nonnull final HCSpecialNodes aSpecialNodes)
   {
     final JsonObject aAssocArray = new JsonObject ();
-    // XXX success
-    if (true)
-    {
-      if (aSuccessValue != null)
-        aAssocArray.add (PROPERTY_VALUE, aSuccessValue);
+    if (aSuccessValue != null)
+      aAssocArray.add (PROPERTY_VALUE, aSuccessValue);
 
-      // Apply special nodes
-      if (aSpecialNodes.hasExternalCSSs ())
-      {
-        final JsonArray aList = new JsonArray ();
-        for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ()
-                                                                                          .entrySet ())
-          for (final String sCSSFile : aEntry.getValue ())
-            aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
-                                        .add (SUBPROPERTY_CSS_HREF, sCSSFile));
-        aAssocArray.add (PROPERTY_EXTERNAL_CSS, aList);
-      }
-      if (aSpecialNodes.hasInlineCSSBeforeExternal ())
-      {
-        final JsonArray aList = new JsonArray ();
-        for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())
-          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
-                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-        aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
-      }
-      if (aSpecialNodes.hasInlineCSSAfterExternal ())
-      {
-        final JsonArray aList = new JsonArray ();
-        for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSAfterExternal ())
-          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
-                                      .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-        aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
-      }
-      if (aSpecialNodes.hasExternalJSs ())
-        aAssocArray.add (PROPERTY_EXTERNAL_JS, aSpecialNodes.getAllExternalJSs ());
-      if (aSpecialNodes.hasInlineJSBeforeExternal ())
-        aAssocArray.add (PROPERTY_INLINE_JS_BEFORE_EXTERNAL, aSpecialNodes.getInlineJSBeforeExternal ().getJSCode ());
-      if (aSpecialNodes.hasInlineJSAfterExternal ())
-        aAssocArray.add (PROPERTY_INLINE_JS_AFTER_EXTERNAL, aSpecialNodes.getInlineJSAfterExternal ().getJSCode ());
-    }
-    else
+    // Apply special nodes
+    if (aSpecialNodes.hasExternalCSSs ())
     {
-      aAssocArray.add (PROPERTY_ERRORMESSAGE, StringHelper.getNotNull (sErrorMessage));
+      final JsonArray aList = new JsonArray ();
+      for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ()
+                                                                                        .entrySet ())
+        for (final String sCSSFile : aEntry.getValue ())
+          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
+                                      .add (SUBPROPERTY_CSS_HREF, sCSSFile));
+      aAssocArray.add (PROPERTY_EXTERNAL_CSS, aList);
     }
+    if (aSpecialNodes.hasInlineCSSBeforeExternal ())
+    {
+      final JsonArray aList = new JsonArray ();
+      for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())
+        aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
+                                    .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
+      aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
+    }
+    if (aSpecialNodes.hasInlineCSSAfterExternal ())
+    {
+      final JsonArray aList = new JsonArray ();
+      for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSAfterExternal ())
+        aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
+                                    .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
+      aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
+    }
+    if (aSpecialNodes.hasExternalJSs ())
+      aAssocArray.add (PROPERTY_EXTERNAL_JS, aSpecialNodes.getAllExternalJSs ());
+    if (aSpecialNodes.hasInlineJSBeforeExternal ())
+      aAssocArray.add (PROPERTY_INLINE_JS_BEFORE_EXTERNAL, aSpecialNodes.getInlineJSBeforeExternal ().getJSCode ());
+    if (aSpecialNodes.hasInlineJSAfterExternal ())
+      aAssocArray.add (PROPERTY_INLINE_JS_AFTER_EXTERNAL, aSpecialNodes.getInlineJSAfterExternal ().getJSCode ());
     return aAssocArray;
   }
 
   @Nonnull
   public JsonObject getResponseAsJSON ()
   {
-    return getResponseAsJSON (m_aSuccessValue, m_aSpecialNodes, m_sErrorMessage);
+    return getResponseAsJSON (m_aSuccessValue, m_aSpecialNodes);
   }
 
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
@@ -335,30 +303,9 @@ public class AjaxHtmlResponse implements IAjaxResponse
   }
 
   @Override
-  public boolean equals (final Object o)
-  {
-    if (o == this)
-      return true;
-    if (!super.equals (o))
-      return false;
-    final AjaxHtmlResponse rhs = (AjaxHtmlResponse) o;
-    return EqualsHelper.equals (m_sErrorMessage, rhs.m_sErrorMessage) && m_aSuccessValue.equals (rhs.m_aSuccessValue);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return HashCodeGenerator.getDerived (super.hashCode ())
-                            .append (m_sErrorMessage)
-                            .append (m_aSuccessValue)
-                            .getHashCode ();
-  }
-
-  @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("ErrorMsg", m_sErrorMessage)
                             .appendIfNotNull ("SuccessValue", m_aSuccessValue)
                             .getToString ();
   }
@@ -396,7 +343,7 @@ public class AjaxHtmlResponse implements IAjaxResponse
                                                 @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                                                 @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
-    return new AjaxHtmlResponse (aRequestScope, aNode, aOnDocumentReadyProvider, (IJsonObject) null, (String) null);
+    return new AjaxHtmlResponse (aRequestScope, aNode, aOnDocumentReadyProvider, (IJsonObject) null);
   }
 
   @Nonnull
@@ -404,6 +351,6 @@ public class AjaxHtmlResponse implements IAjaxResponse
                                                    @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                                                    @Nullable final IJsonObject aCustomJson)
   {
-    return new AjaxHtmlResponse (aRequestScope, aNode, (IHCOnDocumentReadyProvider) null, aCustomJson, (String) null);
+    return new AjaxHtmlResponse (aRequestScope, aNode, (IHCOnDocumentReadyProvider) null, aCustomJson);
   }
 }

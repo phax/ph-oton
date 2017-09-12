@@ -185,94 +185,85 @@ jqphClass.prototype = {
    * @param callbackFctEnd function Callback to be executed after the inclusions took place
    */
   jqueryAjaxSuccessHandler:function(data,textStatus,xhr,callbackFctStart,callbackFctEnd){
-    if(data.success){
-      if (callbackFctStart) {
-        // Invoke callback before the inclusions
-        callbackFctStart(data.value,textStatus,xhr);
-      }
-      
-      // Do we have inline JS before external?
-      if (data.inlinejsBeforeExternal) {
-        // eval now
-        $.globalEval(data.inlinejsBeforeExternal);
-      }
-      
-      // Do we have inline JS after external?
-      var aInlineJSEval;
-      if(data.inlinejsAfterExternal){
-        // Include inline JS
-        aInlineJSEval = function() { $.globalEval(data.inlinejsAfterExternal); }
-      }
-  
-      if(data.externaljs){
-        // Include external JS elements
-        if (aInlineJSEval) {
-          // external JS and inline JS is present
-          this.loadJSInOrder (data.externaljs, aInlineJSEval);
-        } else {
-          // Only external JS present
-          this.loadJSInOrder (data.externaljs);
-        }  
-      }
-      else{
-        // No external JS - Maybe inline JS?
-        if (aInlineJSEval)
-          aInlineJSEval();
-      }
-      
-      var head=document.head || document.getElementsByTagName('head')[0];
-      var createStyle = function(media,content) {
-        var cssNode=document.createElement('style');
-        cssNode.type='text\/css';
-        cssNode.title='dynamicallyLoadedCSS';
-        cssNode.media=media;
-        if (cssNode.styleSheet)
-          cssNode.styleSheet.cssText=content;
-        else
-          cssNode.appendChild(document.createTextNode(content));
-        return cssNode;
-      };
-      
-      // Inline CSS before externals?
-      if(data.inlinecssBeforeExternal) {
-        for(var css in data.inlinecssBeforeExternal){
-          head.appendChild(createStyle (data.inlinecssBeforeExternal[css].media,
-                                        data.inlinecssBeforeExternal[css].content));
-        }
-      }
-      
-      // Externa CSS elements present?
-      if(data.externalcss){
-        for(var css in data.externalcss){
-          var cssNode=document.createElement('link');
-          cssNode.href=data.externalcss[css].href;
-          cssNode.type='text\/css';
-          cssNode.rel='stylesheet';
-          cssNode.title='dynamicallyLoadedCSS';
-          cssNode.media=data.externalcss[css].media;
-          head.appendChild(cssNode);
-        }
-      }
+    if (callbackFctStart) {
+      // Invoke callback before the inclusions
+      callbackFctStart(data.value,textStatus,xhr);
+    }
+    
+    // Do we have inline JS before external?
+    if (data.inlinejsBeforeExternal) {
+      // eval now
+      $.globalEval(data.inlinejsBeforeExternal);
+    }
+    
+    // Do we have inline JS after external?
+    var aInlineJSEval;
+    if(data.inlinejsAfterExternal){
+      // Include inline JS
+      aInlineJSEval = function() { $.globalEval(data.inlinejsAfterExternal); }
+    }
 
-      // Inline CSS after externals?
-      if(data.inlinecssAfterExternal) {
-        for(var css in data.inlinecssAfterExternal){
-          head.appendChild(createStyle (data.inlinecssAfterExternal[css].media,
-                                        data.inlinecssAfterExternal[css].content));
-        }
+    if(data.externaljs){
+      // Include external JS elements
+      if (aInlineJSEval) {
+        // external JS and inline JS is present
+        this.loadJSInOrder (data.externaljs, aInlineJSEval);
+      } else {
+        // Only external JS present
+        this.loadJSInOrder (data.externaljs);
+      }  
+    }
+    else{
+      // No external JS - Maybe inline JS?
+      if (aInlineJSEval)
+        aInlineJSEval();
+    }
+    
+    var head=document.head || document.getElementsByTagName('head')[0];
+    var createStyle = function(media,content) {
+      var cssNode=document.createElement('style');
+      cssNode.type='text\/css';
+      cssNode.title='dynamicallyLoadedCSS';
+      cssNode.media=media;
+      if (cssNode.styleSheet)
+        cssNode.styleSheet.cssText=content;
+      else
+        cssNode.appendChild(document.createTextNode(content));
+      return cssNode;
+    };
+    
+    // Inline CSS before externals?
+    if(data.inlinecssBeforeExternal) {
+      for(var css in data.inlinecssBeforeExternal){
+        head.appendChild(createStyle (data.inlinecssBeforeExternal[css].media,
+                                      data.inlinecssBeforeExternal[css].content));
       }
-      
-      if (callbackFctEnd) {
-        // Invoke callback after the inclusions
-        callbackFctEnd(data.value,textStatus,xhr);
+    }
+    
+    // External CSS elements present?
+    if(data.externalcss){
+      for(var css in data.externalcss){
+        var cssNode=document.createElement('link');
+        cssNode.href=data.externalcss[css].href;
+        cssNode.type='text\/css';
+        cssNode.rel='stylesheet';
+        cssNode.title='dynamicallyLoadedCSS';
+        cssNode.media=data.externalcss[css].media;
+        head.appendChild(cssNode);
       }
-    }else{
-      var msg='Error invoking ph AJAX function';
-      if (textStatus)
-    	msg += ' ['+textStatus+']!';
-      if(data.errormessage)
-    	msg += ' '+data.errormessage;
-      window.alert(msg);
+    }
+
+    // Inline CSS after externals?
+    if(data.inlinecssAfterExternal) {
+      for(var css in data.inlinecssAfterExternal){
+        head.appendChild(createStyle (data.inlinecssAfterExternal[css].media,
+                                      data.inlinecssAfterExternal[css].content));
+      }
+    }
+    
+    if (callbackFctEnd) {
+      // Invoke callback after the inclusions
+      callbackFctEnd(data.value,textStatus,xhr);
     }
   }
 };
