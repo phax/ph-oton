@@ -1,5 +1,6 @@
 package com.helger.photon.core;
 
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.MimeType;
+import com.helger.commons.serialize.SerializationHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
@@ -63,9 +65,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   private IXMLWriterSettings m_aXWS = XMLWriterSettings.DEFAULT_XML_SETTINGS;
 
   public PhotonUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
-                       @Nonnull final EHttpMethod eHttpMethod,
-                       @Nonnull final HttpServletRequest aHttpRequest,
-                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+                                @Nonnull final EHttpMethod eHttpMethod,
+                                @Nonnull final HttpServletRequest aHttpRequest,
+                                @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     super (eHttpVersion, eHttpMethod, aHttpRequest);
     m_aRequestScope = aRequestScope;
@@ -392,6 +394,14 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   }
 
   /**
+   * HTTP 409 Conflict
+   */
+  public void createConflict ()
+  {
+    setStatus (HttpServletResponse.SC_CONFLICT);
+  }
+
+  /**
    * HTTP 412 Precondition Failed
    */
   public void createPreconditionFailed ()
@@ -410,6 +420,12 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   public void setContent (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
   {
     setContent (aBAOS.directGetBuffer (), 0, aBAOS.size ());
+  }
+
+  public void serialized (@Nonnull final Serializable aObj)
+  {
+    setContent (SerializationHelper.getSerializedByteArray (aObj));
+    setMimeType (CMimeType.APPLICATION_OCTET_STREAM);
   }
 
   public void pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
@@ -441,8 +457,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
       return new PhotonUnifiedResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, aHttpRequest, aRequestScope);
     }
     return new PhotonUnifiedResponse (RequestHelper.getHttpVersion (aHttpRequest),
-                             RequestHelper.getHttpMethod (aHttpRequest),
-                             aHttpRequest,
-                             aRequestScope);
+                                      RequestHelper.getHttpMethod (aHttpRequest),
+                                      aHttpRequest,
+                                      aRequestScope);
   }
 }
