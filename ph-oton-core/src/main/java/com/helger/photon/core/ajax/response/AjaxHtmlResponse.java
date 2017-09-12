@@ -66,10 +66,8 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class AjaxHtmlResponse extends AbstractAjaxResponse
+public class AjaxHtmlResponse implements IAjaxResponse
 {
-  /** Success property */
-  public static final String PROPERTY_SUCCESS = "success";
   /**
    * Response value property - only in case of success - contains the response
    * data as object
@@ -213,18 +211,16 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
    * @param sErrorMessage
    *        Optional error message if success if <code>false</code>
    */
-  protected AjaxHtmlResponse (final boolean bSuccess,
-                              @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
+  protected AjaxHtmlResponse (@Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                               @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                               @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider,
                               @Nullable final IJsonObject aCustomJson,
                               @Nullable final String sErrorMessage)
   {
-    super (bSuccess);
-
     // Now decompose the HCNode itself and set it in "html" property
     final JsonObject aObj = new JsonObject ();
-    if (bSuccess)
+    // XXX success
+    if (true)
     {
       // First extract the HTML
       aObj.add (PROPERTY_HTML, getHTMLString (aRequestScope, aNode, m_aSpecialNodes, aOnDocumentReadyProvider));
@@ -273,14 +269,13 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   }
 
   @Nonnull
-  public static JsonObject getResponseAsJSON (final boolean bIsSuccess,
-                                              @Nullable final IJsonObject aSuccessValue,
+  public static JsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue,
                                               @Nonnull final HCSpecialNodes aSpecialNodes,
                                               @Nullable final String sErrorMessage)
   {
     final JsonObject aAssocArray = new JsonObject ();
-    aAssocArray.add (PROPERTY_SUCCESS, bIsSuccess);
-    if (bIsSuccess)
+    // XXX success
+    if (true)
     {
       if (aSuccessValue != null)
         aAssocArray.add (PROPERTY_VALUE, aSuccessValue);
@@ -329,7 +324,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
   @Nonnull
   public JsonObject getResponseAsJSON ()
   {
-    return getResponseAsJSON (isSuccess (), m_aSuccessValue, m_aSpecialNodes, m_sErrorMessage);
+    return getResponseAsJSON (m_aSuccessValue, m_aSpecialNodes, m_sErrorMessage);
   }
 
   public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
@@ -401,12 +396,7 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
                                                 @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                                                 @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
-    return new AjaxHtmlResponse (true,
-                                 aRequestScope,
-                                 aNode,
-                                 aOnDocumentReadyProvider,
-                                 (IJsonObject) null,
-                                 (String) null);
+    return new AjaxHtmlResponse (aRequestScope, aNode, aOnDocumentReadyProvider, (IJsonObject) null, (String) null);
   }
 
   @Nonnull
@@ -414,22 +404,6 @@ public class AjaxHtmlResponse extends AbstractAjaxResponse
                                                    @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                                                    @Nullable final IJsonObject aCustomJson)
   {
-    return new AjaxHtmlResponse (true,
-                                 aRequestScope,
-                                 aNode,
-                                 (IHCOnDocumentReadyProvider) null,
-                                 aCustomJson,
-                                 (String) null);
-  }
-
-  @Nonnull
-  public static AjaxHtmlResponse createError (@Nullable final String sErrorMessage)
-  {
-    return new AjaxHtmlResponse (false,
-                                 (IRequestWebScopeWithoutResponse) null,
-                                 (IHCHasChildrenMutable <?, IHCNode>) null,
-                                 (IHCOnDocumentReadyProvider) null,
-                                 (IJsonObject) null,
-                                 sErrorMessage);
+    return new AjaxHtmlResponse (aRequestScope, aNode, (IHCOnDocumentReadyProvider) null, aCustomJson, (String) null);
   }
 }

@@ -43,7 +43,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Philip Helger
  */
 @Immutable
-public class AjaxBinaryResponse extends AbstractAjaxResponse
+public class AjaxBinaryResponse implements IAjaxResponse
 {
   private final byte [] m_aValue;
   private final IMimeType m_aMimeType;
@@ -56,7 +56,6 @@ public class AjaxBinaryResponse extends AbstractAjaxResponse
                              @Nonnull final IMimeType aMimeType,
                              @Nonnull @Nonempty final String sDispositionFilename)
   {
-    super (true);
     m_aValue = ValueEnforcer.notEmpty (aValue, "Value");
     m_aMimeType = ValueEnforcer.notNull (aMimeType, "MimeType");
     m_sDispositionFilename = ValueEnforcer.notEmpty (sDispositionFilename, "DispositionFilename");

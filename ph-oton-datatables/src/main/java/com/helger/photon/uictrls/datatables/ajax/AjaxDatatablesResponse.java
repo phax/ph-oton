@@ -24,11 +24,11 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.IJsonObject;
-import com.helger.photon.core.ajax.response.AbstractAjaxResponse;
 import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
+import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.servlet.response.UnifiedResponse;
 
-public class AjaxDatatablesResponse extends AbstractAjaxResponse
+public class AjaxDatatablesResponse implements IAjaxResponse
 {
   private final IJsonObject m_aResponseData;
   private final HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
@@ -36,14 +36,13 @@ public class AjaxDatatablesResponse extends AbstractAjaxResponse
   public AjaxDatatablesResponse (@Nonnull final IJsonObject aResponseData,
                                  @Nonnull final IHCSpecialNodes aAdditionalSpecialNodes)
   {
-    super (true);
     m_aResponseData = aResponseData;
     m_aSpecialNodes.addAll (aAdditionalSpecialNodes);
   }
 
   public void applyToResponse (final UnifiedResponse aUnifiedResponse)
   {
-    final IJsonObject aJson = AjaxHtmlResponse.getResponseAsJSON (isSuccess (), m_aResponseData, m_aSpecialNodes, null);
+    final IJsonObject aJson = AjaxHtmlResponse.getResponseAsJSON (m_aResponseData, m_aSpecialNodes, null);
     aUnifiedResponse.setContentAndCharset (aJson.getAsJsonString (), StandardCharsets.UTF_8)
                     .setMimeType (CMimeType.APPLICATION_JSON);
   }

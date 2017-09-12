@@ -73,7 +73,7 @@ public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
     // Main action
     final IJsonObject aData = DataTables.createLanguageJson (aLanguage);
 
-    return new AjaxJsonResponse (true, aData)
+    return new AjaxJsonResponse (aData)
     {
       @Override
       public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)

@@ -34,7 +34,7 @@ import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
+import com.helger.photon.core.ajax.response.AjaxHttpStatusCodeResponse;
 import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
@@ -396,7 +396,10 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                                             .getCastedState (DataTablesServerData.OT_DATATABLES,
                                                                              sDataTablesID);
     if (aServerData == null)
-      return AjaxHtmlResponse.createError ("No such data tables ID: " + sDataTablesID);
+    {
+      s_aLogger.error ("No such data tables ID: " + sDataTablesID);
+      return AjaxHttpStatusCodeResponse.createNotFound ();
+    }
 
     // Main request handling
     final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);

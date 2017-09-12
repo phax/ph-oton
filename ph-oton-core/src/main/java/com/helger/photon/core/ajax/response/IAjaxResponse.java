@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.state.ISuccessIndicator;
 import com.helger.servlet.response.UnifiedResponse;
 
 /**
@@ -28,7 +27,7 @@ import com.helger.servlet.response.UnifiedResponse;
  *
  * @author Philip Helger
  */
-public interface IAjaxResponse extends ISuccessIndicator, Serializable
+public interface IAjaxResponse extends Serializable
 {
   /**
    * Apply the AJAX response onto the passed {@link UnifiedResponse}. This

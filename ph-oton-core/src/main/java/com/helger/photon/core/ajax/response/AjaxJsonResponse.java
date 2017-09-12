@@ -38,13 +38,12 @@ import com.helger.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @Immutable
-public class AjaxJsonResponse extends AbstractAjaxResponse
+public class AjaxJsonResponse implements IAjaxResponse
 {
   private final IJson m_aValue;
 
-  public AjaxJsonResponse (final boolean bSuccess, @Nullable final IJson aValue)
+  public AjaxJsonResponse (@Nullable final IJson aValue)
   {
-    super (bSuccess);
     m_aValue = aValue;
   }
 
@@ -96,12 +95,12 @@ public class AjaxJsonResponse extends AbstractAjaxResponse
   @Nonnull
   public static AjaxJsonResponse createSuccess (@Nullable final IJson aValue)
   {
-    return new AjaxJsonResponse (true, aValue);
+    return new AjaxJsonResponse (aValue);
   }
 
   @Nonnull
   public static AjaxJsonResponse createError (@Nonnull final String sErrorMsg)
   {
-    return new AjaxJsonResponse (false, JsonValue.create (sErrorMsg));
+    return new AjaxJsonResponse (JsonValue.create (sErrorMsg));
   }
 }

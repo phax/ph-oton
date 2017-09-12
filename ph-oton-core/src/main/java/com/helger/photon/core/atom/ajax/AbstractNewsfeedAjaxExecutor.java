@@ -48,8 +48,9 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
  *
  * @author Philip Helger
  */
-public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor
-                                                   implements IHasID <String>, IHasDisplayText
+public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor implements
+                                                   IHasID <String>,
+                                                   IHasDisplayText
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
@@ -122,10 +123,7 @@ public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor
     StatisticsManager.getTimerHandler (AbstractNewsfeedAjaxExecutor.class.getName () + "$TIMER." + m_sFeedID)
                      .addTime (aSW.stopAndGetMillis ());
 
-    return new AjaxStringResponse (true,
-                                   sXML,
-                                   XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ,
-                                   CMimeType.APPLICATION_ATOM_XML)
+    return new AjaxStringResponse (sXML, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, CMimeType.APPLICATION_ATOM_XML)
     {
       @Override
       public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)

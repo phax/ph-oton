@@ -58,7 +58,7 @@ public class AjaxInvoker implements IAjaxInvoker
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap<> ();
+  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap <> ();
 
   public AjaxInvoker ()
   {}
@@ -145,14 +145,6 @@ public class AjaxInvoker implements IAjaxInvoker
 
       // Main handle request
       final IAjaxResponse aAjaxResponse = aAjaxExecutor.handleRequest (aRequestScope);
-      if (aAjaxResponse.isFailure ())
-      {
-        // Execution failed
-        s_aLogger.warn ("Invoked Ajax function '" +
-                        sFunctionName +
-                        "' returned a failure: " +
-                        aAjaxResponse.toString ());
-      }
 
       // Invoke after handler
       AjaxSettings.afterExecutionCallbacks ()
@@ -172,11 +164,12 @@ public class AjaxInvoker implements IAjaxInvoker
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
         // Long running execution
-        AjaxSettings.longRunningExecutionCallbacks ().forEach (aCB -> aCB.onLongRunningExecution (this,
-                                                                                                     sFunctionName,
-                                                                                                     aRequestScope,
-                                                                                                     aAjaxExecutor,
-                                                                                                     nExecutionMillis));
+        AjaxSettings.longRunningExecutionCallbacks ()
+                    .forEach (aCB -> aCB.onLongRunningExecution (this,
+                                                                 sFunctionName,
+                                                                 aRequestScope,
+                                                                 aAjaxExecutor,
+                                                                 nExecutionMillis));
       }
       return aAjaxResponse;
     }

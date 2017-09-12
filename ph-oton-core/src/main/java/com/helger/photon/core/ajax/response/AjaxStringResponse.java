@@ -46,18 +46,16 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
  * @author Philip Helger
  */
 @Immutable
-public class AjaxStringResponse extends AbstractAjaxResponse
+public class AjaxStringResponse implements IAjaxResponse
 {
   private final String m_sValue;
   private final Charset m_aCharset;
   private final IMimeType m_aMimeType;
 
-  public AjaxStringResponse (final boolean bSuccess,
-                             @Nullable final String sValue,
+  public AjaxStringResponse (@Nullable final String sValue,
                              @Nonnull final Charset aCharset,
                              @Nonnull final IMimeType aMimeType)
   {
-    super (bSuccess);
     m_sValue = StringHelper.getNotNull (sValue);
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
     m_aMimeType = ValueEnforcer.notNull (aMimeType, "MimeType");
@@ -114,57 +112,50 @@ public class AjaxStringResponse extends AbstractAjaxResponse
   }
 
   @Nonnull
-  public static AjaxStringResponse createForXML (final boolean bSuccess, @Nullable final String sValue)
+  public static AjaxStringResponse createForXML (@Nullable final String sValue)
   {
-    return new AjaxStringResponse (bSuccess,
-                                   sValue,
-                                   XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ,
-                                   CMimeType.APPLICATION_XML);
+    return new AjaxStringResponse (sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, CMimeType.APPLICATION_XML);
   }
 
   @Nonnull
-  public static AjaxStringResponse createForXML (final boolean bSuccess, @Nullable final IMicroNode aNode)
+  public static AjaxStringResponse createForXML (@Nullable final IMicroNode aNode)
   {
-    return createForXML (bSuccess, aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+    return createForXML (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
   @Nonnull
-  public static AjaxStringResponse createForXML (final boolean bSuccess,
-                                                 @Nullable final IMicroNode aNode,
+  public static AjaxStringResponse createForXML (@Nullable final IMicroNode aNode,
                                                  @Nonnull final IXMLWriterSettings aSettings)
   {
-    return new AjaxStringResponse (bSuccess,
-                                   aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings),
+    return new AjaxStringResponse (aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings),
                                    aSettings.getCharset (),
                                    CMimeType.APPLICATION_XML);
   }
 
   @Nonnull
-  public static AjaxStringResponse createForXML (final boolean bSuccess, @Nullable final Node aNode)
+  public static AjaxStringResponse createForXML (@Nullable final Node aNode)
   {
-    return createForXML (bSuccess, aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+    return createForXML (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
   @Nonnull
-  public static AjaxStringResponse createForXML (final boolean bSuccess,
-                                                 @Nullable final Node aNode,
+  public static AjaxStringResponse createForXML (@Nullable final Node aNode,
                                                  @Nonnull final IXMLWriterSettings aSettings)
   {
-    return new AjaxStringResponse (bSuccess,
-                                   aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings),
+    return new AjaxStringResponse (aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings),
                                    aSettings.getCharset (),
                                    CMimeType.APPLICATION_XML);
   }
 
   @Nonnull
-  public static AjaxStringResponse createForHTML (final boolean bSuccess, @Nullable final String sValue)
+  public static AjaxStringResponse createForHTML (@Nullable final String sValue)
   {
-    return new AjaxStringResponse (bSuccess, sValue, HCSettings.getHTMLCharset (), PhotonHTMLHelper.getMimeType (null));
+    return new AjaxStringResponse (sValue, HCSettings.getHTMLCharset (), PhotonHTMLHelper.getMimeType (null));
   }
 
   @Nonnull
-  public static AjaxStringResponse createForText (final boolean bSuccess, @Nullable final String sValue)
+  public static AjaxStringResponse createForText (@Nullable final String sValue)
   {
-    return new AjaxStringResponse (bSuccess, sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, CMimeType.TEXT_PLAIN);
+    return new AjaxStringResponse (sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, CMimeType.TEXT_PLAIN);
   }
 }

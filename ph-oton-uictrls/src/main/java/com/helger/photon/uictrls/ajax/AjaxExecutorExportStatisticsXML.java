@@ -22,7 +22,6 @@ import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
 import com.helger.photon.core.ajax.response.AjaxStringResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.microdom.IMicroDocument;
-import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.util.statistics.StatisticsExporter;
 
 /**
@@ -37,7 +36,6 @@ public class AjaxExecutorExportStatisticsXML extends AbstractAjaxExecutor
   protected AjaxStringResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
   {
     final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
-    final String sXMLString = MicroWriter.getNodeAsString (aDoc);
-    return AjaxStringResponse.createForXML (true, sXMLString);
+    return AjaxStringResponse.createForXML (aDoc);
   }
 }

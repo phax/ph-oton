@@ -35,14 +35,13 @@ import com.helger.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @Immutable
-public class AjaxHttpStatusCodeResponse extends AbstractAjaxResponse
+public class AjaxHttpStatusCodeResponse implements IAjaxResponse
 {
   private final int m_nStatusCode;
   private ISimpleURL m_aRedirectTargetURL;
 
   public AjaxHttpStatusCodeResponse (final int nStatusCode)
   {
-    super (true);
     m_nStatusCode = nStatusCode;
   }
 
