@@ -335,9 +335,9 @@ public class AjaxResponse extends UnifiedResponse
 
   /**
    * Create a simple HTML response without JSON structuring
-   * 
+   *
    * @param aNode
-   *        The node to be renderered. May be <code>null</code>.
+   *        The node to be rendered. May be <code>null</code>.
    */
   public void htmlSimple (@Nullable final IHCNode aNode)
   {
