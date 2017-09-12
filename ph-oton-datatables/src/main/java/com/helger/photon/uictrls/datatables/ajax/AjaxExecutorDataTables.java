@@ -35,7 +35,6 @@ import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.ajax.AjaxResponse;
 import com.helger.photon.core.ajax.IAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
@@ -405,8 +404,8 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
       final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
 
       // Convert the response to JSON and add the special nodes
-      aAjaxResponse.json (AjaxHtmlResponse.getResponseAsJSON (aResponseData.getAsJson (),
-                                                              aResponseData.getSpecialNodes ()));
+      aAjaxResponse.json (AjaxResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
+                                                                     aResponseData.getSpecialNodes ()));
     }
   }
 }

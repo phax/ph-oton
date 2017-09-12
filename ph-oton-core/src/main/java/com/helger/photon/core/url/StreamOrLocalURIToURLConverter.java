@@ -33,8 +33,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * The default implementation of {@link IWebURIToURLConverter} that uses
  * {@link LinkHelper#getStreamURL(IRequestWebScopeWithoutResponse, String)} to
  * convert relative URIs to URLs. If you are using a different stream servlet
- * path, you may need to provide your own implementation and use it in
- * {@link com.helger.photon.core.ajax.response.AjaxHtmlResponse}!
+ * path, you may need to provide your own implementation and use it!
  *
  * @author Philip Helger
  */

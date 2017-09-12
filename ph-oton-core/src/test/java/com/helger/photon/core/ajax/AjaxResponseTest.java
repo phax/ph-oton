@@ -14,16 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.ajax.response;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+package com.helger.photon.core.ajax;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.metadata.HCLink;
@@ -37,14 +32,12 @@ import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.web.scope.mgr.WebScoped;
 
 /**
- * Test class for class {@link AjaxHtmlResponse}.
+ * Test class for class {@link AjaxResponse}.
  *
  * @author Philip Helger
  */
-public final class AjaxHtmlResponseTest
+public final class AjaxResponseTest
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxHtmlResponseTest.class);
-
   @Rule
   public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
@@ -61,12 +54,8 @@ public final class AjaxHtmlResponseTest
       aHtml.getBody ().addChild (new HCH1 ().addChild ("Test H1"));
       aHtml.getBody ().addChild (new HCStyle ("h1{color:red;}"));
       aHtml.getBody ().addChild (new HCScriptInline (new UnparsedJSCodeProvider ("var y = x;")));
-      final AjaxHtmlResponse aResponse = AjaxHtmlResponse.createSuccess (aWebScoped.getRequestScope (), aHtml);
-      assertNotNull (aResponse);
-      assertNotNull (aResponse.getSuccessValue ());
-      assertNotNull (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML));
-      assertTrue (aResponse.getSuccessValue ().get (AjaxHtmlResponse.PROPERTY_HTML).isValue ());
-      s_aLogger.info (aResponse.getSuccessValue ().getAsString (AjaxHtmlResponse.PROPERTY_HTML));
+      final AjaxResponse aResponse = AjaxResponse.createSimple (aWebScoped.getRequestScope ());
+      aResponse.html (aHtml);
     }
   }
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.w3c.dom.Node;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.mime.CMimeType;
@@ -43,6 +44,9 @@ import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.resource.ResourceBundleServlet;
+import com.helger.servlet.mock.MockHttpServletRequest;
+import com.helger.servlet.request.RequestHelper;
+import com.helger.servlet.response.EContentDispositionType;
 import com.helger.servlet.response.ERedirectMode;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -281,14 +285,15 @@ public class AjaxResponse extends UnifiedResponse
 
   public void htmlEmpty ()
   {
-    html ((IHCNode) null);
+    html (null, null, null);
   }
 
   @SuppressWarnings ("unchecked")
   public void html (@Nullable final IHCNode aNode)
   {
-    html (aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
-                                                        : new HCNodeList ().addChild (aNode),
+    html (aNode == null ? null
+                        : aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
+                                                                        : new HCNodeList ().addChild (aNode),
           null,
           null);
   }
@@ -376,9 +381,30 @@ public class AjaxResponse extends UnifiedResponse
     setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
   }
 
-  public void attachment (final String aString)
+  public void attachment (@Nonnull @Nonempty final String sFilename)
   {
-    setContentDispositionFilename (aString);
+    setContentDispositionFilename (sFilename);
+    setContentDispositionType (EContentDispositionType.ATTACHMENT);
+  }
 
+  /**
+   * Factory method
+   *
+   * @param aRequestScope
+   *        The current request scope. May not be <code>null</code>.
+   * @return New {@link AjaxResponse}. Never <code>null</code>.
+   */
+  @Nonnull
+  public static AjaxResponse createSimple (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
+    if (aHttpRequest instanceof MockHttpServletRequest)
+    {
+      return new AjaxResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, aHttpRequest, aRequestScope);
+    }
+    return new AjaxResponse (RequestHelper.getHttpVersion (aHttpRequest),
+                             RequestHelper.getHttpMethod (aHttpRequest),
+                             aHttpRequest,
+                             aRequestScope);
   }
 }
