@@ -33,9 +33,9 @@ import com.helger.commons.string.StringParser;
 import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.json.JsonObject;
-import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxHttpStatusCodeResponse;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
+import com.helger.photon.core.ajax.response.AjaxHtmlResponse;
 import com.helger.photon.core.state.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
@@ -49,7 +49,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public class AjaxExecutorDataTables extends AbstractAjaxExecutor
+public class AjaxExecutorDataTables implements IAjaxExecutor
 {
   // This parameter must be passed to identify the table from the
   // UIStateRegistry!
@@ -308,9 +308,8 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
                                  aSpecialNodes);
   }
 
-  @Override
-  @Nonnull
-  protected IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("DataTables AJAX request: " + CollectionHelper.getSortedByKey (aRequestScope.params ()));
@@ -398,13 +397,16 @@ public class AjaxExecutorDataTables extends AbstractAjaxExecutor
     if (aServerData == null)
     {
       s_aLogger.error ("No such data tables ID: " + sDataTablesID);
-      return AjaxHttpStatusCodeResponse.createNotFound ();
+      aAjaxResponse.createNotFound ();
     }
+    else
+    {
+      // Main request handling
+      final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
 
-    // Main request handling
-    final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
-
-    // Convert the response to JSON and add the special nodes
-    return new AjaxDatatablesResponse (aResponseData.getAsJson (), aResponseData.getSpecialNodes ());
+      // Convert the response to JSON and add the special nodes
+      aAjaxResponse.json (AjaxHtmlResponse.getResponseAsJSON (aResponseData.getAsJson (),
+                                                              aResponseData.getSpecialNodes ()));
+    }
   }
 }

@@ -94,12 +94,12 @@ public abstract class AbstractErrorCallback implements
                                         @Nullable final String sAjaxFunctionName,
                                         @Nonnull final IAjaxExecutor aAjaxExecutor,
                                         @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final Throwable t)
+                                        @Nonnull final Exception ex)
   {
     final String sErrorCode = "ajax-error-" +
                               (StringHelper.hasText (sAjaxFunctionName) ? sAjaxFunctionName + "-" : "") +
                               InternalErrorHandler.createNewErrorID ();
-    onError (t, aRequestScope, sErrorCode, new StringMap ().add ("ajax-function-name", sAjaxFunctionName));
+    onError (ex, aRequestScope, sErrorCode, new StringMap ().add ("ajax-function-name", sAjaxFunctionName));
   }
 
   public void onAPIExecutionException (@Nullable final IAPIInvoker aAPIInvoker,

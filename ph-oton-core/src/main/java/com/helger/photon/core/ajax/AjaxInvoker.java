@@ -37,7 +37,6 @@ import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -115,14 +114,15 @@ public class AjaxInvoker implements IAjaxInvoker
                        aFunctionDeclaration.getExecutorFactory ());
   }
 
-  @Nonnull
-  public IAjaxResponse invokeFunction (@Nonnull final String sFunctionName,
-                                       @Nonnull final IAjaxExecutor aAjaxExecutor,
-                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Throwable
+  public void invokeFunction (@Nonnull final String sFunctionName,
+                              @Nonnull final IAjaxExecutor aAjaxExecutor,
+                              @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                              @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     ValueEnforcer.notNull (sFunctionName, "FunctionName");
     ValueEnforcer.notNull (aAjaxExecutor, "AjaxExecutor");
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
+    ValueEnforcer.notNull (aAjaxResponse, "AjaxResponse");
 
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Invoking Ajax function '" + sFunctionName + "'");
@@ -144,7 +144,7 @@ public class AjaxInvoker implements IAjaxInvoker
       aAjaxExecutor.registerExternalResources ();
 
       // Main handle request
-      final IAjaxResponse aAjaxResponse = aAjaxExecutor.handleRequest (aRequestScope);
+      aAjaxExecutor.handleRequest (aRequestScope, aAjaxResponse);
 
       // Invoke after handler
       AjaxSettings.afterExecutionCallbacks ()
@@ -171,21 +171,24 @@ public class AjaxInvoker implements IAjaxInvoker
                                                                  aAjaxExecutor,
                                                                  nExecutionMillis));
       }
-      return aAjaxResponse;
     }
-    catch (final Throwable t)
+    catch (final Exception ex)
     {
       AjaxSettings.exceptionCallbacks ()
-                  .forEach (aCB -> aCB.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, t));
+                  .forEach (aCB -> aCB.onAjaxExecutionException (this,
+                                                                 sFunctionName,
+                                                                 aAjaxExecutor,
+                                                                 aRequestScope,
+                                                                 ex));
 
       // Re-throw
-      throw t;
+      throw ex;
     }
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("map", m_aFuncDecls).getToString ();
+    return new ToStringGenerator (this).append ("FuncDecls", m_aFuncDecls).getToString ();
   }
 }

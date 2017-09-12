@@ -17,44 +17,24 @@
 package com.helger.photon.core.ajax.response;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.css.media.ICSSMediaList;
-import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCNodeList;
-import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
-import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.hc.render.HCRenderer;
-import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
-import com.helger.html.resource.css.ICSSCodeProvider;
-import com.helger.html.resource.css.ICSSPathProvider;
-import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.json.IJsonObject;
-import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonHTMLHelper;
-import com.helger.photon.core.app.html.PhotonHTMLSettings;
-import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.core.resource.ResourceBundleServlet;
+import com.helger.photon.core.ajax.AjaxResponse.HtmlHelper;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.xml.microdom.IMicroNode;
-import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
  * Ajax response with HTML content. The returned Content-Type is JSON and the
@@ -63,6 +43,7 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  * @author Philip Helger
  */
 @NotThreadSafe
+@Deprecated
 public class AjaxHtmlResponse implements IAjaxResponse
 {
   /**
@@ -104,82 +85,13 @@ public class AjaxHtmlResponse implements IAjaxResponse
                                       @Nonnull final HCSpecialNodes aSpecialNodes,
                                       @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
-    ValueEnforcer.notNull (aRequestScope, "RequestScope");
-    ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
-    if (aNode == null)
-      return "";
-
-    final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
-
-    IHCNode aTargetNode = aNode;
-
-    // Special handling for complete HCHtml objects needed
-    if (aNode instanceof IHCNodeList <?> &&
-        ((IHCNodeList <?>) aNode).getChildCount () == 1 &&
-        ((IHCNodeList <?>) aNode).getFirstChild () instanceof HCHtml)
-    {
-      final HCHtml aHtml = (HCHtml) ((IHCNodeList <?>) aNode).getFirstChild ();
-      aTargetNode = aHtml;
-
-      // customize, finalize and extract resources
-      // This must be done before the CSS and JS are included because
-      // per-request
-      // resource registration happens inside
-      HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
-
-      // Extract and merge all inline out-of-band nodes
-      if (aConversionSettings.isExtractOutOfBandNodes ())
-      {
-        final ICommonsList <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
-        aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
-      }
-
-      final boolean bMergeCSS = ResourceBundleServlet.isEnabled ();
-      final boolean bMergeJS = ResourceBundleServlet.isEnabled ();
-      PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
-
-      // Move scripts to body? If so, after aggregation!
-      if (HCSettings.isScriptsInBody ())
-        aHtml.moveScriptElementsToBody ();
-    }
-    else
-    {
-      // customize, finalize and extract resources
-      // Non-HTML node
-      HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
-
-      if (aConversionSettings.isExtractOutOfBandNodes ())
-      {
-        HCSpecialNodeHandler.extractSpecialContent (aNode, aSpecialNodes, aOnDocumentReadyProvider);
-      }
-    }
-
-    // Serialize remaining node to HTML
-    final IMicroNode aMicroNode = aTargetNode.convertToMicroNode (aConversionSettings);
-    final String sHTML = aMicroNode == null ? ""
-                                            : MicroWriter.getNodeAsString (aMicroNode,
-                                                                           aConversionSettings.getXMLWriterSettings ());
-
-    return sHTML;
+    return HtmlHelper.getHTMLString (aRequestScope, aNode, aSpecialNodes, aOnDocumentReadyProvider);
   }
 
   public static final void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                         @Nonnull final HCSpecialNodes aSpecialNodes)
   {
-    ValueEnforcer.notNull (aRequestScope, "RequestScope");
-
-    // Grab per-request CSS/JS only in success case!
-    // Grab all CSS/JS independent of conditional comment :(
-    final boolean bRegular = HCSettings.isUseRegularResources ();
-
-    for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
-      aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
-                                    PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular)
-                                                      .getAsStringWithEncodedParameters ());
-
-    for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
-      aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular)
-                                                     .getAsStringWithEncodedParameters ());
+    HtmlHelper.addCSSAndJS (aRequestScope, aSpecialNodes);
   }
 
   /**
@@ -247,46 +159,9 @@ public class AjaxHtmlResponse implements IAjaxResponse
 
   @Nonnull
   public static JsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue,
-                                              @Nonnull final HCSpecialNodes aSpecialNodes)
+                                              @Nonnull final IHCSpecialNodes aSpecialNodes)
   {
-    final JsonObject aAssocArray = new JsonObject ();
-    if (aSuccessValue != null)
-      aAssocArray.add (PROPERTY_VALUE, aSuccessValue);
-
-    // Apply special nodes
-    if (aSpecialNodes.hasExternalCSSs ())
-    {
-      final JsonArray aList = new JsonArray ();
-      for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ()
-                                                                                        .entrySet ())
-        for (final String sCSSFile : aEntry.getValue ())
-          aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
-                                      .add (SUBPROPERTY_CSS_HREF, sCSSFile));
-      aAssocArray.add (PROPERTY_EXTERNAL_CSS, aList);
-    }
-    if (aSpecialNodes.hasInlineCSSBeforeExternal ())
-    {
-      final JsonArray aList = new JsonArray ();
-      for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())
-        aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
-                                    .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-      aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
-    }
-    if (aSpecialNodes.hasInlineCSSAfterExternal ())
-    {
-      final JsonArray aList = new JsonArray ();
-      for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSAfterExternal ())
-        aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
-                                    .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-      aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
-    }
-    if (aSpecialNodes.hasExternalJSs ())
-      aAssocArray.add (PROPERTY_EXTERNAL_JS, aSpecialNodes.getAllExternalJSs ());
-    if (aSpecialNodes.hasInlineJSBeforeExternal ())
-      aAssocArray.add (PROPERTY_INLINE_JS_BEFORE_EXTERNAL, aSpecialNodes.getInlineJSBeforeExternal ().getJSCode ());
-    if (aSpecialNodes.hasInlineJSAfterExternal ())
-      aAssocArray.add (PROPERTY_INLINE_JS_AFTER_EXTERNAL, aSpecialNodes.getInlineJSAfterExternal ().getJSCode ());
-    return aAssocArray;
+    return HtmlHelper.getResponseAsJSON (aSuccessValue, aSpecialNodes);
   }
 
   @Nonnull

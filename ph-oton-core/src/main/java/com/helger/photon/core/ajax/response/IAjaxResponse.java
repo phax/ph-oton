@@ -27,6 +27,7 @@ import com.helger.servlet.response.UnifiedResponse;
  *
  * @author Philip Helger
  */
+@Deprecated
 public interface IAjaxResponse extends Serializable
 {
   /**

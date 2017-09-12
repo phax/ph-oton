@@ -43,6 +43,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public class AjaxBinaryResponse implements IAjaxResponse
 {
   private final byte [] m_aValue;

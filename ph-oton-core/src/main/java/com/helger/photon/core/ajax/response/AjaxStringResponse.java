@@ -23,8 +23,6 @@ import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.Immutable;
 
-import org.w3c.dom.Node;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.mime.CMimeType;
@@ -34,10 +32,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.servlet.response.UnifiedResponse;
-import com.helger.xml.microdom.IMicroNode;
-import com.helger.xml.microdom.serialize.MicroWriter;
-import com.helger.xml.serialize.write.IXMLWriterSettings;
-import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
@@ -46,6 +40,7 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public class AjaxStringResponse implements IAjaxResponse
 {
   private final String m_sValue;
@@ -109,42 +104,6 @@ public class AjaxStringResponse implements IAjaxResponse
                             .append ("Value", m_sValue)
                             .append ("MimeType", m_aMimeType)
                             .getToString ();
-  }
-
-  @Nonnull
-  public static AjaxStringResponse createForXML (@Nullable final String sValue)
-  {
-    return new AjaxStringResponse (sValue, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, CMimeType.APPLICATION_XML);
-  }
-
-  @Nonnull
-  public static AjaxStringResponse createForXML (@Nullable final IMicroNode aNode)
-  {
-    return createForXML (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
-  }
-
-  @Nonnull
-  public static AjaxStringResponse createForXML (@Nullable final IMicroNode aNode,
-                                                 @Nonnull final IXMLWriterSettings aSettings)
-  {
-    return new AjaxStringResponse (aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings),
-                                   aSettings.getCharset (),
-                                   CMimeType.APPLICATION_XML);
-  }
-
-  @Nonnull
-  public static AjaxStringResponse createForXML (@Nullable final Node aNode)
-  {
-    return createForXML (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
-  }
-
-  @Nonnull
-  public static AjaxStringResponse createForXML (@Nullable final Node aNode,
-                                                 @Nonnull final IXMLWriterSettings aSettings)
-  {
-    return new AjaxStringResponse (aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings),
-                                   aSettings.getCharset (),
-                                   CMimeType.APPLICATION_XML);
   }
 
   @Nonnull

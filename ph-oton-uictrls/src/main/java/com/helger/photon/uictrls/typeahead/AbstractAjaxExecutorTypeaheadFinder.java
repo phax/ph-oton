@@ -33,8 +33,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
+import com.helger.photon.core.ajax.AjaxResponse;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
-import com.helger.photon.core.ajax.response.AjaxJsonResponse;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
 /**
@@ -45,8 +45,8 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
  * @param <LECTYPE>
  *        Layout execution context
  */
-public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayoutExecutionContext>
-                                                          extends AbstractAjaxExecutorWithContext <LECTYPE>
+public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayoutExecutionContext> extends
+                                                          AbstractAjaxExecutorWithContext <LECTYPE>
 {
   public static final String PARAM_QUERY = "query";
 
@@ -241,14 +241,15 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
                                                                                    @Nonnull LECTYPE aLEC);
 
   @Override
-  @Nonnull
-  protected final AjaxJsonResponse mainHandleRequest (@Nonnull final LECTYPE aLEC) throws Exception
+  protected void mainHandleRequest (@Nonnull final LECTYPE aLEC,
+                                    @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);
     if (StringHelper.hasNoTextAfterTrim (sOriginalQuery))
     {
       // May happen when the user enters " " (only spaces)
-      return AjaxJsonResponse.createSuccess ();
+      aAjaxResponse.jsonEmpty ();
+      return;
     }
 
     // Create the main Finder object
@@ -258,9 +259,9 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     final ICommonsList <? extends TypeaheadDatum> aMatchingDatums = getAllMatchingDatums (aFinder, aLEC);
 
     // Convert to JSON, sorted by display name using the current display locale
-    final IJsonArray ret = new JsonArray ().addAllMapped (aMatchingDatums, aDatum -> aDatum.getAsJson ());
+    final IJsonArray ret = new JsonArray ().addAllMapped (aMatchingDatums, TypeaheadDatum::getAsJson);
 
     // Use the simple response, because the response layout is predefined!
-    return AjaxJsonResponse.createSuccess (ret);
+    aAjaxResponse.json (ret);
   }
 }

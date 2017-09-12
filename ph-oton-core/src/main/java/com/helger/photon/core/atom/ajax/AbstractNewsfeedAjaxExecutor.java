@@ -36,21 +36,16 @@ import com.helger.commons.timing.StopWatch;
 import com.helger.photon.basic.atom.Feed;
 import com.helger.photon.basic.atom.FeedGenerator;
 import com.helger.photon.basic.atom.FeedLink;
-import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxStringResponse;
-import com.helger.servlet.response.UnifiedResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.xml.microdom.serialize.MicroWriter;
-import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
  * Abstract news feed action.
  *
  * @author Philip Helger
  */
-public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor implements
-                                                   IHasID <String>,
-                                                   IHasDisplayText
+public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHasID <String>, IHasDisplayText
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
@@ -92,7 +87,8 @@ public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor 
   protected abstract void fillNewsfeed (@Nonnull Feed aFeed);
 
   @Override
-  protected AjaxStringResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     // Increment statistics counter
     final StopWatch aSW = StopWatch.createdStarted ();
@@ -119,19 +115,12 @@ public abstract class AbstractNewsfeedAjaxExecutor extends AbstractAjaxExecutor 
     // Performance improvement: set the Last-Modified HTTP header if available
     final LocalDateTime aLDT = aFeed.getUpdated () != null ? aFeed.getUpdated ().getDateTime () : null;
 
-    final String sXML = MicroWriter.getNodeAsString (aFeed.getAsDocument ());
     StatisticsManager.getTimerHandler (AbstractNewsfeedAjaxExecutor.class.getName () + "$TIMER." + m_sFeedID)
                      .addTime (aSW.stopAndGetMillis ());
 
-    return new AjaxStringResponse (sXML, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, CMimeType.APPLICATION_ATOM_XML)
-    {
-      @Override
-      public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
-      {
-        super.applyToResponse (aUnifiedResponse);
-        if (aLDT != null)
-          aUnifiedResponse.setLastModified (aLDT);
-      }
-    };
+    aAjaxResponse.xml (aFeed.getAsDocument ());
+    aAjaxResponse.setMimeType (CMimeType.APPLICATION_ATOM_XML);
+    if (aLDT != null)
+      aAjaxResponse.setLastModified (aLDT);
   }
 }

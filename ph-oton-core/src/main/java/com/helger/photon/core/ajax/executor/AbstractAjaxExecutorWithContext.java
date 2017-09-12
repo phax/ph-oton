@@ -19,20 +19,20 @@ package com.helger.photon.core.ajax.executor;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Special {@link AbstractAjaxExecutor} that requires an
+ * Special {@link IAjaxExecutor} that requires an
  * {@link ILayoutExecutionContext} object to be present.
  *
  * @author Philip Helger
  * @param <LECTYPE>
  *        LayoutExecutionContext implementation type
  */
-public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutExecutionContext>
-                                                      extends AbstractAjaxExecutor
+public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutExecutionContext> implements IAjaxExecutor
 {
   /**
    * Create the layout execution context
@@ -51,20 +51,21 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
    *
    * @param aLEC
    *        The layout execution context. Never <code>null</code>.
-   * @return the result object. May not be <code>null</code>
+   * @param aAjaxResponse
+   *        The Ajax response to be filled. Never <code>null</code>.
    * @throws Exception
    *         In case of an error
    */
   @OverrideOnDemand
-  @Nonnull
-  protected abstract IAjaxResponse mainHandleRequest (@Nonnull LECTYPE aLEC) throws Exception;
+  protected abstract void mainHandleRequest (@Nonnull LECTYPE aLEC,
+                                             @Nonnull AjaxResponse aAjaxResponse) throws Exception;
 
-  @Override
-  protected final IAjaxResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     final LECTYPE aLEC = createLayoutExecutionContext (aRequestScope);
     if (aLEC == null)
       throw new IllegalStateException ("Failed to create layout execution context for request scope " + aRequestScope);
-    return mainHandleRequest (aLEC);
+    mainHandleRequest (aLEC, aAjaxResponse);
   }
 }

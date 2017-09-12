@@ -45,16 +45,16 @@ public class LoggingAjaxExceptionCallback implements IAjaxExceptionCallback
                                         @Nullable final String sFunctionName,
                                         @Nonnull final IAjaxExecutor aAjaxExecutor,
                                         @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final Throwable t)
+                                        @Nonnull final Exception ex)
   {
-    if (t instanceof IOException)
+    if (ex instanceof IOException)
     {
-      if (!StreamHelper.isKnownEOFException (t))
-        s_aLogger.error ("Error writing result of Ajax function '" + sFunctionName + "' with " + aAjaxExecutor, t);
+      if (!StreamHelper.isKnownEOFException (ex))
+        s_aLogger.error ("Error writing result of Ajax function '" + sFunctionName + "' with " + aAjaxExecutor, ex);
     }
     else
     {
-      s_aLogger.error ("Error invoking Ajax function '" + sFunctionName + "' on " + aAjaxExecutor, t);
+      s_aLogger.error ("Error invoking Ajax function '" + sFunctionName + "' on " + aAjaxExecutor, ex);
       if (GlobalDebug.isDebugMode ())
         RequestLogger.logRequestComplete (aRequestScope.getRequest ());
     }

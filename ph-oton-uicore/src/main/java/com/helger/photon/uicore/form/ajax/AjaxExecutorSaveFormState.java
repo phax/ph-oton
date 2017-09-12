@@ -20,17 +20,20 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxJsonResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
+public class AjaxExecutorSaveFormState implements IAjaxExecutor
 {
   /** Special field for the flow ID */
   public static final String FIELD_FLOW_ID = CPageParam.FIELD_ATTRIBUTE_PREFIX_INTERNAL + "flowid";
@@ -41,6 +44,8 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
   // Same as in form.js!
   private static final String ATTR_PAGE_ID = "$pageID";
 
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorSaveFormState.class);
+
   @OverrideOnDemand
   protected void saveFormState (@Nonnull final String sPageID,
                                 @Nonnull final String sFlowID,
@@ -49,14 +54,17 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
     FormStateManager.getInstance ().saveFormState (new FormState (sPageID, sFlowID, aFieldCont));
   }
 
-  @Override
-  @Nonnull
-  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     // Extract page ID
     final String sPageID = aRequestScope.attrs ().getAsString (ATTR_PAGE_ID);
     if (sPageID == null)
-      return AjaxJsonResponse.createError ("Page ID is missing!");
+    {
+      s_aLogger.error ("Page ID '" + sPageID + "' not found!");
+      aAjaxResponse.createNotFound ();
+      return;
+    }
 
     // Filter all params
     final AttributeContainerAny <String> aFieldCont = new AttributeContainerAny <> ();
@@ -75,13 +83,17 @@ public class AjaxExecutorSaveFormState extends AbstractAjaxExecutor
     // Extract the flow ID
     final String sFlowID = aFieldCont.getAsString (FIELD_FLOW_ID);
     if (sFlowID == null)
-      return AjaxJsonResponse.createError ("Flow ID is missing!");
+    {
+      s_aLogger.error ("Flow ID '" + sFlowID + "' not found!");
+      aAjaxResponse.createNotFound ();
+      return;
+    }
 
     aFieldCont.removeObject (FIELD_FLOW_ID);
     aFieldCont.removeObject (CPageParam.PARAM_SUBACTION);
     // Leave action and object
 
     saveFormState (sPageID, sFlowID, aFieldCont);
-    return AjaxJsonResponse.createSuccess ();
+    aAjaxResponse.jsonEmpty ();
   }
 }

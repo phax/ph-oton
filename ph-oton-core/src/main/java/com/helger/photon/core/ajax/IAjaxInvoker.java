@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -76,14 +75,15 @@ public interface IAjaxInvoker extends Serializable
    * @param aAjaxExecutor
    *        The executor to be invoked. May not be <code>null</code>.
    * @param aRequestScope
-   *        The request scope to be used for the function.
-   * @return <code>null</code> if this is a void function, the JS string to
-   *         serialize otherwise.
-   * @throws Throwable
+   *        The request scope to be used for the function. Never
+   *        <code>null</code>.
+   * @param aAjaxResponse
+   *        The Ajax response to be filled. Never <code>null</code>.
+   * @throws Exception
    *         In case something goes wrong
    */
-  @Nonnull
-  IAjaxResponse invokeFunction (@Nonnull String sFunctionName,
-                                @Nonnull IAjaxExecutor aAjaxExecutor,
-                                @Nonnull IRequestWebScopeWithoutResponse aRequestScope) throws Throwable;
+  void invokeFunction (@Nonnull String sFunctionName,
+                       @Nonnull IAjaxExecutor aAjaxExecutor,
+                       @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                       @Nonnull AjaxResponse aAjaxResponse) throws Exception;
 }

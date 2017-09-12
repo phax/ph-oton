@@ -19,16 +19,20 @@ package com.helger.photon.uicore.serverlog;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxJsonResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-public class AjaxExecutorServerLog extends AbstractAjaxExecutor
+public class AjaxExecutorServerLog implements IAjaxExecutor
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorServerLog.class);
   private static final IErrorLevel DEFAULT_SEVERITY = EErrorLevel.INFO;
   private static final String PARAM_SEVERITY = "severity";
   private static final String PARAM_MESSAGE = "message";
@@ -55,21 +59,23 @@ public class AjaxExecutorServerLog extends AbstractAjaxExecutor
     return DEFAULT_SEVERITY;
   }
 
-  @Override
-  @Nonnull
-  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     final String sSeverity = aRequestScope.params ().getAsString (PARAM_SEVERITY);
     final String sMessage = aRequestScope.params ().getAsString (PARAM_MESSAGE);
     final String sKey = aRequestScope.params ().getAsString (PARAM_KEY);
     final String sExpectedKey = ServerLogSessionKey.getGeneratedSessionKey ();
     if (StringHelper.hasNoText (sMessage) || sExpectedKey == null || !sExpectedKey.equals (sKey))
-      return AjaxJsonResponse.createError ("Missing required parameter");
+    {
+      s_aLogger.error ("Missing required parameter");
+      aAjaxResponse.createBadRequest ();
+      return;
+    }
 
     // Main logging
     final IErrorLevel aSeverity = getErrorLevelFromString (sSeverity);
     LogHelper.log (AjaxExecutorServerLog.class, aSeverity, sMessage);
-
-    return AjaxJsonResponse.createSuccess ();
+    aAjaxResponse.jsonEmpty ();
   }
 }

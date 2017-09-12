@@ -35,6 +35,7 @@ import com.helger.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public class AjaxHttpStatusCodeResponse implements IAjaxResponse
 {
   private final int m_nStatusCode;

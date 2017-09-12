@@ -25,11 +25,10 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
-import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxJsonResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.servlet.response.ResponseHelperSettings;
-import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -37,7 +36,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
+public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
 {
   // This parameter must contain the locale - otherwise English is returned
   public static final String LANGUAGE_ID = "language";
@@ -57,9 +56,8 @@ public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
     m_aDefaultLocale = aDefaultLocale;
   }
 
-  @Override
-  @Nonnull
-  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     // Resolve language
     final String sLanguage = aRequestScope.params ().getAsString (LANGUAGE_ID);
@@ -72,15 +70,7 @@ public class AjaxExecutorDataTablesI18N extends AbstractAjaxExecutor
 
     // Main action
     final IJsonObject aData = DataTables.createLanguageJson (aLanguage);
-
-    return new AjaxJsonResponse (aData)
-    {
-      @Override
-      public void applyToResponse (@Nonnull final UnifiedResponse aUnifiedResponse)
-      {
-        super.applyToResponse (aUnifiedResponse);
-        aUnifiedResponse.enableCaching (ResponseHelperSettings.getExpirationSeconds ());
-      }
-    };
+    aAjaxResponse.json (aData);
+    aAjaxResponse.enableCaching (ResponseHelperSettings.getExpirationSeconds ());
   }
 }

@@ -40,12 +40,12 @@ public interface IAjaxExceptionCallback extends ICallback
    *        The running AJAX executor. Never <code>null</code>.
    * @param aRequestScope
    *        The request scope. Never <code>null</code>.
-   * @param t
+   * @param ex
    *        The exception. Never <code>null</code>.
    */
   void onAjaxExecutionException (@Nonnull IAjaxInvoker aAjaxInvoker,
                                  @Nonnull String sFunctionName,
                                  @Nonnull IAjaxExecutor aAjaxExecutor,
                                  @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                 @Nonnull Throwable t);
+                                 @Nonnull Exception ex);
 }

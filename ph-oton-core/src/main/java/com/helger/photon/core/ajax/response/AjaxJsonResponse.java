@@ -38,6 +38,7 @@ import com.helger.servlet.response.UnifiedResponse;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public class AjaxJsonResponse implements IAjaxResponse
 {
   private final IJson m_aValue;

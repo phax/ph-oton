@@ -20,7 +20,6 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -46,7 +45,8 @@ public interface IAjaxExecutor extends Serializable
   /**
    * Registers all external resources (CSS or JS files) needed by controls
    * potentially spawned by an AJAX request of this handler. This method is
-   * called BEFORE {@link #handleRequest(IRequestWebScopeWithoutResponse)} is
+   * called BEFORE
+   * {@link #handleRequest(IRequestWebScopeWithoutResponse, AjaxResponse)} is
    * invoked!
    */
   default void registerExternalResources ()
@@ -58,11 +58,12 @@ public interface IAjaxExecutor extends Serializable
    * Called to handle a specific request.
    *
    * @param aRequestScope
-   *        the request scope values to be used
-   * @return the result object. May never be <code>null</code>
+   *        the request scope values to be used. Never <code>null</code>.
+   * @param aAjaxResponse
+   *        The response object to be filled. Never <code>null</code>.
    * @throws Exception
    *         Any exception if an error occurs.
    */
-  @Nonnull
-  IAjaxResponse handleRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope) throws Exception;
+  void handleRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                      @Nonnull AjaxResponse aAjaxResponse) throws Exception;
 }

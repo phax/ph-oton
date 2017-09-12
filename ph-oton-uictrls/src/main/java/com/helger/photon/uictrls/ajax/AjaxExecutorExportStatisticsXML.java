@@ -18,8 +18,8 @@ package com.helger.photon.uictrls.ajax;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.core.ajax.executor.AbstractAjaxExecutor;
-import com.helger.photon.core.ajax.response.AjaxStringResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.util.statistics.StatisticsExporter;
@@ -29,13 +29,12 @@ import com.helger.xml.util.statistics.StatisticsExporter;
  *
  * @author Philip Helger
  */
-public class AjaxExecutorExportStatisticsXML extends AbstractAjaxExecutor
+public class AjaxExecutorExportStatisticsXML implements IAjaxExecutor
 {
-  @Override
-  @Nonnull
-  protected AjaxStringResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
-    return AjaxStringResponse.createForXML (aDoc);
+    aAjaxResponse.xml (aDoc);
   }
 }

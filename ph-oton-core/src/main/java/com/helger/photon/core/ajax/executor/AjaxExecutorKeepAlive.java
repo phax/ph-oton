@@ -22,7 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.photon.core.ajax.response.AjaxJsonResponse;
+import com.helger.photon.core.ajax.AjaxResponse;
+import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -30,13 +31,12 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public final class AjaxExecutorKeepAlive extends AbstractAjaxExecutor
+public final class AjaxExecutorKeepAlive implements IAjaxExecutor
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorKeepAlive.class);
 
-  @Override
-  @Nonnull
-  protected AjaxJsonResponse mainHandleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws Exception
+  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final AjaxResponse aAjaxResponse) throws Exception
   {
     if (GlobalDebug.isDebugMode ())
       s_aLogger.info ("AJAX Keep alive!");
@@ -45,6 +45,6 @@ public final class AjaxExecutorKeepAlive extends AbstractAjaxExecutor
     aRequestScope.getSession (false);
 
     // Always success
-    return AjaxJsonResponse.createSuccess ();
+    aAjaxResponse.jsonEmpty ();
   }
 }

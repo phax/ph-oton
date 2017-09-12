@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -30,16 +31,19 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.functional.ISupplier;
+import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
+import com.helger.http.EHttpVersion;
+import com.helger.photon.core.ajax.AjaxResponse;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
@@ -51,6 +55,12 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 @ThreadSafe
 public class AjaxXServletHandler implements IXServletSimpleHandler
 {
+  /**
+   * The name of the request parameter used by jQuery to indicate "no cache".
+   * Use this constant for parameter filtering.
+   */
+  public static final String REQUEST_PARAM_JQUERY_NO_CACHE = "_";
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxXServletHandler.class);
 
   private static final String SCOPE_ATTR_NAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.name";
@@ -68,6 +78,15 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   public AjaxXServletHandler (@Nonnull final ISupplier <? extends IAjaxInvoker> aFactory)
   {
     m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
+  }
+
+  @Nonnull
+  public AjaxResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
+                                             @Nonnull final EHttpMethod eHttpMethod,
+                                             @Nonnull final HttpServletRequest aHttpRequest,
+                                             @Nonnull final IRequestWebScope aRequestScope)
+  {
+    return new AjaxResponse (eHttpVersion, eHttpMethod, aHttpRequest, aRequestScope);
   }
 
   @Override
@@ -116,6 +135,9 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     // Call the initialization of the action executor
     aAjaxExecutor.initExecution (aRequestScope);
 
+    // Remove the jQuery time stamp parameter
+    aRequestScope.params ().remove (REQUEST_PARAM_JQUERY_NO_CACHE);
+
     // Remember in scope
     // Important: use a wrapper to avoid scope destruction
     aRequestScope.attrs ().putIn (SCOPE_ATTR_NAME, sFunctionName);
@@ -142,12 +164,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     try
     {
       // Invoke function
-      final IAjaxResponse aResult = aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope);
-      if (s_aLogger.isTraceEnabled ())
-        s_aLogger.trace ("  AJAX Result: " + aResult);
-
-      // Write result to the passed response
-      aResult.applyToResponse (aUnifiedResponse);
+      aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope, (AjaxResponse) aUnifiedResponse);
 
       if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
       {

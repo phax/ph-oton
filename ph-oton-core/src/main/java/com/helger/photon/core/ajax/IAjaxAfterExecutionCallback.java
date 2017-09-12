@@ -19,7 +19,6 @@ package com.helger.photon.core.ajax;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.callback.ICallback;
-import com.helger.photon.core.ajax.response.IAjaxResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -48,5 +47,5 @@ public interface IAjaxAfterExecutionCallback extends ICallback
                          @Nonnull String sFunctionName,
                          @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
                          @Nonnull IAjaxExecutor aExecutor,
-                         @Nonnull IAjaxResponse aAjaxResponse);
+                         @Nonnull AjaxResponse aAjaxResponse);
 }
