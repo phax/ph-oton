@@ -46,7 +46,7 @@ public interface ISimpleWebExecutionContext
     return getRequestScope ().params ();
   }
 
-  // Deprecated
+  @Deprecated
   @Nullable
   default String getAttributeAsString (@Nullable final String sFieldName)
   {

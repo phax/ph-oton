@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap.demo.ajax;
 
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.functional.IPredicate;
 import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
@@ -25,6 +26,7 @@ import com.helger.photon.core.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * This class defines the available ajax functions for the view application.
@@ -47,10 +49,11 @@ public final class CAjax
                                                                                              .withExecutor (AjaxExecutorPublicUpdateMenuView.class)
                                                                                              .withApplicationID (CApplicationID.APP_ID_PUBLIC)
                                                                                              .build ();
+  private static final IPredicate <? super IRequestWebScopeWithoutResponse> FILTER_LOGIN = x -> LoggedInUserManager.getInstance ()
+                                                                                                                   .isUserLoggedInInCurrentSession ();
   public static final IAjaxFunctionDeclaration UPDATE_MENU_VIEW_SEC = AjaxFunctionDeclaration.builder ("updateMenuViewSec")
                                                                                              .withExecutor (AjaxExecutorSecureUpdateMenuView.class)
-                                                                                             .withFilter (x -> LoggedInUserManager.getInstance ()
-                                                                                                                                  .isUserLoggedInInCurrentSession ())
+                                                                                             .withFilter (FILTER_LOGIN)
                                                                                              .withApplicationID (CApplicationID.APP_ID_SECURE)
                                                                                              .build ();
 

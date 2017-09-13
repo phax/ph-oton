@@ -18,6 +18,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.mime.CMimeType;
+import com.helger.commons.mime.IMimeType;
 import com.helger.commons.mime.MimeType;
 import com.helger.commons.serialize.SerializationHelper;
 import com.helger.commons.url.ISimpleURL;
@@ -438,6 +439,15 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   {
     setContentDispositionFilename (sFilename);
     setContentDispositionType (EContentDispositionType.ATTACHMENT);
+  }
+
+  public void binary (@Nonnull final NonBlockingByteArrayOutputStream aBAOS,
+                      @Nonnull final IMimeType aMimeType,
+                      @Nonnull @Nonempty final String sFilename)
+  {
+    setContent (aBAOS);
+    setMimeType (aMimeType);
+    attachment (sFilename);
   }
 
   /**
