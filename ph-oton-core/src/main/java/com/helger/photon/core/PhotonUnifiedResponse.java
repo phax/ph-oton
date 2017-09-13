@@ -435,6 +435,21 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     setMimeType (CMimeType.APPLICATION_PDF);
   }
 
+  public void pdf (@Nonnull final byte [] aData, @Nonnull @Nonempty final String sFilename)
+  {
+    setContent (aData);
+    setMimeType (CMimeType.APPLICATION_PDF);
+    setContentDispositionFilename (sFilename);
+    setContentDispositionType (EContentDispositionType.INLINE);
+  }
+
+  public void pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS, @Nonnull @Nonempty final String sFilename)
+  {
+    pdf (aBAOS);
+    setContentDispositionFilename (sFilename);
+    setContentDispositionType (EContentDispositionType.INLINE);
+  }
+
   public void attachment (@Nonnull @Nonempty final String sFilename)
   {
     setContentDispositionFilename (sFilename);
