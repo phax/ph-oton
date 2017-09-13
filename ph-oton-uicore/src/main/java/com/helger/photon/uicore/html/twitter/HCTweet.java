@@ -30,9 +30,8 @@ import com.helger.photon.core.app.html.PhotonJS;
 
 /**
  * <pre>
- * <a href="https://twitter.com/share" class=
-"twitter-share-button" data-show-count=
-"false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+ * &lt;a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false"&gt;Tweet&lt;/a&gt;
+ * &lt;script async src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
  * </pre>
  *
  * @author Philip Helger

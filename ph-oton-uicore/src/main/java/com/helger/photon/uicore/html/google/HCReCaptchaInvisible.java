@@ -39,8 +39,8 @@ import com.helger.photon.core.app.html.PhotonJS;
  * https://developers.google.com/recaptcha/docs/invisible
  *
  * <pre>
- * <button class="g-recaptcha" data-sitekey="your_site_key" data-callback=
-'onSubmit'>Submit</button>
+ * &lt;button class="g-recaptcha" data-sitekey="your_site_key" data-callback=
+'onSubmit'&gt;Submit&lt;/button&gt;
  * </pre>
  *
  * @author Philip Helger

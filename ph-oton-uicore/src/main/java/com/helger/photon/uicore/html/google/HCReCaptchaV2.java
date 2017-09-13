@@ -37,7 +37,7 @@ import com.helger.photon.core.app.html.PhotonJS;
  * https://developers.google.com/recaptcha/docs/display
  *
  * <pre>
- * <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+ * &lt;div class="g-recaptcha" data-sitekey="your_site_key"&gt;&lt;/div&gt;
  * </pre>
  *
  * @author Philip Helger
