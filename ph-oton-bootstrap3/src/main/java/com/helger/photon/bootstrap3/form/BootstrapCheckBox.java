@@ -33,6 +33,12 @@ public class BootstrapCheckBox extends AbstractHCCheckBox <BootstrapCheckBox>
     addClass (CBootstrapCSS.CHECKBOX);
   }
 
+  // For JS only checkboxes
+  public BootstrapCheckBox ()
+  {
+    _init ();
+  }
+
   public BootstrapCheckBox (@Nonnull final IHCRequestFieldBoolean aRF)
   {
     super (aRF);
