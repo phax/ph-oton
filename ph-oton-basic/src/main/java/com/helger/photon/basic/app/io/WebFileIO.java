@@ -28,8 +28,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.IFileOperationManager;
 import com.helger.commons.io.relative.FileRelativeIO;
 import com.helger.commons.io.relative.IFileRelativeIO;
 import com.helger.commons.io.relative.IPathRelativeIO;
@@ -49,8 +47,6 @@ public final class WebFileIO
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebFileIO.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
-  @GuardedBy ("s_aRWLock")
-  private static IFileOperationManager s_aFileOpMgr = FileOperationManager.INSTANCE;
   @GuardedBy ("s_aRWLock")
   private static IFileRelativeIO s_aDataPath;
   @GuardedBy ("s_aRWLock")
