@@ -27,6 +27,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
+import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -45,21 +47,25 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                           @Nonnull final IMenuTree aMenuTree)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
-    ret.setLocaleFromString (aRequestScope.params ().getAsString (getRequestParamNameLocale ()));
-    ret.setMenuItemFromString (aRequestScope.params ().getAsString (getRequestParamNameMenuItem ()));
+    ret.setLocaleFromString (GlobalLocaleManager.getInstance (),
+                             aRequestScope.params ().getAsString (getRequestParamNameLocale ()));
+    ret.setMenuItemFromString (aMenuTree, aRequestScope.params ().getAsString (getRequestParamNameMenuItem ()));
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
+                                                       @Nonnull final IMenuTree aMenuTree)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
-    ret.setLocaleFromString (aURL.params ().getFirstParamValue (getRequestParamNameLocale ()));
-    ret.setMenuItemFromString (aURL.params ().getFirstParamValue (getRequestParamNameMenuItem ()));
+    ret.setLocaleFromString (GlobalLocaleManager.getInstance (),
+                             aURL.params ().getFirstParamValue (getRequestParamNameLocale ()));
+    ret.setMenuItemFromString (aMenuTree, aURL.params ().getFirstParamValue (getRequestParamNameMenuItem ()));
     return ret;
   }
 

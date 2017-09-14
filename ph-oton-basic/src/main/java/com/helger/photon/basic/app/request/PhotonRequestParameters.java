@@ -19,16 +19,17 @@ package com.helger.photon.basic.app.request;
 import java.io.Serializable;
 import java.util.Locale;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.app.locale.GlobalLocaleManager;
-import com.helger.photon.basic.app.menu.ApplicationMenuTree;
+import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
+import com.helger.photon.basic.app.menu.IMenuTree;
 
 /**
  * Holder for the special ph-oton parameters
@@ -83,7 +84,7 @@ public class PhotonRequestParameters implements Serializable
   }
 
   @Nullable
-  public Locale setLocaleFromString (@Nullable final String sDisplayLocale)
+  public Locale setLocaleFromString (@Nonnull final ILocaleManager aLocaleMgr, @Nullable final String sDisplayLocale)
   {
     Locale ret = null;
     if (StringHelper.hasText (sDisplayLocale))
@@ -92,9 +93,8 @@ public class PhotonRequestParameters implements Serializable
       final Locale aDisplayLocale = LocaleCache.getInstance ().getLocale (sDisplayLocale);
       if (aDisplayLocale != null)
       {
-        // Check if the locale is present in the locale manager of the current
-        // application
-        if (GlobalLocaleManager.getInstance ().isSupportedLocale (aDisplayLocale))
+        // Check if the locale is present
+        if (aLocaleMgr.isSupportedLocale (aDisplayLocale))
           ret = aDisplayLocale;
       }
     }
@@ -119,19 +119,14 @@ public class PhotonRequestParameters implements Serializable
     return m_aMenuItem != null;
   }
 
-  public void setMenuItem (@Nullable final IMenuItemPage aMenuItem)
-  {
-    m_aMenuItem = aMenuItem;
-  }
-
   @Nullable
-  public IMenuItemPage setMenuItemFromString (@Nullable final String sMenuItemID)
+  public IMenuItemPage setMenuItemFromString (@Nonnull final IMenuTree aTree, @Nullable final String sMenuItemID)
   {
     IMenuItemPage ret = null;
     if (StringHelper.hasText (sMenuItemID))
     {
       // Check if the menu item exists in the current application menu tree
-      final IMenuObject aMenuObject = ApplicationMenuTree.getTree ().getMenuObjectOfID (sMenuItemID);
+      final IMenuObject aMenuObject = aTree.getMenuObjectOfID (sMenuItemID);
       if (aMenuObject != null)
       {
         // Only internal menu items pointing to a page are valid
@@ -140,7 +135,7 @@ public class PhotonRequestParameters implements Serializable
           ret = (IMenuItemPage) aMenuObject;
       }
     }
-    setMenuItem (ret);
+    m_aMenuItem = ret;
     return ret;
   }
 

@@ -26,6 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -41,11 +42,14 @@ public interface IRequestParameterHandler extends Serializable
    *
    * @param aRequestScope
    *        The current request scope. May not be <code>null</code>.
+   * @param aMenuTree
+   *        Relevant menu tree. May not be <code>null</code>.
    * @return A non-<code>null</code> list of all parameters.
    */
   @Nonnull
   @ReturnsMutableCopy
-  PhotonRequestParameters getParametersFromRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  PhotonRequestParameters getParametersFromRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                                                    @Nonnull IMenuTree aMenuTree);
 
   /**
    * Get all request parameters from the provided URL.
@@ -53,11 +57,13 @@ public interface IRequestParameterHandler extends Serializable
    * @param aURL
    *        The URL to extract the parameters from. May not be
    *        <code>null</code>.
+   * @param aMenuTree
+   *        Relevant menu tree. May not be <code>null</code>.
    * @return A non-<code>null</code> list of all parameters.
    */
   @Nonnull
   @ReturnsMutableCopy
-  PhotonRequestParameters getParametersFromURL (@Nonnull ISimpleURL aURL);
+  PhotonRequestParameters getParametersFromURL (@Nonnull ISimpleURL aURL, @Nonnull IMenuTree aMenuTree);
 
   /**
    * Build a URL based on the passed base path and an optional list of

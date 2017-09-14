@@ -33,6 +33,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
+import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -90,7 +92,8 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   }
 
   @Nonnull
-  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath)
+  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath,
+                                                           @Nonnull final IMenuTree aMenuTree)
   {
     // Use paths for standard menu items
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
@@ -102,10 +105,10 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
         final String sParamName = aElements.get (0);
         final String sParamValue = aElements.get (1);
         if (sParamName.equals (getRequestParamNameLocale ()))
-          ret.setLocaleFromString (sParamValue);
+          ret.setLocaleFromString (GlobalLocaleManager.getInstance (), sParamValue);
         else
           if (sParamName.equals (getRequestParamNameMenuItem ()))
-            ret.setMenuItemFromString (sParamValue);
+            ret.setMenuItemFromString (aMenuTree, sParamValue);
           else
             if (s_aLogger.isDebugEnabled ())
               s_aLogger.debug ("Ignoring superfluous parameter '" + sParamName + "' with value '" + sParamValue + "'");
@@ -116,16 +119,18 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                           @Nonnull final IMenuTree aMenuTree)
   {
-    return getParametersFromPath (aRequestScope.getPathInfo ());
+    return getParametersFromPath (aRequestScope.getPathInfo (), aMenuTree);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
+                                                       @Nonnull final IMenuTree aMenuTree)
   {
-    return getParametersFromPath (aURL.getPath ());
+    return getParametersFromPath (aURL.getPath (), aMenuTree);
   }
 
   @Nonnull

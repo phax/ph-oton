@@ -29,8 +29,8 @@ import org.junit.rules.TestRule;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.locale.GlobalLocaleManager;
-import com.helger.photon.basic.app.menu.ApplicationMenuTree;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
+import com.helger.photon.basic.app.menu.MenuTree;
 import com.helger.photon.basic.app.page.AbstractPage;
 import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.servlet.mock.MockHttpServletRequest;
@@ -59,14 +59,15 @@ public final class RequestParameterHandlerURLPathOrderedTest
     final RequestParameterHandlerURLPathOrdered h = new RequestParameterHandlerURLPathOrdered ();
 
     GlobalLocaleManager.getInstance ().registerLocale (LOCALE);
-    final IMenuItemPage aMenuItem = ApplicationMenuTree.getTree ().createRootItem (new AbstractPage ("test")
+    final MenuTree aMenuTree = new MenuTree ();
+    final IMenuItemPage aMenuItem = aMenuTree.createRootItem (new AbstractPage ("test")
     {});
 
     // No params
     SimpleURL aURL = h.buildURL (aRequestScope, "", null, null);
     assertEquals ("", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    PhotonRequestParameters aParams = h.getParametersFromRequest (aRequestScope);
+    PhotonRequestParameters aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertFalse (aParams.hasLocale ());
     assertFalse (aParams.hasMenuItem ());
 
@@ -74,7 +75,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", LOCALE, null);
     assertEquals ("/de_AT", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertTrue (aParams.hasLocale ());
     assertEquals (LOCALE, aParams.getLocale ());
     assertFalse (aParams.hasMenuItem ());
@@ -83,7 +84,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", Locale.US, null);
     assertEquals ("/en_US", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertFalse (aParams.hasLocale ());
     assertFalse (aParams.hasMenuItem ());
 
@@ -91,7 +92,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", null, aMenuItem.getID ());
     assertEquals ("/test", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertFalse (aParams.hasLocale ());
     assertTrue (aParams.hasMenuItem ());
     assertEquals (aMenuItem, aParams.getMenuItem ());
@@ -100,7 +101,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", null, "other");
     assertEquals ("/other", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertFalse (aParams.hasLocale ());
     assertFalse (aParams.hasMenuItem ());
 
@@ -108,7 +109,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", LOCALE, aMenuItem.getID ());
     assertEquals ("/de_AT/test", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertTrue (aParams.hasLocale ());
     assertEquals (LOCALE, aParams.getLocale ());
     assertTrue (aParams.hasMenuItem ());
@@ -117,7 +118,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", Locale.US, aMenuItem.getID ());
     assertEquals ("/en_US/test", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertFalse (aParams.hasLocale ());
     assertTrue (aParams.hasMenuItem ());
     assertEquals (aMenuItem, aParams.getMenuItem ());
@@ -126,7 +127,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", LOCALE, "other");
     assertEquals ("/de_AT/other", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertTrue (aParams.hasLocale ());
     assertEquals (LOCALE, aParams.getLocale ());
     assertFalse (aParams.hasMenuItem ());
@@ -135,7 +136,7 @@ public final class RequestParameterHandlerURLPathOrderedTest
     aURL = h.buildURL (aRequestScope, "", Locale.US, "other");
     assertEquals ("/en_US/other", aURL.getAsStringWithEncodedParameters ());
     aRequest.setPathInfo (aURL.getAsStringWithEncodedParameters ());
-    aParams = h.getParametersFromRequest (aRequestScope);
+    aParams = h.getParametersFromRequest (aRequestScope, aMenuTree);
     assertFalse (aParams.hasLocale ());
     assertFalse (aParams.hasMenuItem ());
   }

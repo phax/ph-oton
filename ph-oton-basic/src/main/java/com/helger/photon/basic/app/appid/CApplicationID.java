@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.app;
+package com.helger.photon.basic.app.appid;
 
 import javax.annotation.concurrent.Immutable;
 
