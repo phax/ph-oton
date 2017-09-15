@@ -19,7 +19,6 @@ package com.helger.photon.core.servlet;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
@@ -28,9 +27,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.css.propertyvalue.CSSValue;
-import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.basic.app.appid.PhotonGlobalState;
 import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 import com.helger.photon.basic.app.locale.ILocaleManager;
@@ -43,13 +39,6 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.ILayoutManager;
 import com.helger.photon.core.app.layout.LayoutManagerProxy;
-import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
-import com.helger.photon.security.password.GlobalPasswordSettings;
-import com.helger.photon.security.password.constraint.PasswordConstraintList;
-import com.helger.photon.security.password.constraint.PasswordConstraintMinLength;
-import com.helger.smtp.EmailGlobalSettings;
-import com.helger.smtp.transport.listener.LoggingConnectionListener;
-import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.web.scope.mgr.WebScoped;
 
 /**
@@ -59,9 +48,9 @@ import com.helger.web.scope.mgr.WebScoped;
  * @param <LECTYPE>
  *        Layout execution context type
  */
+@Deprecated
 public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExecutionContext> extends WebAppListener
 {
-  public static final int DEFAULT_PASSWORD_MIN_LENGTH = 6;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebAppListenerMultiApp.class);
 
@@ -96,36 +85,6 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
   {}
 
   /**
-   * Set global system properties, after the content was initialized but before
-   * the application specific init is started
-   */
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  protected void initGlobals ()
-  {
-    // Enable when ready
-    WebScopeManager.setSessionPassivationAllowed (false);
-
-    // Define the password constrains
-    GlobalPasswordSettings.setPasswordConstraintList (new PasswordConstraintList (new PasswordConstraintMinLength (DEFAULT_PASSWORD_MIN_LENGTH)));
-
-    // Email global settings
-    EmailGlobalSettings.addEmailDataTransportListener (new AuditingEmailDataTransportListener ());
-    if (GlobalDebug.isDebugMode ())
-    {
-      EmailGlobalSettings.addConnectionListener (new LoggingConnectionListener ());
-    }
-    else
-    {
-      // HTML output settings
-      HCSettings.getMutableConversionSettings ().setToOptimized ();
-
-      // Disable CSS Value consistency checks
-      CSSValue.setConsistencyChecksEnabled (false);
-    }
-  }
-
-  /**
    * This method is called after globals and all initializers are done.
    *
    * @param aSC
@@ -139,9 +98,6 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
   @Override
   protected final void afterContextInitialized (@Nonnull final ServletContext aSC)
   {
-    // Global properties
-    initGlobals ();
-
     // Determine all initializers
     final ICommonsMap <String, IApplicationInitializer <LECTYPE>> aIniter = getAllInitializers ();
     if (aIniter.isEmpty ())

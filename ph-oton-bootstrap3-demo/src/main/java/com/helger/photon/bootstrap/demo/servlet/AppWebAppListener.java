@@ -178,7 +178,7 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
   }
 
   @Override
-  protected void initGlobals ()
+  protected void initGlobalSettings ()
   {
     // Internal stuff:
 
@@ -186,7 +186,7 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
     SLF4JBridgeHandler.removeHandlersForRootLogger ();
     SLF4JBridgeHandler.install ();
 
-    super.initGlobals ();
+    super.initGlobalSettings ();
 
     // UI stuff
     _initUI ();

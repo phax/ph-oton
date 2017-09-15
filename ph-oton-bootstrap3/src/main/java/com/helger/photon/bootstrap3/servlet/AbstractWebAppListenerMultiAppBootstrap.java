@@ -34,9 +34,9 @@ public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends I
 {
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void initGlobals ()
+  protected void initGlobalSettings ()
   {
-    super.initGlobals ();
+    super.initGlobalSettings ();
 
     // UI stuff:
 

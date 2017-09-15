@@ -60,11 +60,19 @@ import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.commons.timing.StopWatch;
 import com.helger.commons.url.URLHelper;
+import com.helger.css.propertyvalue.CSSValue;
 import com.helger.datetime.util.PDTIOHelper;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOLongIDFactory;
+import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
+import com.helger.photon.security.password.GlobalPasswordSettings;
+import com.helger.photon.security.password.constraint.PasswordConstraintList;
+import com.helger.photon.security.password.constraint.PasswordConstraintMinLength;
 import com.helger.servlet.StaticServerInfo;
+import com.helger.smtp.EmailGlobalSettings;
+import com.helger.smtp.transport.listener.LoggingConnectionListener;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
@@ -121,6 +129,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * The default file name where the global unique IDs are stored.
    */
   public static final String ID_FILENAME = "persistent_id.dat";
+
+  public static final int DEFAULT_PASSWORD_MIN_LENGTH = 6;
 
   /** The logger to use. */
   private static final Logger s_aLogger = LoggerFactory.getLogger (WebAppListener.class);
@@ -471,6 +481,36 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     GlobalIDFactory.setPersistentIntIDFactory ( () -> (int) GlobalIDFactory.getNewPersistentLongID ());
   }
 
+  /**
+   * Set global system properties, after the content was initialized but before
+   * the application specific init is started
+   */
+  @OverrideOnDemand
+  @OverridingMethodsMustInvokeSuper
+  protected void initGlobalSettings ()
+  {
+    // Enable when ready
+    WebScopeManager.setSessionPassivationAllowed (false);
+
+    // Define the password constrains
+    GlobalPasswordSettings.setPasswordConstraintList (new PasswordConstraintList (new PasswordConstraintMinLength (DEFAULT_PASSWORD_MIN_LENGTH)));
+
+    // Email global settings
+    EmailGlobalSettings.addEmailDataTransportListener (new AuditingEmailDataTransportListener ());
+    if (GlobalDebug.isDebugMode ())
+    {
+      EmailGlobalSettings.addConnectionListener (new LoggingConnectionListener ());
+    }
+    else
+    {
+      // HTML output settings
+      HCSettings.getMutableConversionSettings ().setToOptimized ();
+
+      // Disable CSS Value consistency checks
+      CSSValue.setConsistencyChecksEnabled (false);
+    }
+  }
+
   public final void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
     final ServletContext aSC = aSCE.getServletContext ();
@@ -534,6 +574,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
       // Set persistent ID provider - must be done after IO is setup
       initGlobalIDFactory ();
+
+      // Global properties
+      initGlobalSettings ();
     }
 
     // Callback
