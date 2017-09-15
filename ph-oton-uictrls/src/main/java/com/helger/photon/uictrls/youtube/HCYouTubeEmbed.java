@@ -50,10 +50,10 @@ public class HCYouTubeEmbed extends AbstractHCObject <HCYouTubeEmbed>
     addChild (new HCParam ("allowscriptaccess").setValue ("always"));
     final HCEmbed aEmbed = addAndReturnChild (new HCEmbed ());
     aEmbed.setType (CMimeType.APPLICATION_SHOCKWAVE_FLASH);
-    aEmbed.setCustomAttr ("allowscriptaccess", "always");
+    aEmbed.customAttrs ().putIn ("allowscriptaccess", "always");
     aEmbed.setWidth (nWidth);
     aEmbed.setHeight (nHeight);
-    aEmbed.setCustomAttr ("allowfullscreen", Boolean.toString (bAllowFullScreen));
+    aEmbed.customAttrs ().putIn ("allowfullscreen", Boolean.toString (bAllowFullScreen));
 
     // Build the correct URL based on the passed settings
     final ISimpleURL aURL = new SimpleURL (aBaseURL).add ("hl", "en_US").add ("fs", bAllowFullScreen ? "1" : "0");

@@ -16,8 +16,10 @@
  */
 package com.helger.html;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.string.StringHelper;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
 
@@ -239,4 +241,20 @@ public final class CHTMLAttributes
 
   private CHTMLAttributes ()
   {}
+
+  public static boolean isDataAttrName (@Nullable final IMicroQName aName)
+  {
+    return aName != null && isDataAttrName (aName.getName ());
+  }
+
+  public static boolean isDataAttrName (@Nullable final String sName)
+  {
+    return StringHelper.startsWith (sName, HTML5_PREFIX_DATA);
+  }
+
+  @Nullable
+  public static IMicroQName makeDataAttrName (@Nullable final String sName)
+  {
+    return StringHelper.hasNoText (sName) ? null : new MicroQName (HTML5_PREFIX_DATA + sName);
+  }
 }

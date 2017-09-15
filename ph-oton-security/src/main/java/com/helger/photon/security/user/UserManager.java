@@ -464,7 +464,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
       eChange = eChange.or (aUser.setDescription (sNewDescription));
       eChange = eChange.or (aUser.setDesiredLocale (aNewDesiredLocale));
       eChange = eChange.or (aUser.setDisabled (bNewDisabled));
-      eChange = eChange.or (aUser.customAttrs ().setAll (aNewCustomAttrs));
+      eChange = eChange.or (aUser.attrs ().setAll (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

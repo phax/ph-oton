@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
-import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.html.forms.AbstractHCButton;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCEntityNode;
@@ -27,7 +26,10 @@ public class BootstrapCloseIcon extends AbstractHCButton <BootstrapCloseIcon>
   public BootstrapCloseIcon ()
   {
     addClass (CBootstrapCSS.CLOSE);
-    setCustomAttr (CHTMLAttributes.ARIA_LABEL, "Close");
-    addChild (new HCSpan ().setCustomAttr (CHTMLAttributes.ARIA_HIDDEN, "true").addChild (HCEntityNode.times ()));
+    customAttrs ().setAriaLabel ("Close");
+
+    final HCSpan aTimes = new HCSpan ().addChild (HCEntityNode.times ());
+    aTimes.customAttrs ().setAriaHidden (true);
+    addChild (aTimes);
   }
 }

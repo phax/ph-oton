@@ -52,7 +52,7 @@ public class HCReCaptchaV2 extends AbstractHCDiv <HCReCaptchaV2>
     ValueEnforcer.notEmpty (sSiteKey, "SiteKey");
 
     addClass (CSS_G_RECAPTCHA);
-    setDataAttr ("sitekey", sSiteKey);
+    customAttrs ().setDataAttr ("sitekey", sSiteKey);
     m_sDisplayLanguage = sDisplayLanguage;
   }
 

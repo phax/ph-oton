@@ -339,7 +339,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     {
       EChange eChange = aUserGroup.setName (sNewName);
       eChange = eChange.or (aUserGroup.setDescription (sNewDescription));
-      eChange = eChange.or (aUserGroup.customAttrs ().setAll (aNewCustomAttrs));
+      eChange = eChange.or (aUserGroup.attrs ().setAll (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

@@ -65,9 +65,8 @@ public class HCTweet extends AbstractHCA <HCTweet>
   @Nonnull
   public static HCTweet createShareButton ()
   {
-    return new HCTweet ().addClass (CSS_TWITTER_SHARE_BUTTON)
-                         .setHref (URL_SHARE)
-                         .addChild ("Tweet")
-                         .setDataAttr ("show-count", "false");
+    final HCTweet ret = new HCTweet ().addClass (CSS_TWITTER_SHARE_BUTTON).setHref (URL_SHARE).addChild ("Tweet");
+    ret.customAttrs ().setDataAttr ("show-count", "false");
+    return ret;
   }
 }

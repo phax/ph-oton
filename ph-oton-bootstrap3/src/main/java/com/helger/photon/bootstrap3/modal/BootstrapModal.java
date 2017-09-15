@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -197,7 +196,8 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.MODAL).setRole (EHTMLRole.DIALOG).setCustomAttr (CHTMLAttributes.ARIA_HIDDEN, "true");
+    addClass (CBootstrapCSS.MODAL).setRole (EHTMLRole.DIALOG);
+    customAttrs ().setAriaHidden (true);
     if (m_bFade)
       addClass (CBootstrapCSS.FADE);
 
@@ -207,10 +207,14 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
     if (m_aHeader != null)
     {
       final String sTitleID = _getTitleID ();
-      setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, sTitleID);
+      customAttrs ().setAriaLabeledBy (sTitleID);
       final HCDiv aHeader = aContent.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_HEADER));
       if (m_bShowClose)
-        aHeader.addChild (new BootstrapCloseIcon ().setDataAttr ("dismiss", "modal"));
+      {
+        final BootstrapCloseIcon aCloseIcon = new BootstrapCloseIcon ();
+        aCloseIcon.customAttrs ().setDataAttr ("dismiss", "modal");
+        aHeader.addChild (aCloseIcon);
+      }
       aHeader.addChild (new HCH4 ().addClass (CBootstrapCSS.MODAL_TITLE).setID (sTitleID).addChild (m_aHeader));
     }
     if (m_aBody != null)

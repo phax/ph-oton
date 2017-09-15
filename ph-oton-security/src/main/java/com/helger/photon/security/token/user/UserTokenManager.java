@@ -94,7 +94,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     {
       EChange eChange = EChange.UNCHANGED;
       // tenant ID cannot be changed!
-      eChange = eChange.or (aUserToken.customAttrs ().setAll (aCustomAttrs));
+      eChange = eChange.or (aUserToken.attrs ().setAll (aCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

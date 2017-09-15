@@ -31,7 +31,6 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.CHTMLAttributes;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -257,7 +256,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       // Set "aria-labelledby"
       if (aLabel != null)
         for (final IHCControl <?> aCurCtrl : aAllCtrls)
-          aCurCtrl.setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, aLabel.ensureID ().getID ());
+          aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
     }
 
     final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);

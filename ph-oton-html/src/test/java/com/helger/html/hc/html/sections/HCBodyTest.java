@@ -43,7 +43,7 @@ public final class HCBodyTest
     aBody.addEventHandler (EJSEvent.MOUSEDOWN, null);
     // With prefix
     aBody.setEventHandler (EJSEvent.CLICK, new UnparsedJSCodeProvider ("onClick();"));
-    aBody.setCustomAttr ("bla", "foo");
+    aBody.customAttrs ().putIn ("bla", "foo");
     assertEquals ("<body xmlns=\"http://www.w3.org/1999/xhtml\" onload=\"javascript:onLoad();\" onclick=\"javascript:onClick();\" bla=\"foo\"></body>",
                   HCRenderer.getAsHTMLString (aBody));
   }

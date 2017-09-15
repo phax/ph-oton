@@ -255,7 +255,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // custom attributes
-    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.customAttrs ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.attrs ();
 
     // Callback for custom attributes
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,

@@ -35,9 +35,9 @@ import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart <IMPLTYPE>>
-                                          extends AbstractHCElementWithInternalChildren <IMPLTYPE, HCRow>
-                                          implements IHCTablePart <IMPLTYPE>
+public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart <IMPLTYPE>> extends
+                                          AbstractHCElementWithInternalChildren <IMPLTYPE, HCRow> implements
+                                          IHCTablePart <IMPLTYPE>
 {
   private final boolean m_bHeaderOrFooter;
 
@@ -86,7 +86,7 @@ public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart 
   public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Avoid creating an empty part
-    return hasChildren () || hasID () || hasAnyClass () || hasAnyStyle () || hasCustomAttrs ();
+    return hasChildren () || hasID () || hasAnyClass () || hasAnyStyle () || customAttrs ().isNotEmpty ();
   }
 
   @Override

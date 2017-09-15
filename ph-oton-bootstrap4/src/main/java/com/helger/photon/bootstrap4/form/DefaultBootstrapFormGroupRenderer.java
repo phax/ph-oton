@@ -31,7 +31,6 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.CHTMLAttributes;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -47,7 +46,6 @@ import com.helger.html.hc.html.forms.IHCTextArea;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.bootstrap4.BootstrapHelper;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 
@@ -212,8 +210,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
                                 @Nonnull final Locale aDisplayLocale)
   {
     final EBootstrapFormType eFormType = aForm.getFormType ();
-    final BootstrapGridSpec aLeftGrid = aForm.getLeft ();
-    final BootstrapGridSpec aRightGrid = aForm.getRight ();
     HCFormLabel aLabel = aFormGroup.getLabel ();
     final IHCNode aCtrls = aFormGroup.getCtrl ();
     final IHCNode aHelpText = aFormGroup.getHelpText ();
@@ -229,7 +225,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       // Set "aria-labelledby"
       if (aLabel != null)
         for (final IHCControl <?> aCurCtrl : aAllCtrls)
-          aCurCtrl.setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, aLabel.ensureID ().getID ());
+          aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
     }
 
     final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);

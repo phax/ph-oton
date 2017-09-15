@@ -19,7 +19,6 @@ package com.helger.html.hc.html;
 import java.util.Map;
 
 import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -32,7 +31,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.cache.AnnotationUsageCache;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.attr.AttributeContainer;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
@@ -81,7 +80,8 @@ import com.helger.xml.microdom.MicroQName;
  */
 @NotThreadSafe
 public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMPLTYPE>> extends AbstractHCNode
-                                        implements IHCElement <IMPLTYPE>
+                                        implements
+                                        IHCElement <IMPLTYPE>
 {
   /** Default translate mode */
   public static final ETriState DEFAULT_TRANSLATE = ETriState.UNDEFINED;
@@ -125,7 +125,10 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   private boolean m_bSpellCheck = DEFAULT_SPELLCHECK;
   private EHTMLRole m_eRole;
 
-  private ICommonsOrderedMap <IMicroQName, String> m_aCustomAttrs;
+  private static final class AttrCont extends AttributeContainer <IMicroQName, String> implements IHCAttrContainer
+  {}
+
+  private final AttrCont m_aCustomAttrs = new AttrCont ();
 
   protected AbstractHCElement (@Nonnull final EHTMLElement eElement)
   {
@@ -620,119 +623,11 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  public boolean hasCustomAttrs ()
-  {
-    return CollectionHelper.isNotEmpty (m_aCustomAttrs);
-  }
-
-  @Nonnegative
-  public int getCustomAttrCount ()
-  {
-    return CollectionHelper.getSize (m_aCustomAttrs);
-  }
-
-  public boolean containsCustomAttr (@Nullable final IMicroQName aName)
-  {
-    return m_aCustomAttrs != null && aName != null ? m_aCustomAttrs.containsKey (aName) : false;
-  }
-
-  @Nullable
-  public final String getCustomAttrValue (@Nullable final IMicroQName aName)
-  {
-    return m_aCustomAttrs != null && aName != null ? m_aCustomAttrs.get (aName) : null;
-  }
-
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsOrderedMap <IMicroQName, String> getAllCustomAttrs ()
+  public final IHCAttrContainer customAttrs ()
   {
-    return new CommonsLinkedHashMap <> (m_aCustomAttrs);
-  }
-
-  @Nonnull
-  public final Iterable <Map.Entry <IMicroQName, String>> getAllCustomAttrsIterable ()
-  {
-    return m_aCustomAttrs == null ? new CommonsArrayList <> (0) : m_aCustomAttrs.entrySet ();
-  }
-
-  @Nonnull
-  public final IMPLTYPE setCustomAttr (@Nullable final IMicroQName aName, @Nullable final String sValue)
-  {
-    if (aName != null && sValue != null)
-    {
-      if (m_aCustomAttrs == null)
-        m_aCustomAttrs = new CommonsLinkedHashMap <> ();
-      m_aCustomAttrs.put (aName, sValue);
-    }
-    return thisAsT ();
-  }
-
-  @Nonnull
-  public final IMPLTYPE removeCustomAttr (@Nullable final IMicroQName aName)
-  {
-    if (m_aCustomAttrs != null && aName != null)
-      m_aCustomAttrs.remove (aName);
-    return thisAsT ();
-  }
-
-  public static boolean isDataAttrName (@Nullable final IMicroQName aName)
-  {
-    return aName != null && isDataAttrName (aName.getName ());
-  }
-
-  public static boolean isDataAttrName (@Nullable final String sName)
-  {
-    return StringHelper.startsWith (sName, CHTMLAttributes.HTML5_PREFIX_DATA);
-  }
-
-  @Nullable
-  public static IMicroQName makeDataAttrName (@Nullable final String sName)
-  {
-    return StringHelper.hasNoText (sName) ? null : new MicroQName (CHTMLAttributes.HTML5_PREFIX_DATA + sName);
-  }
-
-  public boolean hasDataAttrs ()
-  {
-    if (m_aCustomAttrs != null)
-      for (final IMicroQName aName : m_aCustomAttrs.keySet ())
-        if (isDataAttrName (aName.getName ()))
-          return true;
-    return false;
-  }
-
-  public boolean containsDataAttr (@Nullable final String sName)
-  {
-    return containsCustomAttr (makeDataAttrName (sName));
-  }
-
-  @Nullable
-  public String getDataAttrValue (@Nullable final String sName)
-  {
-    return getCustomAttrValue (makeDataAttrName (sName));
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsOrderedMap <IMicroQName, String> getAllDataAttrs ()
-  {
-    final ICommonsOrderedMap <IMicroQName, String> ret = new CommonsLinkedHashMap <> ();
-    if (m_aCustomAttrs != null)
-      for (final Map.Entry <IMicroQName, String> aEntry : m_aCustomAttrs.entrySet ())
-        if (isDataAttrName (aEntry.getKey ().getName ()))
-          ret.put (aEntry.getKey (), aEntry.getValue ());
-    return ret;
-  }
-
-  @Nonnull
-  public IMPLTYPE setDataAttr (@Nullable final String sName, @Nullable final String sValue)
-  {
-    return setCustomAttr (makeDataAttrName (sName), sValue);
-  }
-
-  @Nonnull
-  public IMPLTYPE removeDataAttr (@Nullable final String sName)
-  {
-    return removeCustomAttr (makeDataAttrName (sName));
+    return m_aCustomAttrs;
   }
 
   @Override

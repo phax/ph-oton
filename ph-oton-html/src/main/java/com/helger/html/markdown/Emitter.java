@@ -530,7 +530,8 @@ final class Emitter
               throw new MarkdownException ("Failed to get HC element: " + eRoot.getTagName ());
 
             // Clone all attributes
-            eRoot.forAllAttributes (aAttr -> aHC.setCustomAttr (aAttr.getAttributeName (), aAttr.getAttributeValue ()));
+            eRoot.forAllAttributes (aAttr -> aHC.customAttrs ().putIn (aAttr.getAttributeQName (),
+                                                                       aAttr.getAttributeValue ()));
 
             if (aHC.getElement ().mayBeSelfClosed ())
             {

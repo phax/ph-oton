@@ -271,7 +271,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
     {
       EChange eChange = aRole.setName (sNewName);
       eChange = eChange.or (aRole.setDescription (sNewDescription));
-      eChange = eChange.or (aRole.customAttrs ().setAll (aNewCustomAttrs));
+      eChange = eChange.or (aRole.attrs ().setAll (aNewCustomAttrs));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 

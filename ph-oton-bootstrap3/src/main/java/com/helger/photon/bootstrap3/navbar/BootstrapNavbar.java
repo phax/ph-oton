@@ -72,8 +72,8 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
       // Responsive toggle
       final HCButton aToggle = m_aHeader.addAndReturnChild (new HCButton ());
       aToggle.addClass (CBootstrapCSS.NAVBAR_TOGGLE);
-      aToggle.setDataAttr ("toggle", "collapse");
-      aToggle.setDataAttr ("target", "#" + sCollapseTarget);
+      aToggle.customAttrs ().setDataAttr ("toggle", "collapse");
+      aToggle.customAttrs ().setDataAttr ("target", "#" + sCollapseTarget);
       aToggle.addChild (new HCSpan ().addClass (CBootstrapCSS.SR_ONLY)
                                      .addChild (EBootstrapText.TOOGLE_NAVIGATION.getDisplayText (aDisplayLocale)));
       aToggle.addChild (new HCSpan ().addClass (CBootstrapCSS.ICON_BAR));

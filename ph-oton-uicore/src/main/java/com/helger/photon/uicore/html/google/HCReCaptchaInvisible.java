@@ -55,8 +55,8 @@ public class HCReCaptchaInvisible extends AbstractHCButton <HCReCaptchaInvisible
     ValueEnforcer.notEmpty (sProgressCallbackFn, "ProgressCallbackFn");
 
     addClass (CSS_G_RECAPTCHA);
-    setDataAttr ("sitekey", sSiteKey);
-    setDataAttr ("callback", sProgressCallbackFn);
+    customAttrs ().setDataAttr ("sitekey", sSiteKey);
+    customAttrs ().setDataAttr ("callback", sProgressCallbackFn);
     addStyle (CCSSProperties.DISPLAY_NONE);
   }
 

@@ -16,17 +16,12 @@
  */
 package com.helger.html.hc.html;
 
-import java.util.Map;
-
 import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.state.ETriState;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;
@@ -35,8 +30,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSEventMap;
-import com.helger.xml.microdom.IMicroQName;
-import com.helger.xml.microdom.MicroQName;
 
 /**
  * Base interface for an HC element
@@ -409,209 +402,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   @Nonnull
   IMPLTYPE setRole (@Nullable EHTMLRole eRole);
 
-  /**
-   * @return <code>true</code> if at least one custom attribute is contained
-   */
-  boolean hasCustomAttrs ();
-
-  /**
-   * @return The number of contained custom attributes. Always &ge; 0.
-   */
-  @Nonnegative
-  int getCustomAttrCount ();
-
-  /**
-   * Check if a certain custom attribute is contained
-   *
-   * @param aName
-   *        The name of the custom attribute to check
-   * @return <code>true</code> if such a custom attribute is contained.
-   */
-  boolean containsCustomAttr (@Nullable IMicroQName aName);
-
-  /**
-   * Get the value of a certain custom attribute
-   *
-   * @param aName
-   *        The name of the custom attribute to retrieve the value from
-   * @return <code>null</code> if no such custom attribute is contained.
-   */
-  @Nullable
-  String getCustomAttrValue (@Nullable IMicroQName aName);
-
-  /**
-   * @return All custom attributes contained. Never <code>null</code>.
-   */
   @Nonnull
-  @ReturnsMutableCopy
-  ICommonsOrderedMap <IMicroQName, String> getAllCustomAttrs ();
-
-  @Nonnull
-  Iterable <Map.Entry <IMicroQName, String>> getAllCustomAttrsIterable ();
-
-  /**
-   * Set a custom attribute that is serialized as is.
-   *
-   * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @param nValue
-   *        The value of the attribute that is converted to a String.
-   * @return this
-   */
-  @Nonnull
-  default IMPLTYPE setCustomAttr (@Nullable final String sName, final int nValue)
-  {
-    return setCustomAttr (sName, Integer.toString (nValue));
-  }
-
-  /**
-   * Set a custom attribute that is serialized as is.
-   *
-   * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @param nValue
-   *        The value of the attribute that is converted to a String.
-   * @return this
-   */
-  @Nonnull
-  default IMPLTYPE setCustomAttr (@Nullable final String sName, final long nValue)
-  {
-    return setCustomAttr (sName, Long.toString (nValue));
-  }
-
-  /**
-   * Set a custom attribute that is serialized as is.
-   *
-   * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @param sValue
-   *        The value of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @return this
-   */
-  @Nonnull
-  default IMPLTYPE setCustomAttr (@Nullable final String sName, @Nullable final String sValue)
-  {
-    return setCustomAttr (new MicroQName (sName), sValue);
-  }
-
-  /**
-   * Set a custom attribute that is serialized as is.
-   *
-   * @param aName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @param sValue
-   *        The value of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE setCustomAttr (@Nullable IMicroQName aName, @Nullable String sValue);
-
-  /**
-   * Remove the custom attribute with the specified name
-   *
-   * @param sName
-   *        The name of the custom attribute to be removed
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE removeCustomAttr (@Nullable IMicroQName sName);
-
-  /**
-   * @return <code>true</code> if at least one data attribute is contained
-   */
-  boolean hasDataAttrs ();
-
-  /**
-   * Check if a certain data attribute is contained. Shortcut for
-   * <code>containsCustomAttr ("data-"+sName)</code>.
-   *
-   * @param sName
-   *        The name of the data attribute to check
-   * @return <code>true</code> if such a data attribute is contained.
-   */
-  boolean containsDataAttr (@Nullable String sName);
-
-  /**
-   * Get the value of a certain data attribute. Shortcut for
-   * <code>getCustomAttrValue ("data-"+sName)</code>.
-   *
-   * @param sName
-   *        The name of the data attribute to retrieve the value from
-   * @return <code>null</code> if no such data attribute is contained.
-   */
-  @Nullable
-  String getDataAttrValue (@Nullable String sName);
-
-  /**
-   * @return All data attributes contained. Never <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  ICommonsOrderedMap <IMicroQName, String> getAllDataAttrs ();
-
-  /**
-   * Set a data attribute that is serialized as is. Shortcut for
-   * <code>setCustomAttr ("data-"+sName, nValue)</code>.
-   *
-   * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @param nValue
-   *        The value of the attribute that is converted to a String.
-   * @return this
-   */
-  @Nonnull
-  default IMPLTYPE setDataAttr (@Nullable final String sName, final int nValue)
-  {
-    return setDataAttr (sName, Integer.toString (nValue));
-  }
-
-  /**
-   * Set a data attribute that is serialized as is. Shortcut for
-   * <code>setCustomAttr ("data-"+sName, nValue)</code>.
-   *
-   * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @param nValue
-   *        The value of the attribute that is converted to a String.
-   * @return this
-   */
-  @Nonnull
-  default IMPLTYPE setDataAttr (@Nullable final String sName, final long nValue)
-  {
-    return setDataAttr (sName, Long.toString (nValue));
-  }
-
-  /**
-   * Set a data attribute that is serialized as is. Shortcut for
-   * <code>setCustomAttr ("data-"+sName, sValue)</code>.
-   *
-   * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @param sValue
-   *        The value of the attribute. If it is <code>null</code> nothing
-   *        happens
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE setDataAttr (@Nullable String sName, @Nullable String sValue);
-
-  /**
-   * Remove the data attribute with the specified name. Shortcut for
-   * <code>removeCustomAttr ("data-"+sName)</code>.
-   *
-   * @param sName
-   *        The name of the data attribute to be removed
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE removeDataAttr (@Nullable String sName);
+  @ReturnsMutableObject
+  IHCAttrContainer customAttrs ();
 }

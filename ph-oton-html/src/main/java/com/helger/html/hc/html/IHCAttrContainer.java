@@ -1,0 +1,181 @@
+package com.helger.html.hc.html;
+
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.attr.IAttributeContainer;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.commons.state.EChange;
+import com.helger.html.CHTMLAttributes;
+import com.helger.xml.microdom.IMicroQName;
+import com.helger.xml.microdom.MicroQName;
+
+/**
+ * Special attribute container for HC elements
+ *
+ * @author Philip Helger
+ */
+public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, String>
+{
+  @Nonnull
+  default EChange putIn (@Nonnull final String sName, @Nullable final String sNewValue)
+  {
+    return putIn (new MicroQName (sName), sNewValue);
+  }
+
+  /**
+   * @return <code>true</code> if at least one data attribute is contained
+   */
+  default boolean hasDataAttrs ()
+  {
+    return CollectionHelper.containsAny (keySet (), x -> CHTMLAttributes.isDataAttrName (x.getName ()));
+  }
+
+  /**
+   * Check if a certain data attribute is contained. Shortcut for
+   * <code>containsCustomAttr ("data-"+sName)</code>.
+   *
+   * @param sName
+   *        The name of the data attribute to check
+   * @return <code>true</code> if such a data attribute is contained.
+   */
+  default boolean containsDataAttr (@Nullable final String sName)
+  {
+    return containsKey (CHTMLAttributes.makeDataAttrName (sName));
+  }
+
+  /**
+   * Get the value of a certain data attribute. Shortcut for
+   * <code>getCustomAttrValue ("data-"+sName)</code>.
+   *
+   * @param sName
+   *        The name of the data attribute to retrieve the value from
+   * @return <code>null</code> if no such data attribute is contained.
+   */
+  @Nullable
+  default String getDataAttrValue (@Nullable final String sName)
+  {
+    return getValue (CHTMLAttributes.makeDataAttrName (sName));
+  }
+
+  /**
+   * @return All data attributes contained. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  default ICommonsOrderedMap <IMicroQName, String> getAllDataAttrs ()
+  {
+    final ICommonsOrderedMap <IMicroQName, String> ret = new CommonsLinkedHashMap <> ();
+    for (final Map.Entry <IMicroQName, String> aEntry : entrySet ())
+      if (CHTMLAttributes.isDataAttrName (aEntry.getKey ().getName ()))
+        ret.put (aEntry.getKey (), aEntry.getValue ());
+    return ret;
+  }
+
+  /**
+   * Set a data attribute that is serialized as is. Shortcut for
+   * <code>setCustomAttr ("data-"+sName, nValue)</code>.
+   *
+   * @param sName
+   *        The name of the attribute. If it is <code>null</code> nothing
+   *        happens
+   * @param nValue
+   *        The value of the attribute that is converted to a String.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  default EChange setDataAttr (@Nullable final String sName, final int nValue)
+  {
+    return setDataAttr (sName, Integer.toString (nValue));
+  }
+
+  /**
+   * Set a data attribute that is serialized as is. Shortcut for
+   * <code>setCustomAttr ("data-"+sName, nValue)</code>.
+   *
+   * @param sName
+   *        The name of the attribute. If it is <code>null</code> nothing
+   *        happens
+   * @param nValue
+   *        The value of the attribute that is converted to a String.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  default EChange setDataAttr (@Nullable final String sName, final long nValue)
+  {
+    return setDataAttr (sName, Long.toString (nValue));
+  }
+
+  /**
+   * Set a data attribute that is serialized as is. Shortcut for
+   * <code>setCustomAttr ("data-"+sName, sValue)</code>.
+   *
+   * @param sName
+   *        The name of the attribute. If it is <code>null</code> nothing
+   *        happens
+   * @param sValue
+   *        The value of the attribute. If it is <code>null</code> nothing
+   *        happens
+   * @return {@link EChange}
+   */
+  @Nonnull
+  default EChange setDataAttr (@Nullable final String sName, @Nullable final String sValue)
+  {
+    return putIn (CHTMLAttributes.makeDataAttrName (sName), sValue);
+  }
+
+  /**
+   * Remove the data attribute with the specified name. Shortcut for
+   * <code>removeCustomAttr ("data-"+sName)</code>.
+   *
+   * @param sName
+   *        The name of the data attribute to be removed
+   * @return this
+   */
+  @Nonnull
+  default EChange removeDataAttr (@Nullable final String sName)
+  {
+    return removeObject (CHTMLAttributes.makeDataAttrName (sName));
+  }
+
+  @Nonnull
+  default EChange setAriaExpanded (final boolean bIsExpanded)
+  {
+    return putIn (CHTMLAttributes.ARIA_EXPANDED, Boolean.toString (bIsExpanded));
+  }
+
+  @Nonnull
+  default EChange setAriaHasPopup (final boolean bHasPopup)
+  {
+    return putIn (CHTMLAttributes.ARIA_HASPOPUP, Boolean.toString (bHasPopup));
+  }
+
+  @Nonnull
+  default EChange setAriaHidden (final boolean bHidden)
+  {
+    return putIn (CHTMLAttributes.ARIA_HIDDEN, Boolean.toString (bHidden));
+  }
+
+  @Nonnull
+  default EChange setAriaLabel (@Nonnull final String sLabel)
+  {
+    return putIn (CHTMLAttributes.ARIA_LABEL, sLabel);
+  }
+
+  @Nonnull
+  default EChange setAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
+  {
+    return setAriaLabeledBy (aLabeledBy.ensureID ().getID ());
+  }
+
+  @Nonnull
+  default EChange setAriaLabeledBy (@Nonnull final String sLabeledBy)
+  {
+    return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
+  }
+}

@@ -32,7 +32,7 @@ public class BootstrapModalCloseButton extends BootstrapButton
 {
   private void _init ()
   {
-    setDataAttr ("dismiss", "modal");
+    customAttrs ().setDataAttr ("dismiss", "modal");
   }
 
   public BootstrapModalCloseButton ()

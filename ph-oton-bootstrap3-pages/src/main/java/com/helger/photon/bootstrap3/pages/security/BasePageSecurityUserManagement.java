@@ -535,7 +535,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     // custom attributes
-    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.customAttrs ();
+    final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.attrs ();
 
     // Callback for custom attributes
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
@@ -657,7 +657,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       {
         final String sUserID = aSelectedObject.getID ();
 
-        final Map <String, String> aAttrMap = aSelectedObject.customAttrs ();
+        final Map <String, String> aAttrMap = aSelectedObject.attrs ();
         if (aCustomAttrMap != null)
           aAttrMap.putAll (aCustomAttrMap);
 

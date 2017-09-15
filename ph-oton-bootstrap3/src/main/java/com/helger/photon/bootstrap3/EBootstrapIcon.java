@@ -19,7 +19,6 @@ package com.helger.photon.bootstrap3;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.CHTMLAttributes;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCSpan;
@@ -315,7 +314,7 @@ public enum EBootstrapIcon implements IIcon
   public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
   {
     aElement.addClasses (CBootstrapCSS.GLYPHICON, m_aCSSClass);
-    aElement.setCustomAttr (CHTMLAttributes.ARIA_HIDDEN, "true");
+    aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 

@@ -103,7 +103,9 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
       }
       else
       {
-        aToggleLI.addChild (new HCA (aTab.getLinkURL ()).setDataAttr ("toggle", "tab").addChild (aTab.getLabel ()));
+        final HCA aLink = new HCA (aTab.getLinkURL ()).addChild (aTab.getLabel ());
+        aLink.customAttrs ().setDataAttr ("toggle", "tab");
+        aToggleLI.addChild (aLink);
       }
 
       // content

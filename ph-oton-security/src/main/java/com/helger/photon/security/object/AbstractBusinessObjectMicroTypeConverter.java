@@ -61,7 +61,7 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T> implements IM
     aElement.setAttribute (ATTR_LASTMODUSERID, aValue.getLastModificationUserID ());
     aElement.setAttributeWithConversion (ATTR_DELETIONLDT, aValue.getDeletionDateTime ());
     aElement.setAttribute (ATTR_DELETIONUSERID, aValue.getDeletionUserID ());
-    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.customAttrs ()).entrySet ())
+    for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (aValue.attrs ()).entrySet ())
     {
       final IMicroElement eCustom = aElement.appendElement (aElement.getNamespaceURI (), ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());

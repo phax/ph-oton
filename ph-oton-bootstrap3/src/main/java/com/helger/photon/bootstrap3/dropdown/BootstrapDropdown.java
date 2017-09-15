@@ -21,7 +21,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
@@ -79,7 +78,7 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
     }
 
     // Link selector and menu
-    aMenu.setCustomAttr (CHTMLAttributes.ARIA_LABELLEDBY, aSelector.ensureID ().getID ());
+    aMenu.customAttrs ().setAriaLabeledBy (aSelector);
 
     if (bAddDropDownToggle)
     {
@@ -89,7 +88,7 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
     else
     {
       // Required for drop down to work :)
-      aSelector.setDataAttr ("toggle", "dropdown");
+      aSelector.customAttrs ().setDataAttr ("toggle", "dropdown");
     }
 
     // Add children
@@ -132,11 +131,10 @@ public class BootstrapDropdown extends AbstractHCDiv <BootstrapDropdown>
   @Nonnull
   public static <IMPLTYPE extends IHCElementWithChildren <?>> IMPLTYPE makeDropdownToggle (@Nonnull final IMPLTYPE aElement)
   {
-    aElement.addClass (CBootstrapCSS.DROPDOWN_TOGGLE)
-            .setDataAttr ("toggle", "dropdown")
-            .addChild (new BootstrapCaret ())
-            .setCustomAttr (CHTMLAttributes.ARIA_HASPOPUP, "true")
-            .setCustomAttr (CHTMLAttributes.ARIA_EXPANDED, "false");
+    aElement.addClass (CBootstrapCSS.DROPDOWN_TOGGLE).addChild (new BootstrapCaret ());
+    aElement.customAttrs ().setDataAttr ("toggle", "dropdown");
+    aElement.customAttrs ().setAriaHasPopup (true);
+    aElement.customAttrs ().setAriaExpanded (false);
     return aElement;
   }
 }

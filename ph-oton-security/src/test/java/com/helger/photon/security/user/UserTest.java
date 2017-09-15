@@ -151,7 +151,7 @@ public final class UserTest
     assertEquals ("Helger", aUser2.getLastName ());
     assertEquals ("bla", aUser2.getDescription ());
     assertEquals (Locale.GERMANY, aUser2.getDesiredLocale ());
-    assertEquals (1, aUser2.customAttrs ().size ());
-    assertEquals ("de_DE", aUser2.customAttrs ().getAsString ("locale"));
+    assertEquals (1, aUser2.attrs ().size ());
+    assertEquals ("de_DE", aUser2.attrs ().getAsString ("locale"));
   }
 }

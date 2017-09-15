@@ -19,19 +19,14 @@ package com.helger.photon.bootstrap3.servlet;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.photon.bootstrap3.EBootstrapIcon;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.core.servlet.AbstractWebAppListenerMultiApp;
+import com.helger.photon.core.servlet.WebAppListener;
 
 /**
  * Bootstrap specific initialization listener
  *
  * @author Philip Helger
- * @param <LECTYPE>
- *        Layout execution context class
  */
-@Deprecated
-public abstract class AbstractWebAppListenerMultiAppBootstrap <LECTYPE extends ILayoutExecutionContext> extends
-                                                              AbstractWebAppListenerMultiApp <LECTYPE>
+public abstract class WebAppListenerBootstrap extends WebAppListener
 {
   @Override
   @OverridingMethodsMustInvokeSuper

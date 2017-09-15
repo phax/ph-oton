@@ -92,7 +92,7 @@ public final class StubObject extends AbstractBusinessObject
                            getLastModificationUserID (),
                            getDeletionDateTime (),
                            getDeletionUserID (),
-                           customAttrs ());
+                           attrs ());
   }
 
   /**

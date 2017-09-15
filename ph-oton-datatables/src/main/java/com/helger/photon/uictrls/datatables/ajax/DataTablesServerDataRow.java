@@ -34,8 +34,8 @@ import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.IHCConversionSettings;
-import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.xml.microdom.IMicroQName;
@@ -65,25 +65,24 @@ public final class DataTablesServerDataRow implements Serializable
     m_sRowID = aRow.getID ();
     m_sRowClass = aRow.getAllClassesAsString ();
 
-    if (aRow.hasCustomAttrs ())
-      for (final Map.Entry <IMicroQName, String> aEntry : aRow.getAllCustomAttrsIterable ())
+    for (final Map.Entry <IMicroQName, String> aEntry : aRow.customAttrs ().entrySet ())
+    {
+      final IMicroQName aAttrName = aEntry.getKey ();
+      if (CHTMLAttributes.isDataAttrName (aAttrName))
       {
-        final IMicroQName aAttrName = aEntry.getKey ();
-        if (AbstractHCElement.isDataAttrName (aAttrName))
-        {
-          // Data attribute
-          if (m_aRowData == null)
-            m_aRowData = new CommonsLinkedHashMap <> ();
-          m_aRowData.put (aAttrName, aEntry.getValue ());
-        }
-        else
-        {
-          // Custom non-data attribute
-          if (m_aRowAttr == null)
-            m_aRowAttr = new CommonsLinkedHashMap <> ();
-          m_aRowAttr.put (aAttrName, aEntry.getValue ());
-        }
+        // Data attribute
+        if (m_aRowData == null)
+          m_aRowData = new CommonsLinkedHashMap <> ();
+        m_aRowData.put (aAttrName, aEntry.getValue ());
       }
+      else
+      {
+        // Custom non-data attribute
+        if (m_aRowAttr == null)
+          m_aRowAttr = new CommonsLinkedHashMap <> ();
+        m_aRowAttr.put (aAttrName, aEntry.getValue ());
+      }
+    }
 
     m_aCells = new CommonsArrayList <> (aRow.getCellCount ());
     for (final IHCCell <?> aCell : aRow.getAllCellsIterable ())
