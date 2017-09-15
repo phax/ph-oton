@@ -26,6 +26,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 
+@Deprecated
 public interface ILayoutManager <LECTYPE extends ILayoutExecutionContext>
 {
   void registerAreaContentProvider (@Nonnull String sAreaID,

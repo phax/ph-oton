@@ -28,8 +28,8 @@ import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.photon.basic.app.CApplicationID;
-import com.helger.photon.basic.app.PhotonPathMapper;
+import com.helger.photon.basic.app.appid.CApplicationID;
+import com.helger.photon.basic.app.appid.PhotonGlobalState;
 import com.helger.photon.bootstrap3.BootstrapCustomConfig;
 import com.helger.photon.bootstrap3.servlet.BootstrapCustomizer;
 import com.helger.photon.core.app.html.PhotonCSS;
@@ -138,14 +138,10 @@ public final class PhotonStubInitializer
     // parsing problems
     AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
 
-    if (!PhotonPathMapper.containsAnyMapping ())
-    {
-      // Add default mapping from Application ID to path
-      PhotonPathMapper.setApplicationServletPathMapping (CApplicationID.APP_ID_PUBLIC,
-                                                         AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setApplicationServletPathMapping (CApplicationID.APP_ID_SECURE,
-                                                         AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonPathMapper.setDefaultApplicationID (CApplicationID.APP_ID_PUBLIC);
-    }
+    // Add default mapping from Application ID to path
+    PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_PUBLIC,
+                                                        AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
+    PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_SECURE,
+                                                        AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
   }
 }

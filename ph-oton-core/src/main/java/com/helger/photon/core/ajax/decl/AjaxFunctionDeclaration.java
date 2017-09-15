@@ -29,8 +29,7 @@ import com.helger.commons.functional.IPredicate;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.AjaxInvoker;
-import com.helger.photon.core.ajax.IAjaxExecutor;
-import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.ajax.servlet.PhotonAjaxServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -45,13 +44,11 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   private final String m_sFunctionName;
   private final ISupplier <? extends IAjaxExecutor> m_aExecutorFactory;
   private final IPredicate <? super IRequestWebScopeWithoutResponse> m_aExecutionFilter;
-  private final String m_sApplicationID;
   private final String m_sServletPath;
 
   public AjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
                                   @Nonnull final ISupplier <? extends IAjaxExecutor> aExecutorFactory,
                                   @Nullable final IPredicate <? super IRequestWebScopeWithoutResponse> aExecutionFilter,
-                                  @Nullable final String sApplicationID,
                                   @Nonnull @Nonempty final String sServletPath)
   {
     ValueEnforcer.isTrue (AjaxInvoker.isValidFunctionName (sFunctionName), "Invalid Ajax functionName provided");
@@ -62,7 +59,6 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     m_sFunctionName = sFunctionName;
     m_aExecutorFactory = aExecutorFactory;
     m_aExecutionFilter = aExecutionFilter;
-    m_sApplicationID = sApplicationID;
     m_sServletPath = sServletPath;
   }
 
@@ -93,12 +89,6 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     return m_aExecutionFilter.test (aRequestScope);
   }
 
-  @Nullable
-  public String getSpecialApplicationID ()
-  {
-    return m_sApplicationID;
-  }
-
   @Nonnull
   @Nonempty
   public String getAjaxServletPath ()
@@ -112,7 +102,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     return new ToStringGenerator (this).append ("FunctionName", m_sFunctionName)
                                        .append ("ExecutorFactory", m_aExecutorFactory)
                                        .appendIfNotNull ("ExecutorFilter", m_aExecutionFilter)
-                                       .appendIfNotNull ("SpecialApplicationID", m_sApplicationID)
+                                       .appendIfNotNull ("ServletPath", m_sServletPath)
                                        .getToString ();
   }
 
@@ -124,7 +114,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
    * the created path is not durable, as the next time the context is
    * initialized a different number might be assigned. Use
    * {@link #builder(String)} for a permanent name.
-   * 
+   *
    * @return A new function declaration builder. Never <code>null</code>.
    */
   @Nonnull
@@ -149,7 +139,6 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     private final String m_sFunctionName;
     private ISupplier <? extends IAjaxExecutor> m_aExecutorFactory;
     private IPredicate <? super IRequestWebScopeWithoutResponse> m_aExecutionFilter;
-    private String m_sApplicationID;
     private String m_sServletPath = PhotonAjaxServlet.SERVLET_DEFAULT_PATH + '/';
 
     public Builder (@Nonnull @Nonempty final String sFunctionName)
@@ -188,14 +177,6 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     }
 
     @Nonnull
-    public final Builder withApplicationID (@Nonnull @Nonempty final String sApplicationID)
-    {
-      ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
-      m_sApplicationID = sApplicationID;
-      return this;
-    }
-
-    @Nonnull
     public final Builder withServletPath (@Nonnull @Nonempty final String sServletPath)
     {
       ValueEnforcer.notEmpty (sServletPath, "ServletPath");
@@ -208,11 +189,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     @Nonnull
     public AjaxFunctionDeclaration build ()
     {
-      return new AjaxFunctionDeclaration (m_sFunctionName,
-                                          m_aExecutorFactory,
-                                          m_aExecutionFilter,
-                                          m_sApplicationID,
-                                          m_sServletPath);
+      return new AjaxFunctionDeclaration (m_sFunctionName, m_aExecutorFactory, m_aExecutionFilter, m_sServletPath);
     }
   }
 }

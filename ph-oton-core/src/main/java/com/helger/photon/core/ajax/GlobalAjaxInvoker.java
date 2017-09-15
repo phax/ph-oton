@@ -25,6 +25,8 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 

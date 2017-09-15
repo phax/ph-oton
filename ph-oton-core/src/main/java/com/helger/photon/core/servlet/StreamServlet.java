@@ -17,7 +17,6 @@
 package com.helger.photon.core.servlet;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.CApplicationID;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.xservlet.AbstractXServlet;
 
@@ -33,7 +32,6 @@ public final class StreamServlet extends AbstractXServlet
 
   public StreamServlet ()
   {
-    super ( () -> CApplicationID.APP_ID_PUBLIC);
     handlerRegistry ().registerHandler (EHttpMethod.GET, new ClassPathResourceHttpHandler ());
   }
 }

@@ -26,9 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.stream.StreamHelper;
-import com.helger.photon.core.ajax.IAjaxExceptionCallback;
-import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 

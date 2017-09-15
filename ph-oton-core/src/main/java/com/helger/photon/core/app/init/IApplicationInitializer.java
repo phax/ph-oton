@@ -33,21 +33,20 @@ import com.helger.photon.core.app.layout.ILayoutManager;
 public interface IApplicationInitializer <LECTYPE extends ILayoutExecutionContext>
 {
   /**
-   * Register all layout handler
-   *
-   * @param aLayoutMgr
-   *        The layout manager to use
-   */
-  default void initLayout (@Nonnull final ILayoutManager <LECTYPE> aLayoutMgr)
-  {}
-
-  /**
    * Create all menu items
    *
    * @param aMenuTree
    *        The menu tree to init
    */
   default void initMenu (@Nonnull final IMenuTree aMenuTree)
+  {}
+
+  /**
+   * @param aLayoutMgr
+   *        Manager
+   */
+  @Deprecated
+  default void initLayout (@Nonnull final ILayoutManager <LECTYPE> aLayoutMgr)
   {}
 
   /**

@@ -26,7 +26,7 @@ import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.photon.basic.app.CApplicationID;
+import com.helger.photon.basic.app.appid.CApplicationID;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.bootstrap.demo.ajax.CAjax;
 import com.helger.photon.bootstrap.demo.app.AppSettings;

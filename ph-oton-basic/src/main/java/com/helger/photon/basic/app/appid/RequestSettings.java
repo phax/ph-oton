@@ -36,7 +36,12 @@ public final class RequestSettings
   @Nonnull
   public static PhotonState getState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final PhotonState aState = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
+    PhotonState aState = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
+    if (aState == null)
+    {
+      // Fallback to last saved state from session
+      aState = PhotonSessionState.getInstance ().stateLastAppID ();
+    }
     if (aState == null)
       throw new IllegalStateException ("No state is present!");
     return aState;

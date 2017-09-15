@@ -1,5 +1,7 @@
 package com.helger.photon.basic.app.appid;
 
+import java.util.function.BiConsumer;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -36,6 +38,19 @@ public final class PhotonStateMap
     finally
     {
       m_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  void forEach (@Nonnull final BiConsumer <? super String, ? super PhotonState> aConsumer)
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      m_aStates.forEach (aConsumer);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
     }
   }
 

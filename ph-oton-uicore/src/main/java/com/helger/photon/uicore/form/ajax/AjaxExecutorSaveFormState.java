@@ -27,7 +27,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.PhotonUnifiedResponse;
-import com.helger.photon.core.ajax.IAjaxExecutor;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.form.FormState;
 import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.uicore.css.CPageParam;

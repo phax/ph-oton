@@ -36,7 +36,7 @@ import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoConfigurationFi
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoGo;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoPathMapper;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoScheduler;
-import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoScopes;
+import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoGlobalScope;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoServletStatus;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoWebSiteResourceBundles;
 import com.helger.photon.bootstrap3.pages.data.BasePageDataCountries;
@@ -113,7 +113,7 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_APPINFO_GO = "admin_appinfo_go";
   public static final String MENU_ADMIN_APPINFO_PATH_MAPPER = "admin_appinfo_pathmapper";
   public static final String MENU_ADMIN_APPINFO_SCHEDULER = "admin_appinfo_scheduler";
-  public static final String MENU_ADMIN_APPINFO_SCOPES = "admin_appinfo_scopes";
+  public static final String MENU_ADMIN_APPINFO_GLOBAL_SCOPE = "admin_appinfo_scopes";
   public static final String MENU_ADMIN_APPINFO_SERVLETSTATUS = "admin_appinfo_servletstatus";
   public static final String MENU_ADMIN_APPINFO_WEBRESBUNDLE = "admin_appinfo_webresbundle";
 
@@ -298,7 +298,7 @@ public final class BootstrapPagesMenuConfigurator
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoScheduler <WPECTYPE> (MENU_ADMIN_APPINFO_SCHEDULER))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoScopes <WPECTYPE> (MENU_ADMIN_APPINFO_SCOPES))
+    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoGlobalScope <WPECTYPE> (MENU_ADMIN_APPINFO_GLOBAL_SCOPE))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoServletStatus <WPECTYPE> (MENU_ADMIN_APPINFO_SERVLETSTATUS))
              .setDisplayFilter (aDisplayFilter);

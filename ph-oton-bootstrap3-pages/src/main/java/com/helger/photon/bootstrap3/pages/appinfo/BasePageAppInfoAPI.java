@@ -30,8 +30,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.api.APISettings;
@@ -45,9 +43,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
-import com.helger.scope.IApplicationScope;
-import com.helger.scope.singleton.AbstractSingleton;
-import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Show all registered APIs.
@@ -61,7 +56,6 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_KEY ("ID", "ID"),
     MSG_FACTORY ("Factory", "Factory"),
     MSG_URL ("Ziel-URL", "Target URL"),
     MSG_CALLBACKS ("Callbacks", "Callbacks"),
@@ -114,67 +108,45 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
+    final GlobalAPIInvoker aMgr = GlobalAPIInvoker.getInstance ();
+    final HCNodeList aTab = new HCNodeList ();
 
-    for (final IApplicationScope aAppScope : WebScopeManager.getGlobalScope ().getAllApplicationScopes ().values ())
+    // Show all registered AJAX functions
     {
-      final String sAppScopeID = aAppScope.getID ();
-      final GlobalAPIInvoker aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
-                                                                                       GlobalAPIInvoker.class);
-      if (aMgr != null)
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale))).setID (getID () + "-api");
+      for (final IAPIDescriptor aDescriptor : aMgr.getAllAPIDescriptors ())
       {
-        final HCNodeList aTab = new HCNodeList ();
-
-        // Show all registered AJAX functions
-        {
-          final HCTable aTable = new HCTable (new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                              new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                    sAppScopeID +
-                                                                                                                    "-api");
-          for (final IAPIDescriptor aDescriptor : aMgr.getAllAPIDescriptors ())
-          {
-            aTable.addBodyRow ().addCells (aDescriptor.getPathDescriptor ().getAsURLString (),
-                                           aDescriptor.getExecutorFactory ().toString ());
-          }
-          aTab.addChild (aTable);
-
-          final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.addChild (aDataTables);
-        }
-
-        // Show all callbacks
-        {
-          aTab.addChild (getUIHandler ().createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
-
-          final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                      1)
-                                                                                                        .setInitialSorting (ESortOrder.ASCENDING),
-                                              new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                     sAppScopeID +
-                                                                                                                     "-api-cb");
-          for (final IAPIExceptionCallback aCB : APISettings.exceptionCallbacks ().getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
-          for (final IAPIBeforeExecutionCallback aCB : APISettings.beforeExecutionCallbacks ().getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
-          for (final IAPIAfterExecutionCallback aCB : APISettings.afterExecutionCallbacks ().getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-          for (final IAPILongRunningExecutionCallback aCB : APISettings.longRunningExecutionCallbacks ()
-                                                                       .getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
-          aTab.addChild (aTable);
-
-          final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.addChild (aDataTables);
-        }
-
-        // Add to tab box
-        aTabBox.addTab (sAppScopeID, sAppScopeID, aTab);
+        aTable.addBodyRow ().addCells (aDescriptor.getPathDescriptor ().getAsURLString (),
+                                       aDescriptor.getExecutorFactory ().toString ());
       }
+      aTab.addChild (aTable);
+
+      final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTab.addChild (aDataTables);
     }
 
-    if (aTabBox.getTabCount () > 0)
-      aNodeList.addChild (aTabBox);
-    else
-      aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NONE_FOUND.getDisplayText (aDisplayLocale)));
+    // Show all callbacks
+    {
+      aTab.addChild (getUIHandler ().createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
+
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0, 1)
+                                                                                                    .setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () + "-api-cb");
+      for (final IAPIExceptionCallback aCB : APISettings.exceptionCallbacks ().getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
+      for (final IAPIBeforeExecutionCallback aCB : APISettings.beforeExecutionCallbacks ().getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
+      for (final IAPIAfterExecutionCallback aCB : APISettings.afterExecutionCallbacks ().getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
+      for (final IAPILongRunningExecutionCallback aCB : APISettings.longRunningExecutionCallbacks ().getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
+      aTab.addChild (aTable);
+
+      final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTab.addChild (aDataTables);
+    }
+
+    aNodeList.addChild (aTab);
   }
 }

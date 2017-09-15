@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -37,7 +36,6 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
-import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
@@ -47,7 +45,6 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
-import com.helger.scope.IApplicationScope;
 import com.helger.web.scope.IGlobalWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 
@@ -58,19 +55,16 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> extends
+public class BasePageAppInfoGlobalScope <WPECTYPE extends IWebPageExecutionContext> extends
                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
   {
-    MSG_GLOBAL_SCOPE ("Globaler Kontext ''{0}''", "Global scope ''{0}''"),
-    MSG_APPLICATION_SCOPE ("Application Kontext ''{0}''", "Application scope ''{0}''"),
     MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
     MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
     MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
     MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
-    MSG_APPLICATION_SCOPES ("Application Kontexte", "Application scopes"),
     MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
     MSG_NAME ("Name", "Wert"),
     MSG_TYPE ("Typ", "Type"),
@@ -90,24 +84,24 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> e
     }
   }
 
-  public BasePageAppInfoScopes (@Nonnull @Nonempty final String sID)
+  public BasePageAppInfoGlobalScope (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_APPINFO_SCOPES.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_APPINFO_GLOBAL_SCOPE.getAsMLT ());
   }
 
-  public BasePageAppInfoScopes (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  public BasePageAppInfoGlobalScope (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageAppInfoScopes (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoGlobalScope (@Nonnull @Nonempty final String sID,
                                 @Nonnull final String sName,
                                 @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageAppInfoScopes (@Nonnull @Nonempty final String sID,
+  public BasePageAppInfoGlobalScope (@Nonnull @Nonempty final String sID,
                                 @Nonnull final IMultilingualText aName,
                                 @Nullable final IMultilingualText aDescription)
   {
@@ -132,8 +126,6 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> e
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
                                                        .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
                                                                                              aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_APPLICATION_SCOPES.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.getApplicationScopeCount ())));
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
                                                        .setCtrl (Integer.toString (aScope.attrs ().size ())));
     aNodeList.addChild (aTableScope);
@@ -142,45 +134,6 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> e
     final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                              new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
                                              new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("globalscope");
-    for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
-      aTableAttrs.addBodyRow ()
-                 .addCell (aEntry.getKey ())
-                 .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
-                 .addCell (UITextFormatter.getToStringContent (aEntry.getValue ()));
-    aNodeList.addChild (aTableAttrs);
-
-    final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aNodeList.addChild (aDataTables);
-
-    return aNodeList;
-  }
-
-  @Nonnull
-  private IHCNode _getApplicationScopeInfo (@Nonnull final WPECTYPE aWPEC, @Nonnull final IApplicationScope aScope)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final HCNodeList aNodeList = new HCNodeList ();
-
-    final BootstrapViewForm aTableScope = new BootstrapViewForm ();
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (aScope.getID ()));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
-    aNodeList.addChild (aTableScope);
-
-    // All scope attributes
-    final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                             new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("appscope" + aScope.getID ());
     for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
       aTableAttrs.addBodyRow ()
                  .addCell (aEntry.getKey ())
@@ -208,19 +161,7 @@ public class BasePageAppInfoScopes <WPECTYPE extends IWebPageExecutionContext> e
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     // Global scope
-    aTabBox.addTab ("global",
-                    EText.MSG_GLOBAL_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aGlobalScope.getID ()),
-                    _getGlobalScopeInfo (aWPEC, aGlobalScope));
-
-    // Application scopes
-    for (final IApplicationScope aAppScope : CollectionHelper.getSortedByKey (aGlobalScope.getAllApplicationScopes ())
-                                                             .values ())
-      aTabBox.addTab (aAppScope.getID (),
-                      EText.MSG_APPLICATION_SCOPE.getDisplayTextWithArgs (aDisplayLocale, aAppScope.getID ()),
-                      _getApplicationScopeInfo (aWPEC, aAppScope));
-
-    aNodeList.addChild (aTabBox);
+    aNodeList.addChild (_getGlobalScopeInfo (aWPEC, aGlobalScope));
   }
 }

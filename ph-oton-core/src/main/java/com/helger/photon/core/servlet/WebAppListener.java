@@ -556,7 +556,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *         <code>null</code> if the context was never initialized.
    */
   @Nullable
-  public LocalDateTime getInitializationStartDT ()
+  public final LocalDateTime getInitializationStartDT ()
   {
     return m_aInitializationStartDT;
   }
@@ -567,7 +567,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *         in the middle of initialization.
    */
   @Nullable
-  public LocalDateTime getInitializationEndDT ()
+  public final LocalDateTime getInitializationEndDT ()
   {
     return m_aInitializationEndDT;
   }
@@ -637,11 +637,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       // serialize statistics
       try
       {
-        final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
         aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
         aDoc.getDocumentElement ()
             .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
+
+        final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         MicroWriter.writeToFile (aDoc, aDestPath);
       }
       catch (final Throwable t)

@@ -21,7 +21,8 @@ import java.util.EnumSet;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.CApplicationID;
+import com.helger.photon.basic.app.appid.CApplicationID;
+import com.helger.photon.basic.app.appid.XServletFilterAppIDExplicit;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
@@ -36,9 +37,9 @@ public abstract class AbstractPublicApplicationServlet extends AbstractXServlet
 
   protected AbstractPublicApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler)
   {
-    super ( () -> CApplicationID.APP_ID_PUBLIC);
     handlerRegistry ().registerHandler (EHttpMethod.GET, aHandler);
     // Must support POST for form submits :)
     handlerRegistry ().copyHandler (EHttpMethod.GET, EnumSet.of (EHttpMethod.POST));
+    filterHighLevelList ().add (new XServletFilterAppIDExplicit (CApplicationID.APP_ID_PUBLIC));
   }
 }

@@ -37,7 +37,7 @@ import com.helger.photon.basic.atom.Feed;
 import com.helger.photon.basic.atom.FeedGenerator;
 import com.helger.photon.basic.atom.FeedLink;
 import com.helger.photon.core.PhotonUnifiedResponse;
-import com.helger.photon.core.ajax.IAjaxExecutor;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

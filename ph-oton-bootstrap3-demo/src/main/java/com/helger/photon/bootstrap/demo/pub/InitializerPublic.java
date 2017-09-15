@@ -33,6 +33,7 @@ import com.helger.photon.core.app.layout.ILayoutManager;
 public final class InitializerPublic implements IApplicationInitializer <LayoutExecutionContext>
 {
   @Override
+  @Deprecated
   public void initLayout (@Nonnull final ILayoutManager <LayoutExecutionContext> aLayoutMgr)
   {
     // Register all layout area handler (order is important for SEO!)

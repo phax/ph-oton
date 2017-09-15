@@ -18,14 +18,16 @@ package com.helger.photon.bootstrap.demo.app.ui;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.hc.html.root.HCHtml;
+import com.helger.photon.basic.app.appid.PhotonGlobalState;
+import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.request.IRequestParameterManager;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.layout.AbstractLayoutManagerBasedLayoutHTMLProvider;
-import com.helger.photon.core.app.layout.ApplicationLayoutManager;
 
 /**
  * Main class for creating HTML output
@@ -34,9 +36,9 @@ import com.helger.photon.core.app.layout.ApplicationLayoutManager;
  */
 public class AppLayoutHTMLProvider extends AbstractLayoutManagerBasedLayoutHTMLProvider <LayoutExecutionContext>
 {
-  public AppLayoutHTMLProvider ()
+  public AppLayoutHTMLProvider (@Nonnull @Nonempty final String sAppID)
   {
-    super (ApplicationLayoutManager.<LayoutExecutionContext> getInstance ());
+    super (PhotonGlobalState.getInstance ().state (sAppID).getCustom ("lm"));
     setCreateLayoutAreaSpan (false);
   }
 
@@ -44,7 +46,7 @@ public class AppLayoutHTMLProvider extends AbstractLayoutManagerBasedLayoutHTMLP
   protected LayoutExecutionContext createLayoutExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC,
                                                                  @Nonnull final IRequestParameterManager aRequestManager)
   {
-    return new LayoutExecutionContext (aSWEC, aRequestManager.getRequestMenuItem ());
+    return new LayoutExecutionContext (aSWEC, RequestSettings.getMenuItem (aSWEC.getRequestScope ()));
   }
 
   /**

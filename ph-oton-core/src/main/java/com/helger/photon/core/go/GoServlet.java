@@ -17,7 +17,7 @@
 package com.helger.photon.core.go;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.CApplicationID;
+import com.helger.photon.basic.app.appid.XServletFilterAppIDFromSessionID;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
@@ -33,7 +33,7 @@ public final class GoServlet extends AbstractXServlet
 
   public GoServlet ()
   {
-    super ( () -> CApplicationID.APP_ID_PUBLIC);
     handlerRegistry ().registerHandler (EHttpMethod.GET, new GoXServletHandler ());
+    filterHighLevelList ().add (new XServletFilterAppIDFromSessionID ());
   }
 }

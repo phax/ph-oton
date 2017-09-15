@@ -39,7 +39,8 @@ import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.basic.app.menu.ApplicationMenuTree;
+import com.helger.photon.basic.app.appid.CApplicationID;
+import com.helger.photon.basic.app.appid.PhotonGlobalState;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObject;
@@ -91,10 +92,13 @@ public final class AppRendererPublic implements ILayoutAreaContentProvider <Layo
   public AppRendererPublic ()
   {
     m_aFooterObjects = new CommonsArrayList <> ();
-    ApplicationMenuTree.getTree ().iterateAllMenuObjects (aCurrentObject -> {
-      if (aCurrentObject.attrs ().containsKey (CMenuPublic.FLAG_FOOTER))
-        m_aFooterObjects.add (aCurrentObject);
-    });
+    PhotonGlobalState.getInstance ()
+                     .state (CApplicationID.APP_ID_PUBLIC)
+                     .getMenuTree ()
+                     .iterateAllMenuObjects (aCurrentObject -> {
+                       if (aCurrentObject.attrs ().containsKey (CMenuPublic.FLAG_FOOTER))
+                         m_aFooterObjects.add (aCurrentObject);
+                     });
   }
 
   private static void _addNavbarLoginLogout (@Nonnull final LayoutExecutionContext aLEC,

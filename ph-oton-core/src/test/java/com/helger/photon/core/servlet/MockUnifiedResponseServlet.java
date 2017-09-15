@@ -20,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.mime.CMimeType;
-import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
 import com.helger.xservlet.AbstractXServlet;
 
 public final class MockUnifiedResponseServlet extends AbstractXServlet
@@ -29,7 +28,6 @@ public final class MockUnifiedResponseServlet extends AbstractXServlet
 
   public MockUnifiedResponseServlet ()
   {
-    super ( () -> MockServletRequestListenerScopeAware.MOCK_APPLICATION_ID);
     handlerRegistry ().registerHandler (EHttpMethod.GET,
                                         (aRequestScope,
                                          aUnifiedResponse) -> aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT,

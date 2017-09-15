@@ -4,7 +4,10 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
@@ -65,6 +68,15 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
     final String ret = getInstance ().state (sAppID).getAttr (ATTR_SERVLET_PATH);
     if (StringHelper.hasNoText (ret))
       throw new IllegalStateException ("No servlet path specified!");
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static ICommonsMap <String, String> getAppIDToServletPathMap ()
+  {
+    final ICommonsMap <String, String> ret = new CommonsHashMap <> ();
+    getInstance ().m_aState.forEach ( (sAppID, state) -> ret.put (sAppID, state.getAttr (ATTR_SERVLET_PATH)));
     return ret;
   }
 }

@@ -17,7 +17,6 @@
 package com.helger.photon.core.userdata;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
@@ -32,7 +31,6 @@ public final class UserStreamServlet extends AbstractXServlet
 
   public UserStreamServlet ()
   {
-    super ( () -> CApplicationID.APP_ID_PUBLIC);
     handlerRegistry ().registerHandler (EHttpMethod.GET, new UserDataDeliveryHttpHandler ());
   }
 }

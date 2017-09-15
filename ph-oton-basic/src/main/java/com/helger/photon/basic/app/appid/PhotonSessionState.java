@@ -96,6 +96,12 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
     return m_aStateMap.get (sAppID);
   }
 
+  @Nonnull
+  public PhotonState stateLastAppID ()
+  {
+    return state (getLastApplicationID ());
+  }
+
   @Override
   public String toString ()
   {

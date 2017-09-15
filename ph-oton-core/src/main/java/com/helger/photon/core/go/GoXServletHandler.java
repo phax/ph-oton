@@ -29,7 +29,7 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.basic.app.menu.ApplicationMenuTree;
+import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
@@ -88,16 +88,6 @@ public class GoXServletHandler implements IXServletSimpleHandler
   }
 
   /**
-   * @return The menu tree to be used for item resolving.
-   */
-  @Nullable
-  @OverrideOnDemand
-  protected IMenuTree getMenuTree ()
-  {
-    return ApplicationMenuTree.getTree ();
-  }
-
-  /**
    * Callback method that allows for customizing the result URL.
    *
    * @param aRequestScope
@@ -135,14 +125,15 @@ public class GoXServletHandler implements IXServletSimpleHandler
       // Base URL
       if (aGoItem.isInternal ())
       {
-        final IMenuTree aMenuTree = getMenuTree ();
+        final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
         if (aMenuTree != null)
         {
           // If it is an internal menu item, check if this internal item is an
           // "external menu item" and if so, directly use the URL of the
           // external menu item
           final String sTargetMenuItemID = RequestParameterManager.getInstance ()
-                                                                  .getMenuItemFromURL (aGoItem.getTargetURL ());
+                                                                  .getMenuItemFromURL (aGoItem.getTargetURL (),
+                                                                                       aMenuTree);
 
           final IMenuObject aMenuObj = aMenuTree.getItemDataWithID (sTargetMenuItemID);
           if (aMenuObj instanceof IMenuItemExternal)

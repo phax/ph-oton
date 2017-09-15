@@ -38,9 +38,9 @@ import com.helger.commons.wrapper.Wrapper;
 import com.helger.http.EHttpVersion;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
-import com.helger.photon.core.ajax.IAjaxExecutor;
-import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
@@ -127,10 +127,6 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
       aUnifiedResponse.setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return EContinue.BREAK;
     }
-
-    // Explicitly set the application ID per declaration invocation
-    if (aAjaxDeclaration.hasSpecialApplicationID ())
-      ScopeManager.internalSetRequestApplicationID (aRequestScope, aAjaxDeclaration.getSpecialApplicationID ());
 
     // Call the initialization of the action executor
     aAjaxExecutor.initExecution (aRequestScope);

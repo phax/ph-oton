@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.ajax;
+package com.helger.photon.core.ajax.decl;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -27,6 +27,7 @@ import com.helger.commons.functional.IPredicate;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -44,7 +45,7 @@ public interface IAjaxFunctionDeclaration extends IHasName, Serializable
   ISupplier <? extends IAjaxExecutor> getExecutorFactory ();
 
   /**
-   * @return Amn Ajax executor from the executor factory.
+   * @return An Ajax executor from the executor factory.
    * @see #getExecutorFactory()
    */
   @Nullable
@@ -141,20 +142,4 @@ public interface IAjaxFunctionDeclaration extends IHasName, Serializable
    *         <code>false</code> otherwise.
    */
   boolean canExecute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
-
-  /**
-   * @return A special application ID that is needed for the execution of the
-   *         Ajax function. May be <code>null</code>.
-   */
-  @Nullable
-  String getSpecialApplicationID ();
-
-  /**
-   * @return <code>true</code> if a special application ID is present,
-   *         <code>false</code> if not.
-   */
-  default boolean hasSpecialApplicationID ()
-  {
-    return getSpecialApplicationID () != null;
-  }
 }

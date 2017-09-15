@@ -38,6 +38,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

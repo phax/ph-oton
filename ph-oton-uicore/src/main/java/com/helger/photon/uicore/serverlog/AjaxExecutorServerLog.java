@@ -27,7 +27,7 @@ import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.log.LogHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.core.PhotonUnifiedResponse;
-import com.helger.photon.core.ajax.IAjaxExecutor;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class AjaxExecutorServerLog implements IAjaxExecutor

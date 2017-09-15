@@ -22,9 +22,8 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.photon.core.ajax.IAjaxExecutor;
 import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.ajax.IAjaxLongRunningExecutionCallback;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class LoggingAjaxLongRunningExecutionCallback implements IAjaxLongRunningExecutionCallback

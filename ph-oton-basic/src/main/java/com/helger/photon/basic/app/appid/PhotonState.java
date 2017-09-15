@@ -1,6 +1,7 @@
 package com.helger.photon.basic.app.appid;
 
 import java.util.Locale;
+import java.util.function.BiConsumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -75,6 +76,11 @@ public final class PhotonState implements ICloneable <PhotonState>
     }
   }
 
+  public boolean isEmpty ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aAttrs.isEmpty ());
+  }
+
   @Nullable
   public IMenuTree getMenuTree ()
   {
@@ -112,6 +118,24 @@ public final class PhotonState implements ICloneable <PhotonState>
   public PhotonState getClone ()
   {
     return new PhotonState (this);
+  }
+
+  @Deprecated
+  public void setCustom (@Nonnull @Nonempty final String sKey, @Nonnull final Object aValue)
+  {
+    setAttr (sKey, aValue);
+  }
+
+  @Nullable
+  @Deprecated
+  public <T> T getCustom (@Nonnull @Nonempty final String sKey)
+  {
+    return getAttr (sKey);
+  }
+
+  void forEach (@Nonnull final BiConsumer <? super String, ? super Object> aConsumer)
+  {
+    m_aAttrs.forEach (aConsumer);
   }
 
   @Override

@@ -25,6 +25,10 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.photon.core.ajax.callback.IAjaxAfterExecutionCallback;
+import com.helger.photon.core.ajax.callback.IAjaxBeforeExecutionCallback;
+import com.helger.photon.core.ajax.callback.IAjaxExceptionCallback;
+import com.helger.photon.core.ajax.callback.IAjaxLongRunningExecutionCallback;
 import com.helger.photon.core.ajax.callback.LoggingAjaxExceptionCallback;
 import com.helger.photon.core.ajax.callback.LoggingAjaxLongRunningExecutionCallback;
 

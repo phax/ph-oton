@@ -27,12 +27,9 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
-import com.helger.photon.basic.app.PhotonSessionState;
-import com.helger.photon.basic.app.menu.ApplicationMenuTree;
+import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.request.IRequestParameterManager;
-import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
@@ -98,19 +95,13 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   @Nonnull
   public static LayoutExecutionContext createForAjaxOrAction (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final IRequestParameterManager aRequestMgr = RequestParameterManager.getInstance ();
     // Get the locale from the session
-    final Locale aDisplayLocale = aRequestMgr.getRequestDisplayLocale ();
-    IMenuTree aMenuTree = ApplicationMenuTree.getTree ();
-    if (aMenuTree.getRootItem ().hasNoChildren ())
-    {
-      final String sLastApplicationID = PhotonSessionState.getInstance ().getLastApplicationID ();
-      final IMenuTree aMenuTree2 = ApplicationMenuTree.getTree (sLastApplicationID);
-      if (aMenuTree2 != null && aMenuTree2.getRootItem ().hasChildren ())
-        aMenuTree = aMenuTree2;
-    }
-    // vSince no menu item is selected, use the default menu item
+    final Locale aDisplayLocale = RequestSettings.getDisplayLocale (aRequestScope);
+    final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
+    final IMenuItemPage aMenuItem = RequestSettings.getMenuItem (aRequestScope);
+
+    // Since no menu item is selected, use the default menu item
     return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree),
-                                       aMenuTree.getDefaultMenuItem ());
+                                       aMenuItem);
   }
 }

@@ -313,7 +313,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
         if (aItem.isInternal ())
         {
           // Get value of "menu item" parameter and check for existence
-          final String sParamValue = aRPM.getMenuItemFromURL (aItem.getTargetURLReadonly ());
+          final String sParamValue = aRPM.getMenuItemFromURL (aItem.getTargetURLReadonly (), aMenuTree);
           if (sParamValue != null)
           {
             ++nCount;

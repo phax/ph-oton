@@ -50,6 +50,7 @@ import com.helger.xservlet.forcedredirect.ForcedRedirectException;
  * @param <LECTYPE>
  *        Layout execution context type
  */
+@Deprecated
 public abstract class AbstractLayoutHTMLProvider <LECTYPE extends ILayoutExecutionContext> extends AbstractHTMLProvider
 {
   public static final boolean DEFAULT_CREATE_LAYOUT_AREA_SPAN = true;

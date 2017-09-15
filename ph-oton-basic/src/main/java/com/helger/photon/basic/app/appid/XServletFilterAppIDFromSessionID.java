@@ -24,8 +24,13 @@ public final class XServletFilterAppIDFromSessionID implements IXServletHighLeve
     // Set all fields from session
     final PhotonSessionState aSession = PhotonSessionState.getInstance ();
     final String sAppID = aSession.getLastApplicationID ();
-    final PhotonState aSessionState = aSession.state (sAppID);
-    RequestSettings.set (aRequestScope, sAppID, aSessionState);
+    if (sAppID != null)
+    {
+      PhotonState aState = aSession.state (sAppID);
+      if (aState.isEmpty ())
+        aState = PhotonGlobalState.getInstance ().state (sAppID);
+      RequestSettings.set (aRequestScope, sAppID, aState);
+    }
   }
 
   public void afterRequest (@Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException

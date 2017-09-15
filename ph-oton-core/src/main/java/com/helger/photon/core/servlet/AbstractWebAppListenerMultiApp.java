@@ -31,16 +31,18 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.css.propertyvalue.CSSValue;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.photon.basic.app.appid.PhotonGlobalState;
 import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 import com.helger.photon.basic.app.locale.ILocaleManager;
-import com.helger.photon.basic.app.menu.ApplicationMenuTree;
+import com.helger.photon.basic.app.menu.MenuTree;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.api.GlobalAPIInvoker;
 import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
-import com.helger.photon.core.app.layout.ApplicationLayoutManager;
+import com.helger.photon.core.app.layout.ILayoutManager;
+import com.helger.photon.core.app.layout.LayoutManagerProxy;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
@@ -149,15 +151,18 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
     for (final Map.Entry <String, IApplicationInitializer <LECTYPE>> aEntry : aIniter.entrySet ())
     {
       final String sAppID = aEntry.getKey ();
-      try (final WebScoped aWebScoped = new WebScoped (sAppID))
+      try (final WebScoped aWebScoped = new WebScoped ())
       {
         final IApplicationInitializer <LECTYPE> aInitializer = aEntry.getValue ();
 
         // Create all menu items
-        aInitializer.initMenu (ApplicationMenuTree.getTree ());
+        final MenuTree aMenuTree = new MenuTree ();
+        aInitializer.initMenu (aMenuTree);
+        PhotonGlobalState.getInstance ().state (sAppID).setMenuTree (aMenuTree);
 
-        // Create the application layouts - after the menus!
-        aInitializer.initLayout (ApplicationLayoutManager.<LECTYPE> getInstance ());
+        final ILayoutManager <LECTYPE> aLayoutMgr = new LayoutManagerProxy <> ();
+        aInitializer.initLayout (aLayoutMgr);
+        PhotonGlobalState.getInstance ().state (sAppID).setCustom ("lm", aLayoutMgr);
 
         // All other things come last
         aInitializer.initRest ();

@@ -16,13 +16,8 @@
  */
 package com.helger.photon.core.job;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
-import com.helger.quartz.IJobExecutionContext;
-import com.helger.quartz.JobDataMap;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
 
@@ -52,23 +47,5 @@ public abstract class AbstractPhotonJob extends AbstractScopeAwareJob
   protected AbstractPhotonJob (@Nullable final String sFixedAppID)
   {
     m_sFixedAppID = sFixedAppID;
-  }
-
-  @Override
-  @Nonnull
-  @Nonempty
-  protected final String getApplicationScopeID (@Nonnull final JobDataMap aJobDataMap,
-                                                @Nonnull final IJobExecutionContext aContext)
-  {
-    if (StringHelper.hasText (m_sFixedAppID))
-      return m_sFixedAppID;
-
-    final String sAppID = aJobDataMap.getString (JOB_DATA_ATTR_APPLICATION_ID);
-    if (StringHelper.hasNoText (sAppID))
-      throw new IllegalStateException ("JobDataMap is missing entry for '" +
-                                       JOB_DATA_ATTR_APPLICATION_ID +
-                                       "' - see " +
-                                       AbstractPhotonJob.class.getName ());
-    return sAppID;
   }
 }

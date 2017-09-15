@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTToString;
@@ -46,7 +45,6 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
-import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -60,7 +58,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
-import com.helger.scope.ISessionApplicationScope;
 import com.helger.scope.ISessionScope;
 import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.web.scope.ISessionWebScope;
@@ -80,7 +77,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
   protected static enum EText implements IHasDisplayTextWithArgs
   {
     MSG_SESSION ("Session Kontext", "Session scope"),
-    MSG_SESSION_APPLICATION_SCOPE ("Session Application Kontext ''{0}''", "Session app scope ''{0}''"),
     MSG_ID ("ID", "ID"),
     MSG_ATTRCOUNT ("Attribute", "Attributes"),
     MSG_LAST_ACCESS ("Letzter Zugriff", "Last access"),
@@ -89,7 +85,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
     MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
     MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
-    MSG_SESSION_APPLICATION_SCOPES ("Session Application Kontexte", "Session application scopes"),
     MSG_SCOPE_ATTRS ("Attribute", "Attributes"),
     MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),
     MSG_SCOPE_LASTACCESS_DT ("Letzter Zugriff", "Last access date time"),
@@ -180,8 +175,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
                                                        .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
                                                                                              aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SESSION_APPLICATION_SCOPES.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.getSessionApplicationScopeCount ())));
     aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
                                                        .setCtrl (Integer.toString (aScope.attrs ().size ())));
 
@@ -236,46 +229,6 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     return ret;
   }
 
-  @Nonnull
-  private IHCNode _getSessionApplicationScopeInfo (@Nonnull final WPECTYPE aWPEC,
-                                                   @Nonnull final ISessionApplicationScope aScope)
-  {
-    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final HCNodeList aNodeList = new HCNodeList ();
-
-    final BootstrapViewForm aTableScope = new BootstrapViewForm ();
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (aScope.getID ()));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
-    aNodeList.addChild (aTableScope);
-
-    // All scope attributes
-    final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                             new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
-                                             new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionappscope" + aScope.getID ());
-    for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
-      aTableAttrs.addBodyRow ()
-                 .addCell (aEntry.getKey ())
-                 .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
-                 .addCell (UITextFormatter.getToStringContent (aEntry.getValue ()));
-    aNodeList.addChild (aTableAttrs);
-
-    final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
-    aNodeList.addChild (aDataTables);
-
-    return aNodeList;
-  }
-
   @Override
   protected void showSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nonnull final ISessionScope aScope)
   {
@@ -292,17 +245,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                         EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
-    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
-    aTabBox.addTab ("session", EText.MSG_SESSION.getDisplayText (aDisplayLocale), _getSessionScopeInfo (aWPEC, aScope));
-    for (final ISessionApplicationScope aSessionAppScope : CollectionHelper.getSortedByKey (aScope.getAllSessionApplicationScopes ())
-                                                                           .values ())
-    {
-      aTabBox.addTab (aSessionAppScope.getID (),
-                      EText.MSG_SESSION_APPLICATION_SCOPES.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                   aSessionAppScope.getID ()),
-                      _getSessionApplicationScopeInfo (aWPEC, aSessionAppScope));
-    }
-    aNodeList.addChild (aTabBox);
+    aNodeList.addChild (_getSessionScopeInfo (aWPEC, aScope));
   }
 
   @Override

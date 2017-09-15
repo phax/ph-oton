@@ -52,10 +52,9 @@ import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.util.PDTIOHelper;
+import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
-import com.helger.scope.mgr.ScopeManager;
 import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.servlet.ServletHelper;
 import com.helger.servlet.request.RequestHelper;
@@ -527,20 +526,18 @@ public final class InternalErrorHandler
   @Nullable
   private static Locale _getSafeDisplayLocale ()
   {
-    try
-    {
-      // This may fail, if a weird application context is used
-      return RequestParameterManager.getInstance ().getRequestDisplayLocale ();
-    }
-    catch (final IllegalStateException ex)
-    {
-      // This happens e.g. on internal errors on startup
-      final IRequestWebScope aRequestScope = WebScopeManager.getRequestScopeOrNull ();
-      final String sAppID = aRequestScope == null ? "<no request scope present>"
-                                                  : ScopeManager.getRequestApplicationID (aRequestScope);
-      s_aLogger.warn ("Failed to retrieve default locale for application ID '" + sAppID + "'");
-      return InternalErrorSettings.getFallbackLocale ();
-    }
+    final IRequestWebScope aRequestScope = WebScopeManager.getRequestScopeOrNull ();
+    if (aRequestScope != null)
+      try
+      {
+        // This may fail, if a weird application context is used
+        return RequestSettings.getDisplayLocale (aRequestScope);
+      }
+      catch (final IllegalStateException ex)
+      {
+        // This happens e.g. on internal errors on startup
+      }
+    return InternalErrorSettings.getFallbackLocale ();
   }
 
   /**

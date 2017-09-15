@@ -41,9 +41,8 @@ import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.photon.basic.app.menu.ApplicationMenuTree;
+import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.resource.ResourceBundleServlet;
@@ -70,19 +69,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected boolean isMergeExternalJSNodes ()
   {
     return ResourceBundleServlet.isEnabled ();
-  }
-
-  @Nonnull
-  @OverrideOnDemand
-  protected Locale getDisplayLocale ()
-  {
-    return RequestParameterManager.getInstance ().getRequestDisplayLocale ();
-  }
-
-  @Nonnull
-  protected final IMenuTree getMenuTree ()
-  {
-    return ApplicationMenuTree.getTree ();
   }
 
   @OverrideOnDemand
@@ -115,7 +101,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected void addMetaElements (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                   @Nonnull final HCHead aHead)
   {
-    final ICommonsList <IMetaElement> aMetaElements = new CommonsArrayList<> ();
+    final ICommonsList <IMetaElement> aMetaElements = new CommonsArrayList <> ();
     {
       // add special meta element at the beginning
       final IMimeType aMimeType = PhotonHTMLHelper.getMimeType (aRequestScope);
@@ -197,13 +183,12 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   @Nonnull
   public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
   {
-    final Locale aDisplayLocale = getDisplayLocale ();
+    final Locale aDisplayLocale = RequestSettings.getDisplayLocale (aRequestScope);
+    final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
     final IHCConversionSettingsToNode aConversionSettings = HCSettings.getConversionSettings ();
 
     // Build the execution scope
-    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope,
-                                                                            aDisplayLocale,
-                                                                            getMenuTree ());
+    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree);
 
     // Create the surrounding HTML element
     final HCHtml aHtml = createHCHtml (aDisplayLocale);

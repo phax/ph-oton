@@ -31,7 +31,6 @@ public final class UserUploadServlet extends AbstractXServlet
 
   public UserUploadServlet ()
   {
-    super ( () -> "user-upload");
     handlerRegistry ().registerHandler (EHttpMethod.POST, new UserUploadXServletHandler ());
   }
 }

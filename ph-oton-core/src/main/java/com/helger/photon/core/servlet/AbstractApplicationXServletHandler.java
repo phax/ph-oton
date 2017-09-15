@@ -22,10 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.ServletException;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.photon.basic.app.PhotonSessionState;
-import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.servlet.response.UnifiedResponse;
@@ -41,18 +37,6 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
 {
   protected AbstractApplicationXServletHandler ()
   {}
-
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  public void onRequestBegin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                              @Nonnull @Nonempty final String sApplicationID)
-  {
-    // Set the last application ID in the session
-    PhotonSessionState.getInstance ().setLastApplicationID (sApplicationID);
-
-    // Run default request initialization (menu item and locale)
-    RequestParameterManager.getInstance ().onRequestBegin (aRequestScope, sApplicationID);
-  }
 
   /**
    * @param aRequestScope

@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.CApplicationID;
 import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
 
@@ -59,7 +58,6 @@ public final class ResourceBundleServlet extends AbstractXServlet
 
   public ResourceBundleServlet ()
   {
-    super ( () -> CApplicationID.APP_ID_PUBLIC);
     handlerRegistry ().registerHandler (EHttpMethod.GET, new ResourceBundleDeliveryHttpHandler ());
   }
 

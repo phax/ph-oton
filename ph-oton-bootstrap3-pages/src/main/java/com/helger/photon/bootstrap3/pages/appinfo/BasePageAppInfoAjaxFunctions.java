@@ -31,25 +31,20 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
-import com.helger.photon.core.ajax.IAjaxAfterExecutionCallback;
-import com.helger.photon.core.ajax.IAjaxBeforeExecutionCallback;
-import com.helger.photon.core.ajax.IAjaxExceptionCallback;
-import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
-import com.helger.photon.core.ajax.IAjaxLongRunningExecutionCallback;
+import com.helger.photon.core.ajax.callback.IAjaxAfterExecutionCallback;
+import com.helger.photon.core.ajax.callback.IAjaxBeforeExecutionCallback;
+import com.helger.photon.core.ajax.callback.IAjaxExceptionCallback;
+import com.helger.photon.core.ajax.callback.IAjaxLongRunningExecutionCallback;
+import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
-import com.helger.scope.IApplicationScope;
-import com.helger.scope.singleton.AbstractSingleton;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Show all registered AJAX functions.
@@ -58,8 +53,8 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext>
-                                          extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends
+                                          AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -69,8 +64,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
     MSG_URL ("Ziel-URL", "Target URL"),
     MSG_CALLBACKS ("Callbacks", "Callbacks"),
     MSG_TYPE ("Typ", "Type"),
-    MSG_CALLBACK ("Callback", "Callback"),
-    MSG_NONE_FOUND ("Keine Daten gefunden.", "No data found.");
+    MSG_CALLBACK ("Callback", "Callback");
 
     @Nonnull
     private final IMultilingualText m_aTP;
@@ -118,70 +112,49 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
 
-    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
+    final GlobalAjaxInvoker aMgr = GlobalAjaxInvoker.getInstance ();
 
-    for (final IApplicationScope aAppScope : WebScopeManager.getGlobalScope ().getAllApplicationScopes ().values ())
+    final HCNodeList aTab = new HCNodeList ();
+
+    // Show all registered AJAX functions
     {
-      final String sAppScopeID = aAppScope.getID ();
-      final GlobalAjaxInvoker aMgr = AbstractSingleton.getSingletonIfInstantiated (aAppScope,
-                                                                                        GlobalAjaxInvoker.class);
-      if (aMgr != null)
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () + "-ajax");
+      for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aMgr.getAllRegisteredFunctions ().entrySet ())
       {
-        final HCNodeList aTab = new HCNodeList ();
-
-        // Show all registered AJAX functions
-        {
-          final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                              new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale)),
-                                              new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                sAppScopeID +
-                                                                                                                "-ajax");
-          for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aMgr.getAllRegisteredFunctions ()
-                                                                               .entrySet ())
-          {
-            aTable.addBodyRow ().addCells (aEntry.getKey (),
-                                           aEntry.getValue ().getExecutorFactory ().toString (),
-                                           aEntry.getValue ().getInvocationURI (aRequestScope));
-          }
-          aTab.addChild (aTable);
-
-          final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.addChild (aDataTables);
-        }
-
-        // Show all callbacks
-        {
-          aTab.addChild (getUIHandler ().createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
-
-          final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                      1)
-                                                                                                        .setInitialSorting (ESortOrder.ASCENDING),
-                                              new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                     sAppScopeID +
-                                                                                                                     "-ajax-cb");
-          for (final IAjaxExceptionCallback aCB : AjaxSettings.exceptionCallbacks ().getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
-          for (final IAjaxBeforeExecutionCallback aCB : AjaxSettings.beforeExecutionCallbacks ().getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
-          for (final IAjaxAfterExecutionCallback aCB : AjaxSettings.afterExecutionCallbacks ().getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-          for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ()
-                                                                         .getAllCallbacks ())
-            aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
-          aTab.addChild (aTable);
-
-          final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-          aTab.addChild (aDataTables);
-        }
-
-        // Add to tab box
-        aTabBox.addTab (sAppScopeID, sAppScopeID, aTab);
+        aTable.addBodyRow ().addCells (aEntry.getKey (),
+                                       aEntry.getValue ().getExecutorFactory ().toString (),
+                                       aEntry.getValue ().getInvocationURI (aRequestScope));
       }
+      aTab.addChild (aTable);
+
+      final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTab.addChild (aDataTables);
     }
 
-    if (aTabBox.getTabCount () > 0)
-      aNodeList.addChild (aTabBox);
-    else
-      aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NONE_FOUND.getDisplayText (aDisplayLocale)));
+    // Show all callbacks
+    {
+      aTab.addChild (getUIHandler ().createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
+
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0, 1)
+                                                                                                    .setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_CALLBACK.getDisplayText (aDisplayLocale))).setID (getID () + "-ajax-cb");
+      for (final IAjaxExceptionCallback aCB : AjaxSettings.exceptionCallbacks ().getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("Exception", aCB.toString ());
+      for (final IAjaxBeforeExecutionCallback aCB : AjaxSettings.beforeExecutionCallbacks ().getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
+      for (final IAjaxAfterExecutionCallback aCB : AjaxSettings.afterExecutionCallbacks ().getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
+      for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ()
+                                                                     .getAllCallbacks ())
+        aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
+      aTab.addChild (aTable);
+
+      final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTab.addChild (aDataTables);
+    }
+
+    aNodeList.addChild (aTab);
   }
 }

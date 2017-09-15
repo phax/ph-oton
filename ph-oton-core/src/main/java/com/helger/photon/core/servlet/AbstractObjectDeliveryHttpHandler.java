@@ -29,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsMap;
@@ -150,8 +149,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
   }
 
   @Override
-  public void onServletInit (@Nonnull @Nonempty final String sApplicationID,
-                             @Nonnull final ICommonsMap <String, String> aInitParams)
+  public void onServletInit (@Nonnull final ICommonsMap <String, String> aInitParams)
   {
     _initialFillSet (m_aDeniedFilenames, aInitParams.get (INITPARAM_DENIED_FILENAMES), false);
     _initialFillSet (m_aDeniedExtensions, aInitParams.get (INITPARAM_DENIED_EXTENSIONS), true);

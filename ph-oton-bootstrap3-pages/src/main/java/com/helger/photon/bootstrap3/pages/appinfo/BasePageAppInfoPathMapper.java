@@ -32,7 +32,7 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.basic.app.PhotonPathMapper;
+import com.helger.photon.basic.app.appid.PhotonGlobalState;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -54,7 +54,6 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
   protected static enum EText implements IHasDisplayText
   {
     MSG_APPID ("Application ID", "Application ID"),
-    MSG_IS_DEFAULT (" [Standard]", " [default]"),
     MSG_APP_SERVLET_PATH ("App-Servlet Pfad", "App servlet path");
 
     @Nonnull
@@ -105,16 +104,13 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_APPID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_APP_SERVLET_PATH.getDisplayText (aDisplayLocale))).setID (getID ());
 
-    final String sDefaultAppID = PhotonPathMapper.getDefaultApplicationID ();
-    for (final Map.Entry <String, PhotonPathMapper.PathEntry> aEntry : PhotonPathMapper.getApplicationIDToPathEntryMap ()
-                                                                                       .entrySet ())
+    for (final Map.Entry <String, String> aEntry : PhotonGlobalState.getAppIDToServletPathMap ().entrySet ())
     {
       final String sAppID = aEntry.getKey ();
-      final boolean bIsDefault = sAppID.equals (sDefaultAppID);
 
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (sAppID + (bIsDefault ? EText.MSG_IS_DEFAULT.getDisplayText (aDisplayLocale) : ""));
-      aRow.addCell (aEntry.getValue ().getApplicationServletPath ());
+      aRow.addCell (sAppID);
+      aRow.addCell (aEntry.getValue ());
     }
     aNodeList.addChild (aTable);
 

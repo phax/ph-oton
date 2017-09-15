@@ -24,6 +24,7 @@ import javax.annotation.concurrent.Immutable;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public final class CLayout
 {
   // Layout area IDs - used in CSS!!!

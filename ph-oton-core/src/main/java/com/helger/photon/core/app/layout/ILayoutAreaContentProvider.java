@@ -30,6 +30,7 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
  * @param <LECTYPE>
  *        Layout execution context type
  */
+@Deprecated
 public interface ILayoutAreaContentProvider <LECTYPE extends ILayoutExecutionContext>
 {
   /**

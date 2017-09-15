@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
