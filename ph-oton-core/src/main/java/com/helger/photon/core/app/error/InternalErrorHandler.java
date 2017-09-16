@@ -533,7 +533,7 @@ public final class InternalErrorHandler
         // This may fail, if a weird application context is used
         return RequestSettings.getDisplayLocale (aRequestScope);
       }
-      catch (final IllegalStateException ex)
+      catch (final RuntimeException ex)
       {
         // This happens e.g. on internal errors on startup
       }
