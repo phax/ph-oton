@@ -114,8 +114,6 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
 
     final GlobalAjaxInvoker aMgr = GlobalAjaxInvoker.getInstance ();
 
-    final HCNodeList aTab = new HCNodeList ();
-
     // Show all registered AJAX functions
     {
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
@@ -127,15 +125,14 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
                                        aEntry.getValue ().getExecutorFactory ().toString (),
                                        aEntry.getValue ().getInvocationURI (aRequestScope));
       }
-      aTab.addChild (aTable);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTab.addChild (aDataTables);
+      aNodeList.addChild (aTable).addChild (aDataTables);
     }
 
     // Show all callbacks
     {
-      aTab.addChild (getUIHandler ().createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
+      aNodeList.addChild (getUIHandler ().createDataGroupHeader (EText.MSG_CALLBACKS.getDisplayText (aDisplayLocale)));
 
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0, 1)
                                                                                                     .setInitialSorting (ESortOrder.ASCENDING),
@@ -149,12 +146,9 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
       for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ()
                                                                      .getAllCallbacks ())
         aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
-      aTab.addChild (aTable);
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTab.addChild (aDataTables);
+      aNodeList.addChild (aTable).addChild (aDataTables);
     }
-
-    aNodeList.addChild (aTab);
   }
 }
