@@ -32,6 +32,7 @@ Release history:
     * Renamed 'Client' to 'Tenant'
     * Updated to Bootstrap 4.0.0-beta
     * Updated to TinyMCE 4.6.6
+    * Updated to Jetty 9.4.7
   * v7.1.2 - 2017-07-19
     * Fixed an error with path handling of resource bundles when deployed as JAR
   * v7.1.1 - 2017-07-18
