@@ -26,14 +26,12 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.io.misc.SizeHelper;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.photon.core.app.error.InternalErrorSettings;
-import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.IScheduleBuilder;
@@ -46,6 +44,7 @@ import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
 import com.helger.smtp.data.EEmailType;
 import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
+import com.helger.web.scope.util.AbstractScopeAwareJob;
 
 /**
  * Check whether at least x bytes of usable space is present on the file system
@@ -54,7 +53,7 @@ import com.helger.smtp.scope.ScopedMailAPI;
  * @author philip
  */
 @DisallowConcurrentExecution
-public final class CheckDiskUsableSpaceJob extends AbstractPhotonJob
+public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckDiskUsableSpaceJob.class);
   private static final String JOB_DATA_ATTR_THRESHOLD_BYTES = "threshold-bytes";
@@ -112,9 +111,6 @@ public final class CheckDiskUsableSpaceJob extends AbstractPhotonJob
    *        The schedule builder to be used. May not be <code>null</code>.
    *        Example:
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (60)</code>
-   * @param sApplicationID
-   *        The internal application ID to be used. May neither be
-   *        <code>null</code> nor empty.
    * @param nThresholdBytes
    *        If &le; than this number of bytes are free on the drive, an internal
    *        notification email is send. Must be &ge; 0.
@@ -122,15 +118,12 @@ public final class CheckDiskUsableSpaceJob extends AbstractPhotonJob
    */
   @Nonnull
   public static TriggerKey schedule (@Nonnull final IScheduleBuilder <? extends ITrigger> aScheduleBuilder,
-                                     @Nonnull @Nonempty final String sApplicationID,
                                      @Nonnegative final long nThresholdBytes)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
-    ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
     ValueEnforcer.isGE0 (nThresholdBytes, "ThresholdBytes");
 
     final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
-    aJobDataMap.put (JOB_DATA_ATTR_APPLICATION_ID, sApplicationID);
     aJobDataMap.put (JOB_DATA_ATTR_THRESHOLD_BYTES, Long.valueOf (nThresholdBytes));
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckDiskUsableSpaceJob.class.getName (),

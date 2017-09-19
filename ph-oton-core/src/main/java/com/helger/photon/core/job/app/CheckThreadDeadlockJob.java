@@ -22,12 +22,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.deadlock.ThreadDeadlockDetector;
 import com.helger.photon.core.app.error.callback.MailingThreadDeadlockCallback;
-import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
@@ -36,6 +34,7 @@ import com.helger.quartz.SimpleScheduleBuilder;
 import com.helger.quartz.TriggerKey;
 import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
+import com.helger.web.scope.util.AbstractScopeAwareJob;
 
 /**
  * A Quartz job to be scheduled to check for thread dead locks.
@@ -43,7 +42,7 @@ import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
  * @author Philip Helger
  */
 @DisallowConcurrentExecution
-public final class CheckThreadDeadlockJob extends AbstractPhotonJob
+public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckThreadDeadlockJob.class);
 
@@ -72,19 +71,14 @@ public final class CheckThreadDeadlockJob extends AbstractPhotonJob
    *        The schedule builder to be used. May not be <code>null</code>.
    *        Example:
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (2)</code>
-   * @param sApplicationID
-   *        The internal application ID to be used. May neither be
-   *        <code>null</code> nor empty.
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
   @Nonnull
-  public static TriggerKey schedule (@Nonnull final SimpleScheduleBuilder aScheduleBuilder,
-                                     @Nonnull @Nonempty final String sApplicationID)
+  public static TriggerKey schedule (@Nonnull final SimpleScheduleBuilder aScheduleBuilder)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 
     final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
-    aJobDataMap.put (JOB_DATA_ATTR_APPLICATION_ID, sApplicationID);
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckThreadDeadlockJob.class.getName (),
                                                              JDK8TriggerBuilder.newTrigger ()

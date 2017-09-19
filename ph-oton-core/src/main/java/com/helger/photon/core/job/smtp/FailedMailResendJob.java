@@ -22,11 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.photon.core.job.AbstractPhotonJob;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
@@ -38,6 +36,7 @@ import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
 import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.scope.ScopedMailAPI;
+import com.helger.web.scope.util.AbstractScopeAwareJob;
 
 /**
  * A Quartz job, that tries to re-send failed mails.
@@ -45,7 +44,7 @@ import com.helger.smtp.scope.ScopedMailAPI;
  * @author Philip Helger
  */
 @DisallowConcurrentExecution
-public final class FailedMailResendJob extends AbstractPhotonJob
+public final class FailedMailResendJob extends AbstractScopeAwareJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FailedMailResendJob.class);
 
@@ -73,19 +72,14 @@ public final class FailedMailResendJob extends AbstractPhotonJob
    *        The schedule builder to be used. May not be <code>null</code>.
    *        Example:
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (60)</code>
-   * @param sApplicationID
-   *        The internal application ID to be used. May neither be
-   *        <code>null</code> nor empty.
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
   @Nonnull
-  public static TriggerKey schedule (@Nonnull final SimpleScheduleBuilder aScheduleBuilder,
-                                     @Nonnull @Nonempty final String sApplicationID)
+  public static TriggerKey schedule (@Nonnull final SimpleScheduleBuilder aScheduleBuilder)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 
     final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
-    aJobDataMap.put (JOB_DATA_ATTR_APPLICATION_ID, sApplicationID);
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (FailedMailResendJob.class.getName (),
                                                              JDK8TriggerBuilder.newTrigger ()
