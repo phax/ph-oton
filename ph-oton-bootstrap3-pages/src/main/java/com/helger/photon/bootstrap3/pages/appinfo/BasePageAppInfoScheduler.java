@@ -54,10 +54,10 @@ import com.helger.quartz.IJobListener;
 import com.helger.quartz.IScheduler;
 import com.helger.quartz.ITrigger;
 import com.helger.quartz.JobKey;
+import com.helger.quartz.SchedulerContext;
 import com.helger.quartz.SchedulerException;
 import com.helger.quartz.TriggerKey;
 import com.helger.quartz.impl.matchers.GroupMatcher;
-import com.helger.quartz.utils.DirtyFlagMap;
 import com.helger.schedule.quartz.QuartzSchedulerHelper;
 
 /**
@@ -67,8 +67,8 @@ import com.helger.schedule.quartz.QuartzSchedulerHelper;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext>
-                                      extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext> extends
+                                      AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -142,8 +142,8 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
         final HCNodeList aTab = new HCNodeList ();
 
         // Context
-        final DirtyFlagMap <String, Object> aContext = aScheduler.getContext ();
-        if (!aContext.isEmpty ())
+        final SchedulerContext aContext = aScheduler.getContext ();
+        if (aContext.isNotEmpty ())
         {
           aNodeList.addChild (getUIHandler ().createActionHeader (EText.MSG_CONTEXT.getDisplayText (aDisplayLocale)));
           final HCTable aContextTable = new HCTable (HCCol.star (), HCCol.star ());

@@ -27,7 +27,12 @@ public final class RequestSettings
   @Nonempty
   public static String getApplicationID (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final String sAppID = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_APP_ID);
+    String sAppID = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_APP_ID);
+    if (StringHelper.hasNoText (sAppID))
+    {
+      // Fallback to last saved state from session
+      sAppID = PhotonSessionState.getInstance ().getLastApplicationID ();
+    }
     if (StringHelper.hasNoText (sAppID))
       throw new IllegalStateException ("No app ID is present!");
     return sAppID;
@@ -40,7 +45,8 @@ public final class RequestSettings
     if (aState == null)
     {
       // Fallback to last saved state from session
-      aState = PhotonSessionState.getInstance ().stateLastAppID ();
+      final String sAppID = getApplicationID (aRequestScope);
+      aState = PhotonSessionState.getInstance ().state (sAppID);
     }
     if (aState == null)
       throw new IllegalStateException ("No state is present!");

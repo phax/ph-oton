@@ -19,7 +19,6 @@ package com.helger.photon.core.app.context;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.SimpleURL;
@@ -44,13 +43,6 @@ public interface ISimpleWebExecutionContext
   default IRequestParamContainer params ()
   {
     return getRequestScope ().params ();
-  }
-
-  @Deprecated
-  @Nullable
-  default String getAttributeAsString (@Nullable final String sFieldName)
-  {
-    return params ().getAsString (sFieldName);
   }
 
   /**

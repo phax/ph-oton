@@ -116,11 +116,10 @@ public final class JSFormHelper
   }
 
   @Nonnull
-  public static JSAssocArray createUpdateParam (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                @Nonnull @Nonempty final String sFieldID,
-                                                @Nonnull final IAjaxFunctionDeclaration aUpdateCallURL)
+  public static JSAssocArray createUpdateParam (@Nonnull @Nonempty final String sFieldID,
+                                                @Nonnull final ISimpleURL aURL)
   {
-    return new JSAssocArray ().add ("id", sFieldID).add ("url", aUpdateCallURL.getInvocationURI (aRequestScope));
+    return new JSAssocArray ().add ("id", sFieldID).add ("url", aURL.getAsStringWithEncodedParameters ());
   }
 
   @Nonnull

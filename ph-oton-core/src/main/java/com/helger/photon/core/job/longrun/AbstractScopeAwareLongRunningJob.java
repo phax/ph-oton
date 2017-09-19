@@ -91,7 +91,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
     try
     {
       // Get long running job ID from JobDataMap
-      final String sLongRunningJobID = aJobDataMap.getString (KEY_LONG_RUNNING_JOB_ID);
+      final String sLongRunningJobID = aJobDataMap.getAsString (KEY_LONG_RUNNING_JOB_ID);
       if (sLongRunningJobID != null)
       {
         // Create the main result

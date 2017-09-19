@@ -68,7 +68,7 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
   protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
                             @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
   {
-    final long nThresholdBytes = aJobDataMap.getLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
+    final long nThresholdBytes = aJobDataMap.getAsLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
     final File aBaseDir = WebFileIO.getDataIO ().getBasePathFile ();
 
     if (s_aLogger.isDebugEnabled ())

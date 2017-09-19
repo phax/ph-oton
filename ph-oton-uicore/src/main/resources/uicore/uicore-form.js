@@ -71,7 +71,7 @@ FormHelperClass.prototype =
     $.ajax({
       url:ajaxUrl,
       success:function(data){
-        if (data.success && data.value) 
+        if (data.value) 
           FormHelper.updateElementDirect (updateFieldId,data.value.html);
       }
     });
@@ -96,10 +96,10 @@ FormHelperClass.prototype =
       url:ajaxUrl,
       data:vals,
       success:function(data){
-        if (data.success) 
-          FormHelper.updateElements(successUpdates);
-        else
-          FormHelper.updateElements(errorUpdates);
+        FormHelper.updateElements(successUpdates);
+      },
+      error:function(data){
+        FormHelper.updateElements(errorUpdates);
       }
     });
   },
