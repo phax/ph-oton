@@ -14,18 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.secure.menu;
+package com.helger.photon.bootstrap.demo.pub;
 
 import javax.annotation.concurrent.Immutable;
 
 @Immutable
-public final class CMenuSecure
+public final class CMenuPublic
 {
-  // Menu item IDs
-  public static final String MENU_ADMIN = "admin";
+  public static final String MENU_LOGIN = "login";
 
-  public static final String MENU_SAVED_STATES = "saved_states";
+  public static final String MENU_SITENOTICE = "sitenotice";
+  public static final String MENU_GTC = "gtc";
 
-  private CMenuSecure ()
+  // flags
+  public static final String FLAG_FOOTER = "footer";
+
+  private CMenuPublic ()
   {}
 }

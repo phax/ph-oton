@@ -89,13 +89,13 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
                                                                                  aItem -> (IMenuItemPage) aItem.getData ());
             if (aFirstMenuItem != null)
               aMenuItem = aFirstMenuItem;
-
-            if (aMenuItem == null)
-              throw new IllegalStateException ("No menu item is present!");
           }
         }
       }
     }
+
+    if (aMenuItem == null)
+      throw new IllegalStateException ("No menu item is present!");
 
     {
       // Store in all scopes

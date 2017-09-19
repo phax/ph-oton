@@ -43,7 +43,7 @@ import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
  * @author Philip Helger
  */
 @DisallowConcurrentExecution
-public class CheckThreadDeadlockJob extends AbstractPhotonJob
+public final class CheckThreadDeadlockJob extends AbstractPhotonJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckThreadDeadlockJob.class);
 

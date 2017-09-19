@@ -28,13 +28,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.photon.basic.app.appid.PhotonGlobalState;
-import com.helger.photon.basic.app.locale.GlobalLocaleManager;
-import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.MenuTree;
-import com.helger.photon.core.ajax.GlobalAjaxInvoker;
-import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.api.GlobalAPIInvoker;
-import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.core.app.layout.ILayoutManager;
@@ -59,33 +53,7 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
   protected abstract ICommonsMap <String, IApplicationInitializer <LECTYPE>> getAllInitializers ();
 
   /**
-   * Init all locales
-   *
-   * @param aLocaleMgr
-   *        Locale manager to use
-   */
-  protected abstract void initLocales (@Nonnull final ILocaleManager aLocaleMgr);
-
-  /**
-   * Register all ajax functions
-   *
-   * @param aAjaxInvoker
-   *        The ajax invoker to use
-   */
-  public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
-  {}
-
-  /**
-   * Register all API functions
-   *
-   * @param aAPIInvoker
-   *        The API invoker to use
-   */
-  public void initAPI (@Nonnull final IAPIInvoker aAPIInvoker)
-  {}
-
-  /**
-   * This method is called after globals and all initializers are done.
+   * /** This method is called after globals and all initializers are done.
    *
    * @param aSC
    *        {@link ServletContext} that is initialized.
@@ -132,15 +100,6 @@ public abstract class AbstractWebAppListenerMultiApp <LECTYPE extends ILayoutExe
         throw ex;
       }
     }
-
-    // Register application locales
-    initLocales (GlobalLocaleManager.getInstance ());
-
-    // Register all Ajax functions here
-    initAjax (GlobalAjaxInvoker.getInstance ());
-
-    // Register all API functions here
-    initAPI (GlobalAPIInvoker.getInstance ());
 
     // Call final callback
     afterContextAndInitializersDone (aSC);

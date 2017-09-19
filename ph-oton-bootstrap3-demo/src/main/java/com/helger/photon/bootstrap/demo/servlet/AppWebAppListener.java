@@ -21,23 +21,23 @@ import javax.servlet.ServletContext;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.basic.app.appid.CApplicationID;
+import com.helger.photon.basic.app.appid.PhotonGlobalState;
 import com.helger.photon.basic.app.locale.ILocaleManager;
+import com.helger.photon.basic.app.menu.MenuTree;
 import com.helger.photon.bootstrap.demo.ajax.CAjax;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.pub.InitializerPublic;
-import com.helger.photon.bootstrap.demo.secure.InitializerSecure;
-import com.helger.photon.bootstrap3.servlet.AbstractWebAppListenerMultiAppBootstrap;
+import com.helger.photon.bootstrap.demo.pub.MenuPublic;
+import com.helger.photon.bootstrap.demo.secure.MenuSecure;
+import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
+import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
+import com.helger.photon.bootstrap3.servlet.WebAppListenerBootstrap;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.IAjaxInvoker;
-import com.helger.photon.core.app.context.LayoutExecutionContext;
-import com.helger.photon.core.app.init.IApplicationInitializer;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
@@ -47,15 +47,16 @@ import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
+import com.helger.photon.uictrls.prism.EPrismLanguage;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * This listener is invoked during the servlet initiailization. This is
- * basically a ServletContextListener.
+ * This listener is invoked during the servlet initialization. This is basically
+ * a ServletContextListener.
  *
  * @author Philip Helger
  */
-public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBootstrap <LayoutExecutionContext>
+public final class AppWebAppListener extends WebAppListenerBootstrap
 {
   @Override
   protected String getInitParameterDebug (@Nonnull final ServletContext aSC)
@@ -82,17 +83,54 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
   }
 
   @Override
-  @Nonnull
-  @Nonempty
-  protected ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> getAllInitializers ()
+  protected void initGlobalSettings ()
   {
-    final ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> ret = new CommonsHashMap <> ();
-    ret.put (CApplicationID.APP_ID_SECURE, new InitializerSecure ());
-    ret.put (CApplicationID.APP_ID_PUBLIC, new InitializerPublic ());
-    return ret;
+    // JUL to SLF4J
+    SLF4JBridgeHandler.removeHandlersForRootLogger ();
+    SLF4JBridgeHandler.install ();
+
+    final ConfigurationFileManager aCfgMgr = ConfigurationFileManager.getInstance ();
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("log4j2.xml")).setDescription ("log4j configuration file")
+                                                                                                   .setSyntaxHighlightLanguage (EPrismLanguage.MARKUP));
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("webapp.properties")).setDescription ("Web application properties")
+                                                                                                          .setSyntaxHighlightLanguage (EPrismLanguage.APACHECONF));
   }
 
-  private static void _initSecurity ()
+  @Override
+  protected void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
+  {
+    aLocaleMgr.registerLocale (CApp.DEFAULT_LOCALE);
+    aLocaleMgr.setDefaultLocale (CApp.DEFAULT_LOCALE);
+  }
+
+  @Override
+  protected void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  {
+    aAjaxInvoker.registerFunction (CAjax.DATATABLES);
+    aAjaxInvoker.registerFunction (CAjax.LOGIN);
+    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_PUB);
+    aAjaxInvoker.registerFunction (CAjax.DATATABLES_I18N);
+    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_SEC);
+  }
+
+  @Override
+  protected void initMenu ()
+  {
+    // Create all menu items
+    {
+      final MenuTree aMenuTree = new MenuTree ();
+      MenuPublic.init (aMenuTree);
+      PhotonGlobalState.getInstance ().state (CApplicationID.APP_ID_PUBLIC).setMenuTree (aMenuTree);
+    }
+    {
+      final MenuTree aMenuTree = new MenuTree ();
+      MenuSecure.init (aMenuTree);
+      PhotonGlobalState.getInstance ().state (CApplicationID.APP_ID_SECURE).setMenuTree (aMenuTree);
+    }
+  }
+
+  @Override
+  protected void initSecurity ()
   {
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
@@ -156,7 +194,8 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
     aUserGroupMgr.assignRoleToUserGroup (CApp.USERGROUP_VIEW_ID, CApp.ROLE_VIEW_ID);
   }
 
-  private static void _initUI ()
+  @Override
+  protected void initUI ()
   {
     final DataTablesLengthMenu LENGTH_MENU = new DataTablesLengthMenu ().addItem (25)
                                                                         .addItem (50)
@@ -175,40 +214,5 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
                                      AjaxExecutorDataTablesI18N.LANGUAGE_ID)
                  .addPlugin (new DataTablesPluginSearchHighlight ());
     });
-  }
-
-  @Override
-  protected void initGlobalSettings ()
-  {
-    // Internal stuff:
-
-    // JUL to SLF4J
-    SLF4JBridgeHandler.removeHandlersForRootLogger ();
-    SLF4JBridgeHandler.install ();
-
-    super.initGlobalSettings ();
-
-    // UI stuff
-    _initUI ();
-
-    // Set all security related stuff
-    _initSecurity ();
-  }
-
-  @Override
-  public void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
-  {
-    aLocaleMgr.registerLocale (CApp.DEFAULT_LOCALE);
-    aLocaleMgr.setDefaultLocale (CApp.DEFAULT_LOCALE);
-  }
-
-  @Override
-  public void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
-  {
-    aAjaxInvoker.registerFunction (CAjax.DATATABLES);
-    aAjaxInvoker.registerFunction (CAjax.LOGIN);
-    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_PUB);
-    aAjaxInvoker.registerFunction (CAjax.DATATABLES_I18N);
-    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_SEC);
   }
 }

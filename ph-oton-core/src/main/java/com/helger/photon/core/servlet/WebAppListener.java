@@ -66,6 +66,12 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOLongIDFactory;
+import com.helger.photon.basic.app.locale.GlobalLocaleManager;
+import com.helger.photon.basic.app.locale.ILocaleManager;
+import com.helger.photon.core.ajax.GlobalAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.api.GlobalAPIInvoker;
+import com.helger.photon.core.api.IAPIInvoker;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
@@ -481,13 +487,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     GlobalIDFactory.setPersistentIntIDFactory ( () -> (int) GlobalIDFactory.getNewPersistentLongID ());
   }
 
-  /**
-   * Set global system properties, after the content was initialized but before
-   * the application specific init is started
-   */
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  protected void initGlobalSettings ()
+  protected final void initDefaultGlobalSettings ()
   {
     // Enable when ready
     WebScopeManager.setSessionPassivationAllowed (false);
@@ -510,6 +510,67 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       CSSValue.setConsistencyChecksEnabled (false);
     }
   }
+
+  /**
+   * Set global system properties, after the content was initialized but before
+   * the application specific init is started
+   */
+  @OverrideOnDemand
+  protected void initGlobalSettings ()
+  {}
+
+  /**
+   * @param aLocaleMgr
+   *        Locale manager
+   */
+  @OverrideOnDemand
+  protected void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
+  {}
+
+  /**
+   * Init menu. If you have more than one menu tree, you need to init them all
+   * in here.
+   */
+  @OverrideOnDemand
+  protected void initMenu ()
+  {}
+
+  /**
+   * @param aAjaxInvoker
+   *        Ajax invoker
+   */
+  @OverrideOnDemand
+  protected void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  {}
+
+  /**
+   * @param aAPIInvoker
+   *        API invoker
+   */
+  @OverrideOnDemand
+  protected void initAPI (@Nonnull final IAPIInvoker aAPIInvoker)
+  {}
+
+  /**
+   * Init security stuff
+   */
+  @OverrideOnDemand
+  protected void initSecurity ()
+  {}
+
+  /**
+   * Init UI stuff
+   */
+  @OverrideOnDemand
+  protected void initUI ()
+  {}
+
+  /**
+   * Init managers. This is called after all other initialization was done.
+   */
+  @OverrideOnDemand
+  protected void initManagers ()
+  {}
 
   public final void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
@@ -575,8 +636,32 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       // Set persistent ID provider - must be done after IO is setup
       initGlobalIDFactory ();
 
+      // Init default settings
+      initDefaultGlobalSettings ();
+
       // Global properties
       initGlobalSettings ();
+
+      // Register application locales
+      initLocales (GlobalLocaleManager.getInstance ());
+
+      // Init menu (per app)
+      initMenu ();
+
+      // Register all Ajax functions here
+      initAjax (GlobalAjaxInvoker.getInstance ());
+
+      // Register all API functions here
+      initAPI (GlobalAPIInvoker.getInstance ());
+
+      // Set all security related stuff
+      initSecurity ();
+
+      // UI stuff
+      initUI ();
+
+      // Init all managers
+      initManagers ();
     }
 
     // Callback

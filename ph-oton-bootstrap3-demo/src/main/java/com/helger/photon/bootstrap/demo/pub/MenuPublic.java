@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.pub.menu;
+package com.helger.photon.bootstrap.demo.pub;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;

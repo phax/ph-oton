@@ -45,7 +45,7 @@ import com.helger.smtp.scope.ScopedMailAPI;
  * @author Philip Helger
  */
 @DisallowConcurrentExecution
-public class FailedMailResendJob extends AbstractPhotonJob
+public final class FailedMailResendJob extends AbstractPhotonJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FailedMailResendJob.class);
 
@@ -84,7 +84,7 @@ public class FailedMailResendJob extends AbstractPhotonJob
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 
-    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
+    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
     aJobDataMap.put (JOB_DATA_ATTR_APPLICATION_ID, sApplicationID);
 
     return GlobalQuartzScheduler.getInstance ().scheduleJob (FailedMailResendJob.class.getName (),

@@ -54,7 +54,7 @@ import com.helger.smtp.scope.ScopedMailAPI;
  * @author philip
  */
 @DisallowConcurrentExecution
-public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
+public final class CheckDiskUsableSpaceJob extends AbstractPhotonJob
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CheckDiskUsableSpaceJob.class);
   private static final String JOB_DATA_ATTR_THRESHOLD_BYTES = "threshold-bytes";
@@ -129,7 +129,7 @@ public class CheckDiskUsableSpaceJob extends AbstractPhotonJob
     ValueEnforcer.notEmpty (sApplicationID, "ApplicationID");
     ValueEnforcer.isGE0 (nThresholdBytes, "ThresholdBytes");
 
-    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap<> ();
+    final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
     aJobDataMap.put (JOB_DATA_ATTR_APPLICATION_ID, sApplicationID);
     aJobDataMap.put (JOB_DATA_ATTR_THRESHOLD_BYTES, Long.valueOf (nThresholdBytes));
 

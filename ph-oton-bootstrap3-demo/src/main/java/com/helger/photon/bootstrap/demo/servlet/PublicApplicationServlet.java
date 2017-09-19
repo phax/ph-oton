@@ -16,8 +16,8 @@
  */
 package com.helger.photon.bootstrap.demo.servlet;
 
-import com.helger.photon.basic.app.appid.CApplicationID;
 import com.helger.photon.bootstrap.demo.app.ui.AppLayoutHTMLProvider;
+import com.helger.photon.bootstrap.demo.pub.AppRendererPublic;
 import com.helger.photon.core.app.html.IHTMLProvider;
 import com.helger.photon.core.servlet.AbstractApplicationXServletHandler;
 import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
@@ -32,7 +32,7 @@ public class PublicApplicationServlet extends AbstractPublicApplicationServlet
       @Override
       protected IHTMLProvider createHTMLProvider (final IRequestWebScopeWithoutResponse aRequestScope)
       {
-        return new AppLayoutHTMLProvider (CApplicationID.APP_ID_PUBLIC);
+        return new AppLayoutHTMLProvider (AppRendererPublic::getContent);
       }
     });
   }

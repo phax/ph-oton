@@ -37,15 +37,14 @@ public abstract class AbstractPhotonJob extends AbstractScopeAwareJob
   public static final String JOB_DATA_ATTR_APPLICATION_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                             "photon.job.appid";
 
-  private final String m_sFixedAppID;
-
   protected AbstractPhotonJob ()
   {
     this ((String) null);
   }
 
+  /**
+   * @param sFixedAppID
+   */
   protected AbstractPhotonJob (@Nullable final String sFixedAppID)
-  {
-    m_sFixedAppID = sFixedAppID;
-  }
+  {}
 }
