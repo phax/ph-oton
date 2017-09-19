@@ -199,6 +199,11 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     return getResource (m_sBundleID).getInputStream ();
   }
 
+  public boolean isReadMultiple ()
+  {
+    return true;
+  }
+
   @Nonnull
   public IMimeType getMimeType ()
   {
