@@ -90,8 +90,8 @@ import com.helger.smtp.transport.MailTransportError;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionContext>
-                                           extends AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
+public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionContext> extends
+                                           AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -511,10 +511,13 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                                                                     CPageParam.ACTION_DELETE_ALL))
                                              .setIcon (EDefaultIcon.DELETE)
                                              .setDisabled (bDisabled));
-    aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_SETTINGS_SMTP.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_SETTINGS_SMTP))
-                                             .setIcon (EBootstrapIcon.ARROW_RIGHT));
 
+    if (aWPEC.getMenuTree ().containsItemWithID (BootstrapPagesMenuConfigurator.MENU_ADMIN_SETTINGS_SMTP))
+    {
+      aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_SETTINGS_SMTP.getDisplayText (aDisplayLocale))
+                                               .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_SETTINGS_SMTP))
+                                               .setIcon (EBootstrapIcon.ARROW_RIGHT));
+    }
     aNodeList.addChild (aToolbar);
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.DESCENDING),
