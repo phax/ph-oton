@@ -13,7 +13,6 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
@@ -85,16 +84,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
 
   public static boolean containsAnyApplicationServletPathMapping ()
   {
-    return getInstance ().m_aStateMap.containsAnyValue (x -> x.getServletPath () != null);
-  }
-
-  @Nonnull
-  public static String getApplicationServletPath (@Nonnull @Nonempty final String sAppID)
-  {
-    final String ret = state (sAppID).getServletPath ();
-    if (StringHelper.hasNoText (ret))
-      throw new IllegalStateException ("No servlet path specified!");
-    return ret;
+    return getInstance ().m_aStateMap.containsAnyValue (x -> x.internalGetServletPath () != null);
   }
 
   @Nonnull

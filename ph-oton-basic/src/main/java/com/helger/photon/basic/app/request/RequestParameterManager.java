@@ -75,12 +75,7 @@ public class RequestParameterManager extends AbstractGlobalWebSingleton implemen
                                       @Nonnull final String sMenuItemID)
   {
     // Get the servlet path from the app ID
-    final String sServletPath = PhotonGlobalState.getApplicationServletPath (sAppID);
-    if (sServletPath == null)
-      throw new IllegalStateException ("Failed to determine the servlet path for app ID '" +
-                                       sAppID +
-                                       "'. Please make sure you initialized PhotonGlobalState correctly!");
-
+    final String sServletPath = PhotonGlobalState.state (sAppID).getServletPath ();
     // Prepend the context path
     final String sBasePath = aRequestScope.getContextPath () + sServletPath;
     return m_aRequestParamHdl.buildURL (aRequestScope, sBasePath, aDisplayLocale, sMenuItemID);
