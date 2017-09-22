@@ -16,30 +16,22 @@
  */
 package com.helger.photon.core.servlet;
 
-import java.util.EnumSet;
-
 import javax.annotation.Nonnull;
 
-import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.basic.app.appid.CApplicationID;
-import com.helger.photon.basic.app.appid.XServletFilterAppIDExplicit;
-import com.helger.xservlet.AbstractXServlet;
 
 /**
  * The servlet to show the public application
  *
  * @author Philip Helger
  */
-public abstract class AbstractPublicApplicationServlet extends AbstractXServlet
+public abstract class AbstractPublicApplicationServlet extends AbstractApplicationServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "public";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
   protected AbstractPublicApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler)
   {
-    handlerRegistry ().registerHandler (EHttpMethod.GET, aHandler);
-    // Must support POST for form submits :)
-    handlerRegistry ().copyHandler (EHttpMethod.GET, EnumSet.of (EHttpMethod.POST));
-    filterHighLevelList ().add (new XServletFilterAppIDExplicit (CApplicationID.APP_ID_PUBLIC));
+    super (aHandler, CApplicationID.APP_ID_PUBLIC);
   }
 }

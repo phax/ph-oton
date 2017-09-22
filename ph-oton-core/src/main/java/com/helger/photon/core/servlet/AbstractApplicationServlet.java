@@ -16,22 +16,28 @@
  */
 package com.helger.photon.core.servlet;
 
+import java.util.EnumSet;
+
 import javax.annotation.Nonnull;
 
-import com.helger.photon.basic.app.appid.CApplicationID;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.http.EHttpMethod;
+import com.helger.photon.basic.app.appid.XServletFilterAppIDExplicit;
+import com.helger.xservlet.AbstractXServlet;
 
 /**
  * The servlet to show the secure application
  *
  * @author Philip Helger
  */
-public abstract class AbstractSecureApplicationServlet extends AbstractApplicationServlet
+public abstract class AbstractApplicationServlet extends AbstractXServlet
 {
-  public static final String SERVLET_DEFAULT_NAME = "secure";
-  public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
-
-  protected AbstractSecureApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler)
+  protected AbstractApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler,
+                                        @Nonnull @Nonempty final String sAppID)
   {
-    super (aHandler, CApplicationID.APP_ID_SECURE);
+    handlerRegistry ().registerHandler (EHttpMethod.GET, aHandler);
+    // Must support POST for form submits :)
+    handlerRegistry ().copyHandler (EHttpMethod.GET, EnumSet.of (EHttpMethod.POST));
+    filterHighLevelList ().add (new XServletFilterAppIDExplicit (sAppID));
   }
 }
