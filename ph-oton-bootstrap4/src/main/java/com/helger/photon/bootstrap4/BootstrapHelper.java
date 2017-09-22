@@ -24,6 +24,7 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.state.EChange;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.IHCTextNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCCtrlHelper;
@@ -93,6 +94,9 @@ public final class BootstrapHelper
 
   public static boolean containsFormControlPlaintext (@Nullable final IHCNode aNode)
   {
+    if (aNode instanceof IHCTextNode <?>)
+      return true;
+
     if (aNode instanceof IHCElement <?>)
     {
       return !(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>);
