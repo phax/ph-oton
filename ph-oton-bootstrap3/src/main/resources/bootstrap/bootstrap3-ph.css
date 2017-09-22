@@ -57,3 +57,8 @@ table > label.form-label{
 .btn-toolbar + .nav-tabs {
   margin-top: 1em;
 }
+
+/* No margin on condensed view-form groups */
+.view-form-condensed .form-group {
+	margin-bottom: 0;
+}

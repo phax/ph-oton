@@ -25,15 +25,19 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
+import com.helger.xml.microdom.IMicroElement;
 
 @NotThreadSafe
 public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> implements IMutableBootstrapFormGroupContainer
 {
   public static final ICSSClassProvider CSS_CLASS_VIEW_FORM = DefaultCSSClassProvider.create ("view-form");
+  public static final ICSSClassProvider CSS_CLASS_VIEW_FORM_CONDENSED = DefaultCSSClassProvider.create ("view-form-condensed");
+
   public static final int DEFAULT_LEFT_PART = 3;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
 
@@ -41,6 +45,7 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   private BootstrapGridSpec m_aLeftGrid = BootstrapGridSpec.create (DEFAULT_LEFT_PART);
   private BootstrapGridSpec m_aRightGrid = BootstrapGridSpec.create (DEFAULT_RIGHT_PART);
   private IBootstrapFormGroupRenderer m_aFormGroupRenderer = new DefaultBootstrapFormGroupRenderer ();
+  private boolean m_bCondensed = false;
 
   public BootstrapViewForm ()
   {
@@ -170,5 +175,28 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
     // otherwise, the adding may happen after the out of band nodes were
     // extracted!
     return addChild (getRenderedFormGroup (aFormGroup));
+  }
+
+  public boolean isCondensed ()
+  {
+    return m_bCondensed;
+  }
+
+  @Nonnull
+  public BootstrapViewForm setCondensed (final boolean bCondensed)
+  {
+    m_bCondensed = bCondensed;
+    return this;
+  }
+
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
+  {
+    // Before super class
+    if (m_bCondensed)
+      addClass (CSS_CLASS_VIEW_FORM_CONDENSED);
+
+    super.fillMicroElement (aElement, aConversionSettings);
   }
 }
