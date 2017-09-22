@@ -49,9 +49,9 @@ public final class RequestSettings
   }
 
   @Nullable
-  private static PhotonState _getStateOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  private static PhotonRequestState _getStateOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    PhotonState aState = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
+    PhotonRequestState aState = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
     if (aState == null)
     {
       // Fallback to last saved state from session
@@ -60,18 +60,22 @@ public final class RequestSettings
       {
         final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
         if (aPSS != null)
-          aState = aPSS.state (sAppID);
+        {
+          aState = new PhotonRequestState (aPSS.state (sAppID));
+        }
         else
-          aState = PhotonGlobalState.getInstance ().state (sAppID);
+        {
+          aState = new PhotonRequestState (PhotonGlobalState.state (sAppID));
+        }
       }
     }
     return aState;
   }
 
   @Nonnull
-  public static PhotonState getState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static PhotonRequestState getState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final PhotonState aState = _getStateOrNull (aRequestScope);
+    final PhotonRequestState aState = _getStateOrNull (aRequestScope);
     if (aState == null)
       throw new IllegalStateException ("No state is present!");
     return aState;
@@ -105,7 +109,7 @@ public final class RequestSettings
   @Nonnull
   public static Locale getDisplayLocale (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final Locale aLocale = getState (aRequestScope).getLocale ();
+    final Locale aLocale = getState (aRequestScope).getDisplayLocale ();
     if (aLocale == null)
       throw new IllegalStateException ("No locale is available");
     return aLocale;
@@ -125,7 +129,7 @@ public final class RequestSettings
 
   static void setRequestState (@Nonnull final IRequestWebScope aRequestScope,
                                @Nonnull @Nonempty final String sAppID,
-                               @Nonnull final PhotonState aState)
+                               @Nonnull final PhotonRequestState aState)
   {
     ValueEnforcer.notEmpty (sAppID, "AppID");
     ValueEnforcer.notNull (aState, "State");
@@ -133,6 +137,6 @@ public final class RequestSettings
     // Remember AppID in request
     final IAttributeContainerAny <String> aAttrs = aRequestScope.attrs ();
     aAttrs.putIn (REQUEST_ATTR_APP_ID, sAppID);
-    aAttrs.putIn (REQUEST_ATTR_STATE, aState.getClone ());
+    aAttrs.putIn (REQUEST_ATTR_STATE, aState);
   }
 }

@@ -20,8 +20,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
@@ -34,13 +37,13 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
  * </ul>
  *
  * @author Philip Helger
- * @since 6.1.0
+ * @since 8.0.0
  */
 @ThreadSafe
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   private String m_sLastApplicationID;
-  private final PhotonStateMap m_aStateMap = new PhotonStateMap ();
+  private final ICommonsMap <String, PhotonSessionStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 
   @Deprecated
   @UsedViaReflection
@@ -92,20 +95,21 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
 
   /**
    * Get or create a new state for the provided app ID.
-   * 
+   *
    * @param sAppID
    *        The app ID to get the state for. May neither be <code>null</code>
    *        nor empty.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public PhotonState state (@Nonnull @Nonempty final String sAppID)
+  public PhotonSessionStatePerApp state (@Nonnull @Nonempty final String sAppID)
   {
-    return m_aStateMap.get (sAppID);
+    ValueEnforcer.notEmpty (sAppID, "AppID");
+    return m_aStateMap.computeIfAbsent (sAppID, k -> new PhotonSessionStatePerApp ());
   }
 
   @Nonnull
-  public PhotonState stateLastAppID ()
+  public PhotonSessionStatePerApp stateLastAppID ()
   {
     return state (getLastApplicationID ());
   }

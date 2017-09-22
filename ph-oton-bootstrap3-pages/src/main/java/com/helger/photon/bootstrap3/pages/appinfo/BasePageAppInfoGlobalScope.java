@@ -56,7 +56,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
  *        Web page execution context type
  */
 public class BasePageAppInfoGlobalScope <WPECTYPE extends IWebPageExecutionContext> extends
-                                   AbstractBootstrapWebPage <WPECTYPE>
+                                        AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -95,15 +95,15 @@ public class BasePageAppInfoGlobalScope <WPECTYPE extends IWebPageExecutionConte
   }
 
   public BasePageAppInfoGlobalScope (@Nonnull @Nonempty final String sID,
-                                @Nonnull final String sName,
-                                @Nullable final String sDescription)
+                                     @Nonnull final String sName,
+                                     @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageAppInfoGlobalScope (@Nonnull @Nonempty final String sID,
-                                @Nonnull final IMultilingualText aName,
-                                @Nullable final IMultilingualText aDescription)
+                                     @Nonnull final IMultilingualText aName,
+                                     @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -114,21 +114,22 @@ public class BasePageAppInfoGlobalScope <WPECTYPE extends IWebPageExecutionConte
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = new HCNodeList ();
 
-    final BootstrapViewForm aTableScope = new BootstrapViewForm ();
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (aScope.getID ()));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
-    aNodeList.addChild (aTableScope);
+    final BootstrapViewForm aViewForm = new BootstrapViewForm ();
+    aViewForm.setCondensed (true);
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aScope.getID ()));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (),
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (Integer.toString (aScope.attrs ().size ())));
+    aNodeList.addChild (aViewForm);
 
     // All scope attributes
     final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),

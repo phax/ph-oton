@@ -33,26 +33,25 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
 
   public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
-    final PhotonGlobalState aGlobal = PhotonGlobalState.getInstance ();
-    // It's important to create a session here!
-    final PhotonSessionState aSession = PhotonSessionState.getInstance ();
     final String sAppID = m_sAppID;
 
-    final PhotonState aGlobalState = aGlobal.state (sAppID);
+    // It's important to create a session here!
+    final PhotonSessionState aSessionState = PhotonSessionState.getInstance ();
 
     // Remember AppID in session
-    aSession.setLastApplicationID (sAppID);
-    final PhotonState aSessionState = aSession.state (sAppID);
+    aSessionState.setLastApplicationID (sAppID);
+    final PhotonSessionStatePerApp aAppSessionState = aSessionState.state (sAppID);
+    final PhotonGlobalStatePerApp aAppGlobalState = PhotonGlobalState.state (sAppID);
 
     // Get menu tree
-    IMenuTree aMenuTree = aSessionState.getMenuTree ();
+    IMenuTree aMenuTree = aAppSessionState.getMenuTree ();
     if (aMenuTree == null)
     {
-      aMenuTree = aGlobalState.getMenuTree ();
+      aMenuTree = aAppGlobalState.getMenuTree ();
       if (aMenuTree != null)
       {
-        // Remember in session
-        aSessionState.setMenuTree (aMenuTree);
+        // Remember in session so that the next lookup is more efficient
+        aAppSessionState.setMenuTree (aMenuTree);
       }
     }
     if (aMenuTree == null)
@@ -68,7 +67,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     {
       // None provided in URL
       // -- check if one is in session
-      aMenuItem = aSessionState.getMenuItem ();
+      aMenuItem = aAppSessionState.getMenuItem ();
       if (aMenuItem == null)
       {
         // None in request, none in session
@@ -98,15 +97,14 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
       throw new IllegalStateException ("No menu item is present!");
 
     // Store in all scopes
-    aGlobalState.setMenuItem (aMenuItem);
-    aSessionState.setMenuItem (aMenuItem);
+    aAppSessionState.setMenuItem (aMenuItem);
 
     // determine locale from request
     Locale aDisplayLocale = aParams.getLocale ();
     if (aDisplayLocale == null)
     {
       // Was a request locale set in session scope?
-      final Locale aSessionDisplayLocale = aSessionState.getLocale ();
+      final Locale aSessionDisplayLocale = aAppSessionState.getDisplayLocale ();
       if (aSessionDisplayLocale != null)
         aDisplayLocale = aSessionDisplayLocale;
 
@@ -122,11 +120,12 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
 
     {
       // Store in all scopes
-      aGlobalState.setLocale (aDisplayLocale);
-      aSessionState.setLocale (aDisplayLocale);
+      aAppSessionState.setLocale (aDisplayLocale);
     }
 
-    RequestSettings.setRequestState (aRequestScope, sAppID, aSessionState);
+    RequestSettings.setRequestState (aRequestScope,
+                                     sAppID,
+                                     new PhotonRequestState (aMenuTree, aMenuItem, aDisplayLocale));
   }
 
   public void afterRequest (@Nonnull final IRequestWebScope aRequestScope)

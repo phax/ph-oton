@@ -184,22 +184,6 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                       new HCNodeList ().addChildren (aTable, aDT));
     }
 
-    // Request properties
-    {
-      final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
-      aTable.setID (getID () + "props");
-      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
-                                       EText.MSG_VALUE.getDisplayText (aDisplayLocale));
-      for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
-      {
-        aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aEntry.getValue ());
-      }
-      final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTabBox.addTab ("props",
-                      EText.MSG_PROPERTIES.getDisplayText (aDisplayLocale),
-                      new HCNodeList ().addChildren (aTable, aDT));
-    }
-
     // Request attributes
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star (), HCCol.star ());
@@ -219,6 +203,22 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
       final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aTabBox.addTab ("attrs",
                       EText.MSG_ATTRIBUTES.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
+    }
+
+    // Request properties
+    {
+      final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
+      aTable.setID (getID () + "props");
+      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale),
+                                       EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+      for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
+      {
+        aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aEntry.getValue ());
+      }
+      final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
+      aTabBox.addTab ("props",
+                      EText.MSG_PROPERTIES.getDisplayText (aDisplayLocale),
                       new HCNodeList ().addChildren (aTable, aDT));
     }
     aNodeList.addChild (aTabBox);

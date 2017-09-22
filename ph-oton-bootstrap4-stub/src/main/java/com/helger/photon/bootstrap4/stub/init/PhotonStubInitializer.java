@@ -138,9 +138,13 @@ public final class PhotonStubInitializer
     // parsing problems
     AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
 
-    PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_PUBLIC,
-                                                        AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-    PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_SECURE,
-                                                        AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+    // Add default mapping from Application ID to path
+    if (!PhotonGlobalState.containsAnyApplicationServletPathMapping ())
+    {
+      PhotonGlobalState.state (CApplicationID.APP_ID_PUBLIC)
+                       .setServletPath (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonGlobalState.state (CApplicationID.APP_ID_SECURE)
+                       .setServletPath (AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+    }
   }
 }
