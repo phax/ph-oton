@@ -61,9 +61,9 @@ public final class PhotonSessionStatePerApp implements Serializable
     m_aRWLock.writeLocked ( () -> m_aDisplayLocale = aDisplayLocale);
   }
 
-  public boolean isEmpty ()
+  public boolean isNotEmpty ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMenuTree == null && m_aMenuItem == null && m_aDisplayLocale == null);
+    return m_aRWLock.readLocked ( () -> m_aMenuTree != null || m_aMenuItem != null || m_aDisplayLocale != null);
   }
 
   @Override

@@ -60,25 +60,29 @@ public final class RequestSettings
   @Nullable
   private static PhotonRequestState _getRequestStateOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    PhotonRequestState aState = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
-    if (aState == null)
+    PhotonRequestState ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
+    if (ret == null)
     {
       // Fallback to last saved state from session
       final String sAppID = _getApplicationIDOrNull (aRequestScope);
       if (StringHelper.hasText (sAppID))
       {
-        final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
-        if (aPSS != null)
+        final PhotonSessionState aSessionState = PhotonSessionState.getInstanceIfInstantiated ();
+        if (aSessionState != null)
         {
-          aState = new PhotonRequestState (aPSS.state (sAppID));
+          final PhotonSessionStatePerApp aSessionStatePerApp = aSessionState.state (sAppID);
+          // Is e.g. empty if a new session state was created!
+          if (aSessionStatePerApp.isNotEmpty ())
+            ret = new PhotonRequestState (aSessionStatePerApp);
         }
-        else
-        {
-          aState = new PhotonRequestState (PhotonGlobalState.state (sAppID));
-        }
+
+        // Global state as last resort
+        if (ret == null)
+          ret = new PhotonRequestState (PhotonGlobalState.state (sAppID));
       }
+      // else - no app ID - we're lost
     }
-    return aState;
+    return ret;
   }
 
   @Nonnull

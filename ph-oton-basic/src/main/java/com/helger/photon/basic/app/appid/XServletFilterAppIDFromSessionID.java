@@ -2,6 +2,7 @@ package com.helger.photon.basic.app.appid;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
 
@@ -19,21 +20,32 @@ public final class XServletFilterAppIDFromSessionID implements IXServletHighLeve
   public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
     // Set all fields from session
-    final PhotonSessionState aSession = PhotonSessionState.getInstanceIfInstantiated ();
-    if (aSession != null)
-    {
-      final String sAppID = aSession.getLastApplicationID ();
-      if (sAppID != null)
-      {
-        final PhotonSessionStatePerApp aSessionStatePerApp = aSession.state (sAppID);
-        PhotonRequestState aRequestState;
-        if (aSessionStatePerApp.isEmpty ())
-          aRequestState = new PhotonRequestState (PhotonGlobalState.state (sAppID));
-        else
-          aRequestState = new PhotonRequestState (aSessionStatePerApp);
+    final PhotonSessionState aSessionState = PhotonSessionState.getInstanceIfInstantiated ();
 
-        RequestSettings.setRequestState (aRequestScope, sAppID, aRequestState);
+    // Get App ID
+    String sAppID = null;
+    if (aSessionState != null)
+      sAppID = aSessionState.getLastApplicationID ();
+    if (StringHelper.hasNoText (sAppID))
+      sAppID = PhotonGlobalState.getInstance ().getDefaultApplicationID ();
+
+    if (StringHelper.hasText (sAppID))
+    {
+      PhotonRequestState aRequestState = null;
+      if (aSessionState != null)
+      {
+        final PhotonSessionStatePerApp aSessionStatePerApp = aSessionState.state (sAppID);
+        // Is e.g. empty if a new session state was created!
+        if (aSessionStatePerApp.isNotEmpty ())
+          aRequestState = new PhotonRequestState (aSessionStatePerApp);
       }
+
+      // Global state as last resort
+      if (aRequestState == null)
+        aRequestState = new PhotonRequestState (PhotonGlobalState.state (sAppID));
+
+      // Remember in request
+      RequestSettings.setRequestState (aRequestScope, sAppID, aRequestState);
     }
   }
 
