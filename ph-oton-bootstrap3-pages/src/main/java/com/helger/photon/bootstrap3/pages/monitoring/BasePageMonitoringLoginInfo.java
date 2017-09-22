@@ -225,26 +225,27 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayText (aDisplayLocale)));
-    final BootstrapViewForm aTable = aNodeList.addAndReturnChild (new BootstrapViewForm ());
-    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERID.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (aSelectedObject.getUserID ()));
-    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERNAME.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (SecurityHelper.getUserDisplayName (aSelectedObject.getUser (),
-                                                                                               aDisplayLocale)));
-    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (),
-                                                                                     aDisplayLocale)));
-    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getLastAccessDT (),
-                                                                                     aDisplayLocale)));
+    final BootstrapViewForm aViewForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aViewForm.setCondensed (true);
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERID.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aSelectedObject.getUserID ()));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USERNAME.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (SecurityHelper.getUserDisplayName (aSelectedObject.getUser (),
+                                                                                                  aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (),
+                                                                                        aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (PDTToString.getAsString (aSelectedObject.getLastAccessDT (),
+                                                                                        aDisplayLocale)));
     if (aSelectedObject.getLogoutDT () != null)
     {
-      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGOUTDT.getDisplayText (aDisplayLocale))
-                                                    .setCtrl (PDTToString.getAsString (aSelectedObject.getLogoutDT (),
-                                                                                       aDisplayLocale)));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGOUTDT.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (PDTToString.getAsString (aSelectedObject.getLogoutDT (),
+                                                                                          aDisplayLocale)));
     }
-    aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SESSION_ID.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (aSelectedObject.getSessionScope ().getID ()));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SESSION_ID.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aSelectedObject.getSessionScope ().getID ()));
 
     // Add custom attributes
     final IStringMap aAttrs = aSelectedObject.attrs ();
@@ -256,8 +257,8 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
         aCustomAttrTable.addBodyRow ().addCells (aEntry.getKey (), aEntry.getValue ());
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aCustomAttrTable);
-      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTRS.getDisplayText (aDisplayLocale))
-                                                    .setCtrl (aCustomAttrTable, aDataTables));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTRS.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (aCustomAttrTable, aDataTables));
     }
   }
 

@@ -460,46 +460,50 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
                                                                                                                                             aDisplayLocale))));
-    final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
-    onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
+    final BootstrapViewForm aViewForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aViewForm.setCondensed (true);
+    onShowSelectedObjectTableStart (aWPEC, aViewForm, aSelectedObject);
     if (!useEmailAddressAsLoginName ())
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LOGINNAME.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (aSelectedObject.getLoginName ()));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LOGINNAME.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (aSelectedObject.getLoginName ()));
     }
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_FIRSTNAME.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSelectedObject.getFirstName ()));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LASTNAME.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSelectedObject.getLastName ()));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_EMAIL.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (HCA_MailTo.createLinkedEmail (aSelectedObject.getEmailAddress ())));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isEnabled (),
-                                                                                       aDisplayLocale)));
-    if (StringHelper.hasText (aSelectedObject.getDescription ()))
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DELETED.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isDeleted (),
-                                                                                       aDisplayLocale)));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LAST_LOGIN.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSelectedObject.getLastLoginDateTime () != null ? new HCTextNode (PDTToString.getAsString (aSelectedObject.getLastLoginDateTime (),
-                                                                                                                                                      aDisplayLocale))
-                                                                                                           : new HCEM ().addChild (EText.LABEL_LAST_LOGIN_NEVER.getDisplayText (aDisplayLocale))));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LOGIN_COUNT.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (Integer.toString (aSelectedObject.getLoginCount ())));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CONSECUTIVE_FAILED_LOGIN_COUNT.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (Integer.toString (aSelectedObject.getConsecutiveFailedLoginCount ())));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PASSWORD_HASH_ALGORITHM.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSelectedObject.getPasswordHash ().getAlgorithmName ()));
+    if (aSelectedObject.hasFirstName ())
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_FIRSTNAME.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (aSelectedObject.getFirstName ()));
+    if (aSelectedObject.hasLastName ())
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LASTNAME.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (aSelectedObject.getLastName ()));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_EMAIL.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (HCA_MailTo.createLinkedEmail (aSelectedObject.getEmailAddress ())));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isEnabled (),
+                                                                                           aDisplayLocale)));
+    if (StringHelper.hasText (aSelectedObject.getDescription ()))
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DELETED.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isDeleted (),
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LAST_LOGIN.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aSelectedObject.getLastLoginDateTime () != null ? new HCTextNode (PDTToString.getAsString (aSelectedObject.getLastLoginDateTime (),
+                                                                                                                                                          aDisplayLocale))
+                                                                                                               : new HCEM ().addChild (EText.LABEL_LAST_LOGIN_NEVER.getDisplayText (aDisplayLocale))));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_LOGIN_COUNT.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (Integer.toString (aSelectedObject.getLoginCount ())));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CONSECUTIVE_FAILED_LOGIN_COUNT.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (Integer.toString (aSelectedObject.getConsecutiveFailedLoginCount ())));
+
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PASSWORD_HASH_ALGORITHM.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aSelectedObject.getPasswordHash ().getAlgorithmName ()));
 
     // user groups
     final ICommonsCollection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
     if (aUserGroups.isEmpty ())
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCEM ().addChild (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (new HCEM ().addChild (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -509,17 +513,17 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                                                                              BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
                                                                                                              aUG.getID (),
                                                                                                              null)).addChild (aUG.getName ()))));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                               Integer.toString (aUserGroups.size ())))
-                                                   .setCtrl (aUserGroupUI));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                   Integer.toString (aUserGroups.size ())))
+                                                       .setCtrl (aUserGroupUI));
     }
 
     // roles
     final ICommonsSet <IRole> aUserRoles = SecurityHelper.getAllUserRoles (aSelectedObject.getID ());
     if (aUserRoles.isEmpty ())
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCEM ().addChild (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (new HCEM ().addChild (EText.NONE_DEFINED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -529,9 +533,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                                                                           BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
                                                                                                           aRole.getID (),
                                                                                                           null)).addChild (aRole.getName ()))));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                          Integer.toString (aUserRoles.size ())))
-                                                   .setCtrl (aRoleUI));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                              Integer.toString (aUserRoles.size ())))
+                                                       .setCtrl (aRoleUI));
     }
 
     // custom attributes
@@ -541,7 +545,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
                                                                                 aSelectedObject,
                                                                                 aCustomAttrs,
-                                                                                aForm);
+                                                                                aViewForm);
 
     if (aCustomAttrs.isNotEmpty ())
     {
@@ -561,12 +565,12 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       // Maybe all custom attributes where handled in
       // showCustomAttrsOfSelectedObject
       if (aAttrTable.hasBodyRows ())
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (aAttrTable));
+        aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
+                                                         .setCtrl (aAttrTable));
     }
 
     // Callback
-    onShowSelectedObjectTableEnd (aWPEC, aForm, aSelectedObject);
+    onShowSelectedObjectTableEnd (aWPEC, aViewForm, aSelectedObject);
   }
 
   @Override

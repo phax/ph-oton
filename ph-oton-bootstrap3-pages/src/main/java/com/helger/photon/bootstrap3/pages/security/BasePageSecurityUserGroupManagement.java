@@ -17,7 +17,6 @@
 package com.helger.photon.bootstrap3.pages.security;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +27,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
@@ -224,66 +225,67 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          aSelectedObject.getName ())));
-    final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
-    onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
+    final BootstrapViewForm aViewForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aViewForm.setCondensed (true);
+    onShowSelectedObjectTableStart (aWPEC, aViewForm, aSelectedObject);
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSelectedObject.getName ()));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_NAME.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aSelectedObject.getName ()));
 
-    if (StringHelper.hasText (aSelectedObject.getDescription ()))
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
+    if (aSelectedObject.hasDescription ())
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
 
     // All users assigned to this user group
-    final Collection <String> aAssignedUserIDs = aSelectedObject.getAllContainedUserIDs ();
+    final ICommonsSet <String> aAssignedUserIDs = aSelectedObject.getAllContainedUserIDs ();
     if (aAssignedUserIDs.isEmpty ())
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_0.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
       // Convert IDs to objects
       final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-      final List <IUser> aAssignedUsers = CollectionHelper.newListMapped (aAssignedUserIDs,
-                                                                          sUserID -> aUserMgr.getUserOfID (sUserID));
+      final ICommonsList <IUser> aAssignedUsers = new CommonsArrayList <> (aAssignedUserIDs,
+                                                                           sUserID -> aUserMgr.getUserOfID (sUserID));
 
       final HCNodeList aUserUI = new HCNodeList ();
-      CollectionHelper.getSortedInline (aAssignedUsers, IHasDisplayName.getComparatorCollating (aDisplayLocale))
-                      .forEach (aUser -> aUserUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                          BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
-                                                                                                          aUser.getID (),
-                                                                                                          null)).addChild (aUser.getDisplayName ()))));
+      aAssignedUsers.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))
+                    .forEach (aUser -> aUserUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                        BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                                                                                        aUser.getID (),
+                                                                                                        null)).addChild (aUser.getDisplayName ()))));
 
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                          Integer.toString (aAssignedUserIDs.size ())))
-                                                   .setCtrl (aUserUI));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                              Integer.toString (aAssignedUserIDs.size ())))
+                                                       .setCtrl (aUserUI));
     }
 
     // All roles assigned to this user group
     final Collection <String> aAssignedRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
     if (aAssignedRoleIDs.isEmpty ())
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
       // Convert IDs to objects
       final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
-      final List <IRole> aAssignedRoles = CollectionHelper.newListMapped (aAssignedRoleIDs,
-                                                                          sRoleID -> aRoleMgr.getRoleOfID (sRoleID));
+      final ICommonsList <IRole> aAssignedRoles = new CommonsArrayList <> (aAssignedRoleIDs,
+                                                                           sRoleID -> aRoleMgr.getRoleOfID (sRoleID));
 
       final HCNodeList aRoleUI = new HCNodeList ();
-      CollectionHelper.getSorted (aAssignedRoles, IHasName.getComparatorCollating (aDisplayLocale))
-                      .forEach (aRole -> aRoleUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                          BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
-                                                                                                          aRole.getID (),
-                                                                                                          null)).addChild (aRole.getName ()))));
+      aAssignedRoles.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
+                    .forEach (aRole -> aRoleUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
+                                                                                                        BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
+                                                                                                        aRole.getID (),
+                                                                                                        null)).addChild (aRole.getName ()))));
 
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                          Integer.toString (aAssignedRoleIDs.size ())))
-                                                   .setCtrl (aRoleUI));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                              Integer.toString (aAssignedRoleIDs.size ())))
+                                                       .setCtrl (aRoleUI));
     }
 
     // custom attributes
@@ -293,7 +295,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
                                                                                 aSelectedObject,
                                                                                 aCustomAttrs,
-                                                                                aForm);
+                                                                                aViewForm);
 
     if (aCustomAttrs.isNotEmpty ())
     {
@@ -314,12 +316,12 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       // Maybe all custom attributes where handled in
       // showCustomAttrsOfSelectedObject
       if (aAttrTable.hasBodyRows ())
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (aAttrTable));
+        aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
+                                                         .setCtrl (aAttrTable));
     }
 
     // Callback
-    onShowSelectedObjectTableEnd (aWPEC, aForm, aSelectedObject);
+    onShowSelectedObjectTableEnd (aWPEC, aViewForm, aSelectedObject);
   }
 
   @Override

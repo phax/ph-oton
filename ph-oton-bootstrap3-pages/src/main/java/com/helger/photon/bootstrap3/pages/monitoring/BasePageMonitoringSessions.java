@@ -160,23 +160,25 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     final HCNodeList ret = new HCNodeList ();
 
     final boolean bIsMySession = aScope.getID ().equals (WebScopeManager.getSessionScope ().getID ());
-    final BootstrapViewForm aTableScope = ret.addAndReturnChild (new BootstrapViewForm ());
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (aScope.getID ()));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_MY_SESSION.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (bIsMySession,
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
-                                                                                             aDisplayLocale)));
-    aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Integer.toString (aScope.attrs ().size ())));
+    final BootstrapViewForm aViewForm = ret.addAndReturnChild (new BootstrapViewForm ());
+    aViewForm.setCondensed (true);
+
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aScope.getID ()));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_MY_SESSION.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (bIsMySession,
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (),
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
+                                                                                           aDisplayLocale)));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (Integer.toString (aScope.attrs ().size ())));
 
     if (aScope instanceof ISessionWebScope)
     {
@@ -185,31 +187,31 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
       final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTime (aWebScope.getSession ()
                                                                                    .getLastAccessedTime ());
 
-      aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_CREATION_DT.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (PDTToString.getAsString (aCreationDT,
-                                                                                            aDisplayLocale)));
-      aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_LASTACCESS_DT.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (PDTToString.getAsString (aLastAccessDT,
-                                                                                            aDisplayLocale)));
-      aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_AGE.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (Duration.between (aCreationDT,
-                                                                                     PDTFactory.getCurrentLocalDateTime ())
-                                                                           .toString ()));
-      aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_TIMEOUT.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (EText.MSG_SCOPE_SESSION_TIMEOUT_TEXT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                Long.toString (aWebScope.getSession ()
-                                                                                                                                                        .getMaxInactiveInterval ()),
-                                                                                                                                Long.toString (aWebScope.getSession ()
-                                                                                                                                                        .getMaxInactiveInterval () /
-                                                                                                                                               CGlobal.SECONDS_PER_MINUTE))));
-      aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_EXPIRATION_DT.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (PDTToString.getAsString (aLastAccessDT.plusSeconds (aWebScope.getSession ()
-                                                                                                                                .getMaxInactiveInterval ()),
-                                                                                            aDisplayLocale)));
-      aTableScope.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IS_NEW.getDisplayText (aDisplayLocale))
-                                                         .setCtrl (EPhotonCoreText.getYesOrNo (aWebScope.getSession ()
-                                                                                                        .isNew (),
-                                                                                               aDisplayLocale)));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_CREATION_DT.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (PDTToString.getAsString (aCreationDT,
+                                                                                          aDisplayLocale)));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_LASTACCESS_DT.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (PDTToString.getAsString (aLastAccessDT,
+                                                                                          aDisplayLocale)));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_AGE.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (Duration.between (aCreationDT,
+                                                                                   PDTFactory.getCurrentLocalDateTime ())
+                                                                         .toString ()));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_TIMEOUT.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (EText.MSG_SCOPE_SESSION_TIMEOUT_TEXT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                              Long.toString (aWebScope.getSession ()
+                                                                                                                                                      .getMaxInactiveInterval ()),
+                                                                                                                              Long.toString (aWebScope.getSession ()
+                                                                                                                                                      .getMaxInactiveInterval () /
+                                                                                                                                             CGlobal.SECONDS_PER_MINUTE))));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_EXPIRATION_DT.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (PDTToString.getAsString (aLastAccessDT.plusSeconds (aWebScope.getSession ()
+                                                                                                                              .getMaxInactiveInterval ()),
+                                                                                          aDisplayLocale)));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IS_NEW.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aWebScope.getSession ()
+                                                                                                      .isNew (),
+                                                                                             aDisplayLocale)));
     }
 
     // All scope attributes

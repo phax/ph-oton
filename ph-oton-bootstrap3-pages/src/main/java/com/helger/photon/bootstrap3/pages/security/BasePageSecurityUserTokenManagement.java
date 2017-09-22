@@ -402,16 +402,17 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_SHOW.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                       aSelectedObject.getDisplayName ())));
 
-    final BootstrapViewForm aForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
-    onShowSelectedObjectTableStart (aWPEC, aForm, aSelectedObject);
+    final BootstrapViewForm aViewForm = aNodeList.addAndReturnChild (new BootstrapViewForm ());
+    aViewForm.setCondensed (true);
+    onShowSelectedObjectTableStart (aWPEC, aViewForm, aSelectedObject);
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (createUserLink (aWPEC, aSelectedObject.getUser ())));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (createUserLink (aWPEC, aSelectedObject.getUser ())));
 
     {
       final IHCNode aAT = createAccessTokenListUI (aSelectedObject.getAllAccessTokens (), aDisplayLocale);
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_ACCESS_TOKENS.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (aAT));
+      aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_ACCESS_TOKENS.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (aAT));
     }
 
     // custom attributes
@@ -421,7 +422,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
                                                                                 aSelectedObject,
                                                                                 aCustomAttrs,
-                                                                                aForm);
+                                                                                aViewForm);
 
     if (aCustomAttrs.isNotEmpty ())
     {
@@ -442,12 +443,12 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       // Maybe all custom attributes where handled in
       // showCustomAttrsOfSelectedObject
       if (aAttrTable.hasBodyRows ())
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (aAttrTable));
+        aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ATTRIBUTES.getDisplayText (aDisplayLocale))
+                                                         .setCtrl (aAttrTable));
     }
 
     // Callback
-    onShowSelectedObjectTableEnd (aWPEC, aForm, aSelectedObject);
+    onShowSelectedObjectTableEnd (aWPEC, aViewForm, aSelectedObject);
   }
 
   @Override

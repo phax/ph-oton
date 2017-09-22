@@ -633,9 +633,12 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     // Toolbar on top
     final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
-    aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_MONITORING_FAILED_MAILS.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_MONITORING_FAILEDMAILS))
-                                             .setIcon (EBootstrapIcon.ARROW_RIGHT));
+    if (aWPEC.getMenuTree ().containsItemWithID (BootstrapPagesMenuConfigurator.MENU_ADMIN_MONITORING_FAILEDMAILS))
+    {
+      aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_MONITORING_FAILED_MAILS.getDisplayText (aDisplayLocale))
+                                               .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_MONITORING_FAILEDMAILS))
+                                               .setIcon (EBootstrapIcon.ARROW_RIGHT));
+    }
 
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_HOST.getDisplayText (aDisplayLocale)),

@@ -95,7 +95,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
    * @param aCustomAttrs
    *        The available custom attributes. Never <code>null</code> but maybe
    *        empty.
-   * @param aTable
+   * @param aViewForm
    *        The table to be add custom information
    * @return A set of all attribute names that were handled in this method or
    *         <code>null</code>. All attributes handled in this method will not
@@ -106,7 +106,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   protected ICommonsSet <String> onShowSelectedObjectCustomAttrs (@Nonnull final WPECTYPE aWPEC,
                                                                   @Nonnull final DATATYPE aSelectedObject,
                                                                   @Nonnull final Map <String, String> aCustomAttrs,
-                                                                  @Nonnull final BootstrapViewForm aTable)
+                                                                  @Nonnull final BootstrapViewForm aViewForm)
   {
     return null;
   }
