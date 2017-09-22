@@ -1,9 +1,6 @@
 package com.helger.photon.basic.app.appid;
 
-import java.io.IOException;
-
 import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
 
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
@@ -19,21 +16,24 @@ public final class XServletFilterAppIDFromSessionID implements IXServletHighLeve
   public XServletFilterAppIDFromSessionID ()
   {}
 
-  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
+  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
     // Set all fields from session
-    final PhotonSessionState aSession = PhotonSessionState.getInstance ();
-    final String sAppID = aSession.getLastApplicationID ();
-    if (sAppID != null)
+    final PhotonSessionState aSession = PhotonSessionState.getInstanceIfInstantiated ();
+    if (aSession != null)
     {
-      PhotonState aState = aSession.state (sAppID);
-      if (aState.isEmpty ())
-        aState = PhotonGlobalState.getInstance ().state (sAppID);
-      RequestSettings.set (aRequestScope, sAppID, aState);
+      final String sAppID = aSession.getLastApplicationID ();
+      if (sAppID != null)
+      {
+        PhotonState aState = aSession.state (sAppID);
+        if (aState.isEmpty ())
+          aState = PhotonGlobalState.getInstance ().state (sAppID);
+        RequestSettings.setRequestState (aRequestScope, sAppID, aState);
+      }
     }
   }
 
-  public void afterRequest (@Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
+  public void afterRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
     // empty
   }

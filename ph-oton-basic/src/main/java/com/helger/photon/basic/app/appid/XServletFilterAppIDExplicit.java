@@ -1,10 +1,8 @@
 package com.helger.photon.basic.app.appid;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -33,26 +31,34 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     m_sAppID = ValueEnforcer.notEmpty (sAppID, "AppID");
   }
 
-  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
+  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
     final PhotonGlobalState aGlobal = PhotonGlobalState.getInstance ();
-    final PhotonSessionState aSession = PhotonSessionState.getInstance ();
+    final PhotonSessionState aSession = PhotonSessionState.getInstanceIfInstantiated ();
     final String sAppID = m_sAppID;
 
-    // Remember AppID in session
-    aSession.setLastApplicationID (sAppID);
     final PhotonState aGlobalState = aGlobal.state (sAppID);
-    final PhotonState aSessionState = aSession.state (sAppID);
+
+    // Remember AppID in session
+    PhotonState aSessionState;
+    if (aSession != null)
+    {
+      aSession.setLastApplicationID (sAppID);
+      aSessionState = aSession.state (sAppID);
+    }
+    else
+      aSessionState = null;
 
     // Get menu tree
-    IMenuTree aMenuTree = aSessionState.getMenuTree ();
+    IMenuTree aMenuTree = aSessionState != null ? aSessionState.getMenuTree () : null;
     if (aMenuTree == null)
     {
       aMenuTree = aGlobalState.getMenuTree ();
       if (aMenuTree != null)
       {
         // Remember in session
-        aSessionState.setMenuTree (aMenuTree);
+        if (aSessionState != null)
+          aSessionState.setMenuTree (aMenuTree);
       }
     }
     if (aMenuTree == null)
@@ -68,7 +74,8 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     {
       // None provided in URL
       // -- check if one is in session
-      aMenuItem = aSessionState.getMenuItem ();
+      if (aSessionState != null)
+        aMenuItem = aSessionState.getMenuItem ();
       if (aMenuItem == null)
       {
         // None in request, none in session
@@ -97,20 +104,22 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     if (aMenuItem == null)
       throw new IllegalStateException ("No menu item is present!");
 
-    {
-      // Store in all scopes
-      aGlobalState.setMenuItem (aMenuItem);
+    // Store in all scopes
+    aGlobalState.setMenuItem (aMenuItem);
+    if (aSessionState != null)
       aSessionState.setMenuItem (aMenuItem);
-    }
 
     // determine locale from request
     Locale aDisplayLocale = aParams.getLocale ();
     if (aDisplayLocale == null)
     {
       // Was a request locale set in session scope?
-      final Locale aSessionDisplayLocale = aSessionState.getLocale ();
-      if (aSessionDisplayLocale != null)
-        aDisplayLocale = aSessionDisplayLocale;
+      if (aSessionState != null)
+      {
+        final Locale aSessionDisplayLocale = aSessionState.getLocale ();
+        if (aSessionDisplayLocale != null)
+          aDisplayLocale = aSessionDisplayLocale;
+      }
 
       if (aDisplayLocale == null)
       {
@@ -125,13 +134,14 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     {
       // Store in all scopes
       aGlobalState.setLocale (aDisplayLocale);
-      aSessionState.setLocale (aDisplayLocale);
+      if (aSessionState != null)
+        aSessionState.setLocale (aDisplayLocale);
     }
 
-    RequestSettings.set (aRequestScope, sAppID, aSessionState);
+    RequestSettings.setRequestState (aRequestScope, sAppID, aSessionState != null ? aSessionState : aGlobalState);
   }
 
-  public void afterRequest (@Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
+  public void afterRequest (@Nonnull final IRequestWebScope aRequestScope)
   {
     // empty
   }
