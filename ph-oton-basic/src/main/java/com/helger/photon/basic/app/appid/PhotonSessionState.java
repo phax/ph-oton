@@ -90,6 +90,14 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
     m_aRWLock.writeLocked ( () -> m_sLastApplicationID = sLastApplicationID);
   }
 
+  /**
+   * Get or create a new state for the provided app ID.
+   * 
+   * @param sAppID
+   *        The app ID to get the state for. May neither be <code>null</code>
+   *        nor empty.
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public PhotonState state (@Nonnull @Nonempty final String sAppID)
   {

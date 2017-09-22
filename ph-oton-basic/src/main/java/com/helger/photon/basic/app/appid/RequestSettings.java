@@ -31,7 +31,9 @@ public final class RequestSettings
     if (StringHelper.hasNoText (sAppID))
     {
       // Fallback to last saved state from session
-      sAppID = PhotonSessionState.getInstance ().getLastApplicationID ();
+      final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
+      if (aPSS != null)
+        sAppID = aPSS.getLastApplicationID ();
     }
     if (StringHelper.hasNoText (sAppID))
       throw new IllegalStateException ("No app ID is present!");
@@ -46,7 +48,9 @@ public final class RequestSettings
     {
       // Fallback to last saved state from session
       final String sAppID = getApplicationID (aRequestScope);
-      aState = PhotonSessionState.getInstance ().state (sAppID);
+      final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
+      if (aPSS != null)
+        aState = aPSS.state (sAppID);
     }
     if (aState == null)
       throw new IllegalStateException ("No state is present!");
@@ -99,9 +103,9 @@ public final class RequestSettings
     return getDisplayLocale (aRequestScope).getLanguage ();
   }
 
-  static void set (@Nonnull final IRequestWebScope aRequestScope,
-                   @Nonnull @Nonempty final String sAppID,
-                   @Nonnull final PhotonState aState)
+  static void setRequestState (@Nonnull final IRequestWebScope aRequestScope,
+                               @Nonnull @Nonempty final String sAppID,
+                               @Nonnull final PhotonState aState)
   {
     ValueEnforcer.notEmpty (sAppID, "AppID");
     ValueEnforcer.notNull (aState, "State");
