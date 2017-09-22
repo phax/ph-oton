@@ -13,6 +13,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.attr.AttributeContainerAny;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.lang.ICloneable;
+import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
@@ -63,12 +64,27 @@ public final class PhotonState implements ICloneable <PhotonState>
     }
   }
 
-  void setAttr (@Nonnull @Nonempty final String sAttr, @Nonnull final Object aValue)
+  @Nonnull
+  EChange setAttr (@Nonnull @Nonempty final String sAttr, @Nonnull final Object aValue)
   {
     m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aAttrs.putIn (sAttr, aValue);
+      return m_aAttrs.putIn (sAttr, aValue);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  EChange removeAttr (@Nonnull @Nonempty final String sAttr)
+  {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return m_aAttrs.removeObject (sAttr);
     }
     finally
     {

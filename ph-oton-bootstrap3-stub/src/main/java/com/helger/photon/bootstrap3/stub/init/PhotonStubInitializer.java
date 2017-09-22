@@ -20,7 +20,6 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.system.SystemProperties;
 import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
@@ -104,14 +103,9 @@ public final class PhotonStubInitializer
       if (false)
         ScopeHelper.setDebugSessionScopeEnabled (true);
 
-      // Enable Java Serialization debug
-      SystemProperties.setPropertyValue ("sun.io.serialization.extendedDebugInfo", "true");
-
+      // Not production ready yet
       if (false)
-      {
-        // Not production ready yet
         WebScopeManager.setSessionPassivationAllowed (true);
-      }
 
       // Disable in debug mode
       RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
@@ -139,9 +133,12 @@ public final class PhotonStubInitializer
     AbstractHCAutoNumeric.setDefaultThousandSeparator ("");
 
     // Add default mapping from Application ID to path
-    PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_PUBLIC,
-                                                        AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-    PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_SECURE,
-                                                        AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+    if (!PhotonGlobalState.containsAnyApplicationServletPathMapping ())
+    {
+      PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_PUBLIC,
+                                                          AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonGlobalState.setApplicationServletPathMapping (CApplicationID.APP_ID_SECURE,
+                                                          AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+    }
   }
 }

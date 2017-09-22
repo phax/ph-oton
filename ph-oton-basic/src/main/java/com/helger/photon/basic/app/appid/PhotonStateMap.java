@@ -43,6 +43,7 @@ public final class PhotonStateMap
 
   void forEach (@Nonnull final BiConsumer <? super String, ? super PhotonState> aConsumer)
   {
+    ValueEnforcer.notNull (aConsumer, "Consumer");
     m_aRWLock.readLock ().lock ();
     try
     {

@@ -8,6 +8,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
@@ -62,6 +63,19 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
     getInstance ().state (sAppID).setAttr (ATTR_SERVLET_PATH, sApplicationServletPath);
   }
 
+  public static void removeAllApplicationServletPathMappings ()
+  {
+    getInstance ().m_aState.forEach ( (sAppID, aState) -> aState.removeAttr (ATTR_SERVLET_PATH));
+  }
+
+  public static boolean containsAnyApplicationServletPathMapping ()
+  {
+    final MutableInt aCount = new MutableInt (0);
+    getInstance ().m_aState.forEach ( (sAppID,
+                                       aState) -> aCount.inc (aState.getAttr (ATTR_SERVLET_PATH) != null ? 1 : 0));
+    return aCount.isGT0 ();
+  }
+
   @Nonnull
   public static String getApplicationServletPath (@Nonnull @Nonempty final String sAppID)
   {
@@ -76,7 +90,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   public static ICommonsMap <String, String> getAppIDToServletPathMap ()
   {
     final ICommonsMap <String, String> ret = new CommonsHashMap <> ();
-    getInstance ().m_aState.forEach ( (sAppID, state) -> ret.put (sAppID, state.getAttr (ATTR_SERVLET_PATH)));
+    getInstance ().m_aState.forEach ( (sAppID, aState) -> ret.put (sAppID, aState.getAttr (ATTR_SERVLET_PATH)));
     return ret;
   }
 }
