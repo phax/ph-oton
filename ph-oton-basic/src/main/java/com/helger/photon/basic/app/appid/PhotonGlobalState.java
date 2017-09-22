@@ -80,6 +80,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   public static void removeAllApplicationServletPathMappings ()
   {
     getInstance ().m_aStateMap.forEachValue (PhotonGlobalStatePerApp::removeServletPath);
+    getInstance ().setDefaultApplicationID (null);
   }
 
   public static boolean containsAnyApplicationServletPathMapping ()
