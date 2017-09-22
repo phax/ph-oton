@@ -17,6 +17,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
  * Single global state per app
  *
  * @author Philip Helger
+ * @since 8.0.0
  */
 @ThreadSafe
 public final class PhotonGlobalStatePerApp implements Serializable

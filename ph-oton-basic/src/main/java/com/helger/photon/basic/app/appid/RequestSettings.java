@@ -16,6 +16,11 @@ import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+/**
+ * This is a utility class to get the
+ *
+ * @author Philip Helger
+ */
 public final class RequestSettings
 {
   public static final String REQUEST_ATTR_APP_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "app-id";
@@ -34,6 +39,10 @@ public final class RequestSettings
       final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
       if (aPSS != null)
         sAppID = aPSS.getLastApplicationID ();
+
+      // None in request nor session -> fall back to default
+      if (StringHelper.hasNoText (sAppID))
+        sAppID = PhotonGlobalState.getInstance ().getDefaultApplicationID ();
     }
     return sAppID;
   }
@@ -49,7 +58,7 @@ public final class RequestSettings
   }
 
   @Nullable
-  private static PhotonRequestState _getStateOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  private static PhotonRequestState _getRequestStateOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     PhotonRequestState aState = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
     if (aState == null)
@@ -73,9 +82,9 @@ public final class RequestSettings
   }
 
   @Nonnull
-  public static PhotonRequestState getState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static PhotonRequestState getRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final PhotonRequestState aState = _getStateOrNull (aRequestScope);
+    final PhotonRequestState aState = _getRequestStateOrNull (aRequestScope);
     if (aState == null)
       throw new IllegalStateException ("No state is present!");
     return aState;
@@ -84,7 +93,7 @@ public final class RequestSettings
   @Nonnull
   public static IMenuTree getMenuTree (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final IMenuTree aMenuTree = getState (aRequestScope).getMenuTree ();
+    final IMenuTree aMenuTree = getRequestState (aRequestScope).getMenuTree ();
     if (aMenuTree == null)
       throw new IllegalStateException ("No menu tree is present!");
     return aMenuTree;
@@ -93,7 +102,7 @@ public final class RequestSettings
   @Nonnull
   public static IMenuItemPage getMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final IMenuItemPage aMenuItem = getState (aRequestScope).getMenuItem ();
+    final IMenuItemPage aMenuItem = getRequestState (aRequestScope).getMenuItem ();
     if (aMenuItem == null)
       throw new IllegalStateException ("No menu item is present!");
     return aMenuItem;
@@ -109,7 +118,7 @@ public final class RequestSettings
   @Nonnull
   public static Locale getDisplayLocale (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    final Locale aLocale = getState (aRequestScope).getDisplayLocale ();
+    final Locale aLocale = getRequestState (aRequestScope).getDisplayLocale ();
     if (aLocale == null)
       throw new IllegalStateException ("No locale is available");
     return aLocale;

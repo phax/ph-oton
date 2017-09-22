@@ -17,6 +17,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
  * Request state
  *
  * @author Philip Helger
+ * @since 8.0.0
  */
 @ThreadSafe
 public final class PhotonRequestState implements Serializable

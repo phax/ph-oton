@@ -29,12 +29,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
 /**
- * This class maintains ph-oton specific settings within a session.
- * <ul>
- * <li>The last used application ID</li>
- * <li>The selected menu items per application ID</li>
- * <li>The selected display locale per application ID</li>
- * </ul>
+ * This class maintains the session state per application ID
  *
  * @author Philip Helger
  * @since 8.0.0

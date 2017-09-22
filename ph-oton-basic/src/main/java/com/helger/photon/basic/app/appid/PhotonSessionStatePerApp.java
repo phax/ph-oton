@@ -15,6 +15,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
  * Single session state per app
  *
  * @author Philip Helger
+ * @since 8.0.0
  */
 @ThreadSafe
 public final class PhotonSessionStatePerApp implements Serializable
