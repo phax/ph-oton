@@ -3,6 +3,7 @@ package com.helger.photon.basic.app.appid;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -23,9 +24,8 @@ public final class RequestSettings
   private RequestSettings ()
   {}
 
-  @Nonnull
-  @Nonempty
-  public static String getApplicationID (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @Nullable
+  private static String _getApplicationIDOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     String sAppID = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_APP_ID);
     if (StringHelper.hasNoText (sAppID))
@@ -35,23 +35,43 @@ public final class RequestSettings
       if (aPSS != null)
         sAppID = aPSS.getLastApplicationID ();
     }
+    return sAppID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public static String getApplicationID (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    final String sAppID = _getApplicationIDOrNull (aRequestScope);
     if (StringHelper.hasNoText (sAppID))
       throw new IllegalStateException ("No app ID is present!");
     return sAppID;
   }
 
-  @Nonnull
-  public static PhotonState getState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @Nullable
+  private static PhotonState _getStateOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     PhotonState aState = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
     if (aState == null)
     {
       // Fallback to last saved state from session
-      final String sAppID = getApplicationID (aRequestScope);
-      final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
-      if (aPSS != null)
-        aState = aPSS.state (sAppID);
+      final String sAppID = _getApplicationIDOrNull (aRequestScope);
+      if (StringHelper.hasText (sAppID))
+      {
+        final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
+        if (aPSS != null)
+          aState = aPSS.state (sAppID);
+        else
+          aState = PhotonGlobalState.getInstance ().state (sAppID);
+      }
     }
+    return aState;
+  }
+
+  @Nonnull
+  public static PhotonState getState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    final PhotonState aState = _getStateOrNull (aRequestScope);
     if (aState == null)
       throw new IllegalStateException ("No state is present!");
     return aState;

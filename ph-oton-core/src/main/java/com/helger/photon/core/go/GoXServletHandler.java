@@ -24,12 +24,13 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.functional.IFunction;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.menu.IMenuItemExternal;
 import com.helger.photon.basic.app.menu.IMenuObject;
 import com.helger.photon.basic.app.menu.IMenuTree;
@@ -52,9 +53,13 @@ public class GoXServletHandler implements IXServletSimpleHandler
                                                                                                                        "$error");
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsOK = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
                                                                                                                     "$ok");
+  private final IFunction <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> m_aMenuTreeSupplier;
 
-  public GoXServletHandler ()
-  {}
+  public GoXServletHandler (@Nonnull final IFunction <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> aMenuTreeSupplier)
+  {
+    ValueEnforcer.notNull (aMenuTreeSupplier, "MenuTreeSupplier");
+    m_aMenuTreeSupplier = aMenuTreeSupplier;
+  }
 
   /**
    * Resolve the passed go-mapping key to an {@link GoMappingItem}.
@@ -125,7 +130,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
       // Base URL
       if (aGoItem.isInternal ())
       {
-        final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
+        final IMenuTree aMenuTree = m_aMenuTreeSupplier.apply (aRequestScope);
         if (aMenuTree != null)
         {
           // If it is an internal menu item, check if this internal item is an
@@ -157,10 +162,10 @@ public class GoXServletHandler implements IXServletSimpleHandler
     // Append all request parameters of this request
     // Don't use the request attributes, as there might be more of them
     // FIXME crash with multipart request?
-    final Enumeration <?> aEnum = aRequestScope.getRequest ().getParameterNames ();
+    final Enumeration <String> aEnum = aRequestScope.getRequest ().getParameterNames ();
     while (aEnum.hasMoreElements ())
     {
-      final String sParamName = (String) aEnum.nextElement ();
+      final String sParamName = aEnum.nextElement ();
       final String [] aParamValues = aRequestScope.getRequest ().getParameterValues (sParamName);
       if (aParamValues != null)
         for (final String sParamValue : aParamValues)
