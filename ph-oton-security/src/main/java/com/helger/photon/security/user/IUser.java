@@ -73,11 +73,21 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   @Nullable
   String getFirstName ();
 
+  default boolean hasFirstName ()
+  {
+    return StringHelper.hasText (getFirstName ());
+  }
+
   /**
    * @return The last name of the user. May be <code>null</code>.
    */
   @Nullable
   String getLastName ();
+
+  default boolean hasLastName ()
+  {
+    return StringHelper.hasText (getLastName ());
+  }
 
   /**
    * @return The display name of the user. May be empty if both first and last
