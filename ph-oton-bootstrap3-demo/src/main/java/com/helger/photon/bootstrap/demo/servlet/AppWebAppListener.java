@@ -88,12 +88,6 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
     // JUL to SLF4J
     SLF4JBridgeHandler.removeHandlersForRootLogger ();
     SLF4JBridgeHandler.install ();
-
-    final ConfigurationFileManager aCfgMgr = ConfigurationFileManager.getInstance ();
-    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("log4j2.xml")).setDescription ("log4j configuration file")
-                                                                                                   .setSyntaxHighlightLanguage (EConfigurationFileSyntax.XML));
-    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("webapp.properties")).setDescription ("Web application properties")
-                                                                                                          .setSyntaxHighlightLanguage (EConfigurationFileSyntax.PROPERTIES));
   }
 
   @Override
@@ -214,5 +208,15 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
                                      AjaxExecutorDataTablesI18N.LANGUAGE_ID)
                  .addPlugin (new DataTablesPluginSearchHighlight ());
     });
+  }
+
+  @Override
+  protected void initManagers ()
+  {
+    final ConfigurationFileManager aCfgMgr = ConfigurationFileManager.getInstance ();
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("log4j2.xml")).setDescription ("Log4J2 configuration file")
+                                                                                                   .setSyntaxHighlightLanguage (EConfigurationFileSyntax.XML));
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("webapp.properties")).setDescription ("Web application properties")
+                                                                                                          .setSyntaxHighlightLanguage (EConfigurationFileSyntax.PROPERTIES));
   }
 }
