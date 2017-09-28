@@ -18,7 +18,7 @@ package com.helger.photon.bootstrap.demo.secure.ajax;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.decl.SecureApplicationAjaxFunctionDeclaration;
 import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 

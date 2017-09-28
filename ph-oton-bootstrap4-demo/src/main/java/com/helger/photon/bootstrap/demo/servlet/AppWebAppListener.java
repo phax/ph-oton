@@ -21,39 +21,38 @@ import javax.servlet.ServletContext;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.photon.basic.app.CApplicationID;
+import com.helger.photon.basic.app.appid.CApplicationID;
+import com.helger.photon.basic.app.appid.PhotonGlobalState;
+import com.helger.photon.basic.app.locale.ILocaleManager;
+import com.helger.photon.basic.app.menu.MenuTree;
+import com.helger.photon.basic.configfile.ConfigurationFile;
+import com.helger.photon.basic.configfile.ConfigurationFileManager;
+import com.helger.photon.basic.configfile.EConfigurationFileSyntax;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap.demo.pub.InitializerPublic;
 import com.helger.photon.bootstrap.demo.pub.ajax.CAjaxPublic;
-import com.helger.photon.bootstrap.demo.secure.InitializerSecure;
-import com.helger.photon.bootstrap3.servlet.AbstractWebAppListenerMultiAppBootstrap;
+import com.helger.photon.bootstrap.demo.pub.menu.MenuPublic;
+import com.helger.photon.bootstrap.demo.secure.ajax.CAjaxSecure;
+import com.helger.photon.bootstrap.demo.secure.menu.MenuSecure;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.app.context.LayoutExecutionContext;
-import com.helger.photon.core.app.init.IApplicationInitializer;
+import com.helger.photon.bootstrap4.servlet.WebAppListenerBootstrap;
+import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
-import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
-import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
-import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
-import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
-import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * This listener is invoked during the servlet initiailization. This is
- * basically a ServletContextListener.
+ * This listener is invoked during the servlet initialization. This is basically
+ * a ServletContextListener.
  *
  * @author Philip Helger
  */
-public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBootstrap <LayoutExecutionContext>
+public final class AppWebAppListener extends WebAppListenerBootstrap
 {
   @Override
   protected String getInitParameterDebug (@Nonnull final ServletContext aSC)
@@ -80,17 +79,30 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
   }
 
   @Override
-  @Nonnull
-  @Nonempty
-  protected ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> getAllInitializers ()
+  protected void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
   {
-    final ICommonsMap <String, IApplicationInitializer <LayoutExecutionContext>> ret = new CommonsHashMap <> ();
-    ret.put (CApplicationID.APP_ID_SECURE, new InitializerSecure ());
-    ret.put (CApplicationID.APP_ID_PUBLIC, new InitializerPublic ());
-    return ret;
+    aLocaleMgr.registerLocale (CApp.DEFAULT_LOCALE);
+    aLocaleMgr.setDefaultLocale (CApp.DEFAULT_LOCALE);
   }
 
-  private static void _initSecurity ()
+  @Override
+  protected void initMenu ()
+  {
+    // Create all menu items
+    {
+      final MenuTree aMenuTree = new MenuTree ();
+      MenuPublic.init (aMenuTree);
+      PhotonGlobalState.state (CApplicationID.APP_ID_PUBLIC).setMenuTree (aMenuTree);
+    }
+    {
+      final MenuTree aMenuTree = new MenuTree ();
+      MenuSecure.init (aMenuTree);
+      PhotonGlobalState.state (CApplicationID.APP_ID_SECURE).setMenuTree (aMenuTree);
+    }
+  }
+
+  @Override
+  protected void initSecurity ()
   {
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
@@ -154,7 +166,8 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
     aUserGroupMgr.assignRoleToUserGroup (CApp.USERGROUP_VIEW_ID, CApp.ROLE_VIEW_ID);
   }
 
-  private static void _initUI ()
+  @Override
+  protected void initUI ()
   {
     final DataTablesLengthMenu LENGTH_MENU = new DataTablesLengthMenu ().addItem (25)
                                                                         .addItem (50)
@@ -176,20 +189,31 @@ public final class AppWebAppListener extends AbstractWebAppListenerMultiAppBoots
   }
 
   @Override
-  protected void initGlobals ()
+  protected void initGlobalSettings ()
   {
-    // Internal stuff:
-
     // JUL to SLF4J
     SLF4JBridgeHandler.removeHandlersForRootLogger ();
     SLF4JBridgeHandler.install ();
+  }
 
-    super.initGlobals ();
+  @Override
+  protected void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  {
+    aAjaxInvoker.registerFunction (CAjaxSecure.SAVE_FORM_STATE);
+    aAjaxInvoker.registerFunction (CAjaxSecure.UPDATE_MENU_VIEW);
+    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES);
+    aAjaxInvoker.registerFunction (CAjaxPublic.LOGIN);
+    aAjaxInvoker.registerFunction (CAjaxPublic.UPDATE_MENU_VIEW);
+    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES_I18N);
+  }
 
-    // UI stuff
-    _initUI ();
-
-    // Set all security related stuff
-    _initSecurity ();
+  @Override
+  protected void initManagers ()
+  {
+    final ConfigurationFileManager aCfgMgr = ConfigurationFileManager.getInstance ();
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("log4j2.xml")).setDescription ("log4j configuration file")
+                                                                                                   .setSyntaxHighlightLanguage (EConfigurationFileSyntax.XML));
+    aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("webapp.properties")).setDescription ("Web application properties")
+                                                                                                          .setSyntaxHighlightLanguage (EConfigurationFileSyntax.PROPERTIES));
   }
 }

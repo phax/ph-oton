@@ -26,15 +26,13 @@ import com.helger.photon.core.servlet.WebAppListener;
  *
  * @author Philip Helger
  */
-public abstract class WebAppListenerBootstrap extends WebAppListener
+public class WebAppListenerBootstrap extends WebAppListener
 {
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void initGlobalSettings ()
+  protected void initUI ()
   {
-    super.initGlobalSettings ();
-
-    // UI stuff:
+    super.initUI ();
 
     // Using Bootstrap icon set by default
     EBootstrapIcon.setAsDefault ();

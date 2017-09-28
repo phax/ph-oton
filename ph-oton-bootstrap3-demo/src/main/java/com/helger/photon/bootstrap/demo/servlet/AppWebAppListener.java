@@ -28,13 +28,14 @@ import com.helger.photon.basic.app.appid.CApplicationID;
 import com.helger.photon.basic.app.appid.PhotonGlobalState;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.basic.app.menu.MenuTree;
+import com.helger.photon.basic.configfile.ConfigurationFile;
+import com.helger.photon.basic.configfile.ConfigurationFileManager;
+import com.helger.photon.basic.configfile.EConfigurationFileSyntax;
 import com.helger.photon.bootstrap.demo.ajax.CAjax;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.pub.MenuPublic;
 import com.helger.photon.bootstrap.demo.secure.MenuSecure;
-import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
-import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
 import com.helger.photon.bootstrap3.servlet.WebAppListenerBootstrap;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.IAjaxInvoker;
@@ -47,7 +48,6 @@ import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
-import com.helger.photon.uictrls.prism.EPrismLanguage;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -91,9 +91,9 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
 
     final ConfigurationFileManager aCfgMgr = ConfigurationFileManager.getInstance ();
     aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("log4j2.xml")).setDescription ("log4j configuration file")
-                                                                                                   .setSyntaxHighlightLanguage (EPrismLanguage.MARKUP));
+                                                                                                   .setSyntaxHighlightLanguage (EConfigurationFileSyntax.XML));
     aCfgMgr.registerConfigurationFile (new ConfigurationFile (new ClassPathResource ("webapp.properties")).setDescription ("Web application properties")
-                                                                                                          .setSyntaxHighlightLanguage (EPrismLanguage.APACHECONF));
+                                                                                                          .setSyntaxHighlightLanguage (EConfigurationFileSyntax.PROPERTIES));
   }
 
   @Override

@@ -16,31 +16,17 @@
  */
 package com.helger.photon.bootstrap.demo.servlet;
 
-import javax.annotation.Nonnull;
-import javax.servlet.http.HttpServletRequest;
-
+import com.helger.commons.http.EHttpMethod;
+import com.helger.photon.basic.xservlet.ErrorXServletHandler;
 import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
-import com.helger.photon.core.servlet.AbstractUnifiedResponseServlet;
-import com.helger.servlet.response.UnifiedResponse;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.AbstractXServlet;
 
-public class AppErrorServlet extends AbstractUnifiedResponseServlet
+public class AppErrorServlet extends AbstractXServlet
 {
-  @Override
-  protected void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public AppErrorServlet ()
   {
-    // In Jetty, the request attributes are already URL encoded!
-    final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
-    final String sTarget = aRequestScope.getContextPath () +
-                           AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH +
-                           "?httpError=true" +
-                           "&httpStatusCode=" +
-                           aHttpRequest.getAttribute ("javax.servlet.error.status_code") +
-                           "&httpStatusMessage=" +
-                           aHttpRequest.getAttribute ("javax.servlet.error.message") +
-                           "&httpRequestUri=" +
-                           aHttpRequest.getAttribute ("javax.servlet.error.request_uri");
-    aUnifiedResponse.setRedirect (sTarget);
+    handlerRegistry ().registerHandler (EHttpMethod.GET,
+                                        new ErrorXServletHandler (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH));
+    handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }
 }

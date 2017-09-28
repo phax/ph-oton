@@ -14,19 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.servlet;
+package com.helger.photon.bootstrap4.servlet;
 
-import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.xservlet.RootXServletHandler;
-import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
-import com.helger.xservlet.AbstractXServlet;
+import com.helger.photon.core.servlet.WebAppListener;
 
-public class AppRootServlet extends AbstractXServlet
+/**
+ * Bootstrap specific initialization listener
+ *
+ * @author Philip Helger
+ */
+public class WebAppListenerBootstrap extends WebAppListener
 {
-  public AppRootServlet ()
-  {
-    handlerRegistry ().registerHandler (EHttpMethod.GET,
-                                        new RootXServletHandler (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH));
-    handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
-  }
+  // Nothing so far
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.sysinfo;
+package com.helger.photon.basic.configfile;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -29,7 +29,6 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IHasDescription;
-import com.helger.photon.uictrls.prism.EPrismLanguage;
 
 @NotThreadSafe
 public class ConfigurationFile implements IHasID <String>, IHasDescription
@@ -37,7 +36,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   private final IReadableResource m_aRes;
   private String m_sDescription;
   private Charset m_aDefaultCharset = StandardCharsets.UTF_8;
-  private EPrismLanguage m_eSyntaxHighlightLanguage = EPrismLanguage.NONE;
+  private EConfigurationFileSyntax m_eSyntaxHighlightLanguage = EConfigurationFileSyntax.NONE;
 
   /**
    * Constructor
@@ -118,13 +117,13 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   }
 
   @Nonnull
-  public EPrismLanguage getSyntaxHighlightLanguage ()
+  public EConfigurationFileSyntax getSyntaxHighlightLanguage ()
   {
     return m_eSyntaxHighlightLanguage;
   }
 
   @Nonnull
-  public ConfigurationFile setSyntaxHighlightLanguage (@Nonnull final EPrismLanguage eSyntaxHighlightLanguage)
+  public ConfigurationFile setSyntaxHighlightLanguage (@Nonnull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
   {
     m_eSyntaxHighlightLanguage = ValueEnforcer.notNull (eSyntaxHighlightLanguage, "SyntaxHighlightLanguage");
     return this;

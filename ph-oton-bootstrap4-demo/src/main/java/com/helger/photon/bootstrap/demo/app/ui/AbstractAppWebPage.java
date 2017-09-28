@@ -19,7 +19,6 @@ package com.helger.photon.bootstrap.demo.app.ui;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 
 public abstract class AbstractAppWebPage extends AbstractBootstrapWebPage <WebPageExecutionContext>

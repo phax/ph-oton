@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap.demo.pub.ajax;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.core.ajax.IAjaxFunctionDeclaration;
+import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.decl.PublicApplicationAjaxFunctionDeclaration;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;

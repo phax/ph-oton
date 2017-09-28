@@ -29,17 +29,18 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.basic.configfile.ConfigurationFile;
+import com.helger.photon.basic.configfile.ConfigurationFileManager;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
-import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFile;
-import com.helger.photon.bootstrap3.pages.sysinfo.ConfigurationFileManager;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.photon.uictrls.prism.EPrismLanguage;
 import com.helger.photon.uictrls.prism.EPrismPlugin;
 import com.helger.photon.uictrls.prism.HCPrismJS;
 
@@ -51,8 +52,8 @@ import com.helger.photon.uictrls.prism.HCPrismJS;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext>
-                                               extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext> extends
+                                               AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -124,8 +125,8 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
       if (aCF.exists ())
       {
         final String sContent = aCF.getContentAsString ();
-        aContent.addChild (new HCPrismJS (aCF.getSyntaxHighlightLanguage ()).addPlugin (EPrismPlugin.LINE_NUMBERS)
-                                                                            .addChild (sContent));
+        aContent.addChild (new HCPrismJS (EPrismLanguage.find (aCF.getSyntaxHighlightLanguage ())).addPlugin (EPrismPlugin.LINE_NUMBERS)
+                                                                                                  .addChild (sContent));
       }
       else
       {

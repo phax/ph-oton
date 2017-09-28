@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.pages.sysinfo;
+package com.helger.photon.basic.configfile;
 
 import javax.annotation.Nonnull;
 
@@ -27,9 +27,15 @@ import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
+/**
+ * A non-persisting manager for {@link ConfigurationFile} objects. Needs to be
+ * initialized manually at startup.
+ * 
+ * @author Philip Helger
+ */
 public final class ConfigurationFileManager extends AbstractGlobalSingleton
 {
-  private final ICommonsOrderedMap <String, ConfigurationFile> m_aMap = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, ConfigurationFile> m_aMap = new CommonsLinkedHashMap <> ();
 
   @Deprecated
   @UsedViaReflection

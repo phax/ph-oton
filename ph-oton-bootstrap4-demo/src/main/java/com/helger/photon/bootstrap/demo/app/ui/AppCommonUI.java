@@ -38,10 +38,10 @@ import com.helger.html.jscode.JSVar;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.bootstrap.demo.pub.ajax.AjaxExecutorPublicLogin;
 import com.helger.photon.bootstrap.demo.pub.ajax.CAjaxPublic;
-import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
-import com.helger.photon.bootstrap3.form.BootstrapForm;
-import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
-import com.helger.photon.bootstrap3.form.EBootstrapFormType;
+import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap4.form.BootstrapForm;
+import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap4.form.EBootstrapFormType;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.RequestField;
@@ -73,7 +73,7 @@ public final class AppCommonUI
     final String sIDErrorField = GlobalIDFactory.getNewStringID ();
 
     final BootstrapForm aForm = new BootstrapForm (aLEC).setAction (aLEC.getSelfHref ())
-                                                        .setFormType (bFullUI ? EBootstrapFormType.HORIZONTAL
+                                                        .setFormType (bFullUI ? EBootstrapFormType.DEFAULT
                                                                               : EBootstrapFormType.DEFAULT);
     aForm.setLeft (3);
 

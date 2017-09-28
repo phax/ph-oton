@@ -14,32 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.app.layout;
+package com.helger.photon.basic.configfile;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.metadata.HCHead;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.id.IHasID;
+import com.helger.commons.lang.EnumHelper;
 
 /**
- * Interface for an object that provides content to an application layout area.
+ * Define the syntax of a configuration file.
  *
  * @author Philip Helger
- * @param <LECTYPE>
- *        Layout execution context type
  */
-@Deprecated
-public interface ILayoutAreaContentProvider <LECTYPE extends ILayoutExecutionContext>
+public enum EConfigurationFileSyntax implements IHasID <String>
 {
-  /**
-   * @param aLEC
-   *        The layout execution context. Never <code>null</code>.
-   * @param aHead
-   *        The HTML head element to e.g. add meta elements etc.
-   * @return The content of the area based on the current state.
-   */
+  NONE ("none"),
+  PROPERTIES ("properties"),
+  XML ("xml");
+
+  private final String m_sID;
+
+  private EConfigurationFileSyntax (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
+  }
+
   @Nullable
-  IHCNode getContent (@Nonnull LECTYPE aLEC, @Nonnull HCHead aHead);
+  public static EConfigurationFileSyntax getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EConfigurationFileSyntax.class, sID);
+  }
 }

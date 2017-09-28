@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.photon.basic.configfile.EConfigurationFileSyntax;
 
 public enum EPrismLanguage implements ICSSClassProvider
 {
@@ -55,5 +56,21 @@ public enum EPrismLanguage implements ICSSClassProvider
   public String getCSSClass ()
   {
     return m_sCSSClass;
+  }
+
+  @Nonnull
+  public static EPrismLanguage find (@Nonnull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
+  {
+    switch (eSyntaxHighlightLanguage)
+    {
+      case NONE:
+        return NONE;
+      case PROPERTIES:
+        return APACHECONF;
+      case XML:
+        return MARKUP;
+    }
+    // Default fallback
+    return EPrismLanguage.NONE;
   }
 }
