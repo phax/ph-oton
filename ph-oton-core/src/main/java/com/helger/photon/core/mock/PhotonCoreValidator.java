@@ -40,7 +40,14 @@ public final class PhotonCoreValidator
   private PhotonCoreValidator ()
   {}
 
-  static void validateWebXML () throws Exception
+  /**
+   * Validate the content of the <code>web.xml</code> file. It checks if all
+   * referenced classes are loadable!
+   *
+   * @throws Exception
+   *         In case of an error.
+   */
+  public static void validateWebXML () throws Exception
   {
     final IMicroDocument aDoc = MicroReader.readMicroXML (new File ("src/main/webapp/WEB-INF/web.xml"));
     if (aDoc != null)
@@ -64,7 +71,13 @@ public final class PhotonCoreValidator
         }
   }
 
-  static void validateHTMLConfiguration ()
+  /**
+   * Check if the referenced JS and CSS files exist
+   * 
+   * @throws IllegalStateException
+   *         if not
+   */
+  public static void validateHTMLConfiguration () throws IllegalStateException
   {
     // This will throw an IllegalStateException for wrong files in html/js.xml
     // and html/css.xml
