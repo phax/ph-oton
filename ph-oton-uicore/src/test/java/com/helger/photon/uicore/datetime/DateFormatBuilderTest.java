@@ -29,14 +29,13 @@ import org.junit.Test;
 
 import com.helger.commons.datetime.PDTFormatPatterns;
 import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.mock.AbstractCommonsTestCase;
 
 /**
  * Test class for class {@link DateFormatBuilder}.
  *
  * @author Philip Helger
  */
-public final class DateFormatBuilderTest extends AbstractCommonsTestCase
+public final class DateFormatBuilderTest
 {
   @Test
   public void testAll ()
