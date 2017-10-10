@@ -107,6 +107,8 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeLi
   @Nullable
   Tab getActiveTabOrDefault ();
 
+  boolean hasTabs ();
+
   boolean hasNoTabs ();
 
   int getTabCount ();

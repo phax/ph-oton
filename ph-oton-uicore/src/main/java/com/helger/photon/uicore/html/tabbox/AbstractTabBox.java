@@ -41,7 +41,8 @@ import com.helger.html.hc.impl.AbstractHCNodeList;
  *        Implementation type
  */
 public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>> extends AbstractHCNodeList <IMPLTYPE>
-                                     implements ITabBox <IMPLTYPE>
+                                     implements
+                                     ITabBox <IMPLTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractTabBox.class);
 
@@ -129,6 +130,11 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     if (aTab == null)
       aTab = m_aTabs.getFirstValue ();
     return aTab;
+  }
+
+  public boolean hasTabs ()
+  {
+    return m_aTabs.isNotEmpty ();
   }
 
   public boolean hasNoTabs ()
