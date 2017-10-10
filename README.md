@@ -8,6 +8,7 @@ Contained subprojects are:
   * ph-oton-html - Java wrapper for all HTML elements and attributes
   * ph-oton-jscode - a Java code model to build structured JS code
   * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
+  * ph-oton-atom - ATOM newsfeed stuff
   * ph-oton-basic - basic application stuff
   * ph-oton-security - security elements (user, user groups, roles etc.)
   * ph-oton-exchange - data exchange (import and export)
@@ -29,10 +30,11 @@ Contained subprojects are:
 Release history:
   * v8.0.0 - work in progress
     * Updated to ph-commons 9.0.0
-    * Renamed 'Client' to 'Tenant'
+    * Renamed 'Client' to 'Tenant' and moved to ph-tenancy in ph-masterdata project
     * Updated to Bootstrap 4.0.0-beta
     * Updated to TinyMCE 4.6.6
     * Updated to Jetty 9.4.7
+    * Extracted ph-oton-atom
   * v7.1.2 - 2017-07-19
     * Fixed an error with path handling of resource bundles when deployed as JAR
   * v7.1.1 - 2017-07-18
