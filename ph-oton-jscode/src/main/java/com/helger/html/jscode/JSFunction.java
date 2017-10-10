@@ -32,7 +32,7 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
 
 /**
- * JS function
+ * JS function declaration
  *
  * @author Philip Helger
  */
@@ -51,7 +51,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   /**
    * List of parameters for this function's declaration
    */
-  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList<> ();
+  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList <> ();
 
   /**
    * Block of statements that makes up the body this function
