@@ -134,9 +134,15 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   }
 
   @Nonnull
-  public BootstrapModal setHeader (@Nullable final IHCNode... aFooter)
+  public BootstrapModal setHeader (@Nullable final IHCNode... aHeader)
   {
-    return setHeader (new HCNodeList ().addChildren (aFooter));
+    return setHeader (new HCNodeList ().addChildren (aHeader));
+  }
+
+  @Nonnull
+  public BootstrapModal setHeader (@Nullable final Iterable <? extends IHCNode> aHeader)
+  {
+    return setHeader (new HCNodeList ().addChildren (aHeader));
   }
 
   @Nonnull
@@ -153,9 +159,15 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   }
 
   @Nonnull
-  public BootstrapModal setBody (@Nullable final IHCNode... aFooter)
+  public BootstrapModal setBody (@Nullable final IHCNode... aBody)
   {
-    return setBody (new HCNodeList ().addChildren (aFooter));
+    return setBody (new HCNodeList ().addChildren (aBody));
+  }
+
+  @Nonnull
+  public BootstrapModal setBody (@Nullable final Iterable <? extends IHCNode> aBody)
+  {
+    return setBody (new HCNodeList ().addChildren (aBody));
   }
 
   @Nonnull
@@ -173,6 +185,12 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
 
   @Nonnull
   public BootstrapModal setFooter (@Nullable final IHCNode... aFooter)
+  {
+    return setFooter (new HCNodeList ().addChildren (aFooter));
+  }
+
+  @Nonnull
+  public BootstrapModal setFooter (@Nullable final Iterable <? extends IHCNode> aFooter)
   {
     return setFooter (new HCNodeList ().addChildren (aFooter));
   }
