@@ -119,6 +119,7 @@ import com.helger.html.hc.html.tabular.HCTH;
 import com.helger.html.hc.html.tabular.HCTHead;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.textlevel.*;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 
 @Immutable
@@ -420,11 +421,21 @@ public final class HCExtHelper
     }
   }
 
+  @Nonnull
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> nl2brList (@Nullable final String sText)
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     nl2brList (sText, ret::add);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static HCNodeList nl2brNodeList (@Nullable final String sText)
+  {
+    final HCNodeList ret = new HCNodeList ();
+    nl2brList (sText, ret::addChild);
     return ret;
   }
 
@@ -474,8 +485,30 @@ public final class HCExtHelper
    *
    * @param sText
    *        The text to be split. May be <code>null</code>.
+   * @return A non-<code>null</code> but maybe empty list. The list is empty, if
+   *         the string is empty.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static HCNodeList nl2divNodeList (@Nullable final String sText)
+  {
+    final HCNodeList ret = new HCNodeList ();
+    nl2divList (sText, ret::addChild);
+    return ret;
+  }
+
+  /**
+   * Convert the passed text to a list of &lt;div&gt; elements. Each \n is used
+   * to split the text into separate lines. \r characters are removed from the
+   * string! Empty lines are preserved except for the last line. E.g.
+   * <code>Hello\nworld</code> results in 2 &lt;div&gt;s:
+   * &lt;div&gt;Hello&lt;/div&gt; and &lt;div&gt;world&lt;/div&gt;
+   *
+   * @param sText
+   *        The text to be split. May be <code>null</code>.
    * @param aTarget
-   *        The collection to be filled. May not be <code>null</code>.
+   *        The consumer to be invoked with every {@link HCDiv}. May not be
+   *        <code>null</code>.
    */
   public static void nl2divList (@Nullable final String sText, @Nonnull final Consumer <? super HCDiv> aTarget)
   {
