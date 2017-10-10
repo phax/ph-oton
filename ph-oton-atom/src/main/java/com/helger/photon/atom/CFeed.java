@@ -14,35 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.app.menu;
+package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.photon.basic.app.page.IPage;
+import javax.annotation.concurrent.Immutable;
 
 /**
- * Base interface for a single menu item referencing an internal page.
+ * Constants for ATOM feeds
  *
  * @author Philip Helger
  */
-public interface IMenuItemPage extends IMenuItem
+@Immutable
+public final class CFeed
 {
   /**
-   * {@inheritDoc}
+   * The XML namespace for ATOM feeds.
    */
-  @Nonnull
-  IMenuItemPage setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
+  public static final String XMLNS_ATOM = "http://www.w3.org/2005/Atom";
 
-  /**
-   * @return The referenced page object.
-   */
-  @Nonnull
-  IPage getPage ();
-
-  /*
-   * Change return type
-   */
-  @Nonnull
-  IMenuItemPage setTarget (@Nullable String sTarget);
+  private CFeed ()
+  {}
 }

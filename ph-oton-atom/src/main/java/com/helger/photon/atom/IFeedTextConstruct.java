@@ -14,35 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.app.menu;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.photon.basic.app.page.IPage;
+package com.helger.photon.atom;
 
 /**
- * Base interface for a single menu item referencing an internal page.
+ * Base interface for the text construct.
  *
  * @author Philip Helger
  */
-public interface IMenuItemPage extends IMenuItem
+public interface IFeedTextConstruct extends IFeedElement
 {
-  /**
-   * {@inheritDoc}
-   */
-  @Nonnull
-  IMenuItemPage setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
-
-  /**
-   * @return The referenced page object.
-   */
-  @Nonnull
-  IPage getPage ();
-
-  /*
-   * Change return type
-   */
-  @Nonnull
-  IMenuItemPage setTarget (@Nullable String sTarget);
+  /* empty */
 }

@@ -14,43 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.app.menu;
+package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
+import java.util.Locale;
+
 import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.display.IHasDisplayText;
 
 /**
- * Base interface for a single menu item.
+ * Abstract implementation of {@link IFeedElement} with a common language
+ * handling.
  *
  * @author Philip Helger
  */
-public interface IMenuItem extends IMenuObject, IHasDisplayText
+public abstract class AbstractFeedElement implements IFeedElement
 {
-  /**
-   * @return The (HTML) target of the link. May be <code>null</code>.
-   */
-  @Nullable
-  String getTarget ();
+  private String m_sContentLanguage;
 
-  /**
-   * @return <code>true</code> if an explicit target is defined,
-   *         <code>false</code> otherwise.
-   */
-  default boolean hasTarget ()
+  public AbstractFeedElement ()
+  {}
+
+  @Nullable
+  public final String getLanguage ()
   {
-    return StringHelper.hasText (getTarget ());
+    return m_sContentLanguage;
   }
 
-  /**
-   * Set the (HTML) target of the link.
-   *
-   * @param sTarget
-   *        The name of the target window. May be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  IMenuItem setTarget (@Nullable String sTarget);
+  public final void setLanguage (@Nullable final Locale aContentLocale)
+  {
+    setLanguage (aContentLocale == null ? null : aContentLocale.getLanguage ());
+  }
+
+  public final void setLanguage (@Nullable final String sContentLanguage)
+  {
+    m_sContentLanguage = StringHelper.hasNoText (sContentLanguage) ? null : sContentLanguage;
+  }
 }

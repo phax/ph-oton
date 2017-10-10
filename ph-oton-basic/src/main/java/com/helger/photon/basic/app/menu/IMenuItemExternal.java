@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.url.IHasSimpleURL;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.html.HC_Target;
 
 /**
  * Base interface for a single menu item referencing an arbitrary URL.
@@ -49,15 +48,6 @@ public interface IMenuItemExternal extends IMenuItem
   default ISimpleURL getURL ()
   {
     return getURLProvider ().getSimpleURL ();
-  }
-
-  /*
-   * Change return type
-   */
-  @Nonnull
-  default IMenuItemExternal setTarget (@Nullable final HC_Target aTarget)
-  {
-    return setTarget (aTarget == null ? null : aTarget.getName ());
   }
 
   /*

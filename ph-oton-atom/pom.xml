@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>8.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-core</artifactId>
+  <artifactId>ph-oton-atom</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-core</name>
-  <description>ph-oton core</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-core</url>
+  <name>ph-oton-atom</name>
+  <description>ph-oton ATOM newsfeed stuff</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-atom</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
@@ -52,36 +52,7 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-basic</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-smtp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-http</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schedule</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
       <artifactId>ph-oton-html</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-atom</artifactId>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -102,24 +73,9 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>com.helger.photon.core.*</Export-Package>
+            <Export-Package>com.helger.photon.atom.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.photon.core.config.MicroTypeConverterRegistrar_ph_oton_core</Provide-Capability>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/schemas/servlet/**</exclude>
-            <exclude>src/test/resources/res/**</exclude>
-            <exclude>**/NOTICE</exclude>
-            <exclude>**/LICENSE</exclude>
-            <exclude>**/*.dat</exclude>
-          </excludes>
         </configuration>
       </plugin>
     </plugins>

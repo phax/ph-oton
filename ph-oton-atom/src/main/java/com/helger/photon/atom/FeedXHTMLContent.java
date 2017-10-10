@@ -14,35 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.app.menu;
+package com.helger.photon.atom;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.helger.photon.basic.app.page.IPage;
+import com.helger.html.hc.html.grouping.HCDiv;
 
 /**
- * Base interface for a single menu item referencing an internal page.
+ * Feed entry XHTML content.
  *
  * @author Philip Helger
  */
-public interface IMenuItemPage extends IMenuItem
+public class FeedXHTMLContent extends AbstractFeedXHTML implements IFeedContent
 {
-  /**
-   * {@inheritDoc}
-   */
-  @Nonnull
-  IMenuItemPage setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
-
-  /**
-   * @return The referenced page object.
-   */
-  @Nonnull
-  IPage getPage ();
-
-  /*
-   * Change return type
-   */
-  @Nonnull
-  IMenuItemPage setTarget (@Nullable String sTarget);
+  public FeedXHTMLContent (@Nonnull final HCDiv aDiv)
+  {
+    super (aDiv);
+  }
 }
