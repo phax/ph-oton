@@ -125,10 +125,10 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   private boolean m_bSpellCheck = DEFAULT_SPELLCHECK;
   private EHTMLRole m_eRole;
 
-  private static final class AttrCont extends AttributeContainer <IMicroQName, String> implements IHCAttrContainer
+  private static final class HCAttrCont extends AttributeContainer <IMicroQName, String> implements IHCAttrContainer
   {}
 
-  private final AttrCont m_aCustomAttrs = new AttrCont ();
+  private final HCAttrCont m_aCustomAttrs = new HCAttrCont ();
 
   protected AbstractHCElement (@Nonnull final EHTMLElement eElement)
   {
