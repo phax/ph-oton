@@ -87,7 +87,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>com.helger.photon.stub.*</Export-Package>
+            <Automatic-Module-Name>com.helger.photon.bootstrap4.stub</Automatic-Module-Name>
+            <Export-Package>com.helger.photon.bootstrap4.stub.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
             <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.photon.bootstrap4.stub.config.ThirdPartyModuleProvider_ph_oton_bootstrap4_stub,

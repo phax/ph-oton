@@ -68,6 +68,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
+            <Automatic-Module-Name>com.helger.photon.icon</Automatic-Module-Name>
             <Export-Package>com.helger.photon.icon.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
