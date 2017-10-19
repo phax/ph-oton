@@ -26,7 +26,8 @@ import com.helger.html.resource.js.IJSPathProvider;
 public enum EBootstrapJSPathProvider implements IJSPathProvider
 {
   /** Default complete Bootstrap JS */
-  BOOTSTRAP ("bootstrap/4.0.0-beta/js/bootstrap.js");
+  BOOTSTRAP ("bootstrap/4.0.0-b2/js/bootstrap.js"),
+  BOOTSTRAP_BUNDLE ("bootstrap/4.0.0-b2/js/bootstrap.bundle.js");
 
   private final ConstantJSPathProvider m_aPP;
 

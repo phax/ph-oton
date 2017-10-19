@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.0.0-beta
+  // 4.0.0-b2
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
   public static final ICSSClassProvider ALERT_DANGER = DefaultCSSClassProvider.create ("alert-danger");
@@ -346,6 +346,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider D_LG_NONE = DefaultCSSClassProvider.create ("d-lg-none");
   public static final ICSSClassProvider D_LG_TABLE = DefaultCSSClassProvider.create ("d-lg-table");
   public static final ICSSClassProvider D_LG_TABLE_CELL = DefaultCSSClassProvider.create ("d-lg-table-cell");
+  public static final ICSSClassProvider D_LG_TABLE_ROW = DefaultCSSClassProvider.create ("d-lg-table-row");
   public static final ICSSClassProvider D_MD_BLOCK = DefaultCSSClassProvider.create ("d-md-block");
   public static final ICSSClassProvider D_MD_FLEX = DefaultCSSClassProvider.create ("d-md-flex");
   public static final ICSSClassProvider D_MD_INLINE = DefaultCSSClassProvider.create ("d-md-inline");
@@ -354,6 +355,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider D_MD_NONE = DefaultCSSClassProvider.create ("d-md-none");
   public static final ICSSClassProvider D_MD_TABLE = DefaultCSSClassProvider.create ("d-md-table");
   public static final ICSSClassProvider D_MD_TABLE_CELL = DefaultCSSClassProvider.create ("d-md-table-cell");
+  public static final ICSSClassProvider D_MD_TABLE_ROW = DefaultCSSClassProvider.create ("d-md-table-row");
   public static final ICSSClassProvider D_NONE = DefaultCSSClassProvider.create ("d-none");
   public static final ICSSClassProvider D_PRINT_BLOCK = DefaultCSSClassProvider.create ("d-print-block");
   public static final ICSSClassProvider D_PRINT_INLINE = DefaultCSSClassProvider.create ("d-print-inline");
@@ -367,8 +369,10 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider D_SM_NONE = DefaultCSSClassProvider.create ("d-sm-none");
   public static final ICSSClassProvider D_SM_TABLE = DefaultCSSClassProvider.create ("d-sm-table");
   public static final ICSSClassProvider D_SM_TABLE_CELL = DefaultCSSClassProvider.create ("d-sm-table-cell");
+  public static final ICSSClassProvider D_SM_TABLE_ROW = DefaultCSSClassProvider.create ("d-sm-table-row");
   public static final ICSSClassProvider D_TABLE = DefaultCSSClassProvider.create ("d-table");
   public static final ICSSClassProvider D_TABLE_CELL = DefaultCSSClassProvider.create ("d-table-cell");
+  public static final ICSSClassProvider D_TABLE_ROW = DefaultCSSClassProvider.create ("d-table-row");
   public static final ICSSClassProvider D_XL_BLOCK = DefaultCSSClassProvider.create ("d-xl-block");
   public static final ICSSClassProvider D_XL_FLEX = DefaultCSSClassProvider.create ("d-xl-flex");
   public static final ICSSClassProvider D_XL_INLINE = DefaultCSSClassProvider.create ("d-xl-inline");
@@ -377,6 +381,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider D_XL_NONE = DefaultCSSClassProvider.create ("d-xl-none");
   public static final ICSSClassProvider D_XL_TABLE = DefaultCSSClassProvider.create ("d-xl-table");
   public static final ICSSClassProvider D_XL_TABLE_CELL = DefaultCSSClassProvider.create ("d-xl-table-cell");
+  public static final ICSSClassProvider D_XL_TABLE_ROW = DefaultCSSClassProvider.create ("d-xl-table-row");
   public static final ICSSClassProvider DISABLED = DefaultCSSClassProvider.create ("disabled");
   public static final ICSSClassProvider DISPLAY_1 = DefaultCSSClassProvider.create ("display-1");
   public static final ICSSClassProvider DISPLAY_2 = DefaultCSSClassProvider.create ("display-2");
@@ -456,6 +461,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider FOCUS = DefaultCSSClassProvider.create ("focus");
   public static final ICSSClassProvider FONT_ITALIC = DefaultCSSClassProvider.create ("font-italic");
   public static final ICSSClassProvider FONT_WEIGHT_BOLD = DefaultCSSClassProvider.create ("font-weight-bold");
+  public static final ICSSClassProvider FONT_WEIGHT_LIGHT = DefaultCSSClassProvider.create ("font-weight-light");
   public static final ICSSClassProvider FONT_WEIGHT_NORMAL = DefaultCSSClassProvider.create ("font-weight-normal");
   public static final ICSSClassProvider FORM_CHECK = DefaultCSSClassProvider.create ("form-check");
   public static final ICSSClassProvider FORM_CHECK_INLINE = DefaultCSSClassProvider.create ("form-check-inline");
@@ -464,7 +470,6 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider FORM_CONTROL = DefaultCSSClassProvider.create ("form-control");
   public static final ICSSClassProvider FORM_CONTROL_FEEDBACK = DefaultCSSClassProvider.create ("form-control-feedback");
   public static final ICSSClassProvider FORM_CONTROL_FILE = DefaultCSSClassProvider.create ("form-control-file");
-  public static final ICSSClassProvider FORM_CONTROL_LABEL = DefaultCSSClassProvider.create ("form-control-label");
   public static final ICSSClassProvider FORM_CONTROL_LG = DefaultCSSClassProvider.create ("form-control-lg");
   public static final ICSSClassProvider FORM_CONTROL_PLAINTEXT = DefaultCSSClassProvider.create ("form-control-plaintext");
   public static final ICSSClassProvider FORM_CONTROL_RANGE = DefaultCSSClassProvider.create ("form-control-range");
@@ -824,6 +829,65 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider NAVBAR_TOGGLER = DefaultCSSClassProvider.create ("navbar-toggler");
   public static final ICSSClassProvider NAVBAR_TOGGLER_ICON = DefaultCSSClassProvider.create ("navbar-toggler-icon");
   public static final ICSSClassProvider NO_GUTTERS = DefaultCSSClassProvider.create ("no-gutters");
+  public static final ICSSClassProvider OFFSET_1 = DefaultCSSClassProvider.create ("offset-1");
+  public static final ICSSClassProvider OFFSET_10 = DefaultCSSClassProvider.create ("offset-10");
+  public static final ICSSClassProvider OFFSET_11 = DefaultCSSClassProvider.create ("offset-11");
+  public static final ICSSClassProvider OFFSET_2 = DefaultCSSClassProvider.create ("offset-2");
+  public static final ICSSClassProvider OFFSET_3 = DefaultCSSClassProvider.create ("offset-3");
+  public static final ICSSClassProvider OFFSET_4 = DefaultCSSClassProvider.create ("offset-4");
+  public static final ICSSClassProvider OFFSET_5 = DefaultCSSClassProvider.create ("offset-5");
+  public static final ICSSClassProvider OFFSET_6 = DefaultCSSClassProvider.create ("offset-6");
+  public static final ICSSClassProvider OFFSET_7 = DefaultCSSClassProvider.create ("offset-7");
+  public static final ICSSClassProvider OFFSET_8 = DefaultCSSClassProvider.create ("offset-8");
+  public static final ICSSClassProvider OFFSET_9 = DefaultCSSClassProvider.create ("offset-9");
+  public static final ICSSClassProvider OFFSET_LG_0 = DefaultCSSClassProvider.create ("offset-lg-0");
+  public static final ICSSClassProvider OFFSET_LG_1 = DefaultCSSClassProvider.create ("offset-lg-1");
+  public static final ICSSClassProvider OFFSET_LG_10 = DefaultCSSClassProvider.create ("offset-lg-10");
+  public static final ICSSClassProvider OFFSET_LG_11 = DefaultCSSClassProvider.create ("offset-lg-11");
+  public static final ICSSClassProvider OFFSET_LG_2 = DefaultCSSClassProvider.create ("offset-lg-2");
+  public static final ICSSClassProvider OFFSET_LG_3 = DefaultCSSClassProvider.create ("offset-lg-3");
+  public static final ICSSClassProvider OFFSET_LG_4 = DefaultCSSClassProvider.create ("offset-lg-4");
+  public static final ICSSClassProvider OFFSET_LG_5 = DefaultCSSClassProvider.create ("offset-lg-5");
+  public static final ICSSClassProvider OFFSET_LG_6 = DefaultCSSClassProvider.create ("offset-lg-6");
+  public static final ICSSClassProvider OFFSET_LG_7 = DefaultCSSClassProvider.create ("offset-lg-7");
+  public static final ICSSClassProvider OFFSET_LG_8 = DefaultCSSClassProvider.create ("offset-lg-8");
+  public static final ICSSClassProvider OFFSET_LG_9 = DefaultCSSClassProvider.create ("offset-lg-9");
+  public static final ICSSClassProvider OFFSET_MD_0 = DefaultCSSClassProvider.create ("offset-md-0");
+  public static final ICSSClassProvider OFFSET_MD_1 = DefaultCSSClassProvider.create ("offset-md-1");
+  public static final ICSSClassProvider OFFSET_MD_10 = DefaultCSSClassProvider.create ("offset-md-10");
+  public static final ICSSClassProvider OFFSET_MD_11 = DefaultCSSClassProvider.create ("offset-md-11");
+  public static final ICSSClassProvider OFFSET_MD_2 = DefaultCSSClassProvider.create ("offset-md-2");
+  public static final ICSSClassProvider OFFSET_MD_3 = DefaultCSSClassProvider.create ("offset-md-3");
+  public static final ICSSClassProvider OFFSET_MD_4 = DefaultCSSClassProvider.create ("offset-md-4");
+  public static final ICSSClassProvider OFFSET_MD_5 = DefaultCSSClassProvider.create ("offset-md-5");
+  public static final ICSSClassProvider OFFSET_MD_6 = DefaultCSSClassProvider.create ("offset-md-6");
+  public static final ICSSClassProvider OFFSET_MD_7 = DefaultCSSClassProvider.create ("offset-md-7");
+  public static final ICSSClassProvider OFFSET_MD_8 = DefaultCSSClassProvider.create ("offset-md-8");
+  public static final ICSSClassProvider OFFSET_MD_9 = DefaultCSSClassProvider.create ("offset-md-9");
+  public static final ICSSClassProvider OFFSET_SM_0 = DefaultCSSClassProvider.create ("offset-sm-0");
+  public static final ICSSClassProvider OFFSET_SM_1 = DefaultCSSClassProvider.create ("offset-sm-1");
+  public static final ICSSClassProvider OFFSET_SM_10 = DefaultCSSClassProvider.create ("offset-sm-10");
+  public static final ICSSClassProvider OFFSET_SM_11 = DefaultCSSClassProvider.create ("offset-sm-11");
+  public static final ICSSClassProvider OFFSET_SM_2 = DefaultCSSClassProvider.create ("offset-sm-2");
+  public static final ICSSClassProvider OFFSET_SM_3 = DefaultCSSClassProvider.create ("offset-sm-3");
+  public static final ICSSClassProvider OFFSET_SM_4 = DefaultCSSClassProvider.create ("offset-sm-4");
+  public static final ICSSClassProvider OFFSET_SM_5 = DefaultCSSClassProvider.create ("offset-sm-5");
+  public static final ICSSClassProvider OFFSET_SM_6 = DefaultCSSClassProvider.create ("offset-sm-6");
+  public static final ICSSClassProvider OFFSET_SM_7 = DefaultCSSClassProvider.create ("offset-sm-7");
+  public static final ICSSClassProvider OFFSET_SM_8 = DefaultCSSClassProvider.create ("offset-sm-8");
+  public static final ICSSClassProvider OFFSET_SM_9 = DefaultCSSClassProvider.create ("offset-sm-9");
+  public static final ICSSClassProvider OFFSET_XL_0 = DefaultCSSClassProvider.create ("offset-xl-0");
+  public static final ICSSClassProvider OFFSET_XL_1 = DefaultCSSClassProvider.create ("offset-xl-1");
+  public static final ICSSClassProvider OFFSET_XL_10 = DefaultCSSClassProvider.create ("offset-xl-10");
+  public static final ICSSClassProvider OFFSET_XL_11 = DefaultCSSClassProvider.create ("offset-xl-11");
+  public static final ICSSClassProvider OFFSET_XL_2 = DefaultCSSClassProvider.create ("offset-xl-2");
+  public static final ICSSClassProvider OFFSET_XL_3 = DefaultCSSClassProvider.create ("offset-xl-3");
+  public static final ICSSClassProvider OFFSET_XL_4 = DefaultCSSClassProvider.create ("offset-xl-4");
+  public static final ICSSClassProvider OFFSET_XL_5 = DefaultCSSClassProvider.create ("offset-xl-5");
+  public static final ICSSClassProvider OFFSET_XL_6 = DefaultCSSClassProvider.create ("offset-xl-6");
+  public static final ICSSClassProvider OFFSET_XL_7 = DefaultCSSClassProvider.create ("offset-xl-7");
+  public static final ICSSClassProvider OFFSET_XL_8 = DefaultCSSClassProvider.create ("offset-xl-8");
+  public static final ICSSClassProvider OFFSET_XL_9 = DefaultCSSClassProvider.create ("offset-xl-9");
   public static final ICSSClassProvider ORDER_1 = DefaultCSSClassProvider.create ("order-1");
   public static final ICSSClassProvider ORDER_10 = DefaultCSSClassProvider.create ("order-10");
   public static final ICSSClassProvider ORDER_11 = DefaultCSSClassProvider.create ("order-11");
@@ -836,6 +900,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_7 = DefaultCSSClassProvider.create ("order-7");
   public static final ICSSClassProvider ORDER_8 = DefaultCSSClassProvider.create ("order-8");
   public static final ICSSClassProvider ORDER_9 = DefaultCSSClassProvider.create ("order-9");
+  public static final ICSSClassProvider ORDER_FIRST = DefaultCSSClassProvider.create ("order-first");
   public static final ICSSClassProvider ORDER_LG_1 = DefaultCSSClassProvider.create ("order-lg-1");
   public static final ICSSClassProvider ORDER_LG_10 = DefaultCSSClassProvider.create ("order-lg-10");
   public static final ICSSClassProvider ORDER_LG_11 = DefaultCSSClassProvider.create ("order-lg-11");
@@ -848,6 +913,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_LG_7 = DefaultCSSClassProvider.create ("order-lg-7");
   public static final ICSSClassProvider ORDER_LG_8 = DefaultCSSClassProvider.create ("order-lg-8");
   public static final ICSSClassProvider ORDER_LG_9 = DefaultCSSClassProvider.create ("order-lg-9");
+  public static final ICSSClassProvider ORDER_LG_FIRST = DefaultCSSClassProvider.create ("order-lg-first");
   public static final ICSSClassProvider ORDER_MD_1 = DefaultCSSClassProvider.create ("order-md-1");
   public static final ICSSClassProvider ORDER_MD_10 = DefaultCSSClassProvider.create ("order-md-10");
   public static final ICSSClassProvider ORDER_MD_11 = DefaultCSSClassProvider.create ("order-md-11");
@@ -860,6 +926,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_MD_7 = DefaultCSSClassProvider.create ("order-md-7");
   public static final ICSSClassProvider ORDER_MD_8 = DefaultCSSClassProvider.create ("order-md-8");
   public static final ICSSClassProvider ORDER_MD_9 = DefaultCSSClassProvider.create ("order-md-9");
+  public static final ICSSClassProvider ORDER_MD_FIRST = DefaultCSSClassProvider.create ("order-md-first");
   public static final ICSSClassProvider ORDER_SM_1 = DefaultCSSClassProvider.create ("order-sm-1");
   public static final ICSSClassProvider ORDER_SM_10 = DefaultCSSClassProvider.create ("order-sm-10");
   public static final ICSSClassProvider ORDER_SM_11 = DefaultCSSClassProvider.create ("order-sm-11");
@@ -872,6 +939,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_SM_7 = DefaultCSSClassProvider.create ("order-sm-7");
   public static final ICSSClassProvider ORDER_SM_8 = DefaultCSSClassProvider.create ("order-sm-8");
   public static final ICSSClassProvider ORDER_SM_9 = DefaultCSSClassProvider.create ("order-sm-9");
+  public static final ICSSClassProvider ORDER_SM_FIRST = DefaultCSSClassProvider.create ("order-sm-first");
   public static final ICSSClassProvider ORDER_XL_1 = DefaultCSSClassProvider.create ("order-xl-1");
   public static final ICSSClassProvider ORDER_XL_10 = DefaultCSSClassProvider.create ("order-xl-10");
   public static final ICSSClassProvider ORDER_XL_11 = DefaultCSSClassProvider.create ("order-xl-11");
@@ -884,6 +952,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_XL_7 = DefaultCSSClassProvider.create ("order-xl-7");
   public static final ICSSClassProvider ORDER_XL_8 = DefaultCSSClassProvider.create ("order-xl-8");
   public static final ICSSClassProvider ORDER_XL_9 = DefaultCSSClassProvider.create ("order-xl-9");
+  public static final ICSSClassProvider ORDER_XL_FIRST = DefaultCSSClassProvider.create ("order-xl-first");
   public static final ICSSClassProvider P_0 = DefaultCSSClassProvider.create ("p-0");
   public static final ICSSClassProvider P_1 = DefaultCSSClassProvider.create ("p-1");
   public static final ICSSClassProvider P_2 = DefaultCSSClassProvider.create ("p-2");
@@ -982,6 +1051,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider POPOVER = DefaultCSSClassProvider.create ("popover");
   public static final ICSSClassProvider POPOVER_BODY = DefaultCSSClassProvider.create ("popover-body");
   public static final ICSSClassProvider POPOVER_HEADER = DefaultCSSClassProvider.create ("popover-header");
+  public static final ICSSClassProvider POSITION_ABSOLUTE = DefaultCSSClassProvider.create ("position-absolute");
+  public static final ICSSClassProvider POSITION_FIXED = DefaultCSSClassProvider.create ("position-fixed");
+  public static final ICSSClassProvider POSITION_RELATIVE = DefaultCSSClassProvider.create ("position-relative");
+  public static final ICSSClassProvider POSITION_STATIC = DefaultCSSClassProvider.create ("position-static");
+  public static final ICSSClassProvider POSITION_STICKY = DefaultCSSClassProvider.create ("position-sticky");
   public static final ICSSClassProvider PR_0 = DefaultCSSClassProvider.create ("pr-0");
   public static final ICSSClassProvider PR_1 = DefaultCSSClassProvider.create ("pr-1");
   public static final ICSSClassProvider PR_2 = DefaultCSSClassProvider.create ("pr-2");
@@ -1129,10 +1203,13 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TABLE_DARK = DefaultCSSClassProvider.create ("table-dark");
   public static final ICSSClassProvider TABLE_HOVER = DefaultCSSClassProvider.create ("table-hover");
   public static final ICSSClassProvider TABLE_INFO = DefaultCSSClassProvider.create ("table-info");
-  public static final ICSSClassProvider TABLE_INVERSE = DefaultCSSClassProvider.create ("table-inverse");
   public static final ICSSClassProvider TABLE_LIGHT = DefaultCSSClassProvider.create ("table-light");
   public static final ICSSClassProvider TABLE_PRIMARY = DefaultCSSClassProvider.create ("table-primary");
   public static final ICSSClassProvider TABLE_RESPONSIVE = DefaultCSSClassProvider.create ("table-responsive");
+  public static final ICSSClassProvider TABLE_RESPONSIVE_LG = DefaultCSSClassProvider.create ("table-responsive-lg");
+  public static final ICSSClassProvider TABLE_RESPONSIVE_MD = DefaultCSSClassProvider.create ("table-responsive-md");
+  public static final ICSSClassProvider TABLE_RESPONSIVE_SM = DefaultCSSClassProvider.create ("table-responsive-sm");
+  public static final ICSSClassProvider TABLE_RESPONSIVE_XL = DefaultCSSClassProvider.create ("table-responsive-xl");
   public static final ICSSClassProvider TABLE_SECONDARY = DefaultCSSClassProvider.create ("table-secondary");
   public static final ICSSClassProvider TABLE_SM = DefaultCSSClassProvider.create ("table-sm");
   public static final ICSSClassProvider TABLE_STRIPED = DefaultCSSClassProvider.create ("table-striped");
@@ -1170,10 +1247,12 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TEXT_XL_CENTER = DefaultCSSClassProvider.create ("text-xl-center");
   public static final ICSSClassProvider TEXT_XL_LEFT = DefaultCSSClassProvider.create ("text-xl-left");
   public static final ICSSClassProvider TEXT_XL_RIGHT = DefaultCSSClassProvider.create ("text-xl-right");
-  public static final ICSSClassProvider THEAD_DEFAULT = DefaultCSSClassProvider.create ("thead-default");
-  public static final ICSSClassProvider THEAD_INVERSE = DefaultCSSClassProvider.create ("thead-inverse");
+  public static final ICSSClassProvider THEAD_DARK = DefaultCSSClassProvider.create ("thead-dark");
+  public static final ICSSClassProvider THEAD_LIGHT = DefaultCSSClassProvider.create ("thead-light");
   public static final ICSSClassProvider TOOLTIP = DefaultCSSClassProvider.create ("tooltip");
   public static final ICSSClassProvider TOOLTIP_INNER = DefaultCSSClassProvider.create ("tooltip-inner");
+  public static final ICSSClassProvider VALID_FEEDBACK = DefaultCSSClassProvider.create ("valid-feedback");
+  public static final ICSSClassProvider VALID_TOOLTIP = DefaultCSSClassProvider.create ("valid-tooltip");
   public static final ICSSClassProvider VISIBLE = DefaultCSSClassProvider.create ("visible");
   public static final ICSSClassProvider W_100 = DefaultCSSClassProvider.create ("w-100");
   public static final ICSSClassProvider W_25 = DefaultCSSClassProvider.create ("w-25");

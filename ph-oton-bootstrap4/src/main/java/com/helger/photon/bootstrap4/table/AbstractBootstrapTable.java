@@ -104,12 +104,18 @@ public abstract class AbstractBootstrapTable <IMPLTYPE extends AbstractHCTable <
   }
 
   @Nonnull
-  public IMPLTYPE setInverse (final boolean bCondensed)
+  public IMPLTYPE setInverse (final boolean bInverse)
   {
-    if (bCondensed)
-      addClass (CBootstrapCSS.TABLE_INVERSE);
+    return setDark (bInverse);
+  }
+
+  @Nonnull
+  public IMPLTYPE setDark (final boolean bDark)
+  {
+    if (bDark)
+      addClass (CBootstrapCSS.TABLE_DARK);
     else
-      removeClass (CBootstrapCSS.TABLE_INVERSE);
+      removeClass (CBootstrapCSS.TABLE_DARK);
     return thisAsT ();
   }
 

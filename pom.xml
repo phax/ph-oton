@@ -73,8 +73,8 @@
     <jetty.version>9.4.5.v20170502</jetty.version>
     <jetty.version>9.4.6.v20170531</jetty.version>
     <!--  
-    <jetty.version>9.4.7.v20170914</jetty.version>
     -->
+    <jetty.version>9.4.7.v20170914</jetty.version>
   </properties>
 
   <dependencyManagement>
