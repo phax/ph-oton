@@ -47,8 +47,8 @@ public interface IAjaxExecutor extends Serializable
    * Registers all external resources (CSS or JS files) needed by controls
    * potentially spawned by an AJAX request of this handler. This method is
    * called BEFORE
-   * {@link #handleRequest(IRequestWebScopeWithoutResponse, PhotonUnifiedResponse)} is
-   * invoked!
+   * {@link #handleRequest(IRequestWebScopeWithoutResponse, PhotonUnifiedResponse)}
+   * is invoked!
    */
   default void registerExternalResources ()
   {
@@ -56,7 +56,12 @@ public interface IAjaxExecutor extends Serializable
   }
 
   /**
-   * Called to handle a specific request.
+   * Called to handle a specific request. The implementation of this method
+   * usually performs a server side task and fills the provided response object
+   * with e.g. binary data to download or HTML content to be evaluated by the
+   * calling HTML page. If this Ajax executor only executes something but
+   * delivers no result, at least the HTTP status 204 (No content) should be
+   * returned.
    *
    * @param aRequestScope
    *        the request scope values to be used. Never <code>null</code>.

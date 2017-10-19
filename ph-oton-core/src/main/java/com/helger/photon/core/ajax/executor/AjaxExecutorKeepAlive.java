@@ -44,6 +44,6 @@ public final class AjaxExecutorKeepAlive implements IAjaxExecutor
     aRequestScope.getSession (false);
 
     // Always success
-    aAjaxResponse.jsonEmpty ();
+    aAjaxResponse.createNoContent ();
   }
 }
