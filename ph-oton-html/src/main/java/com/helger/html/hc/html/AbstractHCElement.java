@@ -836,6 +836,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   {
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("element", m_eElement)
+                            .append ("elementName", m_sElementName)
                             .appendIfNotNull ("ID", m_sID)
                             .appendIfNotNull ("title", m_sTitle)
                             .appendIfNotNull ("language", m_sLanguage)
@@ -846,12 +847,14 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
                             .append ("unfocusable", m_bUnfocusable)
                             .append ("tabIndex", m_nTabIndex)
                             .appendIfNotNull ("accessKey", m_sAccessKey)
+                            .appendIfNotNull ("translate", m_eTranslate)
                             .appendIfNotNull ("contentEditable", m_eContentEditable)
                             .appendIfNotNull ("contextMenu", m_sContextMenuID)
                             .appendIfNotNull ("draggable", m_eDraggable)
                             .appendIfNotNull ("dropZone", m_eDropZone)
                             .append ("hidden", m_bHidden)
                             .append ("spellcheck", m_bSpellCheck)
+                            .appendIfNotNull ("role", m_eRole)
                             .appendIfNotNull ("customAttrs", m_aCustomAttrs)
                             .getToString ();
   }
