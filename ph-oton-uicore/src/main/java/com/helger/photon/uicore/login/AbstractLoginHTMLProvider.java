@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.core.app.html.AbstractHTMLProvider;
+import com.helger.photon.core.app.html.AbstractSWECHTMLProvider;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.WebPageCSRFHandler;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
@@ -34,7 +34,7 @@ import com.helger.security.authentication.credentials.ICredentialValidationResul
  *
  * @author Philip Helger
  */
-public abstract class AbstractLoginHTMLProvider extends AbstractHTMLProvider
+public abstract class AbstractLoginHTMLProvider extends AbstractSWECHTMLProvider
 {
   private final boolean m_bLoginError;
   private final ICredentialValidationResult m_aLoginResult;

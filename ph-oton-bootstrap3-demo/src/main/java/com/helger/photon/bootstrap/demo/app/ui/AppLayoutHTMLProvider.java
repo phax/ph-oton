@@ -31,7 +31,7 @@ import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
-import com.helger.photon.core.app.html.AbstractHTMLProvider;
+import com.helger.photon.core.app.html.AbstractSWECHTMLProvider;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
@@ -40,7 +40,7 @@ import com.helger.xservlet.forcedredirect.ForcedRedirectException;
  *
  * @author Philip Helger
  */
-public class AppLayoutHTMLProvider extends AbstractHTMLProvider
+public class AppLayoutHTMLProvider extends AbstractSWECHTMLProvider
 {
   private final IFunction <LayoutExecutionContext, IHCNode> m_aFactory;
 

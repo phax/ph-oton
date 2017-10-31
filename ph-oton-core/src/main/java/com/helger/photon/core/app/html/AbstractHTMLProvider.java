@@ -19,14 +19,13 @@ package com.helger.photon.core.app.html;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.ToStringGenerator;
@@ -42,9 +41,6 @@ import com.helger.html.meta.IMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.basic.app.appid.RequestSettings;
-import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
-import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
@@ -77,17 +73,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   {
     return new HCHtml ().setLanguage (aDisplayLocale.getLanguage ());
   }
-
-  /**
-   * Fill the HTML body
-   *
-   * @param aSWEC
-   *        Web execution context
-   * @param aHtml
-   *        HTML object to be filled
-   */
-  protected abstract void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                    @Nonnull HCHtml aHtml) throws ForcedRedirectException;
 
   /**
    * Add all meta elements to the HTML head element.
@@ -145,7 +130,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     final HCHead aHead = aHtml.head ();
 
     // Add configured and per-request CSS
-    final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
+    final ICommonsOrderedSet <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
     PhotonCSS.getAllRegisteredCSSIncludesForThisRequest (aCSSs);
 
     // Add each CSS separately
@@ -153,7 +138,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
       aHead.addCSS (PhotonHTMLHelper.getCSSNode (aRequestScope, aCSS, bRegular));
 
     // Add all configured and per-request JS
-    final Set <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
+    final ICommonsOrderedSet <IJSPathProvider> aJSs = PhotonJS.getAllRegisteredJSIncludesForGlobal ();
     PhotonJS.getAllRegisteredJSIncludesForThisRequest (aJSs);
 
     // Add each JS separately
@@ -162,42 +147,30 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   }
 
   /**
-   * Fill the HTML HEAD element.
+   * Overridable method to fill head and body.
    *
-   * @param aSWEC
-   *        Web execution context
+   * @param aRequestScope
+   *        Current request scope
    * @param aHtml
-   *        The HTML object to be filled.
+   *        Created (empty) HTML node
+   * @param aDisplayLocale
+   *        The display locale of the current request
    */
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
-  {
-    final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
-    final HCHead aHead = aHtml.head ();
-
-    // Add all meta elements
-    addMetaElements (aRequestScope, aHead);
-  }
+  protected abstract void fillHeadAndBody (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+                                           @Nonnull HCHtml aHtml,
+                                           @Nonnull Locale aDisplayLocale);
 
   @Nonnull
   public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
   {
     final Locale aDisplayLocale = RequestSettings.getDisplayLocale (aRequestScope);
-    final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
     final IHCConversionSettingsToNode aConversionSettings = HCSettings.getConversionSettings ();
-
-    // Build the execution scope
-    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree);
 
     // Create the surrounding HTML element
     final HCHtml aHtml = createHCHtml (aDisplayLocale);
 
-    // fill body
-    fillBody (aSWEC, aHtml);
-
-    // build HTML header (after body for per-request stuff)
-    fillHead (aSWEC, aHtml);
+    // Main content filling
+    fillHeadAndBody (aRequestScope, aHtml, aDisplayLocale);
 
     // customize, finalize and extract resources
     // This must be done before the CSS and JS are included because per-request
