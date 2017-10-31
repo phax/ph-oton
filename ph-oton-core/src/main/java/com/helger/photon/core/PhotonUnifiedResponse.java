@@ -219,7 +219,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
         // This must be done before the CSS and JS are included because
         // per-request
         // resource registration happens inside
-        HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
+        HCRenderer.prepareForConversion (aHtml, aHtml.body (), aConversionSettings);
 
         // Extract and merge all inline out-of-band nodes
         if (aConversionSettings.isExtractOutOfBandNodes ())
@@ -230,7 +230,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
         final boolean bMergeCSS = ResourceBundleServlet.isEnabled ();
         final boolean bMergeJS = ResourceBundleServlet.isEnabled ();
-        PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
+        PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.head (), bMergeCSS, bMergeJS);
 
         // Move scripts to body? If so, after aggregation!
         if (HCSettings.isScriptsInBody ())

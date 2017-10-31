@@ -71,7 +71,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
       }
     }
     if (aMenuTree == null)
-      throw new IllegalStateException ("Failed to resolve MenuTree for request!");
+      throw new IllegalStateException ("Failed to resolve MenuTree for request using application ID '" + sAppID + "'!");
 
     // Run default request initialization (menu item and locale)
     final PhotonRequestParameters aParams = RequestParameterManager.getInstance ()
@@ -110,7 +110,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     }
 
     if (aMenuItem == null)
-      throw new IllegalStateException ("No menu item is present!");
+      throw new IllegalStateException ("No menu item is present for application ID '" + sAppID + "'!");
 
     // Store in all scopes
     aAppSessionState.setMenuItem (aMenuItem);
@@ -130,7 +130,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
         aDisplayLocale = GlobalLocaleManager.getInstance ().getDefaultLocale ();
 
         if (aDisplayLocale == null)
-          throw new IllegalStateException ("No locale could be determined!");
+          throw new IllegalStateException ("No locale could be determined for application ID '" + sAppID + "!");
       }
     }
 

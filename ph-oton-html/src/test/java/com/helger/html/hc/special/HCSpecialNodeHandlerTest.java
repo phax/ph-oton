@@ -65,10 +65,10 @@ public final class HCSpecialNodeHandlerTest
   public void testSpecialNodeListHandler ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().setPageTitle ("Test");
-    aHtml.getHead ().addJS (new MockScript ("var x=0;"));
-    aHtml.getHead ().addJS (new MockScript ("var y=0;"));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("root"));
+    aHtml.head ().setPageTitle ("Test");
+    aHtml.head ().addJS (new MockScript ("var x=0;"));
+    aHtml.head ().addJS (new MockScript ("var y=0;"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("root"));
     final String sCRLF = ENewLineMode.DEFAULT.getText ();
     final HCConversionSettings aCS = new HCConversionSettings (EHTMLVersion.HTML5);
     aCS.getXMLWriterSettings ().setEmitNamespaces (false).setIndent (EXMLSerializeIndent.ALIGN_ONLY);
@@ -111,11 +111,11 @@ public final class HCSpecialNodeHandlerTest
   public void testCSSMerge1 ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().setPageTitle ("Test");
-    aHtml.getHead ().addCSS (new HCStyle ("body{color:red}"));
-    aHtml.getHead ().addCSS (new HCStyle ("div{color:blue}"));
-    aHtml.getHead ().addCSS (new HCStyle ("span{color:green}"));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("root"));
+    aHtml.head ().setPageTitle ("Test");
+    aHtml.head ().addCSS (new HCStyle ("body{color:red}"));
+    aHtml.head ().addCSS (new HCStyle ("div{color:blue}"));
+    aHtml.head ().addCSS (new HCStyle ("span{color:green}"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("root"));
     final String sCRLF = ENewLineMode.DEFAULT.getText ();
     final HCConversionSettings aCS = new HCConversionSettings (EHTMLVersion.HTML5);
     aCS.getXMLWriterSettings ().setEmitNamespaces (false).setIndent (EXMLSerializeIndent.ALIGN_ONLY);
@@ -150,12 +150,12 @@ public final class HCSpecialNodeHandlerTest
   public void testCSSMerge1a ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().setPageTitle ("Test");
-    aHtml.getHead ().addCSS (new HCStyle ("body{color:red}"));
+    aHtml.head ().setPageTitle ("Test");
+    aHtml.head ().addCSS (new HCStyle ("body{color:red}"));
     // Should be the same as no media list specified!
-    aHtml.getHead ().addCSS (new HCStyle ("div{color:blue}").setMedia (new CSSMediaList ()));
-    aHtml.getHead ().addCSS (new HCStyle ("span{color:green}"));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("root"));
+    aHtml.head ().addCSS (new HCStyle ("div{color:blue}").setMedia (new CSSMediaList ()));
+    aHtml.head ().addCSS (new HCStyle ("span{color:green}"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("root"));
     final String sCRLF = ENewLineMode.DEFAULT.getText ();
     final HCConversionSettings aCS = new HCConversionSettings (EHTMLVersion.HTML5);
     aCS.getXMLWriterSettings ().setEmitNamespaces (false).setIndent (EXMLSerializeIndent.ALIGN_ONLY);
@@ -190,12 +190,12 @@ public final class HCSpecialNodeHandlerTest
   public void testCSSMerge1b ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().setPageTitle ("Test");
-    aHtml.getHead ().addCSS (new HCStyle ("body{color:red}"));
+    aHtml.head ().setPageTitle ("Test");
+    aHtml.head ().addCSS (new HCStyle ("body{color:red}"));
     // Should be the same as no media list specified!
-    aHtml.getHead ().addCSS (new HCStyle ("div{color:blue}").setMedia (new CSSMediaList (ECSSMedium.ALL)));
-    aHtml.getHead ().addCSS (new HCStyle ("span{color:green}"));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("root"));
+    aHtml.head ().addCSS (new HCStyle ("div{color:blue}").setMedia (new CSSMediaList (ECSSMedium.ALL)));
+    aHtml.head ().addCSS (new HCStyle ("span{color:green}"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("root"));
     final String sCRLF = ENewLineMode.DEFAULT.getText ();
     final HCConversionSettings aCS = new HCConversionSettings (EHTMLVersion.HTML5);
     aCS.getXMLWriterSettings ().setEmitNamespaces (false).setIndent (EXMLSerializeIndent.ALIGN_ONLY);
@@ -230,11 +230,11 @@ public final class HCSpecialNodeHandlerTest
   public void testCSSMerge2 ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().setPageTitle ("Test");
-    aHtml.getHead ().addCSS (new HCStyle ("body{color:red}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
-    aHtml.getHead ().addCSS (new HCStyle ("div{color:blue}"));
-    aHtml.getHead ().addCSS (new HCStyle ("span{color:green}"));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("root"));
+    aHtml.head ().setPageTitle ("Test");
+    aHtml.head ().addCSS (new HCStyle ("body{color:red}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
+    aHtml.head ().addCSS (new HCStyle ("div{color:blue}"));
+    aHtml.head ().addCSS (new HCStyle ("span{color:green}"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("root"));
     final String sCRLF = ENewLineMode.DEFAULT.getText ();
     final HCConversionSettings aCS = new HCConversionSettings (EHTMLVersion.HTML5);
     aCS.getXMLWriterSettings ().setEmitNamespaces (false).setIndent (EXMLSerializeIndent.ALIGN_ONLY);
@@ -271,11 +271,11 @@ public final class HCSpecialNodeHandlerTest
   public void testCSSMerge3 ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().setPageTitle ("Test");
-    aHtml.getHead ().addCSS (new HCStyle ("body{color:red}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
-    aHtml.getHead ().addCSS (new HCStyle ("div{color:blue}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
-    aHtml.getHead ().addCSS (new HCStyle ("span{color:green}"));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("root"));
+    aHtml.head ().setPageTitle ("Test");
+    aHtml.head ().addCSS (new HCStyle ("body{color:red}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
+    aHtml.head ().addCSS (new HCStyle ("div{color:blue}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
+    aHtml.head ().addCSS (new HCStyle ("span{color:green}"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("root"));
     final String sCRLF = ENewLineMode.DEFAULT.getText ();
     final HCConversionSettings aCS = new HCConversionSettings (EHTMLVersion.HTML5);
     aCS.getXMLWriterSettings ().setEmitNamespaces (false).setIndent (EXMLSerializeIndent.ALIGN_ONLY);
@@ -312,11 +312,11 @@ public final class HCSpecialNodeHandlerTest
   public void testCSSMerge4 ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().setPageTitle ("Test");
-    aHtml.getHead ().addCSS (new HCStyle ("body{color:red}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
-    aHtml.getHead ().addCSS (new HCStyle ("div{color:blue}"));
-    aHtml.getHead ().addCSS (new HCStyle ("span{color:green}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("root"));
+    aHtml.head ().setPageTitle ("Test");
+    aHtml.head ().addCSS (new HCStyle ("body{color:red}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
+    aHtml.head ().addCSS (new HCStyle ("div{color:blue}"));
+    aHtml.head ().addCSS (new HCStyle ("span{color:green}").setMedia (new CSSMediaList (ECSSMedium.PRINT)));
+    aHtml.body ().addChild (new HCH1 ().addChild ("root"));
     final String sCRLF = ENewLineMode.DEFAULT.getText ();
     final HCConversionSettings aCS = new HCConversionSettings (EHTMLVersion.HTML5);
     aCS.getXMLWriterSettings ().setEmitNamespaces (false).setIndent (EXMLSerializeIndent.ALIGN_ONLY);

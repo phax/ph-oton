@@ -53,10 +53,8 @@ public final class HCHeadTest
     assertNull (aHead.getPageTitle ());
     assertNull (aHead.getBaseHref ());
     assertNull (aHead.getBaseTarget ());
-    assertTrue (aHead.getAllMetaElements ().isEmpty ());
-    assertEquals (0, aHead.getMetaElementCount ());
-    assertTrue (aHead.getAllLinks ().isEmpty ());
-    assertEquals (0, aHead.getLinkCount ());
+    assertTrue (aHead.metaElements ().isEmpty ());
+    assertTrue (aHead.links ().isEmpty ());
     assertTrue (aHead.getAllCSSNodes ().isEmpty ());
     assertTrue (aHead.getAllJSNodes ().isEmpty ());
     assertEquals ("", aHead.getPlainText ());
@@ -87,19 +85,16 @@ public final class HCHeadTest
   public void testMetaElements ()
   {
     final HCHead aHead = new HCHead ();
-    assertTrue (aHead.getAllMetaElements ().isEmpty ());
-    assertEquals (0, aHead.getMetaElementCount ());
+    assertTrue (aHead.metaElements ().isEmpty ());
 
-    assertSame (aHead, aHead.addMetaElement (new HCMeta ().setName ("foo").setContent ("bar")));
-    assertFalse (aHead.getAllMetaElements ().isEmpty ());
-    assertEquals (1, aHead.getMetaElementCount ());
-    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\">" +
-                  "<meta name=\"foo\" content=\"bar\" />" +
-                  "</head>",
+    assertTrue (aHead.metaElements ().add (new HCMeta ().setName ("foo").setContent ("bar")));
+    assertFalse (aHead.metaElements ().isEmpty ());
+    assertEquals (1, aHead.metaElements ().size ());
+    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\">" + "<meta name=\"foo\" content=\"bar\" />" + "</head>",
                   HCRenderer.getAsHTMLString (aHead));
 
-    assertSame (aHead, aHead.addMetaElement (new HCMeta ().setHttpEquiv ("goo").setContent ("car")));
-    assertEquals (2, aHead.getMetaElementCount ());
+    assertTrue (aHead.metaElements ().add (new HCMeta ().setHttpEquiv ("goo").setContent ("car")));
+    assertEquals (2, aHead.metaElements ().size ());
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\">" +
                   "<meta name=\"foo\" content=\"bar\" />" +
                   "<meta http-equiv=\"goo\" content=\"car\" />" +
@@ -107,17 +102,17 @@ public final class HCHeadTest
                   HCRenderer.getAsHTMLString (aHead));
 
     assertEquals (EChange.UNCHANGED, aHead.removeMetaElement ("any"));
-    assertEquals (2, aHead.getMetaElementCount ());
+    assertEquals (2, aHead.metaElements ().size ());
     assertEquals (EChange.CHANGED, aHead.removeMetaElement ("foo"));
-    assertEquals (1, aHead.getMetaElementCount ());
+    assertEquals (1, aHead.metaElements ().size ());
     assertEquals (EChange.UNCHANGED, aHead.removeMetaElement ("foo"));
-    assertEquals (1, aHead.getMetaElementCount ());
+    assertEquals (1, aHead.metaElements ().size ());
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\">" +
                   "<meta http-equiv=\"goo\" content=\"car\" />" +
                   "</head>",
                   HCRenderer.getAsHTMLString (aHead));
     assertEquals (EChange.CHANGED, aHead.removeMetaElement ("goo"));
-    assertEquals (0, aHead.getMetaElementCount ());
+    assertEquals (0, aHead.metaElements ().size ());
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"></head>", HCRenderer.getAsHTMLString (aHead));
   }
 
@@ -187,7 +182,7 @@ public final class HCHeadTest
     assertTrue (aHead.getFirstChild () instanceof HCTitle);
     assertTrue (aHead.getLastChild () instanceof HCStyle);
 
-    aHead.addLink (new HCLink ().setRev (EHCLinkType.APPENDIX));
+    aHead.links ().add (new HCLink ().setRev (EHCLinkType.APPENDIX));
     assertEquals (5, aHead.getChildCount ());
     assertTrue (aHead.getChildAtIndex (0) instanceof HCTitle);
     assertTrue (aHead.getChildAtIndex (1) instanceof HCBase);

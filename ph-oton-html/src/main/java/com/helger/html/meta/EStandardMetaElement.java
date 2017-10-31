@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.http.CHttpHeader;
 import com.helger.commons.lang.EnumHelper;
 
 /**
@@ -30,24 +31,23 @@ import com.helger.commons.lang.EnumHelper;
 public enum EStandardMetaElement implements IMetaElementDeclaration
 {
   // Source: http://vancouver-webpages.com/META/metatags.detail.html
-  CONTENT_TYPE ("Content-Type", true),
-  CONTENT_SCRIPT_TYPE ("Content-Script-Type", true),
-  CONTENT_SECURITY_POLICY ("Content-Security-Policy", true),
-  CONTENT_STYLE_TYPE ("Content-Style-Type", true),
-  CONTENT_DISPOSITION ("Content-Disposition", true),
-  EXPIRES ("Expires", true),
-  PRAGMA ("Pragma", true),
-  DEFAULT_STYLE ("Default-Style", true),
-  CONTENT_LANGUAGE ("Content-Language", true),
-  REFRESH ("Refresh", true),
-  WINDOW_TARGET ("Window-target", true),
-  EXT_CACHE ("Ext-cache", true),
-  SET_COOKIE ("Set-Cookie", true),
-  PICS_LABEL ("PICS-Label", true),
-  CACHE_CONTROL ("Cache-Control", true),
-  VARY ("Vary", true),
-  LOTUS ("Lotus", true),
-  X_UA_COMPATIBLE ("X-UA-Compatible", true),
+  CONTENT_TYPE (CHttpHeader.CONTENT_TYPE, true),
+  CONTENT_SCRIPT_TYPE (CHttpHeader.CONTENT_SCRIPT_TYPE, true),
+  CONTENT_SECURITY_POLICY (CHttpHeader.CONTENT_SECURITY_POLICY, true),
+  CONTENT_STYLE_TYPE (CHttpHeader.CONTENT_STYLE_TYPE, true),
+  CONTENT_DISPOSITION (CHttpHeader.CONTENT_DISPOSITION, true),
+  EXPIRES (CHttpHeader.EXPIRES, true),
+  PRAGMA (CHttpHeader.PRAGMA, true),
+  DEFAULT_STYLE (CHttpHeader.DEFAULT_STYLE, true),
+  CONTENT_LANGUAGE (CHttpHeader.CONTENT_LANGUAGE, true),
+  REFRESH (CHttpHeader.REFRESH, true),
+  WINDOW_TARGET (CHttpHeader.WINDOW_TARGET, true),
+  EXT_CACHE (CHttpHeader.EXT_CACHE, true),
+  SET_COOKIE (CHttpHeader.SET_COOKIE, true),
+  PICS_LABEL (CHttpHeader.PICS_LABEL, true),
+  CACHE_CONTROL (CHttpHeader.CACHE_CONTROL, true),
+  VARY (CHttpHeader.VARY, true),
+  X_UA_COMPATIBLE (CHttpHeader.X_UA_COMPATIBLE, true),
   // Non HTTP equiv:
   DESCRIPTION ("Description", false),
   KEYWORDS ("Keywords", false),

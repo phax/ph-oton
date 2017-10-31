@@ -50,16 +50,16 @@ public final class PhotonRequestState implements Serializable
   public PhotonRequestState (@Nonnull final PhotonGlobalStatePerApp aState)
   {
     this (aState.getMenuTree (),
-          aState.getMenuTree ().getDefaultMenuItem (),
+          aState.getMenuTree () == null ? null : aState.getMenuTree ().getDefaultMenuItem (),
           GlobalLocaleManager.getInstance ().getDefaultLocale ());
   }
 
-  public PhotonRequestState (@Nonnull final IMenuTree aMenuTree,
-                             @Nonnull final IMenuItemPage aMenuItem,
+  public PhotonRequestState (@Nullable final IMenuTree aMenuTree,
+                             @Nullable final IMenuItemPage aMenuItem,
                              @Nonnull final Locale aDisplayLocale)
   {
-    m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
-    m_aMenuItem = ValueEnforcer.notNull (aMenuItem, "MenuItem");
+    m_aMenuTree = aMenuTree;
+    m_aMenuItem = aMenuItem;
     m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
   }
 

@@ -57,8 +57,8 @@ public class AppLayoutHTMLProvider extends AbstractHTMLProvider
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
     final IMenuItemPage aMenuItem = RequestSettings.getMenuItem (aRequestScope);
     final LayoutExecutionContext aLEC = new LayoutExecutionContext (aSWEC, aMenuItem);
-    final HCHead aHead = aHtml.getHead ();
-    final HCBody aBody = aHtml.getBody ();
+    final HCHead aHead = aHtml.head ();
+    final HCBody aBody = aHtml.body ();
 
     // Add menu item in page title
     aHead.setPageTitle (StringHelper.getConcatenatedOnDemand (CApp.getApplicationTitle (),

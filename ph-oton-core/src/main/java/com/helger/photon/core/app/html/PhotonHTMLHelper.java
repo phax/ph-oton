@@ -114,8 +114,10 @@ public final class PhotonHTMLHelper
     final HCHtml aHtml = aHTMLProvider.createHTML (aRequestScope);
 
     // Add some ad comment :)
-    aHtml.getHead ().addMetaElement (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ())
-                                                  .setContent ("https://github.com/phax/ph-oton // phax // ASL 2.0"));
+    aHtml.head ()
+         .metaElements ()
+         .add (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ())
+                            .setContent ("https://github.com/phax/ph-oton // phax // ASL 2.0"));
 
     // Convert HTML to String, including namespaces
     final String sXMLCode = HCRenderer.getAsHTMLString (aHtml);

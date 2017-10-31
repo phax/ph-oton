@@ -82,7 +82,7 @@ public final class HCRenderer
                                                @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // customize, finalize and extract resources
-    prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
+    prepareForConversion (aHtml, aHtml.body (), aConversionSettings);
 
     // Extract all out-of-band nodes into the body
     if (aConversionSettings.isExtractOutOfBandNodes ())

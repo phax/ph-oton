@@ -222,7 +222,7 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     onAfterLoginContainer (aSWEC, aSpan);
 
     // Build body
-    final HCBody aBody = aHtml.getBody ();
+    final HCBody aBody = aHtml.body ();
     aBody.addChild (aSpan);
   }
 
@@ -232,6 +232,6 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
   {
     super.fillHead (aSWEC, aHtml);
     if (m_aPageTitle != null)
-      aHtml.getHead ().setPageTitle (m_aPageTitle.getPlainText ());
+      aHtml.head ().setPageTitle (m_aPageTitle.getPlainText ());
   }
 }

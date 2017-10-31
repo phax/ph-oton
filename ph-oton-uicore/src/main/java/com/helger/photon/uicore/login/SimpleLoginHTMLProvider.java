@@ -99,7 +99,7 @@ public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
 
-    final HCBody aBody = aHtml.getBody ();
+    final HCBody aBody = aHtml.body ();
     final HCSpan aSpan = aBody.addAndReturnChild (new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN));
     final HCCenter aCenter = aSpan.addAndReturnChild (new HCCenter ());
     final HCForm aForm = aCenter.addAndReturnChild (new HCForm (new SimpleURL (aRequestScope.getURL ())));

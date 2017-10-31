@@ -67,7 +67,7 @@ public final class HC5FuncTest
   public void testMainHC ()
   {
     final HCHtml h = new HCHtml ();
-    final HCBody b = h.getBody ();
+    final HCBody b = h.body ();
 
     b.addChild (new HCArticle ());
     b.addChild (new HCArticle ().addChild ("Bla foo"));

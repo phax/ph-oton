@@ -122,7 +122,7 @@ public final class HCFuncTest
   public void testMainHC ()
   {
     final HCHtml h = new HCHtml ();
-    final HCBody b = h.getBody ();
+    final HCBody b = h.body ();
     b.addChild (new HCA (new SimpleURL ("http://www.helger.com")).setTarget (HC_Target.SELF).addChild ("helger"));
     b.addChild (new HCAbbr ().addChild ("abbr"));
     b.addChild (new HCAddress ().addChild ("address"));

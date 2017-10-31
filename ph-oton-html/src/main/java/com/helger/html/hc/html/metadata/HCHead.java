@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -120,76 +121,40 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   //
-  // Meta element handling
+  // Meta elements
   //
 
-  @Nonnull
-  public HCHead addMetaElement (@Nonnull final HCMeta aMetaElement)
-  {
-    ValueEnforcer.notNull (aMetaElement, "MetaElement");
-    m_aMetaElements.add (aMetaElement);
-    return this;
-  }
-
   /**
-   * Add the meta element at the specified index.
-   *
-   * @param nIndex
-   *        The index to be used. Should be &ge; 0.
-   * @param aMetaElement
-   *        The element to be added. May not be <code>null</code>.
-   * @return this for chaining
+   * @return meta element list. Never <code>null</code>.
    */
   @Nonnull
-  public HCHead addMetaElementAt (@Nonnegative final int nIndex, @Nonnull final HCMeta aMetaElement)
+  @ReturnsMutableObject
+  public ICommonsList <HCMeta> metaElements ()
   {
-    ValueEnforcer.notNull (aMetaElement, "MetaElement");
-    m_aMetaElements.add (nIndex, aMetaElement);
-    return this;
+    return m_aMetaElements;
   }
 
   @Nonnull
   public EChange removeMetaElement (@Nullable final String sName)
   {
     if (StringHelper.hasText (sName))
-    {
-      int nIndex = 0;
-      for (final HCMeta aMetaElement : m_aMetaElements)
-      {
-        if (sName.equals (aMetaElement.getName ()) || sName.equals (aMetaElement.getHttpEquiv ()))
-        {
-          m_aMetaElements.remove (nIndex);
-          return EChange.CHANGED;
-        }
-        ++nIndex;
-      }
-    }
+      return EChange.valueOf (m_aMetaElements.removeIf (x -> sName.equals (x.getName ()) ||
+                                                             sName.equals (x.getHttpEquiv ())));
     return EChange.UNCHANGED;
-  }
-
-  @Nonnegative
-  public int getMetaElementCount ()
-  {
-    return m_aMetaElements.size ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <HCMeta> getAllMetaElements ()
-  {
-    return m_aMetaElements.getClone ();
-  }
-
-  @Nonnull
-  public HCHead removeAllMetaElements ()
-  {
-    m_aMetaElements.clear ();
-    return this;
   }
 
   //
   // Link handling
   //
+  /**
+   * @return linkmeta element list. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  public ICommonsList <HCLink> links ()
+  {
+    return m_aLinks;
+  }
 
   @Nonnull
   public HCHead setShortcutIconHref (@Nullable final ISimpleURL aShortcutIconHref)
@@ -197,78 +162,15 @@ public class HCHead extends AbstractHCElement <HCHead>
     if (aShortcutIconHref == null)
     {
       // Remove the 2 link types again
-      removeLinkOfRel (EHCLinkType.SHORTCUT_ICON);
-      removeLinkOfRel (EHCLinkType.ICON);
+      m_aLinks.removeIf (x -> x.getRel ().equals (EHCLinkType.SHORTCUT_ICON) || x.getRel ().equals (EHCLinkType.ICON));
     }
     else
     {
-      addLink (new HCLink ().setRel (EHCLinkType.SHORTCUT_ICON).setHref (aShortcutIconHref));
+      m_aLinks.add (new HCLink ().setRel (EHCLinkType.SHORTCUT_ICON).setHref (aShortcutIconHref));
       // Required for IE:
-      addLink (new HCLink ().setRel (EHCLinkType.ICON).setType (CMimeType.IMAGE_ICON).setHref (aShortcutIconHref));
+      m_aLinks.add (new HCLink ().setRel (EHCLinkType.ICON).setType (CMimeType.IMAGE_ICON).setHref (aShortcutIconHref));
     }
     return this;
-  }
-
-  /**
-   * Add a link object to the head.
-   *
-   * @param aLink
-   *        The link to be added. May not be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  public HCHead addLink (@Nonnull final HCLink aLink)
-  {
-    ValueEnforcer.notNull (aLink, "Link");
-    m_aLinks.add (aLink);
-    return this;
-  }
-
-  /**
-   * Add a link object to the head at the specified position.
-   *
-   * @param nIndex
-   *        The index where the links should be added (counting link elements
-   *        only)
-   * @param aLink
-   *        The link to be added. May not be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  public HCHead addLinkAt (@Nonnegative final int nIndex, @Nonnull final HCLink aLink)
-  {
-    ValueEnforcer.notNull (aLink, "Link");
-    m_aLinks.add (nIndex, aLink);
-    return this;
-  }
-
-  @Nonnull
-  public EChange removeLinkOfRel (@Nonnull final IHCLinkType aLinkType)
-  {
-    int i = 0;
-    for (final HCLink aLink : m_aLinks)
-    {
-      if (aLink.getRel ().equals (aLinkType))
-      {
-        m_aLinks.remove (i);
-        return EChange.CHANGED;
-      }
-      ++i;
-    }
-    return EChange.UNCHANGED;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <HCLink> getAllLinks ()
-  {
-    return m_aLinks.getClone ();
-  }
-
-  @Nonnegative
-  public int getLinkCount ()
-  {
-    return m_aLinks.size ();
   }
 
   //

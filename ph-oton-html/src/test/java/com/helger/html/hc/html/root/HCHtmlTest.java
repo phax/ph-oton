@@ -45,8 +45,8 @@ public final class HCHtmlTest
   public void testOutOfBandNodes1 ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("Test"));
-    aHtml.getBody ().addChild (new HCStyle ("h1{color:red;}"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("Test"));
+    aHtml.body ().addChild (new HCStyle ("h1{color:red;}"));
 
     // Must be done for HCHtml separately
     HCRenderer.prepareHtmlForConversion (aHtml, HCSettings.getConversionSettings ());
@@ -70,8 +70,8 @@ public final class HCHtmlTest
   public void testOutOfBandNodes1WithStyleMedium ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("Test"));
-    aHtml.getBody ().addChild (new HCStyle ("h1{color:red;}").addMedium (ECSSMedium.PRINT));
+    aHtml.body ().addChild (new HCH1 ().addChild ("Test"));
+    aHtml.body ().addChild (new HCStyle ("h1{color:red;}").addMedium (ECSSMedium.PRINT));
 
     // Must be done for HCHtml separately
     HCRenderer.prepareHtmlForConversion (aHtml, HCSettings.getConversionSettings ());
@@ -95,10 +95,10 @@ public final class HCHtmlTest
   public void testOutOfBandNodes2 ()
   {
     final HCHtml aHtml = new HCHtml ();
-    aHtml.getHead ().addMetaElement (new HCMeta ().setName ("foo").setContent ("bar"));
-    aHtml.getBody ().addChild (new HCH1 ().addChild ("Test"));
-    aHtml.getBody ().addChild (new HCScriptInlineOnDocumentReady (new UnparsedJSCodeProvider ("a=b;")));
-    aHtml.getBody ().addChild (new HCScriptInlineOnDocumentReady (new UnparsedJSCodeProvider ("c=d;")));
+    aHtml.head ().metaElements ().add (new HCMeta ().setName ("foo").setContent ("bar"));
+    aHtml.body ().addChild (new HCH1 ().addChild ("Test"));
+    aHtml.body ().addChild (new HCScriptInlineOnDocumentReady (new UnparsedJSCodeProvider ("a=b;")));
+    aHtml.body ().addChild (new HCScriptInlineOnDocumentReady (new UnparsedJSCodeProvider ("c=d;")));
 
     // Must be done for HCHtml separately
     HCRenderer.prepareHtmlForConversion (aHtml, HCSettings.getConversionSettings ());

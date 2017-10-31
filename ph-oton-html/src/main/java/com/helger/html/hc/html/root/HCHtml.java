@@ -76,13 +76,13 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   }
 
   @Nonnull
-  public final HCHead getHead ()
+  public HCHead head ()
   {
     return m_aHead;
   }
 
   @Nonnull
-  public final HCBody getBody ()
+  public HCBody body ()
   {
     return m_aBody;
   }
@@ -257,8 +257,8 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("head", m_aHead)
-                            .appendIfNotNull ("body", m_aBody)
+                            .append ("head", m_aHead)
+                            .append ("body", m_aBody)
                             .getToString ();
   }
 }

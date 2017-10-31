@@ -125,7 +125,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
         if (aContentLocale != null && !LocaleHelper.isSpecialLocale (aContentLocale))
           aMeta.setLanguage (aContentLocale.toString ());
 
-        aHead.addMetaElement (aMeta);
+        aHead.metaElements ().add (aMeta);
       }
   }
 
@@ -142,7 +142,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
                                                  @Nonnull final HCHtml aHtml)
   {
     final boolean bRegular = HCSettings.isUseRegularResources ();
-    final HCHead aHead = aHtml.getHead ();
+    final HCHead aHead = aHtml.head ();
 
     // Add configured and per-request CSS
     final Set <ICSSPathProvider> aCSSs = PhotonCSS.getAllRegisteredCSSIncludesForGlobal ();
@@ -174,7 +174,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
-    final HCHead aHead = aHtml.getHead ();
+    final HCHead aHead = aHtml.head ();
 
     // Add all meta elements
     addMetaElements (aRequestScope, aHead);
@@ -202,7 +202,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // customize, finalize and extract resources
     // This must be done before the CSS and JS are included because per-request
     // resource registration happens inside
-    HCRenderer.prepareForConversion (aHtml, aHtml.getBody (), aConversionSettings);
+    HCRenderer.prepareForConversion (aHtml, aHtml.body (), aConversionSettings);
 
     // Add global and per-request CSS and JS
     addGlobalAndPerRequestCSSAndJS (aRequestScope, aHtml);
@@ -217,7 +217,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // Merge all external CSS and JS nodes
     final boolean bMergeCSS = isMergeExternalCSSNodes ();
     final boolean bMergeJS = isMergeExternalJSNodes ();
-    PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.getHead (), bMergeCSS, bMergeJS);
+    PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.head (), bMergeCSS, bMergeJS);
 
     // Move scripts to body? If so, after aggregation!
     if (HCSettings.isScriptsInBody ())
@@ -226,7 +226,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // This is only required so that the additional CSS/JS nodes on the head get
     // the correct EHCNodeState
     if (false)
-      HCRenderer.prepareForConversion (aHtml.getHead (), aHtml.getBody (), aConversionSettings);
+      HCRenderer.prepareForConversion (aHtml.head (), aHtml.body (), aConversionSettings);
 
     return aHtml;
   }

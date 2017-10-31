@@ -48,13 +48,13 @@ public final class PhotonUnifiedResponseTest
     try (final WebScoped aWebScoped = new WebScoped ())
     {
       final HCHtml aHtml = new HCHtml ();
-      aHtml.getHead ().addCSS (new HCStyle ("*{font-family:Helvetica;}"));
-      aHtml.getHead ().addJS (new HCScriptInline (new UnparsedJSCodeProvider ("var x = 1;")));
-      aHtml.getHead ().addCSS (HCLink.createCSSLink (new SimpleURL ("res/animate.css")));
-      aHtml.getHead ().addJS (new HCScriptFile ().setSrc (new SimpleURL ("res/stacktrace.js")));
-      aHtml.getBody ().addChild (new HCH1 ().addChild ("Test H1"));
-      aHtml.getBody ().addChild (new HCStyle ("h1{color:red;}"));
-      aHtml.getBody ().addChild (new HCScriptInline (new UnparsedJSCodeProvider ("var y = x;")));
+      aHtml.head ().addCSS (new HCStyle ("*{font-family:Helvetica;}"));
+      aHtml.head ().addJS (new HCScriptInline (new UnparsedJSCodeProvider ("var x = 1;")));
+      aHtml.head ().addCSS (HCLink.createCSSLink (new SimpleURL ("res/animate.css")));
+      aHtml.head ().addJS (new HCScriptFile ().setSrc (new SimpleURL ("res/stacktrace.js")));
+      aHtml.body ().addChild (new HCH1 ().addChild ("Test H1"));
+      aHtml.body ().addChild (new HCStyle ("h1{color:red;}"));
+      aHtml.body ().addChild (new HCScriptInline (new UnparsedJSCodeProvider ("var y = x;")));
       final PhotonUnifiedResponse aResponse = PhotonUnifiedResponse.createSimple (aWebScoped.getRequestScope ());
       aResponse.html (aHtml);
     }
