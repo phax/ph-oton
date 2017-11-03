@@ -27,6 +27,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.attr.IStringMap;
 import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
@@ -661,7 +662,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       {
         final String sUserID = aSelectedObject.getID ();
 
-        final Map <String, String> aAttrMap = aSelectedObject.attrs ();
+        // Important to clone here!
+        final IStringMap aAttrMap = aSelectedObject.attrs ().getClone ();
         if (aCustomAttrMap != null)
           aAttrMap.putAll (aCustomAttrMap);
 
@@ -677,7 +679,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                               !bEnabled);
 
         // assign to the matching user groups
-        final ICommonsCollection <String> aPrevUserGroupIDs = aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (sUserID);
+        final ICommonsList <String> aPrevUserGroupIDs = aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (sUserID);
         // Create all missing assignments
         final ICommonsSet <String> aUserGroupsToBeAssigned = CollectionHelper.getDifference (aUserGroupIDs,
                                                                                              aPrevUserGroupIDs);
