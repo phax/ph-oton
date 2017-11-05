@@ -28,7 +28,7 @@ import com.helger.html.js.JSWriterDefaultSettings;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 
-public class JSAssocArrayTest
+public final class JSAssocArrayTest
 {
   @Test
   public void testJson ()

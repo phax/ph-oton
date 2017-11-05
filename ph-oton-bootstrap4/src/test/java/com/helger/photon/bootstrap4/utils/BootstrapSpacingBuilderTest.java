@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.spacing;
+package com.helger.photon.bootstrap4.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,6 +34,11 @@ import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
 import com.helger.photon.bootstrap4.utils.ESpacingPropertyType;
 import com.helger.photon.bootstrap4.utils.ESpacingSideType;
 
+/**
+ * Test class for class {@link BootstrapSpacingBuilder}.
+ * 
+ * @author Philip Helger
+ */
 public final class BootstrapSpacingBuilderTest
 {
   @Test

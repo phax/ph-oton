@@ -257,8 +257,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
       return sHTML;
     }
 
-    public static final void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                          @Nonnull final HCSpecialNodes aSpecialNodes)
+    public static void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                    @Nonnull final HCSpecialNodes aSpecialNodes)
     {
       ValueEnforcer.notNull (aRequestScope, "RequestScope");
 
