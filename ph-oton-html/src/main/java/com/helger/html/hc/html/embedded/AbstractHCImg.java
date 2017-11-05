@@ -62,7 +62,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   }
 
   @Nonnull
-  public IMPLTYPE setSrc (@Nonnull final ISimpleURL aSrc)
+  public final IMPLTYPE setSrc (@Nonnull final ISimpleURL aSrc)
   {
     ValueEnforcer.notNull (aSrc, "src");
 
@@ -71,13 +71,13 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   }
 
   @Nullable
-  public String getSrcSet ()
+  public final String getSrcSet ()
   {
     return m_sSrcSet;
   }
 
   @Nonnull
-  public IMPLTYPE setSrcSet (@Nullable final String sSrcSet)
+  public final IMPLTYPE setSrcSet (@Nullable final String sSrcSet)
   {
     m_sSrcSet = sSrcSet;
     return thisAsT ();
@@ -118,9 +118,9 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   }
 
   @Nonnull
-  public final IMPLTYPE setExtent (@Nullable final SizeInt aImageData)
+  public final IMPLTYPE setExtent (@Nullable final SizeInt aExtent)
   {
-    m_aExtent = aImageData;
+    m_aExtent = aExtent;
     return thisAsT ();
   }
 
