@@ -32,24 +32,23 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EDataTablesCSSPathProvider implements ICSSPathProvider
 {
-  DATATABLES_1_10 ("datatables/1.10.15/css/jquery.dataTables.css"),
-  DATATABLES_1_10_THEMEROLLER ("datatables/1.10.15/css/jquery.dataTables_themeroller.css"),
-  DATATABLES_1_10_BOOTSTRAP ("datatables/1.10.15/css/dataTables.bootstrap.css"),
-  DATATABLES_BUTTONS ("datatables/Buttons-1.3.1/css/buttons.dataTables.css"),
-  DATATABLES_BUTTONS_BOOTSTRAP ("datatables/Buttons-1.3.1/css/buttons.bootstrap.css"),
-  DATATABLES_FIXED_COLUMNS ("datatables/FixedColumns-3.2.2/css/fixedColumns.dataTables.css"),
-  DATATABLES_FIXED_COLUMNS_BOOTSTRAP ("datatables/FixedColumns-3.2.2/css/fixedColumns.bootstrap.css"),
-  DATATABLES_FIXED_HEADER ("datatables/FixedHeader-3.1.2/css/fixedHeader.dataTables.css"),
-  DATATABLES_FIXED_HEADER_BOOTSTRAP ("datatables/FixedHeader-3.1.2/css/fixedHeader.bootstrap.css"),
-  DATATABLES_RESPONSIVE ("datatables/Responsive-2.1.1/css/responsive.dataTables.css"),
-  DATATABLES_RESPONSIVE_BOOTSTRAP ("datatables/Responsive-2.1.1/css/responsive.bootstrap.css"),
-  DATATABLES_ROW_REORDER ("datatables/RowReorder-1.2.0/css/rowReorder.dataTables.css"),
-  DATATABLES_ROW_REORDER_BOOTSTRAP ("datatables/RowReorder-1.2.0/css/rowReorder.bootstrap.css"),
-  DATATABLES_SCROLLER ("datatables/Scroller-1.4.2/css/scroller.dataTables.css"),
-  DATATABLES_SCROLLER_BOOTSTRAP ("datatables/Scroller-1.4.2/css/scroller.bootstrap.css"),
+  DATATABLES_1_10 ("datatables/1.10.16/css/jquery.dataTables.css"),
+  DATATABLES_1_10_BOOTSTRAP ("datatables/1.10.16/css/dataTables.bootstrap.css"),
+  DATATABLES_BUTTONS ("datatables/Buttons-1.4.2/css/buttons.dataTables.css"),
+  DATATABLES_BUTTONS_BOOTSTRAP ("datatables/Buttons-1.4.2/css/buttons.bootstrap.css"),
+  DATATABLES_FIXED_COLUMNS ("datatables/FixedColumns-3.2.3/css/fixedColumns.dataTables.css"),
+  DATATABLES_FIXED_COLUMNS_BOOTSTRAP ("datatables/FixedColumns-3.2.3/css/fixedColumns.bootstrap.css"),
+  DATATABLES_FIXED_HEADER ("datatables/FixedHeader-3.1.3/css/fixedHeader.dataTables.css"),
+  DATATABLES_FIXED_HEADER_BOOTSTRAP ("datatables/FixedHeader-3.1.3/css/fixedHeader.bootstrap.css"),
+  DATATABLES_RESPONSIVE ("datatables/Responsive-2.2.0/css/responsive.dataTables.css"),
+  DATATABLES_RESPONSIVE_BOOTSTRAP ("datatables/Responsive-2.2.0/css/responsive.bootstrap.css"),
+  DATATABLES_ROW_REORDER ("datatables/RowReorder-1.2.3/css/rowReorder.dataTables.css"),
+  DATATABLES_ROW_REORDER_BOOTSTRAP ("datatables/RowReorder-1.2.3/css/rowReorder.bootstrap.css"),
+  DATATABLES_SCROLLER ("datatables/Scroller-1.4.3/css/scroller.dataTables.css"),
+  DATATABLES_SCROLLER_BOOTSTRAP ("datatables/Scroller-1.4.3/css/scroller.bootstrap.css"),
   DATATABLES_SEARCH_HIGHLIGHT ("datatables/searchHighlight/dataTables.searchHighlight.css"),
-  DATATABLES_SELECT ("datatables/Select-1.2.2/css/select.dataTables.css"),
-  DATATABLES_SELECT_BOOTSTRAP ("datatables/Select-1.2.2/css/select.bootstrap.css");
+  DATATABLES_SELECT ("datatables/Select-1.2.3/css/select.dataTables.css"),
+  DATATABLES_SELECT_BOOTSTRAP ("datatables/Select-1.2.3/css/select.bootstrap.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
