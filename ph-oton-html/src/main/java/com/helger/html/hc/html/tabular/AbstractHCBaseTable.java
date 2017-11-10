@@ -28,7 +28,6 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -55,8 +54,9 @@ import com.helger.html.hc.impl.HCEntityNode;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable <IMPLTYPE>>
-                                          extends AbstractHCElement <IMPLTYPE> implements IHCTable <IMPLTYPE>
+public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable <IMPLTYPE>> extends
+                                          AbstractHCElement <IMPLTYPE> implements
+                                          IHCTable <IMPLTYPE>
 {
   public static final ICSSClassProvider CSS_FORCE_COLSPAN = DefaultCSSClassProvider.create ("force-colspan");
 
@@ -266,49 +266,6 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   //
-  // header/footer row handling
-  //
-
-  /**
-   * Get the contained list object that holds all the rows. Handle with care
-   * because it alters the internal data structures of this table.
-   *
-   * @return The contained list object for external row order handling.
-   */
-  @Nullable
-  @ReturnsMutableObject ("For performance reasons in derived classes")
-  protected final ICommonsList <HCRow> directGetHeaderRowList ()
-  {
-    return m_aHead.directGetRowList ();
-  }
-
-  /**
-   * Get the contained list object that holds all the rows. Handle with care
-   * because it alters the internal data structures of this table.
-   *
-   * @return The contained list object for external row order handling.
-   */
-  @Nullable
-  @ReturnsMutableObject ("For performance reasons in derived classes")
-  protected final ICommonsList <HCRow> directGetFooterRowList ()
-  {
-    return m_aFoot.directGetRowList ();
-  }
-
-  /**
-   * Get the contained list object that holds all the rows. Handle with care
-   * because it alters the internal data structures of this table.
-   *
-   * @return The contained list object for external row order handling.
-   */
-  @Nullable
-  @ReturnsMutableObject ("For performance reasons in derived classes")
-  protected final ICommonsList <HCRow> directGetBodyRowList ()
-  {
-    return m_aBody.directGetRowList ();
-  }
-
-  //
   // code generation
   //
 
@@ -390,7 +347,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     boolean bTotalHasRowSpans = false;
     final ICommonsList <int []> aTotalRowSpans = new CommonsArrayList <> (aPart.getChildCount ());
     if (aPart.hasChildren ())
-      for (final HCRow aBodyRow : aPart.directGetRowList ())
+      for (final HCRow aBodyRow : aPart.getChildren ())
       {
         // Pass null if no row spans are defined!
         final int nRowCols = _getEffectiveCellCount (aBodyRow, bTotalHasRowSpans ? aTotalRowSpans : null);

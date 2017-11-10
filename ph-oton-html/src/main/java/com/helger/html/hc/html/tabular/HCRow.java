@@ -22,14 +22,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.DevelopersNote;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
-import com.helger.html.hc.impl.HCNodeList;
 
 /**
  * Represents an HTML &lt;tr&gt; element
@@ -469,25 +466,6 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   /**
-   * @return A list with all contained cells. Never <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IHCCell <?>> getAllCells ()
-  {
-    return getAllChildren ();
-  }
-
-  /**
-   * @return All iterable cells. Avoids copying the list.
-   */
-  @Nonnull
-  public Iterable <IHCCell <?>> getAllCellsIterable ()
-  {
-    return directGetAllChildren ();
-  }
-
-  /**
    * Get the cell at the specified index in this row. This method does consider
    * colspans!!!!
    *
@@ -500,7 +478,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   {
     int i = 0;
     if (hasChildren ())
-      for (final IHCCell <?> aCell : directGetAllChildren ())
+      for (final IHCCell <?> aCell : children ())
       {
         if (i >= nIndex)
           return aCell;
@@ -531,22 +509,8 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   {
     int ret = 0;
     if (hasChildren ())
-      for (final IHCCell <?> aCell : directGetAllChildren ())
+      for (final IHCCell <?> aCell : children ())
         ret += aCell.getColspan ();
-    return ret;
-  }
-
-  /**
-   * @return All cell nodes as one big {@link HCNodeList}. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  public HCNodeList getCellsAsNodeList ()
-  {
-    final HCNodeList ret = new HCNodeList ();
-    if (hasChildren ())
-      for (final IHCCell <?> aCell : directGetAllChildren ())
-        ret.addChild (aCell);
     return ret;
   }
 
@@ -565,23 +529,12 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   /**
-   * Remove all cells of this row
-   *
-   * @return this
-   */
-  @Nonnull
-  public HCRow removeAllCells ()
-  {
-    return removeAllChildren ();
-  }
-
-  /**
    * @return <code>true</code> if at least one contained cell uses a colspan.
    */
   public boolean isColspanUsed ()
   {
     if (hasChildren ())
-      for (final IHCCell <?> aCell : directGetAllChildren ())
+      for (final IHCCell <?> aCell : children ())
         if (aCell.getColspan () > 1)
           return true;
     return false;
@@ -593,7 +546,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   public boolean isRowspanUsed ()
   {
     if (hasChildren ())
-      for (final IHCCell <?> aCell : directGetAllChildren ())
+      for (final IHCCell <?> aCell : children ())
         if (aCell.getRowspan () > 1)
           return true;
     return false;

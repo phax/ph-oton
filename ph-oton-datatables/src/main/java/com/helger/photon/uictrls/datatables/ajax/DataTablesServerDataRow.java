@@ -85,7 +85,7 @@ public final class DataTablesServerDataRow implements Serializable
     }
 
     m_aCells = new CommonsArrayList <> (aRow.getCellCount ());
-    for (final IHCCell <?> aCell : aRow.getAllCellsIterable ())
+    for (final IHCCell <?> aCell : aRow.getChildren ())
       m_aCells.add (new DataTablesServerDataCell (aCell, aCS));
   }
 

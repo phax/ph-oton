@@ -18,11 +18,8 @@ package com.helger.html.hc.html.tabular;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -66,19 +63,6 @@ public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart 
     final HCRow aRow = new HCRow (m_bHeaderOrFooter);
     addChildAt (nIndex, aRow);
     return aRow;
-  }
-
-  /**
-   * Get the contained list object that holds all the rows. Handle with care
-   * because it alters the internal data structures of this table.
-   *
-   * @return The contained list object. May be <code>null</code>.
-   */
-  @Nullable
-  @ReturnsMutableObject ("speed")
-  protected final ICommonsList <HCRow> directGetRowList ()
-  {
-    return directGetAllChildren ();
   }
 
   @Override

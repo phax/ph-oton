@@ -120,7 +120,7 @@ public class BootstrapRow extends AbstractBootstrapDiv <BootstrapRow>
   public BootstrapCol getColumnAtIndex (@Nonnegative final int nIndex)
   {
     int nCols = 0;
-    for (final IHCNode aChild : directGetAllChildren ())
+    for (final IHCNode aChild : getChildren ())
       if (aChild instanceof BootstrapCol)
       {
         if (nCols == nIndex)

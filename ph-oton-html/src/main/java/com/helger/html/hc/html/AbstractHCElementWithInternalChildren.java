@@ -58,7 +58,8 @@ import com.helger.xml.microdom.IMicroElement;
  */
 @NotThreadSafe
 public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends AbstractHCElementWithInternalChildren <IMPLTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
-                                                            extends AbstractHCElement <IMPLTYPE> implements
+                                                            extends
+                                                            AbstractHCElement <IMPLTYPE> implements
                                                             IHCElementWithInternalChildren <IMPLTYPE, CHILDTYPE>
 {
   private ICommonsList <CHILDTYPE> m_aChildren;
@@ -192,13 +193,6 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
     return m_aChildren == null ? 0 : m_aChildren.size ();
   }
 
-  @Nullable
-  @ReturnsMutableObject ("speed")
-  protected final ICommonsList <CHILDTYPE> directGetAllChildren ()
-  {
-    return m_aChildren;
-  }
-
   @Override
   @Nonnull
   @ReturnsMutableCopy
@@ -207,9 +201,16 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
     return new CommonsArrayList <> (m_aChildren);
   }
 
+  @Nullable
+  @ReturnsMutableObject
+  public final ICommonsList <CHILDTYPE> children ()
+  {
+    return m_aChildren;
+  }
+
   @Override
   @Nullable
-  public ICommonsIterable <? extends IHCNode> getChildren ()
+  public ICommonsIterable <CHILDTYPE> getChildren ()
   {
     return m_aChildren;
   }
