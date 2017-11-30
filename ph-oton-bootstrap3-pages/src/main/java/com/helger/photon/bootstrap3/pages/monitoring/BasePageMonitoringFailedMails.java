@@ -415,7 +415,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           aBody = HCExtHelper.nl2divList (aEmailData.getBody ());
           break;
         case HTML:
-          aBody = new CommonsArrayList <> (new HCTextNode (aEmailData.getBody ()));
+          aBody = true ? HCExtHelper.nl2divList (aEmailData.getBody ())
+                       : new CommonsArrayList <> (new HCTextNode (aEmailData.getBody ()));
           break;
       }
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BODY.getDisplayText (aDisplayLocale))
