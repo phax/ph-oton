@@ -133,7 +133,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     m_eWeekStart = EDateTimePickerDayOfWeek.getFromJavaValueOrNull (Calendar.getInstance (aDisplayLocale)
                                                                             .getFirstDayOfWeek ());
     // Use the calendar icon as default prefix
-    addPrefix (EBootstrapIcon.CALENDAR.getAsNode ());
+    prefixes ().addChild (EBootstrapIcon.CALENDAR.getAsNode ());
 
     if (false)
     {
@@ -515,7 +515,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
     if (m_bShowResetButton)
-      addSuffix (EBootstrapIcon.REMOVE.getAsNode ());
+      suffixes ().addChild (EBootstrapIcon.REMOVE.getAsNode ());
 
     addClass (CSS_CLASS_DATE);
 

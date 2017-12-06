@@ -37,15 +37,33 @@ import com.helger.commons.traits.IGenericImplTrait;
  *        Desired child type
  */
 public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
-                                       extends IHCNode, IGenericImplTrait <IMPLTYPE>
+                                       extends
+                                       IHCNode,
+                                       IGenericImplTrait <IMPLTYPE>
 {
   /**
+   * Add a new child.
+   * 
    * @param aNode
    *        Child to add. May be <code>null</code>.
    * @return this
    */
   @Nonnull
   IMPLTYPE addChild (@Nullable CHILDTYPE aNode);
+
+  /**
+   * Remove all existing children and only set the new child.
+   * 
+   * @param aNode
+   *        Child to add. May be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  default IMPLTYPE setChild (@Nullable final CHILDTYPE aNode)
+  {
+    removeAllChildren ();
+    return addChild (aNode);
+  }
 
   /**
    * @param nIndex

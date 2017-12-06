@@ -16,30 +16,26 @@
  */
 package com.helger.photon.bootstrap3.inputgroup;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EChange;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.textlevel.HCSpan;
-import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.button.BootstrapButton;
 
 public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 {
   private final EBootstrapInputGroupSize m_eSize;
-  private final ICommonsList <IHCNode> m_aPrefixes = new CommonsArrayList <> ();
+  private final HCNodeList m_aPrefixes = new HCNodeList ();
   private final IHCNode m_aInput;
-  private final ICommonsList <IHCNode> m_aSuffixes = new CommonsArrayList <> ();
+  private final HCNodeList m_aSuffixes = new HCNodeList ();
 
   public BootstrapInputGroup (@Nonnull final IHCNode aInput)
   {
@@ -53,176 +49,62 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   }
 
   @Nonnull
-  public EBootstrapInputGroupSize getSize ()
+  public final EBootstrapInputGroupSize getSize ()
   {
     return m_eSize;
   }
 
   @Nonnull
-  public BootstrapInputGroup setPrefix (@Nullable final String sPrefix)
+  @ReturnsMutableObject
+  public final HCNodeList prefixes ()
   {
-    return setPrefix (HCTextNode.createOnDemand (sPrefix));
+    return m_aPrefixes;
   }
 
   @Nonnull
-  public BootstrapInputGroup setPrefix (@Nullable final IHCNode aPrefix)
+  public BootstrapInputGroup setPrefix (@Nullable final String sText)
   {
-    m_aPrefixes.clear ();
-    return addPrefix (aPrefix);
-  }
-
-  @Nonnull
-  public BootstrapInputGroup addPrefix (@Nullable final String sPrefix)
-  {
-    return addPrefix (HCTextNode.createOnDemand (sPrefix));
-  }
-
-  @Nonnull
-  public BootstrapInputGroup addPrefix (@Nullable final IHCNode aPrefix)
-  {
-    if (aPrefix != null)
-      m_aPrefixes.add (aPrefix);
+    m_aPrefixes.setChild (sText);
     return this;
   }
 
   @Nonnull
-  public BootstrapInputGroup addPrefix (@Nonnegative final int nIndex, @Nullable final String sPrefix)
+  public BootstrapInputGroup setPrefix (@Nullable final IHCNode aNode)
   {
-    return addPrefix (nIndex, HCTextNode.createOnDemand (sPrefix));
-  }
-
-  @Nonnull
-  public BootstrapInputGroup addPrefix (@Nonnegative final int nIndex, @Nullable final IHCNode aPrefix)
-  {
-    if (nIndex < 0)
-      throw new IllegalArgumentException ("Index too small: " + nIndex);
-
-    if (aPrefix != null)
-      if (nIndex >= getPrefixCount ())
-        m_aPrefixes.add (aPrefix);
-      else
-        m_aPrefixes.add (nIndex, aPrefix);
+    m_aPrefixes.setChild (aNode);
     return this;
   }
 
   @Nonnull
-  public EChange removePrefixAtIndex (@Nonnegative final int nIndex)
-  {
-    return m_aPrefixes.removeAtIndex (nIndex);
-  }
-
-  @Nonnull
-  public BootstrapInputGroup removeAllPrefixes ()
-  {
-    m_aPrefixes.clear ();
-    return this;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IHCNode> getAllPrefixes ()
-  {
-    return m_aPrefixes.getClone ();
-  }
-
-  public boolean hasPrefixes ()
-  {
-    return m_aPrefixes.isNotEmpty ();
-  }
-
-  @Nonnegative
-  public int getPrefixCount ()
-  {
-    return m_aPrefixes.size ();
-  }
-
-  @Nonnull
-  public IHCNode getInput ()
+  public final IHCNode getInput ()
   {
     return m_aInput;
   }
 
   @Nonnull
-  public BootstrapInputGroup setSuffix (@Nullable final String sSuffix)
+  @ReturnsMutableObject
+  public final HCNodeList suffixes ()
   {
-    return setSuffix (HCTextNode.createOnDemand (sSuffix));
+    return m_aSuffixes;
   }
 
   @Nonnull
-  public BootstrapInputGroup setSuffix (@Nullable final IHCNode aSuffix)
+  public BootstrapInputGroup setSuffix (@Nullable final String sText)
   {
-    m_aSuffixes.clear ();
-    return addSuffix (aSuffix);
-  }
-
-  @Nonnull
-  public BootstrapInputGroup addSuffix (@Nullable final String sSuffix)
-  {
-    return addSuffix (HCTextNode.createOnDemand (sSuffix));
-  }
-
-  @Nonnull
-  public BootstrapInputGroup addSuffix (@Nullable final IHCNode aSuffix)
-  {
-    if (aSuffix != null)
-      m_aSuffixes.add (aSuffix);
+    m_aSuffixes.setChild (sText);
     return this;
   }
 
   @Nonnull
-  public BootstrapInputGroup addSuffix (@Nonnegative final int nIndex, @Nullable final String sSuffix)
+  public BootstrapInputGroup setSuffix (@Nullable final IHCNode aNode)
   {
-    return addSuffix (nIndex, HCTextNode.createOnDemand (sSuffix));
-  }
-
-  @Nonnull
-  public BootstrapInputGroup addSuffix (@Nonnegative final int nIndex, @Nullable final IHCNode aSuffix)
-  {
-    if (nIndex < 0)
-      throw new IllegalArgumentException ("Index too small: " + nIndex);
-
-    if (aSuffix != null)
-      if (nIndex >= getSuffixCount ())
-        m_aSuffixes.add (aSuffix);
-      else
-        m_aSuffixes.add (nIndex, aSuffix);
+    m_aSuffixes.setChild (aNode);
     return this;
-  }
-
-  @Nonnull
-  public EChange removeSuffixAtIndex (@Nonnegative final int nIndex)
-  {
-    return m_aSuffixes.removeAtIndex (nIndex);
-  }
-
-  @Nonnull
-  public BootstrapInputGroup removeAllSuffixes ()
-  {
-    m_aSuffixes.clear ();
-    return this;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IHCNode> getAllSuffixes ()
-  {
-    return m_aSuffixes.getClone ();
-  }
-
-  public boolean hasSuffixes ()
-  {
-    return m_aSuffixes.isNotEmpty ();
-  }
-
-  @Nonnegative
-  public int getSuffixCount ()
-  {
-    return m_aSuffixes.size ();
   }
 
   public boolean hasNeitherPrefixNoSuffix ()
   {
-    return m_aPrefixes.isEmpty () && m_aSuffixes.isEmpty ();
+    return m_aPrefixes.hasNoChildren () && m_aSuffixes.hasNoChildren ();
   }
 
   @Override
@@ -232,22 +114,24 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClasses (CBootstrapCSS.INPUT_GROUP, m_eSize);
 
-    for (final IHCNode aPrefix : m_aPrefixes)
-    {
-      if (aPrefix instanceof BootstrapButton)
-        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aPrefix));
-      else
-        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aPrefix));
-    }
+    if (m_aPrefixes.hasChildren ())
+      for (final IHCNode aPrefix : m_aPrefixes.getChildren ())
+      {
+        if (aPrefix instanceof BootstrapButton)
+          addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aPrefix));
+        else
+          addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aPrefix));
+      }
 
     addChild (m_aInput);
 
-    for (final IHCNode aSuffix : m_aSuffixes)
-    {
-      if (aSuffix instanceof BootstrapButton)
-        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aSuffix));
-      else
-        addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aSuffix));
-    }
+    if (m_aSuffixes.hasChildren ())
+      for (final IHCNode aSuffix : m_aSuffixes.getChildren ())
+      {
+        if (aSuffix instanceof BootstrapButton)
+          addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_BTN).addChild (aSuffix));
+        else
+          addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_ADDON).addChild (aSuffix));
+      }
   }
 }
