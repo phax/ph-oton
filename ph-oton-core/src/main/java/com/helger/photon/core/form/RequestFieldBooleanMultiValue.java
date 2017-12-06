@@ -23,7 +23,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-import com.helger.web.scope.mgr.WebScopeManager;
 
 /**
  * Special request field specially for check boxes where the same field name can
@@ -65,7 +64,7 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
 
   public boolean isChecked ()
   {
-    return WebScopeManager.getRequestScope ().params ().hasCheckBoxValue (getFieldName (), m_sValue, m_bDefaultValue);
+    return getParams ().hasCheckBoxValue (getFieldName (), m_sValue, m_bDefaultValue);
   }
 
   @Override
