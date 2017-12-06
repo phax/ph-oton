@@ -56,6 +56,16 @@ public final class DTOrderSpec implements Serializable
     return m_aComparableExtractor;
   }
 
+  /**
+   * @param aFormatter
+   *        Optional formatter to be used, to e.g. trim off certain prefixes or
+   *        suffixes. May be <code>null</code>.
+   * @param aComparableExtractor
+   *        The converter from String to any comparable type. May be
+   *        <code>null</code> if no formatter is present. Must be
+   *        non-<code>null</code> if a formatter is present!
+   * @return this for chaining
+   */
   @Nonnull
   public <T extends Comparable <? super T>> DTOrderSpec setComparableExtractor (@Nullable final Function <String, String> aFormatter,
                                                                                 @Nullable final IComparableExtractor <T> aComparableExtractor)

@@ -276,4 +276,19 @@ public class DTCol extends AbstractHCCol <DTCol>
   {
     return m_aOrderSpec;
   }
+
+  @Nonnull
+  public DTCol setCollating (final boolean bCollating)
+  {
+    m_aOrderSpec.setCollating (bCollating);
+    return this;
+  }
+
+  @Nonnull
+  public <T extends Comparable <? super T>> DTCol setComparableExtractor (@Nullable final Function <String, String> aFormatter,
+                                                                          @Nullable final IComparableExtractor <T> aComparableExtractor)
+  {
+    m_aOrderSpec.setComparableExtractor (aFormatter, aComparableExtractor);
+    return this;
+  }
 }
