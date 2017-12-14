@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.special;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -53,7 +55,7 @@ public class InlineCSSList
     return new CSSMediaList ();
   }
 
-  private static final class Key
+  private static final class Key implements Serializable
   {
     private final ICSSMediaList m_aMediaList;
 
@@ -92,7 +94,7 @@ public class InlineCSSList
     }
   }
 
-  private static final class Item
+  private static final class Item implements Serializable
   {
     private final Key m_aKey;
     private final StringBuilder m_aCSS = new StringBuilder ();
@@ -132,7 +134,7 @@ public class InlineCSSList
     }
   }
 
-  private final ICommonsList <Item> m_aItems = new CommonsArrayList<> ();
+  private final ICommonsList <Item> m_aItems = new CommonsArrayList <> ();
 
   public InlineCSSList ()
   {}
@@ -158,6 +160,11 @@ public class InlineCSSList
   void clear ()
   {
     m_aItems.clear ();
+  }
+
+  public boolean isEmpty ()
+  {
+    return m_aItems.isEmpty ();
   }
 
   public boolean isNotEmpty ()

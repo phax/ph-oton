@@ -38,6 +38,8 @@ import com.helger.html.resource.css.ICSSCodeProvider;
  */
 public interface IHCSpecialNodes extends Serializable
 {
+  boolean isEmpty ();
+
   /**
    * @return <code>true</code> if CSS files are present, <code>false</code> if
    *         not

@@ -53,16 +53,17 @@ import com.helger.html.resource.css.ICSSCodeProvider;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecialNodes <IMPLTYPE>>
-                                             implements IHCSpecialNodes, IGenericImplTrait <IMPLTYPE>
+public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecialNodes <IMPLTYPE>> implements
+                                             IHCSpecialNodes,
+                                             IGenericImplTrait <IMPLTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractHCSpecialNodes.class);
 
-  private final MultiLinkedHashMapLinkedHashSetBased <ICSSMediaList, String> m_aExternalCSSs = new MultiLinkedHashMapLinkedHashSetBased<> ();
+  private final MultiLinkedHashMapLinkedHashSetBased <ICSSMediaList, String> m_aExternalCSSs = new MultiLinkedHashMapLinkedHashSetBased <> ();
   private final InlineCSSList m_aInlineCSSBeforeExternal = new InlineCSSList ();
   private final InlineCSSList m_aInlineCSSAfterExternal = new InlineCSSList ();
 
-  private final ICommonsOrderedSet <String> m_aExternalJSs = new CommonsLinkedHashSet<> ();
+  private final ICommonsOrderedSet <String> m_aExternalJSs = new CommonsLinkedHashSet <> ();
   private final CollectingJSCodeProvider m_aInlineJSBeforeExternal = new CollectingJSCodeProvider ();
   private final CollectingJSCodeProvider m_aInlineJSAfterExternal = new CollectingJSCodeProvider ();
 
@@ -80,6 +81,16 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     m_aExternalJSs.clear ();
     m_aInlineJSBeforeExternal.reset ();
     m_aInlineJSAfterExternal.reset ();
+  }
+
+  public boolean isEmpty ()
+  {
+    return m_aExternalCSSs.isEmpty () &&
+           m_aInlineCSSBeforeExternal.isEmpty () &&
+           m_aInlineCSSAfterExternal.isEmpty () &&
+           m_aExternalJSs.isEmpty () &&
+           m_aInlineJSBeforeExternal.isEmpty () &&
+           m_aInlineJSBeforeExternal.isEmpty ();
   }
 
   @Nonnull
@@ -116,7 +127,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
   @ReturnsMutableCopy
   public ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> getAllExternalCSSs ()
   {
-    final ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> ret = new CommonsLinkedHashMap<> ();
+    final ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> ret = new CommonsLinkedHashMap <> ();
     for (final Map.Entry <ICSSMediaList, ICommonsOrderedSet <String>> aEntry : m_aExternalCSSs.entrySet ())
       ret.put (aEntry.getKey (), aEntry.getValue ().getCopyAsList ());
     return ret;

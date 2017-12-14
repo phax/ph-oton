@@ -32,6 +32,7 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.html.hc.special.HCSpecialNodes;
+import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.JsonObject;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.executor.IAjaxExecutor;
@@ -286,7 +287,9 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
         aRowData.add (Integer.toString (nCellIndex++), aCell.getHTMLString ());
 
         // Merge all special nodes into the global ones
-        aSpecialNodes.addAll (aCell.getSpecialNodes ());
+        final IHCSpecialNodes aCellSpecialNodes = aCell.getSpecialNodes ();
+        if (aCellSpecialNodes != null)
+          aSpecialNodes.addAll (aCellSpecialNodes);
       }
       aData.add (aRowData);
       ++nResultRowCount;
@@ -405,7 +408,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
 
       // Convert the response to JSON and add the special nodes
       aAjaxResponse.json (PhotonUnifiedResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
-                                                                     aResponseData.getSpecialNodes ()));
+                                                                              aResponseData.getSpecialNodes ()));
     }
   }
 }

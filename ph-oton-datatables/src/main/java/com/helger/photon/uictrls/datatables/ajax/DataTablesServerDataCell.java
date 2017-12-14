@@ -29,7 +29,6 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -58,8 +57,9 @@ public final class DataTablesServerDataCell implements Serializable
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerDataCell.class);
 
   private IHCNodeList <?> m_aContent;
-  private IMicroNode m_aMicroNode;
-  private HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
+  // Lazy stuff
+  private HCSpecialNodes m_aLazySpecialNodes;
+  private IMicroNode m_aLazyMicroNode;
   private String m_sLazyHTML;
   private String m_sLazyTextContent;
 
@@ -79,22 +79,19 @@ public final class DataTablesServerDataCell implements Serializable
   private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
   {
     out.writeObject (m_aContent);
-    out.writeObject (m_aSpecialNodes);
-    StreamHelper.writeSafeUTF (out, m_sLazyHTML);
-    StreamHelper.writeSafeUTF (out, m_sLazyTextContent);
+    out.writeObject (m_aLazySpecialNodes);
   }
 
   private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     m_aContent = (HCNodeList) in.readObject ();
-    m_aSpecialNodes = (HCSpecialNodes) in.readObject ();
-    m_sLazyHTML = StreamHelper.readSafeUTF (in);
-    m_sLazyTextContent = StreamHelper.readSafeUTF (in);
+    m_aLazySpecialNodes = (HCSpecialNodes) in.readObject ();
   }
 
   public void setContent (@Nonnull final IHCNodeList <?> aCellChildren)
   {
-    m_aSpecialNodes.clear ();
+    if (m_aLazySpecialNodes != null)
+      m_aLazySpecialNodes.clear ();
 
     final IHCConversionSettings aCS = DataTablesServerData.DEFAULT_CONVERSION_SETTINGS;
 
@@ -103,24 +100,23 @@ public final class DataTablesServerDataCell implements Serializable
 
     if (aCS.isExtractOutOfBandNodes ())
     {
+      if (m_aLazySpecialNodes == null)
+        m_aLazySpecialNodes = new HCSpecialNodes ();
+
       // Add the content without the out-of-band nodes (but no document.ready()
       // because this is invoked per AJAX)
       final IHCOnDocumentReadyProvider aOnDocumentReadyProvider = null;
-      HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aSpecialNodes, aOnDocumentReadyProvider);
+      HCSpecialNodeHandler.extractSpecialContent (aCellChildren, m_aLazySpecialNodes, aOnDocumentReadyProvider);
+
+      // Free memory if nothing is contained
+      if (m_aLazySpecialNodes.isEmpty ())
+        m_aLazySpecialNodes = null;
     }
 
     m_aContent = aCellChildren;
+    m_aLazyMicroNode = null;
     m_sLazyHTML = null;
     m_sLazyTextContent = null;
-
-    // Convert to HC node to Micro node
-    m_aMicroNode = m_aContent.convertToMicroNode (aCS);
-    if (m_aMicroNode == null)
-    {
-      // Avoid later checks
-      m_sLazyHTML = "";
-      m_sLazyTextContent = "";
-    }
   }
 
   @Nonnull
@@ -130,19 +126,49 @@ public final class DataTablesServerDataCell implements Serializable
   }
 
   @Nullable
+  private IMicroNode _getOrCreateMicroNode ()
+  {
+    IMicroNode ret = m_aLazyMicroNode;
+    if (ret == null)
+    {
+      // Convert to HC node to Micro node
+      ret = m_aContent.convertToMicroNode (DataTablesServerData.DEFAULT_CONVERSION_SETTINGS);
+      m_aLazyMicroNode = ret;
+
+      if (ret == null)
+      {
+        // Avoid later checks
+        m_sLazyHTML = "";
+        m_sLazyTextContent = "";
+      }
+    }
+    return ret;
+  }
+
+  @Nullable
   public String getHTMLString ()
   {
     String ret = m_sLazyHTML;
     if (ret == null)
     {
-      // Create lazy
-      ret = MicroWriter.getNodeAsString (m_aMicroNode,
-                                         DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
+      // _getMicroNode may change lazy variable
+      final IMicroNode aMicroNode = _getOrCreateMicroNode ();
+      ret = m_sLazyHTML;
 
-      // Avoid multiple calls for non-cached version
+      // Re-check
       if (ret == null)
-        ret = "";
-      m_sLazyHTML = ret;
+      {
+        assert aMicroNode != null;
+
+        // Create lazy
+        ret = MicroWriter.getNodeAsString (aMicroNode,
+                                           DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
+
+        // Avoid multiple calls for non-cached version
+        if (ret == null)
+          ret = "";
+        m_sLazyHTML = ret;
+      }
     }
     return ret;
   }
@@ -153,37 +179,46 @@ public final class DataTablesServerDataCell implements Serializable
     String ret = m_sLazyTextContent;
     if (ret == null)
     {
-      // Create lazy
-      // e.g. for initial sorting
-      final IMicroNode aMicroNode = m_aMicroNode;
-      if (aMicroNode instanceof IMicroNodeWithChildren)
-        ret = ((IMicroNodeWithChildren) aMicroNode).getTextContent ();
-      else
-        if (aMicroNode.isText ())
-        {
-          // ignore whitespace-only content
-          if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
-            ret = aMicroNode.getNodeValue ();
-        }
-        else
-          if (aMicroNode.isCDATA ())
-          {
-            ret = aMicroNode.getNodeValue ();
-          }
+      // _getMicroNode may change lazy variable
+      final IMicroNode aMicroNode = _getOrCreateMicroNode ();
+      ret = m_sLazyTextContent;
 
-      // Avoid multiple calls for non-cached version
+      // Re-check
       if (ret == null)
-        ret = "";
-      m_sLazyTextContent = ret;
+      {
+        assert aMicroNode != null;
+
+        // Create lazy
+        // e.g. for initial sorting
+        if (aMicroNode instanceof IMicroNodeWithChildren)
+          ret = ((IMicroNodeWithChildren) aMicroNode).getTextContent ();
+        else
+          if (aMicroNode.isText ())
+          {
+            // ignore whitespace-only content
+            if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
+              ret = aMicroNode.getNodeValue ();
+          }
+          else
+            if (aMicroNode.isCDATA ())
+            {
+              ret = aMicroNode.getNodeValue ();
+            }
+
+        // Avoid multiple calls for non-cached version
+        if (ret == null)
+          ret = "";
+        m_sLazyTextContent = ret;
+      }
     }
 
     return m_sLazyTextContent;
   }
 
-  @Nonnull
+  @Nullable
   public IHCSpecialNodes getSpecialNodes ()
   {
-    return m_aSpecialNodes;
+    return m_aLazySpecialNodes;
   }
 
   public void matchRegEx (@Nonnull final String [] aSearchTexts, @Nonnull final BitSet aMatchingWords)
@@ -228,8 +263,6 @@ public final class DataTablesServerDataCell implements Serializable
   @Nonnull
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("html", m_sLazyHTML)
-                                       .append ("textContent", m_sLazyTextContent)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("Content", m_aContent).getToString ();
   }
 }
