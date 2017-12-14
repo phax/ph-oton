@@ -16,6 +16,7 @@
  */
 package com.helger.photon.basic.app.menu;
 
+import java.io.Serializable;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -36,7 +37,7 @@ import com.helger.photon.basic.app.page.IPage;
  *
  * @author philip
  */
-public interface IMenuOperations
+public interface IMenuOperations extends Serializable
 {
   /**
    * Append a new menu item separator at root level

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.page;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -24,7 +26,7 @@ import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.uicore.css.CUICoreCSS;
 
-public interface IWebPageUIHandler
+public interface IWebPageUIHandler extends Serializable
 {
   @Nullable
   default IHCElementWithChildren <?> createActionHeader ()

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.app.menu;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,7 +30,7 @@ import com.helger.commons.id.IHasID;
  *
  * @author Philip Helger
  */
-public interface IMenuObject extends IHasID <String>
+public interface IMenuObject extends IHasID <String>, Serializable
 {
   @Nonnull
   EMenuObjectType getMenuObjectType ();
