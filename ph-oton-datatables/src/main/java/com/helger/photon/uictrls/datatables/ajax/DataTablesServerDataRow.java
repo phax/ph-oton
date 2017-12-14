@@ -35,7 +35,6 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributes;
-import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.xml.microdom.IMicroQName;
@@ -57,7 +56,7 @@ public final class DataTablesServerDataRow implements Serializable
   private ICommonsOrderedMap <IMicroQName, String> m_aRowAttr;
   private final ICommonsList <DataTablesServerDataCell> m_aCells;
 
-  public DataTablesServerDataRow (@Nonnull final HCRow aRow, @Nonnull final IHCConversionSettings aCS)
+  public DataTablesServerDataRow (@Nonnull final HCRow aRow)
   {
     if (aRow.hasAnyStyle ())
       s_aLogger.warn ("Cell has styles assigned which will be lost: " + aRow.getAllStyles ());
@@ -86,7 +85,7 @@ public final class DataTablesServerDataRow implements Serializable
 
     m_aCells = new CommonsArrayList <> (aRow.getCellCount ());
     for (final IHCCell <?> aCell : aRow.getChildren ())
-      m_aCells.add (new DataTablesServerDataCell (aCell, aCS));
+      m_aCells.add (new DataTablesServerDataCell (aCell));
   }
 
   public boolean hasRowID ()

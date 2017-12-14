@@ -57,21 +57,19 @@ public final class DataTablesServerDataCell implements Serializable
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerDataCell.class);
 
-  private IHCConversionSettings m_aConversionSettings;
   private IHCNodeList <?> m_aContent;
   private IMicroNode m_aMicroNode;
   private HCSpecialNodes m_aSpecialNodes = new HCSpecialNodes ();
-  private String m_sHTML;
-  private String m_sTextContent;
+  private String m_sLazyHTML;
+  private String m_sLazyTextContent;
 
-  public DataTablesServerDataCell (@Nonnull final IHCCell <?> aCell, @Nonnull final IHCConversionSettings aCS)
+  public DataTablesServerDataCell (@Nonnull final IHCCell <?> aCell)
   {
     if (aCell.hasAnyStyle ())
       s_aLogger.warn ("Cell has styles assigned which will be lost: " + aCell.getAllStyles ());
     if (aCell.hasAnyClass ())
       s_aLogger.warn ("Cell has classes assigned which will be lost: " + aCell.getAllClasses ());
 
-    m_aConversionSettings = aCS;
     final IHCNodeList <?> aCellContent = aCell.getAllChildrenAsNodeList ();
 
     // Remember cell content
@@ -82,28 +80,28 @@ public final class DataTablesServerDataCell implements Serializable
   {
     out.writeObject (m_aContent);
     out.writeObject (m_aSpecialNodes);
-    StreamHelper.writeSafeUTF (out, m_sHTML);
-    StreamHelper.writeSafeUTF (out, m_sTextContent);
+    StreamHelper.writeSafeUTF (out, m_sLazyHTML);
+    StreamHelper.writeSafeUTF (out, m_sLazyTextContent);
   }
 
   private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
-    // Always the same CS
-    m_aConversionSettings = DataTablesServerData.createConversionSettings ();
     m_aContent = (HCNodeList) in.readObject ();
     m_aSpecialNodes = (HCSpecialNodes) in.readObject ();
-    m_sHTML = StreamHelper.readSafeUTF (in);
-    m_sTextContent = StreamHelper.readSafeUTF (in);
+    m_sLazyHTML = StreamHelper.readSafeUTF (in);
+    m_sLazyTextContent = StreamHelper.readSafeUTF (in);
   }
 
   public void setContent (@Nonnull final IHCNodeList <?> aCellChildren)
   {
     m_aSpecialNodes.clear ();
 
-    // customize, finalize and extract resources
-    HCRenderer.prepareForConversion (aCellChildren, aCellChildren, m_aConversionSettings);
+    final IHCConversionSettings aCS = DataTablesServerData.DEFAULT_CONVERSION_SETTINGS;
 
-    if (m_aConversionSettings.isExtractOutOfBandNodes ())
+    // customize, finalize and extract resources
+    HCRenderer.prepareForConversion (aCellChildren, aCellChildren, aCS);
+
+    if (aCS.isExtractOutOfBandNodes ())
     {
       // Add the content without the out-of-band nodes (but no document.ready()
       // because this is invoked per AJAX)
@@ -112,16 +110,16 @@ public final class DataTablesServerDataCell implements Serializable
     }
 
     m_aContent = aCellChildren;
-    m_sHTML = null;
-    m_sTextContent = null;
+    m_sLazyHTML = null;
+    m_sLazyTextContent = null;
 
     // Convert to HC node to Micro node
-    m_aMicroNode = m_aContent.convertToMicroNode (m_aConversionSettings);
+    m_aMicroNode = m_aContent.convertToMicroNode (aCS);
     if (m_aMicroNode == null)
     {
       // Avoid later checks
-      m_sHTML = "";
-      m_sTextContent = "";
+      m_sLazyHTML = "";
+      m_sLazyTextContent = "";
     }
   }
 
@@ -134,16 +132,17 @@ public final class DataTablesServerDataCell implements Serializable
   @Nullable
   public String getHTMLString ()
   {
-    String ret = m_sHTML;
+    String ret = m_sLazyHTML;
     if (ret == null)
     {
       // Create lazy
-      ret = MicroWriter.getNodeAsString (m_aMicroNode, m_aConversionSettings.getXMLWriterSettings ());
+      ret = MicroWriter.getNodeAsString (m_aMicroNode,
+                                         DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
 
       // Avoid multiple calls for non-cached version
       if (ret == null)
         ret = "";
-      m_sHTML = ret;
+      m_sLazyHTML = ret;
     }
     return ret;
   }
@@ -151,7 +150,7 @@ public final class DataTablesServerDataCell implements Serializable
   @Nonnull
   public String getTextContent ()
   {
-    String ret = m_sTextContent;
+    String ret = m_sLazyTextContent;
     if (ret == null)
     {
       // Create lazy
@@ -175,10 +174,10 @@ public final class DataTablesServerDataCell implements Serializable
       // Avoid multiple calls for non-cached version
       if (ret == null)
         ret = "";
-      m_sTextContent = ret;
+      m_sLazyTextContent = ret;
     }
 
-    return m_sTextContent;
+    return m_sLazyTextContent;
   }
 
   @Nonnull
@@ -229,6 +228,8 @@ public final class DataTablesServerDataCell implements Serializable
   @Nonnull
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("html", m_sHTML).append ("textContent", m_sTextContent).getToString ();
+    return new ToStringGenerator (this).append ("html", m_sLazyHTML)
+                                       .append ("textContent", m_sLazyTextContent)
+                                       .getToString ();
   }
 }

@@ -62,6 +62,7 @@ import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 public final class DataTablesServerData implements IHasUIState
 {
   public static final ObjectType OT_DATATABLES = new ObjectType ("datatables");
+  public static final IHCConversionSettings DEFAULT_CONVERSION_SETTINGS = createConversionSettings ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerData.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
@@ -108,15 +109,12 @@ public final class DataTablesServerData implements IHasUIState
       if (m_aColumns[i] == null)
         m_aColumns[i] = new DTOrderSpec ().setDisplayLocale (aDisplayLocale);
 
-    // Create HTML without namespaces
-    final IHCConversionSettings aRealCS = createConversionSettings ();
-
     // Row data
-    m_aRows = new CommonsArrayList<> (aTable.getBodyRowCount ());
+    m_aRows = new CommonsArrayList <> (aTable.getBodyRowCount ());
     int nCells = 0;
     for (final HCRow aRow : aTable.getAllBodyRows ())
     {
-      m_aRows.add (new DataTablesServerDataRow (aRow, aRealCS));
+      m_aRows.add (new DataTablesServerDataRow (aRow));
       nCells += aRow.getCellCount ();
     }
 
