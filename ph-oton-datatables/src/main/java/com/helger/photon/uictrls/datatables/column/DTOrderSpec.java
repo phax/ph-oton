@@ -29,7 +29,7 @@ import com.helger.commons.compare.IComparator;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.ToStringGenerator;
 
-public final class DTOrderSpec implements Serializable
+public class DTOrderSpec implements Serializable
 {
   public static final boolean DEFAULT_COLLATING = true;
 
