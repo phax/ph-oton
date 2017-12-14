@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 
@@ -33,9 +33,10 @@ import com.helger.commons.text.util.TextHelper;
  * @author Philip Helger
  */
 @Translatable
-public enum ETypeaheadText implements IHasDisplayText
+public enum ETypeaheadText implements IHasDisplayTextWithArgs
 {
-  ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase");
+  ENTER_SEARCH_STRING ("Geben Sie einen Suchtext ein", "Enter a search phrase"),
+  DATUM_INDEX ("[{0} von {1}]", "[{0} of {1}]");
 
   private final IMultilingualText m_aTP;
 

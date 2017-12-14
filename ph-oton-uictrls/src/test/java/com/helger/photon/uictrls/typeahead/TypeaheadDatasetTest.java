@@ -47,16 +47,16 @@ public final class TypeaheadDatasetTest
     d.setLocal ((List <? extends TypeaheadDatum>) null);
     d.setPrefetch (new SimpleURL ("prefetch.x"));
     assertEquals ("{name:'test',prefetch:{url:'prefetch.x'}}", d.getAsJSObject ().getJSCode (aJSWS));
-    d.getPrefetch ().setTTL (1234);
+    d.prefetch ().setTTL (1234);
     assertEquals ("{name:'test',prefetch:{url:'prefetch.x',ttl:1234}}", d.getAsJSObject ().getJSCode (aJSWS));
     d.setPrefetch ((TypeaheadPrefetch) null);
     d.setRemote (new TypeaheadRemote (new SimpleURL ("remote.x")));
     assertEquals ("{name:'test',remote:{url:'remote.x',wildcard:'_query_'}}", d.getAsJSObject ().getJSCode (aJSWS));
-    d.getRemote ().setCache (false);
+    d.remote ().setCache (false);
     assertEquals ("{name:'test',remote:{url:'remote.x',cache:false,wildcard:'_query_'}}",
                   d.getAsJSObject ().getJSCode (aJSWS));
-    d.getRemote ().setCache (ETriState.UNDEFINED);
-    d.getRemote ().setWildcard ("%q");
+    d.remote ().setCache (ETriState.UNDEFINED);
+    d.remote ().setWildcard ("%q");
     assertEquals ("{name:'test',remote:{url:'remote.x',wildcard:'%q'}}", d.getAsJSObject ().getJSCode (aJSWS));
   }
 }

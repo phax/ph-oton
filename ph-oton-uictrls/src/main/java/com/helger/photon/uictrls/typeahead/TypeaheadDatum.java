@@ -20,12 +20,13 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -43,13 +44,13 @@ import com.helger.json.JsonObject;
  *
  * @author Philip Helger
  */
-@Immutable
+@NotThreadSafe
 public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
 {
   public static final String JSON_VALUE = "value";
   public static final String JSON_TOKENS = "tokens";
 
-  private final String m_sValue;
+  private String m_sValue;
   private final ICommonsList <String> m_aTokens;
 
   /**
@@ -103,6 +104,22 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   public final String getValue ()
   {
     return m_sValue;
+  }
+
+  public final void setValue (@Nonnull final String sValue)
+  {
+    ValueEnforcer.notNull (sValue, "Value");
+    m_sValue = sValue;
+  }
+
+  /**
+   * @return The list of all tokens. Never <code>null</code> but maybe empty.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  public ICommonsList <String> tokens ()
+  {
+    return m_aTokens;
   }
 
   /**

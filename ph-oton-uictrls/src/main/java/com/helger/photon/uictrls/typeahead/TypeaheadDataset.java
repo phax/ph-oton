@@ -30,7 +30,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -341,21 +341,21 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setLocal (@Nullable final TypeaheadDatum... aLocal)
   {
-    m_aLocal = aLocal == null ? null : CollectionHelper.newList (aLocal);
+    m_aLocal = aLocal == null ? null : new CommonsArrayList <> (aLocal);
     return this;
   }
 
   @Nonnull
   public TypeaheadDataset setLocal (@Nullable final List <? extends TypeaheadDatum> aLocal)
   {
-    m_aLocal = aLocal == null ? null : CollectionHelper.newList (aLocal);
+    m_aLocal = aLocal == null ? null : new CommonsArrayList <> (aLocal);
     return this;
   }
 
   @Nullable
   public ICommonsList <? extends TypeaheadDatum> getLocal ()
   {
-    return m_aLocal == null ? null : CollectionHelper.newList (m_aLocal);
+    return m_aLocal == null ? null : m_aLocal.getClone ();
   }
 
   /**
@@ -395,8 +395,8 @@ public class TypeaheadDataset
    *         with care!
    */
   @Nullable
-  @ReturnsMutableObject ("Design")
-  public TypeaheadPrefetch getPrefetch ()
+  @ReturnsMutableObject
+  public TypeaheadPrefetch prefetch ()
   {
     return m_aPrefetch;
   }
@@ -426,8 +426,8 @@ public class TypeaheadDataset
    *         with care!
    */
   @Nullable
-  @ReturnsMutableObject ("design")
-  public TypeaheadRemote getRemote ()
+  @ReturnsMutableObject
+  public TypeaheadRemote remote ()
   {
     return m_aRemote;
   }

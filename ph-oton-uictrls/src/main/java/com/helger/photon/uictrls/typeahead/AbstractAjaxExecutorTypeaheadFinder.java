@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -56,7 +57,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    * @author Philip Helger
    */
   @NotThreadSafe
-  public static class Finder
+  public static class Finder implements Serializable
   {
     private final Locale m_aSortLocale;
     private String [] m_aSearchTerms;
@@ -240,6 +241,18 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder,
                                                                                    @Nonnull LECTYPE aLEC);
 
+  /**
+   * Override this method and return <code>false</code> if the default suffix
+   * "[x of y]" should not be added to the displayname!
+   *
+   * @return <code>true</code> by default
+   */
+  @OverrideOnDemand
+  protected boolean isAddDatumCount ()
+  {
+    return true;
+  }
+
   @Override
   protected void mainHandleRequest (@Nonnull final LECTYPE aLEC,
                                     @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
@@ -258,6 +271,26 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     // Map from ID to name
     final ICommonsList <? extends TypeaheadDatum> aMatchingDatums = getAllMatchingDatums (aFinder, aLEC);
 
+    if (isAddDatumCount ())
+    {
+      // Add "x of y" to the end
+      final int nDatums = aMatchingDatums.size ();
+      if (nDatums > 1)
+      {
+        final Locale aDisplayLocale = aLEC.getDisplayLocale ();
+        final String sMax = Integer.toString (nDatums);
+        int nIndex = 0;
+        for (final TypeaheadDatum aDatum : aMatchingDatums)
+        {
+          nIndex++;
+          final String sText = ETypeaheadText.DATUM_INDEX.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                  Integer.toString (nIndex),
+                                                                                  sMax);
+          aDatum.setValue (aDatum.getValue () + " " + sText);
+          aDatum.tokens ().addAll (TypeaheadDatum.getTokensFromValue (sText));
+        }
+      }
+    }
     // Convert to JSON, sorted by display name using the current display locale
     final IJsonArray ret = new JsonArray ().addAllMapped (aMatchingDatums, TypeaheadDatum::getAsJson);
 
