@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap3.pages.monitoring;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -31,6 +32,7 @@ import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.lang.ClassHelper;
+import com.helger.commons.serialize.SerializationHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
@@ -50,6 +52,8 @@ import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.FormErrorList;
+import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.UITextFormatter;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -215,20 +219,41 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     }
 
     // All scope attributes
+    final boolean bIsAdmin = SecurityHelper.isCurrentUserAssignedToUserGroup (CSecurity.USERGROUP_ADMINISTRATORS_ID);
+
     final HCTable aTableAttrs = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                              new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)),
                                              new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID ("sessionscope-" + aScope.getID ());
     for (final Map.Entry <String, Object> aEntry : aScope.attrs ().entrySet ())
-      aTableAttrs.addBodyRow ()
-                 .addCell (aEntry.getKey ())
-                 .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()))
-                 .addCell (UITextFormatter.getToStringContent (aEntry.getValue ()));
+    {
+      final Object aValue = aEntry.getValue ();
+
+      final HCRow aRow = aTableAttrs.addBodyRow ();
+      aRow.addCell (aEntry.getKey ())
+          .addCell (ClassHelper.getClassLocalName (aEntry.getValue ()) + (bIsAdmin ? _getUISize (aValue) : ""))
+          .addCell (UITextFormatter.getToStringContent (aValue));
+    }
     ret.addChild (aTableAttrs);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTableAttrs);
     ret.addChild (aDataTables);
 
     return ret;
+  }
+
+  @Nonnull
+  @Nonempty
+  private static String _getUISize (final Object aValue)
+  {
+    try
+    {
+      final int nLen = SerializationHelper.getSerializedByteArray ((Serializable) aValue).length;
+      return " [" + nLen + " Bytes]";
+    }
+    catch (final RuntimeException ex)
+    {
+      return " [unknown - " + ex.getMessage () + "]";
+    }
   }
 
   @Override
