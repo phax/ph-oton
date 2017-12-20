@@ -210,13 +210,6 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IAccountingArea> getAllAccountingAreas ()
-  {
-    return getAll ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
   public ICommonsList <IAccountingArea> getAllAccountingAreasOfTenant (@Nullable final String sTenantID)
   {
     return getAll (x -> x.hasSameTenantID (sTenantID));
