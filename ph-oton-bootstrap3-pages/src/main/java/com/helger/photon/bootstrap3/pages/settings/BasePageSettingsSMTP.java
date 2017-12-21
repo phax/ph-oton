@@ -385,15 +385,15 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                                  .setCtrl (aSettings.getHostName ()));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PORT.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (aSettings.getPort () > 0 ? Integer.toString (aSettings.getPort ())
-                                                                                    : EText.PORT_DEFAULT.getDisplayText (aDisplayLocale)));
+                                                 .setCtrl (aSettings.hasPort () ? Integer.toString (aSettings.getPort ())
+                                                                                : EText.PORT_DEFAULT.getDisplayText (aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERNAME.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSettings.getUserName ()));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (StringHelper.hasText (aSettings.getPassword ()) ? "***"
-                                                                                                           : EText.MSG_NO_PASSWORD_SET.getDisplayText (aDisplayLocale)));
+                                                 .setCtrl (aSettings.hasPassword () ? "***"
+                                                                                    : EText.MSG_NO_PASSWORD_SET.getDisplayText (aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CHARSET.getDisplayText (aDisplayLocale))
                                                  .setCtrl (aSettings.getCharsetName ()));
@@ -531,9 +531,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       final String sPort = EText.LABEL_PORT.getDisplayText (aDisplayLocale);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sPort)
                                                    .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_PORT,
-                                                                                                     aSettings == null ||
-                                                                                                                 aSettings.getPort () < 0 ? ""
-                                                                                                                                          : Integer.toString (aSettings.getPort ())),
+                                                                                                     aSettings != null &&
+                                                                                                                 aSettings.hasPort () ? Integer.toString (aSettings.getPort ())
+                                                                                                                                      : ""),
                                                                                    aDisplayLocale).setMin (CNetworkPort.MINIMUM_PORT_NUMBER)
                                                                                                   .setMax (CNetworkPort.MAXIMUM_PORT_NUMBER)
                                                                                                   .setThousandSeparator (""))
@@ -651,7 +651,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewLink).addChild (aCurObject.getName ()));
-      aRow.addCell (aSettings.getHostName () + (aSettings.getPort () > 0 ? ":" + aSettings.getPort () : ""));
+      aRow.addCell (aSettings.getHostName () + (aSettings.hasPort () ? ":" + aSettings.getPort () : ""));
       aRow.addCell (aSettings.getUserName ());
 
       final IHCCell <?> aActionCell = aRow.addCell ();

@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.string.StringHelper;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.smtp.settings.ISMTPSettings;
@@ -38,10 +37,15 @@ public class HCNamedSMTPSettingsSelect extends HCExtSelect
     {
       final ISMTPSettings aSMTP = aCurObject.getSMTPSettings ();
       String sUserName = "";
-      if (StringHelper.hasText (aSMTP.getUserName ()))
+      if (aSMTP.hasUserName ())
         sUserName = aSMTP.getUserName () + "@";
       addOption (aCurObject.getID (),
-                 aCurObject.getName () + " (" + sUserName + aSMTP.getHostName () + ":" + aSMTP.getPort () + ")");
+                 aCurObject.getName () +
+                                      " (" +
+                                      sUserName +
+                                      aSMTP.getHostName () +
+                                      (aSMTP.hasPort () ? ":" + aSMTP.getPort () : "") +
+                                      ")");
     }
 
     addOptionPleaseSelect (aDisplayLocale);
