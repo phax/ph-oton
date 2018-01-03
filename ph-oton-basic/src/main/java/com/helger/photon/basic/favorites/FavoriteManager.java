@@ -290,7 +290,10 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     {
       final EChange eChange = aFavorite.setDisplayName (sDisplayName);
       if (eChange.isUnchanged ())
+      {
+        AuditHelper.onAuditModifyFailure (Favorite.OT, aFavorite.getID (), "unchanged");
         return EChange.UNCHANGED;
+      }
 
       markAsChanged (aFavorite, EDAOActionType.UPDATE);
     }
@@ -299,7 +302,6 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (Favorite.OT, aFavorite.getID (), sUserID, sDisplayName);
-
     return EChange.CHANGED;
   }
 
@@ -323,19 +325,22 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
       return EChange.UNCHANGED;
     }
 
-    return m_aRWLock.writeLocked ( () -> {
-      final EChange eChange = aFavorites.removeObject (aFavorite);
-      if (eChange.isChanged ())
-      {
-        markAsChanged (aFavorite, EDAOActionType.DELETE);
-        AuditHelper.onAuditDeleteSuccess (Favorite.OT, sID);
-      }
-      else
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (aFavorites.removeObject (aFavorite).isUnchanged ())
       {
         AuditHelper.onAuditDeleteFailure (Favorite.OT, sID, "no-such-id");
+        return EChange.UNCHANGED;
       }
-      return eChange;
-    });
+      markAsChanged (aFavorite, EDAOActionType.DELETE);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditDeleteSuccess (Favorite.OT, sID);
+    return EChange.CHANGED;
   }
 
   /**
@@ -348,20 +353,24 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nullable
   public EChange removeAllFavoritesOfUser (@Nullable final String sUserID)
   {
-    return m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
       final ICommonsList <Favorite> aFavoritesOfUser = m_aMap.remove (sUserID);
-      final EChange eChange = EChange.valueOf (aFavoritesOfUser != null);
-      if (eChange.isChanged ())
-      {
-        markAsChanged (aFavoritesOfUser, EDAOActionType.DELETE);
-        AuditHelper.onAuditDeleteSuccess (Favorite.OT, sUserID);
-      }
-      else
+      if (aFavoritesOfUser == null)
       {
         AuditHelper.onAuditDeleteFailure (Favorite.OT, sUserID, "no-such-user-id");
+        return EChange.UNCHANGED;
       }
-      return eChange;
-    });
+      markAsChanged (aFavoritesOfUser, EDAOActionType.DELETE);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+
+    AuditHelper.onAuditDeleteSuccess (Favorite.OT, sUserID);
+    return EChange.CHANGED;
   }
 
   @Override
