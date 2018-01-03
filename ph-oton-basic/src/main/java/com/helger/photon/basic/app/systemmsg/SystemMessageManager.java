@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.dao.DAOException;
 import com.helger.photon.basic.app.dao.AbstractPhotonSimpleDAO;
@@ -99,27 +98,41 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
     return ret;
   }
 
+  /**
+   * @return The date and time when the system message was last modified. May be
+   *         <code>null</code>.
+   */
   @Nullable
   public LocalDateTime getLastUpdateDT ()
   {
     return m_aRWLock.readLocked ( () -> m_aData.getLastUpdateDT ());
   }
 
+  /**
+   * @return The type of system message. Never <code>null</code>.
+   */
   @Nonnull
   public ESystemMessageType getMessageType ()
   {
     return m_aRWLock.readLocked ( () -> m_aData.getMessageType ());
   }
 
+  /**
+   * @return The system message text itself. May be <code>null</code>.
+   */
   @Nullable
   public String getSystemMessage ()
   {
     return m_aRWLock.readLocked ( () -> m_aData.getMessage ());
   }
 
+  /**
+   * @return <code>true</code> if a system message text is available,
+   *         <code>false</code> if not.
+   */
   public boolean hasSystemMessage ()
   {
-    return StringHelper.hasText (getSystemMessage ());
+    return m_aRWLock.readLocked ( () -> m_aData.hasMessage ());
   }
 
   @Nonnull

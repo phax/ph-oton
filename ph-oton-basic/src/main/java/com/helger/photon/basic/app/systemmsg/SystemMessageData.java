@@ -92,6 +92,16 @@ public class SystemMessageData implements ISystemMessageData
     m_sMessage = sMessage;
   }
 
+  /**
+   * Set the system message type and text, and update the last modification
+   * date.
+   * 
+   * @param eMessageType
+   *        Message type. May not be <code>null</code>.
+   * @param sMessage
+   *        The message text. May be <code>null</code>.
+   * @return {@link EChange}
+   */
   @Nonnull
   public EChange setSystemMessage (@Nonnull final ESystemMessageType eMessageType, @Nullable final String sMessage)
   {

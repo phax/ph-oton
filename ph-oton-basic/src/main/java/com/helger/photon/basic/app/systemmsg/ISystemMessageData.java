@@ -33,12 +33,22 @@ import com.helger.commons.string.StringHelper;
  */
 public interface ISystemMessageData extends Serializable
 {
+  /**
+   * @return The date and time when the system message was last modified. May be
+   *         <code>null</code>.
+   */
   @Nullable
   LocalDateTime getLastUpdateDT ();
 
+  /**
+   * @return The type of system message. Never <code>null</code>.
+   */
   @Nonnull
   ESystemMessageType getMessageType ();
 
+  /**
+   * @return The ID of the type of system message. Never <code>null</code>.
+   */
   @Nonnull
   @Nonempty
   default String getMessageTypeID ()
@@ -46,9 +56,16 @@ public interface ISystemMessageData extends Serializable
     return getMessageType ().getID ();
   }
 
+  /**
+   * @return The system message text itself. May be <code>null</code>.
+   */
   @Nullable
   String getMessage ();
 
+  /**
+   * @return <code>true</code> if a system message text is available,
+   *         <code>false</code> if not.
+   */
   default boolean hasMessage ()
   {
     return StringHelper.hasText (getMessage ());
