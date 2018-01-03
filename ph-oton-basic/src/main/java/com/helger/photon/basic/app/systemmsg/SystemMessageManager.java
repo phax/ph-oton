@@ -82,7 +82,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
     final IMicroElement eRoot = aDoc.getDocumentElement ();
-    m_aData.internalSetLastUpdate (eRoot.getAttributeValueWithConversion (ATTR_LAST_UPDATE, LocalDateTime.class));
+    m_aData.setLastUpdate (eRoot.getAttributeValueWithConversion (ATTR_LAST_UPDATE, LocalDateTime.class));
     m_aData.internalSetMessageType (ESystemMessageType.getFromIDOrDefault (eRoot.getAttributeValue (ATTR_MESSAGE_TYPE)));
     m_aData.internalSetMessage (MicroHelper.getChildTextContent (eRoot, ELEMENT_MESSAGE));
     return EChange.UNCHANGED;

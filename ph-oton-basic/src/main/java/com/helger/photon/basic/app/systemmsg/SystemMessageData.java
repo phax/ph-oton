@@ -71,12 +71,12 @@ public class SystemMessageData implements ISystemMessageData
 
   final void internalReset ()
   {
-    internalSetLastUpdate (null);
+    setLastUpdate (null);
     internalSetMessageType (ESystemMessageType.DEFAULT);
     internalSetMessage (null);
   }
 
-  final void internalSetLastUpdate (@Nullable final LocalDateTime aLastUpdate)
+  public final void setLastUpdate (@Nullable final LocalDateTime aLastUpdate)
   {
     m_aLastUpdate = aLastUpdate;
   }
@@ -102,7 +102,7 @@ public class SystemMessageData implements ISystemMessageData
 
     internalSetMessageType (eMessageType);
     internalSetMessage (sMessage);
-    internalSetLastUpdate (PDTFactory.getCurrentLocalDateTime ());
+    setLastUpdate (PDTFactory.getCurrentLocalDateTime ());
 
     return EChange.CHANGED;
   }
