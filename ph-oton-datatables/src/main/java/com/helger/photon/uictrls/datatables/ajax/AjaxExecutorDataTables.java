@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Locale;
 
@@ -139,7 +140,12 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
         {
           final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
           if (aColumn == null)
-            s_aLogger.warn ("Invalid columnn index " + nSearchableCellIndex + " for columns " + aColumns);
+          {
+            s_aLogger.warn ("Invalid columnn index " +
+                            nSearchableCellIndex +
+                            " for columns " +
+                            Arrays.toString (aColumns));
+          }
           else
             if (aColumn.isSearchable ())
             {
