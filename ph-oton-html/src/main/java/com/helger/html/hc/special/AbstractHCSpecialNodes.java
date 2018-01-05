@@ -90,7 +90,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
            m_aInlineCSSAfterExternal.isEmpty () &&
            m_aExternalJSs.isEmpty () &&
            m_aInlineJSBeforeExternal.isEmpty () &&
-           m_aInlineJSBeforeExternal.isEmpty ();
+           m_aInlineJSAfterExternal.isEmpty ();
   }
 
   @Nonnull
