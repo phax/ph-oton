@@ -27,70 +27,71 @@ Contained subprojects are:
   * ph-oton-bootstrap3-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
 
-Release history:
-  * v8.0.0 - work in progress
-    * Updated to ph-commons 9.0.0
-    * Renamed 'Client' to 'Tenant' and moved to ph-tenancy in ph-masterdata project
-    * Updated to Bootstrap 4.0.0-beta
-    * Updated to TinyMCE 4.6.6
-    * Updated to Jetty 9.4.7
-    * Extracted ph-oton-atom
-  * v7.1.2 - 2017-07-19
-    * Fixed an error with path handling of resource bundles when deployed as JAR
-  * v7.1.1 - 2017-07-18
-    * Requires ph-commons 8.6.6
-    * ServletContext base path can now be any URL (instead of a mandatory File)
-    * Made `ServletStatusManager` non-static
-    * Improved JS API (better Json support)
-  * v7.1.0 - 2017-07-05
-    * Updated to ph-web 8.8.x
-    * Improved rendering speed through internal optimizations
-    * Updated to Bootstrap Datetime picker 2.4.4
-    * Updated to Jetty 9.4.6
-    * `CharacterEncodingFilter` more flexible
-    * Updated to DataTables 1.10.15
-  * v7.0.5 - 2017-03-30
-    * Updated to Jetty 9.4.3
-    * Updated to ph-schedule 3.6.1
-    * Improved SystemMessage API
-  * v7.0.4 - 2017-03-09
-    * Updated to Jetty 9.4.2
-    * API extensions
-    * Updated to Apache commons-net 3.6
-    * Improved internal error handling API
-    * Internal changes in the ph-oton jobs.
-    * Removed some deprecated methods
-  * v7.0.3 - 2017-01-10
-    * Integrated ph-html into ph-oton
-    * Binds to ph-commons 8.6.0
-  * v7.0.2 - 2017-01-03
-    * Updated to Jetty 9.4.0
-    * Binds to ph-commons 8.5.6
-    * Binds to ph-web 8.7.0
-    * Improved default request parameter handling customizability
-    * New artefact `ph-oton-icon`
-  * v7.0.1 - 2016-11-14
-    * Improvements in request tracking logging
-    * Misc small improvements in different areas
-    * Updated to Jetty 9.3.14.v20161028
-  * v7.0.0 - 2016-10-24
-    * Requires ph-commons 8.5.2
-  * v7.0.0-beta3 - 2016-09-22
-    * Based on ph-commons 8.5.x
-  * v7.0.0-beta2 - 2016-08-31
-    * Based on ph-commons 8.4.x
-  * v7.0.0-beta1 - 2016-07-27
-    * Updated to Java 1.8
-    * Based on ph-commons 8.2.x
-  * v6.2.0 - 2015-12-03 
-    * extracted security module
-    * added support for app and user token management
-    * Last release for Java 1.7
-  * v6.1.0 - 2015-10-02 
-    * merged web actions and ajax functions
-  * v6.0.0 - 2015-09-14 
-    * first ph-oton release based on old webbasics and webctrls etc.
-    * requires ph-commons 6.x
+## News and noteworthy
+
+* v8.0.0 - 2018-01-05
+  * Updated to ph-commons 9.0.0
+  * Renamed 'Client' to 'Tenant' and moved to ph-tenancy in ph-masterdata project
+  * Updated to Bootstrap 4.0.0-beta
+  * Updated to TinyMCE 4.6.6
+  * Updated to Jetty 9.4.8
+  * Extracted ph-oton-atom
+* v7.1.2 - 2017-07-19
+  * Fixed an error with path handling of resource bundles when deployed as JAR
+* v7.1.1 - 2017-07-18
+  * Requires ph-commons 8.6.6
+  * ServletContext base path can now be any URL (instead of a mandatory File)
+  * Made `ServletStatusManager` non-static
+  * Improved JS API (better Json support)
+* v7.1.0 - 2017-07-05
+  * Updated to ph-web 8.8.x
+  * Improved rendering speed through internal optimizations
+  * Updated to Bootstrap Datetime picker 2.4.4
+  * Updated to Jetty 9.4.6
+  * `CharacterEncodingFilter` more flexible
+  * Updated to DataTables 1.10.15
+* v7.0.5 - 2017-03-30
+  * Updated to Jetty 9.4.3
+  * Updated to ph-schedule 3.6.1
+  * Improved SystemMessage API
+* v7.0.4 - 2017-03-09
+  * Updated to Jetty 9.4.2
+  * API extensions
+  * Updated to Apache commons-net 3.6
+  * Improved internal error handling API
+  * Internal changes in the ph-oton jobs.
+  * Removed some deprecated methods
+* v7.0.3 - 2017-01-10
+  * Integrated ph-html into ph-oton
+  * Binds to ph-commons 8.6.0
+* v7.0.2 - 2017-01-03
+  * Updated to Jetty 9.4.0
+  * Binds to ph-commons 8.5.6
+  * Binds to ph-web 8.7.0
+  * Improved default request parameter handling customizability
+  * New artefact `ph-oton-icon`
+* v7.0.1 - 2016-11-14
+  * Improvements in request tracking logging
+  * Misc small improvements in different areas
+  * Updated to Jetty 9.3.14.v20161028
+* v7.0.0 - 2016-10-24
+  * Requires ph-commons 8.5.2
+* v7.0.0-beta3 - 2016-09-22
+  * Based on ph-commons 8.5.x
+* v7.0.0-beta2 - 2016-08-31
+  * Based on ph-commons 8.4.x
+* v7.0.0-beta1 - 2016-07-27
+  * Updated to Java 1.8
+  * Based on ph-commons 8.2.x
+* v6.2.0 - 2015-12-03 
+  * extracted security module
+  * added support for app and user token management
+  * Last release for Java 1.7
+* v6.1.0 - 2015-10-02 
+  * merged web actions and ajax functions
+* v6.0.0 - 2015-09-14 
+  * first ph-oton release based on old webbasics and webctrls etc.
+  * requires ph-commons 6.x
 
 # Requirements
   * Java 1.8+ is required for building 
@@ -106,7 +107,7 @@ Release history:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>7.1.2</version>
+        <version>8.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -120,7 +121,6 @@ Release history:
     </dependency>
   </dependencies>
 ```
-
 
 ---
 
