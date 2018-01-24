@@ -30,6 +30,7 @@ import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -44,7 +45,7 @@ import com.helger.commons.string.ToStringGenerator;
 public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultCSSClassProvider.class);
-  private static final ICommonsMap <String, DefaultCSSClassProvider> s_aAll = new CommonsHashMap<> ();
+  private static final ICommonsMap <String, DefaultCSSClassProvider> s_aAll = new CommonsHashMap <> ();
 
   private final String m_sCSSClass;
   // Status vars
@@ -108,5 +109,17 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
   public static DefaultCSSClassProvider create (@Nonnull @Nonempty final String sCSSClass)
   {
     return s_aAll.computeIfAbsent (sCSSClass, k -> new DefaultCSSClassProvider (sCSSClass));
+  }
+
+  /**
+   * Create a dummy CSS class with an arbitrary, but unique name.
+   *
+   * @return A new CSS class with a unique, non-persistent name.
+   * @since 8.0.1
+   */
+  @Nonnull
+  public static DefaultCSSClassProvider createUnique ()
+  {
+    return create ("cssclass" + GlobalIDFactory.getNewIntID ());
   }
 }
