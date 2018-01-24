@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -56,8 +57,8 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   {}
 
   @Nonnull
-  private static <T extends IMenuObject> T _createChildItem (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aParentItem,
-                                                             @Nonnull final T aMenuObject)
+  protected static <T extends IMenuObject> T internalCreateChildItem (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aParentItem,
+                                                                      @Nonnull final T aMenuObject)
   {
     if (aParentItem.createChildItem (aMenuObject.getID (), aMenuObject, false) == null)
       throw new IllegalArgumentException ("Failed to add the menu object " +
@@ -67,24 +68,24 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   }
 
   @Nonnull
-  public IMenuSeparator createRootSeparator ()
+  public IMenuSeparator createRootSeparator (@Nonnull @Nonempty final String sID)
   {
-    return _createChildItem (getRootItem (), new MenuSeparator ());
+    return internalCreateChildItem (getRootItem (), new MenuSeparator (sID));
   }
 
   @Nonnull
-  public IMenuSeparator createSeparator (@Nonnull final String sParentID)
+  public IMenuSeparator createSeparator (@Nonnull final String sParentID, @Nonnull @Nonempty final String sID)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
     if (aParentItem == null)
       throw new IllegalArgumentException ("No such parent menu item '" + sParentID + "'");
-    return _createChildItem (aParentItem, new MenuSeparator ());
+    return internalCreateChildItem (aParentItem, new MenuSeparator (sID));
   }
 
   @Nonnull
   public IMenuItemPage createRootItem (@Nonnull final String sItemID, @Nonnull final IPage aPage)
   {
-    return _createChildItem (getRootItem (), new MenuItemPage (sItemID, aPage));
+    return internalCreateChildItem (getRootItem (), new MenuItemPage (sItemID, aPage));
   }
 
   @Nonnull
@@ -95,7 +96,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
     if (aParentItem == null)
       throw new IllegalArgumentException ("No such parent menu item '" + sParentID + "'");
-    return _createChildItem (aParentItem, new MenuItemPage (sItemID, aPage));
+    return internalCreateChildItem (aParentItem, new MenuItemPage (sItemID, aPage));
   }
 
   @Nonnull
@@ -103,7 +104,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
                                            @Nonnull final IHasSimpleURL aURL,
                                            @Nonnull final IHasDisplayText aName)
   {
-    return _createChildItem (getRootItem (), new MenuItemExternal (sItemID, aURL, aName));
+    return internalCreateChildItem (getRootItem (), new MenuItemExternal (sItemID, aURL, aName));
   }
 
   @Nonnull
@@ -115,7 +116,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
     if (aParentItem == null)
       throw new IllegalArgumentException ("No such parent menu item '" + sParentID + "'");
-    return _createChildItem (aParentItem, new MenuItemExternal (sItemID, aURL, aName));
+    return internalCreateChildItem (aParentItem, new MenuItemExternal (sItemID, aURL, aName));
   }
 
   public void setDefaultMenuItemID (@Nullable final String sDefaultMenuItemID)
@@ -199,7 +200,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return getItemDataWithID (sID);
   }
 
-  public void iterateAllMenuObjects (@Nonnull final Consumer <IMenuObject> aCallback)
+  public void iterateAllMenuObjects (@Nonnull final Consumer <? super IMenuObject> aCallback)
   {
     ValueEnforcer.notNull (aCallback, "Callback");
 

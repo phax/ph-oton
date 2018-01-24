@@ -30,6 +30,7 @@ import com.helger.commons.id.factory.GlobalIDFactory;
 @NotThreadSafe
 public class MenuSeparator extends AbstractMenuObject <MenuSeparator> implements IMenuSeparator
 {
+  @Deprecated
   public MenuSeparator ()
   {
     this (GlobalIDFactory.getNewStringID ());

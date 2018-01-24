@@ -23,8 +23,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.url.ConstantHasSimpleURL;
 import com.helger.commons.url.IHasSimpleURL;
@@ -45,7 +47,22 @@ public interface IMenuOperations extends Serializable
    * @return The created menu item separator object. Never <code>null</code>.
    */
   @Nonnull
-  IMenuSeparator createRootSeparator ();
+  default IMenuSeparator createRootSeparator ()
+  {
+    return createRootSeparator (GlobalIDFactory.getNewStringID ());
+  }
+
+  /**
+   * Append a new menu item separator at root level
+   *
+   * @param sID
+   *        Separator ID to be used. Must be unique. May neither be
+   *        <code>null</code> nor empty!
+   * @return The created menu item separator object. Never <code>null</code>.
+   * @since 8.0.1
+   */
+  @Nonnull
+  IMenuSeparator createRootSeparator (@Nonnull @Nonempty String sID);
 
   /**
    * Append a new menu item separator as a child of the passed menu item
@@ -58,7 +75,10 @@ public interface IMenuOperations extends Serializable
    *         If the passed parent menu item could not be resolved
    */
   @Nonnull
-  IMenuSeparator createSeparator (@Nonnull String sParentID);
+  default IMenuSeparator createSeparator (@Nonnull final String sParentID)
+  {
+    return createSeparator (sParentID, GlobalIDFactory.getNewStringID ());
+  }
 
   /**
    * Append a new menu item separator as a child of the passed menu item
@@ -75,6 +95,44 @@ public interface IMenuOperations extends Serializable
   {
     ValueEnforcer.notNull (aParent, "Parent");
     return createSeparator (aParent.getID ());
+  }
+
+  /**
+   * Append a new menu item separator as a child of the passed menu item
+   *
+   * @param sParentID
+   *        The parent menu item ID to append the separator to. May not be
+   *        <code>null</code>.
+   * @param sID
+   *        Separator ID to be used. Must be unique. May neither be
+   *        <code>null</code> nor empty!
+   * @return The created menu item separator object. Never <code>null</code>.
+   * @throws IllegalArgumentException
+   *         If the passed parent menu item could not be resolved
+   * @since 8.0.1
+   */
+  @Nonnull
+  IMenuSeparator createSeparator (@Nonnull String sParentID, @Nonnull @Nonempty String sID);
+
+  /**
+   * Append a new menu item separator as a child of the passed menu item
+   *
+   * @param aParent
+   *        The parent menu item to append the separator to. May not be
+   *        <code>null</code>.
+   * @param sID
+   *        Separator ID to be used. Must be unique. May neither be
+   *        <code>null</code> nor empty!
+   * @return The created menu item separator object. Never <code>null</code>.
+   * @throws IllegalArgumentException
+   *         If the passed parent menu item could not be resolved
+   * @since 8.0.1
+   */
+  @Nonnull
+  default IMenuSeparator createSeparator (@Nonnull final IMenuItem aParent, @Nonnull @Nonempty final String sID)
+  {
+    ValueEnforcer.notNull (aParent, "Parent");
+    return createSeparator (aParent.getID (), sID);
   }
 
   /**
@@ -379,7 +437,7 @@ public interface IMenuOperations extends Serializable
    *        The callback to be supplied for each menu object. May not be
    *        <code>null</code>.
    */
-  void iterateAllMenuObjects (@Nonnull Consumer <IMenuObject> aCallback);
+  void iterateAllMenuObjects (@Nonnull Consumer <? super IMenuObject> aCallback);
 
   /**
    * Replace an eventually existing menu item with the new one. The ID of the
