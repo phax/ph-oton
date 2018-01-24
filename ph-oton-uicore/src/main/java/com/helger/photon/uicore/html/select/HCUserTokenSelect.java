@@ -22,7 +22,6 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -37,9 +36,9 @@ public class HCUserTokenSelect extends HCExtSelect
     super (aRF);
 
     // for all items
-    for (final IUserToken aUserToken : CollectionHelper.getSorted (PhotonSecurityManager.getUserTokenMgr ()
-                                                                                        .getAllUserTokens (),
-                                                                   IHasDisplayName.getComparatorCollating (aDisplayLocale)))
+    for (final IUserToken aUserToken : PhotonSecurityManager.getUserTokenMgr ()
+                                                            .getAllUserTokens ()
+                                                            .getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale)))
       if (aFilter == null || aFilter.test (aUserToken))
         addOption (aUserToken.getID (), aUserToken.getDisplayName ());
   }

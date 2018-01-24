@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
@@ -50,15 +50,14 @@ public class HCVATItemSelect extends HCExtSelect
       addOptionPleaseSelect (aDisplayLocale);
 
     // for all VAT items of the given country
-    final Map <String, IVATItem> aVATItems = aVATManager.getAllVATItemsForCountry (aCountry);
+    final ICommonsMap <String, IVATItem> aVATItems = aVATManager.getAllVATItemsForCountry (aCountry);
 
     // 0% should always be present
     if (!aVATItems.containsKey (VATManager.VATTYPE_NONE.getID ()))
       aVATItems.put (VATManager.VATTYPE_NONE.getID (), VATManager.VATTYPE_NONE);
 
-    for (final Map.Entry <String, IVATItem> aEntry : CollectionHelper.getSortedByValue (aVATItems,
-                                                                                        Comparator.comparing (IVATItem::getPercentage))
-                                                                     .entrySet ())
+    for (final Map.Entry <String, IVATItem> aEntry : aVATItems.getSortedByValue (Comparator.comparing (IVATItem::getPercentage))
+                                                              .entrySet ())
     {
       final IVATItem aVATItem = aEntry.getValue ();
       if (!aVATItem.isDeprecated ())

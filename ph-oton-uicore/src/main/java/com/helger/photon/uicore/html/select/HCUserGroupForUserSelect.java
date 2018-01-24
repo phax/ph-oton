@@ -21,7 +21,7 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.name.IHasName;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.photon.core.form.RequestField;
@@ -41,10 +41,10 @@ public class HCUserGroupForUserSelect extends HCExtSelect
     super (aRF);
     setMultiple (true);
 
-    final Collection <? extends IUserGroup> aAllUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                                  .getAllUserGroups ();
+    final ICommonsList <IUserGroup> aAllUserGroups = PhotonSecurityManager.getUserGroupMgr ().getAllUserGroups ();
     setSize (Math.min (10, aAllUserGroups.size ()));
-    for (final IUserGroup aUserGroup : CollectionHelper.getSorted (aAllUserGroups, IHasName.getComparatorName ()))
+
+    for (final IUserGroup aUserGroup : aAllUserGroups.getSortedInline (IHasName.getComparatorName ()))
     {
       final HCOption aOption = addOption (aUserGroup.getID (), aUserGroup.getName ());
       if (aSelectedUserGroups != null && aSelectedUserGroups.contains (aUserGroup.getID ()))

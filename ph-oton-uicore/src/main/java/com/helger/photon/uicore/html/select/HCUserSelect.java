@@ -17,12 +17,12 @@
 package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -30,7 +30,7 @@ import com.helger.photon.security.user.IUser;
 
 /**
  * A select for {@link IUser} objects.
- * 
+ *
  * @author Philip Helger
  */
 public class HCUserSelect extends HCExtSelect
@@ -39,12 +39,21 @@ public class HCUserSelect extends HCExtSelect
                        @Nonnull final Locale aDisplayLocale,
                        @Nullable final Predicate <IUser> aFilter)
   {
+    this (aRF, aDisplayLocale, aFilter, aUser -> aUser.getDisplayName () + " (" + aUser.getLoginName () + ")");
+  }
+
+  public HCUserSelect (@Nonnull final IHCRequestField aRF,
+                       @Nonnull final Locale aDisplayLocale,
+                       @Nullable final Predicate <? super IUser> aFilter,
+                       @Nonnull final Function <? super IUser, String> aDisplayTextProvider)
+  {
     super (aRF);
 
     // for all items
-    for (final IUser aUser : CollectionHelper.getSorted (PhotonSecurityManager.getUserMgr ().getAllUsers (),
-                                                         IHasDisplayName.getComparatorCollating (aDisplayLocale)))
+    for (final IUser aUser : PhotonSecurityManager.getUserMgr ()
+                                                  .getAllUsers ()
+                                                  .getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale)))
       if (aFilter == null || aFilter.test (aUser))
-        addOption (aUser.getID (), aUser.getDisplayName () + " (" + aUser.getLoginName () + ")");
+        addOption (aUser.getID (), aDisplayTextProvider.apply (aUser));
   }
 }
