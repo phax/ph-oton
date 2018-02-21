@@ -29,6 +29,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.0.1 - work in progress
+  * Bootstrap3Panel type can be changed
 * v8.0.0 - 2018-01-05
   * Updated to ph-commons 9.0.0
   * Renamed 'Client' to 'Tenant' and moved to ph-tenancy in ph-masterdata project

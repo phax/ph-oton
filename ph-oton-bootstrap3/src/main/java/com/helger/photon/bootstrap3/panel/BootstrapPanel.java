@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.state.EChange;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -31,10 +32,10 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
  */
 public class BootstrapPanel extends AbstractHCDiv <BootstrapPanel>
 {
-  private final EBootstrapPanelType m_eType;
-  private HCDiv m_aHeader = null;
+  private EBootstrapPanelType m_eType;
+  private HCDiv m_aHeader;
   private final HCDiv m_aBody;
-  private HCDiv m_aFooter = null;
+  private HCDiv m_aFooter;
 
   public BootstrapPanel ()
   {
@@ -49,10 +50,8 @@ public class BootstrapPanel extends AbstractHCDiv <BootstrapPanel>
    */
   public BootstrapPanel (@Nonnull final EBootstrapPanelType eType)
   {
-    ValueEnforcer.notNull (eType, "Type");
-
-    addClasses (CBootstrapCSS.PANEL, eType);
-    m_eType = eType;
+    addClass (CBootstrapCSS.PANEL);
+    setType (eType);
     m_aBody = addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.PANEL_BODY));
   }
 
@@ -60,6 +59,26 @@ public class BootstrapPanel extends AbstractHCDiv <BootstrapPanel>
   public EBootstrapPanelType getType ()
   {
     return m_eType;
+  }
+
+  /**
+   * Set the type.
+   * 
+   * @param eType
+   *        Panel type. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public final EChange setType (@Nonnull final EBootstrapPanelType eType)
+  {
+    ValueEnforcer.notNull (eType, "Type");
+    if (eType.equals (m_eType))
+      return EChange.UNCHANGED;
+
+    removeClass (m_eType);
+    addClass (eType);
+    m_eType = eType;
+    return EChange.CHANGED;
   }
 
   public boolean hasHeader ()
