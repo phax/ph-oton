@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
@@ -81,11 +82,17 @@ public final class DataTablesHelper
   {
     final JSAnonymousFunction aFuncIntVal = new JSAnonymousFunction ();
     final JSVar aVal = aFuncIntVal.param ("v");
+
+    // If string
     final JSBlock aIfString = aFuncIntVal.body ()._if (aVal.typeof ().eeq ("string"))._then ();
     if (aValueCleanupFunc != null)
       aIfString.assign (aVal, aValueCleanupFunc.invoke ().arg (aVal));
     aIfString._return (JSGlobal.parseFloat (aVal));
+
+    // If number
     aFuncIntVal.body ()._if (aVal.typeof ().eeq ("number"))._then ()._return (aVal);
+
+    // Assume 0
     aFuncIntVal.body ()._return (0);
     return aFuncIntVal;
   }
@@ -97,28 +104,74 @@ public final class DataTablesHelper
    *        The string suffix to be appended. May not be <code>null</code> but
    *        maybe empty.
    * @return Never <code>null</code>.
+   * @see #createFunctionPrintSum(String, String, String)
    */
   @Nonnull
+  @Deprecated
   public static JSAnonymousFunction createFunctionPrintSum (@Nonnull final String sSuffix)
   {
-    final JSAnonymousFunction aFuncPrintSum = new JSAnonymousFunction ();
-    final JSVar aTotal = aFuncPrintSum.param ("t");
-    final JSVar aPageTotal = aFuncPrintSum.param ("pt");
+    return createFunctionPrintSum (null, sSuffix, " / ");
+  }
 
-    aFuncPrintSum.body ()
-                 ._return (JSOp.cond (aTotal.eq (aPageTotal),
-                                      aTotal.plus (sSuffix),
-                                      aPageTotal.plus (sSuffix + " / ").plus (aTotal).plus (sSuffix)));
+  /**
+   * Create the JS function to print the sum in the footer
+   *
+   * @param sPrefix
+   *        The prefix to be prepended. May be <code>null</code> or empty.
+   * @param sSuffix
+   *        The string suffix to be appended. May be <code>null</code> or empty.
+   * @param sSep
+   *        The separator between page total and overall total. May not be
+   *        <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static JSAnonymousFunction createFunctionPrintSum (@Nullable final String sPrefix,
+                                                            @Nullable final String sSuffix,
+                                                            @Nonnull final String sSep)
+  {
+    final JSAnonymousFunction aFuncPrintSum = new JSAnonymousFunction ();
+
+    IJSExpression aTotal = aFuncPrintSum.param ("t");
+    IJSExpression aPageTotal = aFuncPrintSum.param ("pt");
+    if (StringHelper.hasText (sPrefix))
+    {
+      aTotal = JSExpr.lit (sPrefix).plus (aTotal);
+      aPageTotal = JSExpr.lit (sPrefix).plus (aPageTotal);
+    }
+    if (StringHelper.hasText (sSuffix))
+    {
+      aTotal = aTotal.plus (sSuffix);
+      aPageTotal = aPageTotal.plus (sSuffix);
+    }
+
+    aFuncPrintSum.body ()._return (JSOp.cond (aTotal.eq (aPageTotal), aTotal, aPageTotal.plus (sSep).plus (aTotal)));
     return aFuncPrintSum;
   }
 
   @Nonnull
+  @Deprecated
   public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull @Nonempty final int... aColumns)
   {
     return createFooterCallbackColumnSum (createFunctionIntVal (), createFunctionPrintSum (""), aColumns);
   }
 
+  /**
+   * Create a dynamic callback for calculated footer values (like sums etc.)
+   *
+   * @param aFuncIntVal
+   *        JS function to be invoked on all cells to convert a String into an
+   *        int. Use it to e.g. cut prefixes and/or suffixes.
+   * @param aFuncPrintSum
+   *        JS function to be invoked to format the sum. The parameter is a
+   *        floating point value (the sum).
+   * @param aColumns
+   *        The 0-based column indeces for which the sums should be applied.
+   * @return A JS function to be used as the dataTables footer callback.
+   * @see #createFooterCallbackColumnSum(Iterable)
+   */
   @Nonnull
+  @Deprecated
   public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull final JSAnonymousFunction aFuncIntVal,
                                                                    @Nonnull final JSAnonymousFunction aFuncPrintSum,
                                                                    @Nonnull @Nonempty final int... aColumns)
@@ -162,6 +215,67 @@ public final class DataTablesHelper
                               .arg (0));
       // Update the respective footer
       ret.body ().add (JQuery.jQuery (aAPI.invoke ("column").arg (nTarget).invoke ("footer"))
+                             .html (JSExpr.invoke (aPrintSum).arg (aTotal).arg (aPageTotal)));
+    }
+
+    return ret;
+  }
+
+  /**
+   * Create a dynamic callback for calculated footer values (like sums etc.)
+   *
+   * @param aColumns
+   *        The columns to be added. May neither be <code>null</code> nor empty.
+   * @return A JS function to be used as the dataTables footer callback.
+   */
+  @Nonnull
+  public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull final Iterable <? extends FooterCallbackSumColumn> aColumns)
+  {
+    ValueEnforcer.notEmpty (aColumns, "Columns");
+
+    final JSAnonymousFunction ret = new JSAnonymousFunction ();
+    ret.param ("tfoot");
+    ret.param ("data");
+    ret.param ("start");
+    ret.param ("end");
+    ret.param ("display");
+    final JSVar aAPI = ret.body ().var ("api", JSExpr.THIS.invoke ("api"));
+
+    for (final FooterCallbackSumColumn aColumn : aColumns)
+    {
+      final String sSuffix = Integer.toString (aColumn.getPrintColumn ());
+      final JSVar aIntVal = ret.body ().var ("funcIntVal" + sSuffix, aColumn.getJSFuncIntVal ());
+      final JSVar aPrintSum = ret.body ().var ("funcPrintSum" + sSuffix, aColumn.getJSFuncPrintSum ());
+
+      // The reduce function: plus
+      final JSAnonymousFunction aFuncReduce = new JSAnonymousFunction ();
+      {
+        final JSVar aParam1 = aFuncReduce.param ("a");
+        final JSVar aParam2 = aFuncReduce.param ("b");
+        aFuncReduce.body ()
+                   ._return (JSExpr.invoke (aIntVal).arg (aParam1).plus (JSExpr.invoke (aIntVal).arg (aParam2)));
+      }
+      final JSVar aReduce = ret.body ().var ("funcReduce" + sSuffix, aFuncReduce);
+
+      // Calc overall total
+      final JSVar aTotal = ret.body ().var ("total" + sSuffix,
+                                            aAPI.invoke ("column")
+                                                .arg (aColumn.getCalcColumn ())
+                                                .invoke ("data")
+                                                .invoke ("reduce")
+                                                .arg (aReduce)
+                                                .arg (0));
+      // Calc visible total
+      final JSVar aPageTotal = ret.body ().var ("pagetotal" + sSuffix,
+                                                aAPI.invoke ("column")
+                                                    .arg (aColumn.getCalcColumn ())
+                                                    .arg (new JSAssocArray ().add ("page", "current"))
+                                                    .invoke ("data")
+                                                    .invoke ("reduce")
+                                                    .arg (aReduce)
+                                                    .arg (0));
+      // Update the respective footer
+      ret.body ().add (JQuery.jQuery (aAPI.invoke ("column").arg (aColumn.getPrintColumn ()).invoke ("footer"))
                              .html (JSExpr.invoke (aPrintSum).arg (aTotal).arg (aPageTotal)));
     }
 
