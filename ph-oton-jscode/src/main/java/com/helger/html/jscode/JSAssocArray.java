@@ -19,7 +19,10 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.function.DoublePredicate;
 import java.util.function.Function;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnegative;
@@ -218,6 +221,30 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   {
     if (aFilter.test (aValue))
       return add (getKey (sKey), aValue);
+    return this;
+  }
+
+  @Nonnull
+  public JSAssocArray addIf (@Nonnull final String sKey, final int nValue, @Nonnull final IntPredicate aFilter)
+  {
+    if (aFilter.test (nValue))
+      return add (sKey, nValue);
+    return this;
+  }
+
+  @Nonnull
+  public JSAssocArray addIf (@Nonnull final String sKey, final long nValue, @Nonnull final LongPredicate aFilter)
+  {
+    if (aFilter.test (nValue))
+      return add (sKey, nValue);
+    return this;
+  }
+
+  @Nonnull
+  public JSAssocArray addIf (@Nonnull final String sKey, final double dValue, @Nonnull final DoublePredicate aFilter)
+  {
+    if (aFilter.test (dValue))
+      return add (sKey, dValue);
     return this;
   }
 
