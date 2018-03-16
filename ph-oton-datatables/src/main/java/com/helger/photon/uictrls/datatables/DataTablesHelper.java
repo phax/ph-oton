@@ -104,13 +104,13 @@ public final class DataTablesHelper
    *        The string suffix to be appended. May not be <code>null</code> but
    *        maybe empty.
    * @return Never <code>null</code>.
-   * @see #createFunctionPrintSum(String, String, String)
+   * @see #createFunctionPrintSum(String, String, String, String, String)
    */
   @Nonnull
   @Deprecated
   public static JSAnonymousFunction createFunctionPrintSum (@Nonnull final String sSuffix)
   {
-    return createFunctionPrintSum (null, sSuffix, " / ");
+    return createFunctionPrintSum (null, sSuffix, null, " / ", null);
   }
 
   /**
@@ -120,15 +120,23 @@ public final class DataTablesHelper
    *        The prefix to be prepended. May be <code>null</code> or empty.
    * @param sSuffix
    *        The string suffix to be appended. May be <code>null</code> or empty.
-   * @param sSep
-   *        The separator between page total and overall total. May not be
-   *        <code>null</code>.
+   * @param sBothPrefix
+   *        The prefix to be printed if page total and overall total are
+   *        displayed. May be <code>null</code>.
+   * @param sBothSep
+   *        The separator to be printed if page total and overall total are
+   *        displayed. May be <code>null</code>.
+   * @param sBothSuffix
+   *        The suffix to be printed if page total and overall total are
+   *        displayed. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull
   public static JSAnonymousFunction createFunctionPrintSum (@Nullable final String sPrefix,
                                                             @Nullable final String sSuffix,
-                                                            @Nonnull final String sSep)
+                                                            @Nullable final String sBothPrefix,
+                                                            @Nullable final String sBothSep,
+                                                            @Nullable final String sBothSuffix)
   {
     final JSAnonymousFunction aFuncPrintSum = new JSAnonymousFunction ();
 
@@ -145,7 +153,18 @@ public final class DataTablesHelper
       aPageTotal = aPageTotal.plus (sSuffix);
     }
 
-    aFuncPrintSum.body ()._return (JSOp.cond (aTotal.eq (aPageTotal), aTotal, aPageTotal.plus (sSep).plus (aTotal)));
+    IJSExpression aBoth;
+    if (StringHelper.hasText (sBothPrefix))
+      aBoth = JSExpr.lit (sBothPrefix).plus (aPageTotal);
+    else
+      aBoth = aPageTotal;
+    if (StringHelper.hasText (sBothSep))
+      aBoth = aBoth.plus (sBothSep);
+    aBoth = aBoth.plus (aTotal);
+    if (StringHelper.hasText (sBothSuffix))
+      aBoth = aBoth.plus (sBothSuffix);
+
+    aFuncPrintSum.body ()._return (JSOp.cond (aTotal.eq (aPageTotal), aTotal, aBoth));
     return aFuncPrintSum;
   }
 
