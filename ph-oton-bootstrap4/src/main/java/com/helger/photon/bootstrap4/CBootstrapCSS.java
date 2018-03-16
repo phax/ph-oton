@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.0.0-b2
+  // 4.0.0
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
   public static final ICSSClassProvider ALERT_DANGER = DefaultCSSClassProvider.create ("alert-danger");
@@ -160,16 +160,20 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider BLOCKQUOTE_FOOTER = DefaultCSSClassProvider.create ("blockquote-footer");
   public static final ICSSClassProvider BORDER = DefaultCSSClassProvider.create ("border");
   public static final ICSSClassProvider BORDER_0 = DefaultCSSClassProvider.create ("border-0");
+  public static final ICSSClassProvider BORDER_BOTTOM = DefaultCSSClassProvider.create ("border-bottom");
   public static final ICSSClassProvider BORDER_BOTTOM_0 = DefaultCSSClassProvider.create ("border-bottom-0");
   public static final ICSSClassProvider BORDER_DANGER = DefaultCSSClassProvider.create ("border-danger");
   public static final ICSSClassProvider BORDER_DARK = DefaultCSSClassProvider.create ("border-dark");
   public static final ICSSClassProvider BORDER_INFO = DefaultCSSClassProvider.create ("border-info");
+  public static final ICSSClassProvider BORDER_LEFT = DefaultCSSClassProvider.create ("border-left");
   public static final ICSSClassProvider BORDER_LEFT_0 = DefaultCSSClassProvider.create ("border-left-0");
   public static final ICSSClassProvider BORDER_LIGHT = DefaultCSSClassProvider.create ("border-light");
   public static final ICSSClassProvider BORDER_PRIMARY = DefaultCSSClassProvider.create ("border-primary");
+  public static final ICSSClassProvider BORDER_RIGHT = DefaultCSSClassProvider.create ("border-right");
   public static final ICSSClassProvider BORDER_RIGHT_0 = DefaultCSSClassProvider.create ("border-right-0");
   public static final ICSSClassProvider BORDER_SECONDARY = DefaultCSSClassProvider.create ("border-secondary");
   public static final ICSSClassProvider BORDER_SUCCESS = DefaultCSSClassProvider.create ("border-success");
+  public static final ICSSClassProvider BORDER_TOP = DefaultCSSClassProvider.create ("border-top");
   public static final ICSSClassProvider BORDER_TOP_0 = DefaultCSSClassProvider.create ("border-top-0");
   public static final ICSSClassProvider BORDER_WARNING = DefaultCSSClassProvider.create ("border-warning");
   public static final ICSSClassProvider BORDER_WHITE = DefaultCSSClassProvider.create ("border-white");
@@ -192,6 +196,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider BTN_GROUP = DefaultCSSClassProvider.create ("btn-group");
   public static final ICSSClassProvider BTN_GROUP_LG = DefaultCSSClassProvider.create ("btn-group-lg");
   public static final ICSSClassProvider BTN_GROUP_SM = DefaultCSSClassProvider.create ("btn-group-sm");
+  public static final ICSSClassProvider BTN_GROUP_TOGGLE = DefaultCSSClassProvider.create ("btn-group-toggle");
   public static final ICSSClassProvider BTN_GROUP_VERTICAL = DefaultCSSClassProvider.create ("btn-group-vertical");
   public static final ICSSClassProvider BTN_INFO = DefaultCSSClassProvider.create ("btn-info");
   public static final ICSSClassProvider BTN_LG = DefaultCSSClassProvider.create ("btn-lg");
@@ -260,7 +265,6 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider COL_FORM_LABEL = DefaultCSSClassProvider.create ("col-form-label");
   public static final ICSSClassProvider COL_FORM_LABEL_LG = DefaultCSSClassProvider.create ("col-form-label-lg");
   public static final ICSSClassProvider COL_FORM_LABEL_SM = DefaultCSSClassProvider.create ("col-form-label-sm");
-  public static final ICSSClassProvider COL_FORM_LEGEND = DefaultCSSClassProvider.create ("col-form-legend");
   public static final ICSSClassProvider COL_LG = DefaultCSSClassProvider.create ("col-lg");
   public static final ICSSClassProvider COL_LG_1 = DefaultCSSClassProvider.create ("col-lg-1");
   public static final ICSSClassProvider COL_LG_10 = DefaultCSSClassProvider.create ("col-lg-10");
@@ -323,15 +327,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider CONTAINER_FLUID = DefaultCSSClassProvider.create ("container-fluid");
   public static final ICSSClassProvider CUSTOM_CHECKBOX = DefaultCSSClassProvider.create ("custom-checkbox");
   public static final ICSSClassProvider CUSTOM_CONTROL = DefaultCSSClassProvider.create ("custom-control");
-  public static final ICSSClassProvider CUSTOM_CONTROL_DESCRIPTION = DefaultCSSClassProvider.create ("custom-control-description");
-  public static final ICSSClassProvider CUSTOM_CONTROL_INDICATOR = DefaultCSSClassProvider.create ("custom-control-indicator");
+  public static final ICSSClassProvider CUSTOM_CONTROL_INLINE = DefaultCSSClassProvider.create ("custom-control-inline");
   public static final ICSSClassProvider CUSTOM_CONTROL_INPUT = DefaultCSSClassProvider.create ("custom-control-input");
-  public static final ICSSClassProvider CUSTOM_CONTROLS_STACKED = DefaultCSSClassProvider.create ("custom-controls-stacked");
+  public static final ICSSClassProvider CUSTOM_CONTROL_LABEL = DefaultCSSClassProvider.create ("custom-control-label");
   public static final ICSSClassProvider CUSTOM_FILE = DefaultCSSClassProvider.create ("custom-file");
   public static final ICSSClassProvider CUSTOM_FILE_CONTROL = DefaultCSSClassProvider.create ("custom-file-control");
   public static final ICSSClassProvider CUSTOM_FILE_INPUT = DefaultCSSClassProvider.create ("custom-file-input");
+  public static final ICSSClassProvider CUSTOM_FILE_LABEL = DefaultCSSClassProvider.create ("custom-file-label");
   public static final ICSSClassProvider CUSTOM_RADIO = DefaultCSSClassProvider.create ("custom-radio");
   public static final ICSSClassProvider CUSTOM_SELECT = DefaultCSSClassProvider.create ("custom-select");
+  public static final ICSSClassProvider CUSTOM_SELECT_LG = DefaultCSSClassProvider.create ("custom-select-lg");
   public static final ICSSClassProvider CUSTOM_SELECT_SM = DefaultCSSClassProvider.create ("custom-select-sm");
   public static final ICSSClassProvider D_BLOCK = DefaultCSSClassProvider.create ("d-block");
   public static final ICSSClassProvider D_FLEX = DefaultCSSClassProvider.create ("d-flex");
@@ -358,9 +363,14 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider D_MD_TABLE_ROW = DefaultCSSClassProvider.create ("d-md-table-row");
   public static final ICSSClassProvider D_NONE = DefaultCSSClassProvider.create ("d-none");
   public static final ICSSClassProvider D_PRINT_BLOCK = DefaultCSSClassProvider.create ("d-print-block");
+  public static final ICSSClassProvider D_PRINT_FLEX = DefaultCSSClassProvider.create ("d-print-flex");
   public static final ICSSClassProvider D_PRINT_INLINE = DefaultCSSClassProvider.create ("d-print-inline");
   public static final ICSSClassProvider D_PRINT_INLINE_BLOCK = DefaultCSSClassProvider.create ("d-print-inline-block");
+  public static final ICSSClassProvider D_PRINT_INLINE_FLEX = DefaultCSSClassProvider.create ("d-print-inline-flex");
   public static final ICSSClassProvider D_PRINT_NONE = DefaultCSSClassProvider.create ("d-print-none");
+  public static final ICSSClassProvider D_PRINT_TABLE = DefaultCSSClassProvider.create ("d-print-table");
+  public static final ICSSClassProvider D_PRINT_TABLE_CELL = DefaultCSSClassProvider.create ("d-print-table-cell");
+  public static final ICSSClassProvider D_PRINT_TABLE_ROW = DefaultCSSClassProvider.create ("d-print-table-row");
   public static final ICSSClassProvider D_SM_BLOCK = DefaultCSSClassProvider.create ("d-sm-block");
   public static final ICSSClassProvider D_SM_FLEX = DefaultCSSClassProvider.create ("d-sm-flex");
   public static final ICSSClassProvider D_SM_INLINE = DefaultCSSClassProvider.create ("d-sm-inline");
@@ -395,6 +405,8 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider DROPDOWN_MENU_RIGHT = DefaultCSSClassProvider.create ("dropdown-menu-right");
   public static final ICSSClassProvider DROPDOWN_TOGGLE = DefaultCSSClassProvider.create ("dropdown-toggle");
   public static final ICSSClassProvider DROPDOWN_TOGGLE_SPLIT = DefaultCSSClassProvider.create ("dropdown-toggle-split");
+  public static final ICSSClassProvider DROPLEFT = DefaultCSSClassProvider.create ("dropleft");
+  public static final ICSSClassProvider DROPRIGHT = DefaultCSSClassProvider.create ("dropright");
   public static final ICSSClassProvider DROPUP = DefaultCSSClassProvider.create ("dropup");
   public static final ICSSClassProvider EMBED_RESPONSIVE = DefaultCSSClassProvider.create ("embed-responsive");
   public static final ICSSClassProvider EMBED_RESPONSIVE_16BY9 = DefaultCSSClassProvider.create ("embed-responsive-16by9");
@@ -468,7 +480,6 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider FORM_CHECK_INPUT = DefaultCSSClassProvider.create ("form-check-input");
   public static final ICSSClassProvider FORM_CHECK_LABEL = DefaultCSSClassProvider.create ("form-check-label");
   public static final ICSSClassProvider FORM_CONTROL = DefaultCSSClassProvider.create ("form-control");
-  public static final ICSSClassProvider FORM_CONTROL_FEEDBACK = DefaultCSSClassProvider.create ("form-control-feedback");
   public static final ICSSClassProvider FORM_CONTROL_FILE = DefaultCSSClassProvider.create ("form-control-file");
   public static final ICSSClassProvider FORM_CONTROL_LG = DefaultCSSClassProvider.create ("form-control-lg");
   public static final ICSSClassProvider FORM_CONTROL_PLAINTEXT = DefaultCSSClassProvider.create ("form-control-plaintext");
@@ -488,15 +499,15 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider H4 = DefaultCSSClassProvider.create ("h4");
   public static final ICSSClassProvider H5 = DefaultCSSClassProvider.create ("h5");
   public static final ICSSClassProvider H6 = DefaultCSSClassProvider.create ("h6");
-  public static final ICSSClassProvider HAS_FEEDBACK = DefaultCSSClassProvider.create ("has-feedback");
   public static final ICSSClassProvider IMG_FLUID = DefaultCSSClassProvider.create ("img-fluid");
   public static final ICSSClassProvider IMG_THUMBNAIL = DefaultCSSClassProvider.create ("img-thumbnail");
   public static final ICSSClassProvider INITIALISM = DefaultCSSClassProvider.create ("initialism");
   public static final ICSSClassProvider INPUT_GROUP = DefaultCSSClassProvider.create ("input-group");
-  public static final ICSSClassProvider INPUT_GROUP_ADDON = DefaultCSSClassProvider.create ("input-group-addon");
-  public static final ICSSClassProvider INPUT_GROUP_BTN = DefaultCSSClassProvider.create ("input-group-btn");
+  public static final ICSSClassProvider INPUT_GROUP_APPEND = DefaultCSSClassProvider.create ("input-group-append");
   public static final ICSSClassProvider INPUT_GROUP_LG = DefaultCSSClassProvider.create ("input-group-lg");
+  public static final ICSSClassProvider INPUT_GROUP_PREPEND = DefaultCSSClassProvider.create ("input-group-prepend");
   public static final ICSSClassProvider INPUT_GROUP_SM = DefaultCSSClassProvider.create ("input-group-sm");
+  public static final ICSSClassProvider INPUT_GROUP_TEXT = DefaultCSSClassProvider.create ("input-group-text");
   public static final ICSSClassProvider INVALID_FEEDBACK = DefaultCSSClassProvider.create ("invalid-feedback");
   public static final ICSSClassProvider INVALID_TOOLTIP = DefaultCSSClassProvider.create ("invalid-tooltip");
   public static final ICSSClassProvider INVISIBLE = DefaultCSSClassProvider.create ("invisible");
@@ -659,6 +670,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MODAL_BODY = DefaultCSSClassProvider.create ("modal-body");
   public static final ICSSClassProvider MODAL_CONTENT = DefaultCSSClassProvider.create ("modal-content");
   public static final ICSSClassProvider MODAL_DIALOG = DefaultCSSClassProvider.create ("modal-dialog");
+  public static final ICSSClassProvider MODAL_DIALOG_CENTERED = DefaultCSSClassProvider.create ("modal-dialog-centered");
   public static final ICSSClassProvider MODAL_FOOTER = DefaultCSSClassProvider.create ("modal-footer");
   public static final ICSSClassProvider MODAL_HEADER = DefaultCSSClassProvider.create ("modal-header");
   public static final ICSSClassProvider MODAL_LG = DefaultCSSClassProvider.create ("modal-lg");
@@ -888,6 +900,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider OFFSET_XL_7 = DefaultCSSClassProvider.create ("offset-xl-7");
   public static final ICSSClassProvider OFFSET_XL_8 = DefaultCSSClassProvider.create ("offset-xl-8");
   public static final ICSSClassProvider OFFSET_XL_9 = DefaultCSSClassProvider.create ("offset-xl-9");
+  public static final ICSSClassProvider ORDER_0 = DefaultCSSClassProvider.create ("order-0");
   public static final ICSSClassProvider ORDER_1 = DefaultCSSClassProvider.create ("order-1");
   public static final ICSSClassProvider ORDER_10 = DefaultCSSClassProvider.create ("order-10");
   public static final ICSSClassProvider ORDER_11 = DefaultCSSClassProvider.create ("order-11");
@@ -901,6 +914,8 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_8 = DefaultCSSClassProvider.create ("order-8");
   public static final ICSSClassProvider ORDER_9 = DefaultCSSClassProvider.create ("order-9");
   public static final ICSSClassProvider ORDER_FIRST = DefaultCSSClassProvider.create ("order-first");
+  public static final ICSSClassProvider ORDER_LAST = DefaultCSSClassProvider.create ("order-last");
+  public static final ICSSClassProvider ORDER_LG_0 = DefaultCSSClassProvider.create ("order-lg-0");
   public static final ICSSClassProvider ORDER_LG_1 = DefaultCSSClassProvider.create ("order-lg-1");
   public static final ICSSClassProvider ORDER_LG_10 = DefaultCSSClassProvider.create ("order-lg-10");
   public static final ICSSClassProvider ORDER_LG_11 = DefaultCSSClassProvider.create ("order-lg-11");
@@ -914,6 +929,8 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_LG_8 = DefaultCSSClassProvider.create ("order-lg-8");
   public static final ICSSClassProvider ORDER_LG_9 = DefaultCSSClassProvider.create ("order-lg-9");
   public static final ICSSClassProvider ORDER_LG_FIRST = DefaultCSSClassProvider.create ("order-lg-first");
+  public static final ICSSClassProvider ORDER_LG_LAST = DefaultCSSClassProvider.create ("order-lg-last");
+  public static final ICSSClassProvider ORDER_MD_0 = DefaultCSSClassProvider.create ("order-md-0");
   public static final ICSSClassProvider ORDER_MD_1 = DefaultCSSClassProvider.create ("order-md-1");
   public static final ICSSClassProvider ORDER_MD_10 = DefaultCSSClassProvider.create ("order-md-10");
   public static final ICSSClassProvider ORDER_MD_11 = DefaultCSSClassProvider.create ("order-md-11");
@@ -927,6 +944,8 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_MD_8 = DefaultCSSClassProvider.create ("order-md-8");
   public static final ICSSClassProvider ORDER_MD_9 = DefaultCSSClassProvider.create ("order-md-9");
   public static final ICSSClassProvider ORDER_MD_FIRST = DefaultCSSClassProvider.create ("order-md-first");
+  public static final ICSSClassProvider ORDER_MD_LAST = DefaultCSSClassProvider.create ("order-md-last");
+  public static final ICSSClassProvider ORDER_SM_0 = DefaultCSSClassProvider.create ("order-sm-0");
   public static final ICSSClassProvider ORDER_SM_1 = DefaultCSSClassProvider.create ("order-sm-1");
   public static final ICSSClassProvider ORDER_SM_10 = DefaultCSSClassProvider.create ("order-sm-10");
   public static final ICSSClassProvider ORDER_SM_11 = DefaultCSSClassProvider.create ("order-sm-11");
@@ -940,6 +959,8 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_SM_8 = DefaultCSSClassProvider.create ("order-sm-8");
   public static final ICSSClassProvider ORDER_SM_9 = DefaultCSSClassProvider.create ("order-sm-9");
   public static final ICSSClassProvider ORDER_SM_FIRST = DefaultCSSClassProvider.create ("order-sm-first");
+  public static final ICSSClassProvider ORDER_SM_LAST = DefaultCSSClassProvider.create ("order-sm-last");
+  public static final ICSSClassProvider ORDER_XL_0 = DefaultCSSClassProvider.create ("order-xl-0");
   public static final ICSSClassProvider ORDER_XL_1 = DefaultCSSClassProvider.create ("order-xl-1");
   public static final ICSSClassProvider ORDER_XL_10 = DefaultCSSClassProvider.create ("order-xl-10");
   public static final ICSSClassProvider ORDER_XL_11 = DefaultCSSClassProvider.create ("order-xl-11");
@@ -953,6 +974,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_XL_8 = DefaultCSSClassProvider.create ("order-xl-8");
   public static final ICSSClassProvider ORDER_XL_9 = DefaultCSSClassProvider.create ("order-xl-9");
   public static final ICSSClassProvider ORDER_XL_FIRST = DefaultCSSClassProvider.create ("order-xl-first");
+  public static final ICSSClassProvider ORDER_XL_LAST = DefaultCSSClassProvider.create ("order-xl-last");
   public static final ICSSClassProvider P_0 = DefaultCSSClassProvider.create ("p-0");
   public static final ICSSClassProvider P_1 = DefaultCSSClassProvider.create ("p-1");
   public static final ICSSClassProvider P_2 = DefaultCSSClassProvider.create ("p-2");
