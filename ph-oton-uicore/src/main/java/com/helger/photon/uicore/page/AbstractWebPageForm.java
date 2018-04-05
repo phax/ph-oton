@@ -1149,7 +1149,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                   if (aCustomHandler != null)
                   {
                     if (!aCustomHandler.isSelectedObjectRequired () || aSelectedObject != null)
-                      if (aCustomHandler.canHandleAction (aSelectedObject))
+                      if (aCustomHandler.canHandleAction (aWPEC, aSelectedObject))
                       {
                         eFormAction = EWebPageFormAction.CUSTOM;
                         if (s_aLogger.isDebugEnabled ())

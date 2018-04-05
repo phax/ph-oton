@@ -33,7 +33,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
-                                       extends Serializable
+                                       extends
+                                       Serializable
 {
   /**
    * @return <code>true</code> if this action can only be executed when an
@@ -44,6 +45,8 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
   /**
    * Check if the action handler can be executed on the provided object.
    *
+   * @param aWPEC
+   *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
    *        The selected object. May be <code>null</code> if
    *        {@link #isSelectedObjectRequired()} is <code>false</code>.
@@ -51,7 +54,7 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    *         {@link #handleAction(IWebPageExecutionContext, IHasID)} can be
    *         called on the provided object, <code>false</code> otherwise.
    */
-  default boolean canHandleAction (final DATATYPE aSelectedObject)
+  default boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
   {
     return true;
   }
