@@ -40,7 +40,20 @@ public class PhotonBasicTestRule extends ScopeTestRule
    */
   public PhotonBasicTestRule ()
   {
-    this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH.getAbsolutePath ());
+    this (ScopeTestRule.STORAGE_PATH);
+  }
+
+  /**
+   * Ctor with an arbitrary path
+   *
+   * @param aPath
+   *        The data AND servlet context path to be used. May not be
+   *        <code>null</code>.
+   * @since 8.0.1
+   */
+  public PhotonBasicTestRule (@Nonnull final File aPath)
+  {
+    this (aPath, aPath.getAbsolutePath ());
   }
 
   /**

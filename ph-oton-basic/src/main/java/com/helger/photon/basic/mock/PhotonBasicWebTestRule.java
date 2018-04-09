@@ -44,7 +44,20 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    */
   public PhotonBasicWebTestRule ()
   {
-    this (ScopeTestRule.STORAGE_PATH, ScopeTestRule.STORAGE_PATH.getAbsolutePath ());
+    this (ScopeTestRule.STORAGE_PATH);
+  }
+
+  /**
+   * Ctor with an arbitrary path
+   *
+   * @param aPath
+   *        The data AND servlet context path to be used. May not be
+   *        <code>null</code>.
+   * @since 8.0.1
+   */
+  public PhotonBasicWebTestRule (@Nonnull final File aPath)
+  {
+    this (aPath, aPath.getAbsolutePath ());
   }
 
   /**
@@ -82,6 +95,15 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
     return m_sServletContextPath;
   }
 
+  /**
+   * Delete the directories with data and servlet context path before each
+   * iteration?
+   *
+   * @param bDeleteAllData
+   *        <code>true</code> to delete them in {@link #before()},
+   *        <code>false</code> if not.
+   * @return this for chaining
+   */
   @Nonnull
   public PhotonBasicWebTestRule setDeleteAllData (final boolean bDeleteAllData)
   {
