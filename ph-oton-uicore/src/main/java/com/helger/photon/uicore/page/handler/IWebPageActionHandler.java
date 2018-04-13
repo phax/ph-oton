@@ -46,7 +46,8 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    * Check if the action handler can be executed on the provided object.
    *
    * @param aWPEC
-   *        Web page execution context. Never <code>null</code>.
+   *        Web page execution context. Never <code>null</code>. Parameter was
+   *        added in v8.0.1.
    * @param aSelectedObject
    *        The selected object. May be <code>null</code> if
    *        {@link #isSelectedObjectRequired()} is <code>false</code>.

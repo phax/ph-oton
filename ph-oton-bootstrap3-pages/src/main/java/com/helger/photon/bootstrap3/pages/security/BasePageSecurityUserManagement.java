@@ -261,7 +261,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     });
     addCustomHandler (ACTION_RESET_PASSWORD, new AbstractBootstrapWebPageActionHandler <IUser, WPECTYPE> (true)
     {
-      public boolean canHandleAction (@Nonnull final IUser aSelectedObject)
+      public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
       {
         return SecurityUIHelper.canResetPassword (aSelectedObject);
       }

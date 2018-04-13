@@ -175,7 +175,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     addCustomHandler (ACTION_CREATE_NEW_ACCESS_TOKEN,
                       new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
                       {
-                        public boolean canHandleAction (@Nonnull final IUserToken aSelectedObject)
+                        public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC,
+                                                        @Nonnull final IUserToken aSelectedObject)
                         {
                           return canCreateNewAccessToken (aSelectedObject);
                         }
@@ -275,7 +276,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     addCustomHandler (ACTION_REVOKE_ACCESS_TOKEN,
                       new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
                       {
-                        public boolean canHandleAction (@Nonnull final IUserToken aSelectedObject)
+                        public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC,
+                                                        @Nonnull final IUserToken aSelectedObject)
                         {
                           return canRevokeAccessToken (aSelectedObject);
                         }
