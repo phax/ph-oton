@@ -29,7 +29,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.0.1 - work in progress
+* v8.0.1 - 2018-04-18
   * Updated to Jetty 9.4.9
   * Updated to Bootstrap 4.0.0
   * Bootstrap3Panel type can be changed
@@ -112,7 +112,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.0.0</version>
+        <version>8.0.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
