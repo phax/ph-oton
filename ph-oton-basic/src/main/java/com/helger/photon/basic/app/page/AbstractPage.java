@@ -204,7 +204,7 @@ public abstract class AbstractPage implements IPage
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ID", m_sID)
-                                       .append ("Name", m_aName)
+                                       .appendIfNotNull ("Name", m_aName)
                                        .appendIfNotNull ("Description", m_aDescription)
                                        .appendIf ("Attrs", m_aAttrs, AttributeContainerAny::isNotEmpty)
                                        .getToString ();
