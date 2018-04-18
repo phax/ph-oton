@@ -163,7 +163,7 @@ public abstract class AbstractPage implements IPage
   @Nullable
   public final String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return m_aName.getText (aContentLocale);
+    return m_aName == null ? null : m_aName.getText (aContentLocale);
   }
 
   /**
