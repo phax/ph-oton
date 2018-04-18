@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -60,6 +61,21 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
           append (aProvider);
   }
 
+  /**
+   * @return The underlying modifiable list. Never <code>null</code> but maybe
+   *         empty.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  public ICommonsList <IHasJSCode> directAll ()
+  {
+    return m_aList;
+  }
+
+  /**
+   * @return A copy of the list with all members. Never <code>null</code> but
+   *         maybe empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IHasJSCode> getAll ()

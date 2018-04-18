@@ -95,8 +95,15 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
   }
 
   @Nonnull
+  @ReturnsMutableObject
+  public ICommonsMap <String, IJSDeclaration> directDeclarations ()
+  {
+    return m_aDecls;
+  }
+
+  @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IJSDeclaration> declarations ()
+  public ICommonsList <IJSDeclaration> getAllDeclarations ()
   {
     return m_aDecls.copyOfValues ();
   }
@@ -150,7 +157,7 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IHasJSCode> members ()
+  public ICommonsList <IHasJSCode> getAllMembers ()
   {
     return m_aObjs.getClone ();
   }
@@ -1106,14 +1113,14 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
     if (aJSCode instanceof JSPackage)
     {
       // Avoid nested JSPackage
-      for (final IHasJSCode aNestedJSCode : ((JSPackage) aJSCode).members ())
+      for (final IHasJSCode aNestedJSCode : ((JSPackage) aJSCode).directMembers ())
         add (aNestedJSCode);
     }
     else
       if (aJSCode instanceof CollectingJSCodeProvider)
       {
         // Flatten CollectingJSCodeProvider
-        for (final IHasJSCode aNestedJSCode : ((CollectingJSCodeProvider) aJSCode).getAll ())
+        for (final IHasJSCode aNestedJSCode : ((CollectingJSCodeProvider) aJSCode).directAll ())
           add (aNestedJSCode);
       }
       else

@@ -331,7 +331,7 @@ public class JSFormatter implements Closeable
   public void pkg (@Nonnull final JSPackage aPackage)
   {
     // for all declarations in the current package
-    for (final IHasJSCode aObj : aPackage.members ())
+    for (final IHasJSCode aObj : aPackage.directMembers ())
       if (aObj instanceof IJSDeclaration)
         decl ((IJSDeclaration) aObj);
       else
