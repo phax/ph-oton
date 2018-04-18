@@ -28,8 +28,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.security.object.StubObject;
 import com.helger.tenancy.AbstractBusinessObject;
+import com.helger.tenancy.IBusinessObject;
 import com.helger.tenancy.accarea.IAccountingArea;
 import com.helger.tenancy.accarea.IAccountingAreaObject;
 import com.helger.tenancy.tenant.ITenant;
@@ -50,14 +50,14 @@ public abstract class AbstractAccountingAreaObject extends AbstractBusinessObjec
   }
 
   public AbstractAccountingAreaObject (@Nonnull final IAccountingArea aAccountingArea,
-                                       @Nonnull final StubObject aObject)
+                                       @Nonnull final IBusinessObject aObject)
   {
     this (aAccountingArea.getTenant (), aAccountingArea, aObject);
   }
 
   public AbstractAccountingAreaObject (@Nonnull final ITenant aTenant,
                                        @Nonnull final IAccountingArea aAccountingArea,
-                                       @Nonnull final StubObject aObject)
+                                       @Nonnull final IBusinessObject aObject)
   {
     super (aObject);
     ValueEnforcer.notNull (aTenant, "Tenant");

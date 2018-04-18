@@ -30,10 +30,10 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.tenancy.AbstractBusinessObject;
+import com.helger.tenancy.IBusinessObject;
 
 /**
  * Abstract base implementation if {@link IObjectWithAccessToken}.
@@ -53,7 +53,7 @@ public abstract class AbstractObjectWithAccessToken extends AbstractBusinessObje
     return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
   }
 
-  public AbstractObjectWithAccessToken (@Nonnull final StubObject aStubObject,
+  public AbstractObjectWithAccessToken (@Nonnull final IBusinessObject aStubObject,
                                         @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
   {
     super (aStubObject);
