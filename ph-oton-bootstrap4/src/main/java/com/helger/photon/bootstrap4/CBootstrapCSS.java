@@ -30,7 +30,8 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.0.0
+  // 4.1.0
+  public static final ICSSClassProvider ACCORDION = DefaultCSSClassProvider.create ("accordion");
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
   public static final ICSSClassProvider ALERT_DANGER = DefaultCSSClassProvider.create ("alert-danger");
@@ -239,6 +240,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider CAROUSEL_CONTROL_NEXT_ICON = DefaultCSSClassProvider.create ("carousel-control-next-icon");
   public static final ICSSClassProvider CAROUSEL_CONTROL_PREV = DefaultCSSClassProvider.create ("carousel-control-prev");
   public static final ICSSClassProvider CAROUSEL_CONTROL_PREV_ICON = DefaultCSSClassProvider.create ("carousel-control-prev-icon");
+  public static final ICSSClassProvider CAROUSEL_FADE = DefaultCSSClassProvider.create ("carousel-fade");
   public static final ICSSClassProvider CAROUSEL_INDICATORS = DefaultCSSClassProvider.create ("carousel-indicators");
   public static final ICSSClassProvider CAROUSEL_INNER = DefaultCSSClassProvider.create ("carousel-inner");
   public static final ICSSClassProvider CAROUSEL_ITEM = DefaultCSSClassProvider.create ("carousel-item");
@@ -331,10 +333,10 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider CUSTOM_CONTROL_INPUT = DefaultCSSClassProvider.create ("custom-control-input");
   public static final ICSSClassProvider CUSTOM_CONTROL_LABEL = DefaultCSSClassProvider.create ("custom-control-label");
   public static final ICSSClassProvider CUSTOM_FILE = DefaultCSSClassProvider.create ("custom-file");
-  public static final ICSSClassProvider CUSTOM_FILE_CONTROL = DefaultCSSClassProvider.create ("custom-file-control");
   public static final ICSSClassProvider CUSTOM_FILE_INPUT = DefaultCSSClassProvider.create ("custom-file-input");
   public static final ICSSClassProvider CUSTOM_FILE_LABEL = DefaultCSSClassProvider.create ("custom-file-label");
   public static final ICSSClassProvider CUSTOM_RADIO = DefaultCSSClassProvider.create ("custom-radio");
+  public static final ICSSClassProvider CUSTOM_RANGE = DefaultCSSClassProvider.create ("custom-range");
   public static final ICSSClassProvider CUSTOM_SELECT = DefaultCSSClassProvider.create ("custom-select");
   public static final ICSSClassProvider CUSTOM_SELECT_LG = DefaultCSSClassProvider.create ("custom-select-lg");
   public static final ICSSClassProvider CUSTOM_SELECT_SM = DefaultCSSClassProvider.create ("custom-select-sm");
@@ -401,6 +403,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider DROPDOWN_DIVIDER = DefaultCSSClassProvider.create ("dropdown-divider");
   public static final ICSSClassProvider DROPDOWN_HEADER = DefaultCSSClassProvider.create ("dropdown-header");
   public static final ICSSClassProvider DROPDOWN_ITEM = DefaultCSSClassProvider.create ("dropdown-item");
+  public static final ICSSClassProvider DROPDOWN_ITEM_TEXT = DefaultCSSClassProvider.create ("dropdown-item-text");
   public static final ICSSClassProvider DROPDOWN_MENU = DefaultCSSClassProvider.create ("dropdown-menu");
   public static final ICSSClassProvider DROPDOWN_MENU_RIGHT = DefaultCSSClassProvider.create ("dropdown-menu-right");
   public static final ICSSClassProvider DROPDOWN_TOGGLE = DefaultCSSClassProvider.create ("dropdown-toggle");
@@ -422,37 +425,62 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider FIXED_TOP = DefaultCSSClassProvider.create ("fixed-top");
   public static final ICSSClassProvider FLEX_COLUMN = DefaultCSSClassProvider.create ("flex-column");
   public static final ICSSClassProvider FLEX_COLUMN_REVERSE = DefaultCSSClassProvider.create ("flex-column-reverse");
+  public static final ICSSClassProvider FLEX_FILL = DefaultCSSClassProvider.create ("flex-fill");
+  public static final ICSSClassProvider FLEX_GROW_0 = DefaultCSSClassProvider.create ("flex-grow-0");
+  public static final ICSSClassProvider FLEX_GROW_1 = DefaultCSSClassProvider.create ("flex-grow-1");
   public static final ICSSClassProvider FLEX_LG_COLUMN = DefaultCSSClassProvider.create ("flex-lg-column");
   public static final ICSSClassProvider FLEX_LG_COLUMN_REVERSE = DefaultCSSClassProvider.create ("flex-lg-column-reverse");
+  public static final ICSSClassProvider FLEX_LG_FILL = DefaultCSSClassProvider.create ("flex-lg-fill");
+  public static final ICSSClassProvider FLEX_LG_GROW_0 = DefaultCSSClassProvider.create ("flex-lg-grow-0");
+  public static final ICSSClassProvider FLEX_LG_GROW_1 = DefaultCSSClassProvider.create ("flex-lg-grow-1");
   public static final ICSSClassProvider FLEX_LG_NOWRAP = DefaultCSSClassProvider.create ("flex-lg-nowrap");
   public static final ICSSClassProvider FLEX_LG_ROW = DefaultCSSClassProvider.create ("flex-lg-row");
   public static final ICSSClassProvider FLEX_LG_ROW_REVERSE = DefaultCSSClassProvider.create ("flex-lg-row-reverse");
+  public static final ICSSClassProvider FLEX_LG_SHRINK_0 = DefaultCSSClassProvider.create ("flex-lg-shrink-0");
+  public static final ICSSClassProvider FLEX_LG_SHRINK_1 = DefaultCSSClassProvider.create ("flex-lg-shrink-1");
   public static final ICSSClassProvider FLEX_LG_WRAP = DefaultCSSClassProvider.create ("flex-lg-wrap");
   public static final ICSSClassProvider FLEX_LG_WRAP_REVERSE = DefaultCSSClassProvider.create ("flex-lg-wrap-reverse");
   public static final ICSSClassProvider FLEX_MD_COLUMN = DefaultCSSClassProvider.create ("flex-md-column");
   public static final ICSSClassProvider FLEX_MD_COLUMN_REVERSE = DefaultCSSClassProvider.create ("flex-md-column-reverse");
+  public static final ICSSClassProvider FLEX_MD_FILL = DefaultCSSClassProvider.create ("flex-md-fill");
+  public static final ICSSClassProvider FLEX_MD_GROW_0 = DefaultCSSClassProvider.create ("flex-md-grow-0");
+  public static final ICSSClassProvider FLEX_MD_GROW_1 = DefaultCSSClassProvider.create ("flex-md-grow-1");
   public static final ICSSClassProvider FLEX_MD_NOWRAP = DefaultCSSClassProvider.create ("flex-md-nowrap");
   public static final ICSSClassProvider FLEX_MD_ROW = DefaultCSSClassProvider.create ("flex-md-row");
   public static final ICSSClassProvider FLEX_MD_ROW_REVERSE = DefaultCSSClassProvider.create ("flex-md-row-reverse");
+  public static final ICSSClassProvider FLEX_MD_SHRINK_0 = DefaultCSSClassProvider.create ("flex-md-shrink-0");
+  public static final ICSSClassProvider FLEX_MD_SHRINK_1 = DefaultCSSClassProvider.create ("flex-md-shrink-1");
   public static final ICSSClassProvider FLEX_MD_WRAP = DefaultCSSClassProvider.create ("flex-md-wrap");
   public static final ICSSClassProvider FLEX_MD_WRAP_REVERSE = DefaultCSSClassProvider.create ("flex-md-wrap-reverse");
   public static final ICSSClassProvider FLEX_NOWRAP = DefaultCSSClassProvider.create ("flex-nowrap");
   public static final ICSSClassProvider FLEX_ROW = DefaultCSSClassProvider.create ("flex-row");
   public static final ICSSClassProvider FLEX_ROW_REVERSE = DefaultCSSClassProvider.create ("flex-row-reverse");
+  public static final ICSSClassProvider FLEX_SHRINK_0 = DefaultCSSClassProvider.create ("flex-shrink-0");
+  public static final ICSSClassProvider FLEX_SHRINK_1 = DefaultCSSClassProvider.create ("flex-shrink-1");
   public static final ICSSClassProvider FLEX_SM_COLUMN = DefaultCSSClassProvider.create ("flex-sm-column");
   public static final ICSSClassProvider FLEX_SM_COLUMN_REVERSE = DefaultCSSClassProvider.create ("flex-sm-column-reverse");
+  public static final ICSSClassProvider FLEX_SM_FILL = DefaultCSSClassProvider.create ("flex-sm-fill");
+  public static final ICSSClassProvider FLEX_SM_GROW_0 = DefaultCSSClassProvider.create ("flex-sm-grow-0");
+  public static final ICSSClassProvider FLEX_SM_GROW_1 = DefaultCSSClassProvider.create ("flex-sm-grow-1");
   public static final ICSSClassProvider FLEX_SM_NOWRAP = DefaultCSSClassProvider.create ("flex-sm-nowrap");
   public static final ICSSClassProvider FLEX_SM_ROW = DefaultCSSClassProvider.create ("flex-sm-row");
   public static final ICSSClassProvider FLEX_SM_ROW_REVERSE = DefaultCSSClassProvider.create ("flex-sm-row-reverse");
+  public static final ICSSClassProvider FLEX_SM_SHRINK_0 = DefaultCSSClassProvider.create ("flex-sm-shrink-0");
+  public static final ICSSClassProvider FLEX_SM_SHRINK_1 = DefaultCSSClassProvider.create ("flex-sm-shrink-1");
   public static final ICSSClassProvider FLEX_SM_WRAP = DefaultCSSClassProvider.create ("flex-sm-wrap");
   public static final ICSSClassProvider FLEX_SM_WRAP_REVERSE = DefaultCSSClassProvider.create ("flex-sm-wrap-reverse");
   public static final ICSSClassProvider FLEX_WRAP = DefaultCSSClassProvider.create ("flex-wrap");
   public static final ICSSClassProvider FLEX_WRAP_REVERSE = DefaultCSSClassProvider.create ("flex-wrap-reverse");
   public static final ICSSClassProvider FLEX_XL_COLUMN = DefaultCSSClassProvider.create ("flex-xl-column");
   public static final ICSSClassProvider FLEX_XL_COLUMN_REVERSE = DefaultCSSClassProvider.create ("flex-xl-column-reverse");
+  public static final ICSSClassProvider FLEX_XL_FILL = DefaultCSSClassProvider.create ("flex-xl-fill");
+  public static final ICSSClassProvider FLEX_XL_GROW_0 = DefaultCSSClassProvider.create ("flex-xl-grow-0");
+  public static final ICSSClassProvider FLEX_XL_GROW_1 = DefaultCSSClassProvider.create ("flex-xl-grow-1");
   public static final ICSSClassProvider FLEX_XL_NOWRAP = DefaultCSSClassProvider.create ("flex-xl-nowrap");
   public static final ICSSClassProvider FLEX_XL_ROW = DefaultCSSClassProvider.create ("flex-xl-row");
   public static final ICSSClassProvider FLEX_XL_ROW_REVERSE = DefaultCSSClassProvider.create ("flex-xl-row-reverse");
+  public static final ICSSClassProvider FLEX_XL_SHRINK_0 = DefaultCSSClassProvider.create ("flex-xl-shrink-0");
+  public static final ICSSClassProvider FLEX_XL_SHRINK_1 = DefaultCSSClassProvider.create ("flex-xl-shrink-1");
   public static final ICSSClassProvider FLEX_XL_WRAP = DefaultCSSClassProvider.create ("flex-xl-wrap");
   public static final ICSSClassProvider FLEX_XL_WRAP_REVERSE = DefaultCSSClassProvider.create ("flex-xl-wrap-reverse");
   public static final ICSSClassProvider FLOAT_LEFT = DefaultCSSClassProvider.create ("float-left");
@@ -493,6 +521,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider H_25 = DefaultCSSClassProvider.create ("h-25");
   public static final ICSSClassProvider H_50 = DefaultCSSClassProvider.create ("h-50");
   public static final ICSSClassProvider H_75 = DefaultCSSClassProvider.create ("h-75");
+  public static final ICSSClassProvider H_AUTO = DefaultCSSClassProvider.create ("h-auto");
   public static final ICSSClassProvider H1 = DefaultCSSClassProvider.create ("h1");
   public static final ICSSClassProvider H2 = DefaultCSSClassProvider.create ("h2");
   public static final ICSSClassProvider H3 = DefaultCSSClassProvider.create ("h3");
@@ -1211,6 +1240,10 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ROUNDED_RIGHT = DefaultCSSClassProvider.create ("rounded-right");
   public static final ICSSClassProvider ROUNDED_TOP = DefaultCSSClassProvider.create ("rounded-top");
   public static final ICSSClassProvider ROW = DefaultCSSClassProvider.create ("row");
+  public static final ICSSClassProvider SHADOW = DefaultCSSClassProvider.create ("shadow");
+  public static final ICSSClassProvider SHADOW_LG = DefaultCSSClassProvider.create ("shadow-lg");
+  public static final ICSSClassProvider SHADOW_NONE = DefaultCSSClassProvider.create ("shadow-none");
+  public static final ICSSClassProvider SHADOW_SM = DefaultCSSClassProvider.create ("shadow-sm");
   public static final ICSSClassProvider SHOW = DefaultCSSClassProvider.create ("show");
   public static final ICSSClassProvider SMALL = DefaultCSSClassProvider.create ("small");
   public static final ICSSClassProvider SR_ONLY = DefaultCSSClassProvider.create ("sr-only");
@@ -1221,6 +1254,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TABLE = DefaultCSSClassProvider.create ("table");
   public static final ICSSClassProvider TABLE_ACTIVE = DefaultCSSClassProvider.create ("table-active");
   public static final ICSSClassProvider TABLE_BORDERED = DefaultCSSClassProvider.create ("table-bordered");
+  public static final ICSSClassProvider TABLE_BORDERLESS = DefaultCSSClassProvider.create ("table-borderless");
   public static final ICSSClassProvider TABLE_DANGER = DefaultCSSClassProvider.create ("table-danger");
   public static final ICSSClassProvider TABLE_DARK = DefaultCSSClassProvider.create ("table-dark");
   public static final ICSSClassProvider TABLE_HOVER = DefaultCSSClassProvider.create ("table-hover");
@@ -1237,6 +1271,8 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TABLE_STRIPED = DefaultCSSClassProvider.create ("table-striped");
   public static final ICSSClassProvider TABLE_SUCCESS = DefaultCSSClassProvider.create ("table-success");
   public static final ICSSClassProvider TABLE_WARNING = DefaultCSSClassProvider.create ("table-warning");
+  public static final ICSSClassProvider TEXT_BLACK_50 = DefaultCSSClassProvider.create ("text-black-50");
+  public static final ICSSClassProvider TEXT_BODY = DefaultCSSClassProvider.create ("text-body");
   public static final ICSSClassProvider TEXT_CAPITALIZE = DefaultCSSClassProvider.create ("text-capitalize");
   public static final ICSSClassProvider TEXT_CENTER = DefaultCSSClassProvider.create ("text-center");
   public static final ICSSClassProvider TEXT_DANGER = DefaultCSSClassProvider.create ("text-danger");
@@ -1253,6 +1289,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TEXT_MD_CENTER = DefaultCSSClassProvider.create ("text-md-center");
   public static final ICSSClassProvider TEXT_MD_LEFT = DefaultCSSClassProvider.create ("text-md-left");
   public static final ICSSClassProvider TEXT_MD_RIGHT = DefaultCSSClassProvider.create ("text-md-right");
+  public static final ICSSClassProvider TEXT_MONOSPACE = DefaultCSSClassProvider.create ("text-monospace");
   public static final ICSSClassProvider TEXT_MUTED = DefaultCSSClassProvider.create ("text-muted");
   public static final ICSSClassProvider TEXT_NOWRAP = DefaultCSSClassProvider.create ("text-nowrap");
   public static final ICSSClassProvider TEXT_PRIMARY = DefaultCSSClassProvider.create ("text-primary");
@@ -1266,6 +1303,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TEXT_UPPERCASE = DefaultCSSClassProvider.create ("text-uppercase");
   public static final ICSSClassProvider TEXT_WARNING = DefaultCSSClassProvider.create ("text-warning");
   public static final ICSSClassProvider TEXT_WHITE = DefaultCSSClassProvider.create ("text-white");
+  public static final ICSSClassProvider TEXT_WHITE_50 = DefaultCSSClassProvider.create ("text-white-50");
   public static final ICSSClassProvider TEXT_XL_CENTER = DefaultCSSClassProvider.create ("text-xl-center");
   public static final ICSSClassProvider TEXT_XL_LEFT = DefaultCSSClassProvider.create ("text-xl-left");
   public static final ICSSClassProvider TEXT_XL_RIGHT = DefaultCSSClassProvider.create ("text-xl-right");
@@ -1280,6 +1318,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider W_25 = DefaultCSSClassProvider.create ("w-25");
   public static final ICSSClassProvider W_50 = DefaultCSSClassProvider.create ("w-50");
   public static final ICSSClassProvider W_75 = DefaultCSSClassProvider.create ("w-75");
+  public static final ICSSClassProvider W_AUTO = DefaultCSSClassProvider.create ("w-auto");
   public static final ICSSClassProvider WAS_VALIDATED = DefaultCSSClassProvider.create ("was-validated");
 
   private CBootstrapCSS ()

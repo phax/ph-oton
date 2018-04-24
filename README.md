@@ -29,6 +29,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.0.2 - work in progress
+  * Updated to Bootstrap 4.1.0
 * v8.0.1 - 2018-04-18
   * Updated to Jetty 9.4.9
   * Updated to Bootstrap 4.0.0
