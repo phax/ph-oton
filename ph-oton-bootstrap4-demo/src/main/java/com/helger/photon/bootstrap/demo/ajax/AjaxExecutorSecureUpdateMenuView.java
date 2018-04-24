@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.secure.ajax;
+package com.helger.photon.bootstrap.demo.ajax;
 
 import javax.annotation.Nonnull;
 

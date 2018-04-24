@@ -24,11 +24,11 @@ import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.jscode.JSArray;
-import com.helger.photon.bootstrap.demo.secure.ajax.CAjaxSecure;
-import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPageForm;
+import com.helger.photon.bootstrap.demo.ajax.CAjaxSecure;
+import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
+import com.helger.photon.bootstrap4.page.AbstractBootstrapWebPageForm;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -36,8 +36,8 @@ import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>>
-                                             extends AbstractBootstrapWebPageForm <DATATYPE, WebPageExecutionContext>
+public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>> extends
+                                             AbstractBootstrapWebPageForm <DATATYPE, WebPageExecutionContext>
 {
   public AbstractAppWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {

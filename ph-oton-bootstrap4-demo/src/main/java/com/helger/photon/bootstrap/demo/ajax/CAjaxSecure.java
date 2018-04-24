@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap.demo.secure.ajax;
+package com.helger.photon.bootstrap.demo.ajax;
 
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.photon.core.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
-import com.helger.photon.core.ajax.decl.SecureApplicationAjaxFunctionDeclaration;
 import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 
 /**
@@ -30,10 +30,12 @@ import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 @Immutable
 public final class CAjaxSecure
 {
-  public static final IAjaxFunctionDeclaration SAVE_FORM_STATE = new SecureApplicationAjaxFunctionDeclaration ("saveFormState",
-                                                                                                               AjaxExecutorSaveFormState.class);
-  public static final IAjaxFunctionDeclaration UPDATE_MENU_VIEW = new SecureApplicationAjaxFunctionDeclaration ("updateMenuView",
-                                                                                                                AjaxExecutorSecureUpdateMenuView.class);
+  public static final IAjaxFunctionDeclaration SAVE_FORM_STATE = AjaxFunctionDeclaration.builder ("saveFormState")
+                                                                                        .withExecutor (AjaxExecutorSaveFormState.class)
+                                                                                        .build ();
+  public static final IAjaxFunctionDeclaration UPDATE_MENU_VIEW = AjaxFunctionDeclaration.builder ("updateMenuView")
+                                                                                         .withExecutor (AjaxExecutorSecureUpdateMenuView.class)
+                                                                                         .build ();
 
   private CAjaxSecure ()
   {}
