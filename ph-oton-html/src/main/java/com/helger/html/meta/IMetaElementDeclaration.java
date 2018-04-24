@@ -18,6 +18,7 @@ package com.helger.html.meta;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.name.IHasName;
@@ -30,15 +31,25 @@ import com.helger.commons.name.IHasName;
 public interface IMetaElementDeclaration extends IHasName, Serializable
 {
   /**
-   * Get the optional metatag scheme.
+   * Get the optional meta element scheme.
    *
-   * @return the optional meta tag scheme - can be <code>null</code>
+   * @return the optional meta element scheme - can be <code>null</code>
    */
   @Nullable
   String getScheme ();
 
   /**
+   * @return The meta element type. Never <code>null</code>.
+   * @since 8.0.2
+   */
+  @Nonnull
+  EMetaElementType getType ();
+
+  /**
    * @return <code>true</code> if it is a "http-equiv" tag and not a named tag.
    */
-  boolean isHttpEquiv ();
+  default boolean isHttpEquiv ()
+  {
+    return getType ().equals (EMetaElementType.PRAGMA_DIRECTIVE);
+  }
 }

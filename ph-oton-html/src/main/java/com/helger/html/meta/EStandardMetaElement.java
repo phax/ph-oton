@@ -16,6 +16,8 @@
  */
 package com.helger.html.meta;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -79,12 +81,12 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
   FORMAT_DETECTION ("format-detection", false);
 
   private final String m_sName;
-  private final boolean m_bIsHttpEquiv;
+  private final EMetaElementType m_eType;
 
   private EStandardMetaElement (@Nonnull @Nonempty final String sName, final boolean bIsHttpEquiv)
   {
     m_sName = sName;
-    m_bIsHttpEquiv = bIsHttpEquiv;
+    m_eType = bIsHttpEquiv ? EMetaElementType.PRAGMA_DIRECTIVE : EMetaElementType.DOCUMENT_LEVEL;
   }
 
   /**
@@ -108,15 +110,16 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
     return null;
   }
 
-  public boolean isHttpEquiv ()
+  @Nonnull
+  public EMetaElementType getType ()
   {
-    return m_bIsHttpEquiv;
+    return m_eType;
   }
 
   @Nonnull
   public IMetaElement getAsMetaElement (@Nullable final String sContent)
   {
-    return new MetaElement (this, sContent);
+    return new MetaElement (getType (), m_sName, (String) null, (Locale) null, sContent);
   }
 
   @Nullable
@@ -129,11 +132,5 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
   public static EStandardMetaElement getStandardElementOfNameOrNullIgnoreCase (@Nullable final String sName)
   {
     return EnumHelper.getFromNameCaseInsensitiveOrNull (EStandardMetaElement.class, sName);
-  }
-
-  public static boolean isHttpEquivMetaElement (@Nullable final String sName)
-  {
-    final EStandardMetaElement eStdMetaTag = getStandardElementOfNameOrNullIgnoreCase (sName);
-    return eStdMetaTag != null && eStdMetaTag.isHttpEquiv ();
   }
 }

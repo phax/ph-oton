@@ -96,7 +96,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     PhotonMetaElements.getAllRegisteredMetaElementsForThisRequest (aMetaElements);
 
     for (final IMetaElement aMetaElement : aMetaElements)
-      for (final Map.Entry <Locale, String> aEntry : aMetaElement.getContent ().entrySet ())
+      for (final Map.Entry <Locale, String> aEntry : aMetaElement.getContent ())
       {
         final HCMeta aMeta = new HCMeta ();
         if (aMetaElement.isHttpEquiv ())

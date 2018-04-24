@@ -89,12 +89,10 @@ public enum EDublinCoreMetaElement implements IMetaElementDeclaration
     return m_sScheme;
   }
 
-  /*
-   * All DC meta tags are not HTTP equivalents
-   */
-  public boolean isHttpEquiv ()
+  @Nonnull
+  public EMetaElementType getType ()
   {
-    return false;
+    return EMetaElementType.DOCUMENT_LEVEL;
   }
 
   /**

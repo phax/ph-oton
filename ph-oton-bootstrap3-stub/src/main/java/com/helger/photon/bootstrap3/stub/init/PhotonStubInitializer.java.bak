@@ -20,7 +20,6 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.system.SystemProperties;
 import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
@@ -111,7 +110,7 @@ public final class PhotonStubInitializer
       {
         // Not production ready yet
         WebScopeManager.setSessionPassivationAllowed (true);
-      }
+    }
 
       // Disable in debug mode
       RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);

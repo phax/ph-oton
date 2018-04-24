@@ -72,7 +72,7 @@ public final class PhotonMetaElements
         s_aLogger.error ("Failed to read meta element file " + aRes.getPath ());
 
       for (final Map.Entry <String, String> aEntry : aMetaElements.entrySet ())
-        aTarget.addMetaElement (new MetaElement (aEntry.getKey (), aEntry.getValue ()));
+        aTarget.addMetaElement (MetaElement.createMeta (aEntry.getKey (), aEntry.getValue ()));
     }
   }
 

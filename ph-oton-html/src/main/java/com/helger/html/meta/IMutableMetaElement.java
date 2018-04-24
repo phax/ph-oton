@@ -33,7 +33,29 @@ import com.helger.commons.state.EChange;
 public interface IMutableMetaElement extends IMetaElement
 {
   /**
-   * Set the value of the metatag in an unspecified locale.
+   * Set the type of the meta element.
+   *
+   * @param eType
+   *        The type to use. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  EChange setType (@Nonnull EMetaElementType eType);
+
+  /**
+   * Set the name of the meta element. May usually neither be <code>null</code>
+   * nor empty, except for {@link EMetaElementType#CHARSET} where the name does
+   * not matter.
+   * 
+   * @param sName
+   *        The name to use. May not be <code>null</code>.
+   * @return {@link EChange}.
+   */
+  @Nonnull
+  EChange setName (@Nonnull String sName);
+
+  /**
+   * Set the value of the meta element in an unspecified locale.
    *
    * @param sContent
    *        The value to be set. If the content is <code>null</code> the value
@@ -41,10 +63,13 @@ public interface IMutableMetaElement extends IMetaElement
    * @return {@link EChange}
    */
   @Nonnull
-  EChange setContent (@Nullable String sContent);
+  default EChange setContent (@Nullable final String sContent)
+  {
+    return setContent ((Locale) null, sContent);
+  }
 
   /**
-   * Set the value of the metatag in the given locale.
+   * Set the value of the meta element in the given locale.
    *
    * @param aContentLocale
    *        The locale to set. May be <code>null</code>.
@@ -62,7 +87,10 @@ public interface IMutableMetaElement extends IMetaElement
    * @return {@link EChange}
    */
   @Nonnull
-  EChange removeContent ();
+  default EChange removeContent ()
+  {
+    return removeContent ((Locale) null);
+  }
 
   /**
    * Remove the value of the given locale.
@@ -73,14 +101,4 @@ public interface IMutableMetaElement extends IMetaElement
    */
   @Nonnull
   EChange removeContent (Locale aContentLocale);
-
-  /**
-   * Change the definition of "is http-equiv"
-   *
-   * @param bIsHttpEquiv
-   *        the new value
-   * @return {@link EChange}.
-   */
-  @Nonnull
-  EChange setHttpEquiv (boolean bIsHttpEquiv);
 }

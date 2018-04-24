@@ -17,6 +17,7 @@
 package com.helger.html.meta;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,7 +64,13 @@ public interface IMetaElement extends IMetaElementDeclaration
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsOrderedMap <Locale, String> getContent ();
+  ICommonsOrderedMap <Locale, String> getContentMap ();
+
+  /**
+   * @return A non-<code>null</code> map from language to value.
+   */
+  @Nonnull
+  Iterable <Map.Entry <Locale, String>> getContent ();
 
   /**
    * Get the contents of this meta tag as a self contained list of meta tag

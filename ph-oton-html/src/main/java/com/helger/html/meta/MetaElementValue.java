@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -36,28 +35,34 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public class MetaElementValue implements IMetaElementValue
 {
+  private final EMetaElementType m_eType;
   private final String m_sName;
   private final Locale m_aContentLocale;
   private final String m_sContent;
-  private final boolean m_bIsHttpEquiv;
 
-  public MetaElementValue (@Nonnull @Nonempty final String sName,
+  public MetaElementValue (@Nonnull final EMetaElementType eType,
+                           @Nonnull final String sName,
                            @Nonnull final Locale aContentLocale,
-                           @Nonnull final String sContent,
-                           final boolean bIsHttpEquiv)
+                           @Nonnull final String sContent)
   {
-    ValueEnforcer.notEmpty (sName, "Name");
+    ValueEnforcer.notNull (eType, "Type");
+    ValueEnforcer.notNull (sName, "Name");
     ValueEnforcer.notNull (aContentLocale, "ContentLocale");
     ValueEnforcer.notNull (sContent, "Content");
 
+    m_eType = eType;
     m_sName = sName;
     m_aContentLocale = aContentLocale;
     m_sContent = sContent;
-    m_bIsHttpEquiv = bIsHttpEquiv;
   }
 
   @Nonnull
-  @Nonempty
+  public EMetaElementType getType ()
+  {
+    return m_eType;
+  }
+
+  @Nonnull
   public String getName ()
   {
     return m_sName;
@@ -75,11 +80,6 @@ public class MetaElementValue implements IMetaElementValue
     return m_sContent;
   }
 
-  public boolean isHttpEquiv ()
-  {
-    return m_bIsHttpEquiv;
-  }
-
   @Override
   public boolean equals (final Object o)
   {
@@ -88,29 +88,29 @@ public class MetaElementValue implements IMetaElementValue
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final MetaElementValue rhs = (MetaElementValue) o;
-    return m_sName.equals (rhs.m_sName) &&
+    return m_eType.equals (rhs.m_eType) &&
+           m_sName.equals (rhs.m_sName) &&
            m_aContentLocale.equals (rhs.m_aContentLocale) &&
-           m_sContent.equals (rhs.m_sContent) &&
-           m_bIsHttpEquiv == rhs.m_bIsHttpEquiv;
+           m_sContent.equals (rhs.m_sContent);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sName)
+    return new HashCodeGenerator (this).append (m_eType)
+                                       .append (m_sName)
                                        .append (m_aContentLocale)
                                        .append (m_sContent)
-                                       .append (m_bIsHttpEquiv)
                                        .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("name", m_sName)
+    return new ToStringGenerator (this).append ("type", m_eType)
+                                       .append ("name", m_sName)
                                        .append ("contentLocale", m_aContentLocale)
                                        .append ("content", m_sContent)
-                                       .append ("isHttpEquiv", m_bIsHttpEquiv)
                                        .getToString ();
   }
 }

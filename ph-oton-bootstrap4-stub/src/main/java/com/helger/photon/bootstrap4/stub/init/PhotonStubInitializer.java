@@ -21,11 +21,13 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.system.SystemProperties;
+import com.helger.html.CHTMLCharset;
 import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.impl.HCCustomizerList;
 import com.helger.html.meta.EStandardMetaElement;
+import com.helger.html.meta.MetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.basic.app.appid.CApplicationID;
@@ -82,8 +84,8 @@ public final class PhotonStubInitializer
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_PLACEHOLDER_ALL);
 
     // Meta elements
+    PhotonMetaElements.registerMetaElementForGlobal (MetaElement.createMetaCharset (CHTMLCharset.CHARSET_HTML_OBJ));
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.GENERATOR.getAsMetaElement ("ph-oton stack - https://github.com/phax/ph-oton"));
-    PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.X_UA_COMPATIBLE.getAsMetaElement ("IE=Edge,chrome=1"));
     // Source: https://getbootstrap.com/docs/4.0/getting-started/introduction/
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.VIEWPORT.getAsMetaElement ("width=device-width, initial-scale=1, shrink-to-fit=no"));
 

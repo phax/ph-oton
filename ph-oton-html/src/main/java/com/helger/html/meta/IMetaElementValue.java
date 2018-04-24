@@ -32,6 +32,12 @@ import com.helger.commons.name.IHasName;
 public interface IMetaElementValue extends IHasName, Serializable
 {
   /**
+   * @return The type of the meta element. Never <code>null</code>.
+   */
+  @Nonnull
+  EMetaElementType getType ();
+
+  /**
    * @return The content of the meta tag. May not be <code>null</code>.
    */
   @Nonnull
@@ -42,10 +48,4 @@ public interface IMetaElementValue extends IHasName, Serializable
    */
   @Nullable
   Locale getContentLocale ();
-
-  /**
-   * @return <code>true</code> if the value is "http-equiv", <code>false</code>
-   *         otherwise
-   */
-  boolean isHttpEquiv ();
 }

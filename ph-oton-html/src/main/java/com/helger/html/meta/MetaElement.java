@@ -16,6 +16,7 @@
  */
 package com.helger.html.meta;
 
+import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.lang.ICloneable;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -48,7 +50,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
-import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroContainer;
 import com.helger.xml.microdom.MicroQName;
 
@@ -58,54 +59,74 @@ import com.helger.xml.microdom.MicroQName;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MetaElement implements IMutableMetaElement
+public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement>
 {
-  /** By default the meta element is not an HTTP equivalent */
-  public static final boolean DEFAULT_IS_HTTP_EQUIV = false;
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (MetaElement.class);
+
+  /** HTTP equivalent or not? */
+  private EMetaElementType m_eType;
+
   /** tag name. */
-  private final String m_sName;
+  private String m_sName;
 
   /** optional scheme string. */
   private String m_sScheme;
 
-  /** HTTP equivalent or not? */
-  private boolean m_bIsHttpEquiv;
-
   /** locale to value map. */
   private final ICommonsOrderedMap <Locale, String> m_aContents = new CommonsLinkedHashMap <> ();
 
-  public MetaElement (@Nonnull final IMetaElementDeclaration aMetaTagDecl, @Nullable final String sContent)
+  public MetaElement (@Nonnull final IMetaElement aOther)
   {
-    this (aMetaTagDecl.getName (), aMetaTagDecl.isHttpEquiv (), (Locale) null, sContent);
-    setScheme (aMetaTagDecl.getScheme ());
+    setType (aOther.getType ());
+    setName (aOther.getName ());
+    setScheme (aOther.getScheme ());
+    m_aContents.putAll (aOther.getContentMap ());
   }
 
-  public MetaElement (@Nonnull final String sName, @Nullable final String sContent)
+  protected MetaElement (@Nonnull final EMetaElementType eType,
+                         @Nonnull final String sName,
+                         @Nullable final String sScheme,
+                         @Nullable final Locale aContentLocale,
+                         @Nullable final String sContent)
   {
-    this (sName, DEFAULT_IS_HTTP_EQUIV, (Locale) null, sContent);
-  }
-
-  public MetaElement (@Nonnull final String sName, final boolean bIsHttpEquiv, @Nullable final String sContent)
-  {
-    this (sName, bIsHttpEquiv, (Locale) null, sContent);
-  }
-
-  public MetaElement (@Nonnull final String sName,
-                      final boolean bIsHttpEquiv,
-                      @Nullable final Locale aContentLocale,
-                      @Nullable final String sContent)
-  {
-    m_sName = ValueEnforcer.notNull (sName, "Name");
-    setHttpEquiv (bIsHttpEquiv);
+    setType (eType);
+    setName (sName);
+    setScheme (sScheme);
     setContent (aContentLocale, sContent);
+  }
+
+  @Nonnull
+  public EMetaElementType getType ()
+  {
+    return m_eType;
+  }
+
+  @Nonnull
+  public final EChange setType (@Nonnull final EMetaElementType eType)
+  {
+    ValueEnforcer.notNull (eType, "Type");
+
+    if (eType.equals (m_eType))
+      return EChange.UNCHANGED;
+    m_eType = eType;
+    return EChange.CHANGED;
   }
 
   @Nonnull
   public String getName ()
   {
     return m_sName;
+  }
+
+  @Nonnull
+  public final EChange setName (@Nonnull final String sName)
+  {
+    ValueEnforcer.notNull (sName, "Name");
+
+    if (sName.equals (m_sName))
+      return EChange.UNCHANGED;
+    m_sName = sName;
+    return EChange.CHANGED;
   }
 
   @Nullable
@@ -120,20 +141,6 @@ public class MetaElement implements IMutableMetaElement
     if (EqualsHelper.equals (sScheme, m_sScheme))
       return EChange.UNCHANGED;
     m_sScheme = sScheme;
-    return EChange.CHANGED;
-  }
-
-  public boolean isHttpEquiv ()
-  {
-    return m_bIsHttpEquiv;
-  }
-
-  @Nonnull
-  public EChange setHttpEquiv (final boolean bIsHttpEquiv)
-  {
-    if (m_bIsHttpEquiv == bIsHttpEquiv)
-      return EChange.UNCHANGED;
-    m_bIsHttpEquiv = bIsHttpEquiv;
     return EChange.CHANGED;
   }
 
@@ -157,21 +164,22 @@ public class MetaElement implements IMutableMetaElement
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsOrderedMap <Locale, String> getContent ()
+  public ICommonsOrderedMap <Locale, String> getContentMap ()
   {
     return m_aContents.getClone ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Iterable <Map.Entry <Locale, String>> getContent ()
+  {
+    return m_aContents.entrySet ();
   }
 
   @Nonnull
   public static Locale getRealContentLocale (@Nullable final Locale aContentLocale)
   {
     return aContentLocale == null ? LocaleHelper.LOCALE_INDEPENDENT : aContentLocale;
-  }
-
-  @Nonnull
-  public EChange setContent (@Nullable final String sContent)
-  {
-    return setContent ((Locale) null, sContent);
   }
 
   @Nonnull
@@ -187,12 +195,6 @@ public class MetaElement implements IMutableMetaElement
     else
       m_aContents.put (aRealContentLocale, sContent);
     return EChange.CHANGED;
-  }
-
-  @Nonnull
-  public EChange removeContent ()
-  {
-    return removeContent ((Locale) null);
   }
 
   @Nonnull
@@ -213,7 +215,7 @@ public class MetaElement implements IMutableMetaElement
   {
     final ICommonsList <IMetaElementValue> ret = new CommonsArrayList <> (m_aContents.size ());
     for (final Map.Entry <Locale, String> aEntry : m_aContents.entrySet ())
-      ret.add (new MetaElementValue (m_sName, aEntry.getKey (), aEntry.getValue (), m_bIsHttpEquiv));
+      ret.add (new MetaElementValue (m_eType, m_sName, aEntry.getKey (), aEntry.getValue ()));
     return ret;
   }
 
@@ -223,29 +225,6 @@ public class MetaElement implements IMutableMetaElement
   protected String getNamespaceURI (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     return aConversionSettings.getHTMLNamespaceURI ();
-  }
-
-  /**
-   * @return The attribute name that contains the meta element name. May neither
-   *         be <code>null</code> nor empty
-   */
-  @Nonnull
-  @OverrideOnDemand
-  protected IMicroQName getNodeNameAttribute ()
-  {
-    return CHTMLAttributes.NAME;
-  }
-
-  /**
-   * @return The attribute name that contains the meta element content. May
-   *         neither be <code>null</code> nor empty
-   */
-  @Nonnull
-  @Nonempty
-  @OverrideOnDemand
-  protected IMicroQName getNodeContentAttribute ()
-  {
-    return CHTMLAttributes.CONTENT;
   }
 
   @Nullable
@@ -260,35 +239,66 @@ public class MetaElement implements IMutableMetaElement
     final String sNamespaceURI = getNamespaceURI (aConversionSettings);
     final boolean bAtLeastHTML5 = aConversionSettings.getHTMLVersion ().isAtLeastHTML5 ();
 
-    // determine whether the key is an "http-equiv" or a "name" or a
-    // "property"
-    final boolean bIsHttpEquiv = m_bIsHttpEquiv || EStandardMetaElement.isHttpEquivMetaElement (m_sName);
-
     final IMicroContainer ret = new MicroContainer ();
     for (final Map.Entry <Locale, String> aMetaEntry : m_aContents.entrySet ())
     {
       final IMicroElement aMeta = ret.appendElement (sNamespaceURI, EHTMLElement.META.getElementName ());
-      aMeta.setAttribute (bIsHttpEquiv ? CHTMLAttributes.HTTP_EQUIV : getNodeNameAttribute (), m_sName);
-      aMeta.setAttribute (getNodeContentAttribute (), aMetaEntry.getValue ());
-      final Locale aContentLocale = aMetaEntry.getKey ();
-      if (aContentLocale != null && !LocaleHelper.isSpecialLocale (aContentLocale))
+      final String sValue = aMetaEntry.getValue ();
+
+      switch (m_eType)
       {
-        final String sLang = aContentLocale.toString ();
-        aMeta.setAttribute (new MicroQName (XMLConstants.XML_NS_URI, CHTMLAttributes.LANG.getName ()), sLang);
-        if (bAtLeastHTML5)
+        case DOCUMENT_LEVEL:
+          aMeta.setAttribute (m_eType.getAttrName (), m_sName);
+          aMeta.setAttribute (CHTMLAttributes.CONTENT, sValue);
+          break;
+        case PRAGMA_DIRECTIVE:
+          aMeta.setAttribute (m_eType.getAttrName (), m_sName);
+          aMeta.setAttribute (CHTMLAttributes.CONTENT, sValue);
+          break;
+        case CHARSET:
+          // Name does not matter!
+          aMeta.setAttribute (m_eType.getAttrName (), sValue);
+          break;
+        default:
+          throw new IllegalStateException ("Unsupported meta element type!");
+      }
+
+      if (m_eType.isMultilingual ())
+      {
+        final Locale aContentLocale = aMetaEntry.getKey ();
+        if (aContentLocale != null && !LocaleHelper.isSpecialLocale (aContentLocale))
         {
-          // When the attribute xml:lang in no namespace is specified, the
-          // element must also have the attribute lang present with the same
-          // value
-          aMeta.setAttribute (CHTMLAttributes.LANG, sLang);
+          final String sLang = aContentLocale.toString ();
+          aMeta.setAttribute (new MicroQName (XMLConstants.XML_NS_URI, CHTMLAttributes.LANG.getName ()), sLang);
+          if (bAtLeastHTML5)
+          {
+            // When the attribute xml:lang in no namespace is specified, the
+            // element must also have the attribute lang present with the same
+            // value
+            aMeta.setAttribute (CHTMLAttributes.LANG, sLang);
+          }
         }
       }
 
-      // No scheme attr in HTML5
-      if (!bAtLeastHTML5 && StringHelper.hasText (m_sScheme))
-        aMeta.setAttribute (CHTMLAttributes.SCHEME, m_sScheme);
+      if (bAtLeastHTML5)
+      {
+        // Special HTML 5 handling
+        // No scheme attr in HTML5
+      }
+      else
+      {
+        if (StringHelper.hasText (m_sScheme))
+          aMeta.setAttribute (CHTMLAttributes.SCHEME, m_sScheme);
+      }
     }
     return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public MetaElement getClone ()
+  {
+    return new MetaElement (this);
   }
 
   @Override
@@ -299,29 +309,47 @@ public class MetaElement implements IMutableMetaElement
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final MetaElement rhs = (MetaElement) o;
-    return m_sName.equals (rhs.m_sName) &&
+    return m_eType.equals (rhs.m_eType) &&
+           m_sName.equals (rhs.m_sName) &&
            EqualsHelper.equals (m_sScheme, rhs.m_sScheme) &&
-           m_aContents.equals (rhs.m_aContents) &&
-           m_bIsHttpEquiv == rhs.m_bIsHttpEquiv;
+           m_aContents.equals (rhs.m_aContents);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sName)
+    return new HashCodeGenerator (this).append (m_eType)
+                                       .append (m_sName)
                                        .append (m_sScheme)
                                        .append (m_aContents)
-                                       .append (m_bIsHttpEquiv)
                                        .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("name", m_sName)
+    return new ToStringGenerator (this).append ("type", m_eType)
+                                       .append ("name", m_sName)
                                        .appendIfNotNull ("scheme", m_sScheme)
                                        .append ("contents", m_aContents)
-                                       .append ("isHttpEquiv", m_bIsHttpEquiv)
                                        .getToString ();
+  }
+
+  @Nonnull
+  public static MetaElement createMeta (@Nonnull final String sName, @Nonnull final String sValue)
+  {
+    return new MetaElement (EMetaElementType.DOCUMENT_LEVEL, sName, null, (Locale) null, sValue);
+  }
+
+  @Nonnull
+  public static MetaElement createMetaHttpEquiv (@Nonnull final String sName, @Nonnull final String sValue)
+  {
+    return new MetaElement (EMetaElementType.PRAGMA_DIRECTIVE, sName, null, (Locale) null, sValue);
+  }
+
+  @Nonnull
+  public static MetaElement createMetaCharset (@Nonnull final Charset aCharset)
+  {
+    return new MetaElement (EMetaElementType.CHARSET, "", null, (Locale) null, aCharset.name ());
   }
 }

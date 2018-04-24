@@ -115,6 +115,7 @@ public final class CHTMLAttributes
   public static final IMicroQName INPUTMODE = new MicroQName ("inputmode");
   public static final IMicroQName INTEGRITY = new MicroQName ("integrity");
   public static final IMicroQName ISMAP = new MicroQName ("ismap");
+  public static final IMicroQName ITEMPROP = new MicroQName ("itemprop");
   public static final IMicroQName KEYTYPE = new MicroQName ("keytype");
   public static final IMicroQName KIND = new MicroQName ("kind");
   public static final IMicroQName LABEL = new MicroQName ("label");

@@ -18,11 +18,20 @@ package com.helger.html.meta;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.nio.charset.StandardCharsets;
+
+import javax.annotation.Nullable;
 
 import org.junit.Test;
 
 import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.config.HCSettings;
+import com.helger.xml.microdom.IMicroNode;
+import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
  * Test class for class {@link MetaElement}.
@@ -31,21 +40,37 @@ import com.helger.commons.mock.CommonsTestHelper;
  */
 public final class MetaElementTest
 {
+
   @Test
   public void testBasic ()
   {
-    final MetaElement e1 = new MetaElement ("nam", "con");
+    final MetaElement e1 = MetaElement.createMeta ("nam", "con");
     assertEquals ("nam", e1.getName ());
     assertFalse (e1.isHttpEquiv ());
     assertTrue (e1.isLanguageIndependent ());
     assertEquals ("con", e1.getContentLanguageIndependent ());
+    assertEquals ("<meta name=\"nam\" content=\"con\" />", _getAsString (e1));
+
+    final MetaElement e2 = MetaElement.createMetaHttpEquiv ("x", "y");
+    assertEquals ("<meta http-equiv=\"x\" content=\"y\" />", _getAsString (e2));
+
+    final MetaElement e3 = MetaElement.createMetaCharset (StandardCharsets.ISO_8859_1);
+    assertEquals ("<meta charset=\"ISO-8859-1\" />", _getAsString (e3));
 
     CommonsTestHelper.testDefaultSerialization (e1);
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (e1, new MetaElement ("nam", "con"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, new MetaElement ("nam2", "con"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, new MetaElement ("nam", "con2"));
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (e1, MetaElement.createMeta ("nam", "con"));
+    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam2", "con"));
+    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam", "con2"));
     CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1,
-                                                                           new MetaElement ("nam",
-                                                                                            "con").setHttpEquiv (true));
+                                                                           MetaElement.createMetaHttpEquiv ("nam",
+                                                                                                            "con"));
+  }
+
+  @Nullable
+  private static String _getAsString (final MetaElement aElement)
+  {
+    final IMicroNode aNode = aElement.convertToNode (HCSettings.getConversionSettings ());
+    assertNotNull (aNode);
+    return StringHelper.trim (MicroWriter.getNodeAsString (aNode));
   }
 }
