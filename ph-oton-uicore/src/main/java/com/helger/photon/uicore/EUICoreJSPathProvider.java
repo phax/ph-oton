@@ -34,12 +34,8 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   /** Insert in &lt;head&gt; element (after or before your CSS) for IE &lt; 9 */
   HTML5SHIV ("uicore/html5shiv/3.7.3/html5shiv.js", "if lt IE 9"),
   HTML5SHIV_PRINTSHIV ("uicore/html5shiv/3.7.3/html5shiv-printshiv.js", "if lt IE 9"),
-  /** JQuery 1.x */
-  JQUERY_1 ("uicore/jquery/jquery-1.12.4.js"),
-  /** JQuery 2.x */
-  JQUERY_2 ("uicore/jquery/jquery-2.2.4.js"),
   /** JQuery 3.x */
-  JQUERY_3 ("uicore/jquery/jquery-3.2.1.js"),
+  JQUERY_3 ("uicore/jquery/jquery-3.3.1.js"),
   JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
   JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
   JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.4.1.js"),
@@ -50,9 +46,6 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JS_COOKIE ("uicore/jqueryplugins/js.cookie.js"),
   JS_STORAGE ("uicore/jqueryplugins/js.storage.js"),
   MOMENT ("uicore/moment/2.11.2/moment-with-locales.js"),
-  /** Edit placeholder fix for IE &lt; 10 */
-  @Deprecated
-  PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.js", "if lt IE 10"),
   POPPER ("uicore/popper/1.11.1/popper.js"),
   /**
    * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it
