@@ -61,6 +61,7 @@ import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapMenuItemRendererHorz;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap4.grid.BootstrapCol;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.bootstrap4.layout.BootstrapContainer;
 import com.helger.photon.core.EPhotonCoreText;
@@ -230,15 +231,15 @@ public final class AppRendererPublic
     // Breadcrumbs
     {
       final BootstrapBreadcrumbs aBreadcrumbs = BootstrapBreadcrumbsProvider.createBreadcrumbs (aLEC);
-      aBreadcrumbs.addClass (CBootstrapCSS.HIDDEN_XS);
+      aBreadcrumbs.addClassed (CBootstrapCSS.D_NONE, CBootstrapCSS.D_SM_BLOCK);
       aOuterContainer.addChild (aBreadcrumbs);
     }
 
     // Content
     {
       final BootstrapRow aRow = aOuterContainer.addAndReturnChild (new BootstrapRow ());
-      final HCDiv aCol1 = aRow.createColumn (12, 4, 4, 3);
-      final HCDiv aCol2 = aRow.createColumn (12, 8, 8, 9);
+      final BootstrapCol aCol1 = aRow.createColumn (12, 12, 4, 4, 3);
+      final BootstrapCol aCol2 = aRow.createColumn (12, 12, 8, 8, 9);
 
       // left
       // We need a wrapper span for easy AJAX content replacement

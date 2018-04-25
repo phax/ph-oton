@@ -20,12 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.photon.basic.app.menu.IMenuItemPage;
-import com.helger.photon.basic.app.menu.IMenuObjectFilter;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
-import com.helger.photon.bootstrap3.pages.form.BasePageFormSavedStates;
-import com.helger.photon.core.form.FormStateManager;
 import com.helger.photon.security.menu.MenuObjectFilterUserAssignedToUserGroup;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.system.BasePageShowChildren;
@@ -39,7 +35,6 @@ public final class MenuSecure
   public static void init (@Nonnull final IMenuTree aMenuTree)
   {
     final MenuObjectFilterUserAssignedToUserGroup aFilterAdministrators = new MenuObjectFilterUserAssignedToUserGroup (CApp.USERGROUP_ADMINISTRATORS_ID);
-    final IMenuObjectFilter aFilterSavedStates = aValue -> FormStateManager.getInstance ().containedOnceAFormState ();
 
     // Administrator
     {
@@ -48,14 +43,10 @@ public final class MenuSecure
                                                                                                                  aMenuTree))
                                             .setDisplayFilter (aFilterAdministrators);
 
-      BootstrapPagesMenuConfigurator.addAllItems (aMenuTree, aAdmin, aFilterAdministrators, CApp.DEFAULT_LOCALE);
+      // XXX b4
+      // BootstrapPagesMenuConfigurator.addAllItems (aMenuTree, aAdmin,
+      // aFilterAdministrators, CApp.DEFAULT_LOCALE);
     }
-
-    // Saved states
-    aMenuTree.createRootSeparator ().setDisplayFilter (aFilterSavedStates);
-    aMenuTree.createRootItem (new BasePageFormSavedStates <WebPageExecutionContext> (CMenuSecure.MENU_SAVED_STATES,
-                                                                                     "Saved objects"))
-             .setDisplayFilter (aFilterSavedStates);
 
     // Default menu item
     aMenuTree.setDefaultMenuItemID (CMenuSecure.MENU_ADMIN);
