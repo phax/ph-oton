@@ -22,9 +22,9 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.utils.BootstrapCloseIcon;
 
 /**
@@ -35,7 +35,7 @@ import com.helger.photon.bootstrap4.utils.BootstrapCloseIcon;
  *        Implementation type
  */
 public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrapAlert <IMPLTYPE>> extends
-                                             AbstractHCDiv <IMPLTYPE>
+                                             AbstractBootstrapDiv <IMPLTYPE>
 {
   /**
    * This event fires immediately when the close instance method is called.

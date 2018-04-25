@@ -19,15 +19,15 @@ package com.helger.photon.bootstrap4.card;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 
 /**
  * Special Bootstrap 4 card.
  *
  * @author Philip Helger
  */
-public class BootstrapCard extends AbstractHCDiv <BootstrapCard>
+public class BootstrapCard extends AbstractBootstrapDiv <BootstrapCard>
 {
   public BootstrapCard ()
   {

@@ -16,15 +16,15 @@
  */
 package com.helger.photon.bootstrap4.card;
 
-import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 
 /**
  * Special Bootstrap 4 card header.
  *
  * @author Philip Helger
  */
-public class BootstrapCardHeader extends AbstractHCDiv <BootstrapCardHeader>
+public class BootstrapCardHeader extends AbstractBootstrapDiv <BootstrapCardHeader>
 {
   public BootstrapCardHeader ()
   {
