@@ -17,7 +17,7 @@
 package com.helger.photon.bootstrap.demo.app.ui;
 
 import com.helger.photon.bootstrap.demo.app.CApp;
-import com.helger.photon.bootstrap3.uictrls.ext.BootstrapLoginManager;
+import com.helger.photon.bootstrap4.uictrls.ext.BootstrapLoginManager;
 
 public final class DemoLoginManager extends BootstrapLoginManager
 {

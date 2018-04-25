@@ -30,11 +30,9 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
@@ -44,31 +42,22 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.css.ECSSUnit;
 import com.helger.css.property.CCSSProperties;
-import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.forms.IHCForm;
-import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.html.jscode.JSArray;
-import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.form.FormErrorList;
-import com.helger.photon.core.form.FormState;
-import com.helger.photon.core.form.FormStateManager;
-import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.lock.LockResult;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.css.CUICoreCSS;
-import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
-import com.helger.photon.uicore.js.JSFormHelper;
 import com.helger.photon.uicore.page.handler.IWebPageActionHandler;
 
 /**
@@ -90,10 +79,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                           extends
                                           AbstractWebPage <WPECTYPE>
 {
-  // all internal IDs starting with "$" to prevent accidental overwrite with
-  // actual field
-  public static final String FIELD_FLOW_ID = AjaxExecutorSaveFormState.FIELD_FLOW_ID;
-  public static final String FIELD_RESTORE_FLOW_ID = AjaxExecutorSaveFormState.FIELD_RESTORE_FLOW_ID;
   public static final String FORM_ID_INPUT = "inputform";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageForm.class);
@@ -1072,25 +1057,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   protected abstract void showListOfExistingObjects (@Nonnull WPECTYPE aWPEC);
 
-  @Nonnull
-  @ReturnsMutableCopy
-  private static JSAssocArray _getAsAssocArray (@Nonnull final FormState aFormState)
-  {
-    final JSAssocArray ret = new JSAssocArray ();
-    for (final Map.Entry <String, Object> aEntry : aFormState.attrs ().entrySet ())
-    {
-      final String sKey = aEntry.getKey ();
-      final Object aValue = aEntry.getValue ();
-      if (aValue instanceof String)
-        ret.add (sKey, (String) aValue);
-      else
-        if (aValue instanceof String [])
-          ret.add (sKey, new JSArray ().addAll ((String []) aValue));
-      // else e.g. fileitem -> ignore
-    }
-    return ret;
-  }
-
   @Override
   protected final void fillContent (@Nonnull final WPECTYPE aWPEC)
   {
@@ -1215,10 +1181,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                 // Show input form again?
                 bShowInputForm = showInputFormAgain (aWPEC, aSelectedObject, aFormErrors, eFormAction);
 
-                // Remove an optionally stored state
-                final String sFlowID = aWPEC.params ().getAsString (FIELD_FLOW_ID);
-                FormStateManager.getInstance ().deleteFormState (sFlowID);
-
                 // Callback method
                 onInputFormFinishedSuccess (aWPEC);
               }
@@ -1248,28 +1210,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             // Add the nonce for CSRF check
             aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
-            // The unique form ID, that allows to identify on "transaction"
-            // -> Used only for "form state remembering"
-            // Use a RequestField here, to create the flow ID only once per
-            // "new page" view. For following calls, the flow ID should be
-            // re-used!
-            aForm.addChild (new HCHiddenField (new RequestField (FIELD_FLOW_ID, GlobalIDFactory.getNewStringID ())));
-
             // Callback method
             modifyFormBeforeShowInputForm (aWPEC, aForm);
-
-            // Is there as saved state to use?
-            final String sRestoreFlowID = aWPEC.params ().getAsString (FIELD_RESTORE_FLOW_ID);
-            if (sRestoreFlowID != null)
-            {
-              final FormState aSavedState = FormStateManager.getInstance ().getFormStateOfID (sRestoreFlowID);
-              if (aSavedState != null)
-              {
-                // Restore all form values
-                aForm.addChild (new HCScriptInlineOnDocumentReady (JSFormHelper.setAllFormValues (FORM_ID_INPUT,
-                                                                                                  _getAsAssocArray (aSavedState))));
-              }
-            }
 
             // Show the main input form
             showInputForm (aWPEC, aSelectedObject, aForm, eFormAction, aFormErrors);

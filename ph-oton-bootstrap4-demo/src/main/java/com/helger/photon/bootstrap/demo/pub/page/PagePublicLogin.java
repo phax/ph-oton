@@ -26,7 +26,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
-import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
+import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 
 public final class PagePublicLogin extends AbstractAppWebPage

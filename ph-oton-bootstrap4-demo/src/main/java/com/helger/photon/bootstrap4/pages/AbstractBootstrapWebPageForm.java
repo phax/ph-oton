@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.page;
+package com.helger.photon.bootstrap4.pages;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,13 +27,12 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
-import com.helger.photon.uicore.page.AbstractWebPageSimpleForm;
+import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
- * Abstract base class for a web page that has the common form handling, with a
- * details view and an edit binding. Use this page when showing and editing a
- * single object like global settings.
+ * Abstract base class for a Bootstrap based web page that has the common form
+ * handling, with a list view, details view, create and edit + binding.
  *
  * @author Philip Helger
  * @param <DATATYPE>
@@ -42,31 +41,30 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 @NotThreadSafe
-public abstract class AbstractBootstrapWebPageSimpleForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
-                                                         extends
-                                                         AbstractWebPageSimpleForm <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
+public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+                                                   extends
+                                                   AbstractWebPageForm <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
 {
-  public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, getAsMLT (sName), null, BootstrapWebPageUIHandler.INSTANCE);
   }
 
-  public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final IMultilingualText aName)
+  public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName, null, BootstrapWebPageUIHandler.INSTANCE);
   }
 
-  public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final String sName,
-                                             @Nullable final String sDescription)
+  public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,
+                                       @Nonnull final String sName,
+                                       @Nullable final String sDescription)
   {
     super (sID, getAsMLT (sName), getAsMLT (sDescription), BootstrapWebPageUIHandler.INSTANCE);
   }
 
-  public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final IMultilingualText aName,
-                                             @Nullable final IMultilingualText aDescription)
+  public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID,
+                                       @Nonnull final IMultilingualText aName,
+                                       @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription, BootstrapWebPageUIHandler.INSTANCE);
   }

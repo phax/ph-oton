@@ -24,7 +24,6 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.jscode.IJSExpression;
-import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
@@ -54,20 +53,6 @@ public final class JSFormHelper
   public static JSRef getFormHelper ()
   {
     return JSExpr.ref ("FormHelper");
-  }
-
-  @Nonnull
-  public static JSInvocation getAllFormValues (@Nonnull @Nonempty final String sFormID,
-                                               @Nonnull @Nonempty final String sFieldPrefix)
-  {
-    return getFormHelper ().invoke ("getAllFormValues").arg (sFormID).arg (sFieldPrefix);
-  }
-
-  @Nonnull
-  public static JSInvocation setAllFormValues (@Nonnull @Nonempty final String sFormID,
-                                               @Nonnull final JSAssocArray aValues)
-  {
-    return getFormHelper ().invoke ("setAllFormValues").arg (sFormID).arg (aValues);
   }
 
   @Nonnull
@@ -120,24 +105,6 @@ public final class JSFormHelper
                                                 @Nonnull final ISimpleURL aURL)
   {
     return new JSAssocArray ().add ("id", sFieldID).add ("url", aURL.getAsStringWithEncodedParameters ());
-  }
-
-  @Nonnull
-  public static JSInvocation saveFormData (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                           @Nonnull @Nonempty final String sFormID,
-                                           @Nonnull @Nonempty final String sFieldPrefix,
-                                           @Nonnull @Nonempty final String sPageID,
-                                           @Nonnull final IAjaxFunctionDeclaration aSaveCallURL,
-                                           @Nonnull final JSArray aSuccessUpdates,
-                                           @Nonnull final JSArray aErrorUpdates)
-  {
-    return getFormHelper ().invoke ("saveFormData")
-                           .arg (sFormID)
-                           .arg (sFieldPrefix)
-                           .arg (sPageID)
-                           .arg (aSaveCallURL.getInvocationURI (aRequestScope))
-                           .arg (aSuccessUpdates)
-                           .arg (aErrorUpdates);
   }
 
   /**

@@ -37,7 +37,7 @@ import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSVar;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.bootstrap.demo.ajax.AjaxExecutorPublicLogin;
-import com.helger.photon.bootstrap.demo.ajax.CAjaxPublic;
+import com.helger.photon.bootstrap.demo.ajax.CAjax;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -99,7 +99,7 @@ public final class AppCommonUI
                 ._if (aJSData.ref (AjaxExecutorPublicLogin.JSON_LOGGEDIN),
                       JSHtml.windowLocationReload (),
                       JQuery.idRef (sIDErrorField).empty ().append (aJSData.ref (AjaxExecutorPublicLogin.JSON_HTML)));
-      aOnClick.add (new JQueryAjaxBuilder ().url (CAjaxPublic.LOGIN.getInvocationURI (aRequestScope))
+      aOnClick.add (new JQueryAjaxBuilder ().url (CAjax.LOGIN.getInvocationURI (aRequestScope))
                                             .data (new JSAssocArray ().add (CLogin.REQUEST_ATTR_USERID,
                                                                             JQuery.idRef (sIDUserName).val ())
                                                                       .add (CLogin.REQUEST_ATTR_PASSWORD,

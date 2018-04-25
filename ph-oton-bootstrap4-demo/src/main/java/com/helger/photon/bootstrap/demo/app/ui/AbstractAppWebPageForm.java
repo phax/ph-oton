@@ -22,19 +22,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.jscode.JSArray;
-import com.helger.photon.bootstrap.demo.ajax.CAjaxSecure;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
-import com.helger.photon.bootstrap4.page.AbstractBootstrapWebPageForm;
-import com.helger.photon.core.app.layout.CLayout;
-import com.helger.photon.uicore.form.ajax.AjaxExecutorSaveFormState;
-import com.helger.photon.uicore.icon.EDefaultIcon;
-import com.helger.photon.uicore.js.JSFormHelper;
+import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>> extends
                                              AbstractBootstrapWebPageForm <DATATYPE, WebPageExecutionContext>
@@ -52,34 +41,5 @@ public abstract class AbstractAppWebPageForm <DATATYPE extends IHasID <String>> 
     if (aSelectedObject instanceof IHasDisplayName)
       return ((IHasDisplayName) aSelectedObject).getDisplayName ();
     return super.getHeaderText (aWPEC);
-  }
-
-  @Override
-  protected void modifyCreateToolbar (@Nonnull final WebPageExecutionContext aWPEC,
-                                      @Nonnull final BootstrapButtonToolbar aToolbar)
-  {
-    final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
-    final JSArray aSuccessUpdates = new JSArray ();
-    // Update menu via Ajax
-    aSuccessUpdates.add (JSFormHelper.createUpdateParam (aRequestScope,
-                                                         CLayout.LAYOUT_AREAID_MENU,
-                                                         CAjaxSecure.UPDATE_MENU_VIEW));
-
-    // Update special area directly with code
-    IHCNode aSpecialNode = new BootstrapInfoBox ().addChild ("Data was successfully saved!");
-    aSuccessUpdates.add (JSFormHelper.createUpdateParam (CLayout.LAYOUT_AREAID_SPECIAL, aSpecialNode));
-    final JSArray aFailureUpdates = new JSArray ();
-    // Update special area directly with code
-    aSpecialNode = new BootstrapErrorBox ().addChild ("Error saving the data!");
-    aFailureUpdates.add (JSFormHelper.createUpdateParam (CLayout.LAYOUT_AREAID_SPECIAL, aSpecialNode));
-    aToolbar.addButton ("Remember",
-                        JSFormHelper.saveFormData (aRequestScope,
-                                                   FORM_ID_INPUT,
-                                                   AjaxExecutorSaveFormState.PREFIX_FIELD,
-                                                   getID (),
-                                                   CAjaxSecure.SAVE_FORM_STATE,
-                                                   aSuccessUpdates,
-                                                   aFailureUpdates),
-                        EDefaultIcon.SAVE);
   }
 }

@@ -48,7 +48,9 @@ public enum EDataTablesCSSPathProvider implements ICSSPathProvider
   DATATABLES_SCROLLER_BOOTSTRAP ("datatables/Scroller-1.4.3/css/scroller.bootstrap.css"),
   DATATABLES_SEARCH_HIGHLIGHT ("datatables/searchHighlight/dataTables.searchHighlight.css"),
   DATATABLES_SELECT ("datatables/Select-1.2.3/css/select.dataTables.css"),
-  DATATABLES_SELECT_BOOTSTRAP ("datatables/Select-1.2.3/css/select.bootstrap.css");
+  DATATABLES_SELECT_BOOTSTRAP ("datatables/Select-1.2.3/css/select.bootstrap.css"),
+  BOOTSTRAP3_DATATABLES_PH ("datatables/ph-oton/bootstrap3-datatables-ph.css"),
+  BOOTSTRAP4_DATATABLES_PH ("datatables/ph-oton/bootstrap4-datatables-ph.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

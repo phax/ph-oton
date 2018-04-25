@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.uictrls.datatables;
+package com.helger.photon.bootstrap4.uictrls.datatables;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.tabular.IHCTable;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
@@ -50,7 +50,7 @@ public class BootstrapDataTables extends DataTables
     // Original CSS not needed, when Bootstrap is used
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_10);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_10_BOOTSTRAP);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.BOOTSTRAP3_DATATABLES_PH);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.BOOTSTRAP4_DATATABLES_PH);
   }
 
   @Nullable

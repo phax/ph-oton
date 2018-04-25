@@ -31,19 +31,23 @@ import com.helger.photon.basic.app.menu.MenuTree;
 import com.helger.photon.basic.configfile.ConfigurationFile;
 import com.helger.photon.basic.configfile.ConfigurationFileManager;
 import com.helger.photon.basic.configfile.EConfigurationFileSyntax;
-import com.helger.photon.bootstrap.demo.ajax.CAjaxPublic;
-import com.helger.photon.bootstrap.demo.ajax.CAjaxSecure;
+import com.helger.photon.bootstrap.demo.ajax.CAjax;
 import com.helger.photon.bootstrap.demo.app.AppSettings;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.pub.menu.MenuPublic;
 import com.helger.photon.bootstrap.demo.secure.menu.MenuSecure;
-import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.bootstrap4.servlet.WebAppListenerBootstrap;
+import com.helger.photon.bootstrap4.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
+import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
+import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
+import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
+import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
+import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -178,11 +182,11 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
       final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
       aDataTables.setAutoWidth (false)
                  .setLengthMenu (LENGTH_MENU)
-                 .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjaxPublic.DATATABLES.getInvocationURL (aRequestScope))
+                 .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjax.DATATABLES.getInvocationURL (aRequestScope))
                                                           .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
                                                                                           aTable.getID ())))
                  .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
-                 .setTextLoadingURL (CAjaxPublic.DATATABLES_I18N.getInvocationURL (aRequestScope),
+                 .setTextLoadingURL (CAjax.DATATABLES_I18N.getInvocationURL (aRequestScope),
                                      AjaxExecutorDataTablesI18N.LANGUAGE_ID)
                  .addPlugin (new DataTablesPluginSearchHighlight ());
     });
@@ -199,12 +203,11 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
   @Override
   protected void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
   {
-    aAjaxInvoker.registerFunction (CAjaxSecure.SAVE_FORM_STATE);
-    aAjaxInvoker.registerFunction (CAjaxSecure.UPDATE_MENU_VIEW);
-    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES);
-    aAjaxInvoker.registerFunction (CAjaxPublic.LOGIN);
-    aAjaxInvoker.registerFunction (CAjaxPublic.UPDATE_MENU_VIEW);
-    aAjaxInvoker.registerFunction (CAjaxPublic.DATATABLES_I18N);
+    aAjaxInvoker.registerFunction (CAjax.DATATABLES);
+    aAjaxInvoker.registerFunction (CAjax.LOGIN);
+    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_PUB);
+    aAjaxInvoker.registerFunction (CAjax.DATATABLES_I18N);
+    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_SEC);
   }
 
   @Override

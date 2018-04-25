@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.page;
+package com.helger.photon.bootstrap4.pages;
 
 import java.util.Locale;
 
@@ -27,6 +27,7 @@ import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.EBootstrapFormType;
+import com.helger.photon.bootstrap4.uictrls.ext.BootstrapPageHeader;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
