@@ -14,25 +14,70 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap3.badge;
+package com.helger.photon.bootstrap4.badge;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.textlevel.AbstractHCSpan;
-import com.helger.photon.bootstrap3.CBootstrapCSS;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Bootstrap3 badge.
+ * Bootstrap4 badge.
  *
  * @author Philip Helger
  */
 public class BootstrapBadge extends AbstractHCSpan <BootstrapBadge>
 {
+  public static final boolean DEFAULT_PILL = false;
+
+  private EBootstrapBadgeType m_eBadgeType;
+  private boolean m_bPill = DEFAULT_PILL;
+
   public BootstrapBadge ()
+  {}
+
+  public BootstrapBadge (@Nullable final EBootstrapBadgeType eType)
   {
-    addClass (CBootstrapCSS.BADGE);
+    setBadgeType (eType);
+  }
+
+  @Nonnull
+  public EBootstrapBadgeType getBadgeType ()
+  {
+    return m_eBadgeType;
+  }
+
+  @Nonnull
+  public final BootstrapBadge setBadgeType (@Nullable final EBootstrapBadgeType eType)
+  {
+    m_eBadgeType = eType;
+    return this;
+  }
+
+  public boolean isPill ()
+  {
+    return m_bPill;
+  }
+
+  @Nonnull
+  public final BootstrapBadge setPill (final boolean bPill)
+  {
+    m_bPill = bPill;
+    return this;
+  }
+
+  @Override
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+    addClasses (CBootstrapCSS.BADGE, m_eBadgeType);
+    if (m_bPill)
+      addClass (CBootstrapCSS.BADGE_PILL);
   }
 
   @Nullable

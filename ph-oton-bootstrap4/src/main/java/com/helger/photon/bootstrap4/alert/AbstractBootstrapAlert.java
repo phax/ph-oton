@@ -23,6 +23,7 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
+import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.utils.BootstrapCloseIcon;
 
@@ -65,7 +66,7 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
   }
 
   @Nonnull
-  public IMPLTYPE setType (@Nonnull final EBootstrapAlertType eType)
+  public final IMPLTYPE setType (@Nonnull final EBootstrapAlertType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
     return thisAsT ();
@@ -96,5 +97,12 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
       aCloseIcon.customAttrs ().setDataAttr ("dismiss", "alert");
       addChild (aCloseIcon);
     }
+  }
+
+  @Nonnull
+  public static HCA createAlertLink ()
+  {
+    final HCA ret = new HCA ().addClass (CBootstrapCSS.ALERT_LINK);
+    return ret;
   }
 }
