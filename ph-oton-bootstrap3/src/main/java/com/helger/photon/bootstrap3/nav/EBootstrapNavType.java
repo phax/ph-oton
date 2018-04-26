@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -43,13 +43,13 @@ public enum EBootstrapNavType
 
   private EBootstrapNavType (@Nullable final ICSSClassProvider... aCSSClasses)
   {
-    m_aCSSClasses = CollectionHelper.newList (aCSSClasses);
+    m_aCSSClasses = new CommonsArrayList <> (aCSSClasses);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <ICSSClassProvider> getAllCSSClasses ()
   {
-    return CollectionHelper.newList (m_aCSSClasses);
+    return m_aCSSClasses.getClone ();
   }
 }
