@@ -17,15 +17,6 @@
 package com.helger.html.hc.html.grouping;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.CHTMLAttributes;
-import com.helger.html.EHTMLElement;
-import com.helger.html.hc.IHCConversionSettingsToNode;
-import com.helger.xml.microdom.IMicroElement;
 
 /**
  * Represents an HTML &lt;ul&gt; element
@@ -34,43 +25,19 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCUL <IMPLTYPE extends AbstractHCUL <IMPLTYPE>> extends AbstractHCListLI <IMPLTYPE>
-                                   implements IHCUL <IMPLTYPE>
+public abstract class AbstractHCUL <IMPLTYPE extends AbstractHCUL <IMPLTYPE>> extends AbstractHCULBase <IMPLTYPE, HCLI>
+                                   implements
+                                   IHCUL <IMPLTYPE>
 {
-  private EHCULType m_eType;
-
   public AbstractHCUL ()
   {
-    super (EHTMLElement.UL);
+    super (HCLI.class);
   }
 
-  @Nullable
-  public final EHCULType getType ()
-  {
-    return m_eType;
-  }
-
+  @Override
   @Nonnull
-  public final IMPLTYPE setType (@Nullable final EHCULType eType)
+  protected HCLI createEmptyItem ()
   {
-    m_eType = eType;
-    return thisAsT ();
-  }
-
-  @Override
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
-  {
-    super.fillMicroElement (aElement, aConversionSettings);
-
-    if (m_eType != null)
-      aElement.setAttribute (CHTMLAttributes.TYPE, m_eType);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("type", m_eType).getToString ();
+    return new HCLI ();
   }
 }

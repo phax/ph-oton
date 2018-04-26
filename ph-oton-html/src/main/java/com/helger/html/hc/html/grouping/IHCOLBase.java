@@ -17,27 +17,40 @@
 package com.helger.html.hc.html.grouping;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
- * Represents an HTML &lt;ol&gt; element using {@link HCLI} as children.
+ * Interface for OLs
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
+ * @param <ITEMTYPE>
+ *        Item type
  */
-public abstract class AbstractHCOL <IMPLTYPE extends AbstractHCOL <IMPLTYPE>> extends AbstractHCOLBase <IMPLTYPE, HCLI>
-                                   implements
-                                   IHCOL <IMPLTYPE>
+public interface IHCOLBase <IMPLTYPE extends IHCOLBase <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>> extends
+                           IHCList <IMPLTYPE, ITEMTYPE>
 {
-  public AbstractHCOL ()
+  @Nullable
+  Integer getStart ();
+
+  @Nonnull
+  default IMPLTYPE setStart (final int nStart)
   {
-    super (HCLI.class);
+    return setStart (Integer.valueOf (nStart));
   }
 
-  @Override
   @Nonnull
-  protected HCLI createEmptyItem ()
-  {
-    return new HCLI ();
-  }
+  IMPLTYPE setStart (@Nullable Integer aStart);
+
+  boolean isReversed ();
+
+  @Nonnull
+  IMPLTYPE setReversed (boolean bReversed);
+
+  @Nullable
+  EHCOLType getType ();
+
+  @Nonnull
+  IMPLTYPE setType (@Nullable EHCOLType eType);
 }

@@ -17,27 +17,33 @@
 package com.helger.html.hc.html.grouping;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
- * Represents an HTML &lt;ol&gt; element using {@link HCLI} as children.
+ * Interface for ULs
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
+ * @param <ITEMTYPE>
+ *        Item type
  */
-public abstract class AbstractHCOL <IMPLTYPE extends AbstractHCOL <IMPLTYPE>> extends AbstractHCOLBase <IMPLTYPE, HCLI>
-                                   implements
-                                   IHCOL <IMPLTYPE>
+public interface IHCULBase <IMPLTYPE extends IHCULBase <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>> extends
+                           IHCList <IMPLTYPE, ITEMTYPE>
 {
-  public AbstractHCOL ()
-  {
-    super (HCLI.class);
-  }
+  /**
+   * @return UL type. May be <code>null</code>
+   */
+  @Nullable
+  EHCULType getType ();
 
-  @Override
+  /**
+   * Set the list type.
+   * 
+   * @param eType
+   *        Type to use. May be <code>null</code>.
+   * @return this for chaining
+   */
   @Nonnull
-  protected HCLI createEmptyItem ()
-  {
-    return new HCLI ();
-  }
+  IMPLTYPE setType (@Nullable EHCULType eType);
 }

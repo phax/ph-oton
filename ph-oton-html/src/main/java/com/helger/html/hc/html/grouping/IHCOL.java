@@ -16,9 +16,6 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 /**
  * Interface for OLs
  *
@@ -26,28 +23,7 @@ import javax.annotation.Nullable;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCOL <IMPLTYPE extends IHCOL <IMPLTYPE>> extends IHCList <IMPLTYPE, HCLI>
+public interface IHCOL <IMPLTYPE extends IHCOL <IMPLTYPE>> extends IHCOLBase <IMPLTYPE, HCLI>
 {
-  @Nullable
-  Integer getStart ();
-
-  @Nonnull
-  default IMPLTYPE setStart (final int nStart)
-  {
-    return setStart (Integer.valueOf (nStart));
-  }
-
-  @Nonnull
-  IMPLTYPE setStart (@Nullable Integer aStart);
-
-  boolean isReversed ();
-
-  @Nonnull
-  IMPLTYPE setReversed (boolean bReversed);
-
-  @Nullable
-  EHCOLType getType ();
-
-  @Nonnull
-  IMPLTYPE setType (@Nullable EHCOLType eType);
+  /* empty */
 }
