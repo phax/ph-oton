@@ -18,34 +18,39 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.css.ICSSClassProvider;
-import com.helger.photon.bootstrap4.CBootstrapCSS;
-
 /**
- * Border radius. See https://getbootstrap.com/docs/4.1/utilities/borders/
- *
+ * Spacing side. See https://getbootstrap.com/docs/4.1/utilities/spacing/
+ * 
  * @author Philip Helger
+ * @see BootstrapSpacingBuilder
  */
-public enum EBorderRadiusType implements ICSSClassProvider
+public enum EBootstrapSpacingSideType
 {
-  ROUNDED (CBootstrapCSS.ROUNDED),
-  ROUNDED_TOP (CBootstrapCSS.ROUNDED_TOP),
-  ROUNDED_RIGHT (CBootstrapCSS.ROUNDED_RIGHT),
-  ROUNDED_BOTTOM (CBootstrapCSS.ROUNDED_BOTTOM),
-  ROUNDED_LEFT (CBootstrapCSS.ROUNDED_LEFT),
-  ROUNDED_CIRCLE (CBootstrapCSS.ROUNDED_CIRCLE),
-  NOT_ROUNDED (CBootstrapCSS.ROUNDED_0);
+  /** All 4 sides */
+  ALL (""),
+  /** Top only */
+  TOP ("t"),
+  /** Right only */
+  RIGHT ("r"),
+  /** bottom only */
+  BOTTOM ("b"),
+  /** left only */
+  LEFT ("l"),
+  /** left and right */
+  X ("x"),
+  /** top and bottom */
+  Y ("y");
 
-  private final ICSSClassProvider m_aCSSClass;
+  private final String m_sCSSClassNamePart;
 
-  private EBorderRadiusType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapSpacingSideType (@Nonnull final String sCSSClassNamePart)
   {
-    m_aCSSClass = aCSSClass;
+    m_sCSSClassNamePart = sCSSClassNamePart;
   }
 
   @Nonnull
-  public String getCSSClass ()
+  public String getCSSClassNamePart ()
   {
-    return m_aCSSClass.getCSSClass ();
+    return m_sCSSClassNamePart;
   }
 }

@@ -18,30 +18,32 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
+import com.helger.html.css.ICSSClassProvider;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Spacing property. See https://getbootstrap.com/docs/4.1/utilities/spacing/
- * 
+ * Width. See https://getbootstrap.com/docs/4.1/utilities/sizing/
+ *
  * @author Philip Helger
- * @see BootstrapSpacingBuilder
  */
-public enum ESpacingPropertyType
+public enum EBootstrapWidthType implements ICSSClassProvider
 {
-  MARGIN ("m"),
-  PADDING ("p");
+  W_25 (CBootstrapCSS.W_25),
+  W_50 (CBootstrapCSS.W_50),
+  W_75 (CBootstrapCSS.W_75),
+  W_100 (CBootstrapCSS.W_100),
+  W_AUTO (CBootstrapCSS.W_AUTO);
 
-  private final String m_sCSSClassNamePart;
+  private final ICSSClassProvider m_aCSSClass;
 
-  private ESpacingPropertyType (@Nonnull @Nonempty final String sCSSClassNamePart)
+  private EBootstrapWidthType (@Nonnull final ICSSClassProvider aCSSClass)
   {
-    m_sCSSClassNamePart = sCSSClassNamePart;
+    m_aCSSClass = aCSSClass;
   }
 
   @Nonnull
-  @Nonempty
-  public String getCSSClassNamePart ()
+  public String getCSSClass ()
   {
-    return m_sCSSClassNamePart;
+    return m_aCSSClass.getCSSClass ();
   }
 }

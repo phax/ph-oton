@@ -22,20 +22,25 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Embed aspect ratio. See https://getbootstrap.com/docs/4.1/utilities/embed/
- *
+ * Border color. See https://getbootstrap.com/docs/4.1/utilities/borders/
+ * 
  * @author Philip Helger
  */
-public enum EEmbedAspectRatio implements ICSSClassProvider
+public enum EBootstrapBorderColorType implements ICSSClassProvider
 {
-  AR_21_9 (CBootstrapCSS.EMBED_RESPONSIVE_21BY9),
-  AR_16_9 (CBootstrapCSS.EMBED_RESPONSIVE_16BY9),
-  AR_4_3 (CBootstrapCSS.EMBED_RESPONSIVE_4BY3),
-  AR_1_1 (CBootstrapCSS.EMBED_RESPONSIVE_1BY1);
+  PRIMARY (CBootstrapCSS.BORDER_PRIMARY),
+  SECONDARY (CBootstrapCSS.BORDER_SECONDARY),
+  SUCCESS (CBootstrapCSS.BORDER_SUCCESS),
+  DANGER (CBootstrapCSS.BORDER_DANGER),
+  WARNING (CBootstrapCSS.BORDER_WARNING),
+  INFO (CBootstrapCSS.BORDER_INFO),
+  LIGHT (CBootstrapCSS.BORDER_LIGHT),
+  DARK (CBootstrapCSS.BORDER_DARK),
+  WHITE (CBootstrapCSS.BORDER_WHITE);
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EEmbedAspectRatio (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapBorderColorType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -34,21 +34,21 @@ import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
  */
 public class BootstrapEmbed extends AbstractBootstrapDiv <BootstrapEmbed>
 {
-  private EEmbedAspectRatio m_eAspectRatio;
+  private EBootstrapEmbedAspectRatio m_eAspectRatio;
 
-  public BootstrapEmbed (@Nonnull final EEmbedAspectRatio eAspectRatio)
+  public BootstrapEmbed (@Nonnull final EBootstrapEmbedAspectRatio eAspectRatio)
   {
     setAspectRatio (eAspectRatio);
   }
 
   @Nullable
-  public EEmbedAspectRatio getAspectRatio ()
+  public EBootstrapEmbedAspectRatio getAspectRatio ()
   {
     return m_eAspectRatio;
   }
 
   @Nonnull
-  public final BootstrapEmbed setAspectRatio (@Nonnull final EEmbedAspectRatio eAspectRatio)
+  public final BootstrapEmbed setAspectRatio (@Nonnull final EBootstrapEmbedAspectRatio eAspectRatio)
   {
     ValueEnforcer.notNull (eAspectRatio, "AspectRatio");
     m_eAspectRatio = eAspectRatio;

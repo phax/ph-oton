@@ -31,8 +31,8 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
 import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
-import com.helger.photon.bootstrap4.utils.ESpacingPropertyType;
-import com.helger.photon.bootstrap4.utils.ESpacingSideType;
+import com.helger.photon.bootstrap4.utils.EBootstrapSpacingPropertyType;
+import com.helger.photon.bootstrap4.utils.EBootstrapSpacingSideType;
 
 /**
  * Test class for class {@link BootstrapSpacingBuilder}.
@@ -49,10 +49,10 @@ public final class BootstrapSpacingBuilderTest
 
     final ICommonsSet <String> aNames = new CommonsLinkedHashSet <> ();
     final BootstrapSpacingBuilder aBuilder = new BootstrapSpacingBuilder ();
-    for (final ESpacingPropertyType eProp : ESpacingPropertyType.values ())
+    for (final EBootstrapSpacingPropertyType eProp : EBootstrapSpacingPropertyType.values ())
     {
       aBuilder.property (eProp);
-      for (final ESpacingSideType eSide : ESpacingSideType.values ())
+      for (final EBootstrapSpacingSideType eSide : EBootstrapSpacingSideType.values ())
       {
         aBuilder.side (eSide);
         for (final EBootstrapGridType eGrid : EBootstrapGridType.values ())
@@ -62,7 +62,7 @@ public final class BootstrapSpacingBuilderTest
           {
             if (nSize == -1)
             {
-              if (eProp == ESpacingPropertyType.PADDING)
+              if (eProp == EBootstrapSpacingPropertyType.PADDING)
                 continue;
               aBuilder.auto ();
             }

@@ -22,27 +22,27 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * <p>
- * <b>Requires Bootstrap Customization to work!</b>
- * </p>
- * Background gradient. See https://getbootstrap.com/docs/4.1/utilities/colors/
+ * Position. See https://getbootstrap.com/docs/4.1/utilities/position/ <br>
+ * IE11 and IE10 will render position: sticky as position: relative. As such, we
+ * wrap the styles in a @supports query, limiting the stickiness to only
+ * browsers that can render it properly.
  *
  * @author Philip Helger
  */
-public enum EBackgroundGradientType implements ICSSClassProvider
+public enum EBootstrapPositionType implements ICSSClassProvider
 {
-  PRIMARY (CBootstrapCSS.BG_GRADIENT_PRIMARY),
-  SECONDARY (CBootstrapCSS.BG_GRADIENT_SECONDARY),
-  SUCCESS (CBootstrapCSS.BG_GRADIENT_SUCCESS),
-  DANGER (CBootstrapCSS.BG_GRADIENT_DANGER),
-  WARNING (CBootstrapCSS.BG_GRADIENT_WARNING),
-  INFO (CBootstrapCSS.BG_GRADIENT_INFO),
-  LIGHT (CBootstrapCSS.BG_GRADIENT_LIGHT),
-  DARK (CBootstrapCSS.BG_GRADIENT_DARK);
+  STATIC (CBootstrapCSS.POSITION_STATIC),
+  RELATIVE (CBootstrapCSS.POSITION_RELATIVE),
+  ABSOLUTE (CBootstrapCSS.POSITION_ABSOLUTE),
+  FIXED (CBootstrapCSS.POSITION_FIXED),
+  STICKY (CBootstrapCSS.POSITION_STICKY),
+  FIXED_TOP (CBootstrapCSS.FIXED_TOP),
+  FIXED_BOTTOM (CBootstrapCSS.FIXED_BOTTOM),
+  STICKY_TOP (CBootstrapCSS.STICKY_TOP);
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBackgroundGradientType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapPositionType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

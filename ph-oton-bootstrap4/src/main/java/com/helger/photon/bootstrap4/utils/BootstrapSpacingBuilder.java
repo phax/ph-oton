@@ -32,8 +32,8 @@ import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
  */
 public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
 {
-  private ESpacingPropertyType m_eProperty = ESpacingPropertyType.MARGIN;
-  private ESpacingSideType m_eSide = ESpacingSideType.ALL;
+  private EBootstrapSpacingPropertyType m_eProperty = EBootstrapSpacingPropertyType.MARGIN;
+  private EBootstrapSpacingSideType m_eSide = EBootstrapSpacingSideType.ALL;
   private EBootstrapGridType m_eGrid = EBootstrapGridType.XS;
   private int m_nSize = -1;
 
@@ -48,7 +48,7 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
    * @return this for chaining
    */
   @Nonnull
-  public BootstrapSpacingBuilder property (@Nonnull final ESpacingPropertyType eProperty)
+  public BootstrapSpacingBuilder property (@Nonnull final EBootstrapSpacingPropertyType eProperty)
   {
     ValueEnforcer.notNull (eProperty, "Property");
     m_eProperty = eProperty;
@@ -63,7 +63,7 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
    * @return this for chaining
    */
   @Nonnull
-  public BootstrapSpacingBuilder side (@Nonnull final ESpacingSideType eSide)
+  public BootstrapSpacingBuilder side (@Nonnull final EBootstrapSpacingSideType eSide)
   {
     ValueEnforcer.notNull (eSide, "Side");
     m_eSide = eSide;
@@ -86,12 +86,13 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
   }
 
   /**
-   * Number of grid elements to "margin" (0 = x*0, 1 = x*.25, 2 = x*.5, 3 = x*1,
-   * 4 = x*1.5, 5 = x*3)
+   * Number of grid elements to "margin" and "padding" (0 = x*0, 1 = x*.25, 2 =
+   * x*.5, 3 = x*1, 4 = x*1.5, 5 = x*3)
    *
    * @param nSize
-   *        Size from 0 to 5 or "-1" for "auto"
+   *        Size from 0 to 5 ("-1" for "auto" is not allowed here)
    * @return this for chaining
+   * @see #sizeAuto() for automatic
    */
   @Nonnull
   public BootstrapSpacingBuilder size (final int nSize)
@@ -106,9 +107,10 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
    * work
    *
    * @return this for chaining
+   * @see #size(int)
    */
   @Nonnull
-  public BootstrapSpacingBuilder auto ()
+  public BootstrapSpacingBuilder sizeAuto ()
   {
     m_nSize = -1;
     return this;
@@ -132,13 +134,13 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
   @ReturnsMutableCopy
   public static BootstrapSpacingBuilder createMarginBuilder ()
   {
-    return new BootstrapSpacingBuilder ().property (ESpacingPropertyType.MARGIN);
+    return new BootstrapSpacingBuilder ().property (EBootstrapSpacingPropertyType.MARGIN);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static BootstrapSpacingBuilder createPaddingBuilder ()
   {
-    return new BootstrapSpacingBuilder ().property (ESpacingPropertyType.PADDING);
+    return new BootstrapSpacingBuilder ().property (EBootstrapSpacingPropertyType.PADDING);
   }
 }

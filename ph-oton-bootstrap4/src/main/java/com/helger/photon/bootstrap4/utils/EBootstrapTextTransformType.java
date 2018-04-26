@@ -18,45 +18,34 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Border type. See https://getbootstrap.com/docs/4.1/utilities/borders/
- * 
+ * Text transform. See https://getbootstrap.com/docs/4.1/utilities/text/
+ *
  * @author Philip Helger
  */
-public enum EBorderType implements ICSSClassProvider
+public enum EBootstrapTextTransformType implements ICSSClassProvider
 {
-  /** All 4 sides */
-  BORDER (CBootstrapCSS.BORDER),
-  /** Only top border */
-  TOP_BORDER (CBootstrapCSS.BORDER_TOP),
-  /** Only right border */
-  RIGHT_BORDER (CBootstrapCSS.BORDER_RIGHT),
-  /** Only bottom border */
-  BOTTOM_BORDER (CBootstrapCSS.BORDER_BOTTOM),
-  /** Only left border */
-  LEFT_BORDER (CBootstrapCSS.BORDER_LEFT),
-  /** No border */
-  NONE (CBootstrapCSS.BORDER_0),
-  /** No top border */
-  NO_TOP_BORDER (CBootstrapCSS.BORDER_TOP_0),
-  /** No right border */
-  NO_RIGHT_BORDER (CBootstrapCSS.BORDER_RIGHT_0),
-  /** No bottom border */
-  NO_BOTTOM_BORDER (CBootstrapCSS.BORDER_BOTTOM_0),
-  /** No left border */
-  NO_LEFT_BORDER (CBootstrapCSS.BORDER_LEFT_0);
+  LOWERCASE (CBootstrapCSS.TEXT_LOWERCASE),
+  UPPERCASE (CBootstrapCSS.TEXT_UPPERCASE),
+  /**
+   * Note how text-capitalize only changes the first letter of each word,
+   * leaving the case of any other letters unaffected.
+   */
+  CAPITALIZE (CBootstrapCSS.TEXT_CAPITALIZE);
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBorderType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapTextTransformType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }
 
   @Nonnull
+  @Nonempty
   public String getCSSClass ()
   {
     return m_aCSSClass.getCSSClass ();

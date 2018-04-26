@@ -26,14 +26,14 @@ import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
 
 /**
  * Utility class to build a display class based on {@link EBootstrapGridType}
- * and {@link EDisplayType}.
+ * and {@link EBootstrapDisplayType}.
  *
  * @author Philip Helger
  */
 public class BootstrapDisplayBuilder implements ICSSClassProvider, Serializable
 {
   private EBootstrapGridType m_eGrid = EBootstrapGridType.XS;
-  private EDisplayType m_eDisplay = EDisplayType.BLOCK;
+  private EBootstrapDisplayType m_eDisplay = EBootstrapDisplayType.BLOCK;
 
   public BootstrapDisplayBuilder ()
   {}
@@ -61,7 +61,7 @@ public class BootstrapDisplayBuilder implements ICSSClassProvider, Serializable
    * @return this for chaining
    */
   @Nonnull
-  public BootstrapDisplayBuilder display (@Nonnull final EDisplayType eDisplay)
+  public BootstrapDisplayBuilder display (@Nonnull final EBootstrapDisplayType eDisplay)
   {
     ValueEnforcer.notNull (eDisplay, "eDisplay");
     m_eDisplay = eDisplay;

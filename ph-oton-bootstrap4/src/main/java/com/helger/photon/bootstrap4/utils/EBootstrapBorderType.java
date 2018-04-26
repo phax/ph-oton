@@ -22,26 +22,36 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Print display classes. See
- * https://getbootstrap.com/docs/4.1/utilities/display/
- *
+ * Border type. See https://getbootstrap.com/docs/4.1/utilities/borders/
+ * 
  * @author Philip Helger
  */
-public enum EDisplayPrintType implements ICSSClassProvider
+public enum EBootstrapBorderType implements ICSSClassProvider
 {
-  BLOCK (CBootstrapCSS.D_PRINT_BLOCK),
-  INLINE (CBootstrapCSS.D_PRINT_INLINE),
-  INLINE_BLOCK (CBootstrapCSS.D_PRINT_INLINE_BLOCK),
-  NONE (CBootstrapCSS.D_PRINT_NONE),
-  TABLE (CBootstrapCSS.D_PRINT_TABLE),
-  TABLE_CELL (CBootstrapCSS.D_PRINT_TABLE_CELL),
-  TABLE_ROW (CBootstrapCSS.D_PRINT_TABLE_ROW),
-  FLEX (CBootstrapCSS.D_PRINT_FLEX),
-  INLINE_FLEX (CBootstrapCSS.D_PRINT_INLINE_FLEX);
+  /** All 4 sides */
+  BORDER (CBootstrapCSS.BORDER),
+  /** Only top border */
+  TOP_BORDER (CBootstrapCSS.BORDER_TOP),
+  /** Only right border */
+  RIGHT_BORDER (CBootstrapCSS.BORDER_RIGHT),
+  /** Only bottom border */
+  BOTTOM_BORDER (CBootstrapCSS.BORDER_BOTTOM),
+  /** Only left border */
+  LEFT_BORDER (CBootstrapCSS.BORDER_LEFT),
+  /** No border */
+  NONE (CBootstrapCSS.BORDER_0),
+  /** No top border */
+  NO_TOP_BORDER (CBootstrapCSS.BORDER_TOP_0),
+  /** No right border */
+  NO_RIGHT_BORDER (CBootstrapCSS.BORDER_RIGHT_0),
+  /** No bottom border */
+  NO_BOTTOM_BORDER (CBootstrapCSS.BORDER_BOTTOM_0),
+  /** No left border */
+  NO_LEFT_BORDER (CBootstrapCSS.BORDER_LEFT_0);
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EDisplayPrintType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapBorderType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

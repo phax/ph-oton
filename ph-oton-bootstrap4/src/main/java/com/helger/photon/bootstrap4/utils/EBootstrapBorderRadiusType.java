@@ -18,45 +18,34 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Display type. See https://getbootstrap.com/docs/4.1/utilities/display/
+ * Border radius. See https://getbootstrap.com/docs/4.1/utilities/borders/
  *
  * @author Philip Helger
- * @See {@link BootstrapDisplayBuilder}
  */
-public enum EDisplayType implements ICSSClassProvider
+public enum EBootstrapBorderRadiusType implements ICSSClassProvider
 {
-  NONE ("none"),
-  INLINE ("inline"),
-  INLINE_BLOCK ("inline-block"),
-  BLOCK ("block"),
-  TABLE ("table"),
-  TABLE_CELL ("table-cell"),
-  TABLE_ROW ("table-row"),
-  FLEX ("flex"),
-  INLINE_FLEX ("inline-flex");
+  ROUNDED (CBootstrapCSS.ROUNDED),
+  ROUNDED_TOP (CBootstrapCSS.ROUNDED_TOP),
+  ROUNDED_RIGHT (CBootstrapCSS.ROUNDED_RIGHT),
+  ROUNDED_BOTTOM (CBootstrapCSS.ROUNDED_BOTTOM),
+  ROUNDED_LEFT (CBootstrapCSS.ROUNDED_LEFT),
+  ROUNDED_CIRCLE (CBootstrapCSS.ROUNDED_CIRCLE),
+  NOT_ROUNDED (CBootstrapCSS.ROUNDED_0);
 
-  private final String m_sCSSClassNamePart;
+  private final ICSSClassProvider m_aCSSClass;
 
-  private EDisplayType (@Nonnull @Nonempty final String sCSSClassNamePart)
+  private EBootstrapBorderRadiusType (@Nonnull final ICSSClassProvider aCSSClass)
   {
-    m_sCSSClassNamePart = sCSSClassNamePart;
+    m_aCSSClass = aCSSClass;
   }
 
   @Nonnull
-  @Nonempty
-  public String getCSSClassNamePart ()
-  {
-    return m_sCSSClassNamePart;
-  }
-
-  @Nonnull
-  @Nonempty
   public String getCSSClass ()
   {
-    return "d-" + m_sCSSClassNamePart;
+    return m_aCSSClass.getCSSClass ();
   }
 }

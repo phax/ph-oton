@@ -27,7 +27,7 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
  *
  * @author Philip Helger
  */
-public enum EVerticalAlignType implements ICSSClassProvider
+public enum EBootstrapVerticalAlignType implements ICSSClassProvider
 {
   BASELINE (CBootstrapCSS.ALIGN_BASELINE),
   TOP (CBootstrapCSS.ALIGN_TOP),
@@ -38,7 +38,7 @@ public enum EVerticalAlignType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EVerticalAlignType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapVerticalAlignType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

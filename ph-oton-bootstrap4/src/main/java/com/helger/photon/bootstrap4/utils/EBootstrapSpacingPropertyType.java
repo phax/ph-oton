@@ -18,37 +18,28 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
+
 /**
- * Spacing side. See https://getbootstrap.com/docs/4.1/utilities/spacing/
+ * Spacing property. See https://getbootstrap.com/docs/4.1/utilities/spacing/
  * 
  * @author Philip Helger
  * @see BootstrapSpacingBuilder
  */
-public enum ESpacingSideType
+public enum EBootstrapSpacingPropertyType
 {
-  /** All 4 sides */
-  ALL (""),
-  /** Top only */
-  TOP ("t"),
-  /** Right only */
-  RIGHT ("r"),
-  /** bottom only */
-  BOTTOM ("b"),
-  /** left only */
-  LEFT ("l"),
-  /** left and right */
-  X ("x"),
-  /** top and bottom */
-  Y ("y");
+  MARGIN ("m"),
+  PADDING ("p");
 
   private final String m_sCSSClassNamePart;
 
-  private ESpacingSideType (@Nonnull final String sCSSClassNamePart)
+  private EBootstrapSpacingPropertyType (@Nonnull @Nonempty final String sCSSClassNamePart)
   {
     m_sCSSClassNamePart = sCSSClassNamePart;
   }
 
   @Nonnull
+  @Nonempty
   public String getCSSClassNamePart ()
   {
     return m_sCSSClassNamePart;

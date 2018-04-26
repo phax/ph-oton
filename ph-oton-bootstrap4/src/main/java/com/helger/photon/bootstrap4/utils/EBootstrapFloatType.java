@@ -24,32 +24,32 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
 
 /**
- * Text alignment. See https://getbootstrap.com/docs/4.1/utilities/text/
+ * Floating. See https://getbootstrap.com/docs/4.1/utilities/float/
  *
  * @author Philip Helger
  */
-public enum ETextAlignType implements ICSSClassProvider
+public enum EBootstrapFloatType implements ICSSClassProvider
 {
-  LEFT (CBootstrapCSS.TEXT_LEFT, EBootstrapGridType.XS),
-  CENTER (CBootstrapCSS.TEXT_CENTER, EBootstrapGridType.XS),
-  RIGHT (CBootstrapCSS.TEXT_RIGHT, EBootstrapGridType.XS),
-  SM_LEFT (CBootstrapCSS.TEXT_SM_LEFT, EBootstrapGridType.SM),
-  SM_CENTER (CBootstrapCSS.TEXT_SM_CENTER, EBootstrapGridType.SM),
-  SM_RIGHT (CBootstrapCSS.TEXT_SM_RIGHT, EBootstrapGridType.SM),
-  MD_LEFT (CBootstrapCSS.TEXT_MD_LEFT, EBootstrapGridType.MD),
-  MD_CENTER (CBootstrapCSS.TEXT_MD_CENTER, EBootstrapGridType.MD),
-  MD_RIGHT (CBootstrapCSS.TEXT_MD_RIGHT, EBootstrapGridType.MD),
-  LG_LEFT (CBootstrapCSS.TEXT_LG_LEFT, EBootstrapGridType.LG),
-  LG_CENTER (CBootstrapCSS.TEXT_LG_CENTER, EBootstrapGridType.LG),
-  LG_RIGHT (CBootstrapCSS.TEXT_LG_RIGHT, EBootstrapGridType.LG),
-  XL_LEFT (CBootstrapCSS.TEXT_XL_LEFT, EBootstrapGridType.XL),
-  XL_CENTER (CBootstrapCSS.TEXT_XL_CENTER, EBootstrapGridType.XL),
-  XL_RIGHT (CBootstrapCSS.TEXT_XL_RIGHT, EBootstrapGridType.XL);
+  LEFT (CBootstrapCSS.FLOAT_LEFT, EBootstrapGridType.XS),
+  RIGHT (CBootstrapCSS.FLOAT_RIGHT, EBootstrapGridType.XS),
+  NONE (CBootstrapCSS.FLOAT_NONE, EBootstrapGridType.XS),
+  SM_LEFT (CBootstrapCSS.FLOAT_SM_LEFT, EBootstrapGridType.SM),
+  SM_RIGHT (CBootstrapCSS.FLOAT_SM_RIGHT, EBootstrapGridType.SM),
+  SM_NONE (CBootstrapCSS.FLOAT_SM_NONE, EBootstrapGridType.SM),
+  MD_LEFT (CBootstrapCSS.FLOAT_MD_LEFT, EBootstrapGridType.MD),
+  MD_RIGHT (CBootstrapCSS.FLOAT_MD_RIGHT, EBootstrapGridType.MD),
+  MD_NONE (CBootstrapCSS.FLOAT_MD_NONE, EBootstrapGridType.MD),
+  LG_LEFT (CBootstrapCSS.FLOAT_LG_LEFT, EBootstrapGridType.LG),
+  LG_RIGHT (CBootstrapCSS.FLOAT_LG_RIGHT, EBootstrapGridType.LG),
+  LG_NONE (CBootstrapCSS.FLOAT_LG_NONE, EBootstrapGridType.LG),
+  XL_LEFT (CBootstrapCSS.FLOAT_XL_LEFT, EBootstrapGridType.XL),
+  XL_RIGHT (CBootstrapCSS.FLOAT_XL_RIGHT, EBootstrapGridType.XL),
+  XL_NONE (CBootstrapCSS.FLOAT_XL_NONE, EBootstrapGridType.XL);
 
   private final ICSSClassProvider m_aCSSClass;
   private final EBootstrapGridType m_eGridType;
 
-  private ETextAlignType (@Nonnull final ICSSClassProvider aCSSClass, @Nonnull final EBootstrapGridType eGridType)
+  private EBootstrapFloatType (@Nonnull final ICSSClassProvider aCSSClass, @Nonnull final EBootstrapGridType eGridType)
   {
     m_aCSSClass = aCSSClass;
     m_eGridType = eGridType;

@@ -18,36 +18,45 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Border color. See https://getbootstrap.com/docs/4.1/utilities/borders/
- * 
+ * Display type. See https://getbootstrap.com/docs/4.1/utilities/display/
+ *
  * @author Philip Helger
+ * @See {@link BootstrapDisplayBuilder}
  */
-public enum EBorderColorType implements ICSSClassProvider
+public enum EBootstrapDisplayType implements ICSSClassProvider
 {
-  PRIMARY (CBootstrapCSS.BORDER_PRIMARY),
-  SECONDARY (CBootstrapCSS.BORDER_SECONDARY),
-  SUCCESS (CBootstrapCSS.BORDER_SUCCESS),
-  DANGER (CBootstrapCSS.BORDER_DANGER),
-  WARNING (CBootstrapCSS.BORDER_WARNING),
-  INFO (CBootstrapCSS.BORDER_INFO),
-  LIGHT (CBootstrapCSS.BORDER_LIGHT),
-  DARK (CBootstrapCSS.BORDER_DARK),
-  WHITE (CBootstrapCSS.BORDER_WHITE);
+  NONE ("none"),
+  INLINE ("inline"),
+  INLINE_BLOCK ("inline-block"),
+  BLOCK ("block"),
+  TABLE ("table"),
+  TABLE_CELL ("table-cell"),
+  TABLE_ROW ("table-row"),
+  FLEX ("flex"),
+  INLINE_FLEX ("inline-flex");
 
-  private final ICSSClassProvider m_aCSSClass;
+  private final String m_sCSSClassNamePart;
 
-  private EBorderColorType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapDisplayType (@Nonnull @Nonempty final String sCSSClassNamePart)
   {
-    m_aCSSClass = aCSSClass;
+    m_sCSSClassNamePart = sCSSClassNamePart;
   }
 
   @Nonnull
+  @Nonempty
+  public String getCSSClassNamePart ()
+  {
+    return m_sCSSClassNamePart;
+  }
+
+  @Nonnull
+  @Nonempty
   public String getCSSClass ()
   {
-    return m_aCSSClass.getCSSClass ();
+    return "d-" + m_sCSSClassNamePart;
   }
 }

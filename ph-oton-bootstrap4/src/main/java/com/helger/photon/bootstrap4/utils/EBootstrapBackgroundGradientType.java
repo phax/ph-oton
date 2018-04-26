@@ -22,31 +22,27 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Text color. See https://getbootstrap.com/docs/4.1/utilities/colors/
+ * <p>
+ * <b>Requires Bootstrap Customization to work!</b>
+ * </p>
+ * Background gradient. See https://getbootstrap.com/docs/4.1/utilities/colors/
  *
  * @author Philip Helger
  */
-public enum ETextColorType implements ICSSClassProvider
+public enum EBootstrapBackgroundGradientType implements ICSSClassProvider
 {
-  PRIMARY (CBootstrapCSS.TEXT_PRIMARY),
-  SECONDARY (CBootstrapCSS.TEXT_SECONDARY),
-  SUCCESS (CBootstrapCSS.TEXT_SUCCESS),
-  DANGER (CBootstrapCSS.TEXT_DANGER),
-  WARNING (CBootstrapCSS.TEXT_WARNING),
-  INFO (CBootstrapCSS.TEXT_INFO),
-  LIGHT (CBootstrapCSS.TEXT_LIGHT),
-  DARK (CBootstrapCSS.TEXT_DARK),
-  BODY (CBootstrapCSS.TEXT_BODY),
-  /** Note that the .text-muted class has no link styling. */
-  MUTED (CBootstrapCSS.TEXT_MUTED),
-  /** Note that the .text-white class has no link styling. */
-  WHITE (CBootstrapCSS.TEXT_WHITE),
-  BLACK_50 (CBootstrapCSS.TEXT_BLACK_50),
-  WHITE_50 (CBootstrapCSS.TEXT_WHITE_50);
+  PRIMARY (CBootstrapCSS.BG_GRADIENT_PRIMARY),
+  SECONDARY (CBootstrapCSS.BG_GRADIENT_SECONDARY),
+  SUCCESS (CBootstrapCSS.BG_GRADIENT_SUCCESS),
+  DANGER (CBootstrapCSS.BG_GRADIENT_DANGER),
+  WARNING (CBootstrapCSS.BG_GRADIENT_WARNING),
+  INFO (CBootstrapCSS.BG_GRADIENT_INFO),
+  LIGHT (CBootstrapCSS.BG_GRADIENT_LIGHT),
+  DARK (CBootstrapCSS.BG_GRADIENT_DARK);
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private ETextColorType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapBackgroundGradientType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

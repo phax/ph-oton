@@ -22,26 +22,18 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Background colors. See https://getbootstrap.com/docs/4.1/utilities/colors/
- * 
+ * Visibility. See https://getbootstrap.com/docs/4.1/utilities/visibility/
+ *
  * @author Philip Helger
  */
-public enum EBackgroundType implements ICSSClassProvider
+public enum EBootstrapVisibilityType implements ICSSClassProvider
 {
-  PRIMARY (CBootstrapCSS.BG_PRIMARY),
-  SECONDARY (CBootstrapCSS.BG_SECONDARY),
-  SUCCESS (CBootstrapCSS.BG_SUCCESS),
-  DANGER (CBootstrapCSS.BG_DANGER),
-  WARNING (CBootstrapCSS.BG_WARNING),
-  INFO (CBootstrapCSS.BG_INFO),
-  LIGHT (CBootstrapCSS.BG_LIGHT),
-  DARK (CBootstrapCSS.BG_DARK),
-  WHITE (CBootstrapCSS.BG_WHITE),
-  TRANSPARENT (CBootstrapCSS.BG_TRANSPARENT);
+  VISIBLE (CBootstrapCSS.VISIBLE),
+  INVISIBLE (CBootstrapCSS.INVISIBLE);
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBackgroundType (@Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapVisibilityType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

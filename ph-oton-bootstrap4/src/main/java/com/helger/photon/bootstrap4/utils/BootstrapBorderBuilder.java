@@ -31,9 +31,9 @@ import com.helger.html.hc.html.IHCHasCSSClasses;
  */
 public class BootstrapBorderBuilder implements Serializable
 {
-  private EBorderType m_eType = EBorderType.NONE;
-  private EBorderColorType m_eColor = null;
-  private EBorderRadiusType m_eRadius = EBorderRadiusType.NOT_ROUNDED;
+  private EBootstrapBorderType m_eType = EBootstrapBorderType.NONE;
+  private EBootstrapBorderColorType m_eColor = null;
+  private EBootstrapBorderRadiusType m_eRadius = EBootstrapBorderRadiusType.NOT_ROUNDED;
 
   public BootstrapBorderBuilder ()
   {}
@@ -46,7 +46,7 @@ public class BootstrapBorderBuilder implements Serializable
    * @return this for chaining
    */
   @Nonnull
-  public BootstrapBorderBuilder type (@Nonnull final EBorderType eType)
+  public BootstrapBorderBuilder type (@Nonnull final EBootstrapBorderType eType)
   {
     ValueEnforcer.notNull (eType, "Type");
     m_eType = eType;
@@ -61,7 +61,7 @@ public class BootstrapBorderBuilder implements Serializable
    * @return this for chaining
    */
   @Nonnull
-  public BootstrapBorderBuilder color (@Nullable final EBorderColorType eColor)
+  public BootstrapBorderBuilder color (@Nullable final EBootstrapBorderColorType eColor)
   {
     m_eColor = eColor;
     return this;
@@ -75,7 +75,7 @@ public class BootstrapBorderBuilder implements Serializable
    * @return this for chaining
    */
   @Nonnull
-  public BootstrapBorderBuilder radius (@Nonnull final EBorderRadiusType eRadius)
+  public BootstrapBorderBuilder radius (@Nonnull final EBootstrapBorderRadiusType eRadius)
   {
     ValueEnforcer.notNull (eRadius, "Radius");
     m_eRadius = eRadius;
