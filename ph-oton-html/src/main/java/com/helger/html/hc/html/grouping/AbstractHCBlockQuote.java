@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2034-2038 Philip Helger (www.helger.com)
+ * Copyright (C) 2014-2018 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,26 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.hc.html.sections;
+package com.helger.html.hc.html.grouping;
 
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
- * Represents an HTML &lt;H3&gt; element
+ * Represents an HTML &lt;BLOCKQUOTE&gt; element
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCH3 <IMPLTYPE extends AbstractHCH3 <IMPLTYPE>> extends
-                                   AbstractHCElementWithChildren <IMPLTYPE>
+public abstract class AbstractHCBlockQuote <IMPLTYPE extends AbstractHCBlockQuote <IMPLTYPE>> extends
+                                           AbstractHCElementWithChildren <IMPLTYPE>
 {
   /**
-   * Create a new H3 element
+   * Create a new BLOCKQUOTE element
    */
-  public AbstractHCH3 ()
+  public AbstractHCBlockQuote ()
   {
-    super (EHTMLElement.H3);
+    super (EHTMLElement.BLOCKQUOTE);
   }
 }

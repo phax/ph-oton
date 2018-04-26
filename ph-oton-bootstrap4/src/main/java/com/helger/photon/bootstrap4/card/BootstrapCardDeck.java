@@ -26,34 +26,20 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 
 /**
- * Bootstrap 4 card (replaces B3 panel, well and thumbnail).
+ * Card deck
  *
  * @author Philip Helger
  */
-public class BootstrapCard extends AbstractBootstrapDiv <BootstrapCard>
+public class BootstrapCardDeck extends AbstractBootstrapDiv <BootstrapCardDeck>
 {
-  public BootstrapCard ()
+  public BootstrapCardDeck ()
   {}
 
   @Nonnull
   @ReturnsMutableCopy
-  public BootstrapCardHeader createAndAddHeader ()
+  public BootstrapCard createAndAddCard ()
   {
-    return addAndReturnChild (new BootstrapCardHeader ());
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public BootstrapCardBody createAndAddBody ()
-  {
-    return addAndReturnChild (new BootstrapCardBody ());
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public BootstrapCardFooter createAndAddFooter ()
-  {
-    return addAndReturnChild (new BootstrapCardFooter ());
+    return addAndReturnChild (new BootstrapCard ());
   }
 
   @Override
@@ -61,6 +47,6 @@ public class BootstrapCard extends AbstractBootstrapDiv <BootstrapCard>
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.CARD);
+    addClass (CBootstrapCSS.CARD_DECK);
   }
 }

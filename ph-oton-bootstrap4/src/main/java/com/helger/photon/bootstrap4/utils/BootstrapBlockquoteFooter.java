@@ -14,53 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.card;
+package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.sections.AbstractHCFooter;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 
-/**
- * Bootstrap 4 card (replaces B3 panel, well and thumbnail).
- *
- * @author Philip Helger
- */
-public class BootstrapCard extends AbstractBootstrapDiv <BootstrapCard>
+public class BootstrapBlockquoteFooter extends AbstractHCFooter <BootstrapBlockquoteFooter>
 {
-  public BootstrapCard ()
+  public BootstrapBlockquoteFooter ()
   {}
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public BootstrapCardHeader createAndAddHeader ()
-  {
-    return addAndReturnChild (new BootstrapCardHeader ());
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public BootstrapCardBody createAndAddBody ()
-  {
-    return addAndReturnChild (new BootstrapCardBody ());
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public BootstrapCardFooter createAndAddFooter ()
-  {
-    return addAndReturnChild (new BootstrapCardFooter ());
-  }
 
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.CARD);
+    addClass (CBootstrapCSS.BLOCKQUOTE_FOOTER);
   }
 }

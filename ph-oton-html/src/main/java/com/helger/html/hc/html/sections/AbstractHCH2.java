@@ -26,7 +26,8 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public class AbstractHCH2 <IMPLTYPE extends AbstractHCH2 <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
+public abstract class AbstractHCH2 <IMPLTYPE extends AbstractHCH2 <IMPLTYPE>> extends
+                                   AbstractHCElementWithChildren <IMPLTYPE>
 {
   /**
    * Create a new H2 element

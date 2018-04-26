@@ -16,15 +16,11 @@
  */
 package com.helger.html.hc.html.sections;
 
-import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.SinceHTML5;
-import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 @SinceHTML5
-public class HCFooter extends AbstractHCElementWithChildren <HCFooter>
+public class HCFooter extends AbstractHCFooter <HCFooter>
 {
   public HCFooter ()
-  {
-    super (EHTMLElement.FOOTER);
-  }
+  {}
 }

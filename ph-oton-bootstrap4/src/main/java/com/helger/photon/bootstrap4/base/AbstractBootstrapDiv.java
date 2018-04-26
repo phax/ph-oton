@@ -29,6 +29,7 @@ import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.utils.BootstrapBorderBuilder;
 import com.helger.photon.bootstrap4.utils.BootstrapDisplayBuilder;
 import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
+import com.helger.photon.bootstrap4.utils.EBootstrapTextAlignType;
 
 /**
  * Base class for common bootstrap DIVs.
@@ -45,16 +46,10 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
   private BootstrapSpacingBuilder m_aMargin;
   private BootstrapDisplayBuilder m_aDisplay;
   private BootstrapBorderBuilder m_aBorder;
+  private EBootstrapTextAlignType m_eTextAlign;
 
   public AbstractBootstrapDiv ()
   {}
-
-  @Nonnull
-  public final IMPLTYPE setPadding (@Nullable final BootstrapSpacingBuilder aPadding)
-  {
-    m_aPadding = aPadding;
-    return thisAsT ();
-  }
 
   @Nullable
   public final BootstrapSpacingBuilder getPadding ()
@@ -63,9 +58,9 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
   }
 
   @Nonnull
-  public final IMPLTYPE setMargin (@Nullable final BootstrapSpacingBuilder aMargin)
+  public final IMPLTYPE setPadding (@Nullable final BootstrapSpacingBuilder aPadding)
   {
-    m_aMargin = aMargin;
+    m_aPadding = aPadding;
     return thisAsT ();
   }
 
@@ -76,9 +71,9 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
   }
 
   @Nonnull
-  public final IMPLTYPE setDisplay (@Nullable final BootstrapDisplayBuilder aDisplay)
+  public final IMPLTYPE setMargin (@Nullable final BootstrapSpacingBuilder aMargin)
   {
-    m_aDisplay = aDisplay;
+    m_aMargin = aMargin;
     return thisAsT ();
   }
 
@@ -89,9 +84,9 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
   }
 
   @Nonnull
-  public final IMPLTYPE setBorder (@Nullable final BootstrapBorderBuilder aBorder)
+  public final IMPLTYPE setDisplay (@Nullable final BootstrapDisplayBuilder aDisplay)
   {
-    m_aBorder = aBorder;
+    m_aDisplay = aDisplay;
     return thisAsT ();
   }
 
@@ -99,6 +94,26 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
   public final BootstrapBorderBuilder getBorder ()
   {
     return m_aBorder;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setBorder (@Nullable final BootstrapBorderBuilder aBorder)
+  {
+    m_aBorder = aBorder;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final EBootstrapTextAlignType getTextAlign ()
+  {
+    return m_eTextAlign;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setTextAlign (@Nullable final EBootstrapTextAlignType eTextAlign)
+  {
+    m_eTextAlign = eTextAlign;
+    return thisAsT ();
   }
 
   @Override
@@ -113,5 +128,6 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
     addClass (m_aDisplay);
     if (m_aBorder != null)
       m_aBorder.applyTo (this);
+    addClass (m_eTextAlign);
   }
 }

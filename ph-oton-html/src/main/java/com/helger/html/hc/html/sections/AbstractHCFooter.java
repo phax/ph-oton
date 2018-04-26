@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2034-2038 Philip Helger (www.helger.com)
+ * Copyright (C) 2014-2018 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,23 +17,23 @@
 package com.helger.html.hc.html.sections;
 
 import com.helger.html.EHTMLElement;
+import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
- * Represents an HTML &lt;H3&gt; element
+ * Represents an HTML &lt;footer&gt; element with open semantics.
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCH3 <IMPLTYPE extends AbstractHCH3 <IMPLTYPE>> extends
-                                   AbstractHCElementWithChildren <IMPLTYPE>
+@SinceHTML5
+public abstract class AbstractHCFooter <IMPLTYPE extends AbstractHCFooter <IMPLTYPE>> extends
+                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+                                       IHCFooter <IMPLTYPE>
 {
-  /**
-   * Create a new H3 element
-   */
-  public AbstractHCH3 ()
+  public AbstractHCFooter ()
   {
-    super (EHTMLElement.H3);
+    super (EHTMLElement.FOOTER);
   }
 }
