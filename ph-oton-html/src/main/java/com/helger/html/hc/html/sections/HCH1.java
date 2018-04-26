@@ -16,21 +16,16 @@
  */
 package com.helger.html.hc.html.sections;
 
-import com.helger.html.EHTMLElement;
-import com.helger.html.hc.html.AbstractHCElementWithChildren;
-
 /**
  * Represents an HTML &lt;H1&gt; element
  *
  * @author Philip Helger
  */
-public class HCH1 extends AbstractHCElementWithChildren <HCH1>
+public class HCH1 extends AbstractHCH1 <HCH1>
 {
   /**
    * Create a new H1 element
    */
   public HCH1 ()
-  {
-    super (EHTMLElement.H1);
-  }
+  {}
 }

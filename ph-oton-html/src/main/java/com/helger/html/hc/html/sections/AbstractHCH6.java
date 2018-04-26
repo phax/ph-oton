@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+ * Copyright (C) 2064-2068 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,16 +16,23 @@
  */
 package com.helger.html.hc.html.sections;
 
+import com.helger.html.EHTMLElement;
+import com.helger.html.hc.html.AbstractHCElementWithChildren;
+
 /**
- * Represents an HTML &lt;H4&gt; element
+ * Represents an HTML &lt;H6&gt; element
  *
  * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Implementation type
  */
-public class HCH4 extends AbstractHCH4 <HCH4>
+public class AbstractHCH6 <IMPLTYPE extends AbstractHCH6 <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
 {
   /**
-   * Create a new H4 element
+   * Create a new H6 element
    */
-  public HCH4 ()
-  {}
+  public AbstractHCH6 ()
+  {
+    super (EHTMLElement.H6);
+  }
 }

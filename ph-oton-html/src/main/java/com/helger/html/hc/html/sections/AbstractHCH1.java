@@ -16,16 +16,23 @@
  */
 package com.helger.html.hc.html.sections;
 
+import com.helger.html.EHTMLElement;
+import com.helger.html.hc.html.AbstractHCElementWithChildren;
+
 /**
- * Represents an HTML &lt;H4&gt; element
+ * Represents an HTML &lt;H1&gt; element
  *
  * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Implementation type
  */
-public class HCH4 extends AbstractHCH4 <HCH4>
+public class AbstractHCH1 <IMPLTYPE extends AbstractHCH1 <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
 {
   /**
-   * Create a new H4 element
+   * Create a new H1 element
    */
-  public HCH4 ()
-  {}
+  public AbstractHCH1 ()
+  {
+    super (EHTMLElement.H1);
+  }
 }
