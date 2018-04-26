@@ -203,7 +203,8 @@ public abstract class AbstractHCNode implements IHCNode
 
   /**
    * Finalize the node by applying any internal state that was not yet converted
-   * to a HC element. This method is called at last once per IHCNode.
+   * to a HC element. This method is called at maximum once per IHCNode. It is
+   * safe to still add classes, style or children to this node in this method.
    *
    * @param aConversionSettings
    *        HC conversion settings

@@ -18,6 +18,12 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Spacing side. See https://getbootstrap.com/docs/4.1/utilities/spacing/
+ * 
+ * @author Philip Helger
+ * @see BootstrapSpacingBuilder
+ */
 public enum ESpacingSideType
 {
   /** All 4 sides */
@@ -25,9 +31,9 @@ public enum ESpacingSideType
   /** Top only */
   TOP ("t"),
   /** Right only */
-  RIGHT ("r")
+  RIGHT ("r"),
   /** bottom only */
-  ,BOTTOM ("b"),
+  BOTTOM ("b"),
   /** left only */
   LEFT ("l"),
   /** left and right */

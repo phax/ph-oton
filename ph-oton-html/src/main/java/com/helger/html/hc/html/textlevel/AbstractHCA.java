@@ -41,8 +41,9 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>>
-                                  extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCA <IMPLTYPE>
+public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> extends
+                                  AbstractHCElementWithChildren <IMPLTYPE> implements
+                                  IHCA <IMPLTYPE>
 {
   private ISimpleURL m_aHref;
   private HC_Target m_aTarget;
@@ -144,8 +145,10 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>>
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aHref != null)
-      aElement.setAttribute (CHTMLAttributes.HREF,
-                             m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+    {
+      final String sHref = m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ());
+      aElement.setAttribute (CHTMLAttributes.HREF, sHref.length () == 0 ? "#" : sHref);
+    }
     if (m_aTarget != null)
     {
       // Note: attribute "target" is not allowed in XHTML 1.0 strict (but in

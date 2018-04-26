@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
+/**
+ * Text color. See https://getbootstrap.com/docs/4.1/utilities/colors/
+ *
+ * @author Philip Helger
+ */
 public enum ETextColorType implements ICSSClassProvider
 {
   PRIMARY (CBootstrapCSS.TEXT_PRIMARY),
@@ -31,8 +36,13 @@ public enum ETextColorType implements ICSSClassProvider
   INFO (CBootstrapCSS.TEXT_INFO),
   LIGHT (CBootstrapCSS.TEXT_LIGHT),
   DARK (CBootstrapCSS.TEXT_DARK),
-  WHITE (CBootstrapCSS.TEXT_WHITE);
-  /* Note that the .text-white class has no link styling. */
+  BODY (CBootstrapCSS.TEXT_BODY),
+  /** Note that the .text-muted class has no link styling. */
+  MUTED (CBootstrapCSS.TEXT_MUTED),
+  /** Note that the .text-white class has no link styling. */
+  WHITE (CBootstrapCSS.TEXT_WHITE),
+  BLACK_50 (CBootstrapCSS.TEXT_BLACK_50),
+  WHITE_50 (CBootstrapCSS.TEXT_WHITE_50);
 
   private final ICSSClassProvider m_aCSSClass;
 

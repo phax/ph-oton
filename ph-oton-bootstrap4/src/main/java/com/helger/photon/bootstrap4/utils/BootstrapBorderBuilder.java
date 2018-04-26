@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -27,7 +29,7 @@ import com.helger.html.hc.html.IHCHasCSSClasses;
  *
  * @author Philip Helger
  */
-public class BootstrapBorderBuilder
+public class BootstrapBorderBuilder implements Serializable
 {
   private EBorderType m_eType = EBorderType.NONE;
   private EBorderColorType m_eColor = null;

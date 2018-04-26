@@ -21,10 +21,23 @@ import javax.annotation.Nonnull;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
+/**
+ * Border type. See https://getbootstrap.com/docs/4.1/utilities/borders/
+ * 
+ * @author Philip Helger
+ */
 public enum EBorderType implements ICSSClassProvider
 {
   /** All 4 sides */
   BORDER (CBootstrapCSS.BORDER),
+  /** Only top border */
+  TOP_BORDER (CBootstrapCSS.BORDER_TOP),
+  /** Only right border */
+  RIGHT_BORDER (CBootstrapCSS.BORDER_RIGHT),
+  /** Only bottom border */
+  BOTTOM_BORDER (CBootstrapCSS.BORDER_BOTTOM),
+  /** Only left border */
+  LEFT_BORDER (CBootstrapCSS.BORDER_LEFT),
   /** No border */
   NONE (CBootstrapCSS.BORDER_0),
   /** No top border */

@@ -1323,4 +1323,14 @@ public final class CBootstrapCSS
 
   private CBootstrapCSS ()
   {}
+
+  // Requires Bootstrap customization to be enabled:
+  public static final ICSSClassProvider BG_GRADIENT_DANGER = DefaultCSSClassProvider.create ("bg-gradient-danger");
+  public static final ICSSClassProvider BG_GRADIENT_DARK = DefaultCSSClassProvider.create ("bg-gradient-dark");
+  public static final ICSSClassProvider BG_GRADIENT_INFO = DefaultCSSClassProvider.create ("bg-gradient-info");
+  public static final ICSSClassProvider BG_GRADIENT_LIGHT = DefaultCSSClassProvider.create ("bg-gradient-light");
+  public static final ICSSClassProvider BG_GRADIENT_PRIMARY = DefaultCSSClassProvider.create ("bg-gradient-primary");
+  public static final ICSSClassProvider BG_GRADIENT_SECONDARY = DefaultCSSClassProvider.create ("bg-gradient-secondary");
+  public static final ICSSClassProvider BG_GRADIENT_SUCCESS = DefaultCSSClassProvider.create ("bg-gradient-success");
+  public static final ICSSClassProvider BG_GRADIENT_WARNING = DefaultCSSClassProvider.create ("bg-gradient-warning");
 }

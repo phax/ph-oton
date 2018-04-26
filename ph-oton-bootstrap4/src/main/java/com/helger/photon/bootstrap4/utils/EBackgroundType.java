@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
+/**
+ * Background colors. See https://getbootstrap.com/docs/4.1/utilities/colors/
+ * 
+ * @author Philip Helger
+ */
 public enum EBackgroundType implements ICSSClassProvider
 {
   PRIMARY (CBootstrapCSS.BG_PRIMARY),
@@ -31,7 +36,8 @@ public enum EBackgroundType implements ICSSClassProvider
   INFO (CBootstrapCSS.BG_INFO),
   LIGHT (CBootstrapCSS.BG_LIGHT),
   DARK (CBootstrapCSS.BG_DARK),
-  WHITE (CBootstrapCSS.BG_WHITE);
+  WHITE (CBootstrapCSS.BG_WHITE),
+  TRANSPARENT (CBootstrapCSS.BG_TRANSPARENT);
 
   private final ICSSClassProvider m_aCSSClass;
 

@@ -18,45 +18,38 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Display type. See https://getbootstrap.com/docs/4.1/utilities/display/
+ * <p>
+ * <b>Requires Bootstrap Customization to work!</b>
+ * </p>
+ * Background gradient. See https://getbootstrap.com/docs/4.1/utilities/colors/
  *
  * @author Philip Helger
- * @See {@link BootstrapDisplayBuilder}
  */
-public enum EDisplayType implements ICSSClassProvider
+public enum EBackgroundGradientType implements ICSSClassProvider
 {
-  NONE ("none"),
-  INLINE ("inline"),
-  INLINE_BLOCK ("inline-block"),
-  BLOCK ("block"),
-  TABLE ("table"),
-  TABLE_CELL ("table-cell"),
-  TABLE_ROW ("table-row"),
-  FLEX ("flex"),
-  INLINE_FLEX ("inline-flex");
+  PRIMARY (CBootstrapCSS.BG_GRADIENT_PRIMARY),
+  SECONDARY (CBootstrapCSS.BG_GRADIENT_SECONDARY),
+  SUCCESS (CBootstrapCSS.BG_GRADIENT_SUCCESS),
+  DANGER (CBootstrapCSS.BG_GRADIENT_DANGER),
+  WARNING (CBootstrapCSS.BG_GRADIENT_WARNING),
+  INFO (CBootstrapCSS.BG_GRADIENT_INFO),
+  LIGHT (CBootstrapCSS.BG_GRADIENT_LIGHT),
+  DARK (CBootstrapCSS.BG_GRADIENT_DARK);
 
-  private final String m_sCSSClassNamePart;
+  private final ICSSClassProvider m_aCSSClass;
 
-  private EDisplayType (@Nonnull @Nonempty final String sCSSClassNamePart)
+  private EBackgroundGradientType (@Nonnull final ICSSClassProvider aCSSClass)
   {
-    m_sCSSClassNamePart = sCSSClassNamePart;
+    m_aCSSClass = aCSSClass;
   }
 
   @Nonnull
-  @Nonempty
-  public String getCSSClassNamePart ()
-  {
-    return m_sCSSClassNamePart;
-  }
-
-  @Nonnull
-  @Nonempty
   public String getCSSClass ()
   {
-    return "d-" + m_sCSSClassNamePart;
+    return m_aCSSClass.getCSSClass ();
   }
 }

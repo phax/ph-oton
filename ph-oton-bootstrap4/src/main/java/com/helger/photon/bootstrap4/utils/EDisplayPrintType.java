@@ -22,8 +22,9 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Print display class enum
- * 
+ * Print display classes. See
+ * https://getbootstrap.com/docs/4.1/utilities/display/
+ *
  * @author Philip Helger
  */
 public enum EDisplayPrintType implements ICSSClassProvider
@@ -31,7 +32,12 @@ public enum EDisplayPrintType implements ICSSClassProvider
   BLOCK (CBootstrapCSS.D_PRINT_BLOCK),
   INLINE (CBootstrapCSS.D_PRINT_INLINE),
   INLINE_BLOCK (CBootstrapCSS.D_PRINT_INLINE_BLOCK),
-  NONE (CBootstrapCSS.D_PRINT_NONE);
+  NONE (CBootstrapCSS.D_PRINT_NONE),
+  TABLE (CBootstrapCSS.D_PRINT_TABLE),
+  TABLE_CELL (CBootstrapCSS.D_PRINT_TABLE_CELL),
+  TABLE_ROW (CBootstrapCSS.D_PRINT_TABLE_ROW),
+  FLEX (CBootstrapCSS.D_PRINT_FLEX),
+  INLINE_FLEX (CBootstrapCSS.D_PRINT_INLINE_FLEX);
 
   private final ICSSClassProvider m_aCSSClass;
 

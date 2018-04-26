@@ -50,53 +50,53 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
   {}
 
   @Nonnull
-  public IMPLTYPE setPadding (@Nullable final BootstrapSpacingBuilder aPadding)
+  public final IMPLTYPE setPadding (@Nullable final BootstrapSpacingBuilder aPadding)
   {
     m_aPadding = aPadding;
     return thisAsT ();
   }
 
   @Nullable
-  public BootstrapSpacingBuilder getPadding ()
+  public final BootstrapSpacingBuilder getPadding ()
   {
     return m_aPadding;
   }
 
   @Nonnull
-  public IMPLTYPE setMargin (@Nullable final BootstrapSpacingBuilder aMargin)
+  public final IMPLTYPE setMargin (@Nullable final BootstrapSpacingBuilder aMargin)
   {
     m_aMargin = aMargin;
     return thisAsT ();
   }
 
   @Nullable
-  public BootstrapSpacingBuilder getMargin ()
+  public final BootstrapSpacingBuilder getMargin ()
   {
     return m_aMargin;
   }
 
   @Nonnull
-  public IMPLTYPE setDisplay (@Nullable final BootstrapDisplayBuilder aDisplay)
+  public final IMPLTYPE setDisplay (@Nullable final BootstrapDisplayBuilder aDisplay)
   {
     m_aDisplay = aDisplay;
     return thisAsT ();
   }
 
   @Nullable
-  public BootstrapDisplayBuilder getDisplay ()
+  public final BootstrapDisplayBuilder getDisplay ()
   {
     return m_aDisplay;
   }
 
   @Nonnull
-  public IMPLTYPE setBorder (@Nullable final BootstrapBorderBuilder aBorder)
+  public final IMPLTYPE setBorder (@Nullable final BootstrapBorderBuilder aBorder)
   {
     m_aBorder = aBorder;
     return thisAsT ();
   }
 
   @Nullable
-  public BootstrapBorderBuilder getBorder ()
+  public final BootstrapBorderBuilder getBorder ()
   {
     return m_aBorder;
   }

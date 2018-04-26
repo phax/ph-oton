@@ -18,45 +18,31 @@ package com.helger.photon.bootstrap4.utils;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Display type. See https://getbootstrap.com/docs/4.1/utilities/display/
+ * Embed aspect ratio. See https://getbootstrap.com/docs/4.1/utilities/embed/
  *
  * @author Philip Helger
- * @See {@link BootstrapDisplayBuilder}
  */
-public enum EDisplayType implements ICSSClassProvider
+public enum EEmbedAspectRatio implements ICSSClassProvider
 {
-  NONE ("none"),
-  INLINE ("inline"),
-  INLINE_BLOCK ("inline-block"),
-  BLOCK ("block"),
-  TABLE ("table"),
-  TABLE_CELL ("table-cell"),
-  TABLE_ROW ("table-row"),
-  FLEX ("flex"),
-  INLINE_FLEX ("inline-flex");
+  AR_21_9 (CBootstrapCSS.EMBED_RESPONSIVE_21BY9),
+  AR_16_9 (CBootstrapCSS.EMBED_RESPONSIVE_16BY9),
+  AR_4_3 (CBootstrapCSS.EMBED_RESPONSIVE_4BY3),
+  AR_1_1 (CBootstrapCSS.EMBED_RESPONSIVE_1BY1);
 
-  private final String m_sCSSClassNamePart;
+  private final ICSSClassProvider m_aCSSClass;
 
-  private EDisplayType (@Nonnull @Nonempty final String sCSSClassNamePart)
+  private EEmbedAspectRatio (@Nonnull final ICSSClassProvider aCSSClass)
   {
-    m_sCSSClassNamePart = sCSSClassNamePart;
+    m_aCSSClass = aCSSClass;
   }
 
   @Nonnull
-  @Nonempty
-  public String getCSSClassNamePart ()
-  {
-    return m_sCSSClassNamePart;
-  }
-
-  @Nonnull
-  @Nonempty
   public String getCSSClass ()
   {
-    return "d-" + m_sCSSClassNamePart;
+    return m_aCSSClass.getCSSClass ();
   }
 }

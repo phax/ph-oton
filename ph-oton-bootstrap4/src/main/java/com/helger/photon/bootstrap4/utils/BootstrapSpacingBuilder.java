@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -28,7 +30,7 @@ import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
  *
  * @author Philip Helger
  */
-public class BootstrapSpacingBuilder implements ICSSClassProvider
+public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
 {
   private ESpacingPropertyType m_eProperty = ESpacingPropertyType.MARGIN;
   private ESpacingSideType m_eSide = ESpacingSideType.ALL;

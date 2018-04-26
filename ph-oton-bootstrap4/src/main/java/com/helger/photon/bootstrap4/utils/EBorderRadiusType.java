@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
+/**
+ * Border radius. See https://getbootstrap.com/docs/4.1/utilities/borders/
+ *
+ * @author Philip Helger
+ */
 public enum EBorderRadiusType implements ICSSClassProvider
 {
   ROUNDED (CBootstrapCSS.ROUNDED),

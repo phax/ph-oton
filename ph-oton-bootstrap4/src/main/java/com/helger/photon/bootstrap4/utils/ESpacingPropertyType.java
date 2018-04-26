@@ -20,6 +20,12 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 
+/**
+ * Spacing property. See https://getbootstrap.com/docs/4.1/utilities/spacing/
+ * 
+ * @author Philip Helger
+ * @see BootstrapSpacingBuilder
+ */
 public enum ESpacingPropertyType
 {
   MARGIN ("m"),

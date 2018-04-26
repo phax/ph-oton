@@ -60,7 +60,7 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
   }
 
   @Nonnull
-  public EBootstrapAlertType getType ()
+  public final EBootstrapAlertType getType ()
   {
     return m_eType;
   }
@@ -72,13 +72,13 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
     return thisAsT ();
   }
 
-  public boolean isShowClose ()
+  public final boolean isShowClose ()
   {
     return m_bShowClose;
   }
 
   @Nonnull
-  public IMPLTYPE setShowClose (final boolean bShowClose)
+  public final IMPLTYPE setShowClose (final boolean bShowClose)
   {
     m_bShowClose = bShowClose;
     return thisAsT ();
