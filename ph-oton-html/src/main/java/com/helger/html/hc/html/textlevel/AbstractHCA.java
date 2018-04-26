@@ -147,7 +147,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     if (m_aHref != null)
     {
       final String sHref = m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ());
-      aElement.setAttribute (CHTMLAttributes.HREF, sHref.length () == 0 ? "#" : sHref);
+      aElement.setAttribute (CHTMLAttributes.HREF, sHref);
     }
     if (m_aTarget != null)
     {
