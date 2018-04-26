@@ -26,6 +26,7 @@ public class BootstrapCloseIcon extends AbstractHCButton <BootstrapCloseIcon>
   public BootstrapCloseIcon ()
   {
     addClass (CBootstrapCSS.CLOSE);
+    // TODO translate
     customAttrs ().setAriaLabel ("Close");
 
     final HCSpan aTimes = new HCSpan ().addChild (HCEntityNode.times ());

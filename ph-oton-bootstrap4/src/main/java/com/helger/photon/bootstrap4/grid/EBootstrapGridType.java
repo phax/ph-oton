@@ -17,25 +17,51 @@
 package com.helger.photon.bootstrap4.grid;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import com.helger.commons.lang.EnumHelper;
+
+/**
+ * Grid breakpoint name
+ *
+ * @author Philip Helger
+ */
 public enum EBootstrapGridType
 {
-  XS (""),
-  SM ("-sm"),
-  MD ("-md"),
-  LG ("-lg"),
-  XL ("-xl");
+  // Order should be in ascending size
+  XS ("", 0, 576),
+  SM ("-sm", 576, 768),
+  MD ("-md", 768, 992),
+  LG ("-lg", 992, 1200),
+  XL ("-xl", 1200, -1);
 
   private final String m_sCSSClassNamePart;
+  private final int m_nMinWidthIncl;
+  private final int m_nMaxWidthExcl;
 
-  private EBootstrapGridType (@Nonnull final String sCSSClassNamePart)
+  private EBootstrapGridType (@Nonnull final String sCSSClassNamePart, final int nMinWidthIncl, final int nMaxWidthExcl)
   {
     m_sCSSClassNamePart = sCSSClassNamePart;
+    m_nMinWidthIncl = nMinWidthIncl;
+    m_nMaxWidthExcl = nMaxWidthExcl;
   }
 
   @Nonnull
   public String getCSSClassNamePart ()
   {
     return m_sCSSClassNamePart;
+  }
+
+  public boolean isForWidth (final int nPixels)
+  {
+    return nPixels >= m_nMinWidthIncl && (nPixels < m_nMaxWidthExcl || m_nMaxWidthExcl < 0);
+  }
+
+  @Nullable
+  public static EBootstrapGridType getForWidth (final int nPixels)
+  {
+    if (nPixels < 0)
+      return null;
+    return EnumHelper.findFirst (EBootstrapGridType.class, x -> x.isForWidth (nPixels));
   }
 }
