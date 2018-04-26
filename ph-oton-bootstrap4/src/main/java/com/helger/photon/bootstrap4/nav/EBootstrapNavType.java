@@ -16,39 +16,32 @@
  */
 package com.helger.photon.bootstrap4.nav;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Type of Nav
+ * Type of {@link BootstrapNav}
  *
  * @author Philip Helger
  */
 public enum EBootstrapNavType
 {
-  DEFAULT,
+  DEFAULT (null),
   TABS (CBootstrapCSS.NAV_TABS),
-  TABS_JUSTIFIED (CBootstrapCSS.NAV_TABS, CBootstrapCSS.NAV_JUSTIFIED),
-  PILLS (CBootstrapCSS.NAV_PILLS),
-  PILLS_JUSTIFIED (CBootstrapCSS.NAV_PILLS, CBootstrapCSS.NAV_JUSTIFIED);
+  PILLS (CBootstrapCSS.NAV_PILLS);
 
-  private final ICommonsList <ICSSClassProvider> m_aCSSClasses;
+  private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapNavType (@Nullable final ICSSClassProvider... aCSSClasses)
+  private EBootstrapNavType (@Nullable final ICSSClassProvider aCSSClass)
   {
-    m_aCSSClasses = new CommonsArrayList <> (aCSSClasses);
+    m_aCSSClass = aCSSClass;
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <ICSSClassProvider> getAllCSSClasses ()
+  @Nullable
+  public ICSSClassProvider getCSSClass ()
   {
-    return m_aCSSClasses.getClone ();
+    return m_aCSSClass;
   }
 }

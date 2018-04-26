@@ -32,7 +32,12 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
  */
 public class BootstrapNav extends AbstractHCULBase <BootstrapNav, BootstrapNavItem>
 {
+  public static final boolean DEFAULT_FILL = false;
+  public static final boolean DEFAULT_JUSTIFY = false;
+
   private EBootstrapNavType m_eNavType;
+  private boolean m_bFill = DEFAULT_FILL;
+  private boolean m_bJustified = DEFAULT_JUSTIFY;
 
   public BootstrapNav ()
   {
@@ -52,7 +57,7 @@ public class BootstrapNav extends AbstractHCULBase <BootstrapNav, BootstrapNavIt
   }
 
   @Nonnull
-  public EBootstrapNavType getNavType ()
+  public final EBootstrapNavType getNavType ()
   {
     return m_eNavType;
   }
@@ -65,12 +70,40 @@ public class BootstrapNav extends AbstractHCULBase <BootstrapNav, BootstrapNavIt
     return this;
   }
 
+  public final boolean isFill ()
+  {
+    return m_bFill;
+  }
+
+  @Nonnull
+  public final BootstrapNav setFill (final boolean bFill)
+  {
+    m_bFill = bFill;
+    return this;
+  }
+
+  public final boolean isJustified ()
+  {
+    return m_bJustified;
+  }
+
+  @Nonnull
+  public final BootstrapNav setJustified (final boolean bJustified)
+  {
+    m_bJustified = bJustified;
+    return this;
+  }
+
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClass (CBootstrapCSS.NAV);
-    addClasses (m_eNavType.getAllCSSClasses ());
+    addClass (m_eNavType.getCSSClass ());
+    if (m_bFill)
+      addClass (CBootstrapCSS.NAV_FILL);
+    if (m_bJustified)
+      addClass (CBootstrapCSS.NAV_JUSTIFIED);
   }
 }
