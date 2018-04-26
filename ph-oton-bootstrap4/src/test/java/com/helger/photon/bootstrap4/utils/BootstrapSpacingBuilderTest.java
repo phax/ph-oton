@@ -30,13 +30,10 @@ import com.helger.commons.system.EOperatingSystem;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
-import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
-import com.helger.photon.bootstrap4.utils.EBootstrapSpacingPropertyType;
-import com.helger.photon.bootstrap4.utils.EBootstrapSpacingSideType;
 
 /**
  * Test class for class {@link BootstrapSpacingBuilder}.
- * 
+ *
  * @author Philip Helger
  */
 public final class BootstrapSpacingBuilderTest
@@ -64,7 +61,7 @@ public final class BootstrapSpacingBuilderTest
             {
               if (eProp == EBootstrapSpacingPropertyType.PADDING)
                 continue;
-              aBuilder.auto ();
+              aBuilder.sizeAuto ();
             }
             else
               aBuilder.size (nSize);
