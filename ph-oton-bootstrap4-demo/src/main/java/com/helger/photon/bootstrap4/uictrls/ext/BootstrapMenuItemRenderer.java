@@ -36,6 +36,7 @@ import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.card.BootstrapCard;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.menu.ui.AbstractMenuItemRenderer;
@@ -201,8 +202,8 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
                                                               aRenderer,
                                                               aAllDisplayMenuItemIDs)
                                          .addClass (CBootstrapCSS.NAV);
-    final BootstrapWell ret = new BootstrapWell (EBootstrapWellType.SMALL);
-    ret.addChild (aUL);
+    final BootstrapCard ret = new BootstrapCard ();
+    ret.createAndAddBody ().addChild (aUL);
     return ret;
   }
 }
