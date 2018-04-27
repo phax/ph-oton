@@ -51,6 +51,9 @@ import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap.demo.pub.menu.CMenuPublic;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
+import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumb;
+import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumbProvider;
+import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
 import com.helger.photon.bootstrap4.ext.BootstrapSystemMessage;
 import com.helger.photon.bootstrap4.grid.BootstrapCol;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
@@ -224,7 +227,7 @@ public final class AppRendererPublic
 
     // Breadcrumbs
     {
-      final BootstrapBreadcrumbs aBreadcrumbs = BootstrapBreadcrumbsProvider.createBreadcrumbs (aLEC);
+      final BootstrapBreadcrumb aBreadcrumbs = BootstrapBreadcrumbProvider.createBreadcrumb (aLEC);
       aBreadcrumbs.addClassed (CBootstrapCSS.D_NONE, CBootstrapCSS.D_SM_BLOCK);
       aOuterContainer.addChild (aBreadcrumbs);
     }

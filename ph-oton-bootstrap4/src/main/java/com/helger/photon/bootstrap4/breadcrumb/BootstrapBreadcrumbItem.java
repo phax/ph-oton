@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.nav;
+package com.helger.photon.bootstrap4.breadcrumb;
 
 import javax.annotation.Nonnull;
 
@@ -24,15 +24,30 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCLI;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
-public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
+/**
+ * Single item inside a {@link BootstrapBreadcrumbList}.
+ *
+ * @author Philip Helger
+ */
+public class BootstrapBreadcrumbItem extends AbstractHCLI <BootstrapBreadcrumbItem>
 {
-  public BootstrapNavItem ()
+  public static final boolean DEFAULT_ACTIVE = false;
+
+  private boolean m_bActive = DEFAULT_ACTIVE;
+
+  public BootstrapBreadcrumbItem ()
   {}
 
-  @Nonnull
-  public BootstrapNavLink addNavLink ()
+  public final boolean isActive ()
   {
-    return addAndReturnChild (new BootstrapNavLink ());
+    return m_bActive;
+  }
+
+  @Nonnull
+  public final BootstrapBreadcrumbItem setActive (final boolean bActive)
+  {
+    m_bActive = bActive;
+    return this;
   }
 
   @Override
@@ -40,6 +55,8 @@ public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.NAV_ITEM);
+    addClass (CBootstrapCSS.BREADCRUMB_ITEM);
+    if (m_bActive)
+      addClass (CBootstrapCSS.ACTIVE);
   }
 }

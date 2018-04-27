@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Philip Helger (www.helger.com)
+ * Copyright (C) 2014-2018 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.nav;
+package com.helger.photon.bootstrap4.breadcrumb;
 
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.grouping.AbstractHCLI;
-import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.html.hc.html.sections.AbstractHCNav;
 
-public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
+/**
+ * Breadcrumb container. Use {@link #getList()} to access the main item list.
+ *
+ * @author Philip Helger
+ */
+public class BootstrapBreadcrumb extends AbstractHCNav <BootstrapBreadcrumb>
 {
-  public BootstrapNavItem ()
-  {}
+  private final BootstrapBreadcrumbList m_aList;
+
+  public BootstrapBreadcrumb ()
+  {
+    customAttrs ().setAriaLabel ("breadcrumb");
+    m_aList = new BootstrapBreadcrumbList ();
+  }
 
   @Nonnull
-  public BootstrapNavLink addNavLink ()
+  public final BootstrapBreadcrumbList getList ()
   {
-    return addAndReturnChild (new BootstrapNavLink ());
+    return m_aList;
   }
 
   @Override
@@ -40,6 +49,6 @@ public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.NAV_ITEM);
+    addChild (m_aList);
   }
 }
