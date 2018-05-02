@@ -29,6 +29,7 @@ import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.utils.BootstrapBorderBuilder;
 import com.helger.photon.bootstrap4.utils.BootstrapDisplayBuilder;
 import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
+import com.helger.photon.bootstrap4.utils.EBootstrapBackgroundType;
 import com.helger.photon.bootstrap4.utils.EBootstrapTextAlignType;
 
 /**
@@ -47,6 +48,7 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
   private BootstrapDisplayBuilder m_aDisplay;
   private BootstrapBorderBuilder m_aBorder;
   private EBootstrapTextAlignType m_eTextAlign;
+  private EBootstrapBackgroundType m_eBackground;
 
   public AbstractBootstrapDiv ()
   {}
@@ -116,6 +118,19 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
     return thisAsT ();
   }
 
+  @Nullable
+  public final EBootstrapBackgroundType getBackground ()
+  {
+    return m_eBackground;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setBackground (@Nullable final EBootstrapBackgroundType eBackground)
+  {
+    m_eBackground = eBackground;
+    return thisAsT ();
+  }
+
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
@@ -129,5 +144,6 @@ public abstract class AbstractBootstrapDiv <IMPLTYPE extends AbstractBootstrapDi
     if (m_aBorder != null)
       m_aBorder.applyTo (this);
     addClass (m_eTextAlign);
+    addClass (m_eBackground);
   }
 }
