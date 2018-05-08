@@ -76,7 +76,7 @@
             <Export-Package>com.helger.photon.bootstrap3.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.photon.bootstrap3.config.ThirdPartyModuleProvider_ph_oton_bootstrap3</Provide-Capability>
+            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.commons.thirdparty.IThirdPartyModuleProviderSPI</Provide-Capability>
           </instructions>
         </configuration>
       </plugin>
@@ -104,7 +104,7 @@
         <configuration>
           <forceCreation>false</forceCreation>
           <sourceDirectory>${basedir}/src/main/resources/bootstrap</sourceDirectory>
-          <!-- Non recursive! -->
+          <!-- Non recursive! -->^
           <recursive>false</recursive>
         </configuration>
       </plugin>
@@ -124,8 +124,7 @@
           <quoteURLs>true</quoteURLs>
           <verbose>false</verbose>
           <sourceDirectory>${basedir}/src/main/resources/bootstrap</sourceDirectory>
-          <!-- Non recursive! -->
-          <recursive>false</recursive>
+          <!-- Non recursive! -->          <recursive>false</recursive>
         </configuration>
       </plugin>
     </plugins>

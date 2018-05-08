@@ -229,7 +229,7 @@ public final class AppRendererPublic
     // Breadcrumbs
     {
       final BootstrapBreadcrumb aBreadcrumbs = BootstrapBreadcrumbProvider.createBreadcrumb (aLEC);
-      aBreadcrumbs.addClassed (CBootstrapCSS.D_NONE, CBootstrapCSS.D_SM_BLOCK);
+      aBreadcrumbs.addClasses (CBootstrapCSS.D_NONE, CBootstrapCSS.D_SM_BLOCK);
       aOuterContainer.addChild (aBreadcrumbs);
     }
 

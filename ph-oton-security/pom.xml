@@ -87,13 +87,9 @@
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)",
 osgi.extender; filter:="(osgi.extender=osgi.serviceloader.processor)",
 osgi.serviceloader; filter:="(osgi.serviceloader=com.helger.photon.security.password.hash.IPasswordHashCreatorRegistrarSPI)"; cardinality:=multiple</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserAuthCredentialToSubjectResolverSPI,
-osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserNameAuthCredentialToSubjectResolverSPI,
-osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserTokenAuthCredentialToSubjectResolverSPI,
-osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserAuthCredentialValidatorSPI,
-osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserNameAuthCredentialValidatorSPI,
-osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.auth.UserTokenAuthCredentialValidatorSPI,
-osgi.serviceloader; osgi.serviceloader=com.helger.photon.security.config.MicroTypeConverterRegistrar_ph_oton_security</Provide-Capability>
+            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.security.authentication.credentials.IAuthCredentialToSubjectResolverSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.security.authentication.credentials.IAuthCredentialValidatorSPI,
+osgi.serviceloader; osgi.serviceloader=com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI</Provide-Capability>
           </instructions>
         </configuration>
       </plugin>

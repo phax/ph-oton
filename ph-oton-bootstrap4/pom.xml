@@ -76,7 +76,7 @@
             <Export-Package>com.helger.photon.bootstrap4.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.photon.bootstrap4.config.ThirdPartyModuleProvider_ph_oton_bootstrap4</Provide-Capability>
+            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.commons.thirdparty.IThirdPartyModuleProviderSPI</Provide-Capability>
           </instructions>
         </configuration>
       </plugin>
