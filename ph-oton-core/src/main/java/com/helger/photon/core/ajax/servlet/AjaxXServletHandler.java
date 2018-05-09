@@ -114,7 +114,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     // Is the declaration applicable for the current scope?
     if (!aAjaxDeclaration.canExecute (aRequestScope))
     {
-      s_aLogger.warn ("Ajax function '" + sFunctionName + "' cannot be executed in the current scope.");
+      s_aLogger.warn ("Ajax function '" + sFunctionName + "' self-declined the execution for the current request.");
       aUnifiedResponse.setStatus (HttpServletResponse.SC_UNAUTHORIZED);
       return EContinue.BREAK;
     }
