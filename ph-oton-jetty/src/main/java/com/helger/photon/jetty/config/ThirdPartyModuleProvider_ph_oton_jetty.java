@@ -34,10 +34,11 @@ import com.helger.commons.version.Version;
 @IsSPIImplementation
 public final class ThirdPartyModuleProvider_ph_oton_jetty implements IThirdPartyModuleProviderSPI
 {
+  // It's now dual licensed under Apache 2 and EPL 1.0
   public static final IThirdPartyModule JETTY = new ThirdPartyModule ("Jetty",
                                                                       "Eclipse",
-                                                                      ELicense.EPL10,
-                                                                      new Version (9, 4, 9),
+                                                                      ELicense.APACHE2,
+                                                                      new Version (9, 4, 10),
                                                                       "https://eclipse.org/jetty/");
 
   @Nullable
