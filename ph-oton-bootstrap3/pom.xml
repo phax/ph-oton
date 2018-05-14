@@ -104,7 +104,7 @@
         <configuration>
           <forceCreation>false</forceCreation>
           <sourceDirectory>${basedir}/src/main/resources/bootstrap</sourceDirectory>
-          <!-- Non recursive! -->^
+          <!-- Non recursive! -->
           <recursive>false</recursive>
         </configuration>
       </plugin>
