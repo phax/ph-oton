@@ -65,6 +65,7 @@ public class JettyStarter
   public static final String DEFAULT_STOP_KEY = InternalJettyStopMonitorThread.STOP_KEY;
   public static final int DEFAULT_STOP_PORT = InternalJettyStopMonitorThread.STOP_PORT;
   public static final String DEFAULT_CONTEXT_PATH = "/";
+  public static final String DEFAULT_CONTAINER_JAR_PATTERN = ".*\\.jar$|.*/classes/.*";
   private static final Logger s_aLogger = LoggerFactory.getLogger (JettyStarter.class);
 
   private final String m_sAppName;
@@ -77,6 +78,7 @@ public class JettyStarter
   private Resource m_aResourceBase = _asRes ("target/webapp-classes");
   private String m_sWebXmlResource;
   private String m_sContextPath = DEFAULT_CONTEXT_PATH;
+  private String m_sContainerJarPattern = DEFAULT_CONTAINER_JAR_PATTERN;
   private ThreadPool m_aThreadPool;
   private boolean m_bAllowAnnotationBasedConfig = true;
 
@@ -119,7 +121,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setPort (@Nonnegative final int nPort)
+  public final JettyStarter setPort (@Nonnegative final int nPort)
   {
     ValueEnforcer.isGT0 (nPort, "Port");
     m_nPort = nPort;
@@ -144,7 +146,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setRunStopMonitor (final boolean bRunStopMonitor)
+  public final JettyStarter setRunStopMonitor (final boolean bRunStopMonitor)
   {
     m_bRunStopMonitor = bRunStopMonitor;
     return this;
@@ -165,7 +167,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setStopKey (@Nonnull final String sStopKey)
+  public final JettyStarter setStopKey (@Nonnull final String sStopKey)
   {
     ValueEnforcer.notNull (sStopKey, "StopKey");
     m_sStopKey = sStopKey;
@@ -189,7 +191,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setStopPort (@Nonnegative final int nStopPort)
+  public final JettyStarter setStopPort (@Nonnegative final int nStopPort)
   {
     ValueEnforcer.isGT0 (nStopPort, "StopPort");
     m_nStopPort = nStopPort;
@@ -208,7 +210,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setSpecialSessionMgr (final boolean bSpecialSessionMgr)
+  public final JettyStarter setSpecialSessionMgr (final boolean bSpecialSessionMgr)
   {
     m_bSpecialSessionMgr = bSpecialSessionMgr;
     return this;
@@ -223,7 +225,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setResourceBase (@Nonnull @Nonempty final String sResourceBase)
+  public final JettyStarter setResourceBase (@Nonnull @Nonempty final String sResourceBase)
   {
     ValueEnforcer.notEmpty (sResourceBase, "ResourceBase");
     return setResourceBase (_asRes (sResourceBase));
@@ -238,7 +240,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setResourceBase (@Nonnull final Resource aResourceBase)
+  public final JettyStarter setResourceBase (@Nonnull final Resource aResourceBase)
   {
     ValueEnforcer.notNull (aResourceBase, "ResourceBase");
     m_aResourceBase = aResourceBase;
@@ -260,7 +262,7 @@ public class JettyStarter
    * @return this for chaining.
    */
   @Nonnull
-  public JettyStarter setWebXmlResource (@Nullable final String sWebXmlResource)
+  public final JettyStarter setWebXmlResource (@Nullable final String sWebXmlResource)
   {
     m_sWebXmlResource = sWebXmlResource;
     return this;
@@ -282,7 +284,7 @@ public class JettyStarter
    * @return this for chaining
    */
   @Nonnull
-  public JettyStarter setContextPath (@Nonnull @Nonempty final String sContextPath)
+  public final JettyStarter setContextPath (@Nonnull @Nonempty final String sContextPath)
   {
     ValueEnforcer.notEmpty (sContextPath, "sContextPath");
     m_sContextPath = sContextPath;
@@ -297,6 +299,30 @@ public class JettyStarter
   }
 
   /**
+   * Set the container JAR pattern to be scanned for annotations. By default
+   * this {@link #DEFAULT_CONTAINER_JAR_PATTERN}
+   *
+   * @param sContainerJarPattern
+   *        The new container JAR pattern. May neither be <code>null</code> nor
+   *        empty.
+   * @return this for chaining
+   */
+  @Nonnull
+  public final JettyStarter setContainerJarPattern (@Nonnull @Nonempty final String sContainerJarPattern)
+  {
+    ValueEnforcer.notEmpty (sContainerJarPattern, "ContainerJarPattern");
+    m_sContainerJarPattern = sContainerJarPattern;
+    return this;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getContainerJarPattern ()
+  {
+    return m_sContainerJarPattern;
+  }
+
+  /**
    * Set the thread pool to use.
    *
    * @param aThreadPool
@@ -306,7 +332,7 @@ public class JettyStarter
    * @since 7.0.6
    */
   @Nonnull
-  public JettyStarter setThreadPool (@Nullable final ThreadPool aThreadPool)
+  public final JettyStarter setThreadPool (@Nullable final ThreadPool aThreadPool)
   {
     m_aThreadPool = aThreadPool;
     return this;
@@ -328,7 +354,7 @@ public class JettyStarter
    * @since 8.0.0
    */
   @Nonnull
-  public JettyStarter setAllowAnnotationBasedConfig (final boolean bAllowAnnotationBasedConfig)
+  public final JettyStarter setAllowAnnotationBasedConfig (final boolean bAllowAnnotationBasedConfig)
   {
     m_bAllowAnnotationBasedConfig = bAllowAnnotationBasedConfig;
     return this;
@@ -431,9 +457,9 @@ public class JettyStarter
       aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
       aWebAppCtx.setParentLoaderPriority (true);
       aWebAppCtx.setThrowUnavailableOnStartupException (true);
-      // http://www.eclipse.org/jetty/documentation/9.3.x/configuring-webapps.html#container-include-jar-pattern
+      // http://www.eclipse.org/jetty/documentation/9.4.x/configuring-webapps.html#container-include-jar-pattern
       // https://github.com/eclipse/jetty.project/issues/680
-      aWebAppCtx.setAttribute (WebInfConfiguration.CONTAINER_JAR_PATTERN, ".*\\.jar$|.*/classes/.*");
+      aWebAppCtx.setAttribute (WebInfConfiguration.CONTAINER_JAR_PATTERN, m_sContainerJarPattern);
 
       if (m_bAllowAnnotationBasedConfig)
       {
