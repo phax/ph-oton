@@ -48,9 +48,9 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     private final NonBlockingStack <HCUL> m_aStack;
     private final BasePageShowChildrenRenderer m_aRenderer;
 
-    ShowChildrenCallback (@Nonnull final WPECTYPE aWPEC,
-                          @Nonnull final HCUL aUL,
-                          @Nonnull final BasePageShowChildrenRenderer aRenderer)
+    public ShowChildrenCallback (@Nonnull final WPECTYPE aWPEC,
+                                 @Nonnull final HCUL aUL,
+                                 @Nonnull final BasePageShowChildrenRenderer aRenderer)
     {
       ValueEnforcer.notNull (aWPEC, "WPEC");
       ValueEnforcer.notNull (aUL, "UL");

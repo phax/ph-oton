@@ -56,9 +56,9 @@ public class BasePageShowChildrenRenderer implements Serializable
    *        The previous element from the last call. May be <code>null</code>.
    */
   @OverrideOnDemand
-  protected void beforeAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
-                                            @Nonnull final IMenuObject aMenuObj,
-                                            @Nullable final IHCElement <?> aPreviousLI)
+  public void beforeAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
+                                         @Nonnull final IMenuObject aMenuObj,
+                                         @Nullable final IHCElement <?> aPreviousLI)
   {
     if (aMenuObj.getMenuObjectType () == EMenuObjectType.SEPARATOR && aPreviousLI != null)
       aPreviousLI.addStyle (CCSSProperties.MARGIN_BOTTOM.newValue ("1em"));
@@ -75,8 +75,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  protected IHCNode renderMenuSeparator (@Nonnull final IWebPageExecutionContext aWPEC,
-                                         @Nonnull final IMenuSeparator aMenuSeparator)
+  public IHCNode renderMenuSeparator (@Nonnull final IWebPageExecutionContext aWPEC,
+                                      @Nonnull final IMenuSeparator aMenuSeparator)
   {
     return null;
   }
@@ -92,8 +92,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  protected IHCNode renderMenuItemPage (@Nonnull final IWebPageExecutionContext aWPEC,
-                                        @Nonnull final IMenuItemPage aMenuItemPage)
+  public IHCNode renderMenuItemPage (@Nonnull final IWebPageExecutionContext aWPEC,
+                                     @Nonnull final IMenuItemPage aMenuItemPage)
   {
     if (!aMenuItemPage.matchesDisplayFilter ())
       return null;
@@ -118,8 +118,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  protected IHCNode renderMenuItemExternal (@Nonnull final IWebPageExecutionContext aWPEC,
-                                            @Nonnull final IMenuItemExternal aMenuItemExternal)
+  public IHCNode renderMenuItemExternal (@Nonnull final IWebPageExecutionContext aWPEC,
+                                         @Nonnull final IMenuItemExternal aMenuItemExternal)
   {
     if (!aMenuItemExternal.matchesDisplayFilter ())
       return null;
@@ -142,8 +142,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    *        The created element for the passed object. May be <code>null</code>.
    */
   @OverrideOnDemand
-  protected void afterAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
-                                           @Nonnull final IMenuObject aMenuObj,
-                                           @Nullable final IHCElement <?> aLI)
+  public void afterAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
+                                        @Nonnull final IMenuObject aMenuObj,
+                                        @Nullable final IHCElement <?> aLI)
   {}
 }
