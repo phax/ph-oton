@@ -148,6 +148,12 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   @Nonnull
+  protected final IMenuTree getMenuTree ()
+  {
+    return m_aMenuTree;
+  }
+
+  @Nonnull
   public BasePageShowChildren <WPECTYPE> setRenderer (final BasePageShowChildrenRenderer aRenderer)
   {
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
