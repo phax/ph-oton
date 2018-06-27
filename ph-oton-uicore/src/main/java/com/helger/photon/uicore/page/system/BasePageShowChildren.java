@@ -154,7 +154,13 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   @Nonnull
-  public BasePageShowChildren <WPECTYPE> setRenderer (final BasePageShowChildrenRenderer aRenderer)
+  protected final BasePageShowChildrenRenderer getRenderer ()
+  {
+    return m_aRenderer;
+  }
+
+  @Nonnull
+  public final BasePageShowChildren <WPECTYPE> setRenderer (@Nonnull final BasePageShowChildrenRenderer aRenderer)
   {
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
     return this;
