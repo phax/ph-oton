@@ -258,7 +258,7 @@ public final class JSGlobal
   /**
    * @param aString
    *        parameter
-   * @return Global function <code>eval(string)</code>
+   * @return Global function <code>parseFloat(string)</code>
    */
   @Nonnull
   public static JSInvocation parseFloat (@Nonnull final IJSExpression aString)
@@ -324,7 +324,7 @@ public final class JSGlobal
   /**
    * @param aObject
    *        parameter
-   * @return Global function <code>unescape(string)</code>
+   * @return Global function <code>String(string)</code>
    */
   @Nonnull
   public static JSInvocation String (@Nonnull final IJSExpression aObject)
