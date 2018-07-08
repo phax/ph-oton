@@ -34,6 +34,8 @@ Contained subprojects are:
   * Reworked meta element API so that `<meta charset="...">` can be handled
   * Fixed OSGI ServiceProvider configuration
   * Updated to Jetty 9.4.11
+  * Updated to ph-web 9.0.2
+  * Extended `*HCSelect` APIs for multi values
 * v8.0.1 - 2018-04-18
   * Updated to Jetty 9.4.9
   * Updated to Bootstrap 4.0.0

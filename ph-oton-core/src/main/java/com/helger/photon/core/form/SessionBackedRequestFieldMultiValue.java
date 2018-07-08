@@ -16,14 +16,17 @@
  */
 package com.helger.photon.core.form;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.html.request.IHCRequestField;
-import com.helger.web.scope.util.SessionBackedRequestFieldData;
+import com.helger.html.request.IHCRequestFieldMultiValue;
+import com.helger.web.scope.util.SessionBackedRequestFieldDataMultiValue;
 
-public class SessionBackedRequestField extends SessionBackedRequestFieldData implements IHCRequestField
+public class SessionBackedRequestFieldMultiValue extends SessionBackedRequestFieldDataMultiValue implements
+                                                 IHCRequestFieldMultiValue
 {
   /**
    * Create a new request field that has no default value
@@ -31,7 +34,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    */
-  public SessionBackedRequestField (@Nonnull @Nonempty final String sFieldName)
+  public SessionBackedRequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName)
   {
     super (sFieldName);
   }
@@ -41,25 +44,13 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
    *
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
-   * @param sDefaultValue
-   *        The default value to use, if no value is present in the request
+   * @param aDefaultValues
+   *        The default values to use, if no value is present in the request
    *        scope.
    */
-  public SessionBackedRequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
+  public SessionBackedRequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName,
+                                              @Nullable final Collection <String> aDefaultValues)
   {
-    super (sFieldName, sDefaultValue);
-  }
-
-  /**
-   * Helper constructor using an int instead of a String.
-   *
-   * @param sFieldName
-   *        The field name to use. May neither be <code>null</code> nor empty.
-   * @param nDefaultValue
-   *        The default value to be used. Is converted to a String
-   */
-  public SessionBackedRequestField (@Nonnull @Nonempty final String sFieldName, final int nDefaultValue)
-  {
-    super (sFieldName, Integer.toString (nDefaultValue));
+    super (sFieldName, aDefaultValues);
   }
 }

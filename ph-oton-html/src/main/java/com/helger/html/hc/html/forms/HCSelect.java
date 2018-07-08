@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.request.IHCRequestField;
+import com.helger.html.request.IHCRequestFieldMultiValue;
 
 /**
  * Represents an HTML &lt;select&gt; element
@@ -37,6 +38,7 @@ public class HCSelect extends AbstractHCSelect <HCSelect>
     setName (sName);
   }
 
+  @Deprecated
   public HCSelect (@Nullable final String sName, @Nullable final Iterable <String> aPreselectedValues)
   {
     super (aPreselectedValues);
@@ -44,6 +46,11 @@ public class HCSelect extends AbstractHCSelect <HCSelect>
   }
 
   public HCSelect (@Nonnull final IHCRequestField aRF)
+  {
+    super (aRF);
+  }
+
+  public HCSelect (@Nonnull final IHCRequestFieldMultiValue aRF)
   {
     super (aRF);
   }

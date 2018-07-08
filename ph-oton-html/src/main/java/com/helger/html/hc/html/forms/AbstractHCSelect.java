@@ -40,6 +40,7 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.request.IHCRequestField;
+import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
@@ -72,6 +73,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     super (EHTMLElement.SELECT);
   }
 
+  @Deprecated
   public AbstractHCSelect (@Nullable final Iterable <String> aPreselectedValues)
   {
     this ();
@@ -80,7 +82,19 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
 
   public AbstractHCSelect (@Nonnull final IHCRequestField aRF)
   {
-    this (aRF.getRequestValueAsList ());
+    this ();
+    // Single request value only
+    m_aPreselectedValues.add (aRF.getRequestValue ());
+    setName (aRF.getFieldName ());
+  }
+
+  public AbstractHCSelect (@Nonnull final IHCRequestFieldMultiValue aRF)
+  {
+    this ();
+    // Multiple request values possible
+    m_aPreselectedValues.addAll (aRF.getRequestValues ());
+    // Implicitly multiple
+    setMultiple (true);
     setName (aRF.getFieldName ());
   }
 

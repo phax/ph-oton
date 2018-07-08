@@ -27,6 +27,7 @@ import com.helger.html.hc.html.forms.AbstractHCSelect;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.request.IHCRequestField;
+import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.photon.core.EPhotonCoreText;
 
 public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
@@ -39,6 +40,11 @@ public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
   public static final ICSSClassProvider CSS_CLASS_SPECIAL_OPTION = DefaultCSSClassProvider.create ("select-option-special");
 
   public HCExtSelect (@Nonnull final IHCRequestField aRF)
+  {
+    super (aRF);
+  }
+
+  public HCExtSelect (@Nonnull final IHCRequestFieldMultiValue aRF)
   {
     super (aRF);
   }

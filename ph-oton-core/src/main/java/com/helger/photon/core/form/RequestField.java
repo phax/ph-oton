@@ -75,6 +75,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    *        The object who's ID is to be used. May be <code>null</code> in which
    *        case no default value is used
    */
+  @Deprecated
   public RequestField (@Nonnull @Nonempty final String sFieldName,
                        @Nullable final IHasID <String> aDefaultValueProvider)
   {
@@ -105,7 +106,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    */
   public RequestField (@Nonnull @Nonempty final String sFieldName, final int nDefaultValue)
   {
-    super (sFieldName, nDefaultValue);
+    super (sFieldName, Integer.toString (nDefaultValue));
   }
 
   /**
@@ -132,7 +133,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    */
   public RequestField (@Nonnull @Nonempty final String sFieldName, final long nDefaultValue)
   {
-    super (sFieldName, nDefaultValue);
+    super (sFieldName, Long.toString (nDefaultValue));
   }
 
   /**

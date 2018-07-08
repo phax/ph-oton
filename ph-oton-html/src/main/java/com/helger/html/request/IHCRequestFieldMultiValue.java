@@ -19,18 +19,18 @@ package com.helger.html.request;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.ICommonsList;
 
 /**
  * Defines an abstract request field for input controls. It encapsulates a name
- * and a single request value.
+ * and 0-n request values.
  *
- * @author Philip Helger
+ * @author Philip Helger´
+ * @since 8.0.2
  */
-public interface IHCRequestField extends Serializable
+public interface IHCRequestFieldMultiValue extends Serializable
 {
   /**
    * @return The field name of this request field. Neither <code>null</code> nor
@@ -41,26 +41,22 @@ public interface IHCRequestField extends Serializable
   String getFieldName ();
 
   /**
-   * Get the default value that should be used if no request value is present.
+   * Get the default values that should be used if no request value is present.
    *
    * @return The default value to be used as fallback. May not be
-   *         <code>null</code>. <code>null</code> have to be returned as empty
-   *         strings!
+   *         <code>null</code> but maybe empty.
    */
   @Nonnull
-  String getDefaultValue ();
+  ICommonsList <String> getDefaultValues ();
 
   /**
-   * Get the value of the request - optionally falling back to an eventually
-   * provided default value if no such request parameter is present
+   * In case multiple request parameters with the same value are present (e.g.
+   * multi-selects) this method retrieves all request values. If no such request
+   * value is present, the default values are returned.
    *
-   * @return A single request value as string.
-   * @see #getDefaultValue()
+   * @return A list of request values with the same field name or the default
+   *         values if no such request values are present.
    */
   @Nonnull
-  String getRequestValue ();
-
-  @Deprecated
-  @Nullable
-  ICommonsList <String> getRequestValueAsList ();
+  ICommonsList <String> getRequestValues ();
 }

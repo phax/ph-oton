@@ -17,13 +17,18 @@
 package com.helger.photon.uictrls.select2;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.jquery.JQuery;
+import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.JSInvocation;
 import com.helger.html.request.IHCRequestField;
+import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
@@ -39,6 +44,39 @@ public class HCSelect2 extends HCExtSelect
     ensureID ();
   }
 
+  public HCSelect2 (@Nonnull final IHCRequestFieldMultiValue aRF)
+  {
+    super (aRF);
+    ensureID ();
+  }
+
+  /**
+   * @return The invocation options to be used. May be <code>null</code> or
+   *         empty to indicate that no further options are needed.
+   * @since 8.0.2
+   */
+  @Nullable
+  @OverrideOnDemand
+  protected JSAssocArray getSelect2InvocationOptions ()
+  {
+    return null;
+  }
+
+  /**
+   * @return The select2 JS invocation to be used. May not be <code>null</code>.
+   * @since 8.0.2
+   */
+  @Nonnull
+  @OverrideOnDemand
+  protected JSInvocation getSelect2Invocation ()
+  {
+    final JSInvocation ret = JQuery.idRef (this).invoke ("select2");
+    final JSAssocArray aOptions = getSelect2InvocationOptions ();
+    if (aOptions != null && aOptions.isNotEmpty ())
+      ret.arg (aOptions);
+    return ret;
+  }
+
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -46,7 +84,7 @@ public class HCSelect2 extends HCExtSelect
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
     // Add special JS code
-    aTargetNode.addChild (new HCScriptInlineOnDocumentReady (JQuery.idRef (this).invoke ("select2")));
+    aTargetNode.addChild (new HCScriptInlineOnDocumentReady (getSelect2Invocation ()));
   }
 
   @Override
