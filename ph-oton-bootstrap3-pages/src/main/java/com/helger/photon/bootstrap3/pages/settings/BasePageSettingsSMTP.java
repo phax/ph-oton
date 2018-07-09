@@ -93,7 +93,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                   AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW ("Neue SMTP-Einstellungen anlegen", "Create new SMTP settings"),
     HEADER_NAME ("Name", "Name"),
@@ -436,8 +436,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final Charset aCharset = CharsetHelper.getCharsetFromNameOrNull (sCharset);
 
     final boolean bSSLEnabled = aWPEC.params ().isCheckBoxChecked (FIELD_SSL, EmailGlobalSettings.isUseSSL ());
-    final boolean bSTARTTLSEnabled = aWPEC.params ().isCheckBoxChecked (FIELD_STARTTLS,
-                                                                        EmailGlobalSettings.isUseSTARTTLS ());
+    final boolean bSTARTTLSEnabled = aWPEC.params ()
+                                          .isCheckBoxChecked (FIELD_STARTTLS, EmailGlobalSettings.isUseSTARTTLS ());
     final long nConnectionTimeoutMS = aWPEC.params ().getAsLong (FIELD_CONNECTION_TIMEOUT, CGlobal.ILLEGAL_ULONG);
     final long nSocketTimeoutMS = aWPEC.params ().getAsLong (FIELD_SOCKET_TIMEOUT, CGlobal.ILLEGAL_ULONG);
     final boolean bDebugSMTP = aWPEC.params ().isCheckBoxChecked (FIELD_DEBUG_SMTP, EmailGlobalSettings.isDebugSMTP ());
