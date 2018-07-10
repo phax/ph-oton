@@ -70,16 +70,16 @@ public class HC_Target implements IHCHasHTMLAttributeValue, Serializable
 
   @Nonnull
   @Nonempty
-  public String getName ()
+  public final String getName ()
   {
     return m_sName;
   }
 
   @Nonnull
   @Nonempty
-  public String getAttrValue ()
+  public final String getAttrValue ()
   {
-    return m_sName;
+    return getName ();
   }
 
   @Override

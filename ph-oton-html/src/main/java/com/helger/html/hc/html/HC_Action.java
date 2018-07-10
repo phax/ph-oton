@@ -55,24 +55,24 @@ public class HC_Action implements ICloneable <HC_Action>
   }
 
   @Nullable
-  public ISimpleURL getActionURL ()
+  public final ISimpleURL getActionURL ()
   {
     return m_aActionURL;
   }
 
   @Nullable
-  public IHasJSCodeWithSettings getActionJS ()
+  public final IHasJSCodeWithSettings getActionJS ()
   {
     return m_aActionJS;
   }
 
-  public void setAction (@Nullable final ISimpleURL aAction)
+  public final void setAction (@Nullable final ISimpleURL aAction)
   {
     m_aActionURL = aAction;
     m_aActionJS = null;
   }
 
-  public void setAction (@Nullable final IHasJSCodeWithSettings aAction)
+  public final void setAction (@Nullable final IHasJSCodeWithSettings aAction)
   {
     m_aActionURL = null;
     m_aActionJS = aAction;

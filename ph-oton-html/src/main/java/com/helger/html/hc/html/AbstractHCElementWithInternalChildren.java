@@ -210,7 +210,7 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
 
   @Override
   @Nullable
-  public ICommonsIterable <CHILDTYPE> getChildren ()
+  public final ICommonsIterable <CHILDTYPE> getChildren ()
   {
     return m_aChildren;
   }

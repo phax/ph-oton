@@ -43,25 +43,25 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
     super (EHTMLElement.FRAMESET);
   }
 
-  public int getCols ()
+  public final int getCols ()
   {
     return m_nCols;
   }
 
   @Nonnull
-  public HCFrameset setCols (final int nCols)
+  public final HCFrameset setCols (final int nCols)
   {
     m_nCols = nCols;
     return this;
   }
 
-  public int getRows ()
+  public final int getRows ()
   {
     return m_nRows;
   }
 
   @Nonnull
-  public HCFrameset setRows (final int nRows)
+  public final HCFrameset setRows (final int nRows)
   {
     m_nRows = nRows;
     return this;
