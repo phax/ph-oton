@@ -64,7 +64,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
   }
 
   @Nonnull
-  public HCEmbed setSrc (@Nullable final ISimpleURL aSrc)
+  public final HCEmbed setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
     return this;

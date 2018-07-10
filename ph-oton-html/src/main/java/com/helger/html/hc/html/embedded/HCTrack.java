@@ -46,64 +46,64 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
   }
 
   @Nullable
-  public String getKind ()
+  public final String getKind ()
   {
     return m_sKind;
   }
 
   @Nonnull
-  public HCTrack setKind (@Nullable final String sKind)
+  public final HCTrack setKind (@Nullable final String sKind)
   {
     m_sKind = sKind;
     return this;
   }
 
   @Nullable
-  public ISimpleURL getSrc ()
+  public final ISimpleURL getSrc ()
   {
     return m_aSrc;
   }
 
   @Nonnull
-  public HCTrack setSrc (@Nullable final ISimpleURL aSrc)
+  public final HCTrack setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
     return this;
   }
 
   @Nullable
-  public String getSrcLang ()
+  public final String getSrcLang ()
   {
     return m_sSrcLang;
   }
 
   @Nonnull
-  public HCTrack setSrcLang (@Nullable final String sSrcLang)
+  public final HCTrack setSrcLang (@Nullable final String sSrcLang)
   {
     m_sSrcLang = sSrcLang;
     return this;
   }
 
   @Nullable
-  public String getLabel ()
+  public final String getLabel ()
   {
     return m_sLabel;
   }
 
   @Nonnull
-  public HCTrack setLabel (@Nullable final String sLabel)
+  public final HCTrack setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
     return this;
   }
 
-  public boolean isDefault ()
+  public final boolean isDefault ()
   {
     return m_bDefault;
   }
 
   @Nonnull
-  public HCTrack setDefault (final boolean bDefault)
+  public final HCTrack setDefault (final boolean bDefault)
   {
     m_bDefault = bDefault;
     return this;

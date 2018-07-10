@@ -61,88 +61,88 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     super (eElement);
   }
 
-  public boolean isAutoPlay ()
+  public final boolean isAutoPlay ()
   {
     return m_bAutoPlay;
   }
 
   @Nonnull
-  public IMPLTYPE setAutoPlay (final boolean bAutoPlay)
+  public final IMPLTYPE setAutoPlay (final boolean bAutoPlay)
   {
     m_bAutoPlay = bAutoPlay;
     return thisAsT ();
   }
 
   @Nullable
-  public EHCPreload getPreload ()
+  public final EHCPreload getPreload ()
   {
     return m_ePreload;
   }
 
   @Nonnull
-  public IMPLTYPE setPreload (@Nullable final EHCPreload ePreload)
+  public final IMPLTYPE setPreload (@Nullable final EHCPreload ePreload)
   {
     m_ePreload = ePreload;
     return thisAsT ();
   }
 
-  public boolean isControls ()
+  public final boolean isControls ()
   {
     return m_bControls;
   }
 
   @Nonnull
-  public IMPLTYPE setControls (final boolean bControls)
+  public final IMPLTYPE setControls (final boolean bControls)
   {
     m_bControls = bControls;
     return thisAsT ();
   }
 
-  public boolean isLoop ()
+  public final boolean isLoop ()
   {
     return m_bLoop;
   }
 
   @Nonnull
-  public IMPLTYPE setLoop (final boolean bLoop)
+  public final IMPLTYPE setLoop (final boolean bLoop)
   {
     m_bLoop = bLoop;
     return thisAsT ();
   }
 
-  public boolean isMuted ()
+  public final boolean isMuted ()
   {
     return m_bMuted;
   }
 
   @Nonnull
-  public IMPLTYPE setMuted (final boolean bMuted)
+  public final IMPLTYPE setMuted (final boolean bMuted)
   {
     m_bMuted = bMuted;
     return thisAsT ();
   }
 
   @Nullable
-  public ISimpleURL getSrc ()
+  public final ISimpleURL getSrc ()
   {
     return m_aSrc;
   }
 
   @Nonnull
-  public IMPLTYPE setSrc (@Nullable final ISimpleURL aSrc)
+  public final IMPLTYPE setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
     return thisAsT ();
   }
 
   @Nullable
-  public EHCCORSSettings getCrossOrigin ()
+  public final EHCCORSSettings getCrossOrigin ()
   {
     return m_eCrossOrigin;
   }
 
   @Nonnull
-  public IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
+  public final IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
     return thisAsT ();

@@ -84,13 +84,13 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   }
 
   @Nullable
-  public String getSizes ()
+  public final String getSizes ()
   {
     return m_sSizes;
   }
 
   @Nonnull
-  public IMPLTYPE setSizes (@Nullable final String sSizes)
+  public final IMPLTYPE setSizes (@Nullable final String sSizes)
   {
     m_sSizes = sSizes;
     return thisAsT ();
@@ -178,13 +178,13 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   }
 
   @Nullable
-  public EHCCORSSettings getCrossOrigin ()
+  public final EHCCORSSettings getCrossOrigin ()
   {
     return m_eCrossOrigin;
   }
 
   @Nonnull
-  public IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
+  public final IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
     return thisAsT ();

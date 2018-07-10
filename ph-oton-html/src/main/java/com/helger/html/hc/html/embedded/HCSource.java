@@ -46,65 +46,65 @@ public class HCSource extends AbstractHCMediaElementChild <HCSource> implements 
   }
 
   @Nullable
-  public ISimpleURL getSrc ()
+  public final ISimpleURL getSrc ()
   {
     return m_aSrc;
   }
 
   @Nonnull
-  public HCSource setSrc (@Nullable final ISimpleURL aSrc)
+  public final HCSource setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
     return this;
   }
 
   @Nullable
-  public IMimeType getType ()
+  public final IMimeType getType ()
   {
     return m_aType;
   }
 
   @Nonnull
-  public HCSource setType (@Nullable final IMimeType aType)
+  public final HCSource setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
     return this;
   }
 
   @Nullable
-  public String getSrcSet ()
+  public final String getSrcSet ()
   {
     return m_sSrcSet;
   }
 
   @Nonnull
-  public HCSource setSrcSet (@Nullable final String sSrcSet)
+  public final HCSource setSrcSet (@Nullable final String sSrcSet)
   {
     m_sSrcSet = sSrcSet;
     return this;
   }
 
   @Nullable
-  public String getSizes ()
+  public final String getSizes ()
   {
     return m_sSizes;
   }
 
   @Nonnull
-  public HCSource setSizes (@Nullable final String sSizes)
+  public final HCSource setSizes (@Nullable final String sSizes)
   {
     m_sSizes = sSizes;
     return this;
   }
 
   @Nullable
-  public String getMedia ()
+  public final String getMedia ()
   {
     return m_sMediaQuery;
   }
 
   @Nonnull
-  public HCSource setMedia (@Nullable final String sMediaQuery)
+  public final HCSource setMedia (@Nullable final String sMediaQuery)
   {
     m_sMediaQuery = sMediaQuery;
     return this;

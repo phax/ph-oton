@@ -53,52 +53,52 @@ public class HCParam extends AbstractHCElement <HCParam>
   }
 
   @Nullable
-  public String getName ()
+  public final String getName ()
   {
     return m_sName;
   }
 
   @Nonnull
-  public HCParam setName (@Nonnull final String sName)
+  public final HCParam setName (@Nonnull final String sName)
   {
     m_sName = ValueEnforcer.notNull (sName, "Name");
     return this;
   }
 
   @Nullable
-  public String getValue ()
+  public final String getValue ()
   {
     return m_sValue;
   }
 
   @Nonnull
-  public HCParam setValue (@Nullable final String sValue)
+  public final HCParam setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
     return this;
   }
 
   @Nullable
-  public EHCParamValueType getValueType ()
+  public final EHCParamValueType getValueType ()
   {
     return m_eValueType;
   }
 
   @Nonnull
-  public HCParam setValueType (@Nullable final EHCParamValueType eValueType)
+  public final HCParam setValueType (@Nullable final EHCParamValueType eValueType)
   {
     m_eValueType = eValueType;
     return this;
   }
 
   @Nullable
-  public IMimeType getType ()
+  public final IMimeType getType ()
   {
     return m_aType;
   }
 
   @Nonnull
-  public HCParam setType (@Nullable final IMimeType aType)
+  public final HCParam setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
     return this;
