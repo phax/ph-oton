@@ -42,25 +42,25 @@ public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <I
     super (EHTMLElement.PROGRESS);
   }
 
-  public double getValue ()
+  public final double getValue ()
   {
     return m_dValue;
   }
 
   @Nonnull
-  public IMPLTYPE setValue (final double dValue)
+  public final IMPLTYPE setValue (final double dValue)
   {
     m_dValue = dValue;
     return thisAsT ();
   }
 
-  public double getMax ()
+  public final double getMax ()
   {
     return m_dMax;
   }
 
   @Nonnull
-  public IMPLTYPE setMax (final double dMax)
+  public final IMPLTYPE setMax (final double dMax)
   {
     m_dMax = dMax;
     return thisAsT ();

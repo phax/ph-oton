@@ -161,13 +161,13 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
   }
 
   @Nullable
-  public IMimeType getEncType ()
+  public final IMimeType getEncType ()
   {
     return m_aEncType;
   }
 
   @Nonnull
-  public IMPLTYPE setEncType (@Nullable final IMimeType aEncType)
+  public final IMPLTYPE setEncType (@Nullable final IMimeType aEncType)
   {
     m_aEncType = aEncType;
     return thisAsT ();

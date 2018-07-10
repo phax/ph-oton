@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -69,52 +70,52 @@ public class HCHead extends AbstractHCElement <HCHead>
   //
 
   @Nullable
-  public String getProfile ()
+  public final String getProfile ()
   {
     return m_sProfile;
   }
 
   @Nonnull
-  public HCHead setProfile (@Nullable final String sProfile)
+  public final HCHead setProfile (@Nullable final String sProfile)
   {
     m_sProfile = sProfile;
     return this;
   }
 
   @Nullable
-  public String getPageTitle ()
+  public final String getPageTitle ()
   {
     return m_aPageTitle.getContent ();
   }
 
   @Nonnull
-  public HCHead setPageTitle (@Nullable final String sPageTitle)
+  public final HCHead setPageTitle (@Nullable final String sPageTitle)
   {
     m_aPageTitle.setContent (sPageTitle);
     return this;
   }
 
   @Nullable
-  public ISimpleURL getBaseHref ()
+  public final ISimpleURL getBaseHref ()
   {
     return m_aBase.getHref ();
   }
 
   @Nonnull
-  public HCHead setBaseHref (@Nullable final ISimpleURL aBaseHref)
+  public final HCHead setBaseHref (@Nullable final ISimpleURL aBaseHref)
   {
     m_aBase.setHref (aBaseHref);
     return this;
   }
 
   @Nullable
-  public HC_Target getBaseTarget ()
+  public final HC_Target getBaseTarget ()
   {
     return m_aBase.getTarget ();
   }
 
   @Nonnull
-  public HCHead setBaseTarget (@Nullable final HC_Target aTarget)
+  public final HCHead setBaseTarget (@Nullable final HC_Target aTarget)
   {
     m_aBase.setTarget (aTarget);
     return this;
@@ -129,13 +130,13 @@ public class HCHead extends AbstractHCElement <HCHead>
    */
   @Nonnull
   @ReturnsMutableObject
-  public ICommonsList <HCMeta> metaElements ()
+  public final ICommonsList <HCMeta> metaElements ()
   {
     return m_aMetaElements;
   }
 
   @Nonnull
-  public EChange removeMetaElement (@Nullable final String sName)
+  public final EChange removeMetaElement (@Nullable final String sName)
   {
     if (StringHelper.hasText (sName))
       return EChange.valueOf (m_aMetaElements.removeIf (x -> sName.equals (x.getName ()) ||
@@ -151,13 +152,13 @@ public class HCHead extends AbstractHCElement <HCHead>
    */
   @Nonnull
   @ReturnsMutableObject
-  public ICommonsList <HCLink> links ()
+  public final ICommonsList <HCLink> links ()
   {
     return m_aLinks;
   }
 
   @Nonnull
-  public HCHead setShortcutIconHref (@Nullable final ISimpleURL aShortcutIconHref)
+  public final HCHead setShortcutIconHref (@Nullable final ISimpleURL aShortcutIconHref)
   {
     if (aShortcutIconHref == null)
     {
@@ -178,7 +179,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   //
 
   @Nonnull
-  public HCHead addCSS (@Nonnull final IHCNode aCSS)
+  public final HCHead addCSS (@Nonnull final IHCNode aCSS)
   {
     ValueEnforcer.notNull (aCSS, "CSS");
     if (!HCCSSNodeDetector.isCSSNode (aCSS))
@@ -197,7 +198,7 @@ public class HCHead extends AbstractHCElement <HCHead>
    * @return this for chaining
    */
   @Nonnull
-  public HCHead addCSSAt (@Nonnegative final int nIndex, @Nonnull final IHCNode aCSS)
+  public final HCHead addCSSAt (@Nonnegative final int nIndex, @Nonnull final IHCNode aCSS)
   {
     ValueEnforcer.notNull (aCSS, "CSS");
     if (!HCCSSNodeDetector.isCSSNode (aCSS))
@@ -207,19 +208,33 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Nonnegative
-  public int getCSSCount ()
+  public final int getCSSCount ()
   {
     return m_aCSS.size ();
   }
 
   @Nonnull
+  @ReturnsMutableObject
+  public final ICommonsList <IHCNode> cssNodes ()
+  {
+    return m_aCSS;
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public final ICommonsIterable <IHCNode> getCSSNodes ()
+  {
+    return m_aCSS;
+  }
+
+  @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IHCNode> getAllCSSNodes ()
+  public final ICommonsList <IHCNode> getAllCSSNodes ()
   {
     return m_aCSS.getClone ();
   }
 
-  public void getAllAndRemoveAllCSSNodes (@Nonnull final List <IHCNode> aTargetList)
+  public final void getAllAndRemoveAllCSSNodes (@Nonnull final List <IHCNode> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
     aTargetList.addAll (m_aCSS);
@@ -227,7 +242,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Nonnull
-  public HCHead removeAllCSS ()
+  public final HCHead removeAllCSS ()
   {
     m_aCSS.clear ();
     return this;
@@ -245,7 +260,7 @@ public class HCHead extends AbstractHCElement <HCHead>
    * @return this
    */
   @Nonnull
-  public HCHead addJS (@Nonnull final IHCNode aJS)
+  public final HCHead addJS (@Nonnull final IHCNode aJS)
   {
     ValueEnforcer.notNull (aJS, "JS");
     if (!HCJSNodeDetector.isJSNode (aJS))
@@ -264,7 +279,7 @@ public class HCHead extends AbstractHCElement <HCHead>
    * @return this
    */
   @Nonnull
-  public HCHead addJSAt (@Nonnegative final int nIndex, @Nonnull final IHCNode aJS)
+  public final HCHead addJSAt (@Nonnegative final int nIndex, @Nonnull final IHCNode aJS)
   {
     ValueEnforcer.notNull (aJS, "JS");
     if (!HCJSNodeDetector.isJSNode (aJS))
@@ -277,19 +292,33 @@ public class HCHead extends AbstractHCElement <HCHead>
    * @return The number of contained JS elements
    */
   @Nonnegative
-  public int getJSCount ()
+  public final int getJSCount ()
   {
     return m_aJS.size ();
   }
 
   @Nonnull
+  @ReturnsMutableObject
+  public final ICommonsList <IHCNode> jsNodes ()
+  {
+    return m_aJS;
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public final ICommonsIterable <IHCNode> getJSNodes ()
+  {
+    return m_aJS;
+  }
+
+  @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IHCNode> getAllJSNodes ()
+  public final ICommonsList <IHCNode> getAllJSNodes ()
   {
     return m_aJS.getClone ();
   }
 
-  public void getAllAndRemoveAllJSNodes (@Nonnull final List <IHCNode> aTargetList)
+  public final void getAllAndRemoveAllJSNodes (@Nonnull final List <IHCNode> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
     aTargetList.addAll (m_aJS);
@@ -297,7 +326,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Nonnull
-  public HCHead removeAllJS ()
+  public final HCHead removeAllJS ()
   {
     m_aJS.clear ();
     return this;
@@ -387,7 +416,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   @Override
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IHCNode> getAllChildren ()
+  public final ICommonsList <IHCNode> getAllChildren ()
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     ret.add (m_aPageTitle);
@@ -401,14 +430,14 @@ public class HCHead extends AbstractHCElement <HCHead>
 
   @Override
   @Nonnull
-  public ICommonsIterable <? extends IHCNode> getChildren ()
+  public final ICommonsIterable <IHCNode> getChildren ()
   {
     return getAllChildren ();
   }
 
   @Override
   @Nullable
-  public IHCNode getChildAtIndex (@Nonnegative final int nIndex)
+  public final IHCNode getChildAtIndex (@Nonnegative final int nIndex)
   {
     if (nIndex == 0)
       return m_aPageTitle;
@@ -440,14 +469,14 @@ public class HCHead extends AbstractHCElement <HCHead>
 
   @Override
   @Nullable
-  public IHCNode getFirstChild ()
+  public final IHCNode getFirstChild ()
   {
     return m_aPageTitle;
   }
 
   @Override
   @Nullable
-  public IHCNode getLastChild ()
+  public final IHCNode getLastChild ()
   {
     if (m_aJS.isNotEmpty ())
       return m_aJS.getLast ();
@@ -461,13 +490,13 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Override
-  public boolean hasChildren ()
+  public final boolean hasChildren ()
   {
     return true;
   }
 
   @Override
-  public int getChildCount ()
+  public final int getChildCount ()
   {
     return 1 + 1 + m_aMetaElements.size () + m_aLinks.size () + m_aCSS.size () + m_aJS.size ();
   }

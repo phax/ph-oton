@@ -97,102 +97,102 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     super (EHTMLElement.MENUITEM);
   }
 
-  public boolean isChecked ()
+  public final boolean isChecked ()
   {
     return m_eChecked.isTrue ();
   }
 
   @Nonnull
-  public HCMenuItem setChecked (final boolean bMenuItem)
+  public final HCMenuItem setChecked (final boolean bMenuItem)
   {
     m_eChecked = ETriState.valueOf (bMenuItem);
     return this;
   }
 
   @Nullable
-  public String getCommand ()
+  public final String getCommand ()
   {
     return m_sCommand;
   }
 
   @Nonnull
-  public HCMenuItem setCommand (@Nullable final String sCommand)
+  public final HCMenuItem setCommand (@Nullable final String sCommand)
   {
     m_sCommand = sCommand;
     return this;
   }
 
-  public boolean isDefault ()
+  public final boolean isDefault ()
   {
     return m_eDefault.isTrue ();
   }
 
   @Nonnull
-  public HCMenuItem setDefault (final boolean bMenuItem)
+  public final HCMenuItem setDefault (final boolean bMenuItem)
   {
     m_eDefault = ETriState.valueOf (bMenuItem);
     return this;
   }
 
-  public boolean isDisabled ()
+  public final boolean isDisabled ()
   {
     return m_eDisabled.isTrue ();
   }
 
   @Nonnull
-  public HCMenuItem setDisabled (final boolean bMenuItem)
+  public final HCMenuItem setDisabled (final boolean bMenuItem)
   {
     m_eDisabled = ETriState.valueOf (bMenuItem);
     return this;
   }
 
   @Nullable
-  public ISimpleURL getIcon ()
+  public final ISimpleURL getIcon ()
   {
     return m_aIcon;
   }
 
   @Nonnull
-  public HCMenuItem setIcon (@Nullable final ISimpleURL aIcon)
+  public final HCMenuItem setIcon (@Nullable final ISimpleURL aIcon)
   {
     m_aIcon = aIcon;
     return this;
   }
 
   @Nullable
-  public String getLabel ()
+  public final String getLabel ()
   {
     return m_sLabel;
   }
 
   @Nonnull
-  public HCMenuItem setLabel (@Nullable final String sLabel)
+  public final HCMenuItem setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
     return this;
   }
 
   @Nullable
-  public String getRadioGroup ()
+  public final String getRadioGroup ()
   {
     return m_sRadioGroup;
   }
 
   @Nonnull
-  public HCMenuItem setRadioGroup (@Nullable final String sRadioGroup)
+  public final HCMenuItem setRadioGroup (@Nullable final String sRadioGroup)
   {
     m_sRadioGroup = sRadioGroup;
     return this;
   }
 
   @Nullable
-  public EHCCommandType getType ()
+  public final EHCCommandType getType ()
   {
     return m_eType;
   }
 
   @Nonnull
-  public HCMenuItem setType (@Nullable final EHCCommandType eType)
+  public final HCMenuItem setType (@Nullable final EHCCommandType eType)
   {
     m_eType = eType;
     return this;

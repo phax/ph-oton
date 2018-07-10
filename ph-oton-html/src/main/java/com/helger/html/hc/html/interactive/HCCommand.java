@@ -54,89 +54,89 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     super (EHTMLElement.COMMAND);
   }
 
-  public boolean isChecked ()
+  public final boolean isChecked ()
   {
     return m_bChecked;
   }
 
   @Nonnull
-  public HCCommand setChecked (final boolean bChecked)
+  public final HCCommand setChecked (final boolean bChecked)
   {
     m_bChecked = bChecked;
     return this;
   }
 
-  public boolean isDefault ()
+  public final boolean isDefault ()
   {
     return m_bDefault;
   }
 
   @Nonnull
-  public HCCommand setDefault (final boolean bDefault)
+  public final HCCommand setDefault (final boolean bDefault)
   {
     m_bDefault = bDefault;
     return this;
   }
 
-  public boolean isDisabled ()
+  public final boolean isDisabled ()
   {
     return m_bDisabled;
   }
 
   @Nonnull
-  public HCCommand setDisabled (final boolean bDisabled)
+  public final HCCommand setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
     return this;
   }
 
   @Nullable
-  public ISimpleURL getIcon ()
+  public final ISimpleURL getIcon ()
   {
     return m_aIcon;
   }
 
   @Nonnull
-  public HCCommand setIcon (@Nullable final ISimpleURL aIcon)
+  public final HCCommand setIcon (@Nullable final ISimpleURL aIcon)
   {
     m_aIcon = aIcon;
     return this;
   }
 
   @Nullable
-  public String getLabel ()
+  public final String getLabel ()
   {
     return m_sLabel;
   }
 
   @Nonnull
-  public HCCommand setLabel (@Nullable final String sLabel)
+  public final HCCommand setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
     return this;
   }
 
   @Nullable
-  public String getRadioGroup ()
+  public final String getRadioGroup ()
   {
     return m_sRadioGroup;
   }
 
   @Nonnull
-  public HCCommand setRadioGroup (@Nullable final String sRadioGroup)
+  public final HCCommand setRadioGroup (@Nullable final String sRadioGroup)
   {
     m_sRadioGroup = sRadioGroup;
     return this;
   }
 
   @Nonnull
-  public EHCCommandType getType ()
+  public final EHCCommandType getType ()
   {
     return m_eType;
   }
 
   @Nonnull
-  public HCCommand setType (@Nonnull final EHCCommandType eType)
+  public final HCCommand setType (@Nonnull final EHCCommandType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
     return this;

@@ -18,6 +18,7 @@ package com.helger.photon.security.token.user;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.security.token.object.IObjectWithAccessToken;
 import com.helger.photon.security.user.IUser;
 
@@ -31,8 +32,19 @@ import com.helger.photon.security.user.IUser;
 public interface IUserToken extends IObjectWithAccessToken
 {
   /**
-   * @return Theuser to which this user token belongs. Never <code>null</code>.
+   * @return The user to which this user token belongs. Never <code>null</code>.
    */
   @Nonnull
   IUser getUser ();
+
+  /**
+   * @return The ID of the user to which this user token belongs. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @Nonempty
+  default String getUserID ()
+  {
+    return getUser ().getID ();
+  }
 }

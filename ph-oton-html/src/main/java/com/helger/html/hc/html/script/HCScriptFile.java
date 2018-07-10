@@ -53,50 +53,50 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
   {}
 
   @Nullable
-  public ISimpleURL getSrc ()
+  public final ISimpleURL getSrc ()
   {
     return m_aSrc;
   }
 
   @Nonnull
-  public HCScriptFile setSrc (@Nullable final ISimpleURL aSrc)
+  public final HCScriptFile setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
     return this;
   }
 
-  public boolean isDefer ()
+  public final boolean isDefer ()
   {
     return m_bDefer;
   }
 
   @Nonnull
-  public HCScriptFile setDefer (final boolean bDefer)
+  public final HCScriptFile setDefer (final boolean bDefer)
   {
     m_bDefer = bDefer;
     return this;
   }
 
-  public boolean isAsync ()
+  public final boolean isAsync ()
   {
     return m_bAsync;
   }
 
   @Nonnull
-  public HCScriptFile setAsync (final boolean bAsync)
+  public final HCScriptFile setAsync (final boolean bAsync)
   {
     m_bAsync = bAsync;
     return this;
   }
 
   @Nullable
-  public IJSPathProvider getPathProvider ()
+  public final IJSPathProvider getPathProvider ()
   {
     return m_aJSPathProvider;
   }
 
   @Nonnull
-  public HCScriptFile setPathProvider (@Nullable final IJSPathProvider aJSPathProvider)
+  public final HCScriptFile setPathProvider (@Nullable final IJSPathProvider aJSPathProvider)
   {
     m_aJSPathProvider = aJSPathProvider;
     return thisAsT ();

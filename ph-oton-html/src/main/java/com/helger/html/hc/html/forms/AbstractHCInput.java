@@ -40,7 +40,8 @@ import com.helger.xml.microdom.IMicroElement;
 
 @NotThreadSafe
 public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE>
-                                      implements IHCInput <IMPLTYPE>
+                                      implements
+                                      IHCInput <IMPLTYPE>
 {
   /** By default no auto complete setting is active */
   public static final ETriState DEFAULT_AUTO_COMPLETE = ETriState.UNDEFINED;
@@ -238,13 +239,13 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
   }
 
   @Nullable
-  public IMimeType getFormEncType ()
+  public final IMimeType getFormEncType ()
   {
     return m_aFormEncType;
   }
 
   @Nonnull
-  public IMPLTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
+  public final IMPLTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
   {
     m_aFormEncType = aFormEncType;
     return thisAsT ();

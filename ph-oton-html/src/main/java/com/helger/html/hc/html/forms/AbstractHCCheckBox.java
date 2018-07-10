@@ -45,6 +45,9 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
    */
   public static final boolean DEFAULT_EMIT_HIDDEN_FIELD = true;
 
+  // Must match the constant in IRequestParamContainer (ph-web)
+  public static final String HIDDEN_FIELD_PREFIX = "__";
+
   private boolean m_bEmitHiddenField = DEFAULT_EMIT_HIDDEN_FIELD;
 
   /**
@@ -132,8 +135,8 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
     final String sFieldName = getName ();
     if (StringHelper.hasNoText (sFieldName))
       return null;
-    // Must match the constant in IRequestParamContainer (ph-web)
-    return "__" + sFieldName;
+
+    return HIDDEN_FIELD_PREFIX + sFieldName;
   }
 
   @Override

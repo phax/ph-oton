@@ -73,7 +73,7 @@ public class HCScriptInlineOnDocumentReady extends AbstractHCScriptInline <HCScr
    * @return The contained code, to be executed on document.ready
    */
   @Nonnull
-  public IHasJSCode getOnDocumentReadyCode ()
+  public final IHasJSCode getOnDocumentReadyCode ()
   {
     return m_aOnDocumentReadyCode;
   }

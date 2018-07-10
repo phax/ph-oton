@@ -55,77 +55,77 @@ public class HCKeyGen extends AbstractHCElement <HCKeyGen> implements IHCHasStat
     m_sName = sName;
   }
 
-  public boolean isAutoFocus ()
+  public final boolean isAutoFocus ()
   {
     return m_bAutoFocus;
   }
 
   @Nonnull
-  public HCKeyGen setAutoFocus (final boolean bAutoFocus)
+  public final HCKeyGen setAutoFocus (final boolean bAutoFocus)
   {
     m_bAutoFocus = bAutoFocus;
     return this;
   }
 
   @Nullable
-  public String getChallenge ()
+  public final String getChallenge ()
   {
     return m_sChallenge;
   }
 
   @Nonnull
-  public HCKeyGen setChallenge (@Nullable final String sChallenge)
+  public final HCKeyGen setChallenge (@Nullable final String sChallenge)
   {
     m_sChallenge = sChallenge;
     return this;
   }
 
-  public boolean isDisabled ()
+  public final boolean isDisabled ()
   {
     return m_bDisabled;
   }
 
   @Nonnull
-  public HCKeyGen setDisabled (final boolean bDisabled)
+  public final HCKeyGen setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
     return this;
   }
 
   @Nullable
-  public String getForm ()
+  public final String getForm ()
   {
     return m_sForm;
   }
 
   @Nonnull
-  public HCKeyGen setForm (@Nullable final String sForm)
+  public final HCKeyGen setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
     return this;
   }
 
   @Nonnull
-  public EHCKeyGenType getKeyType ()
+  public final EHCKeyGenType getKeyType ()
   {
     return m_eKeyType;
   }
 
   @Nonnull
-  public HCKeyGen setKeyType (@Nonnull final EHCKeyGenType eKeyType)
+  public final HCKeyGen setKeyType (@Nonnull final EHCKeyGenType eKeyType)
   {
     m_eKeyType = ValueEnforcer.notNull (eKeyType, "KeyType");
     return this;
   }
 
   @Nullable
-  public String getName ()
+  public final String getName ()
   {
     return m_sName;
   }
 
   @Nonnull
-  public HCKeyGen setName (@Nullable final String sName)
+  public final HCKeyGen setName (@Nullable final String sName)
   {
     m_sName = sName;
     return this;

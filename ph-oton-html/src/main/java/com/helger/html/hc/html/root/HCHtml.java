@@ -76,13 +76,13 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   }
 
   @Nonnull
-  public HCHead head ()
+  public final HCHead head ()
   {
     return m_aHead;
   }
 
   @Nonnull
-  public HCBody body ()
+  public final HCBody body ()
   {
     return m_aBody;
   }
@@ -90,21 +90,21 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   @Override
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IHCNode> getAllChildren ()
+  public final ICommonsList <? extends IHCNode> getAllChildren ()
   {
     return new CommonsArrayList <> (m_aHead, m_aBody);
   }
 
   @Override
   @Nonnull
-  public ICommonsIterable <? extends IHCNode> getChildren ()
+  public final ICommonsIterable <? extends IHCNode> getChildren ()
   {
     return getAllChildren ();
   }
 
   @Override
   @Nullable
-  public IHCNode getChildAtIndex (final int nIndex)
+  public final IHCNode getChildAtIndex (final int nIndex)
   {
     if (nIndex == 0)
       return m_aHead;
@@ -115,26 +115,26 @@ public class HCHtml extends AbstractHCElement <HCHtml>
 
   @Override
   @Nonnull
-  public IHCNode getFirstChild ()
+  public final IHCNode getFirstChild ()
   {
     return m_aHead;
   }
 
   @Override
   @Nonnull
-  public IHCNode getLastChild ()
+  public final IHCNode getLastChild ()
   {
     return m_aBody;
   }
 
   @Override
-  public boolean hasChildren ()
+  public final boolean hasChildren ()
   {
     return true;
   }
 
   @Override
-  public int getChildCount ()
+  public final int getChildCount ()
   {
     return 2;
   }

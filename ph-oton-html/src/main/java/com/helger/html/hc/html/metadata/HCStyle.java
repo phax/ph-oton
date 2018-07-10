@@ -89,26 +89,26 @@ public class HCStyle extends AbstractHCElement <HCStyle>
   }
 
   @Nonnull
-  public IMimeType getType ()
+  public final IMimeType getType ()
   {
     return m_aType;
   }
 
   @Nonnull
-  public HCStyle setType (@Nonnull final IMimeType aType)
+  public final HCStyle setType (@Nonnull final IMimeType aType)
   {
     m_aType = ValueEnforcer.notNull (aType, "Type");
     return this;
   }
 
   @Nullable
-  public ICSSMediaList getMedia ()
+  public final ICSSMediaList getMedia ()
   {
     return m_aMediaList;
   }
 
   @Nonnull
-  public HCStyle setMedia (@Nullable final ICSSMediaList aMediaList)
+  public final HCStyle setMedia (@Nullable final ICSSMediaList aMediaList)
   {
     m_aMediaList = aMediaList == null ? null : new CSSMediaList (aMediaList);
     return this;
@@ -123,14 +123,14 @@ public class HCStyle extends AbstractHCElement <HCStyle>
   }
 
   @Nonnull
-  public HCStyle addMedium (@Nonnull final ECSSMedium eMedium)
+  public final HCStyle addMedium (@Nonnull final ECSSMedium eMedium)
   {
     _ensureMediaListPresent ().addMedium (eMedium);
     return this;
   }
 
   @Nonnull
-  public HCStyle removeAllMedia ()
+  public final HCStyle removeAllMedia ()
   {
     m_aMediaList = null;
     return this;
@@ -143,23 +143,23 @@ public class HCStyle extends AbstractHCElement <HCStyle>
    *        The medium to be checked. May be <code>null</code>.
    * @return <code>true</code> if it is contained, <code>false</code> otherwise
    */
-  public boolean containsMedium (@Nullable final ECSSMedium eMedium)
+  public final boolean containsMedium (@Nullable final ECSSMedium eMedium)
   {
     return m_aMediaList != null && m_aMediaList.containsMedium (eMedium);
   }
 
   @Nonnegative
-  public int getMediaCount ()
+  public final int getMediaCount ()
   {
     return m_aMediaList == null ? 0 : m_aMediaList.getMediaCount ();
   }
 
-  public boolean hasAnyMedia ()
+  public final boolean hasAnyMedia ()
   {
     return m_aMediaList != null && m_aMediaList.hasAnyMedia ();
   }
 
-  public boolean hasNoMedia ()
+  public final boolean hasNoMedia ()
   {
     return m_aMediaList == null || !m_aMediaList.hasAnyMedia ();
   }
@@ -168,26 +168,28 @@ public class HCStyle extends AbstractHCElement <HCStyle>
    * @return <code>true</code> if no explicit media is defined or if
    *         {@link ECSSMedium#ALL} is contained.
    */
-  public boolean hasNoMediaOrAll ()
+  public final boolean hasNoMediaOrAll ()
   {
     return hasNoMedia () || containsMedium (ECSSMedium.ALL);
   }
 
   @Nonnull
-  public HCStyle setStyleContent (@Nullable final String sContent)
+  public final HCStyle setStyleContent (@Nullable final String sContent)
   {
     m_sContent = sContent;
     return this;
   }
 
   @Nonnull
-  public HCStyle setStyleContent (@Nonnull final CascadingStyleSheet aCSS, @Nonnull final CSSWriterSettings aSettings)
+  public final HCStyle setStyleContent (@Nonnull final CascadingStyleSheet aCSS,
+                                        @Nonnull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }
 
   @Nonnull
-  public HCStyle setStyleContent (@Nonnull final CSSDeclarationList aCSS, @Nonnull final CSSWriterSettings aSettings)
+  public final HCStyle setStyleContent (@Nonnull final CSSDeclarationList aCSS,
+                                        @Nonnull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }
@@ -196,31 +198,31 @@ public class HCStyle extends AbstractHCElement <HCStyle>
    * @return The CSS content. May be <code>null</code>.
    */
   @Nullable
-  public String getStyleContent ()
+  public final String getStyleContent ()
   {
     return m_sContent;
   }
 
   @Nonnull
-  public EHCStyleInlineMode getMode ()
+  public final EHCStyleInlineMode getMode ()
   {
     return m_eMode;
   }
 
   @Nonnull
-  public HCStyle setMode (@Nonnull final EHCStyleInlineMode eMode)
+  public final HCStyle setMode (@Nonnull final EHCStyleInlineMode eMode)
   {
     m_eMode = ValueEnforcer.notNull (eMode, "Mode");
     return this;
   }
 
-  public boolean isEmitAfterFiles ()
+  public final boolean isEmitAfterFiles ()
   {
     return m_bEmitAfterFiles;
   }
 
   @Nonnull
-  public HCStyle setEmitAfterFiles (final boolean bEmitAfterFiles)
+  public final HCStyle setEmitAfterFiles (final boolean bEmitAfterFiles)
   {
     m_bEmitAfterFiles = bEmitAfterFiles;
     return this;

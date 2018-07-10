@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html;
 
+import java.io.Serializable;
+
 import com.helger.xml.microdom.IHasAttributeValue;
 
 /**
@@ -23,7 +25,7 @@ import com.helger.xml.microdom.IHasAttributeValue;
  *
  * @author Philip Helger
  */
-public interface IHCHasHTMLAttributeValue extends IHasAttributeValue
+public interface IHCHasHTMLAttributeValue extends IHasAttributeValue, Serializable
 {
   /* empty */
 }

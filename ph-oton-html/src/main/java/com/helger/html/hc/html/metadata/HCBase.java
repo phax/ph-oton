@@ -44,26 +44,26 @@ public class HCBase extends AbstractHCElement <HCBase>
   }
 
   @Nullable
-  public ISimpleURL getHref ()
+  public final ISimpleURL getHref ()
   {
     return m_aHref;
   }
 
   @Nonnull
-  public HCBase setHref (@Nullable final ISimpleURL aHref)
+  public final HCBase setHref (@Nullable final ISimpleURL aHref)
   {
     m_aHref = aHref;
     return this;
   }
 
   @Nullable
-  public HC_Target getTarget ()
+  public final HC_Target getTarget ()
   {
     return m_aTarget;
   }
 
   @Nonnull
-  public HCBase setTarget (@Nullable final HC_Target aTarget)
+  public final HCBase setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;
     return this;

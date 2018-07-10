@@ -34,8 +34,8 @@ import com.helger.xml.microdom.IMicroElement;
  *
  * @author Philip Helger
  */
-public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, HCTextNode>
-                      implements IHCHasState <HCOption>
+public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, HCTextNode> implements
+                      IHCHasState <HCOption>
 {
   /** By default the option is not disabled */
   public static final boolean DEFAULT_DISABLED = false;
@@ -55,32 +55,32 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
     super (EHTMLElement.OPTION);
   }
 
-  public boolean isDisabled ()
+  public final boolean isDisabled ()
   {
     return m_bDisabled;
   }
 
   @Nonnull
-  public HCOption setDisabled (final boolean bDisabled)
+  public final HCOption setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
     return this;
   }
 
   @Nullable
-  public String getLabel ()
+  public final String getLabel ()
   {
     return m_sLabel;
   }
 
   @Nonnull
-  public HCOption setLabel (final String sLabel)
+  public final HCOption setLabel (final String sLabel)
   {
     m_sLabel = sLabel;
     return this;
   }
 
-  public boolean isSelected ()
+  public final boolean isSelected ()
   {
     return m_bSelected;
   }
@@ -89,13 +89,13 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
    * @return <code>true</code> if this option was specially marked selected or
    *         not selected.
    */
-  public boolean isSelectionDefined ()
+  public final boolean isSelectionDefined ()
   {
     return m_bSelectionDefined;
   }
 
   @Nonnull
-  public HCOption setSelected (final boolean bSelected)
+  public final HCOption setSelected (final boolean bSelected)
   {
     m_bSelected = bSelected;
     m_bSelectionDefined = true;
@@ -103,13 +103,13 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
   }
 
   @Nullable
-  public String getValue ()
+  public final String getValue ()
   {
     return m_sValue;
   }
 
   @Nonnull
-  public HCOption setValue (@Nullable final String sValue)
+  public final HCOption setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
     return this;

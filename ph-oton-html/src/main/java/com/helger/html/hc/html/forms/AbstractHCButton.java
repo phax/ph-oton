@@ -151,13 +151,13 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
   }
 
   @Nullable
-  public IMimeType getFormEncType ()
+  public final IMimeType getFormEncType ()
   {
     return m_aFormEncType;
   }
 
   @Nonnull
-  public IMPLTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
+  public final IMPLTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
   {
     m_aFormEncType = aFormEncType;
     return thisAsT ();
@@ -220,7 +220,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
   }
 
   @Nonnull
-  public IMPLTYPE setType (@Nonnull final EHCButtonType eType)
+  public final IMPLTYPE setType (@Nonnull final EHCButtonType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
     return thisAsT ();

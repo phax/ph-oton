@@ -29,20 +29,22 @@ import com.helger.xml.microdom.IMicroElement;
 @SinceHTML5
 public class HCDetails extends AbstractHCElementWithChildren <HCDetails>
 {
-  private boolean m_bOpen = false;
+  public static final boolean DEFAULT_OPEN = false;
+
+  private boolean m_bOpen = DEFAULT_OPEN;
 
   public HCDetails ()
   {
     super (EHTMLElement.DETAILS);
   }
 
-  public boolean isOpen ()
+  public final boolean isOpen ()
   {
     return m_bOpen;
   }
 
   @Nonnull
-  public HCDetails setOpen (final boolean bOpen)
+  public final HCDetails setOpen (final boolean bOpen)
   {
     m_bOpen = bOpen;
     return this;

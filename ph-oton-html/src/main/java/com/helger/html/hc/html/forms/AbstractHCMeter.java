@@ -46,73 +46,73 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
     super (EHTMLElement.METER);
   }
 
-  public double getValue ()
+  public final double getValue ()
   {
     return m_dValue;
   }
 
   @Nonnull
-  public IMPLTYPE setValue (final double dValue)
+  public final IMPLTYPE setValue (final double dValue)
   {
     m_dValue = dValue;
     return thisAsT ();
   }
 
-  public double getMin ()
+  public final double getMin ()
   {
     return m_dMin;
   }
 
   @Nonnull
-  public IMPLTYPE setMin (final double dMin)
+  public final IMPLTYPE setMin (final double dMin)
   {
     m_dMin = dMin;
     return thisAsT ();
   }
 
-  public double getMax ()
+  public final double getMax ()
   {
     return m_dMax;
   }
 
   @Nonnull
-  public IMPLTYPE setMax (final double dMax)
+  public final IMPLTYPE setMax (final double dMax)
   {
     m_dMax = dMax;
     return thisAsT ();
   }
 
-  public double getLow ()
+  public final double getLow ()
   {
     return m_dLow;
   }
 
   @Nonnull
-  public IMPLTYPE setLow (final double dLow)
+  public final IMPLTYPE setLow (final double dLow)
   {
     m_dLow = dLow;
     return thisAsT ();
   }
 
-  public double getHigh ()
+  public final double getHigh ()
   {
     return m_dHigh;
   }
 
   @Nonnull
-  public IMPLTYPE setHigh (final double dHigh)
+  public final IMPLTYPE setHigh (final double dHigh)
   {
     m_dHigh = dHigh;
     return thisAsT ();
   }
 
-  public double getOptimum ()
+  public final double getOptimum ()
   {
     return m_dOptimum;
   }
 
   @Nonnull
-  public IMPLTYPE setOptimum (final double dOptimum)
+  public final IMPLTYPE setOptimum (final double dOptimum)
   {
     m_dOptimum = dOptimum;
     return thisAsT ();

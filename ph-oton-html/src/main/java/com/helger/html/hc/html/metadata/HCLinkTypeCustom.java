@@ -48,12 +48,12 @@ public class HCLinkTypeCustom implements IHCLinkType
 
   @Nonnull
   @Nonempty
-  public String getAttrValue ()
+  public final String getAttrValue ()
   {
     return m_sAttrValue;
   }
 
-  public boolean isAllowedMoreThanOnce ()
+  public final boolean isAllowedMoreThanOnce ()
   {
     return m_bAllowedMoreThanOnce;
   }

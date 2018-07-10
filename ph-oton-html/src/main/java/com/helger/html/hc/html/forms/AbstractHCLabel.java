@@ -48,20 +48,20 @@ public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYP
   }
 
   @Nullable
-  public String getFor ()
+  public final String getFor ()
   {
     return m_sFor;
   }
 
   @Nonnull
-  public IMPLTYPE setFor (@Nullable final String sFor)
+  public final IMPLTYPE setFor (@Nullable final String sFor)
   {
     m_sFor = sFor;
     return thisAsT ();
   }
 
   @Nonnull
-  public IMPLTYPE setFor (@Nullable final IHCHasID <?> aFor)
+  public final IMPLTYPE setFor (@Nullable final IHCHasID <?> aFor)
   {
     if (aFor == null)
       m_sFor = null;
@@ -71,13 +71,13 @@ public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYP
   }
 
   @Nullable
-  public String getForm ()
+  public final String getForm ()
   {
     return m_sForm;
   }
 
   @Nonnull
-  public IMPLTYPE setForm (@Nullable final String sForm)
+  public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
     return thisAsT ();

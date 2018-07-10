@@ -46,13 +46,13 @@ public class HCTitle extends AbstractHCElement <HCTitle>
   }
 
   @Nullable
-  public String getContent ()
+  public final String getContent ()
   {
     return m_sContent;
   }
 
   @Nonnull
-  public HCTitle setContent (@Nullable final String sContent)
+  public final HCTitle setContent (@Nullable final String sContent)
   {
     m_sContent = sContent;
     return this;

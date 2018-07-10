@@ -45,52 +45,52 @@ public class HCMeta extends AbstractHCElement <HCMeta>
   }
 
   @Nullable
-  public String getName ()
+  public final String getName ()
   {
     return m_sName;
   }
 
   @Nonnull
-  public HCMeta setName (@Nullable final String sName)
+  public final HCMeta setName (@Nullable final String sName)
   {
     m_sName = sName;
     return this;
   }
 
   @Nullable
-  public String getHttpEquiv ()
+  public final String getHttpEquiv ()
   {
     return m_sHttpEquiv;
   }
 
   @Nonnull
-  public HCMeta setHttpEquiv (@Nullable final String sHttpEquiv)
+  public final HCMeta setHttpEquiv (@Nullable final String sHttpEquiv)
   {
     m_sHttpEquiv = sHttpEquiv;
     return this;
   }
 
   @Nullable
-  public String getContent ()
+  public final String getContent ()
   {
     return m_sContent;
   }
 
   @Nonnull
-  public HCMeta setContent (@Nullable final String sContent)
+  public final HCMeta setContent (@Nullable final String sContent)
   {
     m_sContent = sContent;
     return this;
   }
 
   @Nullable
-  public String getCharset ()
+  public final String getCharset ()
   {
     return m_sCharset;
   }
 
   @Nonnull
-  public HCMeta setCharset (@Nullable final String sCharset)
+  public final HCMeta setCharset (@Nullable final String sCharset)
   {
     m_sCharset = sCharset;
     return this;

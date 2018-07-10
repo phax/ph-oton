@@ -76,7 +76,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
    * @return The JS code passed in the constructor. Never <code>null</code>.
    */
   @Nonnull
-  public IHasJSCode getJSCodeProvider ()
+  public final IHasJSCode getJSCodeProvider ()
   {
     return m_aJSProvider;
   }
@@ -89,7 +89,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
    *         May be <code>null</code>.
    */
   @Nullable
-  public String getJSCode (@Nonnull final IJSWriterSettings aSettings)
+  public final String getJSCode (@Nonnull final IJSWriterSettings aSettings)
   {
     if (m_aJSProvider == null)
       return null;
@@ -103,7 +103,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
    * @return The masking mode. Never <code>null</code>.
    */
   @Nonnull
-  public EHCScriptInlineMode getMode ()
+  public final EHCScriptInlineMode getMode ()
   {
     return m_eScriptMode;
   }
@@ -116,19 +116,19 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
    * @return this
    */
   @Nonnull
-  public IMPLTYPE setMode (@Nonnull final EHCScriptInlineMode eMode)
+  public final IMPLTYPE setMode (@Nonnull final EHCScriptInlineMode eMode)
   {
     m_eScriptMode = ValueEnforcer.notNull (eMode, "Mode");
     return thisAsT ();
   }
 
-  public boolean isEmitAfterFiles ()
+  public final boolean isEmitAfterFiles ()
   {
     return m_bEmitAfterFiles;
   }
 
   @Nonnull
-  public IMPLTYPE setEmitAfterFiles (final boolean bEmitAfterFiles)
+  public final IMPLTYPE setEmitAfterFiles (final boolean bEmitAfterFiles)
   {
     m_bEmitAfterFiles = bEmitAfterFiles;
     return thisAsT ();

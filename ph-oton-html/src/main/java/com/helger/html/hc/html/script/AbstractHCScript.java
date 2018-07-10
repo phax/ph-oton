@@ -40,8 +40,9 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLTYPE>>
-                                       extends AbstractHCElement <IMPLTYPE> implements IHCScript <IMPLTYPE>
+public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLTYPE>> extends
+                                       AbstractHCElement <IMPLTYPE> implements
+                                       IHCScript <IMPLTYPE>
 {
   /** Default MIME type: text/javascript */
   public static final IMimeType DEFAULT_TYPE = CMimeType.TEXT_JAVASCRIPT;
@@ -57,52 +58,52 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
   }
 
   @Nonnull
-  public IMimeType getType ()
+  public final IMimeType getType ()
   {
     return m_aType;
   }
 
   @Nonnull
-  public IMPLTYPE setType (@Nonnull final IMimeType aType)
+  public final IMPLTYPE setType (@Nonnull final IMimeType aType)
   {
     m_aType = ValueEnforcer.notNull (aType, "Type");
     return thisAsT ();
   }
 
   @Nullable
-  public String getCharset ()
+  public final String getCharset ()
   {
     return m_sCharset;
   }
 
   @Nonnull
-  public IMPLTYPE setCharset (@Nullable final String sCharset)
+  public final IMPLTYPE setCharset (@Nullable final String sCharset)
   {
     m_sCharset = sCharset;
     return thisAsT ();
   }
 
   @Nullable
-  public EHCCORSSettings getCrossOrigin ()
+  public final EHCCORSSettings getCrossOrigin ()
   {
     return m_eCrossOrigin;
   }
 
   @Nonnull
-  public IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
+  public final IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
     return thisAsT ();
   }
 
   @Nullable
-  public String getIntegrity ()
+  public final String getIntegrity ()
   {
     return m_sIntegrity;
   }
 
   @Nonnull
-  public IMPLTYPE setIntegrity (@Nullable final String sIntegrity)
+  public final IMPLTYPE setIntegrity (@Nullable final String sIntegrity)
   {
     m_sIntegrity = sIntegrity;
     return thisAsT ();

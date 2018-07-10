@@ -33,8 +33,8 @@ import com.helger.xml.microdom.IMicroElement;
  *
  * @author Philip Helger
  */
-public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGroup, HCOption>
-                        implements IHCHasState <HCOptGroup>
+public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGroup, HCOption> implements
+                        IHCHasState <HCOptGroup>
 {
   /** By default the opt group is not disabled */
   public static final boolean DEFAULT_DISABLED = false;
@@ -47,26 +47,26 @@ public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGrou
     super (EHTMLElement.OPTGROUP);
   }
 
-  public boolean isDisabled ()
+  public final boolean isDisabled ()
   {
     return m_bDisabled;
   }
 
   @Nonnull
-  public HCOptGroup setDisabled (final boolean bDisabled)
+  public final HCOptGroup setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
     return this;
   }
 
   @Nullable
-  public String getLabel ()
+  public final String getLabel ()
   {
     return m_sLabel;
   }
 
   @Nonnull
-  public HCOptGroup setLabel (@Nullable final String sLabel)
+  public final HCOptGroup setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
     return this;

@@ -430,8 +430,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
-      aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
-                                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+      aAttrTable.addHeaderRow ()
+                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
+                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
@@ -470,7 +471,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCUserSelect (new RequestField (FIELD_USER,
                                                                                                aSelectedObject == null ? null
-                                                                                                                       : aSelectedObject.getUser ()),
+                                                                                                                       : aSelectedObject.getUserID ()),
                                                                              aDisplayLocale,
                                                                              x -> !x.isDeleted () && x.isEnabled ())
                                                                                                                     .setReadOnly (bEdit))

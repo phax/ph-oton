@@ -33,8 +33,6 @@
  */
 package com.helger.html.hc.html;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -49,7 +47,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class HC_Target implements IHCHasHTMLAttributeValue, Serializable
+public class HC_Target implements IHCHasHTMLAttributeValue
 {
   // See http://de.selfhtml.org/html/verweise/definieren.htm#zielfenster
   /** New window */

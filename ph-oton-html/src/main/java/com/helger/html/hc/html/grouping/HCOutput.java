@@ -47,7 +47,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
   }
 
   @Nullable
-  public String getFor ()
+  public final String getFor ()
   {
     return m_sFor;
   }
@@ -61,7 +61,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
    * @return this
    */
   @Nonnull
-  public HCOutput setFor (@Nullable final String sFor)
+  public final HCOutput setFor (@Nullable final String sFor)
   {
     m_sFor = sFor;
     return this;
@@ -76,7 +76,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
    * @return this
    */
   @Nonnull
-  public HCOutput setFor (@Nullable final IHCHasID <?> aFor)
+  public final HCOutput setFor (@Nullable final IHCHasID <?> aFor)
   {
     if (aFor == null)
       m_sFor = null;
@@ -86,7 +86,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
   }
 
   @Nullable
-  public String getForm ()
+  public final String getForm ()
   {
     return m_sForm;
   }
@@ -99,7 +99,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
    * @return this
    */
   @Nonnull
-  public HCOutput setForm (@Nullable final String sForm)
+  public final HCOutput setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
     return this;

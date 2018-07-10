@@ -16,8 +16,6 @@
  */
 package com.helger.html.hc.html.forms;
 
-import java.util.function.Predicate;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,13 +23,16 @@ import javax.annotation.Nullable;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.functional.IPredicate;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
@@ -137,12 +138,12 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsSet <String> getAllPreselectedValues ()
+  public final ICommonsSet <String> getAllPreselectedValues ()
   {
     return m_aPreselectedValues.getClone ();
   }
 
-  public boolean isPreselectedValue (@Nullable final String sValue)
+  public final boolean isPreselectedValue (@Nullable final String sValue)
   {
     return m_aPreselectedValues.contains (sValue);
   }
@@ -299,8 +300,8 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_aOptions.containsAny (c -> c instanceof HCOptGroup);
   }
 
-  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = aChild -> aChild instanceof HCOption &&
-                                                                            ((HCOption) aChild).isSelected ();
+  private static final IPredicate <IHCNode> PRED_SELECTED_OPTION = aChild -> aChild instanceof HCOption &&
+                                                                             ((HCOption) aChild).isSelected ();
 
   @Nonnull
   @ReturnsMutableCopy
@@ -320,49 +321,58 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_aOptions.containsAny (PRED_SELECTED_OPTION);
   }
 
-  @Override
   @Nullable
-  public ICommonsList <? extends IHCNode> getAllChildren ()
-  {
-    return m_aOptions.getClone ();
-  }
-
-  @Override
-  @Nonnull
-  public ICommonsIterable <? extends IHCNode> getChildren ()
+  @ReturnsMutableObject
+  public final ICommonsList <IHCNode> children ()
   {
     return m_aOptions;
   }
 
   @Override
   @Nullable
-  public IHCNode getChildAtIndex (final int nIndex)
+  @ReturnsMutableCopy
+  public final ICommonsList <IHCNode> getAllChildren ()
+  {
+    return m_aOptions.getClone ();
+  }
+
+  @Override
+  @Nonnull
+  @ReturnsImmutableObject
+  public final ICommonsIterable <IHCNode> getChildren ()
+  {
+    return m_aOptions;
+  }
+
+  @Override
+  @Nullable
+  public final IHCNode getChildAtIndex (final int nIndex)
   {
     return m_aOptions.getAtIndex (nIndex);
   }
 
   @Override
   @Nullable
-  public IHCNode getFirstChild ()
+  public final IHCNode getFirstChild ()
   {
     return m_aOptions.getFirst ();
   }
 
   @Override
   @Nullable
-  public IHCNode getLastChild ()
+  public final IHCNode getLastChild ()
   {
     return m_aOptions.getLast ();
   }
 
   @Override
-  public boolean hasChildren ()
+  public final boolean hasChildren ()
   {
     return m_aOptions.isNotEmpty ();
   }
 
   @Override
-  public int getChildCount ()
+  public final int getChildCount ()
   {
     return m_aOptions.size ();
   }
