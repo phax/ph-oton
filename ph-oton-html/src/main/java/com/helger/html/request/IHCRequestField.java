@@ -60,6 +60,10 @@ public interface IHCRequestField extends Serializable
   @Nonnull
   String getRequestValue ();
 
+  /**
+   * @return Value list.
+   * @deprecated Use {@link IHCRequestFieldMultiValue} instead!
+   */
   @Deprecated
   @Nullable
   ICommonsList <String> getRequestValueAsList ();

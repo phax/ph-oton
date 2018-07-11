@@ -58,6 +58,6 @@ public enum EHCCommandType implements IHCHasHTMLAttributeValue
   {
     if (StringHelper.hasNoText (sAttrValue))
       return null;
-    return EnumHelper.findFirst (EHCCommandType.class, x -> x.getAttrValue ().equals (sAttrValue));
+    return EnumHelper.findFirst (EHCCommandType.class, x -> x.hasAttrValue (sAttrValue));
   }
 }

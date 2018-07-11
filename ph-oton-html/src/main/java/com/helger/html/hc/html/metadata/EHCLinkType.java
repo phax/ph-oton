@@ -102,6 +102,6 @@ public enum EHCLinkType implements IHCLinkType
   {
     if (StringHelper.hasNoText (sAttrValue))
       return null;
-    return EnumHelper.findFirst (EHCLinkType.class, x -> x.getAttrValue ().equals (sAttrValue));
+    return EnumHelper.findFirst (EHCLinkType.class, x -> x.hasAttrValue (sAttrValue));
   }
 }

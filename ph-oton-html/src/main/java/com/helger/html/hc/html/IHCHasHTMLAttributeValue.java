@@ -18,6 +18,9 @@ package com.helger.html.hc.html;
 
 import java.io.Serializable;
 
+import javax.annotation.Nullable;
+
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.xml.microdom.IHasAttributeValue;
 
 /**
@@ -27,5 +30,17 @@ import com.helger.xml.microdom.IHasAttributeValue;
  */
 public interface IHCHasHTMLAttributeValue extends IHasAttributeValue, Serializable
 {
-  /* empty */
+  /**
+   * Check if the attribute values matches the passed on.
+   * 
+   * @param sAttrValue
+   *        The attribute value to check. May be <code>null</code>.
+   * @return <code>true</code> if the attribute values are equal
+   * @see #getAttrValue()
+   * @since 8.0.2
+   */
+  default boolean hasAttrValue (@Nullable final String sAttrValue)
+  {
+    return EqualsHelper.equals (sAttrValue, getAttrValue ());
+  }
 }
