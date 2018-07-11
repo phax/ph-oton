@@ -38,7 +38,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
   }
 
   @Nonnull
-  public HCColGroup addColumns (@Nullable final IHCCol <?>... aCols)
+  public final HCColGroup addColumns (@Nullable final IHCCol <?>... aCols)
   {
     if (aCols != null)
       for (final IHCCol <?> aCol : aCols)
@@ -47,7 +47,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
   }
 
   @Nonnull
-  public HCColGroup addColumns (@Nullable final Iterable <? extends IHCCol <?>> aCols)
+  public final HCColGroup addColumns (@Nullable final Iterable <? extends IHCCol <?>> aCols)
   {
     if (aCols != null)
       for (final IHCCol <?> aCol : aCols)
@@ -63,7 +63,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    * @return this
    */
   @Nonnull
-  public HCColGroup addColumn (@Nullable final IHCCol <?> aCol)
+  public final HCColGroup addColumn (@Nullable final IHCCol <?> aCol)
   {
     if (aCol != null)
       addChild (aCol);
@@ -80,7 +80,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    * @return this
    */
   @Nonnull
-  public HCColGroup addColumnAt (@Nonnegative final int nIndex, @Nullable final IHCCol <?> aCol)
+  public final HCColGroup addColumnAt (@Nonnegative final int nIndex, @Nullable final IHCCol <?> aCol)
   {
     if (aCol != null)
       addChildAt (nIndex, aCol);
@@ -90,7 +90,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
   /**
    * @return <code>true</code> if at least one column is present
    */
-  public boolean hasColumns ()
+  public final boolean hasColumns ()
   {
     return hasChildren ();
   }
@@ -98,7 +98,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
   /**
    * @return <code>true</code> if not a single column is present
    */
-  public boolean hasNoColumns ()
+  public final boolean hasNoColumns ()
   {
     return hasNoChildren ();
   }
@@ -107,7 +107,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    * @return The number of contained columns. Always &ge; 0.
    */
   @Nonnegative
-  public int getColumnCount ()
+  public final int getColumnCount ()
   {
     return getChildCount ();
   }
@@ -117,7 +117,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    */
   @Nonnull
   @ReturnsImmutableObject
-  public ICommonsList <IHCCol <?>> getAllColumns ()
+  public final ICommonsList <IHCCol <?>> getAllColumns ()
   {
     return getAllChildren ();
   }
@@ -130,7 +130,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    * @return <code>null</code> if no such column exists
    */
   @Nullable
-  public IHCCol <?> getColumnOfIndex (final int nIndex)
+  public final IHCCol <?> getColumnOfIndex (final int nIndex)
   {
     return getChildAtIndex (nIndex);
   }
@@ -143,7 +143,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    * @return this
    */
   @Nonnull
-  public HCColGroup removeColumnAt (final int nIndex)
+  public final HCColGroup removeColumnAt (final int nIndex)
   {
     removeChildAt (nIndex);
     return this;
@@ -155,7 +155,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    * @return this
    */
   @Nonnull
-  public HCColGroup removeAllColumns ()
+  public final HCColGroup removeAllColumns ()
   {
     return removeAllChildren ();
   }

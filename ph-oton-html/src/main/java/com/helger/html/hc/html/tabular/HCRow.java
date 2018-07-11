@@ -49,7 +49,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
     m_bHeader = bHeader;
   }
 
-  public boolean isHeader ()
+  public final boolean isHeader ()
   {
     return m_bHeader;
   }
@@ -60,7 +60,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return The created cell. Never <code>null</code>.
    */
   @Nonnull
-  public IHCCell <?> addCell ()
+  public final IHCCell <?> addCell ()
   {
     final AbstractHCCell <?> ret = m_bHeader ? new HCTH () : new HCTD ();
     ret.internalSetParentRow (this);
@@ -76,7 +76,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return The created cell. Never <code>null</code>.
    */
   @Nonnull
-  public IHCCell <?> addCellAt (@Nonnegative final int nIndex)
+  public final IHCCell <?> addCellAt (@Nonnegative final int nIndex)
   {
     final AbstractHCCell <?> ret = m_bHeader ? new HCTH () : new HCTD ();
     ret.internalSetParentRow (this);
@@ -93,7 +93,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nullable final String sCellText)
+  public final IHCCell <?> addAndReturnCell (@Nullable final String sCellText)
   {
     return addCell ().addChild (sCellText);
   }
@@ -107,7 +107,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nullable final IHCNode aCellChild)
+  public final IHCCell <?> addAndReturnCell (@Nullable final IHCNode aCellChild)
   {
     return addCell ().addChild (aCellChild);
   }
@@ -121,7 +121,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nullable final String... aCellTexts)
+  public final IHCCell <?> addAndReturnCell (@Nullable final String... aCellTexts)
   {
     return addCell ().addChildren (aCellTexts);
   }
@@ -135,7 +135,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nullable final IHCNode... aCellChildren)
+  public final IHCCell <?> addAndReturnCell (@Nullable final IHCNode... aCellChildren)
   {
     return addCell ().addChildren (aCellChildren);
   }
@@ -149,7 +149,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCell (@Nullable final Iterable <? extends IHCNode> aCellChildren)
+  public final IHCCell <?> addAndReturnCell (@Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     return addCell ().addChildren (aCellChildren);
   }
@@ -165,7 +165,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
+  public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
   {
     return addCellAt (nIndex).addChild (sCellText);
   }
@@ -181,7 +181,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode aCellChild)
+  public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode aCellChild)
   {
     return addCellAt (nIndex).addChild (aCellChild);
   }
@@ -197,7 +197,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final String... aCellTexts)
+  public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final String... aCellTexts)
   {
     return addCellAt (nIndex).addChildren (aCellTexts);
   }
@@ -213,7 +213,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
+  public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
   {
     return addCellAt (nIndex).addChildren (aCellChildren);
   }
@@ -229,8 +229,8 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex,
-                                         @Nullable final Iterable <? extends IHCNode> aCellChildren)
+  public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex,
+                                               @Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     return addCellAt (nIndex).addChildren (aCellChildren);
   }
@@ -243,7 +243,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCell (@Nullable final String sCellText)
+  public final HCRow addCell (@Nullable final String sCellText)
   {
     addCell ().addChild (sCellText);
     return this;
@@ -257,7 +257,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCell (@Nullable final IHCNode aChild)
+  public final HCRow addCell (@Nullable final IHCNode aChild)
   {
     addCell ().addChild (aChild);
     return this;
@@ -271,7 +271,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCell (@Nullable final String... aCellTexts)
+  public final HCRow addCell (@Nullable final String... aCellTexts)
   {
     addCell ().addChildren (aCellTexts);
     return this;
@@ -285,7 +285,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCell (@Nullable final IHCNode... aCellChildren)
+  public final HCRow addCell (@Nullable final IHCNode... aCellChildren)
   {
     addCell ().addChildren (aCellChildren);
     return this;
@@ -299,7 +299,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCell (@Nullable final Iterable <? extends IHCNode> aCellChildren)
+  public final HCRow addCell (@Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     addCell ().addChildren (aCellChildren);
     return this;
@@ -315,7 +315,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
+  public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
   {
     addCellAt (nIndex).addChild (sCellText);
     return this;
@@ -331,7 +331,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode aChild)
+  public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode aChild)
   {
     addCellAt (nIndex).addChild (aChild);
     return this;
@@ -347,7 +347,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String... aCellChildren)
+  public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String... aCellChildren)
   {
     addCellAt (nIndex).addChildren (aCellChildren);
     return this;
@@ -363,7 +363,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
+  public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
   {
     addCellAt (nIndex).addChildren (aCellChildren);
     return this;
@@ -379,7 +379,8 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final Iterable <? extends IHCNode> aCellChildren)
+  public final HCRow addCellAt (@Nonnegative final int nIndex,
+                                @Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     addCellAt (nIndex).addChildren (aCellChildren);
     return this;
@@ -388,7 +389,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Deprecated
   @Nonnull
   @DevelopersNote ("Use addCell")
-  public HCRow addCells (@Nullable final String sCellChild)
+  public final HCRow addCells (@Nullable final String sCellChild)
   {
     return addCell (sCellChild);
   }
@@ -401,7 +402,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCells (@Nullable final String... aCellTexts)
+  public final HCRow addCells (@Nullable final String... aCellTexts)
   {
     if (aCellTexts != null)
       for (final String sCellText : aCellTexts)
@@ -412,7 +413,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Deprecated
   @Nonnull
   @DevelopersNote ("Use addCell")
-  public HCRow addCells (@Nullable final IHCNode aCellChild)
+  public final HCRow addCells (@Nullable final IHCNode aCellChild)
   {
     return addCell (aCellChild);
   }
@@ -426,7 +427,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCells (@Nullable final IHCNode... aCellChildren)
+  public final HCRow addCells (@Nullable final IHCNode... aCellChildren)
   {
     if (aCellChildren != null)
       for (final IHCNode aCellChild : aCellChildren)
@@ -443,7 +444,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public HCRow addCells (@Nullable final Iterable <? extends IHCNode> aCellChildren)
+  public final HCRow addCells (@Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     if (aCellChildren != null)
       for (final IHCNode aCellChild : aCellChildren)
@@ -460,7 +461,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return <code>null</code> if no such cell is present
    */
   @Nullable
-  public IHCCell <?> getCellAtIndex (final int nIndex)
+  public final IHCCell <?> getCellAtIndex (final int nIndex)
   {
     return getChildAtIndex (nIndex);
   }
@@ -474,7 +475,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return <code>null</code> if no such cell is present
    */
   @Nullable
-  public IHCCell <?> getCellAtEffectiveIndex (final int nIndex)
+  public final IHCCell <?> getCellAtEffectiveIndex (final int nIndex)
   {
     int i = 0;
     if (hasChildren ())
@@ -494,7 +495,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return The number of contained cells.
    */
   @Nonnegative
-  public int getCellCount ()
+  public final int getCellCount ()
   {
     return getChildCount ();
   }
@@ -505,7 +506,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return The number of effectively contained cells. Always &ge; 0.
    */
   @Nonnegative
-  public int getEffectiveCellCount ()
+  public final int getEffectiveCellCount ()
   {
     int ret = 0;
     if (hasChildren ())
@@ -522,7 +523,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this
    */
   @Nonnull
-  public HCRow removeCellAt (@Nonnegative final int nIndex)
+  public final HCRow removeCellAt (@Nonnegative final int nIndex)
   {
     removeChildAt (nIndex);
     return this;
@@ -531,7 +532,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   /**
    * @return <code>true</code> if at least one contained cell uses a colspan.
    */
-  public boolean isColspanUsed ()
+  public final boolean isColspanUsed ()
   {
     if (hasChildren ())
       for (final IHCCell <?> aCell : children ())
@@ -543,7 +544,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   /**
    * @return <code>true</code> if at least one contained cell uses a rowspan.
    */
-  public boolean isRowspanUsed ()
+  public final boolean isRowspanUsed ()
   {
     if (hasChildren ())
       for (final IHCCell <?> aCell : children ())

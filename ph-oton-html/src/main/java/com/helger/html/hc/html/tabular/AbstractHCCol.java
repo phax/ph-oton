@@ -39,7 +39,8 @@ import com.helger.xml.microdom.IMicroElement;
  *        The implementation type.
  */
 public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE>
-                                    implements IHCCol <IMPLTYPE>
+                                    implements
+                                    IHCCol <IMPLTYPE>
 {
   private String m_sWidth;
   private int m_nSpan = CGlobal.ILLEGAL_UINT;
@@ -56,26 +57,26 @@ public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> 
   }
 
   @Nullable
-  public String getWidth ()
+  public final String getWidth ()
   {
     return m_sWidth;
   }
 
   @Nonnull
-  public IMPLTYPE setWidth (@Nullable final String sWidth)
+  public final IMPLTYPE setWidth (@Nullable final String sWidth)
   {
     m_sWidth = sWidth;
     return thisAsT ();
   }
 
   @CheckForSigned
-  public int getSpan ()
+  public final int getSpan ()
   {
     return m_nSpan;
   }
 
   @Nonnull
-  public IMPLTYPE setSpan (final int nSpan)
+  public final IMPLTYPE setSpan (final int nSpan)
   {
     m_nSpan = nSpan;
     return thisAsT ();

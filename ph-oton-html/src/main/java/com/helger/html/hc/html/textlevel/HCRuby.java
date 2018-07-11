@@ -39,8 +39,7 @@ public class HCRuby extends AbstractHCElementWithInternalChildren <HCRuby, IHCRu
   @Nonnull
   public final HCRuby addItem (@Nullable final IHCRubyChild <?> aChild)
   {
-    if (aChild != null)
-      addChild (aChild);
+    addChild (aChild);
     return this;
   }
 }

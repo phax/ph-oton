@@ -63,7 +63,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
   }
 
   @Nullable
-  public ISimpleURL getHref ()
+  public final ISimpleURL getHref ()
   {
     return m_aHref;
   }
@@ -78,52 +78,52 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
   }
 
   @Nullable
-  public HC_Target getTarget ()
+  public final HC_Target getTarget ()
   {
     return m_aTarget;
   }
 
   @Nonnull
-  public IMPLTYPE setTarget (@Nullable final HC_Target aTarget)
+  public final IMPLTYPE setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;
     return thisAsT ();
   }
 
   @Nullable
-  public String getName ()
+  public final String getName ()
   {
     return m_sName;
   }
 
   @Nonnull
-  public IMPLTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
   }
 
   @Nullable
-  public IMimeType getType ()
+  public final IMimeType getType ()
   {
     return m_aType;
   }
 
   @Nonnull
-  public IMPLTYPE setType (@Nullable final IMimeType aType)
+  public final IMPLTYPE setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
     return thisAsT ();
   }
 
   @Nullable
-  public String getMedia ()
+  public final String getMedia ()
   {
     return m_sMediaQuery;
   }
 
   @Nonnull
-  public IMPLTYPE setMedia (@Nullable final String sMediaQuery)
+  public final IMPLTYPE setMedia (@Nullable final String sMediaQuery)
   {
     m_sMediaQuery = sMediaQuery;
     return thisAsT ();

@@ -38,13 +38,13 @@ public class HCData extends AbstractHCElementWithChildren <HCData>
   }
 
   @Nullable
-  public String getValue ()
+  public final String getValue ()
   {
     return m_sValue;
   }
 
   @Nonnull
-  public HCData setValue (@Nullable final String sValue)
+  public final HCData setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
     return this;

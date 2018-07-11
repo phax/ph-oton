@@ -58,13 +58,13 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nullable
-  public String getDatetime ()
+  public final String getDatetime ()
   {
     return m_sDatetime;
   }
 
   @Nonnull
-  public HCTime setAsMonth (@Nonnegative final int nYear, @Nonnegative final int nMonth)
+  public final HCTime setAsMonth (@Nonnegative final int nYear, @Nonnegative final int nMonth)
   {
     m_sDatetime = StringHelper.getLeadingZero (nYear, LENGTH_YEAR) +
                   "-" +
@@ -73,7 +73,9 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsDate (@Nonnegative final int nYear, @Nonnegative final int nMonth, @Nonnegative final int nDay)
+  public final HCTime setAsDate (@Nonnegative final int nYear,
+                                 @Nonnegative final int nMonth,
+                                 @Nonnegative final int nDay)
   {
     m_sDatetime = StringHelper.getLeadingZero (nYear, LENGTH_YEAR) +
                   "-" +
@@ -84,20 +86,20 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsDate (@Nonnull final LocalDate aDate)
+  public final HCTime setAsDate (@Nonnull final LocalDate aDate)
   {
     m_sDatetime = DateTimeFormatterCache.getDateTimeFormatterStrict ("uuuu-MM-dd").format (aDate);
     return this;
   }
 
   @Nonnull
-  public HCTime setAsDate (@Nonnull final Date aDate)
+  public final HCTime setAsDate (@Nonnull final Date aDate)
   {
     return setAsDate (TypeConverter.convert (aDate, LocalDate.class));
   }
 
   @Nonnull
-  public HCTime setAsYearlessDate (@Nonnegative final int nMonth, @Nonnegative final int nDay)
+  public final HCTime setAsYearlessDate (@Nonnegative final int nMonth, @Nonnegative final int nDay)
   {
     m_sDatetime = StringHelper.getLeadingZero (nMonth, LENGTH_MONTH) +
                   "-" +
@@ -106,7 +108,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsTime (@Nonnegative final int nHour, @Nonnegative final int nMinute)
+  public final HCTime setAsTime (@Nonnegative final int nHour, @Nonnegative final int nMinute)
   {
     m_sDatetime = StringHelper.getLeadingZero (nHour, LENGTH_HOUR) +
                   ":" +
@@ -115,7 +117,9 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsTime (@Nonnegative final int nHour, @Nonnegative final int nMinute, @Nonnegative final int nSecond)
+  public final HCTime setAsTime (@Nonnegative final int nHour,
+                                 @Nonnegative final int nMinute,
+                                 @Nonnegative final int nSecond)
   {
     m_sDatetime = StringHelper.getLeadingZero (nHour, LENGTH_HOUR) +
                   ":" +
@@ -126,10 +130,10 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsTime (@Nonnegative final int nHour,
-                           @Nonnegative final int nMinute,
-                           @Nonnegative final int nSecond,
-                           @Nonnegative final int nMilliSeconds)
+  public final HCTime setAsTime (@Nonnegative final int nHour,
+                                 @Nonnegative final int nMinute,
+                                 @Nonnegative final int nSecond,
+                                 @Nonnegative final int nMilliSeconds)
   {
     m_sDatetime = StringHelper.getLeadingZero (nHour, LENGTH_HOUR) +
                   ":" +
@@ -142,33 +146,33 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsTime (@Nonnull final LocalTime aTime)
+  public final HCTime setAsTime (@Nonnull final LocalTime aTime)
   {
     m_sDatetime = DateTimeFormatterCache.getDateTimeFormatterStrict ("HH:mm:ss").format (aTime);
     return this;
   }
 
   @Nonnull
-  public HCTime setAsTime (@Nonnull final Date aDate)
+  public final HCTime setAsTime (@Nonnull final Date aDate)
   {
     return setAsTime (TypeConverter.convert (aDate, LocalTime.class));
   }
 
   @Nonnull
-  public HCTime setAsDateAndTime (@Nonnull final LocalDateTime aDateTime)
+  public final HCTime setAsDateAndTime (@Nonnull final LocalDateTime aDateTime)
   {
     m_sDatetime = DateTimeFormatterCache.getDateTimeFormatterStrict ("uuuu-MM-dd'T'HH:mm:ss.SSSZZ").format (aDateTime);
     return this;
   }
 
   @Nonnull
-  public HCTime setAsDateAndTime (@Nonnull final ZonedDateTime aDateTime)
+  public final HCTime setAsDateAndTime (@Nonnull final ZonedDateTime aDateTime)
   {
     return setAsDateAndTime (aDateTime.toLocalDateTime ());
   }
 
   @Nonnull
-  public HCTime setAsTimezone (@CheckForSigned final int nMinutes)
+  public final HCTime setAsTimezone (@CheckForSigned final int nMinutes)
   {
     final int nHours = nMinutes / CGlobal.MINUTES_PER_HOUR;
     final int nRestMinutes = nMinutes % CGlobal.MINUTES_PER_HOUR;
@@ -180,7 +184,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsWeekInYear (@Nonnegative final int nYear, @Nonnegative final int nWeekInYear)
+  public final HCTime setAsWeekInYear (@Nonnegative final int nYear, @Nonnegative final int nWeekInYear)
   {
     m_sDatetime = StringHelper.getLeadingZero (nYear, LENGTH_YEAR) +
                   "-W" +
@@ -189,7 +193,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   }
 
   @Nonnull
-  public HCTime setAsYear (@Nonnegative final int nYear)
+  public final HCTime setAsYear (@Nonnegative final int nYear)
   {
     m_sDatetime = StringHelper.getLeadingZero (nYear, LENGTH_YEAR);
     return this;
