@@ -36,6 +36,7 @@ Contained subprojects are:
   * Updated to Jetty 9.4.11
   * Updated to ph-web 9.0.2
   * Extended `*HCSelect` APIs for multi values
+  * The "Change log" page was removed
 * v8.0.1 - 2018-04-18
   * Updated to Jetty 9.4.9
   * Updated to Bootstrap 4.0.0
