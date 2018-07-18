@@ -71,7 +71,6 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
   PAGE_NAME_APPINFO_ACTIONS ("Web Aktionen", "Web actions"),
   PAGE_NAME_APPINFO_AJAX_FUNCTIONS ("AJAX Funktionen", "Ajax functions"),
   PAGE_NAME_APPINFO_API ("APIs", "APIs"),
-  PAGE_NAME_APPINFO_CHANGELOGS ("Änderungshistorie", "Change logs"),
   PAGE_NAME_APPINFO_CONFIG_FILES ("Konfigurationsdateien", "Configuration files"),
   PAGE_NAME_APPINFO_GO ("Go Mappings", "Go mappings"),
   PAGE_NAME_APPINFO_PATH_MAPPER ("AppID-Pfad-Mapping", "AppID path mapping"),
