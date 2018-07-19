@@ -93,7 +93,7 @@ public class WebSiteResource
       try
       {
         aDigestBytes = MessageDigestValue.create (m_aResource.getInputStream (), EMessageDigestAlgorithm.SHA_512)
-                                         .getAllDigestBytes ();
+                                         .bytes ();
       }
       catch (final IOException ex)
       {
@@ -233,9 +233,9 @@ public class WebSiteResource
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
     // long
     final String sVersion = m_sContentHash.length () >= 16 ? m_sContentHash.substring (0, 16) : "";
-    return PhotonHTMLSettings.getURIToURLConverter ().getAsURL (aRequestScope, m_sPath).addIf ("version",
-                                                                                               sVersion,
-                                                                                               StringHelper::hasText);
+    return PhotonHTMLSettings.getURIToURLConverter ()
+                             .getAsURL (aRequestScope, m_sPath)
+                             .addIf ("version", sVersion, StringHelper::hasText);
   }
 
   @Override

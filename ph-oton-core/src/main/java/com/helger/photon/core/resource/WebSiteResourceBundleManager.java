@@ -230,7 +230,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
       eBundle.setAttributeWithConversion (ATTR_CREATIONDT, aResourceBundle.getCreationDT ());
 
       final WebSiteResourceBundle aBundle = aResourceBundle.getBundle ();
-      eBundle.setAttributeWithConversion (ATTR_CONDITIONAL_COMMENT, aBundle.getConditionalComment ());
+      eBundle.setAttribute (ATTR_CONDITIONAL_COMMENT, aBundle.getConditionalComment ());
       eBundle.setAttribute (ATTR_IS_BUNDLABLE, Boolean.toString (aBundle.isBundlable ()));
       if (aBundle.hasMediaList ())
         for (final ECSSMedium eMedium : aBundle.getMediaList ().getAllMedia ())

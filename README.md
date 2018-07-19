@@ -34,6 +34,7 @@ Contained subprojects are:
   * Reworked meta element API so that `<meta charset="...">` can be handled
   * Fixed OSGI ServiceProvider configuration
   * Updated to Jetty 9.4.11
+  * Updated to ph-commons 9.1.3
   * Updated to ph-web 9.0.2
   * Extended `*HCSelect` APIs for multi values
   * The "Change log" page was removed
