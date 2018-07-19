@@ -43,7 +43,7 @@ import com.helger.commons.state.EChange;
 @ThreadSafe
 public final class WebSiteResourceCache
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceCache.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebSiteResourceCache.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static boolean s_bCacheEnabled = !GlobalDebug.isDebugMode ();
@@ -74,7 +74,7 @@ public final class WebSiteResourceCache
   public static void setCacheEnabled (final boolean bCacheEnabled)
   {
     s_aRWLock.writeLocked ( () -> s_bCacheEnabled = bCacheEnabled);
-    s_aLogger.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
+    LOGGER.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
   }
 
   @Nonnull

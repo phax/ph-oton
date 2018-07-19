@@ -32,7 +32,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class AjaxExecutorServerLog implements IAjaxExecutor
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorServerLog.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorServerLog.class);
   private static final IErrorLevel DEFAULT_SEVERITY = EErrorLevel.INFO;
   private static final String PARAM_SEVERITY = "severity";
   private static final String PARAM_MESSAGE = "message";
@@ -68,7 +68,7 @@ public class AjaxExecutorServerLog implements IAjaxExecutor
     final String sExpectedKey = ServerLogSessionKey.getGeneratedSessionKey ();
     if (StringHelper.hasNoText (sMessage) || sExpectedKey == null || !sExpectedKey.equals (sKey))
     {
-      s_aLogger.error ("Missing required parameter");
+      LOGGER.error ("Missing required parameter");
       aAjaxResponse.createBadRequest ();
       return;
     }

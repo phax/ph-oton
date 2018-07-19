@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public final class MainCreateAlertInDifferentColor
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateAlertInDifferentColor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainCreateAlertInDifferentColor.class);
 
   public static String createAlertCSSCode (@Nonnull final String sClassName,
                                            @Nonnull final String sLightColor,
@@ -67,6 +67,6 @@ public final class MainCreateAlertInDifferentColor
 
   public static void main (final String [] args)
   {
-    s_aLogger.info (createAlertCSSCode ("grey", "eeeeee", "cccccc", "999999"));
+    LOGGER.info (createAlertCSSCode ("grey", "eeeeee", "cccccc", "999999"));
   }
 }

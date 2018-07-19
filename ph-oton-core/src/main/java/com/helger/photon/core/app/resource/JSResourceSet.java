@@ -49,7 +49,7 @@ import com.helger.html.resource.js.IJSPathProvider;
 @ThreadSafe
 public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JSResourceSet.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSResourceSet.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
@@ -85,7 +85,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 
   private static void _collectWarn (@Nonnull final String sMsg)
   {
-    s_aLogger.warn (sMsg);
+    LOGGER.warn (sMsg);
   }
 
   @Nonnull

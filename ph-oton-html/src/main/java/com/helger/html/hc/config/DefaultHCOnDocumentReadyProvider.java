@@ -30,12 +30,12 @@ import com.helger.html.js.IHasJSCode;
  */
 public class DefaultHCOnDocumentReadyProvider implements IHCOnDocumentReadyProvider
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultHCOnDocumentReadyProvider.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DefaultHCOnDocumentReadyProvider.class);
 
   @Nonnull
   public IHasJSCode createOnDocumentReady (@Nonnull final IHasJSCode aJSCodeProvider)
   {
-    s_aLogger.warn ("No 'OnDocumentReadyProvider' defined. Please call 'HCDefaultSettings.setOnDocumentReadyProvider' on application startup!");
+    LOGGER.warn ("No 'OnDocumentReadyProvider' defined. Please call 'HCDefaultSettings.setOnDocumentReadyProvider' on application startup!");
     return aJSCodeProvider;
   }
 }

@@ -47,7 +47,7 @@ public final class LoggedInUserStorage
    */
   public static final String BASE_DIRECTORY = "userdata/";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggedInUserStorage.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggedInUserStorage.class);
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
@@ -108,7 +108,7 @@ public final class LoggedInUserStorage
     if (StringHelper.hasNoText (sRealUserID))
       throw new IllegalStateException ("Passed user ID '" + sUserID + "' is an empty filename!");
     if (!sRealUserID.equals (sUserID))
-      s_aLogger.warn ("User ID '" +
+      LOGGER.warn ("User ID '" +
                       sUserID +
                       "' was modified to '" +
                       sRealUserID +

@@ -61,7 +61,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
    */
   public static final String REQUEST_PARAM_JQUERY_NO_CACHE = "_";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxXServletHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AjaxXServletHandler.class);
 
   private static final String SCOPE_ATTR_NAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.name";
   private static final String SCOPE_ATTR_INVOKER = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.invoker";
@@ -104,7 +104,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     final IAjaxFunctionDeclaration aAjaxDeclaration = aAjaxInvoker.getRegisteredFunction (sFunctionName);
     if (aAjaxDeclaration == null)
     {
-      s_aLogger.warn ("Unknown Ajax function '" + sFunctionName + "' provided!");
+      LOGGER.warn ("Unknown Ajax function '" + sFunctionName + "' provided!");
 
       // No such action
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -114,7 +114,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     // Is the declaration applicable for the current scope?
     if (!aAjaxDeclaration.canExecute (aRequestScope))
     {
-      s_aLogger.warn ("Ajax function '" + sFunctionName + "' self-declined the execution for the current request.");
+      LOGGER.warn ("Ajax function '" + sFunctionName + "' self-declined the execution for the current request.");
       aUnifiedResponse.setStatus (HttpServletResponse.SC_UNAUTHORIZED);
       return EContinue.BREAK;
     }
@@ -123,7 +123,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     final IAjaxExecutor aAjaxExecutor = aAjaxDeclaration.getExecutor ();
     if (aAjaxExecutor == null)
     {
-      s_aLogger.warn ("No AjaxExecutor created for declaration " + aAjaxDeclaration);
+      LOGGER.warn ("No AjaxExecutor created for declaration " + aAjaxDeclaration);
       aUnifiedResponse.setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return EContinue.BREAK;
     }

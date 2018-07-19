@@ -46,7 +46,7 @@ import com.helger.web.scope.util.AbstractScopeAwareJob;
 @DisallowConcurrentExecution
 public final class FailedMailResendJob extends AbstractScopeAwareJob
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (FailedMailResendJob.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (FailedMailResendJob.class);
 
   /**
    * Public no argument constructor must be available.
@@ -61,7 +61,7 @@ public final class FailedMailResendJob extends AbstractScopeAwareJob
     final ICommonsList <FailedMailData> aFailedMails = PhotonCoreManager.getFailedMailQueue ().removeAll ();
     if (!aFailedMails.isEmpty ())
     {
-      s_aLogger.info ("Resending " + aFailedMails.size () + " failed mails!");
+      LOGGER.info ("Resending " + aFailedMails.size () + " failed mails!");
       for (final FailedMailData aFailedMailData : aFailedMails)
         ScopedMailAPI.getInstance ().queueMail (aFailedMailData.getSMTPSettings (), aFailedMailData.getEmailData ());
     }

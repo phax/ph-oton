@@ -37,7 +37,7 @@ import com.helger.commons.url.URLParameterDecoder;
 @Immutable
 public final class HCConsistencyChecker
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (HCConsistencyChecker.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (HCConsistencyChecker.class);
 
   private static final int MAX_CSS_IE = 31;
 
@@ -52,7 +52,7 @@ public final class HCConsistencyChecker
     if (GlobalDebug.isDebugMode ())
       throw new IllegalStateException ("HC Consistency check error: " + sMsg);
     // In production emit only an error
-    s_aLogger.error ("HC Consistency check error: " + sMsg);
+    LOGGER.error ("HC Consistency check error: " + sMsg);
   }
 
   public static void checkIfStringURLIsEscaped (@Nullable final String sHref)

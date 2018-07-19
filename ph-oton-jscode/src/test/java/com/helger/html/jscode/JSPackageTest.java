@@ -36,7 +36,7 @@ import com.helger.html.jscode.type.JSPrimitiveType;
  */
 public final class JSPackageTest
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JSPackageTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSPackageTest.class);
 
   @Nonnull
   private JSPackage _createMockPackage ()
@@ -211,8 +211,8 @@ public final class JSPackageTest
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aPkg, _createMockPackage ());
 
     final String sCode = aPkg.getJSCode (new JSWriterSettings ().setMinimumCodeSize (false));
-    s_aLogger.info (sCode);
-    s_aLogger.info ("--------");
+    LOGGER.info (sCode);
+    LOGGER.info ("--------");
     final String sCompressedCode = aPkg.getJSCode (new JSWriterSettings ().setMinimumCodeSize (true));
     assertEquals ("var g_aRoot=0;" +
                   "function mainAdd(m1){" +
@@ -257,12 +257,12 @@ public final class JSPackageTest
                   "i--;" +
                   "}",
                   sCompressedCode);
-    s_aLogger.info ("Saved " +
+    LOGGER.info ("Saved " +
                     (sCode.length () - sCompressedCode.length ()) +
                     " chars. " +
                     sCompressedCode.length () +
                     " chars are left");
-    s_aLogger.info ("--------");
+    LOGGER.info ("--------");
   }
 
   @Test
@@ -300,7 +300,7 @@ public final class JSPackageTest
       f.body ().assign (JSExpr.ref (aDollar, "fn", "setDisabled"), fED);
     }
     aPkg.invoke (f).arg (JSExpr.direct ("jQuery"));
-    s_aLogger.info (aPkg.getJSCode ());
+    LOGGER.info (aPkg.getJSCode ());
 
     // Use an unparsed JS code inside a block
     assertEquals ("{a=b;}",

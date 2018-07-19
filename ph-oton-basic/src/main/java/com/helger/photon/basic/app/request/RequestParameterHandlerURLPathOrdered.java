@@ -46,7 +46,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @Immutable
 public class RequestParameterHandlerURLPathOrdered implements IRequestParameterHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (RequestParameterHandlerURLPathOrdered.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (RequestParameterHandlerURLPathOrdered.class);
 
   /**
    * Default constructor
@@ -71,8 +71,8 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
         if (ret.setMenuItemFromString (aMenuTree, sParamValue) != null)
           continue;
 
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Ignoring superfluous parameter '" + sParamValue + "'");
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Ignoring superfluous parameter '" + sParamValue + "'");
     }
     return ret;
   }

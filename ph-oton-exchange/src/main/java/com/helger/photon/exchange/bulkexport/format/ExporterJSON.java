@@ -62,7 +62,7 @@ public class ExporterJSON implements IExporterFile
   private static final String ATTR_TYPE = "type";
   private static final String ATTR_VALUE = "value";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ExporterJSON.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ExporterJSON.class);
 
   private IJsonWriterSettings m_aJWS = new JsonWriterSettings ();
   private Charset m_aCharset = StandardCharsets.UTF_8;
@@ -181,7 +181,7 @@ public class ExporterJSON implements IExporterFile
     catch (final IOException ex)
     {
       if (!StreamHelper.isKnownEOFException (ex))
-        s_aLogger.error ("Failed to write JSON to output stream " + aOS, ex);
+        LOGGER.error ("Failed to write JSON to output stream " + aOS, ex);
       return ESuccess.FAILURE;
     }
     finally

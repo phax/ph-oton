@@ -30,7 +30,7 @@ import com.helger.commons.string.StringHelper;
 
 public final class MainExtractBootstrapDatetimePickerLanguages
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainExtractBootstrapDatetimePickerLanguages.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainExtractBootstrapDatetimePickerLanguages.class);
 
   public static void main (final String [] args)
   {
@@ -51,6 +51,6 @@ public final class MainExtractBootstrapDatetimePickerLanguages
       }
       aSB.append (sLocale.toUpperCase (Locale.US) + " (\"" + sLocale + "\", \"" + s + "\"),\n");
     }
-    s_aLogger.info (aSB.toString ());
+    LOGGER.info (aSB.toString ());
   }
 }

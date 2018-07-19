@@ -44,7 +44,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
                                      implements
                                      ITabBox <IMPLTYPE>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractTabBox.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractTabBox.class);
 
   protected final ICommonsOrderedMap <String, Tab> m_aTabs = new CommonsLinkedHashMap <> ();
   private String m_sActiveTabID;
@@ -62,7 +62,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
   {
     m_sActiveTabID = sID;
     if (StringHelper.hasText (sID) && !m_aTabs.containsKey (sID))
-      s_aLogger.warn ("No tab with ID '" + sID + "' to be set active!");
+      LOGGER.warn ("No tab with ID '" + sID + "' to be set active!");
     return thisAsT ();
   }
 

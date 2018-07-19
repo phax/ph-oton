@@ -48,7 +48,7 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
  */
 public class GoXServletHandler implements IXServletSimpleHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (GoXServletHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (GoXServletHandler.class);
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsError = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
                                                                                                                        "$error");
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsOK = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
@@ -120,7 +120,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
     final GoMappingItem aGoItem = getResolvedGoMappingItem (sKey);
     if (aGoItem == null)
     {
-      s_aLogger.warn ("No such go-mapping item '" + sKey + "'");
+      LOGGER.warn ("No such go-mapping item '" + sKey + "'");
       // Goto start page
       aTargetURL = getURLForNonExistingItem (aRequestScope, sKey);
       s_aStatsError.increment (sKey);
@@ -172,11 +172,11 @@ public class GoXServletHandler implements IXServletSimpleHandler
           aTargetURL.add (sParamName, sParamValue);
     }
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
     else
       if (GlobalDebug.isDebugMode ())
-        s_aLogger.info ("Following go-mapping item '" +
+        LOGGER.info ("Following go-mapping item '" +
                         sKey +
                         "' to " +
                         aTargetURL.getAsStringWithEncodedParameters ());

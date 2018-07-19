@@ -208,6 +208,6 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
     SimpleFileIO.writeFile (new File ("src/main/java/com/helger/html/jquery/IJQueryInvocationExtended.java"),
                             aFull.toString (),
                             StandardCharsets.UTF_8);
-    s_aLogger.info ("Done");
+    LOGGER.info ("Done");
   }
 }

@@ -114,7 +114,7 @@ import com.helger.html.js.UnparsedJSCodeProvider;
  */
 public final class HCFuncTest
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (HCFuncTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (HCFuncTest.class);
   @Rule
   public final HCTestRuleOptimized m_aRule = new HCTestRuleOptimized ();
 
@@ -249,7 +249,7 @@ public final class HCFuncTest
     final IHCConversionSettings aCS = HCSettings.getConversionSettings ().getCloneIfNecessary (EHTMLVersion.XHTML11);
     assertNotNull (HCRenderer.getAsNode (h, aCS));
     if (false)
-      s_aLogger.info (HCRenderer.getAsHTMLString (h, aCS));
+      LOGGER.info (HCRenderer.getAsHTMLString (h, aCS));
   }
 
   @Test

@@ -55,7 +55,7 @@ public final class HCSettings
   /** By default plain text without escape is used */
   public static final EHCStyleInlineMode DEFAULT_STYLE_MODE = EHCStyleInlineMode.PLAIN_TEXT_NO_ESCAPE;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (HCSettings.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (HCSettings.class);
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
@@ -182,7 +182,7 @@ public final class HCSettings
     getMutableConversionSettings ().setXMLWriterSettings (HCConversionSettings.createDefaultXMLWriterSettings (eHTMLVersion));
 
     if (!eHTMLVersion.equals (eOldVersion))
-      s_aLogger.info ("Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
+      LOGGER.info ("Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
 
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
@@ -206,7 +206,7 @@ public final class HCSettings
   public static void setAutoCompleteOffForPasswordEdits (final boolean bAutoCompleteOffForPasswordEdits)
   {
     s_aRWLock.writeLocked ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
-    s_aLogger.info ("Default @autocomplete for <input type=password> set to " +
+    LOGGER.info ("Default @autocomplete for <input type=password> set to " +
                     (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
   }
 
@@ -218,7 +218,7 @@ public final class HCSettings
   public static void setTextAreaDefaultRows (final int nTextAreaDefaultRows)
   {
     s_aRWLock.writeLocked ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
-    s_aLogger.info ("Default <textarea> rows set to " + nTextAreaDefaultRows);
+    LOGGER.info ("Default <textarea> rows set to " + nTextAreaDefaultRows);
   }
 
   @Nonnull
@@ -232,7 +232,7 @@ public final class HCSettings
     ValueEnforcer.notNull (aOnDocumentReadyProvider, "OnDocumentReadyProvider");
 
     s_aRWLock.writeLocked ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
-    s_aLogger.info ("Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
+    LOGGER.info ("Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
   }
 
   /**
@@ -260,7 +260,7 @@ public final class HCSettings
     final EHCScriptInlineMode eOld = getScriptInlineMode ();
     s_aRWLock.writeLocked ( () -> s_eScriptInlineMode = eMode);
     if (!eMode.equals (eOld))
-      s_aLogger.info ("Default <script> mode changed from " + eOld + " to " + eMode);
+      LOGGER.info ("Default <script> mode changed from " + eOld + " to " + eMode);
   }
 
   /**
@@ -287,7 +287,7 @@ public final class HCSettings
     final EHCStyleInlineMode eOld = getStyleInlineMode ();
     s_aRWLock.writeLocked ( () -> s_eStyleInlineMode = eStyleInlineMode);
     if (!eStyleInlineMode.equals (eOld))
-      s_aLogger.info ("Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
+      LOGGER.info ("Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
   }
 
   @Nonnull
@@ -303,7 +303,7 @@ public final class HCSettings
     final ENewLineMode eOld = getNewLineMode ();
     s_aRWLock.writeLocked ( () -> s_eNewLineMode = eNewLineMode);
     if (!eNewLineMode.equals (eOld))
-      s_aLogger.info ("Default new line mode changed from " + eOld + " to " + eNewLineMode);
+      LOGGER.info ("Default new line mode changed from " + eOld + " to " + eNewLineMode);
   }
 
   public static boolean isOutOfBandDebuggingEnabled ()
@@ -314,7 +314,7 @@ public final class HCSettings
   public static void setOutOfBandDebuggingEnabled (final boolean bEnabled)
   {
     s_aRWLock.writeLocked ( () -> s_bOOBDebugging = bEnabled);
-    s_aLogger.info ("Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
+    LOGGER.info ("Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
   }
 
   /**
@@ -330,7 +330,7 @@ public final class HCSettings
   public static void setScriptsInBody (final boolean bEnabled)
   {
     s_aRWLock.writeLocked ( () -> s_bScriptsInBody = bEnabled);
-    s_aLogger.info ("Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
+    LOGGER.info ("Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
   }
 
   /**
@@ -345,6 +345,6 @@ public final class HCSettings
   public static void setUseRegularResources (final boolean bUseRegularResources)
   {
     s_aRWLock.writeLocked ( () -> s_bUseRegularResources = bUseRegularResources);
-    s_aLogger.info ("Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
+    LOGGER.info ("Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
   }
 }

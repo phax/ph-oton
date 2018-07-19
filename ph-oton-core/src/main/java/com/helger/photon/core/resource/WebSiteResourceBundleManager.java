@@ -70,7 +70,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
   private static final String ATTR_CONTENT_HASH = "contenthash";
   private static final String ATTR_CHARSET = "charset";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceBundleManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebSiteResourceBundleManager.class);
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <WebSiteResourceBundle, String> m_aMapToData = new CommonsHashMap <> ();
   @GuardedBy ("m_aRWLock")
@@ -112,7 +112,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
       final ICommonsList <WebSiteResourceWithCondition> aResources = new CommonsArrayList <> ();
       if (!WebSiteResourceBundleSerialized.getResource (sBundleID).exists ())
       {
-        s_aLogger.warn ("No serialized bundle with ID '" + sBundleID + "' exists.");
+        LOGGER.warn ("No serialized bundle with ID '" + sBundleID + "' exists.");
         bResourcesAreOutOfSync = true;
       }
       else
@@ -124,7 +124,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
           final EWebSiteResourceType eResourceType = EWebSiteResourceType.getFromIDOrNull (sResourceType);
           if (eResourceType == null)
           {
-            s_aLogger.warn ("No such resource type: " + sResourceType);
+            LOGGER.warn ("No such resource type: " + sResourceType);
             bResourcesAreOutOfSync = true;
             continue;
           }
@@ -139,7 +139,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
           final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
           if (!aNewResource.isExisting ())
           {
-            s_aLogger.info ("Skipping resource bundle '" +
+            LOGGER.info ("Skipping resource bundle '" +
                             sBundleID +
                             "' skipping because resource '" +
                             sPath +
@@ -153,7 +153,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
           if (false)
             if (!aNewResource.getAsURLString ().equals (sURL))
             {
-              s_aLogger.info ("Skipping resource bundle '" +
+              LOGGER.info ("Skipping resource bundle '" +
                               sBundleID +
                               "' because resource '" +
                               sPath +
@@ -168,7 +168,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
 
           if (!aNewResource.getContentHashAsString ().equals (sHash))
           {
-            s_aLogger.info ("Skipping resource bundle '" +
+            LOGGER.info ("Skipping resource bundle '" +
                             sBundleID +
                             "' skipping because resource '" +
                             sPath +
@@ -209,10 +209,10 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
       for (final File aFile : new FileSystemIterator (aDir))
         if (!containsResourceBundleOfID (aFile.getName ()))
           if (FileOperationManager.INSTANCE.deleteFile (aFile).isSuccess ())
-            s_aLogger.info ("Successfully deleted the unused resource bundle file " + aFile.getAbsolutePath ());
+            LOGGER.info ("Successfully deleted the unused resource bundle file " + aFile.getAbsolutePath ());
     }
 
-    s_aLogger.info ("Successfully read " + m_aMapToBundle.size () + " resource bundles");
+    LOGGER.info ("Successfully read " + m_aMapToBundle.size () + " resource bundles");
     return bAnyResourceIsOutOfSync ? EChange.CHANGED : EChange.UNCHANGED;
   }
 

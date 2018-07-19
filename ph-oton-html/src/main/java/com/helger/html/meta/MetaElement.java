@@ -61,7 +61,7 @@ import com.helger.xml.microdom.MicroQName;
 @NotThreadSafe
 public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MetaElement.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MetaElement.class);
 
   /** HTTP equivalent or not? */
   private EMetaElementType m_eType;
@@ -232,7 +232,7 @@ public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement
   {
     if (m_aContents.isEmpty ())
     {
-      s_aLogger.info ("Meta element '" + m_sName + "' has no content!");
+      LOGGER.info ("Meta element '" + m_sName + "' has no content!");
       return null;
     }
 

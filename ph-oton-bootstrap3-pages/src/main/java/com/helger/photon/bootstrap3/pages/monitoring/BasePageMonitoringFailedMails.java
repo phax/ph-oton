@@ -137,7 +137,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     }
   }
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (BasePageMonitoringFailedMails.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (BasePageMonitoringFailedMails.class);
   private static final String ACTION_RESEND = "resend";
   private static final String ACTION_RESEND_DEFAULT_SETTINGS = "resend-default-settings";
   private static final String ACTION_RESEND_ALL = "resend-all";
@@ -166,7 +166,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
         // Delete a single failed mail without querying
         if (m_aFailedMailQueue.remove (aSelectedObject.getID ()) != null)
         {
-          s_aLogger.info ("Deleted single failed mail with ID " + aSelectedObject.getID () + "!");
+          LOGGER.info ("Deleted single failed mail with ID " + aSelectedObject.getID () + "!");
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
         }
       }
@@ -182,7 +182,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                           final List <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
                           if (!aFailedMails.isEmpty ())
                           {
-                            s_aLogger.info ("Deleted " + aFailedMails.size () + " failed mails!");
+                            LOGGER.info ("Deleted " + aFailedMails.size () + " failed mails!");
                             final String sSuccessMsg = aFailedMails.size () == 1 ? EText.DELETE_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
                                                                                  : EText.DELETE_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                       Integer.toString (aFailedMails.size ()));
@@ -204,7 +204,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                          .getDefaultSMTPSettings ()
                                                                                                       : null;
-          s_aLogger.info ("Trying to resend single failed mail with ID " +
+          LOGGER.info ("Trying to resend single failed mail with ID " +
                           aFailedMailData.getID () +
                           (aDefaultSMTPSettings != null ? " with default settings" : "") +
                           "!");
@@ -235,7 +235,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_ALL_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                              .getDefaultSMTPSettings ()
                                                                                                           : null;
-          s_aLogger.info ("Trying to resend " +
+          LOGGER.info ("Trying to resend " +
                           aFailedMails.size () +
                           " failed mails" +
                           (aDefaultSMTPSettings != null ? " with default settings" : "") +

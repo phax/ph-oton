@@ -79,7 +79,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public static final boolean DEFAULT_SHOW_MERIDIAN = false;
   public static final boolean DEFAULT_SHOW_RESET_BUTTON = false;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (BootstrapDateTimePicker.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (BootstrapDateTimePicker.class);
 
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
@@ -129,7 +129,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     m_aDisplayLocale = aDisplayLocale;
     m_eLanguage = EDateTimePickerLanguage.getFromLocaleOrNull (aDisplayLocale);
     if (m_eLanguage == null && !EDateTimePickerLanguage.PREDEFINED_LANGUAGE.equals (aDisplayLocale.getLanguage ()))
-      s_aLogger.warn ("Unsupported EDateTimePickerLanguage provided: " + aDisplayLocale);
+      LOGGER.warn ("Unsupported EDateTimePickerLanguage provided: " + aDisplayLocale);
     m_eWeekStart = EDateTimePickerDayOfWeek.getFromJavaValueOrNull (Calendar.getInstance (aDisplayLocale)
                                                                             .getFirstDayOfWeek ());
     // Use the calendar icon as default prefix

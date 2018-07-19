@@ -52,7 +52,7 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
   public static final String SMTP_SETTINGS_XML = "smtpsettings.xml";
   public static final String WEBSITE_RESOURCE_BUNDLES_XML = "resource-bundles.xml";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCoreManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonCoreManager.class);
 
   private FailedMailQueueWithDAO m_aFailedMailQueue;
   private GoMappingManager m_aGoMappingMgr;
@@ -78,7 +78,7 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
 
       m_aWebSiteResourceBundleMgr = new WebSiteResourceBundleManager (WEBSITE_RESOURCE_BUNDLES_XML);
 
-      s_aLogger.info (ClassHelper.getClassLocalName (this) + " was initialized");
+      LOGGER.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }
     catch (final Throwable t)
     {

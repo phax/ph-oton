@@ -28,7 +28,7 @@ import com.helger.commons.io.file.IFileFilter;
 
 public final class MainCreateTinyMCEThemeEnum
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateTinyMCEThemeEnum.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainCreateTinyMCEThemeEnum.class);
 
   public static void main (final String [] args)
   {
@@ -39,6 +39,6 @@ public final class MainCreateTinyMCEThemeEnum
       final String sID = FilenameHelper.getBaseName (aFile);
       aSB.append (sID.toUpperCase (Locale.US)).append (" (\"").append (sID).append ("\"),\n");
     }
-    s_aLogger.info (aSB.toString ());
+    LOGGER.info (aSB.toString ());
   }
 }

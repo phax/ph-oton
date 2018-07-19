@@ -56,7 +56,7 @@ import com.helger.xservlet.handler.IXServletHandler;
 @ThreadSafe
 public class CSPReportingXServletHandler implements IXServletHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final Consumer <? super IJsonObject> m_aJsonHandler;
@@ -97,7 +97,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
 
   public static void logCSPReport (@Nonnull final IJsonObject aJson)
   {
-    s_aLogger.warn ("CSP report: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
+    LOGGER.warn ("CSP report: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
   }
 
   public void onRequest (@Nonnull final HttpServletRequest aHttpRequest,
@@ -125,7 +125,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
         if (bIsDuplicate)
         {
           // Avoid too many reports
-          s_aLogger.info ("Ignoring already blocked URI '" + sBlockedURI + "'");
+          LOGGER.info ("Ignoring already blocked URI '" + sBlockedURI + "'");
         }
         else
         {
@@ -134,11 +134,11 @@ public class CSPReportingXServletHandler implements IXServletHandler
         }
       }
       else
-        s_aLogger.error ("Weird JSON received: " +
+        LOGGER.error ("Weird JSON received: " +
                          aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
     }
     else
-      s_aLogger.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
+      LOGGER.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
   }
 
   @Nonnull

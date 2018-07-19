@@ -48,7 +48,7 @@ import com.helger.photon.security.usergroup.IUserGroup;
 @Immutable
 public final class SecurityHelper
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SecurityHelper.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (SecurityHelper.class);
 
   @PresentForCodeCoverage
   private static final SecurityHelper s_aInstance = new SecurityHelper ();
@@ -132,7 +132,7 @@ public final class SecurityHelper
       if (aRole != null)
         ret.add (aRole);
       else
-        s_aLogger.warn ("Failed to resolve role with ID '" + sRoleID + "'");
+        LOGGER.warn ("Failed to resolve role with ID '" + sRoleID + "'");
     }
     return ret;
   }

@@ -41,7 +41,7 @@ import com.helger.xml.microdom.MicroElement;
  */
 public class FeedSource extends AbstractFeedElement
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (FeedSource.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (FeedSource.class);
 
   private final ICommonsList <FeedPerson> m_aAuthors = new CommonsArrayList <> ();
   private final ICommonsList <FeedCategory> m_aCategories = new CommonsArrayList <> ();
@@ -242,17 +242,17 @@ public class FeedSource extends AbstractFeedElement
     // check mandatory fields
     if (m_sID == null)
     {
-      s_aLogger.warn ("Required field 'id' is not set!");
+      LOGGER.warn ("Required field 'id' is not set!");
       return false;
     }
     if (m_aTitle == null)
     {
-      s_aLogger.warn ("Required field 'title' is not set!");
+      LOGGER.warn ("Required field 'title' is not set!");
       return false;
     }
     if (m_aUpdated == null)
     {
-      s_aLogger.warn ("Required field 'updated' is not set!");
+      LOGGER.warn ("Required field 'updated' is not set!");
       return false;
     }
 
@@ -260,50 +260,50 @@ public class FeedSource extends AbstractFeedElement
     for (final FeedPerson aValue : m_aAuthors)
       if (!aValue.isValid ())
       {
-        s_aLogger.warn ("At least one author is invalid");
+        LOGGER.warn ("At least one author is invalid");
         return false;
       }
     for (final FeedCategory aValue : m_aCategories)
       if (!aValue.isValid ())
       {
-        s_aLogger.warn ("At least one category is invalid");
+        LOGGER.warn ("At least one category is invalid");
         return false;
       }
     for (final FeedPerson aValue : m_aContributors)
       if (!aValue.isValid ())
       {
-        s_aLogger.warn ("At least one constributor is invalid");
+        LOGGER.warn ("At least one constributor is invalid");
         return false;
       }
     if (m_aGenerator != null && !m_aGenerator.isValid ())
     {
-      s_aLogger.warn ("generator is invalid");
+      LOGGER.warn ("generator is invalid");
       return false;
     }
     for (final FeedLink aValue : m_aLinks)
       if (!aValue.isValid ())
       {
-        s_aLogger.warn ("At least one link is invalid");
+        LOGGER.warn ("At least one link is invalid");
         return false;
       }
     if (m_aRights != null && !m_aRights.isValid ())
     {
-      s_aLogger.warn ("rights is invalid");
+      LOGGER.warn ("rights is invalid");
       return false;
     }
     if (m_aSubtitle != null && !m_aSubtitle.isValid ())
     {
-      s_aLogger.warn ("subtitle is invalid");
+      LOGGER.warn ("subtitle is invalid");
       return false;
     }
     if (!m_aTitle.isValid ())
     {
-      s_aLogger.warn ("title is invalid");
+      LOGGER.warn ("title is invalid");
       return false;
     }
     if (!m_aUpdated.isValid ())
     {
-      s_aLogger.warn ("updated is invalid");
+      LOGGER.warn ("updated is invalid");
       return false;
     }
 
@@ -319,7 +319,7 @@ public class FeedSource extends AbstractFeedElement
           break;
         }
       if (!bFoundSelf)
-        s_aLogger.warn ("no '" + FeedLink.REL_SELF + "' link found!");
+        LOGGER.warn ("no '" + FeedLink.REL_SELF + "' link found!");
     }
 
     // elements MUST NOT contain more than one atom:link element with a rel
@@ -335,7 +335,7 @@ public class FeedSource extends AbstractFeedElement
                               (aLink.getHrefLang () == null ? "" : aLink.getHrefLang ().toString ());
           if (!aUniques.add (sKey))
           {
-            s_aLogger.warn ("'" + FeedLink.REL_ALTERNATE + "' link is not unique: " + aLink);
+            LOGGER.warn ("'" + FeedLink.REL_ALTERNATE + "' link is not unique: " + aLink);
             return false;
           }
         }

@@ -48,7 +48,7 @@ public final class AjaxExecutorLogin implements IAjaxExecutor
   public static final String JSON_LOGGEDIN = "loggedin";
   public static final String JSON_HTML = "html";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorLogin.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorLogin.class);
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
@@ -69,7 +69,7 @@ public final class AjaxExecutorLogin implements IAjaxExecutor
     {
       // Get the rendered content of the menu area
       if (GlobalDebug.isDebugMode ())
-        s_aLogger.warn ("Login of '" + sLoginName + "' failed because " + eLoginResult);
+        LOGGER.warn ("Login of '" + sLoginName + "' failed because " + eLoginResult);
 
       final Locale aDisplayLocale = aLEC.getDisplayLocale ();
       final IHCNode aRoot = new BootstrapErrorBox ().addChild (EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +

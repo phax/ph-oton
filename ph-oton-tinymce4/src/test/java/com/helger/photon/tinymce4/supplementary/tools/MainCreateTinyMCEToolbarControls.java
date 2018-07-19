@@ -26,7 +26,7 @@ import com.helger.commons.string.StringHelper;
 
 public final class MainCreateTinyMCEToolbarControls
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateTinyMCEToolbarControls.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainCreateTinyMCEToolbarControls.class);
 
   public static void main (final String [] args)
   {
@@ -78,6 +78,6 @@ public final class MainCreateTinyMCEToolbarControls
            .append ("),\n");
       }
     }
-    s_aLogger.info (aSB.toString ());
+    LOGGER.info (aSB.toString ());
   }
 }

@@ -47,7 +47,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHasID <String>, IHasDisplayText
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
                                                                                                                             "$EXECUTE");
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlError = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
@@ -108,7 +108,7 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
 
     if (!aFeed.isValid ())
     {
-      s_aLogger.error ("Created newsfeed with ID '" + m_sFeedID + "' is invalid!");
+      LOGGER.error ("Created newsfeed with ID '" + m_sFeedID + "' is invalid!");
       s_aStatsHdlError.increment (m_sFeedID);
     }
 

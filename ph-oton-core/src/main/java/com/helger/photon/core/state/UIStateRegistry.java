@@ -56,7 +56,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
 {
   /** ObjectType */
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");
-  private static final Logger s_aLogger = LoggerFactory.getLogger (UIStateRegistry.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (UIStateRegistry.class);
 
   private final ICommonsMap <ObjectType, ICommonsMap <String, IHasUIState>> m_aMap = new CommonsHashMap<> ();
 
@@ -167,8 +167,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
     return m_aRWLock.writeLocked ( () -> {
       final Map <String, IHasUIState> aMap = m_aMap.computeIfAbsent (aOT, k -> new CommonsHashMap<> ());
 
-      if (s_aLogger.isDebugEnabled () && aMap.containsKey (sStateID))
-        s_aLogger.debug ("Overwriting " + aOT.getName () + " with ID " + sStateID + " with new object");
+      if (LOGGER.isDebugEnabled () && aMap.containsKey (sStateID))
+        LOGGER.debug ("Overwriting " + aOT.getName () + " with ID " + sStateID + " with new object");
 
       aMap.put (sStateID, aNewState);
       return EChange.CHANGED;
@@ -189,7 +189,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
   {
     ValueEnforcer.notNull (aNewElement, "NewElement");
     if (aNewElement.hasNoID ())
-      s_aLogger.warn ("Registering the state for an object that has no ID - creating a new ID now!");
+      LOGGER.warn ("Registering the state for an object that has no ID - creating a new ID now!");
 
     return registerState (aNewElement.ensureID ().getID (), aNewElement);
   }

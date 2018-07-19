@@ -37,7 +37,7 @@ import com.helger.json.IJson;
 
 public final class JSToString
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JSToString.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSToString.class);
 
   private JSToString ()
   {}
@@ -65,7 +65,7 @@ public final class JSToString
       return new JSListType (JSType.AUTO_DETECT);
     if (IJson.class.isAssignableFrom (aClass))
       return JSType.JSON;
-    s_aLogger.warn ("Failed to detect JS type of class " + aClass);
+    LOGGER.warn ("Failed to detect JS type of class " + aClass);
     return null;
   }
 

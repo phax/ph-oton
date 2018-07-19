@@ -55,7 +55,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   public static final String RESOURCE_BUNDLE_PATH = "resource-bundles/";
   public static final Charset CHARSET_TO_USE = StandardCharsets.UTF_8;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResourceBundleSerialized.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebSiteResourceBundleSerialized.class);
 
   private final String m_sBundleID;
   private final WebSiteResourceBundle m_aBundle;
@@ -101,7 +101,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
         if (aWriter == null)
         {
           // May happen if write access is denied for the file
-          s_aLogger.error ("Failed to serialize " +
+          LOGGER.error ("Failed to serialize " +
                            m_aBundle.getResourceType ().getID () +
                            " bundle '" +
                            m_sBundleID +
@@ -145,7 +145,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
             }
             else
             {
-              s_aLogger.error ("Web site resource '" +
+              LOGGER.error ("Web site resource '" +
                                aRes.getPath () +
                                "' at '" +
                                aRes.getAsURLString () +
@@ -153,7 +153,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
             }
           }
 
-          s_aLogger.info ("Serialized " +
+          LOGGER.info ("Serialized " +
                           m_aBundle.getResourceType ().getID () +
                           " bundle '" +
                           m_sBundleID +
@@ -167,7 +167,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
       }
       catch (final Throwable t)
       {
-        s_aLogger.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), t);
+        LOGGER.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), t);
         throw new IllegalStateException (t);
       }
     }

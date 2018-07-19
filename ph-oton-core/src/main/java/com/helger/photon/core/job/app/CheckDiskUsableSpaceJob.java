@@ -55,7 +55,7 @@ import com.helger.web.scope.util.AbstractScopeAwareJob;
 @DisallowConcurrentExecution
 public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (CheckDiskUsableSpaceJob.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (CheckDiskUsableSpaceJob.class);
   private static final String JOB_DATA_ATTR_THRESHOLD_BYTES = "threshold-bytes";
 
   /**
@@ -71,8 +71,8 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
     final long nThresholdBytes = aJobDataMap.getAsLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
     final File aBaseDir = WebFileIO.getDataIO ().getBasePathFile ();
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Checking for usable space on " +
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Checking for usable space on " +
                        aBaseDir.getAbsolutePath () +
                        " with a threshold of " +
                        nThresholdBytes +
@@ -84,7 +84,7 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
       final SizeHelper aSH = SizeHelper.getSizeHelperOfLocale (CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
       final String sThresholdFormatted = aSH.getAsMatching (nThresholdBytes, 3);
       final String sUsableFormatted = aSH.getAsMatching (nUsableSpace, 3);
-      s_aLogger.warn ("File system has less or equal than " +
+      LOGGER.warn ("File system has less or equal than " +
                       sThresholdFormatted +
                       " of usable space: " +
                       sUsableFormatted);

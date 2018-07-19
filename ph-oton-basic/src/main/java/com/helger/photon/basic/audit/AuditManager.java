@@ -94,7 +94,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   /** Element name of each item in the serialized XML */
   public static final String ELEMENT_ITEM = "item";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AuditManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AuditManager.class);
 
   private final String m_sBaseDir;
   private final AuditItemList m_aItems = new AuditItemList ();
@@ -154,7 +154,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
       // Migrate to new directory structure
       if (!aIO.existsDir (sBaseDir + PDTFactory.getCurrentYear ()))
       {
-        s_aLogger.info ("Moving audit files");
+        LOGGER.info ("Moving audit files");
         int nCount = 0;
         // Move all files
         for (final File aFile : new FileSystemIterator (aIO.getFile (sBaseDir)))
@@ -166,7 +166,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
             aIO.renameFile (sBaseDir + sFilename, sDestDir + "/" + sFilename);
             nCount++;
           }
-        s_aLogger.info ("Finished moving " + nCount + " files");
+        LOGGER.info ("Finished moving " + nCount + " files");
       }
     }
 

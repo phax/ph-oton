@@ -51,7 +51,7 @@ public final class LinkHelper
    */
   public static final String DEFAULT_STREAM_SERVLET_NAME = "stream";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LinkHelper.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LinkHelper.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
@@ -116,7 +116,7 @@ public final class LinkHelper
   {
     if (StringHelper.hasText (sContextPath) && sHRef.startsWith (sContextPath))
     {
-      s_aLogger.warn ("The passed href '" + sHRef + "' already contains the context path '" + sContextPath + "'!");
+      LOGGER.warn ("The passed href '" + sHRef + "' already contains the context path '" + sContextPath + "'!");
       return sHRef;
     }
 

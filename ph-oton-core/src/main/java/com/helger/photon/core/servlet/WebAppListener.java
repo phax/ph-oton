@@ -139,7 +139,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   public static final int DEFAULT_PASSWORD_MIN_LENGTH = 6;
 
   /** The logger to use. */
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebAppListener.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebAppListener.class);
 
   private static final AtomicBoolean s_aOnlyOneInstanceAllowed = new AtomicBoolean (true);
   private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
@@ -163,7 +163,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logServerInfo (@Nonnull final ServletContext aSC)
   {
     // Print Java and Server (e.g. Tomcat) info
-    s_aLogger.info ("Java " +
+    LOGGER.info ("Java " +
                     SystemProperties.getJavaVersion () +
                     " running '" +
                     aSC.getServletContextName () +
@@ -179,10 +179,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // Tell them to use the server VM if possible:
     final EJVMVendor eJVMVendor = EJVMVendor.getCurrentVendor ();
     if (eJVMVendor.isSun () && eJVMVendor != EJVMVendor.SUN_SERVER)
-      s_aLogger.warn ("Consider using the Sun Server Runtime by specifiying '-server' on the commandline!");
+      LOGGER.warn ("Consider using the Sun Server Runtime by specifiying '-server' on the commandline!");
 
     if (getClass ().desiredAssertionStatus ())
-      s_aLogger.warn ("Java assertions are enabled - this should be disabled in production!");
+      LOGGER.warn ("Java assertions are enabled - this should be disabled in production!");
   }
 
   protected final void logClassPath ()
@@ -191,9 +191,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     if (GlobalDebug.isDebugMode ())
     {
       final ICommonsList <String> aCP = ClassPathHelper.getAllClassPathEntries ();
-      s_aLogger.info ("Class path [" + aCP.size () + " elements]:");
+      LOGGER.info ("Class path [" + aCP.size () + " elements]:");
       for (final String sCP : aCP.getSorted (Comparator.naturalOrder ()))
-        s_aLogger.info ("  " + sCP);
+        LOGGER.info ("  " + sCP);
     }
   }
 
@@ -210,13 +210,13 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     }
 
     if (aParams.isEmpty ())
-      s_aLogger.info ("No servlet context init-parameters present");
+      LOGGER.info ("No servlet context init-parameters present");
     else
     {
       // Emit them
-      s_aLogger.info ("Servlet context init-parameters:");
+      LOGGER.info ("Servlet context init-parameters:");
       for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
-        s_aLogger.info ("  " + aEntry.getKey () + "=" + aEntry.getValue ());
+        LOGGER.info ("  " + aEntry.getKey () + "=" + aEntry.getValue ());
     }
   }
 
@@ -227,7 +227,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
                                                                              .getAllRegisteredThirdPartyModules ();
     if (!aModules.isEmpty ())
     {
-      s_aLogger.info ("Using the following third party modules:");
+      LOGGER.info ("Using the following third party modules:");
       for (final IThirdPartyModule aModule : aModules.getSorted (IHasDisplayName.getComparatorCollating (SystemHelper.getSystemLocale ())))
         if (!aModule.isOptional ())
         {
@@ -237,7 +237,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
           sMsg += " licensed under " + aModule.getLicense ().getDisplayName ();
           if (aModule.getLicense ().getVersion () != null)
             sMsg += ' ' + aModule.getLicense ().getVersion ().getAsString ();
-          s_aLogger.info (sMsg);
+          LOGGER.info (sMsg);
         }
     }
   }
@@ -251,17 +251,17 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       final String sAuthenticate = SystemProperties.getPropertyValueOrNull ("com.sun.management.jmxremote.authenticate");
       final String sPasswordFile = SystemProperties.getPropertyValueOrNull ("com.sun.management.jmxremote.password.file");
       final String sAccessFile = SystemProperties.getPropertyValueOrNull ("com.sun.management.jmxremote.access.file");
-      s_aLogger.info ("Remote JMX is enabled!");
+      LOGGER.info ("Remote JMX is enabled!");
       if (sPort != null)
-        s_aLogger.info ("  Port=" + sPort);
+        LOGGER.info ("  Port=" + sPort);
       if (sSSL != null)
-        s_aLogger.info ("  SSL enabled=" + sSSL);
+        LOGGER.info ("  SSL enabled=" + sSSL);
       if (sAuthenticate != null)
-        s_aLogger.info ("  Authenticate=" + sAuthenticate);
+        LOGGER.info ("  Authenticate=" + sAuthenticate);
       if (sPasswordFile != null)
-        s_aLogger.info ("  Password file=" + sPasswordFile);
+        LOGGER.info ("  Password file=" + sPasswordFile);
       if (sAccessFile != null)
-        s_aLogger.info ("  Access file=" + sAccessFile);
+        LOGGER.info ("  Access file=" + sAccessFile);
     }
   }
 
@@ -412,7 +412,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       sDataPath = aSC.getInitParameter ("storagePath");
       if (StringHelper.hasText (sDataPath))
       {
-        s_aLogger.error ("You are using the old 'storagePath' parameter. Please use '" +
+        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" +
                          INIT_PARAMETER_DATA_PATH +
                          "' instead!");
       }
@@ -421,8 +421,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     {
       // No storage path provided in web.xml
       sDataPath = getServletContextPath (aSC);
-      if (GlobalDebug.isDebugMode () && s_aLogger.isInfoEnabled ())
-        s_aLogger.info ("No servlet context init-parameter '" +
+      if (GlobalDebug.isDebugMode () && LOGGER.isInfoEnabled ())
+        LOGGER.info ("No servlet context init-parameter '" +
                         INIT_PARAMETER_DATA_PATH +
                         "' found! Defaulting to servlet context path '" +
                         sDataPath +
@@ -610,7 +610,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
           StaticServerInfo.init (aURL.getProtocol (), aURL.getHost (), aURL.getPort (), aSC.getContextPath ());
         }
         else
-          s_aLogger.error ("The init-parameter for the server URL" +
+          LOGGER.error ("The init-parameter for the server URL" +
                            (bProductionMode ? " (production mode)" : " (non-production mode)") +
                            "contains the non-URL value '" +
                            sInitParameter +
@@ -671,8 +671,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     m_aInitializationEndDT = PDTFactory.getCurrentLocalDateTime ();
 
     // Finally
-    if (s_aLogger.isInfoEnabled ())
-      s_aLogger.info ("Servlet context '" +
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("Servlet context '" +
                       aSC.getServletContextName () +
                       "' was initialized in " +
                       aSW.stopAndGetMillis () +
@@ -775,11 +775,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       }
       catch (final Throwable t)
       {
-        s_aLogger.error ("Failed to write statistics on context shutdown.", t);
+        LOGGER.error ("Failed to write statistics on context shutdown.", t);
       }
     }
     else
-      s_aLogger.error ("Not writing statistics because WebFileIO was not initialized!");
+      LOGGER.error ("Not writing statistics because WebFileIO was not initialized!");
   }
 
   public final void contextDestroyed (@Nonnull final ServletContextEvent aSCE)
@@ -787,8 +787,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     final ServletContext aSC = aSCE.getServletContext ();
 
     final StopWatch aSW = StopWatch.createdStarted ();
-    if (s_aLogger.isInfoEnabled ())
-      s_aLogger.info ("Servlet context '" + aSC.getServletContextName () + "' is being destroyed");
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("Servlet context '" + aSC.getServletContextName () + "' is being destroyed");
 
     // Callback before global scope end
     beforeContextDestroyed (aSC);
@@ -812,8 +812,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       s_aInited.set (false);
     }
 
-    if (s_aLogger.isInfoEnabled ())
-      s_aLogger.info ("Servlet context '" +
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("Servlet context '" +
                       aSC.getServletContextName () +
                       "' was destroyed in " +
                       aSW.stopAndGetMillis () +

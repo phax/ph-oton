@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public final class MainCreateButtonInDifferentColor
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateButtonInDifferentColor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainCreateButtonInDifferentColor.class);
 
   public static String createButtonCSSCode (@Nonnull final String sClassName,
                                             @Nonnull final String sLightColor,
@@ -226,6 +226,6 @@ public final class MainCreateButtonInDifferentColor
 
   public static void main (final String [] args)
   {
-    s_aLogger.info (createButtonCSSCode ("orange", "f4ac16", "f8951f"));
+    LOGGER.info (createButtonCSSCode ("orange", "f4ac16", "f8951f"));
   }
 }

@@ -38,7 +38,7 @@ import com.helger.commons.ValueEnforcer;
  */
 public final class JettyStopper
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JettyStopper.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JettyStopper.class);
 
   private String m_sStopKey = InternalJettyStopMonitorThread.STOP_KEY;
   private int m_nStopPort = InternalJettyStopMonitorThread.STOP_PORT;
@@ -70,15 +70,15 @@ public final class JettyStopper
 
       try (final OutputStream out = s.getOutputStream ())
       {
-        s_aLogger.info ("Sending Jetty stop request to port " + m_nStopPort);
+        LOGGER.info ("Sending Jetty stop request to port " + m_nStopPort);
         out.write ((m_sStopKey + "\r\nstop\r\n").getBytes (StandardCharsets.UTF_8));
         out.flush ();
       }
-      s_aLogger.info ("Done");
+      LOGGER.info ("Done");
     }
     catch (final ConnectException ex)
     {
-      s_aLogger.warn ("Jetty is not running");
+      LOGGER.warn ("Jetty is not running");
     }
   }
 }

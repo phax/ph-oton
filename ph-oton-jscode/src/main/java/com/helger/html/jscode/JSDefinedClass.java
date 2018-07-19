@@ -43,7 +43,7 @@ import com.helger.html.js.JSMarshaller;
  */
 public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, IJSDocCommentable
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JSDefinedClass.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSDefinedClass.class);
 
   /** class JSDoc */
   private JSCommentMultiLine m_aJSDoc;
@@ -74,7 +74,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
     if (!JSMarshaller.isJSIdentifier (sName))
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
     if (!Character.isUpperCase (sName.charAt (0)))
-      s_aLogger.warn ("Class names should always start with an upper-case character: " + sName);
+      LOGGER.warn ("Class names should always start with an upper-case character: " + sName);
     m_sName = sName;
   }
 

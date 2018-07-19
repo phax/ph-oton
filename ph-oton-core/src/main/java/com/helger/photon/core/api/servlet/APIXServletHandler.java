@@ -49,7 +49,7 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
  */
 public class APIXServletHandler implements IXServletSimpleHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (APIXServletHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (APIXServletHandler.class);
 
   private final ISupplier <? extends IAPIInvoker> m_aFactory;
 
@@ -83,7 +83,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
     final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (new APIPath (eHTTPMethod, sAPIPath));
     if (aInvokableDescriptor == null)
     {
-      s_aLogger.warn ("Unknown API " + eHTTPMethod + " '" + sAPIPath + "' requested!");
+      LOGGER.warn ("Unknown API " + eHTTPMethod + " '" + sAPIPath + "' requested!");
 
       // No such action
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -94,7 +94,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
       // Check for required headers and parameters
       if (!aInvokableDescriptor.canExecute (aRequestScope))
       {
-        s_aLogger.warn ("API " + eHTTPMethod + " '" + sAPIPath + "' cannot be executed for the current request.");
+        LOGGER.warn ("API " + eHTTPMethod + " '" + sAPIPath + "' cannot be executed for the current request.");
         aUnifiedResponse.setStatus (HttpServletResponse.SC_BAD_REQUEST);
       }
       else

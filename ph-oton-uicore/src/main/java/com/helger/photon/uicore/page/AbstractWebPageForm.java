@@ -81,7 +81,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
 {
   public static final String FORM_ID_INPUT = "inputform";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageForm.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractWebPageForm.class);
 
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
@@ -1118,8 +1118,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                       if (aCustomHandler.canHandleAction (aWPEC, aSelectedObject))
                       {
                         eFormAction = EWebPageFormAction.CUSTOM;
-                        if (s_aLogger.isDebugEnabled ())
-                          s_aLogger.debug ("Custom handler for page '" + getID () + "' and action '" + sAction + "'");
+                        if (LOGGER.isDebugEnabled ())
+                          LOGGER.debug ("Custom handler for page '" + getID () + "' and action '" + sAction + "'");
                       }
                   }
                 }
@@ -1131,7 +1131,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
       if (!isActionAllowed (aWPEC, eFormAction, aSelectedObject))
       {
         // Default back to custom
-        s_aLogger.warn ("Action " +
+        LOGGER.warn ("Action " +
                         eFormAction +
                         " is not allowed on object " +
                         (aSelectedObject == null ? "null" : aSelectedObject.getID ()));

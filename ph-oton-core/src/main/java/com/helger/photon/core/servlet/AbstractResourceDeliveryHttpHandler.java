@@ -53,7 +53,7 @@ import com.helger.xml.util.mime.MimeTypeInfoManager;
  */
 public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObjectDeliveryHttpHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractResourceDeliveryHttpHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractResourceDeliveryHttpHandler.class);
   private final IMutableStatisticsHandlerCounter m_aStatsRequests = StatisticsManager.getCounterHandler (getClass ().getName () +
                                                                                                          "$requests");
   private final IMutableStatisticsHandlerKeyedCounter m_aStatsSuccess = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
@@ -95,8 +95,8 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
     final IReadableResource aRes = getResource (aRequestScope, sFilename);
     if (!aRes.exists ())
     {
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Not streaming '" + sFilename + "' because no such resource exists.");
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Not streaming '" + sFilename + "' because no such resource exists.");
 
       m_aStatsNotFound.increment (sFilename);
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -186,7 +186,7 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
       }
     }
     else
-      s_aLogger.warn ("Failed to determine MIME type for filename '" + sFilename + "'");
+      LOGGER.warn ("Failed to determine MIME type for filename '" + sFilename + "'");
 
     // HTTP caching possible?
     if (objectsAllowsForHTTPCaching (aRequestScope, sFilename))
@@ -202,7 +202,7 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
     aUnifiedResponse.setContent (aRes);
     m_aStatsSuccess.increment (sFilename);
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Successfully streamed resource '" + sFilename + "' via " + getClass ().getName ());
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Successfully streamed resource '" + sFilename + "' via " + getClass ().getName ());
   }
 }

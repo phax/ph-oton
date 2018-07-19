@@ -32,7 +32,7 @@ import com.helger.commons.url.SimpleURL;
 
 public final class MainExtractPrismLanguage
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainExtractPrismLanguage.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainExtractPrismLanguage.class);
 
   public static void main (final String [] args)
   {
@@ -65,6 +65,6 @@ public final class MainExtractPrismLanguage
            .append (sPlugin)
            .append ("\"),\n");
     }
-    s_aLogger.info (aSB.toString ());
+    LOGGER.info (aSB.toString ());
   }
 }

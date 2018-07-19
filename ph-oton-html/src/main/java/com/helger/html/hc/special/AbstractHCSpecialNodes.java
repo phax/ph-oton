@@ -57,7 +57,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
                                              IHCSpecialNodes,
                                              IGenericImplTrait <IMPLTYPE>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractHCSpecialNodes.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractHCSpecialNodes.class);
 
   private final MultiLinkedHashMapLinkedHashSetBased <ICSSMediaList, String> m_aExternalCSSs = new MultiLinkedHashMapLinkedHashSetBased <> ();
   private final InlineCSSList m_aInlineCSSBeforeExternal = new InlineCSSList ();
@@ -114,7 +114,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
 
     final ICSSMediaList aRealMediaList = getSafeCSSMediaList (aMediaList);
     if (m_aExternalCSSs.putSingle (aRealMediaList, sCSSURI).isUnchanged ())
-      s_aLogger.warn ("Duplicate CSS URI '" + sCSSURI + "' with media list '" + aRealMediaList + "' ignored");
+      LOGGER.warn ("Duplicate CSS URI '" + sCSSURI + "' with media list '" + aRealMediaList + "' ignored");
     return thisAsT ();
   }
 
@@ -183,7 +183,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     ValueEnforcer.notEmpty (sJSURI, "JSURI");
 
     if (!m_aExternalJSs.add (sJSURI))
-      s_aLogger.warn ("Duplicate JS URI '" + sJSURI + "' ignored");
+      LOGGER.warn ("Duplicate JS URI '" + sJSURI + "' ignored");
     return thisAsT ();
   }
 

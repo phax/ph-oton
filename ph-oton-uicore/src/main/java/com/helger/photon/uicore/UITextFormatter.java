@@ -47,7 +47,7 @@ import com.helger.xml.microdom.util.MicroVisitor;
 @Immutable
 public final class UITextFormatter
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (UITextFormatter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (UITextFormatter.class);
   private static final MarkdownProcessor MARKDOWN_PROC = new MarkdownProcessor (MarkdownConfiguration.DEFAULT_EXTENSIONS);
 
   private UITextFormatter ()
@@ -93,7 +93,7 @@ public final class UITextFormatter
       }
       catch (final Exception ex)
       {
-        s_aLogger.error ("Failed to format", ex);
+        LOGGER.error ("Failed to format", ex);
       }
     }
     return new HCTextNode (sOrigValue);
@@ -122,7 +122,7 @@ public final class UITextFormatter
     }
     catch (final Exception ex)
     {
-      s_aLogger.warn ("Failed to markdown '" + sMD + "': " + ex.getMessage ());
+      LOGGER.warn ("Failed to markdown '" + sMD + "': " + ex.getMessage ());
       return new HCTextNode (sMD);
     }
   }

@@ -34,7 +34,7 @@ import com.helger.xml.microdom.MicroElement;
  */
 public class FeedPerson extends AbstractFeedElement
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (FeedPerson.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (FeedPerson.class);
 
   private String m_sName;
   private String m_sURI;
@@ -122,7 +122,7 @@ public class FeedPerson extends AbstractFeedElement
 
     if (StringHelper.hasText (m_sEmail) && !EmailAddressHelper.isValid (m_sEmail))
     {
-      s_aLogger.warn ("Email address is invalid!");
+      LOGGER.warn ("Email address is invalid!");
       return false;
     }
     return true;

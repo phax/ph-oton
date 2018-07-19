@@ -63,7 +63,7 @@ public class WebSiteResource
 {
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebSiteResource.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebSiteResource.class);
 
   private final EWebSiteResourceType m_eResourceType;
   private final String m_sPath;
@@ -97,7 +97,7 @@ public class WebSiteResource
       }
       catch (final IOException ex)
       {
-        s_aLogger.error ("Failed to create message digest of " + m_aResource.getPath (), ex);
+        LOGGER.error ("Failed to create message digest of " + m_aResource.getPath (), ex);
       }
       m_aContentHash = aDigestBytes;
       m_sContentHash = StringHelper.getHexEncoded (aDigestBytes);
@@ -155,7 +155,7 @@ public class WebSiteResource
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP, m_aCharset, ECSSVersion.CSS30);
     if (aCSS == null)
     {
-      s_aLogger.error ("Failed to parse CSS. Returning 'as-is'");
+      LOGGER.error ("Failed to parse CSS. Returning 'as-is'");
       return StreamHelper.getAllBytesAsString (aISP, m_aCharset);
     }
     CSSVisitor.visitCSSUrl (aCSS, new AbstractModifyingCSSUrlVisitor ()

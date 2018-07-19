@@ -58,7 +58,7 @@ import com.helger.xml.serialize.read.SAXReaderDefaultSettings;
 
 abstract class AbstractCreateJQueryAPIList
 {
-  protected static final Logger s_aLogger = LoggerFactory.getLogger (AbstractCreateJQueryAPIList.class);
+  protected static final Logger LOGGER = LoggerFactory.getLogger (AbstractCreateJQueryAPIList.class);
   private static final String TYPE_ANY = "Anything";
 
   protected static enum EAPIType implements IHasName
@@ -402,7 +402,7 @@ abstract class AbstractCreateJQueryAPIList
     {
       final boolean b = m_aSignatures.contains (aSignature);
       if (b && false)
-        s_aLogger.info ("Duplicate: " + aSignature);
+        LOGGER.info ("Duplicate: " + aSignature);
       return b;
     }
 
@@ -679,7 +679,7 @@ abstract class AbstractCreateJQueryAPIList
         {
           final int nArgs = aSig.getArgumentCount ();
           if (false)
-            s_aLogger.info (aEntry.getName () + " " + nArgs + " - " + nOptCount);
+            LOGGER.info (aEntry.getName () + " " + nArgs + " - " + nOptCount);
           for (int i = nOptCount; i >= 1; --i)
           {
             final int nRemainingArgs = nArgs - i;
@@ -694,7 +694,7 @@ abstract class AbstractCreateJQueryAPIList
       }
     }
 
-    s_aLogger.info ("Scanned " +
+    LOGGER.info ("Scanned " +
                     nFiles +
                     " files, " +
                     aAllEntries.size () +
@@ -705,8 +705,8 @@ abstract class AbstractCreateJQueryAPIList
                     " arguments");
     if (false)
     {
-      s_aLogger.info ("Returns: " + aAllReturnTypes);
-      s_aLogger.info ("Arg Types: " + aAllArgTypes);
+      LOGGER.info ("Returns: " + aAllReturnTypes);
+      LOGGER.info ("Arg Types: " + aAllArgTypes);
     }
     return aAllEntries;
   }

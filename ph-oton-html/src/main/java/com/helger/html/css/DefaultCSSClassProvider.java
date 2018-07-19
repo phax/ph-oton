@@ -44,7 +44,7 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultCSSClassProvider.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DefaultCSSClassProvider.class);
   private static final ICommonsMap <String, DefaultCSSClassProvider> s_aAll = new CommonsHashMap <> ();
 
   private final String m_sCSSClass;
@@ -60,7 +60,7 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
     // Happens more frequently because people are reusing existing attributes
     // for configuration purposes.
     if (!RegExHelper.stringMatchesPattern ("-?[_a-zA-Z]+[_a-zA-Z0-9-]*", sCSSClass))
-      s_aLogger.warn ("The CSS class '" + sCSSClass + "' does not match the naming requirements!");
+      LOGGER.warn ("The CSS class '" + sCSSClass + "' does not match the naming requirements!");
 
     if (sCSSClass.startsWith ("_"))
       throw new IllegalArgumentException ("The CSS class name '" + sCSSClass + "' may rise problems with IE6!");

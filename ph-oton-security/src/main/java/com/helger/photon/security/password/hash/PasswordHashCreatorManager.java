@@ -47,7 +47,7 @@ import com.helger.security.password.salt.IPasswordSalt;
 @ThreadSafe
 public class PasswordHashCreatorManager
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PasswordHashCreatorManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PasswordHashCreatorManager.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
@@ -82,8 +82,8 @@ public class PasswordHashCreatorManager
       m_aPasswordHashCreators.put (sAlgorithmName, aPasswordHashCreator);
     });
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Registered password hash creator algorithm '" +
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Registered password hash creator algorithm '" +
                        sAlgorithmName +
                        "' to " +
                        aPasswordHashCreator);
@@ -98,7 +98,7 @@ public class PasswordHashCreatorManager
       {
         m_aRWLock.writeLocked ( () -> {
           if (m_aPasswordHashCreators.remove (sAlgorithmName) != null)
-            s_aLogger.info ("Unregistered password hash creator algorithm '" + sAlgorithmName + "'");
+            LOGGER.info ("Unregistered password hash creator algorithm '" + sAlgorithmName + "'");
         });
       }
     }
@@ -150,7 +150,7 @@ public class PasswordHashCreatorManager
         throw new IllegalArgumentException ("No PasswordHashCreator registered for algorithm '" + sAlgorithm + "'");
       m_aDefaultPasswordHashCreator = aPHC;
     });
-    s_aLogger.info ("Default PasswordHashCreator algorithm set to '" + sAlgorithm + "'");
+    LOGGER.info ("Default PasswordHashCreator algorithm set to '" + sAlgorithm + "'");
   }
 
   /**

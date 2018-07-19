@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
  */
 public final class PathDescriptorVariableConstraint
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PathDescriptorVariableConstraint.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PathDescriptorVariableConstraint.class);
 
   private final EPathDescriptorVariableConstraintType m_eConstraintType;
   private final String m_sConstraintValue;
@@ -128,7 +128,7 @@ public final class PathDescriptorVariableConstraint
     final String sRealValue = StringHelper.trim (sConstraint);
     if (StringHelper.hasNoText (sRealValue))
     {
-      s_aLogger.warn ("Empty path descriptor variable constraint is ignored!");
+      LOGGER.warn ("Empty path descriptor variable constraint is ignored!");
       return null;
     }
 
@@ -140,7 +140,7 @@ public final class PathDescriptorVariableConstraint
     final EPathDescriptorVariableConstraintType eConstraintType = EPathDescriptorVariableConstraintType.getFromIDOrNull (sConstraintType);
     if (eConstraintType == null)
     {
-      s_aLogger.error ("Unsupported variable constraint type '" + sConstraintType + "' used!");
+      LOGGER.error ("Unsupported variable constraint type '" + sConstraintType + "' used!");
       return null;
     }
 
@@ -148,7 +148,7 @@ public final class PathDescriptorVariableConstraint
     final String sConstraintValue = aParts.getAtIndex (1);
     if (eConstraintType.isRequiresValue () && StringHelper.hasNoText (sConstraintValue))
     {
-      s_aLogger.error ("Variable constraint type '" +
+      LOGGER.error ("Variable constraint type '" +
                        sConstraintType +
                        "' requires a value but no value provided! Separate type and value with a '=' character.");
       return null;

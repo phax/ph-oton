@@ -42,7 +42,7 @@ import com.helger.xml.util.thread.ThreadDescriptorList;
  */
 public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MailingThreadDeadlockCallback.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MailingThreadDeadlockCallback.class);
 
   @Nonnull
   private static String _getAsString (@Nonnull final ThreadDeadlockInfo aTDI)
@@ -57,7 +57,7 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
 
   public void onDeadlockDetected (@Nonnull @Nonempty final ThreadDeadlockInfo [] aDeadlockedThreads)
   {
-    s_aLogger.warn ("Deadlock of " + ArrayHelper.getSize (aDeadlockedThreads) + " threads detected!");
+    LOGGER.warn ("Deadlock of " + ArrayHelper.getSize (aDeadlockedThreads) + " threads detected!");
 
     final StringBuilder aSB = new StringBuilder ();
     aSB.append (InternalErrorHandler.fillInternalErrorMetaData (null, null, null).getAsString ());

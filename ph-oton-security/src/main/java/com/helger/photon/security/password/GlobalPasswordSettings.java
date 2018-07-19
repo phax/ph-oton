@@ -47,7 +47,7 @@ import com.helger.security.password.salt.IPasswordSalt;
 @ThreadSafe
 public final class GlobalPasswordSettings
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (GlobalPasswordSettings.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (GlobalPasswordSettings.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
@@ -101,7 +101,7 @@ public final class GlobalPasswordSettings
     s_aRWLock.writeLocked ( () -> {
       s_aPasswordConstraintList = aRealPasswordConstraints;
     });
-    s_aLogger.info ("Set global password constraints to " + aRealPasswordConstraints);
+    LOGGER.info ("Set global password constraints to " + aRealPasswordConstraints);
   }
 
   /**

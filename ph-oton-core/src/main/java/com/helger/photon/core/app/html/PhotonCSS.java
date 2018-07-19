@@ -58,7 +58,7 @@ public final class PhotonCSS
   public static final String DEFAULT_FILENAME = "html/css.xml";
 
   private static final String REQUEST_ATTR_CSSRESOURCES = PhotonCSS.class.getName ();
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCSS.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonCSS.class);
   private static final CSSResourceSet s_aGlobal = new CSSResourceSet ();
   private static final SimpleLock s_aLock = new SimpleLock ();
 
@@ -77,7 +77,7 @@ public final class PhotonCSS
         final String sPath = eChild.getAttributeValue ("path");
         if (StringHelper.hasNoText (sPath))
         {
-          s_aLogger.error ("Found CSS item without a path in " + aRes.getPath ());
+          LOGGER.error ("Found CSS item without a path in " + aRes.getPath ());
           continue;
         }
 
@@ -100,7 +100,7 @@ public final class PhotonCSS
             final ECSSMedium eMedium = ECSSMedium.getFromNameOrNull (sMedium);
             if (eMedium == null)
             {
-              s_aLogger.warn ("CSS item '" +
+              LOGGER.warn ("CSS item '" +
                               sPath +
                               "' in " +
                               aRes.getPath () +

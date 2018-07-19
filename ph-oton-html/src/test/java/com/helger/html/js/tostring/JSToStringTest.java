@@ -43,13 +43,13 @@ import com.helger.html.js.UnparsedJSCodeProvider;
  */
 public final class JSToStringTest
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JSToStringTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSToStringTest.class);
   private static final int COUNT = 5;
 
   private static void _chk (final Object aSrcObject, final JSType aType, final String sExpected)
   {
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Testing " + aSrcObject.getClass ().getName () + ": " + aSrcObject.toString ());
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Testing " + aSrcObject.getClass ().getName () + ": " + aSrcObject.toString ());
 
     final String sJS = JSToString.objectToJSString (aSrcObject, aType, true);
     assertNotNull (sJS);

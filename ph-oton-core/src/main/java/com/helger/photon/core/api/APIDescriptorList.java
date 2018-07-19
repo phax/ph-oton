@@ -43,7 +43,7 @@ import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
  */
 public class APIDescriptorList
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (APIDescriptorList.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (APIDescriptorList.class);
 
   /** Store APIDescriptor per HTTP method for quick access. */
   private final ICommonsMap <EHttpMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap<> (EHttpMethod.class);
@@ -78,7 +78,7 @@ public class APIDescriptorList
   {
     return getMatching (aPath, aDescriptors -> {
       if (!aDescriptors.isEmpty ())
-        s_aLogger.warn ("Found more than one API descriptor matching path '" + aPath.getPath () + "': " + aDescriptors);
+        LOGGER.warn ("Found more than one API descriptor matching path '" + aPath.getPath () + "': " + aDescriptors);
       return null;
     });
   }

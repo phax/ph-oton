@@ -50,7 +50,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @ThreadSafe
 public class AjaxInvoker implements IAjaxInvoker
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxInvoker.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AjaxInvoker.class);
   private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (AjaxInvoker.class.getName () +
                                                                                                                     "$invocations");
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (AjaxInvoker.class.getName () +
@@ -110,8 +110,8 @@ public class AjaxInvoker implements IAjaxInvoker
       m_aFuncDecls.put (sFunctionName, aFunctionDeclaration);
     });
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Registered AJAX function '" +
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Registered AJAX function '" +
                        sFunctionName +
                        "' with executor factory " +
                        aFunctionDeclaration.getExecutorFactory ());
@@ -127,8 +127,8 @@ public class AjaxInvoker implements IAjaxInvoker
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notNull (aAjaxResponse, "AjaxResponse");
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Invoking Ajax function '" + sFunctionName + "'");
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Invoking Ajax function '" + sFunctionName + "'");
 
     try
     {

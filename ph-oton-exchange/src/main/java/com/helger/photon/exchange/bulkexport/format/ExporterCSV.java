@@ -55,7 +55,7 @@ import com.helger.photon.exchange.bulkexport.IExporterFile;
 @NotThreadSafe
 public class ExporterCSV implements IExporterFile
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ExporterCSV.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ExporterCSV.class);
 
   private Charset m_aCharset;
   private char m_cSeparatorChar = CCSV.DEFAULT_SEPARATOR;
@@ -298,7 +298,7 @@ public class ExporterCSV implements IExporterFile
     }
     catch (final IOException ex)
     {
-      s_aLogger.error ("Error exporting to CSV", ex);
+      LOGGER.error ("Error exporting to CSV", ex);
       return ESuccess.FAILURE;
     }
     finally

@@ -41,7 +41,7 @@ import com.helger.security.authentication.credentials.IAuthCredentials;
 
 public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (FtpConnector.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (FtpConnector.class);
   private final IFtpConnectionDestination m_aDestination;
   private FTPClient m_aChannel;
 
@@ -123,14 +123,14 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
           // Does not close the output-stream!
           if (m_aChannel.retrieveFile (sFilename, aOS))
           {
-            s_aLogger.info ("Successfully got data '" + sFilename + "'");
+            LOGGER.info ("Successfully got data '" + sFilename + "'");
             return ESuccess.SUCCESS;
           }
-          s_aLogger.warn ("Failed to get data '" + sFilename + "': " + m_aChannel.getReplyString ());
+          LOGGER.warn ("Failed to get data '" + sFilename + "': " + m_aChannel.getReplyString ());
         }
         catch (final IOException ex)
         {
-          s_aLogger.error ("Error in get data '" + sFilename + "': " + m_aChannel.getReplyString (), ex);
+          LOGGER.error ("Error in get data '" + sFilename + "': " + m_aChannel.getReplyString (), ex);
         }
       return ESuccess.FAILURE;
     }
@@ -151,14 +151,14 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
           // Does not close the input-stream!
           if (m_aChannel.storeFile (sFilename, aIS))
           {
-            s_aLogger.info ("Successfully put data '" + sFilename + "'");
+            LOGGER.info ("Successfully put data '" + sFilename + "'");
             return ESuccess.SUCCESS;
           }
-          s_aLogger.warn ("Failed to put data '" + sFilename + "': " + m_aChannel.getReplyString ());
+          LOGGER.warn ("Failed to put data '" + sFilename + "': " + m_aChannel.getReplyString ());
         }
         catch (final IOException ex)
         {
-          s_aLogger.error ("Error putting data '" + sFilename + "': " + m_aChannel.getReplyString (), ex);
+          LOGGER.error ("Error putting data '" + sFilename + "': " + m_aChannel.getReplyString (), ex);
         }
       return ESuccess.FAILURE;
     }
@@ -176,14 +176,14 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
       {
         if (m_aChannel.changeWorkingDirectory (sDirectory))
         {
-          s_aLogger.info ("Successfully changed directory to '" + sDirectory + "'");
+          LOGGER.info ("Successfully changed directory to '" + sDirectory + "'");
           return ESuccess.SUCCESS;
         }
-        s_aLogger.warn ("Failed to change working directory to '" + sDirectory + "': " + m_aChannel.getReplyString ());
+        LOGGER.warn ("Failed to change working directory to '" + sDirectory + "': " + m_aChannel.getReplyString ());
       }
       catch (final IOException ex)
       {
-        s_aLogger.error ("Error changing working directory to '" +
+        LOGGER.error ("Error changing working directory to '" +
                          sDirectory +
                          "': " +
                          m_aChannel.getReplyString (),
@@ -200,14 +200,14 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
       {
         if (m_aChannel.changeToParentDirectory ())
         {
-          s_aLogger.info ("Successfully changed directory to parent directory");
+          LOGGER.info ("Successfully changed directory to parent directory");
           return ESuccess.SUCCESS;
         }
-        s_aLogger.warn ("Failed to change to parent directory: " + m_aChannel.getReplyString ());
+        LOGGER.warn ("Failed to change to parent directory: " + m_aChannel.getReplyString ());
       }
       catch (final IOException ex)
       {
-        s_aLogger.error ("Error changing to parent directory: " + m_aChannel.getReplyString (), ex);
+        LOGGER.error ("Error changing to parent directory: " + m_aChannel.getReplyString (), ex);
       }
     return ESuccess.FAILURE;
   }
@@ -223,10 +223,10 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
         {
           if (!m_aChannel.deleteFile (sFilename))
           {
-            s_aLogger.error ("Failed to delete file '" + sFilename + "': " + m_aChannel.getReplyString ());
+            LOGGER.error ("Failed to delete file '" + sFilename + "': " + m_aChannel.getReplyString ());
             return ESuccess.FAILURE;
           }
-          s_aLogger.info ("Successfully deleted file '" + sFilename + "'");
+          LOGGER.info ("Successfully deleted file '" + sFilename + "'");
         }
 
         // Return success if file is not on server
@@ -234,7 +234,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
       }
       catch (final IOException ex)
       {
-        s_aLogger.error ("Error deleting file '" + sFilename + "': " + m_aChannel.getReplyString (), ex);
+        LOGGER.error ("Error deleting file '" + sFilename + "': " + m_aChannel.getReplyString (), ex);
       }
     return ESuccess.FAILURE;
   }
@@ -251,12 +251,12 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
         final FTPFile [] aFiles = m_aChannel.listFiles (null, FTPFileFilterFromIFilter.create (aFilter));
         for (final FTPFile aFile : aFiles)
           aTargetList.add (aFile);
-        s_aLogger.info ("Successfully listed " + aTargetList.size () + " files");
+        LOGGER.info ("Successfully listed " + aTargetList.size () + " files");
         return ESuccess.SUCCESS;
       }
       catch (final IOException ex)
       {
-        s_aLogger.error ("Error listing files: " + m_aChannel.getReplyString (), ex);
+        LOGGER.error ("Error listing files: " + m_aChannel.getReplyString (), ex);
       }
     }
     return ESuccess.FAILURE;

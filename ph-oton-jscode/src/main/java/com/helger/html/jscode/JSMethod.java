@@ -34,7 +34,7 @@ import com.helger.html.js.JSMarshaller;
  */
 public class JSMethod extends JSFunction
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JSMethod.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSMethod.class);
 
   private final JSDefinedClass m_aOwnerClass;
 
@@ -55,7 +55,7 @@ public class JSMethod extends JSFunction
     if (sName.equals (aOwnerClass.name ()))
       throw new IllegalArgumentException ("You cannot name a method like the constructor!");
     if (!Character.isLowerCase (sName.charAt (0)))
-      s_aLogger.warn ("Method names should always start with a lowercase character: '" + sName + "'");
+      LOGGER.warn ("Method names should always start with a lowercase character: '" + sName + "'");
     m_aOwnerClass = aOwnerClass;
     body ().newlineAtEnd (false);
   }

@@ -50,7 +50,7 @@ import com.helger.html.resource.css.ICSSPathProvider;
 @ThreadSafe
 public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (CSSResourceSet.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (CSSResourceSet.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
@@ -86,7 +86,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 
   private static void _collectWarn (@Nonnull final String sMsg)
   {
-    s_aLogger.warn (sMsg);
+    LOGGER.warn (sMsg);
   }
 
   @Nonnull

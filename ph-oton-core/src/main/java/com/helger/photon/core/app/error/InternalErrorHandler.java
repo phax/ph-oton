@@ -91,7 +91,7 @@ public final class InternalErrorHandler
 {
   public static final boolean DEFAULT_ENABLE_FULL_THREAD_DUMPS = false;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (InternalErrorHandler.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap <> ();
@@ -178,7 +178,7 @@ public final class InternalErrorHandler
       nOccurranceCount = aMI.intValue ();
       if ((nOccurranceCount % nDuplicateEliminiationCount) != 0)
       {
-        s_aLogger.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
+        LOGGER.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
         return;
       }
     }
@@ -190,19 +190,19 @@ public final class InternalErrorHandler
     boolean bCanSend = true;
     if (aSender == null)
     {
-      s_aLogger.warn ("Not sending internal error mail, because 'sender' is not set!");
+      LOGGER.warn ("Not sending internal error mail, because 'sender' is not set!");
       bCanSend = false;
     }
     else
       if (aReceiver.isEmpty ())
       {
-        s_aLogger.warn ("Not sending internal error mail, because 'receiver' is not set!");
+        LOGGER.warn ("Not sending internal error mail, because 'receiver' is not set!");
         bCanSend = false;
       }
       else
         if (aSMTPSettings == null)
         {
-          s_aLogger.warn ("Not sending internal error mail, because 'SMTP settings' is not set!");
+          LOGGER.warn ("Not sending internal error mail, because 'SMTP settings' is not set!");
           bCanSend = false;
         }
 
@@ -240,16 +240,16 @@ public final class InternalErrorHandler
       {
         // Try default error communication data
         if (ScopedMailAPI.getInstance ().queueMail (aSMTPSettings, aEmailData).isFailure ())
-          s_aLogger.warn ("Failed to send via ScopedMailAPI");
+          LOGGER.warn ("Failed to send via ScopedMailAPI");
       }
       catch (final Throwable t2)
       {
         // E.g. if no scopes are present
-        s_aLogger.warn ("Failed to send via ScopedMailAPI: " + _getThrowableAsString (t2));
+        LOGGER.warn ("Failed to send via ScopedMailAPI: " + _getThrowableAsString (t2));
 
         // Try to send directly
         if (MailAPI.queueMail (aSMTPSettings, aEmailData).isFailure ())
-          s_aLogger.warn ("Failed to send via MailAPI as well");
+          LOGGER.warn ("Failed to send via MailAPI as well");
       }
     }
   }
@@ -283,7 +283,7 @@ public final class InternalErrorHandler
           }
           catch (final Exception ex)
           {
-            s_aLogger.error ("Failed to get content of attachment '" + aDS.getName () + "'", ex);
+            LOGGER.error ("Failed to get content of attachment '" + aDS.getName () + "'", ex);
             eAttachment.setAttribute ("contentsavefailure", "true");
           }
         }
@@ -333,7 +333,7 @@ public final class InternalErrorHandler
       catch (final Throwable t2)
       {
         // Happens if no scope is available (or what so ever)
-        s_aLogger.warn ("Failed to get request scope: " + _getThrowableAsString (t2));
+        LOGGER.warn ("Failed to get request scope: " + _getThrowableAsString (t2));
       }
     if (aRequestScope != null)
     {
@@ -396,7 +396,7 @@ public final class InternalErrorHandler
         }
         catch (final Throwable t2)
         {
-          s_aLogger.warn ("Failed to get session scope from request scope: " + _getThrowableAsString (t2));
+          LOGGER.warn ("Failed to get session scope from request scope: " + _getThrowableAsString (t2));
         }
       if (aSessionScope == null)
         try
@@ -406,7 +406,7 @@ public final class InternalErrorHandler
         catch (final Throwable t2)
         {
           // Happens if no scope is available (or what so ever)
-          s_aLogger.warn ("Failed to get request scope: " + _getThrowableAsString (t2));
+          LOGGER.warn ("Failed to get request scope: " + _getThrowableAsString (t2));
         }
       if (aSessionScope != null)
       {
@@ -444,7 +444,7 @@ public final class InternalErrorHandler
         }
         catch (final Throwable t2)
         {
-          s_aLogger.error ("Failed to get request fields from " + aHttpRequest, t2);
+          LOGGER.error ("Failed to get request fields from " + aHttpRequest, t2);
         }
         try
         {
@@ -453,7 +453,7 @@ public final class InternalErrorHandler
         }
         catch (final Throwable t2)
         {
-          s_aLogger.error ("Failed to get request headers from " + aHttpRequest, t2);
+          LOGGER.error ("Failed to get request headers from " + aHttpRequest, t2);
         }
         try
         {
@@ -463,7 +463,7 @@ public final class InternalErrorHandler
         }
         catch (final Throwable t2)
         {
-          s_aLogger.error ("Failed to get request parameters from " + aHttpRequest, t2);
+          LOGGER.error ("Failed to get request parameters from " + aHttpRequest, t2);
         }
 
         try
@@ -475,7 +475,7 @@ public final class InternalErrorHandler
         }
         catch (final Throwable t2)
         {
-          s_aLogger.error ("Failed to get request cookies from " + aHttpRequest, t2);
+          LOGGER.error ("Failed to get request cookies from " + aHttpRequest, t2);
         }
       }
       else
@@ -595,7 +595,7 @@ public final class InternalErrorHandler
     final String sErrorID = createNewInternalErrorID ();
 
     // Log the error, to ensure the data is persisted!
-    s_aLogger.error ("handleInternalError " + sErrorID, t);
+    LOGGER.error ("handleInternalError " + sErrorID, t);
 
     // Print on UI
     if (aUIErrorHandler != null)
@@ -606,7 +606,7 @@ public final class InternalErrorHandler
       // Debug mode - log and eventually throw exception (except we're in unit
       // tests)
       if (aCustomData != null)
-        s_aLogger.error ("Custom data: " + aCustomData);
+        LOGGER.error ("Custom data: " + aCustomData);
 
       // In case an unexpected error occurs in the UnitTest, make the test fail!
       if (t != null && StackTraceHelper.containsUnitTestElement (t.getStackTrace ()))

@@ -70,7 +70,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   private static final String ATTR_KEY = "key";
   private static final String ATTR_HREF = "href";
   private static final String ATTR_EDITABLE = "editable";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (GoMappingManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (GoMappingManager.class);
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, GoMappingItem> m_aMap = new CommonsHashMap <> ();
@@ -127,7 +127,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
         if (ELEMENT_INTERNAL.equals (sTagName))
           aCallback.accept (new GoMappingItem (sKey, true, sHref, bIsEditable));
         else
-          s_aLogger.error ("Unsupported go-mapping tag '" + sTagName + "'");
+          LOGGER.error ("Unsupported go-mapping tag '" + sTagName + "'");
     });
   }
 
@@ -174,7 +174,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
       m_aMap.clear ();
       initialRead ();
     });
-    s_aLogger.info ("Reloaded " + m_aMap.size () + " go-mappings!");
+    LOGGER.info ("Reloaded " + m_aMap.size () + " go-mappings!");
   }
 
   @Nonnull
@@ -330,9 +330,9 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
       m_aRWLock.readLock ().unlock ();
     }
     if (nErrors == 0)
-      s_aLogger.info ("Successfully checked " + nCount + " internal go-mappings for consistency");
+      LOGGER.info ("Successfully checked " + nCount + " internal go-mappings for consistency");
     else
-      s_aLogger.warn ("Checked " + nCount + " internal go-mappings for consistency and found " + nErrors + " errors!");
+      LOGGER.warn ("Checked " + nCount + " internal go-mappings for consistency and found " + nErrors + " errors!");
     return nErrors;
   }
 
@@ -356,7 +356,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     ValueEnforcer.notEmpty (sKey, "Key");
 
     if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
-      s_aLogger.warn ("Building URL from non-existing go-mapping item '" + sKey + "'");
+      LOGGER.warn ("Building URL from non-existing go-mapping item '" + sKey + "'");
 
     return LinkHelper.getURLWithContext (aRequestScope, GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
   }
@@ -372,7 +372,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     ValueEnforcer.notEmpty (sKey, "Key");
 
     if (PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey) == null)
-      s_aLogger.warn ("Building URI from non-existing go-mapping item '" + sKey + "'");
+      LOGGER.warn ("Building URI from non-existing go-mapping item '" + sKey + "'");
 
     return LinkHelper.getURIWithContext (GoServlet.SERVLET_DEFAULT_NAME + "/" + sKey);
   }

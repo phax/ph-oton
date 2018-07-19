@@ -44,7 +44,7 @@ import com.helger.commons.io.relative.PathRelativeIO;
 @ThreadSafe
 public final class WebFileIO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebFileIO.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebFileIO.class);
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
@@ -70,12 +70,12 @@ public final class WebFileIO
       if (s_aServletContextPath != null)
         throw new IllegalStateException ("Another servlet context path is already present: " + s_aServletContextPath);
 
-      s_aLogger.info ("Using '" + aDataPath + "' as the data path");
+      LOGGER.info ("Using '" + aDataPath + "' as the data path");
       s_aDataPath = new FileRelativeIO (aDataPath);
       if (bCheckFileAccess)
         FileRelativeIO.internalCheckAccessRights (aDataPath);
 
-      s_aLogger.info ("Using '" + sServletContextPath + "' as the servlet context path");
+      LOGGER.info ("Using '" + sServletContextPath + "' as the servlet context path");
       s_aServletContextPath = new PathRelativeIO (sServletContextPath);
     }
     finally

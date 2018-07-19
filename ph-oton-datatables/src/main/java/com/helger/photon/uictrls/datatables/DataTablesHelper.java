@@ -61,7 +61,7 @@ import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 @Immutable
 public final class DataTablesHelper
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesHelper.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesHelper.class);
 
   private DataTablesHelper ()
   {}
@@ -331,7 +331,7 @@ public final class DataTablesHelper
   {
     final DataTablesColumnDef aColumn = aDataTables.getOrCreateColumnOfTarget (nColumnIndexWithDetails);
     if (aColumn != null && aColumn.isVisible ())
-      s_aLogger.warn ("The column with the expand text, should not be visible!");
+      LOGGER.warn ("The column with the expand text, should not be visible!");
 
     final JSRef jsTable = JSExpr.ref (aDataTables.getJSVariableName ());
 

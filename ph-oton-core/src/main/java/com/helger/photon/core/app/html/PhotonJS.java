@@ -55,7 +55,7 @@ public final class PhotonJS
   public static final String DEFAULT_FILENAME = "html/js.xml";
 
   private static final String REQUEST_ATTR_JSRESOURCES = PhotonJS.class.getName ();
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonJS.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonJS.class);
   private static final JSResourceSet s_aGlobal = new JSResourceSet ();
   private static final SimpleLock s_aLock = new SimpleLock ();
 
@@ -74,7 +74,7 @@ public final class PhotonJS
         final String sPath = eChild.getAttributeValue ("path");
         if (StringHelper.hasNoText (sPath))
         {
-          s_aLogger.error ("Found JS item without a path in " + aRes.getPath ());
+          LOGGER.error ("Found JS item without a path in " + aRes.getPath ());
           continue;
         }
 

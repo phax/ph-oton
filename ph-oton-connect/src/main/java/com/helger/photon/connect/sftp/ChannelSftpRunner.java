@@ -33,7 +33,7 @@ import com.jcraft.jsch.SftpException;
 @Immutable
 public final class ChannelSftpRunner
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ChannelSftpRunner.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ChannelSftpRunner.class);
 
   private ChannelSftpRunner ()
   {}
@@ -84,7 +84,7 @@ public final class ChannelSftpRunner
     }
     catch (final SftpException ex)
     {
-      s_aLogger.error ("Error peforming SFTP action: " + aRunnable.getDisplayName (), ex);
+      LOGGER.error ("Error peforming SFTP action: " + aRunnable.getDisplayName (), ex);
       return ESuccess.FAILURE;
     }
     finally

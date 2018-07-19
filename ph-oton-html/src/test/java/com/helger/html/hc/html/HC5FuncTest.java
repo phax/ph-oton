@@ -61,7 +61,7 @@ import com.helger.html.hc.render.HCRenderer;
  */
 public final class HC5FuncTest
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (HC5FuncTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (HC5FuncTest.class);
 
   @Test
   public void testMainHC ()
@@ -120,6 +120,6 @@ public final class HC5FuncTest
     final IHCConversionSettings aCS = HCSettings.getConversionSettings ().getCloneIfNecessary (EHTMLVersion.HTML5);
     assertNotNull (HCRenderer.getAsNode (h, aCS));
     if (false)
-      s_aLogger.info (HCRenderer.getAsHTMLString (h, aCS));
+      LOGGER.info (HCRenderer.getAsHTMLString (h, aCS));
   }
 }

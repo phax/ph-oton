@@ -49,7 +49,7 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 @ThreadSafe
 public class AsynchronousAuditor extends AbstractAuditor
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AsynchronousAuditor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AsynchronousAuditor.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ConcurrentCollectorMultiple <IAuditItem> m_aCollector;
@@ -117,7 +117,7 @@ public class AsynchronousAuditor extends AbstractAuditor
 
       final int nQueueLength = m_aCollector.getQueueLength ();
       if (nQueueLength > 0)
-        s_aLogger.info ("Stopping auditor queue with " + nQueueLength + " items");
+        LOGGER.info ("Stopping auditor queue with " + nQueueLength + " items");
       return false;
     }))
     {
@@ -135,7 +135,7 @@ public class AsynchronousAuditor extends AbstractAuditor
     }
     catch (final InterruptedException ex)
     {
-      s_aLogger.error ("Error stopping auditor queue", ex);
+      LOGGER.error ("Error stopping auditor queue", ex);
     }
     return EChange.CHANGED;
   }

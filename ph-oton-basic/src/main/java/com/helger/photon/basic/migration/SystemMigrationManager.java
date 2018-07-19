@@ -52,7 +52,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
 {
   public static final ObjectType OT_SYSTEM_MIGRATION_RESULT = new ObjectType ("systemmigrationresult");
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SystemMigrationManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (SystemMigrationManager.class);
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULTS = "systemmigrationresults";
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULT = "systemmigrationresult";
 
@@ -194,19 +194,19 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
     {
       try
       {
-        s_aLogger.info ("Performing migration '" + sMigrationID + "'");
+        LOGGER.info ("Performing migration '" + sMigrationID + "'");
 
         // Invoke the callback
         aMigrationAction.run ();
 
-        s_aLogger.info ("Finished performing migration '" + sMigrationID + "'");
+        LOGGER.info ("Finished performing migration '" + sMigrationID + "'");
 
         // Always assume success
         addMigrationResultSuccess (sMigrationID);
       }
       catch (final RuntimeException ex)
       {
-        s_aLogger.error ("Error execution system migration '" + sMigrationID + "'", ex);
+        LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
         addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
       }
     }
@@ -231,12 +231,12 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
     {
       try
       {
-        s_aLogger.info ("Performing migration '" + sMigrationID + "'");
+        LOGGER.info ("Performing migration '" + sMigrationID + "'");
 
         // Invoke the callback
         final SuccessWithValue <String> ret = aMigrationAction.get ();
 
-        s_aLogger.info ("Finished performing migration '" +
+        LOGGER.info ("Finished performing migration '" +
                         sMigrationID +
                         "' with status " +
                         (ret.isSuccess () ? "success" : "error"));
@@ -249,7 +249,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
       }
       catch (final RuntimeException ex)
       {
-        s_aLogger.error ("Error execution system migration '" + sMigrationID + "'", ex);
+        LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
         addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
       }
     }

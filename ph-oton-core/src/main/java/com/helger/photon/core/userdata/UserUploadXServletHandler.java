@@ -48,7 +48,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
   public static final String PARAM_ID = "id";
   public static final String PARAM_FILE = "file";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (UserUploadXServletHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (UserUploadXServletHandler.class);
 
   public UserUploadXServletHandler ()
   {}
@@ -62,7 +62,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
   @Nonnull
   protected IJsonObject createError (@Nonnull final String sErrorMsg)
   {
-    s_aLogger.error ("User upload error: " + sErrorMsg);
+    LOGGER.error ("User upload error: " + sErrorMsg);
     return new JsonObject ().add ("success", false).add ("error", sErrorMsg).add ("preventRetry", true);
   }
 
@@ -90,7 +90,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
           ret = createError ("No file ID passed!");
         else
         {
-          s_aLogger.info ("Uploading " + aFileItem + " as " + sID + " to " + sDirectory);
+          LOGGER.info ("Uploading " + aFileItem + " as " + sID + " to " + sDirectory);
           // Directory
           String sPath = bDirectoryPresent ? FilenameHelper.ensurePathEndingWithSeparator (sDirectory) : "/";
 
@@ -121,7 +121,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
           }
           catch (final Exception ex)
           {
-            s_aLogger.error ("Writing " + aFileItem + " to " + aUDO + " failed", ex);
+            LOGGER.error ("Writing " + aFileItem + " to " + aUDO + " failed", ex);
             ret = createError ("Failed to store uploaded file " + aFileItem + " to " + aUDO);
           }
         }

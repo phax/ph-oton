@@ -39,7 +39,7 @@ import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
  */
 public final class PhotonGlobalState extends AbstractGlobalWebSingleton
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonGlobalState.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonGlobalState.class);
   private String m_sDefaultApplicationID;
   private final ICommonsMap <String, PhotonGlobalStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 
@@ -75,7 +75,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
       if (!EqualsHelper.equals (m_sDefaultApplicationID, sDefaultApplicationID))
       {
         m_sDefaultApplicationID = sDefaultApplicationID;
-        s_aLogger.info ("Default application ID set to '" + sDefaultApplicationID + "'");
+        LOGGER.info ("Default application ID set to '" + sDefaultApplicationID + "'");
       }
     });
   }

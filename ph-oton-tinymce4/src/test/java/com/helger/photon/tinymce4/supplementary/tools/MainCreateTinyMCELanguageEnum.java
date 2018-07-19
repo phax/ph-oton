@@ -29,7 +29,7 @@ import com.helger.commons.locale.LocaleCache;
 
 public final class MainCreateTinyMCELanguageEnum
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainCreateTinyMCELanguageEnum.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainCreateTinyMCELanguageEnum.class);
 
   public static void main (final String [] args)
   {
@@ -44,6 +44,6 @@ public final class MainCreateTinyMCELanguageEnum
       }
       aSB.append (sID.toUpperCase (Locale.US)).append (" (\"").append (sID).append ("\"),\n");
     }
-    s_aLogger.info (aSB.toString ());
+    LOGGER.info (aSB.toString ());
   }
 }

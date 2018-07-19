@@ -37,7 +37,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHttpHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleDeliveryHttpHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ResourceBundleDeliveryHttpHandler.class);
 
   @Nonnull
   private static String _getBundleIDFromFilename (@Nonnull final String sFilename)
@@ -59,7 +59,7 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
                                                                     .getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
     if (!PhotonCoreManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
     {
-      s_aLogger.info ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
+      LOGGER.info ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
       return EContinue.BREAK;
     }

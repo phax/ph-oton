@@ -44,7 +44,7 @@ import com.helger.web.scope.util.AbstractScopeAwareJob;
 @DisallowConcurrentExecution
 public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (CheckThreadDeadlockJob.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (CheckThreadDeadlockJob.class);
 
   /**
    * Public no argument constructor must be available.
@@ -56,8 +56,8 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
   protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
                             @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
   {
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Checking for dead locks");
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Checking for dead locks");
 
     final ThreadDeadlockDetector aTDD = new ThreadDeadlockDetector ();
     aTDD.callbacks ().add (new MailingThreadDeadlockCallback ());

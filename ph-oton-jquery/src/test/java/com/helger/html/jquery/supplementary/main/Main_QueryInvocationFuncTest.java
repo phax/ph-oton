@@ -101,6 +101,6 @@ public class Main_QueryInvocationFuncTest extends AbstractCreateJQueryAPIList
     SimpleFileIO.writeFile (new File ("src/test/java/com/helger/html/jquery/JQueryInvocationFuncTest.java"),
                             aFull.toString (),
                             StandardCharsets.UTF_8);
-    s_aLogger.info ("Done");
+    LOGGER.info ("Done");
   }
 }

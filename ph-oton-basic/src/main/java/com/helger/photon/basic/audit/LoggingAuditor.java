@@ -37,7 +37,7 @@ public class LoggingAuditor extends AbstractAuditor
 {
   public static final String VALUE_SUCCESS = "success";
   public static final String VALUE_FAILURE = "failure";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingAuditor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAuditor.class);
 
   private final String m_sCommonPrefix;
 
@@ -87,6 +87,6 @@ public class LoggingAuditor extends AbstractAuditor
   @Override
   protected void handleAuditItem (@Nonnull final IAuditItem aAuditItem)
   {
-    s_aLogger.info (getAuditItemString (aAuditItem));
+    LOGGER.info (getAuditItemString (aAuditItem));
   }
 }

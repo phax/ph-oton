@@ -39,7 +39,7 @@ import com.jcraft.jsch.SftpException;
 
 public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelSftp.LsEntry>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SftpConnector.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (SftpConnector.class);
   private final ISftpConnectionDestination m_aDestination;
   private ChannelSftp m_aChannel;
 
@@ -109,12 +109,12 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
         try
         {
           m_aChannel.get (sFilename, aOS);
-          s_aLogger.info ("Successfully got data '" + sFilename + "'");
+          LOGGER.info ("Successfully got data '" + sFilename + "'");
           return ESuccess.SUCCESS;
         }
         catch (final SftpException ex)
         {
-          s_aLogger.error ("Error in get data '" + sFilename + "'", ex);
+          LOGGER.error ("Error in get data '" + sFilename + "'", ex);
         }
       return ESuccess.FAILURE;
     }
@@ -133,12 +133,12 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
         try
         {
           m_aChannel.put (aIS, sFilename);
-          s_aLogger.info ("Successfully put data '" + sFilename + "'");
+          LOGGER.info ("Successfully put data '" + sFilename + "'");
           return ESuccess.SUCCESS;
         }
         catch (final SftpException ex)
         {
-          s_aLogger.error ("Error putting data '" + sFilename + "'", ex);
+          LOGGER.error ("Error putting data '" + sFilename + "'", ex);
         }
       return ESuccess.FAILURE;
     }
@@ -155,12 +155,12 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
       try
       {
         m_aChannel.cd (sDirectory);
-        s_aLogger.info ("Successfully changed directory to '" + sDirectory + "'");
+        LOGGER.info ("Successfully changed directory to '" + sDirectory + "'");
         return ESuccess.SUCCESS;
       }
       catch (final SftpException ex)
       {
-        s_aLogger.error ("Error changing directory to '" + sDirectory + "'", ex);
+        LOGGER.error ("Error changing directory to '" + sDirectory + "'", ex);
       }
     return ESuccess.FAILURE;
   }
@@ -178,12 +178,12 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
       try
       {
         m_aChannel.rm (sFilename);
-        s_aLogger.info ("Successfully deleted file '" + sFilename + "'");
+        LOGGER.info ("Successfully deleted file '" + sFilename + "'");
         return ESuccess.SUCCESS;
       }
       catch (final SftpException ex)
       {
-        s_aLogger.error ("Error deleting file '" + sFilename + "'", ex);
+        LOGGER.error ("Error deleting file '" + sFilename + "'", ex);
       }
     return ESuccess.FAILURE;
   }
@@ -205,12 +205,12 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
           if (aFilter == null || aFilter.test (aEntry))
             aTargetList.add (aEntry);
         }
-        s_aLogger.info ("Successfully listed " + aTargetList.size () + " files");
+        LOGGER.info ("Successfully listed " + aTargetList.size () + " files");
         return ESuccess.SUCCESS;
       }
       catch (final SftpException ex)
       {
-        s_aLogger.error ("Error listing files", ex);
+        LOGGER.error ("Error listing files", ex);
       }
     }
     return ESuccess.FAILURE;

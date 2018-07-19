@@ -29,14 +29,14 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class LoggingAPILongRunningExecutionCallback implements IAPILongRunningExecutionCallback
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingAPILongRunningExecutionCallback.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAPILongRunningExecutionCallback.class);
 
   public void onLongRunningExecution (@Nonnull final IAPIInvoker aInvoker,
                                       @Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nonnegative final long nExecutionMillis)
   {
-    s_aLogger.warn ("Finished invoking API '" +
+    LOGGER.warn ("Finished invoking API '" +
                     aInvokableDescriptor.getPath () +
                     "' which took " +
                     nExecutionMillis +

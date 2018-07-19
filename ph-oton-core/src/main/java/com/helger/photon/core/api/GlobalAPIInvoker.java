@@ -46,7 +46,7 @@ import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 @ThreadSafe
 public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPIInvoker
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (GlobalAPIInvoker.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (GlobalAPIInvoker.class);
   private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (GlobalAPIInvoker.class.getName () +
                                                                                                                     "$invocations");
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (GlobalAPIInvoker.class.getName () +
@@ -95,8 +95,8 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
     ValueEnforcer.notNull (aUnifiedResponse, "UnifiedResponse");
 
     final String sPath = aInvokableDescriptor.getPath ();
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Invoking API '" + sPath + "'");
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Invoking API '" + sPath + "'");
 
     try
     {

@@ -28,7 +28,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class LoggingAjaxLongRunningExecutionCallback implements IAjaxLongRunningExecutionCallback
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingAjaxLongRunningExecutionCallback.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAjaxLongRunningExecutionCallback.class);
 
   public void onLongRunningExecution (@Nonnull final IAjaxInvoker aInvoker,
                                       @Nonnull final String sFunctionName,
@@ -36,7 +36,7 @@ public class LoggingAjaxLongRunningExecutionCallback implements IAjaxLongRunning
                                       @Nonnull final IAjaxExecutor aExecutor,
                                       @Nonnegative final long nExecutionMillis)
   {
-    s_aLogger.warn ("Finished invoking Ajax function '" +
+    LOGGER.warn ("Finished invoking Ajax function '" +
                     sFunctionName +
                     "' which took " +
                     nExecutionMillis +

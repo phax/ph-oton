@@ -46,7 +46,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   private static final String ATTR_LAST_UPDATE = "lastupdate";
   private static final String ATTR_MESSAGE_TYPE = "messagetype";
   private static final String ELEMENT_MESSAGE = "message";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SystemMessageManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (SystemMessageManager.class);
 
   private final SystemMessageData m_aData = new SystemMessageData ();
 
@@ -74,7 +74,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
         throw new IllegalStateException ("Failed to reload system message", ex);
       }
     });
-    s_aLogger.info ("Reloaded system message!");
+    LOGGER.info ("Reloaded system message!");
   }
 
   @Override

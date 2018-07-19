@@ -38,7 +38,7 @@ import com.helger.html.css.ICSSClassProvider;
 
 public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesDom.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesDom.class);
   private static final String OPEN_DIV = "<";
   private static final String CLOSE_DIV = ">";
 
@@ -210,7 +210,7 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   {
     _internalAdd (CLOSE_DIV);
     if (--m_nOpenDivs < 0)
-      s_aLogger.error ("Too many DIVs are closed: " + m_nOpenDivs);
+      LOGGER.error ("Too many DIVs are closed: " + m_nOpenDivs);
     return this;
   }
 
@@ -305,7 +305,7 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   public String getAsString ()
   {
     if (m_nOpenDivs != 0)
-      s_aLogger.error ("The DIVs are not balanced: " +
+      LOGGER.error ("The DIVs are not balanced: " +
                        (m_nOpenDivs > 0 ? m_nOpenDivs + " DIVs are open!"
                                         : m_nOpenDivs + " DIVs too many are closed!"));
     return StringHelper.getImploded (m_aElements);

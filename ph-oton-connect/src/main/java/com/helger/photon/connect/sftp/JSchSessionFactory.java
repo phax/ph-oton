@@ -43,7 +43,7 @@ import com.jcraft.jsch.Session;
 @Immutable
 public final class JSchSessionFactory
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JSchSessionFactory.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSchSessionFactory.class);
   private static final IMutableStatisticsHandlerCounter s_aStatsCounterCreated = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
                                                                                                                       "$created");
   private static final IMutableStatisticsHandlerCounter s_aStatsCounterDestroyed = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
@@ -93,8 +93,8 @@ public final class JSchSessionFactory
     final Session aSession = _createSession (aJSch, aSettings);
     aSession.setPassword (aSettings.getPassword ());
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Created new session " + _debugSession (aSession));
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Created new session " + _debugSession (aSession));
 
     // Timeout already set directly on session!
     aSession.connect ();
@@ -119,8 +119,8 @@ public final class JSchSessionFactory
     // Create session
     final Session aSession = _createSession (aJSch, aSettings);
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Created new session " + _debugSession (aSession));
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Created new session " + _debugSession (aSession));
 
     // Timeout already set directly on session!
     aSession.connect ();
@@ -138,8 +138,8 @@ public final class JSchSessionFactory
       return EChange.UNCHANGED;
 
     aSession.disconnect ();
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Closed session " + _debugSession (aSession));
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Closed session " + _debugSession (aSession));
     s_aStatsCounterDestroyed.increment ();
     return EChange.CHANGED;
   }

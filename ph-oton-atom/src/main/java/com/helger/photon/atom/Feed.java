@@ -37,7 +37,7 @@ import com.helger.xml.microdom.MicroDocument;
  */
 public class Feed extends FeedSource
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (Feed.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (Feed.class);
 
   private final ICommonsList <FeedEntry> m_aEntries = new CommonsArrayList <> ();
 
@@ -95,7 +95,7 @@ public class Feed extends FeedSource
     for (final FeedEntry aValue : m_aEntries)
       if (!aValue.isValid ())
       {
-        s_aLogger.warn ("At least one entry is invalid");
+        LOGGER.warn ("At least one entry is invalid");
         return false;
       }
 
@@ -106,7 +106,7 @@ public class Feed extends FeedSource
       for (final FeedEntry aEntry : m_aEntries)
         if (aEntry.getAllAuthors ().isEmpty ())
         {
-          s_aLogger.warn ("Both the feed author field and at least one entry author field is empty");
+          LOGGER.warn ("Both the feed author field and at least one entry author field is empty");
           return false;
         }
 

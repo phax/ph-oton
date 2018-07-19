@@ -54,7 +54,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
    */
   public static final char DEFAULT_SEPARATOR_CHAR = '-';
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (RequestParameterHandlerURLPathNamed.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (RequestParameterHandlerURLPathNamed.class);
 
   private final String m_sSeparator;
 
@@ -110,8 +110,8 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
           if (sParamName.equals (getRequestParamNameMenuItem ()))
             ret.setMenuItemFromString (aMenuTree, sParamValue);
           else
-            if (s_aLogger.isDebugEnabled ())
-              s_aLogger.debug ("Ignoring superfluous parameter '" + sParamName + "' with value '" + sParamValue + "'");
+            if (LOGGER.isDebugEnabled ())
+              LOGGER.debug ("Ignoring superfluous parameter '" + sParamName + "' with value '" + sParamValue + "'");
       }
     }
     return ret;

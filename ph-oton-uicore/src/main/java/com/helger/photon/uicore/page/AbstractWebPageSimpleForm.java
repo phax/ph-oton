@@ -74,7 +74,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
 {
   public static final String FORM_ID_INPUT = "inputform";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractWebPageSimpleForm.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractWebPageSimpleForm.class);
 
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
 
@@ -654,7 +654,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     if (!isActionAllowed (aWPEC, eSimpleFormAction, aObject))
     {
       // Default back to custom
-      s_aLogger.info ("Action " + eSimpleFormAction + " is not allowed on object " + aObject.getID ());
+      LOGGER.info ("Action " + eSimpleFormAction + " is not allowed on object " + aObject.getID ());
       eSimpleFormAction = EWebPageSimpleFormAction.DEFAULT;
     }
 

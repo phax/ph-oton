@@ -38,7 +38,7 @@ import com.jcraft.jsch.Session;
 
 public final class SftpConnectionDestination implements ISftpConnectionDestination
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SftpConnectionDestination.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (SftpConnectionDestination.class);
   private final int m_nConnectTimeoutMilliSeconds;
   private final String m_sHostname;
   private final int m_nPort;
@@ -114,7 +114,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
     }
     catch (final JSchException ex)
     {
-      s_aLogger.error ("Connection exception to " + m_sHostname + ":" + m_nPort, ex);
+      LOGGER.error ("Connection exception to " + m_sHostname + ":" + m_nPort, ex);
       if (aChannel != null && aChannel.isConnected ())
         aChannel.disconnect ();
 
@@ -144,7 +144,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
     }
     catch (final JSchException ex)
     {
-      s_aLogger.error ("Failed to retrieve session for closing", ex);
+      LOGGER.error ("Failed to retrieve session for closing", ex);
     }
     return EChange.CHANGED;
   }

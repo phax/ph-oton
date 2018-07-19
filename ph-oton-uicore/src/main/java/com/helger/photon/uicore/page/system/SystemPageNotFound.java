@@ -64,7 +64,7 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
   }
 
   public static final String PAGEID_SYSTEM_NOTFOUND = "system.notfound";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SystemPageNotFound.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (SystemPageNotFound.class);
 
   public SystemPageNotFound ()
   {
@@ -77,7 +77,7 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
-    s_aLogger.info ("PAGE NOT FOUND " + aWPEC.getURL ());
+    LOGGER.info ("PAGE NOT FOUND " + aWPEC.getURL ());
     aNodeList.addChild (new HCH1 ().addChild (ETextBase.MESSAGE.getDisplayText (aDisplayLocale)));
   }
 }

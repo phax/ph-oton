@@ -67,7 +67,7 @@ import com.helger.html.resource.css.ICSSCodeProvider;
 @NotThreadSafe
 public final class HCSpecialNodeHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (HCSpecialNodeHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (HCSpecialNodeHandler.class);
   private static final AnnotationUsageCache s_aOOBNAnnotationCache = new AnnotationUsageCache (OutOfBandNode.class);
   private static final AnnotationUsageCache s_aSNLMAnnotationCache = new AnnotationUsageCache (SpecialNodeListModifier.class);
   private static final ICommonsMap <String, IHCSpecialNodeListModifier> s_aModifiers = new CommonsHashMap<> ();
@@ -116,12 +116,12 @@ public final class HCSpecialNodeHandler
       for (final IHCNode aChild : aParentElement.getAllChildren ())
       {
         if (bDebug)
-          s_aLogger.info (StringHelper.getRepeated ("  ", nLevel) + ClassHelper.getClassLocalName (aChild.getClass ()));
+          LOGGER.info (StringHelper.getRepeated ("  ", nLevel) + ClassHelper.getClassLocalName (aChild.getClass ()));
 
         if (isOutOfBandNode (aChild))
         {
           if (bDebug)
-            s_aLogger.info (StringHelper.getRepeated ("  ", nLevel) + "=> is an OOB node!");
+            LOGGER.info (StringHelper.getRepeated ("  ", nLevel) + "=> is an OOB node!");
 
           aTargetList.add (aChild);
           if (aParentElement instanceof IHCHasChildrenMutable <?, ?>)
@@ -189,7 +189,7 @@ public final class HCSpecialNodeHandler
       {
         final IHCSpecialNodeListModifier aModifier = GenericReflection.newInstance (aModifierClass);
         if (aModifier == null)
-          s_aLogger.error ("Failed to instantiate IHCSpecialNodeListModifier implementation " + aModifierClass);
+          LOGGER.error ("Failed to instantiate IHCSpecialNodeListModifier implementation " + aModifierClass);
         s_aModifiers.put (sClassName, aModifier);
       }
     }
@@ -316,7 +316,7 @@ public final class HCSpecialNodeHandler
           if (!(aNode instanceof HCLink) &&
               !(aNode instanceof HCScriptFile) &&
               !(aNode instanceof IHCConditionalCommentNode))
-            s_aLogger.warn ("Found unexpected node to merge inline CSS/JS: " + aNode);
+            LOGGER.warn ("Found unexpected node to merge inline CSS/JS: " + aNode);
 
           // Add always!
           // These nodes are either file based nodes ot conditional comment

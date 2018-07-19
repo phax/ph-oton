@@ -40,7 +40,7 @@ import com.helger.photon.bootstrap4.EBootstrapCSSPathProvider;
 
 public final class MainExtractBootstrap4CSSClasses
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MainExtractBootstrap4CSSClasses.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MainExtractBootstrap4CSSClasses.class);
 
   public static void main (final String [] args)
   {
@@ -78,6 +78,6 @@ public final class MainExtractBootstrap4CSSClasses
          .append ("\");\n");
     }
 
-    s_aLogger.info (aSB.toString ());
+    LOGGER.info (aSB.toString ());
   }
 }

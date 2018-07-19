@@ -49,7 +49,7 @@ import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
  */
 public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject> implements IMenuTree
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MenuTree.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (MenuTree.class);
 
   private final ICommonsList <String> m_aDefaultMenuItemIDs = new CommonsArrayList <> ();
 
@@ -162,13 +162,13 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
         final IMenuObject aMenuItem = aTreeItem.getData ();
         if (aMenuItem instanceof IMenuItemPage)
           return (IMenuItemPage) aMenuItem;
-        s_aLogger.warn ("The default menu object ID '" +
+        LOGGER.warn ("The default menu object ID '" +
                         sMenuItemID +
                         "' does not resolve to an IMenuItemPage but to " +
                         ClassHelper.getSafeClassName (aMenuItem));
       }
       else
-        s_aLogger.warn ("Failed to resolve the default menu item ID '" + sMenuItemID + "'");
+        LOGGER.warn ("Failed to resolve the default menu item ID '" + sMenuItemID + "'");
     }
     return null;
   }

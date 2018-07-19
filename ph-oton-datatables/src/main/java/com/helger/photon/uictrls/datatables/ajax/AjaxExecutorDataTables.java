@@ -77,7 +77,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
   private static final String DT_ROW_DATA = "DT_RowData";
   private static final String DT_ROW_ATTR = "DT_RowAttr";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorDataTables.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorDataTables.class);
 
   private static void _sort (@Nonnull final DTSSRequestData aRequestData,
                              @Nonnull final DataTablesServerData aServerData)
@@ -125,7 +125,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
       {
         bContainsAnyColumnSpecificSearch = true;
         if (eFilterType == EDataTablesFilterType.ALL_TERMS_PER_ROW)
-          s_aLogger.error ("DataTables has column specific search term - this is not implemented for filter type ALL_TERMS_PER_ROW!");
+          LOGGER.error ("DataTables has column specific search term - this is not implemented for filter type ALL_TERMS_PER_ROW!");
       }
 
     final int nUnfilteredRowCount = aServerData.getRowCount ();
@@ -141,7 +141,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
           final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
           if (aColumn == null)
           {
-            s_aLogger.warn ("Invalid columnn index " +
+            LOGGER.warn ("Invalid columnn index " +
                             nSearchableCellIndex +
                             " for columns " +
                             Arrays.toString (aColumns));
@@ -240,8 +240,8 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
       });
     }
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("DataTables filtered " + aFilteredRows.size () + " rows out of " + nUnfilteredRowCount);
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("DataTables filtered " + aFilteredRows.size () + " rows out of " + nUnfilteredRowCount);
 
     // Use the filtered rows
     return aFilteredRows;
@@ -319,8 +319,8 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("DataTables AJAX request: " + CollectionHelper.getSortedByKey (aRequestScope.params ()));
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("DataTables AJAX request: " + CollectionHelper.getSortedByKey (aRequestScope.params ()));
 
     // Read input parameters and ensure non negativeness
     final int nDraw = aRequestScope.params ().getAsInt (DRAW);
@@ -404,7 +404,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
                                                                              sDataTablesID);
     if (aServerData == null)
     {
-      s_aLogger.error ("No such data tables ID: " + sDataTablesID);
+      LOGGER.error ("No such data tables ID: " + sDataTablesID);
       aAjaxResponse.createNotFound ();
     }
     else

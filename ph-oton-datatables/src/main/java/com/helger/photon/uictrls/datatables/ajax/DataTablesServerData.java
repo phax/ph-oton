@@ -63,7 +63,7 @@ public final class DataTablesServerData implements IHasUIState
 {
   public static final ObjectType OT_DATATABLES = new ObjectType ("datatables");
   public static final IHCConversionSettings DEFAULT_CONVERSION_SETTINGS = createConversionSettings ();
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerData.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesServerData.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final DTOrderSpec [] m_aColumns;
@@ -118,8 +118,8 @@ public final class DataTablesServerData implements IHasUIState
       nCells += aRow.getCellCount ();
     }
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Having ServerSide DataTables with " +
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Having ServerSide DataTables with " +
                        aTable.getBodyRowCount () +
                        " rows and a total of " +
                        nCells +

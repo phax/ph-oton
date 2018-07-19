@@ -45,7 +45,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
 {
   public static final int NONCE_BYTES = 64;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (CSRFManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (CSRFManager.class);
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsSet <String> m_aNonces = new CommonsHashSet <> ();
@@ -95,7 +95,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
 
     m_aRWLock.writeLocked ( () -> {
       if (!m_aNonces.remove (sNonce))
-        s_aLogger.error ("Failed to remove nonce '" + sNonce + "'");
+        LOGGER.error ("Failed to remove nonce '" + sNonce + "'");
     });
   }
 

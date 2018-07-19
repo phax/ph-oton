@@ -107,7 +107,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   public static final String EVENT_INIT = "init.dt";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DataTables.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DataTables.class);
 
   // Constructor parameters
   private final IHCTable <?> m_aTable;
@@ -289,7 +289,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       if (bHasDTCol)
         aTable.addHeaderRow ().addCells (aHeaderNodes);
       else
-        s_aLogger.warn ("Table does not have a header row so DataTables may not be displayed correctly!");
+        LOGGER.warn ("Table does not have a header row so DataTables may not be displayed correctly!");
     }
 
     m_aTable = aTable;
@@ -866,7 +866,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       for (final DataTablesColumnDef aCurColumn : m_aColumnDefs)
         if (aCurColumn.hasTarget (nTarget))
         {
-          s_aLogger.warn ("Another DataTablesColumn with target " + nTarget + " is already contained!");
+          LOGGER.warn ("Another DataTablesColumn with target " + nTarget + " is already contained!");
           break;
         }
     m_aColumnDefs.add (aColumn);
@@ -1156,7 +1156,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       if (aPlugin.canBeApplied (this))
         aRelevantPlugins.add (aPlugin);
       else
-        s_aLogger.warn ("Plugin '" + aPlugin.getName () + "' cannot be applied to DataTable " + getTableID ());
+        LOGGER.warn ("Plugin '" + aPlugin.getName () + "' cannot be applied to DataTable " + getTableID ());
 
     // Finalize plugins
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)

@@ -36,7 +36,7 @@ import com.helger.xml.microdom.IMicroContainer;
  */
 public class HCParser extends XHTMLParser
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (HCParser.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (HCParser.class);
 
   public HCParser (@Nonnull final EHTMLVersion eHTMLVersion)
   {
@@ -61,7 +61,7 @@ public class HCParser extends XHTMLParser
       final IMicroContainer aCont = unescapeXHTMLFragment (sText);
       if (aCont != null)
         return new HCDOMWrapper (aCont);
-      s_aLogger.error ("Failed to unescape XHTML:\n" + sText);
+      LOGGER.error ("Failed to unescape XHTML:\n" + sText);
     }
     return new HCTextNode (sText);
   }

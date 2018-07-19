@@ -55,7 +55,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
 
   public static final int DEFAULT_LIMIT = 5;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (BloodhoundOptions.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (BloodhoundOptions.class);
 
   private IJSExpression m_aDatumTokenizer;
   private IJSExpression m_aQueryTokenizer;
@@ -273,11 +273,11 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   public JSAssocArray getAsJSObject ()
   {
     if (m_aDatumTokenizer == null)
-      s_aLogger.warn ("No datumTokenizer present!");
+      LOGGER.warn ("No datumTokenizer present!");
     if (m_aQueryTokenizer == null)
-      s_aLogger.warn ("No queryTokenizer present!");
+      LOGGER.warn ("No queryTokenizer present!");
     if (m_aLocal == null && m_aPrefetch == null && m_aRemote == null)
-      s_aLogger.warn ("Either local, prefetch or remote must be set!");
+      LOGGER.warn ("Either local, prefetch or remote must be set!");
 
     final JSAssocArray ret = new JSAssocArray ();
     if (m_aDatumTokenizer != null)

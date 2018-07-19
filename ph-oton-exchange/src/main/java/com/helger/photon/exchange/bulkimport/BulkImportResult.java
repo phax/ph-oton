@@ -49,7 +49,7 @@ public class BulkImportResult implements ISuccessIndicator
    * Default value for maximum number of warnings to maintain in a list.
    */
   public static final int DEFAULT_MAX_WARNINGS = 1000;
-  private static final Logger s_aLogger = LoggerFactory.getLogger (BulkImportResult.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (BulkImportResult.class);
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final int m_nMaxWarnings;
@@ -151,7 +151,7 @@ public class BulkImportResult implements ISuccessIndicator
       if (m_aWarnings.size () < m_nMaxWarnings)
       {
         if (false)
-          s_aLogger.warn (sWarningMsg);
+          LOGGER.warn (sWarningMsg);
         m_aWarnings.add (sWarningMsg);
       }
       else

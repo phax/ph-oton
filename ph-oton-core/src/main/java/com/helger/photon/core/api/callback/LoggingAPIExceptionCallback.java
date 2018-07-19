@@ -38,7 +38,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public class LoggingAPIExceptionCallback implements IAPIExceptionCallback
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingAPIExceptionCallback.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAPIExceptionCallback.class);
 
   public void onAPIExecutionException (@Nonnull final IAPIInvoker aInvoker,
                                        @Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
@@ -48,7 +48,7 @@ public class LoggingAPIExceptionCallback implements IAPIExceptionCallback
     if (t instanceof IOException)
     {
       if (!StreamHelper.isKnownEOFException (t))
-        s_aLogger.error ("Error writing result of API '" +
+        LOGGER.error ("Error writing result of API '" +
                          aInvokableDescriptor.getPath () +
                          "' with " +
                          aInvokableDescriptor,
@@ -56,7 +56,7 @@ public class LoggingAPIExceptionCallback implements IAPIExceptionCallback
     }
     else
     {
-      s_aLogger.error ("Error invoking API '" + aInvokableDescriptor.getPath () + "' on " + aInvokableDescriptor, t);
+      LOGGER.error ("Error invoking API '" + aInvokableDescriptor.getPath () + "' on " + aInvokableDescriptor, t);
       if (GlobalDebug.isDebugMode ())
         RequestLogger.logRequestComplete (aRequestScope.getRequest ());
     }

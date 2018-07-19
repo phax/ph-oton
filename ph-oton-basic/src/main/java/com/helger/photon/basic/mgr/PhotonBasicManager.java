@@ -53,7 +53,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   public static final String SYSTEM_MIGRATIONS_XML = "systemmigrations.xml";
   public static final String SYSTEM_MESSAGE_XML = "systemmessage.xml";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonBasicManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonBasicManager.class);
 
   private FavoriteManager m_aFavoriteManager;
   private LongRunningJobManager m_aLongRunningJobMgr;
@@ -80,7 +80,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
       m_aLongRunningJobResultMgr = new LongRunningJobResultManager (LONG_RUNNING_JOB_RESULTS_XML);
       m_aLongRunningJobMgr = new LongRunningJobManager (m_aLongRunningJobResultMgr);
 
-      s_aLogger.info (ClassHelper.getClassLocalName (this) + " was initialized");
+      LOGGER.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }
     catch (final Throwable t)
     {

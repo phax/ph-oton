@@ -54,7 +54,7 @@ import com.helger.json.IJson;
 @CodingStyleguideUnaware
 public abstract class AbstractJSBlock implements IJSFunctionContainer
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractJSBlock.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractJSBlock.class);
 
   /**
    * List of the content of this block
@@ -1127,7 +1127,7 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
       {
         if (GlobalDebug.isDebugMode ())
           if (!(aJSCode instanceof IHasJSCodeWithSettings))
-            s_aLogger.warn ("Adding unspecified IHasJSCode of type " +
+            LOGGER.warn ("Adding unspecified IHasJSCode of type " +
                             aJSCode.getClass ().getName () +
                             " to " +
                             ClassHelper.getClassLocalName (this));

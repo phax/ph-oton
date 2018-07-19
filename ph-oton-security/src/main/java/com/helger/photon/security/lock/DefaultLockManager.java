@@ -58,7 +58,7 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 @ThreadSafe
 public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultLockManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DefaultLockManager.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
@@ -149,10 +149,10 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
         bIsNewLock = true;
       }
 
-      if (s_aLogger.isInfoEnabled ())
+      if (LOGGER.isInfoEnabled ())
       {
         if (CollectionHelper.isNotEmpty (aUnlockedObjects))
-          s_aLogger.info ("Before locking, unlocked all objects of user '" +
+          LOGGER.info ("Before locking, unlocked all objects of user '" +
                           sUserID +
                           "': " +
                           aUnlockedObjects +
@@ -160,7 +160,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
                           aObjID +
                           "'");
         if (bIsNewLock)
-          s_aLogger.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
+          LOGGER.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
       }
 
       return new LockResult<> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
@@ -217,7 +217,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     if (aCurrentLock == null)
     {
       // Object is not locked at all
-      s_aLogger.warn ("User '" + sUserID + "' could not unlock object '" + aObjID + "' because it is not locked");
+      LOGGER.warn ("User '" + sUserID + "' could not unlock object '" + aObjID + "' because it is not locked");
       return EChange.UNCHANGED;
     }
 
@@ -225,7 +225,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     if (!aCurrentLock.getLockUserID ().equals (sUserID))
     {
       // This may happen if the user was manually unlocked!
-      s_aLogger.warn ("User '" +
+      LOGGER.warn ("User '" +
                       sUserID +
                       "' could not unlock object '" +
                       aObjID +
@@ -241,8 +241,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
         throw new IllegalStateException ("Internal inconsistency: removing '" + aObjID + "' from lock list failed!");
     });
 
-    if (s_aLogger.isInfoEnabled ())
-      s_aLogger.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");
     return EChange.CHANGED;
   }
 
@@ -308,8 +308,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
       m_aRWLock.writeLocked ( () -> _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects));
 
       if (!aUnlockedObjects.isEmpty ())
-        if (s_aLogger.isInfoEnabled ())
-          s_aLogger.info ("Unlocked all objects of user '" +
+        if (LOGGER.isInfoEnabled ())
+          LOGGER.info ("Unlocked all objects of user '" +
                           sUserID +
                           "': " +
                           aUnlockedObjects +

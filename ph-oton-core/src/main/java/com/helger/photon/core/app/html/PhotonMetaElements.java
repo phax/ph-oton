@@ -53,7 +53,7 @@ public final class PhotonMetaElements
   public static final String DEFAULT_FILENAME = "html/metatags.xml";
 
   private static final String REQUEST_ATTR_METAELEMENTS = PhotonMetaElements.class.getName ();
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonMetaElements.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonMetaElements.class);
   private static final MetaElementList s_aGlobal = new MetaElementList ();
   private static final SimpleLock s_aLock = new SimpleLock ();
 
@@ -69,7 +69,7 @@ public final class PhotonMetaElements
     {
       final ICommonsOrderedMap <String, String> aMetaElements = new CommonsLinkedHashMap <> ();
       if (XMLMapHandler.readMap (aRes, aMetaElements).isFailure ())
-        s_aLogger.error ("Failed to read meta element file " + aRes.getPath ());
+        LOGGER.error ("Failed to read meta element file " + aRes.getPath ());
 
       for (final Map.Entry <String, String> aEntry : aMetaElements.entrySet ())
         aTarget.addMetaElement (MetaElement.createMeta (aEntry.getKey (), aEntry.getValue ()));

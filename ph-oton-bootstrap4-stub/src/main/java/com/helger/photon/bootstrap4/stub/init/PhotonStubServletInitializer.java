@@ -51,7 +51,7 @@ import com.helger.servlet.filter.CharacterEncodingFilter;
 @ThreadSafe
 public final class PhotonStubServletInitializer
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonStubServletInitializer.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonStubServletInitializer.class);
   private static final AtomicBoolean s_aInitialized = new AtomicBoolean (false);
 
   @PresentForCodeCoverage
@@ -88,7 +88,7 @@ public final class PhotonStubServletInitializer
                                          "." +
                                          aSC.getMinorVersion ());
 
-      s_aLogger.info ("Registering default ph-oton listeners and servlets");
+      LOGGER.info ("Registering default ph-oton listeners and servlets");
 
       {
         final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter",
@@ -185,7 +185,7 @@ public final class PhotonStubServletInitializer
         aSC.addListener (PhotonStubServletContextListener.class);
       }
 
-      s_aLogger.info ("Finished registering default ph-oton listeners and servlets");
+      LOGGER.info ("Finished registering default ph-oton listeners and servlets");
     }
   }
 }

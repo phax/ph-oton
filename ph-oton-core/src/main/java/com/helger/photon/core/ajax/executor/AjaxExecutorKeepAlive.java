@@ -32,13 +32,13 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public final class AjaxExecutorKeepAlive implements IAjaxExecutor
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AjaxExecutorKeepAlive.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorKeepAlive.class);
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     if (GlobalDebug.isDebugMode ())
-      s_aLogger.info ("AJAX Keep alive!");
+      LOGGER.info ("AJAX Keep alive!");
 
     // This is all we need. If a session is present, it gets accessed
     aRequestScope.getSession (false);

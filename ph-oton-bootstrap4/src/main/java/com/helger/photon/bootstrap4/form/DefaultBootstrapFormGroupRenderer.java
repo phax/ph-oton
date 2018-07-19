@@ -61,7 +61,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_HELP_TEXT = DefaultCSSClassProvider.create ("form-group-help-text");
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_ERROR_TEXT = DefaultCSSClassProvider.create ("form-group-error-text");
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultBootstrapFormGroupRenderer.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DefaultBootstrapFormGroupRenderer.class);
 
   private boolean m_bUseIcons = false;
   private boolean m_bForceNoCheckBoxHandling = false;
@@ -174,7 +174,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   {
     String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
     if (StringHelper.hasNoText (sErrorText))
-      s_aLogger.warn ("Error " + aError + " has no test in locale " + aContentLocale);
+      LOGGER.warn ("Error " + aError + " has no test in locale " + aContentLocale);
 
     final String sErrorID = aError.getErrorID ();
     if (StringHelper.hasText (sErrorID))

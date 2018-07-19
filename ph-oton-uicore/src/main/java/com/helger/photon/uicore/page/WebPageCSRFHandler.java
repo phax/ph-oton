@@ -40,7 +40,7 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
    */
   public static final WebPageCSRFHandler INSTANCE = new WebPageCSRFHandler ();
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (WebPageCSRFHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebPageCSRFHandler.class);
 
   private boolean m_bCSRFPreventionEnabled = true;
 
@@ -61,7 +61,7 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
 
   public void onCSRFError (@Nonnull final IWebPageExecutionContext aWPEC, @Nullable final String sNonce)
   {
-    s_aLogger.error ("The expected CSRF nonce on page '" +
+    LOGGER.error ("The expected CSRF nonce on page '" +
                      aWPEC.getWebPage ().getID () +
                      "' was not present.\nExpected: '" +
                      CSRFSessionManager.getInstance ().getNonce () +

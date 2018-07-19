@@ -38,7 +38,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public class LoggingAjaxExceptionCallback implements IAjaxExceptionCallback
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingAjaxExceptionCallback.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAjaxExceptionCallback.class);
 
   public void onAjaxExecutionException (@Nullable final IAjaxInvoker aAjaxInvoker,
                                         @Nullable final String sFunctionName,
@@ -49,11 +49,11 @@ public class LoggingAjaxExceptionCallback implements IAjaxExceptionCallback
     if (ex instanceof IOException)
     {
       if (!StreamHelper.isKnownEOFException (ex))
-        s_aLogger.error ("Error writing result of Ajax function '" + sFunctionName + "' with " + aAjaxExecutor, ex);
+        LOGGER.error ("Error writing result of Ajax function '" + sFunctionName + "' with " + aAjaxExecutor, ex);
     }
     else
     {
-      s_aLogger.error ("Error invoking Ajax function '" + sFunctionName + "' on " + aAjaxExecutor, ex);
+      LOGGER.error ("Error invoking Ajax function '" + sFunctionName + "' on " + aAjaxExecutor, ex);
       if (GlobalDebug.isDebugMode ())
         RequestLogger.logRequestComplete (aRequestScope.getRequest ());
     }

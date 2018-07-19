@@ -89,7 +89,7 @@ public abstract class AbstractLoginManager
    */
   public static final String LOGIN_INFO_REQUEST_COUNT = "request-count";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractLoginManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractLoginManager.class);
 
   /**
    * A list of all role IDs that the user must have so that he can login! May be
@@ -260,7 +260,7 @@ public abstract class AbstractLoginManager
             // Credentials are invalid
             aLoginResult = aResult.getCredentialValidationFailure ();
             if (GlobalDebug.isDebugMode ())
-              s_aLogger.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+              LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
 
             // Anyway show the error message only if at least some credential
             // values are passed
@@ -282,7 +282,7 @@ public abstract class AbstractLoginManager
           {
             // Credentials are invalid
             if (GlobalDebug.isDebugMode ())
-              s_aLogger.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+              LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
 
             // Anyway show the error message only if at least some credential
             // values are passed
@@ -313,7 +313,7 @@ public abstract class AbstractLoginManager
     {
       // Internal inconsistency
       if (sSessionUserID != null)
-        s_aLogger.error ("Failed to resolve LoginInfo of user ID '" + sSessionUserID + "'");
+        LOGGER.error ("Failed to resolve LoginInfo of user ID '" + sSessionUserID + "'");
     }
 
     if (bLoggedInInThisRequest)

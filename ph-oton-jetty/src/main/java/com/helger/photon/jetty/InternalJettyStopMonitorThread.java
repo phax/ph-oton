@@ -38,7 +38,7 @@ final class InternalJettyStopMonitorThread extends Thread
   public static final int STOP_PORT = 8079;
   public static final String STOP_KEY = "secret";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (InternalJettyStopMonitorThread.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (InternalJettyStopMonitorThread.class);
   private final int m_nPort;
   private final String m_sKey;
   private final ServerSocket m_aServerSocket;
@@ -69,14 +69,14 @@ final class InternalJettyStopMonitorThread extends Thread
         final String sKey = lin.readLine ();
         if (!m_sKey.equals (sKey))
         {
-          s_aLogger.warn ("Stop key mismatch. Got '" + sKey + "' but was expecting something else");
+          LOGGER.warn ("Stop key mismatch. Got '" + sKey + "' but was expecting something else");
           continue;
         }
 
         // Second line: stop
         final String sCmd = lin.readLine ();
         if (false)
-          s_aLogger.info ("Got command: " + sCmd);
+          LOGGER.info ("Got command: " + sCmd);
         if ("stop".equals (sCmd))
         {
           StreamHelper.close (aSocket);
@@ -87,7 +87,7 @@ final class InternalJettyStopMonitorThread extends Thread
       }
       catch (final Exception e)
       {
-        s_aLogger.error ("Error reading from socket", e);
+        LOGGER.error ("Error reading from socket", e);
         break;
       }
     }

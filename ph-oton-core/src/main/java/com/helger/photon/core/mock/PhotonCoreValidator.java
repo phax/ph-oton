@@ -35,7 +35,7 @@ import com.helger.xml.microdom.util.MicroRecursiveIterator;
 @Immutable
 public final class PhotonCoreValidator
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonCoreValidator.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonCoreValidator.class);
 
   private PhotonCoreValidator ()
   {}
@@ -64,7 +64,7 @@ public final class PhotonCoreValidator
             }
             catch (final Exception ex)
             {
-              s_aLogger.error ("Failed to resolve class '" + sClassName + "'");
+              LOGGER.error ("Failed to resolve class '" + sClassName + "'");
               throw ex;
             }
           }

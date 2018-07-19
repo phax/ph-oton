@@ -65,7 +65,7 @@ public class TypeaheadDataset
   public static final String DEFAULT_VALUE_KEY = "value";
   public static final int DEFAULT_LIMIT = 5;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (TypeaheadDataset.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (TypeaheadDataset.class);
 
   private final String m_sName;
   private String m_sValueKey = DEFAULT_VALUE_KEY;
@@ -438,15 +438,15 @@ public class TypeaheadDataset
   {
     // Consistency checks
     if (m_aTemplate instanceof JSStringLiteral && StringHelper.hasNoText (m_sEngine))
-      s_aLogger.warn ("If template is a String, engine must be set!");
+      LOGGER.warn ("If template is a String, engine must be set!");
     if (m_aLocal == null && m_aPrefetch == null && m_aRemote == null)
-      s_aLogger.warn ("Either local, prefetch or remote must be set!");
+      LOGGER.warn ("Either local, prefetch or remote must be set!");
     if (m_aLocal != null && m_aPrefetch != null)
-      s_aLogger.warn ("Only local or prefetch should be used!");
+      LOGGER.warn ("Only local or prefetch should be used!");
     if (m_aLocal != null && m_aRemote != null)
-      s_aLogger.warn ("Only local or remote should be used!");
+      LOGGER.warn ("Only local or remote should be used!");
     if (m_aPrefetch != null && m_aRemote != null)
-      s_aLogger.warn ("Only prefetch or remote should be used!");
+      LOGGER.warn ("Only prefetch or remote should be used!");
 
     // Build result object
     final JSAssocArray ret = new JSAssocArray ().add (JSON_NAME, m_sName);

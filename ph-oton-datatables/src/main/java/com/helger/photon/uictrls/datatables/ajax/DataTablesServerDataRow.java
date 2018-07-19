@@ -48,7 +48,7 @@ import com.helger.xml.microdom.IMicroQName;
 @NotThreadSafe
 public final class DataTablesServerDataRow implements Serializable
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerDataRow.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesServerDataRow.class);
 
   private final String m_sRowID;
   private final String m_sRowClass;
@@ -59,7 +59,7 @@ public final class DataTablesServerDataRow implements Serializable
   public DataTablesServerDataRow (@Nonnull final HCRow aRow)
   {
     if (aRow.hasAnyStyle ())
-      s_aLogger.warn ("Cell has styles assigned which will be lost: " + aRow.getAllStyles ());
+      LOGGER.warn ("Cell has styles assigned which will be lost: " + aRow.getAllStyles ());
 
     m_sRowID = aRow.getID ();
     m_sRowClass = aRow.getAllClassesAsString ();

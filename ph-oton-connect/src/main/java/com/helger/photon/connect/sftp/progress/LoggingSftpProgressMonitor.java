@@ -23,7 +23,7 @@ import com.jcraft.jsch.SftpProgressMonitor;
 
 public final class LoggingSftpProgressMonitor implements SftpProgressMonitor
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingSftpProgressMonitor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggingSftpProgressMonitor.class);
 
   private String m_sOperation;
   private long m_nCount = 0;
@@ -52,7 +52,7 @@ public final class LoggingSftpProgressMonitor implements SftpProgressMonitor
       if (m_nPercent < nPerc)
       {
         m_nPercent = nPerc;
-        s_aLogger.info (m_sOperation + " Completed " + m_nCount + " out of " + m_nMax + " (" + m_nPercent + "%).");
+        LOGGER.info (m_sOperation + " Completed " + m_nCount + " out of " + m_nMax + " (" + m_nPercent + "%).");
       }
     }
     return true;

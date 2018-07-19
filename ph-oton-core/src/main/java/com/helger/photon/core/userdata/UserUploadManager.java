@@ -52,7 +52,7 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 @ThreadSafe
 public final class UserUploadManager extends AbstractSessionWebSingleton
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (UserUploadManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (UserUploadManager.class);
 
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, TemporaryUserDataObject> m_aMap = new CommonsHashMap <> ();
@@ -71,10 +71,10 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @Nonnull
   private static FileIOError _deleteUDO (@Nonnull final TemporaryUserDataObject aUDO)
   {
-    s_aLogger.info ("Deleting uploaded file " + aUDO);
+    LOGGER.info ("Deleting uploaded file " + aUDO);
     final FileIOError aError = FileOperationManager.INSTANCE.deleteFile (aUDO.getAsFile ());
     if (aError.isFailure ())
-      s_aLogger.error ("Failed to delete UDO " + aUDO.getPath () + ": " + aError.getErrorCode ());
+      LOGGER.error ("Failed to delete UDO " + aUDO.getPath () + ": " + aError.getErrorCode ());
     return aError;
   }
 
@@ -142,7 +142,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
           final TemporaryUserDataObject aUDO = m_aMap.remove (sFieldName);
           if (aUDO != null)
           {
-            s_aLogger.info ("Confirmed uploaded file " + aUDO);
+            LOGGER.info ("Confirmed uploaded file " + aUDO);
             // Convert from temporary to real UDO
             ret.put (sFieldName, new UserDataObject (aUDO.getPath ()));
           }
@@ -171,7 +171,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
         final TemporaryUserDataObject aUDO = m_aMap.remove (sFieldName);
         if (aUDO != null)
         {
-          s_aLogger.info ("Confirmed uploaded file " + aUDO);
+          LOGGER.info ("Confirmed uploaded file " + aUDO);
           // Convert from temporary to real UDO
           return new UserDataObject (aUDO.getPath ());
         }

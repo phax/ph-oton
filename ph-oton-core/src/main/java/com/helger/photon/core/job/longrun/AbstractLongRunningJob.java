@@ -40,7 +40,7 @@ import com.helger.scope.mgr.ScopeManager;
  */
 public abstract class AbstractLongRunningJob extends AbstractJob implements ILongRunningJob
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractLongRunningJob.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractLongRunningJob.class);
 
   /** Predefined key into the job data map */
   private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
@@ -98,11 +98,11 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
         getLongRunningJobManager ().onEndJob (sLongRunningJobID, eExecSuccess, aJobResult);
       }
       else
-        s_aLogger.error ("Failed to retrieve long running job ID from JobDataMap " + aJobDataMap);
+        LOGGER.error ("Failed to retrieve long running job ID from JobDataMap " + aJobDataMap);
     }
     catch (final Throwable t)
     {
-      s_aLogger.error ("Failed to end long running job", t);
+      LOGGER.error ("Failed to end long running job", t);
 
       // Notify custom exception handler
       triggerCustomExceptionHandler (t, getClass ().getName (), this);

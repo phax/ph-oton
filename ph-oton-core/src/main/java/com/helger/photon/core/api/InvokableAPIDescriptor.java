@@ -38,7 +38,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public final class InvokableAPIDescriptor
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (InvokableAPIDescriptor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (InvokableAPIDescriptor.class);
 
   private final IAPIDescriptor m_aDescriptor;
   private final String m_sPath;
@@ -119,7 +119,7 @@ public final class InvokableAPIDescriptor
       for (final String sRequiredHeader : m_aDescriptor.getAllRequiredHeaders ())
         if (aRequestScope.headers ().getFirstHeaderValue (sRequiredHeader) == null)
         {
-          s_aLogger.warn ("Request '" + m_sPath + "' is missing required HTTP header '" + sRequiredHeader + "'");
+          LOGGER.warn ("Request '" + m_sPath + "' is missing required HTTP header '" + sRequiredHeader + "'");
           return false;
         }
 
@@ -128,7 +128,7 @@ public final class InvokableAPIDescriptor
       for (final String sRequiredParam : m_aDescriptor.getAllRequiredParams ())
         if (!aRequestScope.params ().containsKey (sRequiredParam))
         {
-          s_aLogger.warn ("Request '" + m_sPath + "' is missing required HTTP parameter '" + sRequiredParam + "'");
+          LOGGER.warn ("Request '" + m_sPath + "' is missing required HTTP parameter '" + sRequiredParam + "'");
           return false;
         }
 
@@ -136,7 +136,7 @@ public final class InvokableAPIDescriptor
     if (m_aDescriptor.hasExecutionFilter ())
       if (!m_aDescriptor.getExecutionFilter ().canExecute (aRequestScope))
       {
-        s_aLogger.warn ("Request '" + m_sPath + "' cannot be executed because of ExecutionFilter");
+        LOGGER.warn ("Request '" + m_sPath + "' cannot be executed because of ExecutionFilter");
         return false;
       }
 

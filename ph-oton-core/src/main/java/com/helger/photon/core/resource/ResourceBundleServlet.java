@@ -52,7 +52,7 @@ public final class ResourceBundleServlet extends AbstractXServlet
   public static final String SERVLET_DEFAULT_NAME = "resbundle";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleServlet.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ResourceBundleServlet.class);
   private static final AtomicBoolean s_bIsEnabled = new AtomicBoolean (isServletRegisteredInServletContext () &&
                                                                        GlobalDebug.isProductionMode ());
 
@@ -71,7 +71,7 @@ public final class ResourceBundleServlet extends AbstractXServlet
     if (bEnable && !isServletRegisteredInServletContext ())
       throw new IllegalStateException ("Cannot enable the servlet, since it is not registered!");
     s_bIsEnabled.set (bEnable);
-    s_aLogger.info ("ResourceBundleServlet is now: " + (bEnable ? "enabled" : "disabled"));
+    LOGGER.info ("ResourceBundleServlet is now: " + (bEnable ? "enabled" : "disabled"));
   }
 
   public static boolean isEnabled ()

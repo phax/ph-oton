@@ -66,7 +66,7 @@ public class JettyStarter
   public static final int DEFAULT_STOP_PORT = InternalJettyStopMonitorThread.STOP_PORT;
   public static final String DEFAULT_CONTEXT_PATH = "/";
   public static final String DEFAULT_CONTAINER_JAR_PATTERN = ".*\\.jar$|.*/classes/.*";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (JettyStarter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JettyStarter.class);
 
   private final String m_sAppName;
   private final String m_sDirBaseName;
@@ -515,7 +515,7 @@ public class JettyStarter
 
       // Starting the engines:
       aServer.start ();
-      s_aLogger.info ("Started Jetty" + ":" + m_nPort + ":" + m_nStopPort + " " + m_sAppName);
+      LOGGER.info ("Started Jetty" + ":" + m_nPort + ":" + m_nStopPort + " " + m_sAppName);
 
       // Callback
       onServerStarted (aServer);
@@ -528,7 +528,7 @@ public class JettyStarter
         }
         catch (final Exception ex)
         {
-          s_aLogger.error ("Exception in ShutdownHook of JettyStarter!", ex);
+          LOGGER.error ("Exception in ShutdownHook of JettyStarter!", ex);
         }
       }));
     }
@@ -536,7 +536,7 @@ public class JettyStarter
     {
       // Do not throw something here, in case some exception occurs in finally
       // code
-      s_aLogger.error ("Failed to start Jetty " + m_sAppName + "!", t);
+      LOGGER.error ("Failed to start Jetty " + m_sAppName + "!", t);
 
       // Callback
       onServerStartFailure (aServer, t);
@@ -545,16 +545,16 @@ public class JettyStarter
     {
       if (aCtx.isFailed ())
       {
-        s_aLogger.error ("Failed to start Jetty " + m_sAppName + " - stopping server!");
+        LOGGER.error ("Failed to start Jetty " + m_sAppName + " - stopping server!");
         try
         {
           // Throws an Exception e.g. in log4j2 2.5
           aServer.stop ();
-          s_aLogger.error ("Failed to start Jetty " + m_sAppName + " - stopped server!");
+          LOGGER.error ("Failed to start Jetty " + m_sAppName + " - stopped server!");
         }
         catch (final Throwable t)
         {
-          s_aLogger.error ("Error stopping Jetty " + m_sAppName + " after startup errors!", t);
+          LOGGER.error ("Error stopping Jetty " + m_sAppName + " after startup errors!", t);
         }
       }
       else

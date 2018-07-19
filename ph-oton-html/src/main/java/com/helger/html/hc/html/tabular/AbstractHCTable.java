@@ -38,7 +38,7 @@ import com.helger.xml.microdom.IMicroElement;
 public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>>
                                       extends AbstractHCBaseTable <IMPLTYPE>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractHCTable.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractHCTable.class);
 
   public AbstractHCTable ()
   {
@@ -87,7 +87,7 @@ public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYP
       // May happen when a table is filled via AJAX
       // Required by XHTML 1.1
       if (!hasBodyRows () && !hasBodyID () && !hasBodyClasses () && aConversionSettings.getHTMLVersion ().isXHTML11 ())
-        s_aLogger.warn ("Tables without body rows are prohibited by XHTML 1.1!");
+        LOGGER.warn ("Tables without body rows are prohibited by XHTML 1.1!");
     }
 
     // Table specific attributes

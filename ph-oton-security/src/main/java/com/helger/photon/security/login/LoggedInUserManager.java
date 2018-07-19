@@ -207,7 +207,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   public static final boolean DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER = false;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggedInUserManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LoggedInUserManager.class);
 
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
@@ -389,7 +389,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       // This implicitly implies using the default hash creator algorithm
       // This automatically saves the file
       aUserMgr.setUserPassword (sUserID, sPlainTextPassword);
-      s_aLogger.info ("Updated password hash of user '" +
+      LOGGER.info ("Updated password hash of user '" +
                       sUserID +
                       "' from algorithm '" +
                       sExistingPasswordHashAlgorithmName +
@@ -431,7 +431,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       if (aSUH._hasUser ())
       {
         // This session already has a user
-        s_aLogger.warn ("The session user holder already has the user ID '" +
+        LOGGER.warn ("The session user holder already has the user ID '" +
                         aSUH._getUserID () +
                         "' so the new ID '" +
                         sUserID +
@@ -449,7 +449,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aRWLock.writeLock ().unlock ();
     }
 
-    s_aLogger.info ("Logged in user '" + sUserID + "' with login name '" + aUser.getLoginName () + "'");
+    LOGGER.info ("Logged in user '" + sUserID + "' with login name '" + aUser.getLoginName () + "'");
     AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
 
     // Execute callback as the very last action
@@ -494,7 +494,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aRWLock.writeLock ().unlock ();
     }
 
-    s_aLogger.info ("Logged out user '" +
+    LOGGER.info ("Logged out user '" +
                     sUserID +
                     "' after " +
                     Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());

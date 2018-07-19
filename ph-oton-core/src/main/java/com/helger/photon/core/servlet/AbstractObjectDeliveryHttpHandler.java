@@ -64,7 +64,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
 
   protected static final String REQUEST_ATTR_OBJECT_DELIVERY_FILENAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                                         "object-delivery.filename";
-  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractObjectDeliveryHttpHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractObjectDeliveryHttpHandler.class);
 
   /**
    * Create a unique value per server startup. This is the ETag value for all
@@ -161,9 +161,9 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     _initialFillSet (m_aAllowedRegExs, aInitParams.get (INITPARAM_ALLOWED_REG_EXS), false);
     m_bAllowedAllExtensions = m_aAllowedExtensions.contains (INITPARAM_VALUE_WILDCARD);
 
-    if (s_aLogger.isDebugEnabled ())
+    if (LOGGER.isDebugEnabled ())
     {
-      s_aLogger.debug ("Settings for " +
+      LOGGER.debug ("Settings for " +
                        getClass ().getName () +
                        ": " +
                        INITPARAM_DENIED_FILENAMES +
@@ -193,12 +193,12 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
 
     // Short hint, as this may render the whole servlet senseless...
     if (m_bDeniedAllExtensions)
-      s_aLogger.warn ("All extensions are denied in " +
+      LOGGER.warn ("All extensions are denied in " +
                       getClass ().getName () +
                       ". This means that this servlet will not deliver any resource!");
     else
       if (m_aAllowedFilenames.isEmpty () && m_aAllowedExtensions.isEmpty () && m_aAllowedRegExs.isEmpty ())
-        s_aLogger.warn ("No allowance rules are defined in " +
+        LOGGER.warn ("No allowance rules are defined in " +
                         getClass ().getName () +
                         ". This means that this servlet will not deliver any resource!");
   }
@@ -265,16 +265,16 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     // is surely out of scope for a delivery servlet!
     if (StringHelper.endsWith (sRelativeFilename, "/") || StringHelper.hasNoText (sFilename))
     {
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Denied object with name '" + sRelativeFilename + "' because it is empty");
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Denied object with name '" + sRelativeFilename + "' because it is empty");
       return false;
     }
 
     // Denial has precedence
     if (m_aDeniedFilenames.contains (sFilename))
     {
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Denied object with name '" +
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Denied object with name '" +
                          sRelativeFilename +
                          "' because it is in the denied filenames list");
       return false;
@@ -282,8 +282,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
 
     if (m_bDeniedAllExtensions || m_aDeniedExtensions.contains (sUnifiedExt))
     {
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Denied object with name '" +
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Denied object with name '" +
                          sRelativeFilename +
                          "' because it is in the denied extension list");
       return false;
@@ -293,8 +293,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
       for (final String sDeniedRegEx : m_aDeniedRegExs)
         if (RegExHelper.stringMatchesPattern (sDeniedRegEx, sFilename))
         {
-          if (s_aLogger.isDebugEnabled ())
-            s_aLogger.debug ("Denied object with name '" +
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Denied object with name '" +
                              sRelativeFilename +
                              "' because it is in the denied regex list");
           return false;
@@ -303,8 +303,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     // Allowance comes next
     if (m_aAllowedFilenames.contains (sFilename))
     {
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Allowed object with name '" +
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Allowed object with name '" +
                          sRelativeFilename +
                          "' because it is in the allowed filenames list");
       return true;
@@ -312,8 +312,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
 
     if (m_bAllowedAllExtensions || m_aAllowedExtensions.contains (sUnifiedExt))
     {
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Allowed object with name '" +
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Allowed object with name '" +
                          sRelativeFilename +
                          "' because it is in the allowed extension list");
       return true;
@@ -323,16 +323,16 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
       for (final String sAllowedRegEx : m_aAllowedRegExs)
         if (RegExHelper.stringMatchesPattern (sAllowedRegEx, sFilename))
         {
-          if (s_aLogger.isDebugEnabled ())
-            s_aLogger.debug ("Allowed object with name '" +
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Allowed object with name '" +
                              sRelativeFilename +
                              "' because it is in the allowed regex list");
           return true;
         }
 
     // Neither denied nor allowed -> deny for the sake of security
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Denied object with name '" + sRelativeFilename + "' because it is neither denied nor allowed");
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Denied object with name '" + sRelativeFilename + "' because it is neither denied nor allowed");
     return false;
   }
 
@@ -358,7 +358,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     {
       // Send the same error code as if it is simply not found to confuse
       // attackers :)
-      s_aLogger.warn ("Illegal delivery request '" + sFilename + "'");
+      LOGGER.warn ("Illegal delivery request '" + sFilename + "'");
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
       return EContinue.BREAK;
     }
@@ -387,7 +387,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     final String sFilename = aRequestScope.attrs ().getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);
     onDeliverResource (aRequestScope, aUnifiedResponse, sFilename);
 
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Delivered object with name '" + sFilename + "'");
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Delivered object with name '" + sFilename + "'");
   }
 }

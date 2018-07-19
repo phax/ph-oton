@@ -36,7 +36,7 @@ import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswo
 public final class FftpConnectionDestination implements IFtpConnectionDestination
 {
   private static final boolean DEFAULT_ENTER_LOCAL_PASSIVE_MODE = false;
-  private static final Logger s_aLogger = LoggerFactory.getLogger (FftpConnectionDestination.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (FftpConnectionDestination.class);
 
   private final int m_nConnectTimeoutMilliSeconds;
   private final String m_sHostname;
@@ -120,11 +120,11 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     }
     catch (final SocketTimeoutException ex)
     {
-      s_aLogger.error ("Failed to connect to " + m_sHostname + ":" + m_nPort + ": " + ex.getMessage ());
+      LOGGER.error ("Failed to connect to " + m_sHostname + ":" + m_nPort + ": " + ex.getMessage ());
     }
     catch (final IOException ex)
     {
-      s_aLogger.error ("Connection exception to " +
+      LOGGER.error ("Connection exception to " +
                        m_sHostname +
                        ":" +
                        m_nPort +
@@ -141,7 +141,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
       }
       catch (final IOException ex2)
       {
-        s_aLogger.error ("Error disconnecting from FTP while in connection phase: " +
+        LOGGER.error ("Error disconnecting from FTP while in connection phase: " +
                          aFtpClient.getReplyString (),
                          ex2);
       }
@@ -158,7 +158,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     {
       // end FTP session
       if (!aFtpClient.logout ())
-        s_aLogger.warn ("Failed to log out from FTP connection: " + aFtpClient.getReplyString ());
+        LOGGER.warn ("Failed to log out from FTP connection: " + aFtpClient.getReplyString ());
 
       // close channel
       if (aFtpClient.isConnected ())
@@ -166,7 +166,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     }
     catch (final IOException ex)
     {
-      s_aLogger.error ("Error closing FTP connection: " + aFtpClient.getReplyString (), ex);
+      LOGGER.error ("Error closing FTP connection: " + aFtpClient.getReplyString (), ex);
     }
     return EChange.CHANGED;
   }

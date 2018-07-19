@@ -74,7 +74,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
   public static final String FILENAME_USERTOKENS_XML = "usertokens.xml";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PhotonSecurityManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonSecurityManager.class);
 
   private AuditManager m_aAuditMgr;
   private UserManager m_aUserMgr;
@@ -128,7 +128,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       // Init callbacks after all managers
       _initCallbacks ();
 
-      s_aLogger.info (ClassHelper.getClassLocalName (this) + " was initialized");
+      LOGGER.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }
     catch (final Throwable t)
     {

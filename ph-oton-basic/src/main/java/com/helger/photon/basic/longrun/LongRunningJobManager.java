@@ -38,7 +38,7 @@ import com.helger.commons.state.ESuccess;
 @ThreadSafe
 public final class LongRunningJobManager
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LongRunningJobManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (LongRunningJobManager.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
@@ -130,7 +130,7 @@ public final class LongRunningJobManager
       if (nRunningJobCount == 0)
         break;
 
-      s_aLogger.error ("There are still " +
+      LOGGER.error ("There are still " +
                        nRunningJobCount +
                        " long running jobs in the background! Waiting for them to finish...");
 

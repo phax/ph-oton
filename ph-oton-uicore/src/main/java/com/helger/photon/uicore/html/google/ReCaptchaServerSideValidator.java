@@ -38,7 +38,7 @@ import com.helger.json.IJson;
 
 public final class ReCaptchaServerSideValidator
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ReCaptchaServerSideValidator.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ReCaptchaServerSideValidator.class);
 
   private ReCaptchaServerSideValidator ()
   {}
@@ -80,14 +80,14 @@ public final class ReCaptchaServerSideValidator
         final boolean bSuccess = aJson.getAsObject ().getAsBoolean ("success", false);
 
         if (GlobalDebug.isDebugMode ())
-          s_aLogger.info ("ReCpatcha Response for '" + sReCaptchaResponse + "': " + aJson.getAsJsonString ());
+          LOGGER.info ("ReCpatcha Response for '" + sReCaptchaResponse + "': " + aJson.getAsJsonString ());
 
         return ESuccess.valueOf (bSuccess);
       }
     }
     catch (final IOException ex)
     {
-      s_aLogger.warn ("Error checking ReCaptcha response", ex);
+      LOGGER.warn ("Error checking ReCaptcha response", ex);
     }
     return ESuccess.FAILURE;
   }

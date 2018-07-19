@@ -54,7 +54,7 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  */
 public final class DataTablesServerDataCell implements Serializable
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DataTablesServerDataCell.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesServerDataCell.class);
 
   private IHCNodeList <?> m_aContent;
   // Lazy stuff
@@ -66,9 +66,9 @@ public final class DataTablesServerDataCell implements Serializable
   public DataTablesServerDataCell (@Nonnull final IHCCell <?> aCell)
   {
     if (aCell.hasAnyStyle ())
-      s_aLogger.warn ("Cell has styles assigned which will be lost: " + aCell.getAllStyles ());
+      LOGGER.warn ("Cell has styles assigned which will be lost: " + aCell.getAllStyles ());
     if (aCell.hasAnyClass ())
-      s_aLogger.warn ("Cell has classes assigned which will be lost: " + aCell.getAllClasses ());
+      LOGGER.warn ("Cell has classes assigned which will be lost: " + aCell.getAllClasses ());
 
     final IHCNodeList <?> aCellContent = aCell.getAllChildrenAsNodeList ();
 

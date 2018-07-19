@@ -79,7 +79,7 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
     }
   }
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (InternalErrorMetadata.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (InternalErrorMetadata.class);
 
   private final String m_sErrorID;
   private final ICommonsList <Entry> m_aFields = new CommonsArrayList<> ();
@@ -111,7 +111,7 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
   public InternalErrorMetadata addFieldRetrievalError (@Nonnull @Nonempty final String sKey, @Nonnull final Throwable t)
   {
     final String sValue = "Failed to get " + sKey + ": " + t.getMessage () + " -- " + t.getClass ().getName ();
-    s_aLogger.warn (sValue);
+    LOGGER.warn (sValue);
     return addField (sKey, sValue);
   }
 

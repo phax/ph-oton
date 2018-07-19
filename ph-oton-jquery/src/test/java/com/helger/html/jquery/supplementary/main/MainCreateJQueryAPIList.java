@@ -193,6 +193,6 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
     }
 
     for (final String sLine : aLines)
-      s_aLogger.info (sLine);
+      LOGGER.info (sLine);
   }
 }
