@@ -38,6 +38,8 @@ Contained subprojects are:
   * Updated to ph-web 9.0.2
   * Extended `*HCSelect` APIs for multi values
   * The "Change log" page was removed
+  * Extended `JSSwitch` API
+  * Improved signatures of `AbstractJSBlock` (binary incompatible)
 * v8.0.1 - 2018-04-18
   * Updated to Jetty 9.4.9
   * Updated to Bootstrap 4.0.0

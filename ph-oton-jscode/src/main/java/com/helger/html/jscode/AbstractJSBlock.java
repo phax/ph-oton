@@ -41,6 +41,7 @@ import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.math.MathHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
@@ -50,9 +51,13 @@ import com.helger.json.IJson;
  * A JS block. It contains a list of statements and declarations.
  *
  * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Real implementation type
  */
 @CodingStyleguideUnaware
-public abstract class AbstractJSBlock implements IJSFunctionContainer
+public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYPE>> implements
+                                      IJSFunctionContainer,
+                                      IGenericImplTrait <IMPLTYPE>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractJSBlock.class);
 
@@ -168,12 +173,12 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
    * @return this
    */
   @Nonnull
-  public AbstractJSBlock clear ()
+  public IMPLTYPE clear ()
   {
     m_aObjs.clear ();
     m_aDecls.clear ();
     m_nPos = 0;
-    return this;
+    return thisAsT ();
   }
 
   /**
@@ -551,297 +556,297 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, final boolean bValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final boolean bValue)
   {
     return assign (aLhs, JSExpr.lit (bValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, final char cValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final char cValue)
   {
     return assign (aLhs, JSExpr.lit (cValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
   {
     return assign (aLhs, JSExpr.lit (dValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
   {
     return assign (aLhs, JSExpr.lit (fValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
   {
     return assign (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
   {
     return assign (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final String sValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final String sValue)
   {
     return assign (aLhs, sValue == null ? JSExpr.NULL : JSExpr.lit (sValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, @Nullable final IJson aValue)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, @Nullable final IJson aValue)
   {
     return assign (aLhs, aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assign (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
   {
     addStatement (aLhs.assign (aExpr));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final char cValue)
+  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final char cValue)
   {
     return assignPlus (aLhs, JSExpr.lit (cValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No add with 0
     if (EqualsHelper.equals (dValue, 0))
-      return this;
+      return thisAsT ();
     if (dValue < 0)
       return assignMinus (aLhs, JSExpr.lit (MathHelper.abs (dValue)));
     return assignPlus (aLhs, JSExpr.lit (dValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No add with 0
     if (EqualsHelper.equals (fValue, 0))
-      return this;
+      return thisAsT ();
     if (fValue < 0)
       return assignMinus (aLhs, JSExpr.lit (MathHelper.abs (fValue)));
     return assignPlus (aLhs, JSExpr.lit (fValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No add with 0
     if (EqualsHelper.equals (nValue, 0))
-      return this;
+      return thisAsT ();
     if (nValue < 0)
       return assignMinus (aLhs, JSExpr.lit (MathHelper.abs (nValue)));
     return assignPlus (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No add with 0
     if (EqualsHelper.equals (nValue, 0))
-      return this;
+      return thisAsT ();
     if (nValue < 0)
       return assignMinus (aLhs, JSExpr.lit (MathHelper.abs (nValue)));
     return assignPlus (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignPlus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final String sValue)
+  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final String sValue)
   {
     return assignPlus (aLhs, JSExpr.lit (sValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignPlus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignPlus (aLhs, aExpr));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (dValue, 0))
-      return this;
+      return thisAsT ();
     return assignMinus (aLhs, JSExpr.lit (dValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (fValue, 0))
-      return this;
+      return thisAsT ();
     return assignMinus (aLhs, JSExpr.lit (fValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (nValue, 0))
-      return this;
+      return thisAsT ();
     return assignMinus (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (nValue, 0))
-      return this;
+      return thisAsT ();
     return assignMinus (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMinus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignMinus (aLhs, aExpr));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (dValue, 1))
-      return this;
+      return thisAsT ();
     return assignMultiply (aLhs, JSExpr.lit (dValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (fValue, 1))
-      return this;
+      return thisAsT ();
     return assignMultiply (aLhs, JSExpr.lit (fValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (nValue, 1))
-      return this;
+      return thisAsT ();
     return assignMultiply (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (nValue, 1))
-      return this;
+      return thisAsT ();
     return assignMultiply (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignMultiply (aLhs, aExpr));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (dValue, 1))
-      return this;
+      return thisAsT ();
     return assignDivide (aLhs, JSExpr.lit (dValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (fValue, 1))
-      return this;
+      return thisAsT ();
     return assignDivide (aLhs, JSExpr.lit (fValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (nValue, 1))
-      return this;
+      return thisAsT ();
     return assignDivide (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (nValue, 1))
-      return this;
+      return thisAsT ();
     return assignDivide (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignDivide (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignDivide (aLhs, aExpr));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock assignModulo (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  public IMPLTYPE assignModulo (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
   {
     return assignModulo (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignModulo (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  public IMPLTYPE assignModulo (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
   {
     return assignModulo (aLhs, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock assignModulo (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  public IMPLTYPE assignModulo (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignModulo (aLhs, aExpr));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock incrPostfix (@Nonnull final IJSAssignmentTarget aLhs)
+  public IMPLTYPE incrPostfix (@Nonnull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSIncrPostfix (aLhs));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock incrPrefix (@Nonnull final IJSAssignmentTarget aLhs)
+  public IMPLTYPE incrPrefix (@Nonnull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSIncrPrefix (aLhs));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock decrPostfix (@Nonnull final IJSAssignmentTarget aLhs)
+  public IMPLTYPE decrPostfix (@Nonnull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSDecrPostfix (aLhs));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock decrPrefix (@Nonnull final IJSAssignmentTarget aLhs)
+  public IMPLTYPE decrPrefix (@Nonnull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSDecrPrefix (aLhs));
-    return this;
+    return thisAsT ();
   }
 
   /**
@@ -925,10 +930,10 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
    * @return this
    */
   @Nonnull
-  public AbstractJSBlock delete (@Nonnull final IJSExpression aExpr)
+  public IMPLTYPE delete (@Nonnull final IJSExpression aExpr)
   {
     addStatement (new JSDelete (aExpr));
-    return this;
+    return thisAsT ();
   }
 
   /**
@@ -939,20 +944,20 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
    * @return this
    */
   @Nonnull
-  public AbstractJSBlock _throw (@Nonnull final IJSExpression aExpr)
+  public IMPLTYPE _throw (@Nonnull final IJSExpression aExpr)
   {
     addStatement (new JSThrow (aExpr));
-    return this;
+    return thisAsT ();
   }
 
   /**
    * @return this
    */
   @Nonnull
-  public AbstractJSBlock debugger ()
+  public IMPLTYPE debugger ()
   {
     addStatement (new JSDebugger ());
-    return this;
+    return thisAsT ();
   }
 
   /**
@@ -1022,55 +1027,55 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
    * @return this
    */
   @Nonnull
-  public AbstractJSBlock _return ()
+  public IMPLTYPE _return ()
   {
     return _return ((IJSExpression) null);
   }
 
   @Nonnull
-  public AbstractJSBlock _return (final boolean bValue)
+  public IMPLTYPE _return (final boolean bValue)
   {
     return _return (JSExpr.lit (bValue));
   }
 
   @Nonnull
-  public AbstractJSBlock _return (final char cValue)
+  public IMPLTYPE _return (final char cValue)
   {
     return _return (JSExpr.lit (cValue));
   }
 
   @Nonnull
-  public AbstractJSBlock _return (final double dValue)
+  public IMPLTYPE _return (final double dValue)
   {
     return _return (JSExpr.lit (dValue));
   }
 
   @Nonnull
-  public AbstractJSBlock _return (final float fValue)
+  public IMPLTYPE _return (final float fValue)
   {
     return _return (JSExpr.lit (fValue));
   }
 
   @Nonnull
-  public AbstractJSBlock _return (final int nValue)
+  public IMPLTYPE _return (final int nValue)
   {
     return _return (JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock _return (final long nValue)
+  public IMPLTYPE _return (final long nValue)
   {
     return _return (JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public AbstractJSBlock _return (@Nullable final String sValue)
+  public IMPLTYPE _return (@Nullable final String sValue)
   {
     return _return (sValue == null ? JSExpr.NULL : JSExpr.lit (sValue));
   }
 
   @Nonnull
-  public AbstractJSBlock _return (@Nullable final IJson aValue)
+  public IMPLTYPE _return (@Nullable final IJson aValue)
   {
     return _return (aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
   }
@@ -1083,10 +1088,10 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
    * @return this
    */
   @Nonnull
-  public AbstractJSBlock _return (@Nullable final IJSExpression aExpr)
+  public IMPLTYPE _return (@Nullable final IJSExpression aExpr)
   {
     addStatement (new JSReturn (aExpr));
-    return this;
+    return thisAsT ();
   }
 
   /**
@@ -1101,14 +1106,14 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
   }
 
   @Nonnull
-  public AbstractJSBlock comment (@Nonnull final String sComment)
+  public IMPLTYPE comment (@Nonnull final String sComment)
   {
     addStatement (new JSCommentSingleLine (sComment));
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock add (@Nonnull final IHasJSCode aJSCode)
+  public IMPLTYPE add (@Nonnull final IHasJSCode aJSCode)
   {
     if (aJSCode instanceof JSPackage)
     {
@@ -1128,21 +1133,21 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
         if (GlobalDebug.isDebugMode ())
           if (!(aJSCode instanceof IHasJSCodeWithSettings))
             LOGGER.warn ("Adding unspecified IHasJSCode of type " +
-                            aJSCode.getClass ().getName () +
-                            " to " +
-                            ClassHelper.getClassLocalName (this));
+                         aJSCode.getClass ().getName () +
+                         " to " +
+                         ClassHelper.getClassLocalName (this));
 
         m_aObjs.add (m_nPos, aJSCode);
         m_nPos++;
       }
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public AbstractJSBlock add (@Nonnull final IJSStatement aStatement)
+  public IMPLTYPE add (@Nonnull final IJSStatement aStatement)
   {
     addStatement (aStatement);
-    return this;
+    return thisAsT ();
   }
 
   @Override
@@ -1152,7 +1157,7 @@ public abstract class AbstractJSBlock implements IJSFunctionContainer
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AbstractJSBlock rhs = (AbstractJSBlock) o;
+    final AbstractJSBlock <?> rhs = (AbstractJSBlock <?>) o;
     return m_aObjs.equals (rhs.m_aObjs) && m_aDecls.equals (rhs.m_aDecls) && m_nPos == rhs.m_nPos;
   }
 

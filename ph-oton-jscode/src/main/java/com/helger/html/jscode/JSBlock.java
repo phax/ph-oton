@@ -36,7 +36,7 @@ import com.helger.html.js.IJSWriterSettings;
  *
  * @author Philip Helger
  */
-public class JSBlock extends AbstractJSBlock implements IJSGeneratable, IJSStatement
+public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable, IJSStatement
 {
   public static final boolean DEFAULT_BRACES_REQUIRED = true;
   public static final boolean DEFAULT_INDENT_REQUIRED = true;

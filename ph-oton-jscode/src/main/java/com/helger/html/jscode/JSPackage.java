@@ -26,7 +26,7 @@ import com.helger.html.js.IJSWriterSettings;
  *
  * @author Philip Helger
  */
-public class JSPackage extends AbstractJSBlock
+public class JSPackage extends AbstractJSBlock <JSPackage>
 {
   /**
    * Package constructor
