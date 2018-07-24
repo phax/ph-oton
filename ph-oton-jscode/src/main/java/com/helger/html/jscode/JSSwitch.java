@@ -44,7 +44,7 @@ public class JSSwitch extends AbstractJSStatement
   /**
    * List of cases.
    */
-  private final ICommonsList <JSCase> m_aCases = new CommonsArrayList<> ();
+  private final ICommonsList <JSCase> m_aCases = new CommonsArrayList <> ();
 
   /**
    * a single default case
@@ -82,6 +82,27 @@ public class JSSwitch extends AbstractJSStatement
     final JSCase aCase = new JSCase (aLabel);
     m_aCases.add (aCase);
     return aCase;
+  }
+
+  @Nonnull
+  @CodingStyleguideUnaware
+  public JSCase _case (final int nLabel)
+  {
+    return _case (JSExpr.lit (nLabel));
+  }
+
+  @Nonnull
+  @CodingStyleguideUnaware
+  public JSCase _case (final long nLabel)
+  {
+    return _case (JSExpr.lit (nLabel));
+  }
+
+  @Nonnull
+  @CodingStyleguideUnaware
+  public JSCase _case (@Nonnull final String sLabel)
+  {
+    return _case (JSExpr.lit (sLabel));
   }
 
   @Nonnull
