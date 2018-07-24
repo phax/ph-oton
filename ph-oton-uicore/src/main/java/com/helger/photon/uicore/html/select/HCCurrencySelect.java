@@ -20,15 +20,16 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.html.request.IHCRequestField;
+import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
 
 public class HCCurrencySelect extends HCExtSelect
 {
   public HCCurrencySelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
   {
-    this (CollectionHelper.newList (ECurrency.values ()), aRF, aDisplayLocale);
+    this (new CommonsArrayList <> (ECurrency.values ()), aRF, aDisplayLocale);
   }
 
   public HCCurrencySelect (@Nonnull final Iterable <ECurrency> aCurrencies,
@@ -43,7 +44,7 @@ public class HCCurrencySelect extends HCExtSelect
     // For all supported currencies
     for (final ECurrency eCurrency : aCurrencies)
     {
-      final String sDisplayText = eCurrency.getCurrencySymbol () +
+      final String sDisplayText = CurrencyHelper.getCurrencySymbol (eCurrency) +
                                   " (" +
                                   eCurrency.getDisplayText (aDisplayLocale) +
                                   ')';

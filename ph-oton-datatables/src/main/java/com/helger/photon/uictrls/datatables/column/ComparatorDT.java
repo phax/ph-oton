@@ -35,6 +35,7 @@ import com.helger.commons.datetime.PDTFormatter;
 import com.helger.commons.datetime.PDTFromString;
 import com.helger.commons.locale.LocaleParser;
 import com.helger.commons.string.StringHelper;
+import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
 
 /**
@@ -60,13 +61,19 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyFormat (@Nonnull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null : eCurrency.parseCurrencyFormat (sCellText, null);
+    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+                                                           : CurrencyHelper.parseCurrencyFormat (eCurrency,
+                                                                                                 sCellText,
+                                                                                                 null);
   }
 
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyValueFormat (@Nonnull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null : eCurrency.parseValueFormat (sCellText, null);
+    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+                                                           : CurrencyHelper.parseValueFormat (eCurrency,
+                                                                                              sCellText,
+                                                                                              null);
   }
 
   @Nonnull

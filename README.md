@@ -40,6 +40,7 @@ Contained subprojects are:
   * The "Change log" page was removed
   * Extended `JSSwitch` API
   * Improved signatures of `AbstractJSBlock` (binary incompatible)
+  * Updated to ph-masterdata 6.1.0
 * v8.0.1 - 2018-04-18
   * Updated to Jetty 9.4.9
   * Updated to Bootstrap 4.0.0
