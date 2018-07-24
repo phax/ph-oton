@@ -30,7 +30,7 @@ Contained subprojects are:
 ## News and noteworthy
 
 * v8.0.2 - work in progress
-  * Updated to Bootstrap 4.1.2
+  * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled
   * Fixed OSGI ServiceProvider configuration
   * Updated to Jetty 9.4.11
