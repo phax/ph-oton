@@ -25,7 +25,6 @@ import com.helger.html.css.ICSSClassProvider;
  * Display type. See https://getbootstrap.com/docs/4.1/utilities/display/
  *
  * @author Philip Helger
- * @See {@link BootstrapDisplayBuilder}
  */
 public enum EBootstrapDisplayType implements ICSSClassProvider
 {
