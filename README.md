@@ -29,7 +29,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.0.2 - work in progress
+* v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled
   * Fixed OSGI ServiceProvider configuration
@@ -124,7 +124,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.0.1</version>
+        <version>8.0.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
