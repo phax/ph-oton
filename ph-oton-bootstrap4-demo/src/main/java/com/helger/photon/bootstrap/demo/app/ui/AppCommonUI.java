@@ -61,7 +61,7 @@ public final class AppCommonUI
   @Nonnull
   public static BootstrapForm createViewLoginForm (@Nonnull final ILayoutExecutionContext aLEC,
                                                    @Nullable final String sPreselectedUserName,
-                                                   final boolean bFullUI)
+                                                   @Nonnull final EBootstrapFormType eFormType)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
@@ -72,9 +72,7 @@ public final class AppCommonUI
     final String sIDPassword = GlobalIDFactory.getNewStringID ();
     final String sIDErrorField = GlobalIDFactory.getNewStringID ();
 
-    final BootstrapForm aForm = new BootstrapForm (aLEC).setAction (aLEC.getSelfHref ())
-                                                        .setFormType (bFullUI ? EBootstrapFormType.DEFAULT
-                                                                              : EBootstrapFormType.DEFAULT);
+    final BootstrapForm aForm = new BootstrapForm (aLEC).setAction (aLEC.getSelfHref ()).setFormType (eFormType);
     aForm.setLeft (3);
 
     // User name field

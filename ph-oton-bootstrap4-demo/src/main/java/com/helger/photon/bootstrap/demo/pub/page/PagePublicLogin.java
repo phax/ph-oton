@@ -27,6 +27,7 @@ import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
+import com.helger.photon.bootstrap4.form.EBootstrapFormType;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 
 public final class PagePublicLogin extends AbstractAppWebPage
@@ -48,7 +49,7 @@ public final class PagePublicLogin extends AbstractAppWebPage
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
-    aNodeList.addChild (AppCommonUI.createViewLoginForm (aWPEC, null, true));
+    aNodeList.addChild (AppCommonUI.createViewLoginForm (aWPEC, null, EBootstrapFormType.DEFAULT));
     aNodeList.addChild (new BootstrapInfoBox ().addChild ("Demo login ")
                                                .addChild (new HCCode ().addChild (CApp.USER_ADMINISTRATOR_LOGINNAME))
                                                .addChild (" with password ")

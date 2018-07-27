@@ -98,8 +98,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    * <code>setCustomAttr ("data-"+sName, nValue)</code>.
    *
    * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The name of the attribute. If it is <code>null</code> nothing happens
    * @param nValue
    *        The value of the attribute that is converted to a String.
    * @return {@link EChange}
@@ -115,8 +114,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    * <code>setCustomAttr ("data-"+sName, nValue)</code>.
    *
    * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The name of the attribute. If it is <code>null</code> nothing happens
    * @param nValue
    *        The value of the attribute that is converted to a String.
    * @return {@link EChange}
@@ -132,11 +130,9 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    * <code>setCustomAttr ("data-"+sName, sValue)</code>.
    *
    * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The name of the attribute. If it is <code>null</code> nothing happens
    * @param sValue
-   *        The value of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The value of the attribute. If it is <code>null</code> nothing happens
    * @return {@link EChange}
    */
   @Nonnull
@@ -193,5 +189,11 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   default EChange setAriaLabeledBy (@Nonnull final String sLabeledBy)
   {
     return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
+  }
+
+  @Nonnull
+  default EChange setAriaControls (@Nonnull final String sControls)
+  {
+    return putIn (CHTMLAttributes.ARIA_CONTROLS, sControls);
   }
 }

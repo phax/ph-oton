@@ -321,8 +321,6 @@
     <module>ph-oton-bootstrap3-demo</module>
     <module>ph-oton-bootstrap4</module>
     <module>ph-oton-bootstrap4-stub</module>
-    <!-- not working yet
     <module>ph-oton-bootstrap4-demo</module>
-     -->
   </modules>
 </project>

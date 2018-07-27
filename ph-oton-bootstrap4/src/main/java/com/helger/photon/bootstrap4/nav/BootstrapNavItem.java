@@ -17,22 +17,71 @@
 package com.helger.photon.bootstrap4.nav;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import com.helger.commons.url.ISimpleURL;
+import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCLI;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
 
 public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
 {
+  public static final boolean DEFAULT_ACTIVE = false;
+  public static final boolean DEFAULT_DROP_DOWN = false;
+
+  private boolean m_bIsActive = DEFAULT_ACTIVE;
+  private boolean m_bIsDropDown = DEFAULT_DROP_DOWN;
+
   public BootstrapNavItem ()
   {}
+
+  public final boolean isActive ()
+  {
+    return m_bIsActive;
+  }
+
+  @Nonnull
+  public final BootstrapNavItem setActive (final boolean bIsActive)
+  {
+    m_bIsActive = bIsActive;
+    return this;
+  }
+
+  public final boolean isDropDown ()
+  {
+    return m_bIsDropDown;
+  }
 
   @Nonnull
   public BootstrapNavLink addNavLink ()
   {
     return addAndReturnChild (new BootstrapNavLink ());
+  }
+
+  @Nonnull
+  public BootstrapNavLink addNavLink (@Nullable final ISimpleURL aURL)
+  {
+    return addAndReturnChild (new BootstrapNavLink (aURL));
+  }
+
+  public void addNavDropDown (@Nonnull final String sLabel, @Nonnull final BootstrapDropdownMenu aDropDown)
+  {
+    final BootstrapNavLink aLabel = new BootstrapNavLink ();
+    aLabel.addClass (CBootstrapCSS.DROPDOWN_TOGGLE).ensureID ().setRole (EHTMLRole.BUTTON);
+    aLabel.customAttrs ().setDataAttr ("toggle", "dropdown");
+    aLabel.customAttrs ().setAriaHasPopup (true);
+    aLabel.customAttrs ().setAriaExpanded (true);
+    aLabel.addChild (sLabel);
+
+    aDropDown.customAttrs ().setAriaLabeledBy (aLabel);
+
+    addChild (aLabel);
+    addChild (aDropDown);
+    m_bIsDropDown = true;
   }
 
   @Override
@@ -41,5 +90,9 @@ public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClass (CBootstrapCSS.NAV_ITEM);
+    if (m_bIsActive)
+      addClass (CBootstrapCSS.ACTIVE);
+    if (m_bIsDropDown)
+      addClass (CBootstrapCSS.DROPDOWN);
   }
 }

@@ -24,6 +24,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
+import javax.annotation.WillCloseWhenClosed;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
@@ -162,14 +163,14 @@ public class ExporterCSV implements IExporterFile
   }
 
   /**
-   * Enable or disable that empty files are written. By enabling this, all
-   * records are collected which results in higher memory consumption but safer
-   * output. If this is disabled (the default) than it my happen that nothing is
-   * written on the output stream.
+   * Enable or disable that empty files are written. By enabling this, all records
+   * are collected which results in higher memory consumption but safer output. If
+   * this is disabled (the default) than it my happen that nothing is written on
+   * the output stream.
    *
    * @param bAvoidWriteEmpty
-   *        <code>true</code> to collect before write, <code>false</code> to
-   *        write directly
+   *        <code>true</code> to collect before write, <code>false</code> to write
+   *        directly
    * @return this for chaining
    * @since 7.0.4
    */
@@ -181,8 +182,8 @@ public class ExporterCSV implements IExporterFile
   }
 
   /**
-   * @return <code>true</code> if empty files are not written,
-   *         <code>false</code> otherwise (by default).
+   * @return <code>true</code> if empty files are not written, <code>false</code>
+   *         otherwise (by default).
    */
   public boolean isAvoidWriteEmpty ()
   {
@@ -235,8 +236,10 @@ public class ExporterCSV implements IExporterFile
    *        The output stream to write to. May not be <code>null</code>.
    * @return The {@link CSVWriter} to used. Never <code>null</code>.
    */
+  @SuppressWarnings ("resource")
   @Nonnull
   @OverrideOnDemand
+  @WillCloseWhenClosed
   protected CSVWriter createCSVWriter (@Nonnull final OutputStream aOS)
   {
     return new CSVWriter (new OutputStreamWriter (aOS, m_aCharset)).setSeparatorChar (m_cSeparatorChar)

@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
@@ -55,11 +56,14 @@ import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumb;
 import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumbProvider;
 import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
 import com.helger.photon.bootstrap4.ext.BootstrapSystemMessage;
+import com.helger.photon.bootstrap4.form.EBootstrapFormType;
 import com.helger.photon.bootstrap4.grid.BootstrapCol;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.bootstrap4.layout.BootstrapContainer;
-import com.helger.photon.bootstrap4.nav.BootstrapNav;
 import com.helger.photon.bootstrap4.navbar.BootstrapNavbar;
+import com.helger.photon.bootstrap4.navbar.BootstrapNavbarNav;
+import com.helger.photon.bootstrap4.navbar.BootstrapNavbarText;
+import com.helger.photon.bootstrap4.navbar.EBootstrapNavbarExpandType;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRendererHorz;
 import com.helger.photon.core.EPhotonCoreText;
@@ -97,50 +101,46 @@ public final class AppRendererPublic
   private AppRendererPublic ()
   {}
 
-  private static void _addNavbarLoginLogout (@Nonnull final LayoutExecutionContext aLEC,
-                                             @Nonnull final BootstrapNavbar aNavbar)
-  {
-    final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
-    final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
-    if (aUser != null)
-    {
-      final Locale aDisplayLocale = aLEC.getDisplayLocale ();
-      final BootstrapNav aNav = new BootstrapNav ();
-      aNav.addText (new HCSpan ().addChild ("Logged in as ")
-                                 .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
-                                                                                                         aDisplayLocale))));
-
-      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
-                                                           LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
-      aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
-    }
-    else
-    {
-      final BootstrapNav aNav = new BootstrapNav ();
-      final BootstrapDropdownMenu aDropDown = aNav.addDropdownMenu ("Login");
-      {
-        // 300px would lead to a messy layout - so 250px is fine
-        final HCDiv aDiv = new HCDiv ().addStyle (CCSSProperties.PADDING.newValue ("10px"))
-                                       .addStyle (CCSSProperties.WIDTH.newValue ("250px"));
-        aDiv.addChild (AppCommonUI.createViewLoginForm (aLEC, null, false).addClass (CBootstrapCSS.NAVBAR_FORM));
-        aDropDown.addItem (aDiv);
-      }
-      aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_LEFT, aNav);
-    }
-  }
-
   @Nonnull
   private static BootstrapNavbar _getNavbar (@Nonnull final LayoutExecutionContext aLEC)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     final ISimpleURL aLinkToStartPage = aLEC.getLinkToMenuItem (aLEC.getMenuTree ().getDefaultMenuItemID ());
+    final String sIDToToggle = GlobalIDFactory.getNewStringID ();
+    final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
+    final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
 
-    final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
-    aNavbar.getContainer ().setFluid (true);
+    final BootstrapNavbar aNavbar = new BootstrapNavbar ().setExpand (EBootstrapNavbarExpandType.EXPAND_MD);
     aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
                       aLinkToStartPage);
+    aNavbar.addToggler (sIDToToggle);
 
-    _addNavbarLoginLogout (aLEC, aNavbar);
+    final HCDiv aToggleable = aNavbar.addAndReturnToggleable (sIDToToggle);
+
+    if (aUser != null)
+    {
+      aToggleable.addChild (new BootstrapNavbarText ().addChild ("Logged in as ")
+                                                      .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
+                                                                                                                              aDisplayLocale))));
+
+      final BootstrapNavbarNav aNavbarNav = aToggleable.addAndReturnChild (new BootstrapNavbarNav ());
+      aNavbarNav.addItem ()
+                .addNavLink (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH))
+                .addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale));
+    }
+    else
+    {
+      final BootstrapNavbarNav aNavbarNav = aToggleable.addAndReturnChild (new BootstrapNavbarNav ());
+      final BootstrapDropdownMenu aDropDown = new BootstrapDropdownMenu ();
+      {
+        // 300px would lead to a messy layout - so 250px is fine
+        final HCDiv aDiv = new HCDiv ().addStyle (CCSSProperties.PADDING.newValue ("10px"))
+                                       .addStyle (CCSSProperties.WIDTH.newValue ("250px"));
+        aDiv.addChild (AppCommonUI.createViewLoginForm (aLEC, null, EBootstrapFormType.INLINE));
+        aDropDown.addChild (aDiv);
+      }
+      aNavbarNav.addItem ().addNavDropDown ("Login", aDropDown);
+    }
     return aNavbar;
   }
 
