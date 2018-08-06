@@ -96,7 +96,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
     final HCA aLink = new HCA (aSWEC.getLinkToMenuItem (aMenuItem.getID ()));
     aLink.addChild (getMenuItemPageLabel (aMenuItem, bHasChildren, bIsSelected, bIsExpanded));
     if (bHasChildren && !bIsExpanded)
-      aLink.addChildren (new HCTextNode (" "), EBootstrapIcon.CHEVRON_RIGHT.getAsNode ());
+      aLink.addChild (new HCTextNode (" + "));
     return aLink;
   }
 
@@ -135,7 +135,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
     aLink.setTargetBlank ();
     aLink.addChild (getMenuItemExternalLabel (aMenuItem, bHasChildren, bIsSelected, bIsExpanded));
     if (bHasChildren && !bIsExpanded)
-      aLink.addChildren (new HCTextNode (" "), EBootstrapIcon.CHEVRON_RIGHT.getAsNode ());
+      aLink.addChild (new HCTextNode (" + "));
     return aLink;
   }
 

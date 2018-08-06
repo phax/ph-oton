@@ -18,51 +18,27 @@ package com.helger.photon.bootstrap4.navbar;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.forms.AbstractHCButton;
-import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.html.hc.html.textlevel.AbstractHCSpan;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
- * Bootstrap 4 NavBar toggler
+ * Bootstrap 4 nav
  *
  * @author Philip Helger
  */
-public class BootstrapNavbarToggler extends AbstractHCButton <BootstrapNavbarToggler>
+public class BootstrapNavbarText extends AbstractHCSpan <BootstrapNavbarText>
 {
-  private final String m_sIDToToggle;
-
-  public BootstrapNavbarToggler (@Nonnull @Nonempty final String sIDToToggle)
-  {
-    ValueEnforcer.notEmpty (sIDToToggle, "IDToToggle");
-    m_sIDToToggle = sIDToToggle;
-  }
-
-  @Nonnull
-  @Nonempty
-  public final String getIDToToggle ()
-  {
-    return m_sIDToToggle;
-  }
+  public BootstrapNavbarText ()
+  {}
 
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.NAVBAR_TOGGLER);
-    customAttrs ().setDataAttr ("toggle", "collapse");
-    // With hash sign
-    customAttrs ().setDataAttr ("target", "#" + m_sIDToToggle);
-    // without hash sign!
-    customAttrs ().setAriaControls (m_sIDToToggle);
-    customAttrs ().setAriaExpanded (false);
-    customAttrs ().setAriaLabel ("Toggle navigation");
-    // Main toggle button
-    addChild (new HCSpan ().addClass (CBootstrapCSS.NAVBAR_TOGGLER_ICON));
+    addClass (CBootstrapCSS.NAVBAR_TEXT);
   }
 }

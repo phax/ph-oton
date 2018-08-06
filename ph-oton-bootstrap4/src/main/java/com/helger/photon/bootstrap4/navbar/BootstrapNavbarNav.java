@@ -18,35 +18,29 @@ package com.helger.photon.bootstrap4.navbar;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.forms.AbstractHCButton;
-import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.html.hc.html.grouping.AbstractHCULBase;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.nav.BootstrapNavItem;
 
 /**
- * Bootstrap 4 NavBar toggler
+ * Bootstrap 4 nav
  *
  * @author Philip Helger
  */
-public class BootstrapNavbarToggler extends AbstractHCButton <BootstrapNavbarToggler>
+public class BootstrapNavbarNav extends AbstractHCULBase <BootstrapNavbarNav, BootstrapNavItem>
 {
-  private final String m_sIDToToggle;
-
-  public BootstrapNavbarToggler (@Nonnull @Nonempty final String sIDToToggle)
+  public BootstrapNavbarNav ()
   {
-    ValueEnforcer.notEmpty (sIDToToggle, "IDToToggle");
-    m_sIDToToggle = sIDToToggle;
+    super (BootstrapNavItem.class);
   }
 
-  @Nonnull
-  @Nonempty
-  public final String getIDToToggle ()
+  @Override
+  protected final BootstrapNavItem createEmptyItem ()
   {
-    return m_sIDToToggle;
+    return new BootstrapNavItem ();
   }
 
   @Override
@@ -54,15 +48,6 @@ public class BootstrapNavbarToggler extends AbstractHCButton <BootstrapNavbarTog
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.NAVBAR_TOGGLER);
-    customAttrs ().setDataAttr ("toggle", "collapse");
-    // With hash sign
-    customAttrs ().setDataAttr ("target", "#" + m_sIDToToggle);
-    // without hash sign!
-    customAttrs ().setAriaControls (m_sIDToToggle);
-    customAttrs ().setAriaExpanded (false);
-    customAttrs ().setAriaLabel ("Toggle navigation");
-    // Main toggle button
-    addChild (new HCSpan ().addClass (CBootstrapCSS.NAVBAR_TOGGLER_ICON));
+    addClass (CBootstrapCSS.NAVBAR_NAV);
   }
 }

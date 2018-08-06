@@ -281,8 +281,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * @param aRenderer
    *        The renderer to use
    * @param aDisplayMenuItemIDs
-   *        The menu items to display as a map from menu item ID to expanded
-   *        state
+   *        The menu items to display as a map from menu item ID to expanded state
    * @return Never <code>null</code>.
    * @param <T>
    *        HC list type to be instantiated
@@ -328,11 +327,11 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
     final NonBlockingStack <T> aNodeStack = new NonBlockingStack <> ();
     aNodeStack.push (aFactory.get ());
     TreeVisitor.visitTreeItem (aStartTreeItem,
-                               new MenuRendererCallback <T> (aLEC,
-                                                             aFactory,
-                                                             aNodeStack,
-                                                             aRenderer,
-                                                             aDisplayMenuItemIDs));
+                               new MenuRendererCallback <> (aLEC,
+                                                            aFactory,
+                                                            aNodeStack,
+                                                            aRenderer,
+                                                            aDisplayMenuItemIDs));
     if (aNodeStack.size () != 1)
       throw new IllegalStateException ("Stack is inconsistent: " + aNodeStack);
 

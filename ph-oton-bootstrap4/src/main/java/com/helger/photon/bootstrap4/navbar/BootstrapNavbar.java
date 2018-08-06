@@ -20,11 +20,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.sections.AbstractHCNav;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
@@ -40,10 +42,11 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
 {
   public static final EBootstrapNavbarColorSchemeType DEFAULT_COLOR_SCHEME = EBootstrapNavbarColorSchemeType.LIGHT;
   public static final EBootstrapNavbarExpandType DEFAULT_EXPAND = EBootstrapNavbarExpandType.EXPAND_LG;
+  public static final EBootstrapBackgroundType DEFAULT_BACKGROUND = EBootstrapBackgroundType.LIGHT;
 
   private EBootstrapNavbarColorSchemeType m_eColorScheme = DEFAULT_COLOR_SCHEME;
   private EBootstrapNavbarExpandType m_eExpand = DEFAULT_EXPAND;
-  private EBootstrapBackgroundType m_eBackground;
+  private EBootstrapBackgroundType m_eBackground = DEFAULT_BACKGROUND;
 
   public BootstrapNavbar ()
   {}
@@ -110,6 +113,34 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
   {
     addChild (createBrand (aLabel, aURL));
     return this;
+  }
+
+  @Nonnull
+  public final BootstrapNavbar addToggler (@Nonnull @Nonempty final String sIDToToggle)
+  {
+    addChild (new BootstrapNavbarToggler (sIDToToggle));
+    return this;
+  }
+
+  @Nonnull
+  public HCDiv addAndReturnToggleable (@Nonnull @Nonempty final String sIDToToggle)
+  {
+    final HCDiv ret = new HCDiv ().addClass (CBootstrapCSS.COLLAPSE)
+                                  .addClass (CBootstrapCSS.NAVBAR_COLLAPSE)
+                                  .setID (sIDToToggle);
+    return addAndReturnChild (ret);
+  }
+
+  @Nonnull
+  public BootstrapNavbarText addAndReturnText ()
+  {
+    return addAndReturnChild (new BootstrapNavbarText ());
+  }
+
+  @Nonnull
+  public BootstrapNavbarNav addAndReturnNav ()
+  {
+    return addAndReturnChild (new BootstrapNavbarNav ());
   }
 
   @Override
