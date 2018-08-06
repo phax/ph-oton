@@ -37,7 +37,7 @@ public final class ThirdPartyModuleProvider_ph_oton_bootstrap3_stub implements I
   public static final IThirdPartyModule LOG4J2 = new ThirdPartyModule ("Apache Log4j 2",
                                                                        "Apache",
                                                                        ELicense.APACHE2,
-                                                                       new Version (2, 11, 0),
+                                                                       new Version (2, 11, 1),
                                                                        "http://logging.apache.org/log4j/2.x/");
 
   @Nullable
