@@ -43,7 +43,7 @@ public class Favorite implements IFavorite
   private final String m_sID;
   private final String m_sUserID;
   private final String m_sApplicationID;
-  private final String m_sMenuItemID;
+  private String m_sMenuItemID;
   private String m_sDisplayName;
   private ICommonsMap <String, String> m_aAdditionalParams;
 
@@ -70,8 +70,8 @@ public class Favorite implements IFavorite
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_sUserID = ValueEnforcer.notEmpty (sUserID, "User ID");
-    m_sMenuItemID = ValueEnforcer.notEmpty (sMenuItemID, "menu item ID");
     m_sApplicationID = ValueEnforcer.notEmpty (sApplicationID, "application ID");
+    setMenuItemID (sMenuItemID);
     setDisplayName (sDisplayName);
     setAdditionalParams (aAdditionalParams);
   }
@@ -102,6 +102,18 @@ public class Favorite implements IFavorite
   public String getMenuItemID ()
   {
     return m_sMenuItemID;
+  }
+
+  @Nonnull
+  public final EChange setMenuItemID (@Nonnull @Nonempty final String sMenuItemID)
+  {
+    ValueEnforcer.notEmpty (sMenuItemID, "menu item ID");
+
+    if (sMenuItemID.equals (m_sMenuItemID))
+      return EChange.UNCHANGED;
+
+    m_sMenuItemID = sMenuItemID;
+    return EChange.CHANGED;
   }
 
   @Nonnull

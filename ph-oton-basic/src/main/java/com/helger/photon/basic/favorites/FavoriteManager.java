@@ -288,8 +288,11 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
    *        The ID of the user of the favorite object to be updated.
    * @param sID
    *        The ID of the favorite object to be updated.
+   * @param sMenuItemID
+   *        Menu item ID. May neither be <code>null</code> nor empty.
    * @param sDisplayName
-   *        The display name to change.
+   *        The display name to change. May neither be <code>null</code> nor
+   *        empty.
    * @param aAdditionalParams
    *        Additional params. May be <code>null</code>.
    * @return {@link EChange#CHANGED} if something was changed.
@@ -297,7 +300,8 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nullable
   public EChange updateFavorite (@Nullable final String sUserID,
                                  @Nullable final String sID,
-                                 @Nullable final String sDisplayName,
+                                 @Nonnull @Nonempty final String sMenuItemID,
+                                 @Nonnull @Nonempty final String sDisplayName,
                                  @Nullable final Map <String, String> aAdditionalParams)
   {
 
@@ -313,6 +317,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     try
     {
       EChange eChange = EChange.UNCHANGED;
+      eChange = eChange.or (aFavorite.setMenuItemID (sMenuItemID));
       eChange = eChange.or (aFavorite.setDisplayName (sDisplayName));
       eChange = eChange.or (aFavorite.setAdditionalParams (aAdditionalParams));
       if (eChange.isUnchanged ())
@@ -327,7 +332,12 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Favorite.OT, aFavorite.getID (), sUserID, sDisplayName, aAdditionalParams);
+    AuditHelper.onAuditModifySuccess (Favorite.OT,
+                                      aFavorite.getID (),
+                                      sUserID,
+                                      sMenuItemID,
+                                      sDisplayName,
+                                      aAdditionalParams);
     return EChange.CHANGED;
   }
 
