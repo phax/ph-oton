@@ -17,6 +17,7 @@
 package com.helger.photon.basic.favorites;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -70,5 +71,5 @@ public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializabl
    */
   boolean hasSameContent (@Nullable String sAppID,
                           @Nullable String sMenuItemID,
-                          @Nullable ICommonsMap <String, String> aAdditionalParams);
+                          @Nullable Map <String, String> aAdditionalParams);
 }

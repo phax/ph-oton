@@ -27,7 +27,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -46,7 +45,7 @@ public class Favorite implements IFavorite
   private final String m_sApplicationID;
   private final String m_sMenuItemID;
   private String m_sDisplayName;
-  private final ICommonsMap <String, String> m_aAdditionalParams;
+  private ICommonsMap <String, String> m_aAdditionalParams;
 
   public Favorite (@Nonnull @Nonempty final String sUserID,
                    @Nonnull @Nonempty final String sApplicationID,
@@ -74,7 +73,7 @@ public class Favorite implements IFavorite
     m_sMenuItemID = ValueEnforcer.notEmpty (sMenuItemID, "menu item ID");
     m_sApplicationID = ValueEnforcer.notEmpty (sApplicationID, "application ID");
     setDisplayName (sDisplayName);
-    m_aAdditionalParams = new CommonsHashMap <> (aAdditionalParams);
+    setAdditionalParams (aAdditionalParams);
   }
 
   @Nonnull
@@ -113,7 +112,7 @@ public class Favorite implements IFavorite
   }
 
   @Nonnull
-  public EChange setDisplayName (@Nonnull @Nonempty final String sDisplayName)
+  public final EChange setDisplayName (@Nonnull @Nonempty final String sDisplayName)
   {
     ValueEnforcer.notEmpty (sDisplayName, "display name");
 
@@ -131,15 +130,27 @@ public class Favorite implements IFavorite
     return m_aAdditionalParams.getClone ();
   }
 
+  @Nonnull
+  public final EChange setAdditionalParams (@Nullable final Map <String, String> aAdditionalParams)
+  {
+    // Ensure same type
+    final ICommonsMap <String, String> aRealAdditionalParams = new CommonsHashMap <> (aAdditionalParams);
+    if (aRealAdditionalParams.equals (m_aAdditionalParams))
+      return EChange.UNCHANGED;
+
+    m_aAdditionalParams = aRealAdditionalParams;
+    return EChange.CHANGED;
+  }
+
   public boolean hasSameContent (@Nullable final String sAppID,
                                  @Nullable final String sMenuItemID,
-                                 @Nullable final ICommonsMap <String, String> aAdditionalParams)
+                                 @Nullable final Map <String, String> aAdditionalParams)
   {
-    final ICommonsMap <String, String> aRealAdditionalParams = aAdditionalParams != null ? aAdditionalParams
-                                                                                         : new CommonsHashMap <> ();
+    // Ensure same type
+    final ICommonsMap <String, String> aRealAdditionalParams = new CommonsHashMap <> (aAdditionalParams);
     return m_sApplicationID.equals (sAppID) &&
            m_sMenuItemID.equals (sMenuItemID) &&
-           EqualsHelper.equalsMap (m_aAdditionalParams, aRealAdditionalParams);
+           m_aAdditionalParams.equals (aRealAdditionalParams);
   }
 
   @Override
