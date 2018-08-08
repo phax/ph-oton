@@ -32,7 +32,7 @@ public class BootstrapPageHeader extends AbstractHCElementWithChildren <Bootstra
   public BootstrapPageHeader ()
   {
     // TODO page header needs more styling
-    super (EHTMLElement.H1);
+    super (EHTMLElement.H2);
   }
 
   @Nullable

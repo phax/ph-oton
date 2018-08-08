@@ -45,8 +45,10 @@ public final class BootstrapCustomConfig
   {
     // Set default values
     s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP);
+    s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
     s_aJS.add (EUICoreJSPathProvider.POPPER);
     s_aJS.add (EBootstrapJSPathProvider.BOOTSTRAP);
+    s_aJS.add (EBootstrapJSPathProvider.BOOTSTRAP_PH);
   }
 
   private BootstrapCustomConfig ()

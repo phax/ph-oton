@@ -30,7 +30,6 @@ import com.helger.html.hc.html.forms.HCEditPassword;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.sections.HCBody;
-import com.helger.html.hc.html.sections.HCH2;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
@@ -133,10 +132,7 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
   @OverrideOnDemand
   protected IHCNode createPageHeader (@Nullable final IHCNode aPageTitle)
   {
-    if (aPageTitle == null)
-      return null;
-
-    return new BootstrapPageHeader ().addChild (new HCH2 ().addChild (aPageTitle));
+    return BootstrapPageHeader.createOnDemand (aPageTitle);
   }
 
   /**

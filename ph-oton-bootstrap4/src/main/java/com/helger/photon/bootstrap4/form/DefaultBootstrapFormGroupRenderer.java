@@ -43,9 +43,11 @@ import com.helger.html.hc.html.forms.HCCtrlHelper;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCInput;
 import com.helger.html.hc.html.forms.IHCTextArea;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.bootstrap4.BootstrapHelper;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 
@@ -200,14 +202,14 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   @OverrideOnDemand
   protected void modifyFinalNode (@Nonnull final IBootstrapFormGroupContainer <?> aForm,
                                   @Nonnull final BootstrapFormGroup aFormGroup,
-                                  @Nonnull final HCDiv aFinalNode)
+                                  @Nonnull final AbstractHCDiv <?> aFinalNode)
   {}
 
   @Override
   @Nonnull
-  public HCDiv renderFormGroup (@Nonnull final IBootstrapFormGroupContainer <?> aForm,
-                                @Nonnull final BootstrapFormGroup aFormGroup,
-                                @Nonnull final Locale aDisplayLocale)
+  public AbstractHCDiv <?> renderFormGroup (@Nonnull final IBootstrapFormGroupContainer <?> aForm,
+                                            @Nonnull final BootstrapFormGroup aFormGroup,
+                                            @Nonnull final Locale aDisplayLocale)
   {
     final EBootstrapFormType eFormType = aForm.getFormType ();
     HCFormLabel aLabel = aFormGroup.getLabel ();
@@ -238,7 +240,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         aFirstControl.addClass (CBootstrapCSS.IS_VALID);
     }
 
-    HCDiv aFinalNode;
+    AbstractHCDiv <?> aFinalNode;
     boolean bFirstControlIsCheckBox;
     boolean bFirstControlIsRadioButton;
     if (m_bForceNoCheckBoxHandling || aAllCtrls.size () != 1)
@@ -288,7 +290,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
                                                     BootstrapHelper.containsFormControlPlaintext (aCtrls);
 
       // Other control - add in form group
-      aFinalNode = new HCDiv ().addClass (CBootstrapCSS.FORM_GROUP);
+      aFinalNode = new BootstrapRow ();
+      aFinalNode.addClass (CBootstrapCSS.FORM_GROUP);
 
       if (aLabel == null || aLabel.hasNoChildren ())
       {
@@ -315,6 +318,10 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
         if (bContainsFormControlPlaintext)
           BootstrapHelper.makeFormControlPlaintext (aCtrls);
+
+        aForm.getLeft ().applyTo (aLabel);
+        if (aCtrls instanceof IHCElement <?>)
+          aForm.getRight ().applyTo ((IHCElement <?>) aCtrls);
         aFinalNode.addChildren (aLabel, aCtrls);
       }
     }
@@ -331,7 +338,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     }
 
     // Check form errors - highlighting
-    if (aErrorList != null && !aErrorList.isEmpty ())
+    if (aErrorList != null && aErrorList.isNotEmpty ())
     {
       for (final IError aError : aErrorList)
       {

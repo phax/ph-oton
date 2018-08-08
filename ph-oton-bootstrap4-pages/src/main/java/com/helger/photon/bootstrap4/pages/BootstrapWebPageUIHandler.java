@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.html.sections.HCH1;
 import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
@@ -44,7 +43,7 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
   {
     if (StringHelper.hasNoText (sHeaderText))
       return null;
-    return new BootstrapPageHeader ().addChild (new HCH1 ().addChild (sHeaderText));
+    return new BootstrapPageHeader ().addChild (sHeaderText);
   }
 
   @Override
