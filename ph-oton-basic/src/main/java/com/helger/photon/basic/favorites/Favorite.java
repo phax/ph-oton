@@ -27,6 +27,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
@@ -138,7 +139,7 @@ public class Favorite implements IFavorite
                                                                                          : new CommonsHashMap <> ();
     return m_sApplicationID.equals (sAppID) &&
            m_sMenuItemID.equals (sMenuItemID) &&
-           m_aAdditionalParams.equals (aRealAdditionalParams);
+           EqualsHelper.equalsMap (m_aAdditionalParams, aRealAdditionalParams);
   }
 
   @Override
