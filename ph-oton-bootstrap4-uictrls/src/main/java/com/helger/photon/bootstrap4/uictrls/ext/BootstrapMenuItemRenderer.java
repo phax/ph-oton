@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.factory.FactoryNewInstance;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.grouping.HCLI;
@@ -50,6 +52,8 @@ import com.helger.photon.core.app.menu.ui.MenuRendererCallback;
  */
 public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
 {
+  private static final ICSSClassProvider CSS_CLASS_SEPARATOR = DefaultCSSClassProvider.create ("menu-separator");
+
   public BootstrapMenuItemRenderer (@Nonnull final Locale aContentLocale)
   {
     super (aContentLocale);
@@ -59,8 +63,8 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
   public IHCNode renderSeparator (@Nonnull final ISimpleWebExecutionContext aSWEC,
                                   @Nonnull final IMenuSeparator aSeparator)
   {
-    // Surely wrong
-    return new HCLI ().addClass (CBootstrapCSS.DROPDOWN_DIVIDER);
+    // Add styling!
+    return new HCLI ().addClass (CSS_CLASS_SEPARATOR);
   }
 
   /**
@@ -95,6 +99,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
                                      final boolean bIsExpanded)
   {
     final HCA aLink = new HCA (aSWEC.getLinkToMenuItem (aMenuItem.getID ()));
+    aLink.addClass (CBootstrapCSS.NAV_LINK);
     aLink.addChild (getMenuItemPageLabel (aMenuItem, bHasChildren, bIsSelected, bIsExpanded));
     if (bHasChildren && !bIsExpanded)
       aLink.addChild (new HCTextNode (" + "));
@@ -134,6 +139,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
   {
     final HCA aLink = new HCA (aMenuItem.getURL ());
     aLink.setTargetBlank ();
+    aLink.addClass (CBootstrapCSS.NAV_LINK);
     aLink.addChild (getMenuItemExternalLabel (aMenuItem, bHasChildren, bIsSelected, bIsExpanded));
     if (bHasChildren && !bIsExpanded)
       aLink.addChild (new HCTextNode (" + "));
@@ -143,7 +149,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
   @Override
   public void onLevelDown (@Nonnull final HCUL aNewLevel)
   {
-    aNewLevel.addClass (CBootstrapCSS.NAV);
+    aNewLevel.addClass (CBootstrapCSS.NAV).addClass (CBootstrapCSS.FLEX_COLUMN);
   }
 
   @Override
@@ -153,6 +159,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
                                   final boolean bSelected,
                                   final boolean bExpanded)
   {
+    aLI.addClass (CBootstrapCSS.NAV_ITEM);
     if (bSelected || bExpanded)
       aLI.addClass (CBootstrapCSS.ACTIVE);
   }
@@ -164,6 +171,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
                                       final boolean bSelected,
                                       final boolean bExpanded)
   {
+    aLI.addClass (CBootstrapCSS.NAV_ITEM);
     if (bSelected || bExpanded)
       aLI.addClass (CBootstrapCSS.ACTIVE);
   }
@@ -202,7 +210,8 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
                                                               aMenuTree.getRootItem (),
                                                               aRenderer,
                                                               aAllDisplayMenuItemIDs)
-                                         .addClass (CBootstrapCSS.NAV);
+                                         .addClass (CBootstrapCSS.NAV)
+                                         .addClass (CBootstrapCSS.FLEX_COLUMN);
     final BootstrapCard ret = new BootstrapCard ();
     ret.createAndAddBody ().addChild (aUL);
     return ret;
