@@ -18,12 +18,14 @@ package com.helger.photon.basic.favorites;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.helger.collection.multimap.IMultiMapListBased;
 import com.helger.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
@@ -33,6 +35,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -126,12 +129,19 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nonnegative
   public long getSize ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.getTotalValueCount ());
+    return m_aRWLock.readLocked (m_aMap::getTotalValueCount);
   }
 
   public boolean isEmpty ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.isEmpty ());
+    return m_aRWLock.readLocked (m_aMap::isEmpty);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsSet <String> getAllUserIDsWithFavorites ()
+  {
+    return m_aRWLock.readLocked ((Supplier <ICommonsSet <String>>) m_aMap::copyOfKeySet);
   }
 
   /**
@@ -145,6 +155,16 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   public ICommonsList <IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
   {
     return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public IMultiMapListBased <String, IFavorite> getAll ()
+  {
+    final IMultiMapListBased <String, IFavorite> ret = new MultiHashMapArrayListBased <> ();
+    for (final Map.Entry <String, ICommonsList <Favorite>> aEntry : m_aMap.entrySet ())
+      ret.put (aEntry.getKey (), new CommonsArrayList <> (aEntry.getValue ()));
+    return ret;
   }
 
   /**
