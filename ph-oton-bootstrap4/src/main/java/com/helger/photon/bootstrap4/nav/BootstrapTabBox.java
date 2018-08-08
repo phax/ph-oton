@@ -94,16 +94,18 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
 
       // header
       final IHCLI <?> aToggleLI = aNav.addItem ();
+
+      final HCA aLink = new HCA (aTab.getLinkURL ()).addChild (aTab.getLabel ()).addClass (CBootstrapCSS.NAV_LINK);
       if (bIsActiveTab)
-        aToggleLI.addClass (CBootstrapCSS.ACTIVE);
+        aLink.addClass (CBootstrapCSS.ACTIVE);
+
       if (aTab.isDisabled ())
       {
         aToggleLI.addClass (CBootstrapCSS.DISABLED);
-        aToggleLI.addChild (new HCA (aTab.getLinkURL ()).addChild (aTab.getLabel ()));
+        aToggleLI.addChild (aLink);
       }
       else
       {
-        final HCA aLink = new HCA (aTab.getLinkURL ()).addChild (aTab.getLabel ());
         aLink.customAttrs ().setDataAttr ("toggle", "tab");
         aToggleLI.addChild (aLink);
       }

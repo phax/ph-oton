@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+ * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.app.CApp;
+import com.helger.photon.bootstrap4.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.security.menu.MenuObjectFilterUserAssignedToUserGroup;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.system.BasePageShowChildren;
@@ -43,9 +44,7 @@ public final class MenuSecure
                                                                                                                  aMenuTree))
                                             .setDisplayFilter (aFilterAdministrators);
 
-      // XXX b4
-      // BootstrapPagesMenuConfigurator.addAllItems (aMenuTree, aAdmin,
-      // aFilterAdministrators, CApp.DEFAULT_LOCALE);
+      BootstrapPagesMenuConfigurator.addAllItems (aMenuTree, aAdmin, aFilterAdministrators, CApp.DEFAULT_LOCALE);
     }
 
     // Default menu item

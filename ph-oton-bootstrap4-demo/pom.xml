@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+    Copyright (C) 2014-2017 Philip Helger (www.helger.com)
     philip[at]helger[dot]com
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,11 +68,7 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-datatables</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-bootstrap4-uictrls</artifactId>
+      <artifactId>ph-oton-bootstrap4-pages</artifactId>
     </dependency>
 
     <dependency>
