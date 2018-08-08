@@ -65,7 +65,8 @@ public class JettyStarter
   public static final String DEFAULT_STOP_KEY = InternalJettyStopMonitorThread.STOP_KEY;
   public static final int DEFAULT_STOP_PORT = InternalJettyStopMonitorThread.STOP_PORT;
   public static final String DEFAULT_CONTEXT_PATH = "/";
-  public static final String DEFAULT_CONTAINER_JAR_PATTERN = ".*\\.jar$|.*/classes/.*";
+  public static final String DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN = true ? null : ".*\\.jar$|.*/classes/.*";
+  public static final String DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN = null;
   private static final Logger LOGGER = LoggerFactory.getLogger (JettyStarter.class);
 
   private final String m_sAppName;
@@ -78,7 +79,8 @@ public class JettyStarter
   private Resource m_aResourceBase = _asRes ("target/webapp-classes");
   private String m_sWebXmlResource;
   private String m_sContextPath = DEFAULT_CONTEXT_PATH;
-  private String m_sContainerJarPattern = DEFAULT_CONTAINER_JAR_PATTERN;
+  private String m_sContainerIncludeJarPattern = DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN;
+  private String m_sWebInfIncludeJarPattern = DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN;
   private ThreadPool m_aThreadPool;
   private boolean m_bAllowAnnotationBasedConfig = true;
 
@@ -300,26 +302,37 @@ public class JettyStarter
 
   /**
    * Set the container JAR pattern to be scanned for annotations. By default
-   * this {@link #DEFAULT_CONTAINER_JAR_PATTERN}
+   * this {@link #DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN}
    *
-   * @param sContainerJarPattern
-   *        The new container JAR pattern. May neither be <code>null</code> nor
-   *        empty.
+   * @param sContainerIncludeJarPattern
+   *        The new container JAR pattern. May be <code>null</code> to use the
+   *        default.
    * @return this for chaining
    */
   @Nonnull
-  public final JettyStarter setContainerJarPattern (@Nonnull @Nonempty final String sContainerJarPattern)
+  public final JettyStarter setContainerIncludeJarPattern (@Nullable final String sContainerIncludeJarPattern)
   {
-    ValueEnforcer.notEmpty (sContainerJarPattern, "ContainerJarPattern");
-    m_sContainerJarPattern = sContainerJarPattern;
+    m_sContainerIncludeJarPattern = sContainerIncludeJarPattern;
     return this;
   }
 
-  @Nonnull
-  @Nonempty
-  public String getContainerJarPattern ()
+  @Nullable
+  public String getContainerIncludeJarPattern ()
   {
-    return m_sContainerJarPattern;
+    return m_sContainerIncludeJarPattern;
+  }
+
+  @Nonnull
+  public final JettyStarter setWebInfIncludeJarPattern (@Nullable final String sWebInfIncludeJarPattern)
+  {
+    m_sWebInfIncludeJarPattern = sWebInfIncludeJarPattern;
+    return this;
+  }
+
+  @Nullable
+  public String getWebInfIncludeJarPattern ()
+  {
+    return m_sWebInfIncludeJarPattern;
   }
 
   /**
@@ -457,9 +470,16 @@ public class JettyStarter
       aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
       aWebAppCtx.setParentLoaderPriority (true);
       aWebAppCtx.setThrowUnavailableOnStartupException (true);
-      // http://www.eclipse.org/jetty/documentation/9.4.x/configuring-webapps.html#container-include-jar-pattern
-      // https://github.com/eclipse/jetty.project/issues/680
-      aWebAppCtx.setAttribute (WebInfConfiguration.CONTAINER_JAR_PATTERN, m_sContainerJarPattern);
+      if (m_sContainerIncludeJarPattern != null)
+      {
+        // http://www.eclipse.org/jetty/documentation/9.4.x/configuring-webapps.html#container-include-jar-pattern
+        // https://github.com/eclipse/jetty.project/issues/680
+        aWebAppCtx.setAttribute (WebInfConfiguration.CONTAINER_JAR_PATTERN, m_sContainerIncludeJarPattern);
+      }
+      if (m_sWebInfIncludeJarPattern != null)
+      {
+        aWebAppCtx.setAttribute (WebInfConfiguration.WEBINF_JAR_PATTERN, m_sWebInfIncludeJarPattern);
+      }
 
       if (m_bAllowAnnotationBasedConfig)
       {

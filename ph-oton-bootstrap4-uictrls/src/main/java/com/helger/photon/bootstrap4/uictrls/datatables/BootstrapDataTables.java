@@ -69,7 +69,7 @@ public class BootstrapDataTables extends DataTables
                                                              @Nonnull final IHCTable <?> aTable)
   {
     // Assign special table class for Bootstrap look and feel
-    aTable.addClass (CBootstrapCSS.TABLE).addClass (CBootstrapCSS.TABLE_STRIPED);
+    aTable.addClass (CBootstrapCSS.TABLE).addClass (CBootstrapCSS.TABLE_STRIPED).addClass (CBootstrapCSS.TABLE_SM);
 
     final BootstrapDataTables ret = new BootstrapDataTables (aTable);
     ret.setDisplayLocale (aLEC.getDisplayLocale ());
