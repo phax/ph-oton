@@ -29,6 +29,6 @@ public class BootstrapDataTablesPluginFixedColumns extends DataTablesPluginFixed
     super.registerExternalResources (aConversionSettings);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_COLUMNS);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_COLUMNS_BOOTSTRAP);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_COLUMNS_BOOTSTRAP3);
   }
 }

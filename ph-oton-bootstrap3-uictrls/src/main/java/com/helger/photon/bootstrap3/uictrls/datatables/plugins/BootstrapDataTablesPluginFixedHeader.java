@@ -29,6 +29,6 @@ public class BootstrapDataTablesPluginFixedHeader extends DataTablesPluginFixedH
     super.registerExternalResources (aConversionSettings);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_HEADER);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_HEADER_BOOTSTRAP);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_HEADER_BOOTSTRAP3);
   }
 }

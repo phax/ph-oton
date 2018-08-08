@@ -29,6 +29,6 @@ public class BootstrapDataTablesPluginSelect extends DataTablesPluginSelect
     super.registerExternalResources (aConversionSettings);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_SELECT);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_SELECT_BOOTSTRAP);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_SELECT_BOOTSTRAP3);
   }
 }

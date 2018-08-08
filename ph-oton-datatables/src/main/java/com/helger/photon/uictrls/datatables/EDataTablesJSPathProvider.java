@@ -32,9 +32,11 @@ import com.helger.html.resource.js.IJSPathProvider;
 public enum EDataTablesJSPathProvider implements IJSPathProvider
 {
   DATATABLES_1_10 ("datatables/1.10.16/js/jquery.dataTables.js"),
-  DATATABLES_1_10_BOOTSTRAP ("datatables/1.10.16/js/dataTables.bootstrap.js"),
+  DATATABLES_1_10_BOOTSTRAP3 ("datatables/1.10.16/js/dataTables.bootstrap.js"),
+  DATATABLES_1_10_BOOTSTRAP4 ("datatables/1.10.16/js/dataTables.bootstrap4.js"),
   DATATABLES_BUTTONS ("datatables/Buttons-1.4.2/js/dataTables.buttons.js"),
-  DATATABLES_BUTTONS_BOOTSTRAP ("datatables/Buttons-1.4.2/js/buttons.bootstrap.js"),
+  DATATABLES_BUTTONS_BOOTSTRAP3 ("datatables/Buttons-1.4.2/js/buttons.bootstrap.js"),
+  DATATABLES_BUTTONS_BOOTSTRAP4 ("datatables/Buttons-1.4.2/js/buttons.bootstrap4.js"),
   DATATABLES_BUTTONS_COLVIS ("datatables/Buttons-1.4.2/js/buttons.colVis.js"),
   DATATABLES_BUTTONS_FLASH ("datatables/Buttons-1.4.2/js/buttons.flash.js"),
   DATATABLES_BUTTONS_HTML5 ("datatables/Buttons-1.4.2/js/buttons.html5.js"),
@@ -42,7 +44,8 @@ public enum EDataTablesJSPathProvider implements IJSPathProvider
   DATATABLES_FIXED_COLUMNS ("datatables/FixedColumns-3.2.3/js/dataTables.fixedColumns.js"),
   DATATABLES_FIXED_HEADER ("datatables/FixedHeader-3.1.3/js/dataTables.fixedHeader.js"),
   DATATABLES_RESPONSIVE ("datatables/Responsive-2.2.0/js/dataTables.responsive.js"),
-  DATATABLES_RESPONSIVE_BOOTSTRAP ("datatables/Responsive-2.2.0/js/responsive.bootstrap.js"),
+  DATATABLES_RESPONSIVE_BOOTSTRAP3 ("datatables/Responsive-2.2.0/js/responsive.bootstrap.js"),
+  DATATABLES_RESPONSIVE_BOOTSTRAP4 ("datatables/Responsive-2.2.0/js/responsive.bootstrap4.js"),
   DATATABLES_ROW_REORDER ("datatables/RowReorder-1.2.3/js/dataTables.rowReorder.js"),
   DATATABLES_SCROLLER ("datatables/Scroller-1.4.3/js/dataTables.scroller.js"),
   DATATABLES_SEARCH_HIGHLIGHT ("datatables/searchHighlight/dataTables.searchHighlight.js"),
