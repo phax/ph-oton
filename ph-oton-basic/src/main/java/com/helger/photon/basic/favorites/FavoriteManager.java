@@ -166,6 +166,16 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     return ret;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IFavorite> getAllFavorites ()
+  {
+    final ICommonsList <IFavorite> ret = new CommonsArrayList <> ();
+    for (final Map.Entry <String, ICommonsList <Favorite>> aEntry : m_aMap.entrySet ())
+      ret.addAll (aEntry.getValue ());
+    return ret;
+  }
+
   /**
    * Check if the specified user ID is contained or not.
    *
