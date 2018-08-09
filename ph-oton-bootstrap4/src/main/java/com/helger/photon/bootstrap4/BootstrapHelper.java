@@ -24,13 +24,10 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.state.EChange;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.IHCTextNode;
-import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCCtrlHelper;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCInput;
-import com.helger.html.hc.html.script.IHCScript;
 
 @Immutable
 public final class BootstrapHelper
@@ -90,42 +87,5 @@ public final class BootstrapHelper
   {
     if (aParent != null)
       aParent.forAllChildren (aChild -> markAsFormControls (HCCtrlHelper.getAllHCControls (aChild)));
-  }
-
-  public static boolean containsFormControlPlaintext (@Nullable final IHCNode aNode)
-  {
-    if (aNode instanceof IHCTextNode <?>)
-      return true;
-
-    if (aNode instanceof IHCElement <?>)
-    {
-      return !(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>);
-    }
-
-    // Descend only in non-elements
-    if (aNode != null)
-    {
-      // E.g. HCNodeList
-      return aNode.findFirstChild (aChild -> containsFormControlPlaintext (aChild)) != null;
-    }
-
-    return false;
-  }
-
-  public static void makeFormControlPlaintext (@Nullable final IHCNode aNode)
-  {
-    if (aNode != null)
-    {
-      if (aNode instanceof IHCElement <?>)
-      {
-        if (!(aNode instanceof IHCControl <?>) && !(aNode instanceof IHCScript <?>))
-          ((IHCElement <?>) aNode).addClass (CBootstrapCSS.FORM_CONTROL_PLAINTEXT);
-      }
-      else
-      {
-        // Descend only in non-elements - e.g. HCNodeList
-        aNode.forAllChildren (aChild -> makeFormControlPlaintext (aChild));
-      }
-    }
   }
 }

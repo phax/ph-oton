@@ -285,10 +285,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     }
     else
     {
-      // Set static class for all direct children which are not controls
-      final boolean bContainsFormControlPlaintext = aAllCtrls.isEmpty () &&
-                                                    BootstrapHelper.containsFormControlPlaintext (aCtrls);
-
       // Other control - add in form group
       aFinalNode = new BootstrapRow ();
       aFinalNode.addClass (CBootstrapCSS.FORM_GROUP);
@@ -296,8 +292,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       if (aLabel == null || aLabel.hasNoChildren ())
       {
         // No label - just add controls
-        if (bContainsFormControlPlaintext)
-          BootstrapHelper.makeFormControlPlaintext (aCtrls);
         aFinalNode.addChild (aCtrls);
       }
       else
@@ -316,13 +310,10 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
           modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
         }
 
-        if (bContainsFormControlPlaintext)
-          BootstrapHelper.makeFormControlPlaintext (aCtrls);
-
         aForm.getLeft ().applyTo (aLabel);
-        if (aCtrls instanceof IHCElement <?>)
-          aForm.getRight ().applyTo ((IHCElement <?>) aCtrls);
-        aFinalNode.addChildren (aLabel, aCtrls);
+        final HCDiv aDivRight = new HCDiv ().addChild (aCtrls);
+        aForm.getRight ().applyTo (aDivRight);
+        aFinalNode.addChildren (aLabel, aDivRight);
       }
     }
 

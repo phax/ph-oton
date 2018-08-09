@@ -26,9 +26,18 @@ Contained subprojects are:
   * ph-oton-bootstrap3-stub - Servlet stub for Bootstrap 3 web applications
   * ph-oton-bootstrap3-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
+  * ph-oton-bootstrap4-uictrls - special UI controls for Bootstrap 4
+  * ph-oton-bootstrap4-pages - predefined UI pages with Bootstrap 4 styling
+  * ph-oton-bootstrap4-stub - Servlet stub for Bootstrap 4 web applications
+  * ph-oton-bootstrap4-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
 
 ## News and noteworthy
 
+* v8.0.3 - work in progress
+  * Extended the `Favorite` APIs
+  * Initial versions of the subproject `ph-oton-bootstrap4-uictrls` is available 
+  * Initial versions of the subproject `ph-oton-bootstrap4-pages` is available 
+  * Initial versions of the subproject `ph-oton-bootstrap4-demo` is available 
 * v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled
@@ -53,6 +62,7 @@ Contained subprojects are:
   * Updated to TinyMCE 4.6.6
   * Updated to Jetty 9.4.8
   * Extracted ph-oton-atom
+  * Initial versions of the subproject `ph-oton-bootstrap4-stub` is available 
 * v7.1.2 - 2017-07-19
   * Fixed an error with path handling of resource bundles when deployed as JAR
 * v7.1.1 - 2017-07-18
