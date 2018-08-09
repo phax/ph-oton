@@ -28,7 +28,7 @@ public enum EBootstrapJSPathProvider implements IJSPathProvider
   /** Default complete Bootstrap JS */
   BOOTSTRAP ("bootstrap/3.3.7/js/bootstrap.js"),
   /** Some Bootstrap JS extensions */
-  BOOTSTRAP_PH ("bootstrap/bootstrap3-ph.js");
+  BOOTSTRAP_PH ("custom/bootstrap3-ph.js");
 
   private final ConstantJSPathProvider m_aPP;
 
