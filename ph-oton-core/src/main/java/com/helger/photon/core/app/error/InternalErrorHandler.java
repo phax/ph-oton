@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.app.error;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.time.Clock;
 import java.time.ZonedDateTime;
@@ -40,20 +41,17 @@ import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.ClassPathHelper;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.mutable.MutableInt;
+import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
-import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.basic.app.appid.RequestSettings;
-import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.servlet.ServletHelper;
@@ -75,7 +73,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
-import com.helger.xml.serialize.write.XMLWriterSettings;
 import com.helger.xml.util.thread.ThreadDescriptor;
 import com.helger.xml.util.thread.ThreadDescriptorList;
 
@@ -254,10 +251,11 @@ public final class InternalErrorHandler
     }
   }
 
-  private static void _saveInternalErrorToXML (@Nonnull final InternalErrorMetadata aMetadata,
-                                               @Nonnull final ThreadDescriptor aCurrentDescriptor,
-                                               @Nullable final ThreadDescriptorList aAllThreads,
-                                               @Nullable final IEmailAttachmentList aEmailAttachments)
+  @Nonnull
+  private static ESuccess _saveInternalErrorToXML (@Nonnull final InternalErrorMetadata aMetadata,
+                                                   @Nonnull final ThreadDescriptor aCurrentDescriptor,
+                                                   @Nullable final ThreadDescriptorList aAllThreads,
+                                                   @Nullable final IEmailAttachmentList aEmailAttachments)
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("internalerror");
@@ -291,14 +289,8 @@ public final class InternalErrorHandler
     }
 
     // Start saving
-    final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getCurrentLocalDateTimeForFilename (),
-                                                                   "-",
-                                                                   aMetadata.getErrorID ()) +
-                             ".xml";
-    SimpleFileIO.writeFile (WebFileIO.getDataIO ()
-                                     .getFile ("internal-errors/" + PDTFactory.getCurrentYear () + "/" + sFilename),
-                            MicroWriter.getNodeAsString (aDoc),
-                            XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+    final File aDestFile = InternalErrorSettings.getStorageFileProvider ().apply (aMetadata);
+    return MicroWriter.writeToFile (aDoc, aDestFile);
   }
 
   @Nonnull

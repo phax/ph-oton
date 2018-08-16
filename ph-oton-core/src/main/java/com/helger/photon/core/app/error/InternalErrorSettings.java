@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.app.error;
 
+import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -30,7 +32,12 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.email.IEmailAddress;
+import com.helger.commons.functional.IFunction;
+import com.helger.commons.string.StringHelper;
+import com.helger.datetime.util.PDTIOHelper;
+import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.core.app.error.callback.IInternalErrorCallback;
 import com.helger.smtp.settings.ISMTPSettings;
 
@@ -54,6 +61,12 @@ public final class InternalErrorSettings
   @GuardedBy ("s_aRWLock")
   private static Locale s_aFallbackLocale = CGlobal.DEFAULT_LOCALE;
   private static CallbackList <IInternalErrorCallback> s_aCallbacks = new CallbackList <> ();
+  private static IFunction <InternalErrorMetadata, File> s_aStorageFileProvider;
+
+  static
+  {
+    setDefaultStorageFileProvider ();
+  }
 
   private InternalErrorSettings ()
   {}
@@ -155,13 +168,81 @@ public final class InternalErrorSettings
   }
 
   /**
-   * @return The current custom internal error callbacks. Never
-   *         <code>null</code>.
+   * @return The current custom internal error callbacks. Never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableObject
   public static CallbackList <IInternalErrorCallback> callbacks ()
   {
     return s_aCallbacks;
+  }
+
+  /**
+   * @return The provider that defines where to save internal errors to.
+   * @since 8.0.3
+   */
+  @Nonnull
+  public static IFunction <InternalErrorMetadata, File> getStorageFileProvider ()
+  {
+    return s_aStorageFileProvider;
+  }
+
+  /**
+   * Set the provider that defines how to build the filename to save internal
+   * error files.
+   *
+   * @param aStorageFileProvider
+   *        Storage provider. May not be <code>null</code>
+   * @since 8.0.3
+   */
+  public static void setStorageFileProvider (@Nonnull final IFunction <InternalErrorMetadata, File> aStorageFileProvider)
+  {
+    ValueEnforcer.notNull (aStorageFileProvider, "StorageFileProvider");
+    s_aStorageFileProvider = aStorageFileProvider;
+  }
+
+  /**
+   * Set the default storage file provider. In case you played around and want to
+   * restore the default behavior.
+   *
+   * @see #setStorageFileProvider(IFunction)
+   * @since 8.0.3
+   */
+  public static void setDefaultStorageFileProvider ()
+  {
+    setStorageFileProvider (aMetadata -> {
+      final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
+      final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
+                                                                     "-",
+                                                                     aMetadata.getErrorID ()) +
+                               ".xml";
+      return WebFileIO.getDataIO ()
+                      .getFile ("internal-errors/" +
+                                aNow.getYear () +
+                                "/" +
+                                StringHelper.getLeadingZero (aNow.getMonthValue (), 2) +
+                                "/" +
+                                sFilename);
+    });
+  }
+
+  /**
+   * Set the storage file provider to the default before v8.0.3. The difference to
+   * {@link #setDefaultStorageFileProvider()} is, that this version does not
+   * contain a "month" subfolder.
+   *
+   * @see #setStorageFileProvider(IFunction)
+   * @since 8.0.3
+   */
+  public static void setDefaultStorageFileProviderUpTo802 ()
+  {
+    setStorageFileProvider (aMetadata -> {
+      final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
+      final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
+                                                                     "-",
+                                                                     aMetadata.getErrorID ()) +
+                               ".xml";
+      return WebFileIO.getDataIO ().getFile ("internal-errors/" + aNow.getYear () + "/" + sFilename);
+    });
   }
 }
