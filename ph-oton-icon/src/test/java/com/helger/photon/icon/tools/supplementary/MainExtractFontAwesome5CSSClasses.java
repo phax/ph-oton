@@ -18,9 +18,11 @@ package com.helger.photon.icon.tools.supplementary;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.CommonsTreeSet;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
@@ -34,12 +36,35 @@ import com.helger.css.decl.ICSSSelectorMember;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
+import com.helger.json.IJson;
+import com.helger.json.IJsonObject;
+import com.helger.json.serialize.JsonReader;
 import com.helger.photon.icon.EIconCSSPathProvider;
 
 public class MainExtractFontAwesome5CSSClasses
 {
+  @Nonnull
+  static String createFieldName (@Nonnull final String s)
+  {
+    String sFieldName = s.toUpperCase (Locale.US);
+    sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
+    if (Character.isDigit (sFieldName.charAt (0)))
+      sFieldName = "_" + sFieldName;
+    return sFieldName;
+  }
+
   public static void main (final String [] args)
   {
+    // find all brands
+    final ICommonsSet <String> aBrandFields = new CommonsHashSet <> ();
+    final IJsonObject aObject = (IJsonObject) JsonReader.readFromStream (new ClassPathResource ("fontawesome/5.2.0/icons.json"));
+    for (final Map.Entry <String, IJson> aEntry : aObject)
+    {
+      final String sID = aEntry.getKey ();
+      if (aEntry.getValue ().getAsObject ().get ("styles").getAsArray ().contains ("brands"))
+        aBrandFields.add (createFieldName (sID));
+    }
+
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.FONT_AWESOME5.getCSSItemPath (true)),
                                                                StandardCharsets.UTF_8,
                                                                ECSSVersion.CSS30);
@@ -70,8 +95,7 @@ public class MainExtractFontAwesome5CSSClasses
     for (final String sClass : aClasses)
     {
       final String sClassName = sClass.substring (1);
-      String sFieldName = sClassName.toUpperCase (Locale.US);
-      sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
+      final String sFieldName = createFieldName (sClassName);
       System.out.println ("public static final ICSSClassProvider " +
                           sFieldName +
                           " = DefaultCSSClassProvider.create (\"" +
@@ -85,10 +109,14 @@ public class MainExtractFontAwesome5CSSClasses
     for (final String sClass : aClassesIcon)
       if (sClass.startsWith (".fa-"))
       {
-        final String sClassName = sClass.substring (1);
-        String sFieldName = sClassName.toUpperCase (Locale.US);
-        sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
-        System.out.println (sFieldName.substring ("fa-".length ()) + " (CFontAwesome5CSS." + sFieldName + "),");
+        final String sClassFieldName = createFieldName (sClass.substring (1));
+        final String sFieldName = createFieldName (sClassFieldName.substring ("fa-".length ()));
+        System.out.println (sFieldName +
+                            " (CFontAwesome5CSS." +
+                            sClassFieldName +
+                            ", " +
+                            aBrandFields.contains (sFieldName) +
+                            "),");
       }
   }
 }
