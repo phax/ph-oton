@@ -22,7 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.textlevel.HCSmall;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.icon.fontawesome.EFontAwesomeIcon;
+import com.helger.photon.icon.fontawesome.EFontAwesome5Icon;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 
 /**
@@ -30,11 +30,11 @@ import com.helger.photon.uicore.page.WebPageExecutionContext;
  *
  * @author Philip Helger
  */
-public final class PagePublicIconFontAwesome extends AbstractPagePublicIcon
+public final class PagePublicIconFontAwesome5 extends AbstractPagePublicIcon
 {
-  public PagePublicIconFontAwesome (@Nonnull @Nonempty final String sID)
+  public PagePublicIconFontAwesome5 (@Nonnull @Nonempty final String sID)
   {
-    super (sID, "Font Awesome Icon Test");
+    super (sID, "Font Awesome v5 Icon Test");
   }
 
   @Override
@@ -42,8 +42,8 @@ public final class PagePublicIconFontAwesome extends AbstractPagePublicIcon
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
-    EFontAwesomeIcon.registerResourcesForThisRequest ();
-    for (final EFontAwesomeIcon eIcon : EFontAwesomeIcon.values ())
+    EFontAwesome5Icon.registerResourcesForThisRequest ();
+    for (final EFontAwesome5Icon eIcon : EFontAwesome5Icon.values ())
       aNodeList.addChild (new HCDiv ().addClass (CSS_CLASS_ICON_CONTAINER)
                                       .addChild (new HCDiv ().addChild (eIcon.getAsNode4x ()))
                                       .addChild (new HCDiv ().addChild (new HCSmall ().addChild (eIcon.name ()))));

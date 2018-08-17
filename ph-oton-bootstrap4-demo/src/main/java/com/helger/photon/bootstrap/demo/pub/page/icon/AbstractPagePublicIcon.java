@@ -43,6 +43,8 @@ public abstract class AbstractPagePublicIcon extends AbstractAppWebPage
   @Nullable
   public String getHeaderText (@Nonnull final WebPageExecutionContext aWPEC)
   {
+    if (true)
+      return super.getHeaderText (aWPEC);
     return null;
   }
 

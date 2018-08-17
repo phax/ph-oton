@@ -36,15 +36,15 @@ import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.photon.icon.EIconCSSPathProvider;
 
-public class MainExtractFontAwesomeCSSClasses
+public class MainExtractFontAwesome4CSSClasses
 {
   public static void main (final String [] args)
   {
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
                                                                StandardCharsets.UTF_8,
                                                                ECSSVersion.CSS30);
-    final ICommonsSet <String> aClasses = new CommonsTreeSet<> ();
-    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet<> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
+    final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override
@@ -88,7 +88,7 @@ public class MainExtractFontAwesomeCSSClasses
         final String sClassName = sClass.substring (1);
         String sFieldName = sClassName.toUpperCase (Locale.US);
         sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
-        System.out.println (sFieldName.substring ("fa-".length ()) + " (CFontAwesomeCSS." + sFieldName + "),");
+        System.out.println (sFieldName.substring ("fa-".length ()) + " (CFontAwesome4CSS." + sFieldName + "),");
       }
   }
 }

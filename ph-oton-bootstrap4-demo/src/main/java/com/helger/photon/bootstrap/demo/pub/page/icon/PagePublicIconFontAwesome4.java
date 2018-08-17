@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+ * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,11 +30,11 @@ import com.helger.photon.uicore.page.WebPageExecutionContext;
  *
  * @author Philip Helger
  */
-public final class PagePublicIconFontAwesome extends AbstractPagePublicIcon
+public final class PagePublicIconFontAwesome4 extends AbstractPagePublicIcon
 {
-  public PagePublicIconFontAwesome (@Nonnull @Nonempty final String sID)
+  public PagePublicIconFontAwesome4 (@Nonnull @Nonempty final String sID)
   {
-    super (sID, "Font Awesome Icon Test");
+    super (sID, "Font Awesome v4 Icon Test");
   }
 
   @Override

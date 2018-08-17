@@ -23,7 +23,8 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicLogin;
-import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome;
+import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome4;
+import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome5;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconMaterialDesign;
 import com.helger.photon.security.menu.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
@@ -48,7 +49,8 @@ public final class MenuPublic
       final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren <> ("icon",
                                                                                           "Icon sets",
                                                                                           aMenuTree));
-      aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome ("icon-fa"));
+      aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome4 ("icon-fa4"));
+      aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome5 ("icon-fa5"));
       aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));
     }
 

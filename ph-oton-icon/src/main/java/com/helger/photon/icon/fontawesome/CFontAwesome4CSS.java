@@ -27,7 +27,7 @@ import com.helger.html.css.ICSSClassProvider;
  * @author Philip Helger
  */
 @Immutable
-public final class CFontAwesomeCSS
+public final class CFontAwesome4CSS
 {
   // Note: all CSS classes were created via MainExtractFontAwesomeCSSClasses for
   // 4.7.0
@@ -845,6 +845,6 @@ public final class CFontAwesomeCSS
   public static final ICSSClassProvider SR_ONLY = DefaultCSSClassProvider.create ("sr-only");
   public static final ICSSClassProvider SR_ONLY_FOCUSABLE = DefaultCSSClassProvider.create ("sr-only-focusable");
 
-  private CFontAwesomeCSS ()
+  private CFontAwesome4CSS ()
   {}
 }
