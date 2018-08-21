@@ -43,6 +43,7 @@ import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.ext.BootstrapSystemMessage;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
+import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.form.RequestField;
@@ -53,12 +54,14 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 
-public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext>
-                                           extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends
+                                           AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
   {
+    LABEL_SEVERITY ("Typ", "Severity"),
+    LABEL_MESSAGE ("Nachricht", "Message"),
     SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert",
                   "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
@@ -79,7 +82,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
     }
   }
 
-  private static final String FIELD_MESSAGE_TYPE = "msgtype";
+  private static final String FIELD_SEVERITY = "msgtype";
   private static final String FIELD_MESSAGE = "msg";
 
   public BasePageSettingsSystemMessage (@Nonnull @Nonempty final String sID)
@@ -133,7 +136,8 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           // Save message
-          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.params ().getAsString (FIELD_MESSAGE_TYPE));
+          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.params ()
+                                                                                                 .getAsString (FIELD_SEVERITY));
           final String sNewMessage = aWPEC.params ().getAsString (FIELD_MESSAGE);
           final EChange eChange = aSystemMsgMgr.setSystemMessage (eNewMessageType, sNewMessage);
           if (eChange.isChanged ())
@@ -146,12 +150,17 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
       {
         // Show input form
         final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+        aForm.setLeft (2);
 
         final String sSystemMessage = aSystemMsgMgr.getSystemMessage ();
-        aForm.addChild (new HCSystemMessageTypeSelect (new RequestField (FIELD_MESSAGE_TYPE,
-                                                                         aSystemMsgMgr.getMessageType ().getID ()),
-                                                       aDisplayLocale));
-        aForm.addChild (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE, sSystemMessage)));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_SEVERITY.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCSystemMessageTypeSelect (new RequestField (FIELD_SEVERITY,
+                                                                                                                aSystemMsgMgr.getMessageType ()
+                                                                                                                             .getID ()),
+                                                                                              aDisplayLocale)));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_MESSAGE.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE,
+                                                                                                         sSystemMessage))));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE));
         aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
