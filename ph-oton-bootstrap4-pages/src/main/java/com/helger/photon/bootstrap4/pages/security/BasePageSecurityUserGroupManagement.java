@@ -16,10 +16,8 @@
  */
 package com.helger.photon.bootstrap4.pages.security;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.attr.IStringMap;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -263,7 +262,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     }
 
     // All roles assigned to this user group
-    final Collection <String> aAssignedRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
+    final ICommonsSet <String> aAssignedRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
     if (aAssignedRoleIDs.isEmpty ())
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
@@ -360,7 +359,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       {
         final String sUserGroupID = aSelectedObject.getID ();
 
-        final Map <String, String> aAttrMap = aSelectedObject.attrs ();
+        final IStringMap aAttrMap = aSelectedObject.attrs ();
         if (aCustomAttrMap != null)
           aAttrMap.putAll (aCustomAttrMap);
 
@@ -368,14 +367,14 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         aUserGroupMgr.setUserGroupData (sUserGroupID, sName, sDescription, aAttrMap);
 
         // assign to the matching roles
-        final Collection <String> aPrevRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
+        final ICommonsSet <String> aPrevRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
         // Create all missing assignments
-        final Set <String> aRolesToBeAssigned = CollectionHelper.getDifference (aRoleIDs, aPrevRoleIDs);
+        final ICommonsSet <String> aRolesToBeAssigned = CollectionHelper.getDifference (aRoleIDs, aPrevRoleIDs);
         for (final String sRoleID : aRolesToBeAssigned)
           aUserGroupMgr.assignRoleToUserGroup (sUserGroupID, sRoleID);
 
         // Delete all old assignments
-        final Set <String> aRolesToBeUnassigned = CollectionHelper.getDifference (aPrevRoleIDs, aRoleIDs);
+        final ICommonsSet <String> aRolesToBeUnassigned = CollectionHelper.getDifference (aPrevRoleIDs, aRoleIDs);
         for (final String sRoleID : aRolesToBeUnassigned)
           aUserGroupMgr.unassignRoleFromUserGroup (sUserGroupID, sRoleID);
 
@@ -429,8 +428,9 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     // Role assignment
     {
-      final Collection <String> aRoleIDs = aSelectedObject == null ? aWPEC.params ().getAsStringList (FIELD_ROLES)
-                                                                   : aSelectedObject.getAllContainedRoleIDs ();
+      final ICommonsCollection <String> aRoleIDs = aSelectedObject == null ? aWPEC.params ()
+                                                                                  .getAsStringList (FIELD_ROLES)
+                                                                           : aSelectedObject.getAllContainedRoleIDs ();
       final HCRoleForUserGroupSelect aSelect = new HCRoleForUserGroupSelect (new RequestField (FIELD_ROLES), aRoleIDs);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
                                                    .setCtrl (aSelect)
@@ -463,7 +463,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                         new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
-    final Collection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroups ();
+    final ICommonsList <IUserGroup> aUserGroups = aUserGroupMgr.getAll (x -> !x.isDeleted ());
     for (final IUserGroup aUserGroup : aUserGroups)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aUserGroup);

@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.security;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
@@ -267,8 +266,9 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
-      aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
-                                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+      aAttrTable.addHeaderRow ()
+                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
+                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
@@ -329,12 +329,12 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                         new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
-    final Collection <? extends IRole> aRoles = aRoleMgr.getAllRoles ();
+    final ICommonsList <IRole> aRoles = aRoleMgr.getAll (x -> !x.isDeleted ());
     for (final IRole aRole : aRoles)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aRole);
 
-      final Collection <? extends IUserGroup> aAssignedUserGroups = aUserGroupManager.getAllUserGroupsWithAssignedRole (aRole.getID ());
+      final ICommonsList <IUserGroup> aAssignedUserGroups = aUserGroupManager.getAllUserGroupsWithAssignedRole (aRole.getID ());
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aRole.getID ());

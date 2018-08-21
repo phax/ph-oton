@@ -551,8 +551,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     if (aCustomAttrs.isNotEmpty ())
     {
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
-      aAttrTable.addHeaderRow ().addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
-                                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+      aAttrTable.addHeaderRow ()
+                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
+                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
@@ -984,18 +985,18 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
-    final ICommonsCollection <? extends IUser> aActiveUsers = aUserMgr.getAllActiveUsers ();
+    final ICommonsList <IUser> aActiveUsers = aUserMgr.getAllActiveUsers ();
     aTabBox.addTab ("active",
                     EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aActiveUsers.size ())),
                     getTabWithUsers (aWPEC, aActiveUsers, getID () + "1"));
 
-    final ICommonsCollection <? extends IUser> aDisabledUsers = aUserMgr.getAllDisabledUsers ();
+    final ICommonsList <IUser> aDisabledUsers = aUserMgr.getAllDisabledUsers ();
     aTabBox.addTab ("disabled",
                     EText.TAB_DISABLED.getDisplayTextWithArgs (aDisplayLocale,
                                                                Integer.toString (aDisabledUsers.size ())),
                     getTabWithUsers (aWPEC, aDisabledUsers, getID () + "2"));
 
-    final ICommonsCollection <? extends IUser> aDeletedUsers = aUserMgr.getAllDeletedUsers ();
+    final ICommonsList <IUser> aDeletedUsers = aUserMgr.getAllDeletedUsers ();
     aTabBox.addTab ("deleted",
                     EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aDeletedUsers.size ())),
                     getTabWithUsers (aWPEC, aDeletedUsers, getID () + "3"));
