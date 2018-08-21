@@ -51,9 +51,25 @@ public final class WebFileIO
   private static IFileRelativeIO s_aDataPath;
   @GuardedBy ("s_aRWLock")
   private static IPathRelativeIO s_aServletContextPath;
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bSilentMode = false;
 
   private WebFileIO ()
   {}
+
+  public static boolean setSilentMode (final boolean bSilentMode)
+  {
+    return s_aRWLock.writeLocked ( () -> {
+      final boolean bOld = s_bSilentMode;
+      s_bSilentMode = bSilentMode;
+      return bOld;
+    });
+  }
+
+  public static boolean isSilentMode ()
+  {
+    return s_aRWLock.readLocked ( () -> s_bSilentMode);
+  }
 
   public static void initPaths (@Nonnull final File aDataPath,
                                 @Nonnull @Nonempty final String sServletContextPath,
@@ -70,12 +86,18 @@ public final class WebFileIO
       if (s_aServletContextPath != null)
         throw new IllegalStateException ("Another servlet context path is already present: " + s_aServletContextPath);
 
-      LOGGER.info ("Using '" + aDataPath + "' as the data path");
+      final boolean bLog = !isSilentMode ();
+
+      if (bLog && LOGGER.isInfoEnabled ())
+        LOGGER.info ("Using '" + aDataPath + "' as the data path");
+
       s_aDataPath = new FileRelativeIO (aDataPath);
       if (bCheckFileAccess)
         FileRelativeIO.internalCheckAccessRights (aDataPath);
 
-      LOGGER.info ("Using '" + sServletContextPath + "' as the servlet context path");
+      if (bLog && LOGGER.isInfoEnabled ())
+        LOGGER.info ("Using '" + sServletContextPath + "' as the servlet context path");
+
       s_aServletContextPath = new PathRelativeIO (sServletContextPath);
     }
     finally

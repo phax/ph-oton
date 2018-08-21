@@ -26,6 +26,7 @@ import com.helger.commons.io.file.FileOperationManager;
 import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
+import com.helger.servlet.ServletContextPathHolder;
 import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
@@ -38,6 +39,8 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   private final File m_aDataPath;
   private final String m_sServletContextPath;
   private boolean m_bDeleteAllData = false;
+  private boolean m_bOldWebFileIOSilentMode;
+  private boolean m_bOldSCCtxHolderSilentMode;
 
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
@@ -114,6 +117,8 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   @Override
   public void before ()
   {
+    m_bOldWebFileIOSilentMode = WebFileIO.setSilentMode (true);
+    m_bOldSCCtxHolderSilentMode = ServletContextPathHolder.setSilentMode (true);
     super.before ();
     PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
 
@@ -130,5 +135,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   {
     PhotonBasic.shutdown ();
     super.after ();
+    ServletContextPathHolder.setSilentMode (m_bOldSCCtxHolderSilentMode);
+    WebFileIO.setSilentMode (m_bOldWebFileIOSilentMode);
   }
 }
