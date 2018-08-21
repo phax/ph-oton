@@ -99,7 +99,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
     final PhotonGlobalState aGlobalState = getInstance ();
     return aGlobalState.m_aStateMap.computeIfAbsent (sAppID, k -> {
       // By default set first app ID as default
-      if (aGlobalState.m_aStateMap.isEmpty ())
+      if (!aGlobalState.hasDefaultApplicationID ())
         aGlobalState.setDefaultApplicationID (sAppID);
       return new PhotonGlobalStatePerApp ();
     });
@@ -107,8 +107,9 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
 
   public static void removeAllApplicationServletPathMappings ()
   {
-    getInstance ().m_aStateMap.forEachValue (PhotonGlobalStatePerApp::removeServletPath);
-    getInstance ().setDefaultApplicationID (null);
+    final PhotonGlobalState aGlobalState = getInstance ();
+    aGlobalState.m_aStateMap.forEachValue (PhotonGlobalStatePerApp::removeServletPath);
+    aGlobalState.setDefaultApplicationID (null);
   }
 
   public static boolean containsAnyApplicationServletPathMapping ()
