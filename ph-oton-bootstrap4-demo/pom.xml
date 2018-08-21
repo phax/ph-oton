@@ -66,10 +66,6 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-icon</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-bootstrap4-pages</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
