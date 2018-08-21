@@ -29,6 +29,7 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
@@ -64,6 +65,16 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   }
 
   /**
+   * @return <code>true</code> if a default application ID is present,
+   *         <code>false</code> otherwise.
+   * @since 8.0.3
+   */
+  public boolean hasDefaultApplicationID ()
+  {
+    return StringHelper.hasText (getDefaultApplicationID ());
+  }
+
+  /**
    * Set the default application ID of an application servlet.
    *
    * @param sDefaultApplicationID
@@ -75,7 +86,8 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
       if (!EqualsHelper.equals (m_sDefaultApplicationID, sDefaultApplicationID))
       {
         m_sDefaultApplicationID = sDefaultApplicationID;
-        LOGGER.info ("Default application ID set to '" + sDefaultApplicationID + "'");
+        if (LOGGER.isInfoEnabled ())
+          LOGGER.info ("Default application ID set to '" + sDefaultApplicationID + "'");
       }
     });
   }
@@ -112,5 +124,4 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
     getInstance ().m_aStateMap.forEach ( (sAppID, aState) -> ret.put (sAppID, aState.getServletPath ()));
     return ret;
   }
-
 }

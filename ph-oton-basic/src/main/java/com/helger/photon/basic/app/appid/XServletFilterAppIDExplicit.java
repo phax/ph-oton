@@ -30,6 +30,7 @@ import com.helger.photon.basic.app.request.PhotonRequestParameters;
 import com.helger.photon.basic.app.request.RequestParameterManager;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.web.scope.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
 
 /**
@@ -47,10 +48,9 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     m_sAppID = ValueEnforcer.notEmpty (sAppID, "AppID");
   }
 
-  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
+  public static void setStatePerApp (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @Nonnull final String sAppID)
   {
-    final String sAppID = m_sAppID;
-
     // It's important to create a session here!
     final PhotonSessionState aSessionState = PhotonSessionState.getInstance ();
 
@@ -142,6 +142,11 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     RequestSettings.setRequestState (aRequestScope,
                                      sAppID,
                                      new PhotonRequestState (aMenuTree, aMenuItem, aDisplayLocale));
+  }
+
+  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
+  {
+    setStatePerApp (aRequestScope, m_sAppID);
   }
 
   public void afterRequest (@Nonnull final IRequestWebScope aRequestScope)

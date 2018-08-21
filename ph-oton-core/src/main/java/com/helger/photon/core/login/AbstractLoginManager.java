@@ -37,10 +37,7 @@ import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.credentials.UserPasswordCredentials;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
-import com.helger.security.authentication.result.AuthIdentificationManager;
-import com.helger.security.authentication.result.AuthIdentificationResult;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -58,8 +55,8 @@ public abstract class AbstractLoginManager
   public static final String LOGIN_INFO_REMOTE_ADDRESS = "remote-address";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the remote host of
-   * the last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the remote host of the
+   * last request. Type: String.
    */
   public static final String LOGIN_INFO_REMOTE_HOST = "remote-host";
 
@@ -70,8 +67,8 @@ public abstract class AbstractLoginManager
   public static final String LOGIN_INFO_REQUEST_URI = "request-uri";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the query string of
-   * the last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the query string of the
+   * last request. Type: String.
    */
   public static final String LOGIN_INFO_QUERY_STRING = "query-string";
 
@@ -82,8 +79,8 @@ public abstract class AbstractLoginManager
   public static final String LOGIN_INFO_USER_AGENT = "user-agent";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the number of
-   * requests in this session. Type: int.
+   * Attribute name for the LoginInfo attribute that holds the number of requests
+   * in this session. Type: int.
    *
    * @since 2.1.12
    */
@@ -179,16 +176,16 @@ public abstract class AbstractLoginManager
   }
 
   /**
-   * Modify the passed {@link LoginInfo} object with details of the passed
-   * request scope. This method is called for every request!
+   * Modify the passed {@link LoginInfo} object with details of the passed request
+   * scope. This method is called for every request!
    *
    * @param aLoginInfo
    *        Login Info. Never <code>null</code>.
    * @param aRequestScope
    *        The current request scope.
    * @param bLoggedInInThisRequest
-   *        <code>true</code> if the user just logged in with this request.
-   *        Added in 3.4.0.
+   *        <code>true</code> if the user just logged in with this request. Added
+   *        in 3.4.0.
    */
   @OverrideOnDemand
   protected void modifyLoginInfo (@Nonnull final LoginInfo aLoginInfo,
@@ -201,8 +198,9 @@ public abstract class AbstractLoginManager
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURI ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT, aRequestScope.getUserAgent ().getAsString ());
-    aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_COUNT,
-                               Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
+    aLoginInfo.attrs ()
+              .putIn (LOGIN_INFO_REQUEST_COUNT,
+                      Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
   }
 
   /**
@@ -241,53 +239,24 @@ public abstract class AbstractLoginManager
         // Resolve user - may be null
         final IUser aUser = getUserOfLoginName (sLoginName);
 
-        if (false)
+        // Try main login
+        aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, m_aRequiredRoleIDs);
+        if (aLoginResult.isSuccess ())
         {
-          // Try main login
-          final AuthIdentificationResult aResult = AuthIdentificationManager.validateLoginCredentialsAndCreateToken (new UserPasswordCredentials (aUser,
-                                                                                                                                                  sPassword,
-                                                                                                                                                  m_aRequiredRoleIDs));
-          if (aResult.isSuccess ())
-          {
-            // Credentials are valid - implies that the user was resolved
-            // correctly
-            aLoginResult = ELoginResult.SUCCESS;
-            sSessionUserID = aUser.getID ();
-            bLoggedInInThisRequest = true;
-          }
-          else
-          {
-            // Credentials are invalid
-            aLoginResult = aResult.getCredentialValidationFailure ();
-            if (GlobalDebug.isDebugMode ())
-              LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
-
-            // Anyway show the error message only if at least some credential
-            // values are passed
-            bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
-          }
+          // Credentials are valid - implies that the user was resolved
+          // correctly
+          sSessionUserID = aUser.getID ();
+          bLoggedInInThisRequest = true;
         }
         else
         {
-          // Try main login
-          aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, m_aRequiredRoleIDs);
-          if (aLoginResult.isSuccess ())
-          {
-            // Credentials are valid - implies that the user was resolved
-            // correctly
-            sSessionUserID = aUser.getID ();
-            bLoggedInInThisRequest = true;
-          }
-          else
-          {
-            // Credentials are invalid
-            if (GlobalDebug.isDebugMode ())
-              LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+          // Credentials are invalid
+          if (GlobalDebug.isDebugMode ())
+            LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
 
-            // Anyway show the error message only if at least some credential
-            // values are passed
-            bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
-          }
+          // Anyway show the error message only if at least some credential
+          // values are passed
+          bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
         }
       }
 

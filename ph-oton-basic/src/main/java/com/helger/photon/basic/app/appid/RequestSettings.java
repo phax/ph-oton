@@ -29,7 +29,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.scope.mgr.ScopeManager;
-import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -156,7 +155,7 @@ public final class RequestSettings
     return getDisplayLocale (aRequestScope).getLanguage ();
   }
 
-  static void setRequestState (@Nonnull final IRequestWebScope aRequestScope,
+  static void setRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                @Nonnull @Nonempty final String sAppID,
                                @Nonnull final PhotonRequestState aState)
   {

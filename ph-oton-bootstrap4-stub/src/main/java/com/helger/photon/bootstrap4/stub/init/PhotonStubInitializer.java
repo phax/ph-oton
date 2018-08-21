@@ -147,7 +147,8 @@ public final class PhotonStubInitializer
                        .setServletPath (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
       PhotonGlobalState.state (CApplicationID.APP_ID_SECURE)
                        .setServletPath (AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonGlobalState.getInstance ().setDefaultApplicationID (CApplicationID.APP_ID_PUBLIC);
     }
+    if (!PhotonGlobalState.getInstance ().hasDefaultApplicationID ())
+      PhotonGlobalState.getInstance ().setDefaultApplicationID (CApplicationID.APP_ID_PUBLIC);
   }
 }

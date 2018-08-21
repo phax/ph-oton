@@ -18,8 +18,12 @@ package com.helger.photon.basic.app.appid;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.IRequestWebScope;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
 
 /**
@@ -30,10 +34,12 @@ import com.helger.xservlet.filter.IXServletHighLevelFilter;
  */
 public final class XServletFilterAppIDFromSessionID implements IXServletHighLevelFilter
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (XServletFilterAppIDFromSessionID.class);
+
   public XServletFilterAppIDFromSessionID ()
   {}
 
-  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
+  public static void setStatePerApp (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Set all fields from session
     final PhotonSessionState aSessionState = PhotonSessionState.getInstanceIfInstantiated ();
@@ -63,6 +69,15 @@ public final class XServletFilterAppIDFromSessionID implements IXServletHighLeve
       // Remember in request
       RequestSettings.setRequestState (aRequestScope, sAppID, aRequestState);
     }
+    else
+    {
+      LOGGER.warn ("No application ID is present - please check if you really need this filter");
+    }
+  }
+
+  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
+  {
+    setStatePerApp (aRequestScope);
   }
 
   public void afterRequest (@Nonnull final IRequestWebScope aRequestScope)
