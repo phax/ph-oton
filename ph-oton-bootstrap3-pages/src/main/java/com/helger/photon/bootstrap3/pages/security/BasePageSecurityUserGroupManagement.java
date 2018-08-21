@@ -40,6 +40,7 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -57,8 +58,10 @@ import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandlerDelete;
+import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandlerUndelete;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -88,6 +91,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   protected static enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
+    TAB_ACTIVE ("Aktive Benutzergruppen ({0})", "Active user groups ({0})"),
+    TAB_DELETED ("Gelöschte Benutzergruppen ({0})", "Deleted user groups ({0})"),
     HEADER_NAME ("Name", "Name"),
     HEADER_IN_USE ("Verwendet?", "In use?"),
     HEADER_VALUE ("Wert", "Value"),
@@ -106,11 +111,17 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
     ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!",
                          "At least one selected role is invalid!"),
-    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?",
+    DELETE_QUERY ("Soll die Benutzergruppe ''0}'' wirklich gelöscht werden?",
                   "Are you sure to delete the user group ''{0}''?"),
     DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!",
                     "The user group ''{0}'' was successfully deleted!"),
     DELETE_ERROR ("Fehler beim Löschen der Benutzergruppe ''{0}''!", "Error deleting the user group ''{0}''!"),
+    UNDELETE_QUERY ("Sind Sie sicher, dass Sie die Benutzergruppe ''{0}'' wiederherstellen wollen?",
+                    "Are you sure you want to undelete user group ''{0}''?"),
+    UNDELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurde erfolgreich wiederhergestellt!",
+                      "User group ''{0}'' was successfully undeleted!"),
+    UNDELETE_ERROR ("Beim Wiederherstellen der Benutzergruppe ''{0}'' ist ein Fehler aufgetreten!",
+                    "An error occurred while undeleting user group ''{0}''!"),
     SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
     SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
 
@@ -160,6 +171,32 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                                                                                                        aSelectedObject.getName ())));
       }
     });
+    setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUserGroup, WPECTYPE> ()
+    {
+      @Override
+      protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                        @Nonnull final BootstrapForm aForm,
+                                        @Nonnull final IUserGroup aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                           aSelectedObject.getName ())));
+      }
+
+      @Override
+      protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+
+        if (aUserGroupMgr.undeleteUserGroup (aSelectedObject.getID ()).isChanged ())
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.UNDELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                             aSelectedObject.getName ())));
+        else
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.UNDELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                         aSelectedObject.getName ())));
+      }
+    });
   }
 
   public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID)
@@ -205,6 +242,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   {
     if (eFormAction.isDelete ())
       return canDeleteUserGroup (aSelectedObject);
+    if (eFormAction.isUndelete ())
+      return canUndeleteUserGroup (aSelectedObject);
     return true;
   }
 
@@ -444,26 +483,27 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   protected static boolean canDeleteUserGroup (@Nullable final IUserGroup aUserGroup)
   {
     return aUserGroup != null &&
+           !aUserGroup.isDeleted () &&
            !aUserGroup.hasContainedUsers () &&
            !aUserGroup.getID ().equals (CSecurity.USERGROUP_ADMINISTRATORS_ID);
   }
 
-  @Override
-  protected void showListOfExistingObjects (@Nonnull final WPECTYPE aWPEC)
+  protected static boolean canUndeleteUserGroup (@Nullable final IUserGroup aUserGroup)
+  {
+    return aUserGroup != null && aUserGroup.isDeleted ();
+  }
+
+  @Nonnull
+  protected IHCNode getTabWithUserGroups (@Nonnull final WPECTYPE aWPEC,
+                                          @Nonnull final ICommonsList <IUserGroup> aUserGroups,
+                                          @Nonnull @Nonempty final String sTableID)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
-
-    // Toolbar on top
-    final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-    aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW_USERGROUP.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
 
     final HCTable aTable = new HCTable (new DTCol ().setVisible (false),
                                         new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
-                                        new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
-    final ICommonsList <IUserGroup> aUserGroups = aUserGroupMgr.getAll (x -> !x.isDeleted ());
+                                        new BootstrapDTColAction (aDisplayLocale)).setID (sTableID);
     for (final IUserGroup aUserGroup : aUserGroups)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aUserGroup);
@@ -491,11 +531,49 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       {
         aActionCell.addChild (createEmptyAction ());
       }
+      aActionCell.addChild (" ");
+      if (canUndeleteUserGroup (aUserGroup))
+      {
+        aActionCell.addChild (createUndeleteLink (aWPEC,
+                                                  aUserGroup,
+                                                  EWebPageText.OBJECT_UNDELETE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                       aUserGroup.getName ())));
+      }
+      else
+      {
+        aActionCell.addChild (createEmptyAction ());
+      }
     }
 
-    aNodeList.addChild (aTable);
-
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+
+    return new HCNodeList ().addChild (aTable).addChild (aDataTables);
+  }
+
+  @Override
+  protected void showListOfExistingObjects (@Nonnull final WPECTYPE aWPEC)
+  {
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+
+    // Toolbar on top
+    final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+    aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW_USERGROUP.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
+
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
+
+    final ICommonsList <IUserGroup> aActiveUserGroups = aUserGroupMgr.getAllActiveUserGroups ();
+    aTabBox.addTab ("active",
+                    EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale,
+                                                             Integer.toString (aActiveUserGroups.size ())),
+                    getTabWithUserGroups (aWPEC, aActiveUserGroups, getID () + "1"));
+
+    final ICommonsList <IUserGroup> aDeletedUserGroups = aUserGroupMgr.getAllDeletedUserGroups ();
+    aTabBox.addTab ("deleted",
+                    EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale,
+                                                              Integer.toString (aDeletedUserGroups.size ())),
+                    getTabWithUserGroups (aWPEC, aDeletedUserGroups, getID () + "2"));
+    aNodeList.addChild (aTabBox);
   }
 }

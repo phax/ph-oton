@@ -329,7 +329,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                         new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
-    final ICommonsList <IRole> aRoles = aRoleMgr.getAll (x -> !x.isDeleted ());
+    final ICommonsList <IRole> aRoles = aRoleMgr.getAllActiveRoles ();
     for (final IRole aRole : aRoles)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aRole);

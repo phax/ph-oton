@@ -42,6 +42,7 @@ Contained subprojects are:
   * Internal error storage paths are now customizable  
   * Added FontAwesome 5.2.0 free icons
   * Improved state API slightly
+  * User group and role user interfaces were improved 
 * v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled

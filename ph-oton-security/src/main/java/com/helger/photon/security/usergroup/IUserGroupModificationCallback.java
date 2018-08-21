@@ -35,8 +35,8 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param aUserGroup
    *        The created user group. Never <code>null</code>.
    * @param bPredefinedUserGroup
-   *        <code>true</code> if it is a predefined user group,
-   *        <code>false</code> if it is a regular user group
+   *        <code>true</code> if it is a predefined user group, <code>false</code>
+   *        if it is a regular user group
    */
   default void onUserGroupCreated (@Nonnull final IUserGroup aUserGroup, final boolean bPredefinedUserGroup)
   {}
@@ -66,6 +66,15 @@ public interface IUserGroupModificationCallback extends ICallback
    *        The deleted user group. Never <code>null</code>.
    */
   default void onUserGroupDeleted (@Nonnull final IUserGroup aUserGroup)
+  {}
+
+  /**
+   * Called after a user group was undeleted.
+   *
+   * @param aUserGroup
+   *        The undeleted user group. Never <code>null</code>.
+   */
+  default void onUserGroupUndeleted (@Nonnull final IUserGroup aUserGroup)
   {}
 
   /**

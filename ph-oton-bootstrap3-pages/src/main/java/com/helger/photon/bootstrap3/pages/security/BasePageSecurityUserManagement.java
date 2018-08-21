@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.security;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
@@ -160,17 +159,17 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     FAILURE_CREATE ("Fehler beim Anlegen des Benutzers!", "Error creating the new user!"),
     SUCCESS_RESET_PASSWORD ("Das neue Passwort vom Benutzer ''{0}'' wurde gespeichert!",
                             "Successfully saved the new password of user ''{0}''!"),
-    DEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' löschen wollen?",
-               "Are you sure you want to delete user ''{0}''?"),
-    DEL_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich gelöscht!", "User ''{0}'' was successfully deleted!"),
-    DEL_ERROR ("Beim Löschen des Benutzers ''{0}'' ist ein Fehler aufgetreten!",
-               "An error occurred while deleting user ''{0}''!"),
-    UNDEL_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' wiederherstellen wollen?",
-                 "Are you sure you want to undelete user ''{0}''?"),
-    UNDEL_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich wiederhergestellt!",
-                   "User ''{0}'' was successfully undeleted!"),
-    UNDEL_ERROR ("Beim Wiederherstellen des Benutzers ''{0}'' ist ein Fehler aufgetreten!",
-                 "An error occurred while undeleting user ''{0}''!");
+    DELETE_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' löschen wollen?",
+                  "Are you sure you want to delete user ''{0}''?"),
+    DELETE_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich gelöscht!", "User ''{0}'' was successfully deleted!"),
+    DELETE_ERROR ("Beim Löschen des Benutzers ''{0}'' ist ein Fehler aufgetreten!",
+                  "An error occurred while deleting user ''{0}''!"),
+    UNDELETE_QUERY ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' wiederherstellen wollen?",
+                    "Are you sure you want to undelete user ''{0}''?"),
+    UNDELETE_SUCCESS ("Der Benutzer ''{0}'' wurde erfolgreich wiederhergestellt!",
+                      "User ''{0}'' was successfully undeleted!"),
+    UNDELETE_ERROR ("Beim Wiederherstellen des Benutzers ''{0}'' ist ein Fehler aufgetreten!",
+                    "An error occurred while undeleting user ''{0}''!");
 
     private final IMultilingualText m_aTP;
 
@@ -212,8 +211,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                       @Nonnull final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DEL_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                      aSelectedObject.getDisplayName ())));
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                         aSelectedObject.getDisplayName ())));
       }
 
       @Override
@@ -224,11 +223,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
         if (aUserMgr.deleteUser (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                        aSelectedObject.getDisplayName ())));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                           aSelectedObject.getDisplayName ())));
         else
-          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                    aSelectedObject.getDisplayName ())));
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                       aSelectedObject.getDisplayName ())));
       }
     });
     setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUser, WPECTYPE> ()
@@ -240,8 +239,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                         @Nonnull final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDEL_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                        aSelectedObject.getDisplayName ())));
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                           aSelectedObject.getDisplayName ())));
       }
 
       @Override
@@ -252,11 +251,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
         if (aUserMgr.undeleteUser (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.UNDEL_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                          aSelectedObject.getDisplayName ())));
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.UNDELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                             aSelectedObject.getDisplayName ())));
         else
-          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.UNDEL_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                      aSelectedObject.getDisplayName ())));
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.UNDELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                         aSelectedObject.getDisplayName ())));
       }
     });
     addCustomHandler (ACTION_RESET_PASSWORD, new AbstractBootstrapWebPageActionHandler <IUser, WPECTYPE> (true)
@@ -868,7 +867,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
   @Nonnull
   protected IHCNode getTabWithUsers (@Nonnull final WPECTYPE aWPEC,
-                                     @Nonnull final Collection <? extends IUser> aUsers,
+                                     @Nonnull final ICommonsList <IUser> aUsers,
                                      @Nonnull @Nonempty final String sTableID)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
@@ -963,13 +962,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         aActionCell.addChild (createEmptyAction ());
     }
 
-    final HCNodeList aNodeList = new HCNodeList ();
-    aNodeList.addChild (aTable);
-
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
 
-    return aNodeList;
+    return new HCNodeList ().addChild (aTable).addChild (aDataTables);
   }
 
   @Override

@@ -21,7 +21,7 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.name.IHasName;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.photon.core.form.RequestField;
@@ -40,9 +40,9 @@ public class HCRoleForUserGroupSelect extends HCExtSelect
     super (aRF);
     setMultiple (true);
 
-    final Collection <? extends IRole> aAllRoles = PhotonSecurityManager.getRoleMgr ().getAllRoles ();
+    final ICommonsList <IRole> aAllRoles = PhotonSecurityManager.getRoleMgr ().getAllActiveRoles ();
     setSize (Math.min (10, aAllRoles.size ()));
-    for (final IRole aRole : CollectionHelper.getSorted (aAllRoles, IHasName.getComparatorName ()))
+    for (final IRole aRole : aAllRoles.getSortedInline (IHasName.getComparatorName ()))
     {
       final HCOption aOption = addOption (aRole.getID (), aRole.getName ());
       if (aSelectedRoles != null && aSelectedRoles.contains (aRole.getID ()))

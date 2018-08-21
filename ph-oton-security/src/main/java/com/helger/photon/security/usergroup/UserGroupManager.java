@@ -243,6 +243,43 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   }
 
   /**
+   * Undelete the user group with the specified ID.
+   *
+   * @param sUserGroupID
+   *        The ID of the user group to undelete
+   * @return {@link EChange#CHANGED} if the user group was undeleted,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
+  @Nonnull
+  public EChange undeleteUserGroup (@Nullable final String sUserGroupID)
+  {
+    final UserGroup aUserGroup = getOfID (sUserGroupID);
+    if (aUserGroup == null)
+    {
+      AuditHelper.onAuditUndeleteFailure (UserGroup.OT, sUserGroupID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (BusinessObjectHelper.setUndeletionNow (aUserGroup).isUnchanged ())
+        return EChange.UNCHANGED;
+      internalMarkItemUndeleted (aUserGroup);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditUndeleteSuccess (UserGroup.OT, sUserGroupID);
+
+    // Execute callback as the very last action
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUndeleted (aUserGroup));
+
+    return EChange.CHANGED;
+  }
+
+  /**
    * Get the user group with the specified ID
    *
    * @param sUserGroupID
@@ -256,13 +293,34 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   }
 
   /**
-   * @return A non-<code>null</code> list of all user groups
+   * @return A non-<code>null</code> list of all available user groups
    */
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroups ()
   {
     return getAll ();
+  }
+
+  /**
+   * @return A non-<code>null</code> list of all available active (=not deleted)
+   *         user groups
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUserGroup> getAllActiveUserGroups ()
+  {
+    return getAll (x -> !x.isDeleted ());
+  }
+
+  /**
+   * @return A non-<code>null</code> list of all deleted user groups
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUserGroup> getAllDeletedUserGroups ()
+  {
+    return getAll (IUserGroup::isDeleted);
   }
 
   /**
