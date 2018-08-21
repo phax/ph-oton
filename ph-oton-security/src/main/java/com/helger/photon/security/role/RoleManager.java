@@ -172,6 +172,43 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
   }
 
   /**
+   * Undelete the role with the specified ID.
+   *
+   * @param sRoleID
+   *        The ID of the role to undelete
+   * @return {@link EChange#CHANGED} if the role was undeleted,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
+  @Nonnull
+  public EChange undeleteRole (@Nullable final String sRoleID)
+  {
+    final Role aRole = getOfID (sRoleID);
+    if (aRole == null)
+    {
+      AuditHelper.onAuditUndeleteFailure (Role.OT, sRoleID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (BusinessObjectHelper.setUndeletionNow (aRole).isUnchanged ())
+        return EChange.UNCHANGED;
+      internalMarkItemUndeleted (aRole);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditUndeleteSuccess (Role.OT, sRoleID);
+
+    // Execute callback as the very last action
+    m_aCallbacks.forEach (aCB -> aCB.onRoleUndeleted (aRole));
+
+    return EChange.CHANGED;
+  }
+
+  /**
    * Get the role with the specified ID
    *
    * @param sRoleID

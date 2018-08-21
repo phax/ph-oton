@@ -771,7 +771,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     if (StringHelper.hasNoText (sRoleID))
       return getNone ();
 
-    return getAllMapped (aUserGroup -> aUserGroup.containsRoleID (sRoleID), aUserGroup -> aUserGroup.getID ());
+    return getAllMapped (aUserGroup -> aUserGroup.containsRoleID (sRoleID), IUserGroup::getID);
   }
 
   public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)

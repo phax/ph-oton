@@ -36,6 +36,7 @@ import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCCol;
@@ -51,8 +52,10 @@ import com.helger.photon.bootstrap3.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap3.form.BootstrapForm;
 import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.form.BootstrapViewForm;
+import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandlerDelete;
+import com.helger.photon.bootstrap3.pages.handler.AbstractBootstrapWebPageActionHandlerUndelete;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
@@ -78,6 +81,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
   {
+    TAB_ACTIVE ("Aktive Rollen ({0})", "Active roles ({0})"),
+    TAB_DELETED ("Gelöschte Rollen ({0})", "Deleted roles ({0})"),
     HEADER_NAME ("Name", "Name"),
     HEADER_IN_USE ("Verwendet?", "In use?"),
     HEADER_VALUE ("Wert", "Value"),
@@ -91,7 +96,13 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     NONE_ASSIGNED ("keine zugeordnet", "none assigned"),
     DELETE_QUERY ("Soll die Rolle ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the role ''{0}''?"),
     DELETE_SUCCESS ("Die Rolle ''{0}'' wurden erfolgreich gelöscht!", "The role ''{0}'' was successfully deleted!"),
-    DELETE_ERROR ("Fehler beim Löschen der Rolle ''{0}''!", "Error deleting the role ''{0}''!");
+    DELETE_ERROR ("Fehler beim Löschen der Rolle ''{0}''!", "Error deleting the role ''{0}''!"),
+    UNDELETE_QUERY ("Sind Sie sicher, dass Sie die Rolle ''{0}'' wiederherstellen wollen?",
+                    "Are you sure you want to undelete role ''{0}''?"),
+    UNDELETE_SUCCESS ("Die Rolle ''{0}'' wurde erfolgreich wiederhergestellt!",
+                      "Role ''{0}'' was successfully undeleted!"),
+    UNDELETE_ERROR ("Beim Wiederherstellen der Rolle ''{0}'' ist ein Fehler aufgetreten!",
+                    "An error occurred while undeleting role ''{0}''!");
 
     private final IMultilingualText m_aTP;
 
@@ -136,6 +147,36 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
         {
           aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                        aSelectedObject.getName ())));
+        }
+      }
+    });
+    setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IRole, WPECTYPE> ()
+    {
+      @Override
+      protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                        @Nonnull final BootstrapForm aForm,
+                                        @Nonnull final IRole aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                           aSelectedObject.getName ())));
+      }
+
+      @Override
+      protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IRole aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+
+        if (aRoleMgr.undeleteRole (aSelectedObject.getID ()).isChanged ())
+        {
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.UNDELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                             aSelectedObject.getName ())));
+        }
+        else
+        {
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.UNDELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                         aSelectedObject.getName ())));
         }
       }
     });
@@ -193,6 +234,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       return false;
     if (eFormAction.isDelete ())
       return canDeleteRole (aSelectedObject);
+    if (eFormAction.isUndelete ())
+      return canUndeleteRole (aSelectedObject);
     return true;
   }
 
@@ -313,23 +356,29 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   {
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     return aRole != null &&
+           !aRole.isDeleted () &&
            !aRole.getID ().equals (CSecurity.ROLE_ADMINISTRATOR_ID) &&
            !aUserGroupMgr.containsUserGroupWithAssignedRole (aRole.getID ());
   }
 
-  @Override
-  protected void showListOfExistingObjects (@Nonnull final WPECTYPE aWPEC)
+  protected static boolean canUndeleteRole (@Nullable final IRole aRole)
+  {
+    return aRole != null && aRole.isDeleted ();
+  }
+
+  @Nonnull
+  protected IHCNode getTabWithRoles (@Nonnull final WPECTYPE aWPEC,
+                                     @Nonnull final ICommonsList <IRole> aRoles,
+                                     @Nonnull @Nonempty final String sTableID)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+
     final UserGroupManager aUserGroupManager = PhotonSecurityManager.getUserGroupMgr ();
 
     final HCTable aTable = new HCTable (new DTCol ().setVisible (false),
                                         new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_IN_USE.getDisplayText (aDisplayLocale)),
-                                        new BootstrapDTColAction (aDisplayLocale)).setID (getID ());
-    final ICommonsList <IRole> aRoles = aRoleMgr.getAllActiveRoles ();
+                                        new BootstrapDTColAction (aDisplayLocale)).setID (sTableID);
     for (final IRole aRole : aRoles)
     {
       final ISimpleURL aViewLink = createViewURL (aWPEC, aRole);
@@ -353,11 +402,41 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       {
         aActionCell.addChild (createEmptyAction ());
       }
+      if (canUndeleteRole (aRole))
+      {
+        aActionCell.addChild (createUndeleteLink (aWPEC,
+                                                  aRole,
+                                                  EWebPageText.OBJECT_UNDELETE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                       aRole.getName ())));
+      }
+      else
+      {
+        aActionCell.addChild (createEmptyAction ());
+      }
     }
-
-    aNodeList.addChild (aTable);
-
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aNodeList.addChild (aDataTables);
+
+    return new HCNodeList ().addChild (aTable).addChild (aDataTables);
+  }
+
+  @Override
+  protected void showListOfExistingObjects (@Nonnull final WPECTYPE aWPEC)
+  {
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+
+    final BootstrapTabBox aTabBox = new BootstrapTabBox ();
+
+    final ICommonsList <IRole> aActiveRoles = aRoleMgr.getAllActiveRoles ();
+    aTabBox.addTab ("active",
+                    EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aActiveRoles.size ())),
+                    getTabWithRoles (aWPEC, aActiveRoles, getID () + "1"));
+
+    final ICommonsList <IRole> aDeletedRoles = aRoleMgr.getAllDeletedRoles ();
+    aTabBox.addTab ("deleted",
+                    EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aDeletedRoles.size ())),
+                    getTabWithRoles (aWPEC, aDeletedRoles, getID () + "2"));
+    aNodeList.addChild (aTabBox);
   }
 }
