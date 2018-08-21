@@ -19,6 +19,7 @@ package com.helger.photon.basic.app.appid;
 import java.io.Serializable;
 import java.util.Locale;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -50,9 +51,11 @@ public final class PhotonSessionStatePerApp implements Serializable
     return m_aRWLock.readLocked ( () -> m_aMenuTree);
   }
 
-  public void setMenuTree (@Nullable final IMenuTree aMenuTree)
+  @Nonnull
+  public PhotonSessionStatePerApp setMenuTree (@Nullable final IMenuTree aMenuTree)
   {
     m_aRWLock.writeLocked ( () -> m_aMenuTree = aMenuTree);
+    return this;
   }
 
   @Nullable
@@ -61,9 +64,11 @@ public final class PhotonSessionStatePerApp implements Serializable
     return m_aRWLock.readLocked ( () -> m_aMenuItem);
   }
 
-  public void setMenuItem (@Nullable final IMenuItemPage aMenuItem)
+  @Nonnull
+  public PhotonSessionStatePerApp setMenuItem (@Nullable final IMenuItemPage aMenuItem)
   {
     m_aRWLock.writeLocked ( () -> m_aMenuItem = aMenuItem);
+    return this;
   }
 
   @Nullable
@@ -72,9 +77,11 @@ public final class PhotonSessionStatePerApp implements Serializable
     return m_aRWLock.readLocked ( () -> m_aDisplayLocale);
   }
 
-  public void setLocale (@Nullable final Locale aDisplayLocale)
+  @Nonnull
+  public PhotonSessionStatePerApp setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
     m_aRWLock.writeLocked ( () -> m_aDisplayLocale = aDisplayLocale);
+    return this;
   }
 
   public boolean isNotEmpty ()

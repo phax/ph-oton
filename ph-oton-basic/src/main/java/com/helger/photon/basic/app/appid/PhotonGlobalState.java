@@ -41,6 +41,7 @@ import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 public final class PhotonGlobalState extends AbstractGlobalWebSingleton
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonGlobalState.class);
+
   private String m_sDefaultApplicationID;
   private final ICommonsMap <String, PhotonGlobalStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 
@@ -79,8 +80,10 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
    *
    * @param sDefaultApplicationID
    *        The last application ID to be set. May be <code>null</code>.
+   * @return this for chaining
    */
-  public void setDefaultApplicationID (@Nullable final String sDefaultApplicationID)
+  @Nonnull
+  public PhotonGlobalState setDefaultApplicationID (@Nullable final String sDefaultApplicationID)
   {
     m_aRWLock.writeLocked ( () -> {
       if (!EqualsHelper.equals (m_sDefaultApplicationID, sDefaultApplicationID))
@@ -90,6 +93,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
           LOGGER.info ("Default application ID set to '" + sDefaultApplicationID + "'");
       }
     });
+    return this;
   }
 
   @Nonnull
@@ -105,11 +109,21 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
     });
   }
 
-  public static void removeAllApplicationServletPathMappings ()
+  public static void clear ()
   {
     final PhotonGlobalState aGlobalState = getInstance ();
-    aGlobalState.m_aStateMap.forEachValue (PhotonGlobalStatePerApp::removeServletPath);
+    aGlobalState.m_aStateMap.clear ();
     aGlobalState.setDefaultApplicationID (null);
+  }
+
+  public static void removeAllApplicationServletPathMappings ()
+  {
+    getInstance ().m_aStateMap.forEachValue (PhotonGlobalStatePerApp::removeServletPath);
+  }
+
+  public static boolean containsNoState ()
+  {
+    return getInstance ().m_aStateMap.isEmpty ();
   }
 
   public static boolean containsAnyApplicationServletPathMapping ()

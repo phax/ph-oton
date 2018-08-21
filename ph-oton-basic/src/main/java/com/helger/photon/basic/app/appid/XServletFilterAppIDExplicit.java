@@ -136,7 +136,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
 
     {
       // Store in all scopes
-      aAppSessionState.setLocale (aDisplayLocale);
+      aAppSessionState.setDisplayLocale (aDisplayLocale);
     }
 
     RequestSettings.setRequestState (aRequestScope,
