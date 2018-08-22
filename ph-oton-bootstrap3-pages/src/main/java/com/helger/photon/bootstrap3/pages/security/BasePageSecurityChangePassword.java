@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap3.pages.security;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -24,6 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
@@ -57,8 +57,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionContext>
-                                            extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionContext> extends
+                                            AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -145,9 +145,9 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
             aFormErrors.addFieldError (FIELD_OLD_PASSWORD,
                                        EText.ERROR_OLD_PASSWORD_INVALID.getDisplayText (aDisplayLocale));
 
-          final List <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
-                                                                      .getInvalidPasswordDescriptions (sNewPlainTextPassword,
-                                                                                                       aDisplayLocale);
+          final ICommonsList <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
+                                                                              .getInvalidPasswordDescriptions (sNewPlainTextPassword,
+                                                                                                               aDisplayLocale);
           for (final String sPasswordError : aPasswordErrors)
             aFormErrors.addFieldError (FIELD_NEW_PASSWORD, sPasswordError);
           if (!EqualsHelper.equals (sNewPlainTextPassword, sNewPlainTextPasswordConfirm))

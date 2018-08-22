@@ -45,6 +45,7 @@ import com.helger.html.hc.html.forms.IHCInput;
 import com.helger.html.hc.html.forms.IHCTextArea;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.grouping.HCDiv;
+import com.helger.html.hc.html.textlevel.HCSmall;
 import com.helger.photon.bootstrap4.BootstrapHelper;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
@@ -116,8 +117,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   }
 
   /**
-   * Modify the first control that is inserted. This method is only called when
-   * a label is present.
+   * Modify the first control that is inserted. This method is only called when a
+   * label is present.
    *
    * @param aLabel
    *        The label that was provided. Never <code>null</code>.
@@ -154,9 +155,12 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
    */
   @Nonnull
   @OverrideOnDemand
-  protected BootstrapInvalidFeedback createHelpTextNode (@Nonnull final IHCNode aHelpText)
+  protected IHCElementWithChildren <?> createHelpTextNode (@Nonnull final IHCNode aHelpText)
   {
-    final BootstrapInvalidFeedback aHelpBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_HELP_TEXT);
+    final HCSmall aHelpBlock = new HCSmall ();
+    aHelpBlock.addClass (CBootstrapCSS.FORM_TEXT);
+    aHelpBlock.addClass (CBootstrapCSS.TEXT_MUTED);
+    aHelpBlock.addClass (CSS_CLASS_FORM_GROUP_HELP_TEXT);
     aHelpBlock.addChild (aHelpText);
     return aHelpBlock;
   }

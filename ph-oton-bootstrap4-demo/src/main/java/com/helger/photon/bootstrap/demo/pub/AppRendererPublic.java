@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
@@ -106,17 +105,14 @@ public final class AppRendererPublic
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     final ISimpleURL aLinkToStartPage = aLEC.getLinkToMenuItem (aLEC.getMenuTree ().getDefaultMenuItemID ());
-    final String sIDToToggle = GlobalIDFactory.getNewStringID ();
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
     final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar ().setExpand (EBootstrapNavbarExpandType.EXPAND_MD);
     aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
                       aLinkToStartPage);
-    aNavbar.addToggler (sIDToToggle);
 
-    final HCDiv aToggleable = aNavbar.addAndReturnToggleable (sIDToToggle);
-
+    final HCDiv aToggleable = aNavbar.addAndReturnToggleable ();
     if (aUser != null)
     {
       aToggleable.addChild (new BootstrapNavbarText ().addChild ("Logged in as ")

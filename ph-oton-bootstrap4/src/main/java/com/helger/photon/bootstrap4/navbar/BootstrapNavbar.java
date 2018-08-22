@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -120,6 +121,20 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
   {
     addChild (new BootstrapNavbarToggler (sIDToToggle));
     return this;
+  }
+
+  /**
+   * Shortcut for {@link #addToggler(String)} and
+   * {@link #addAndReturnToggleable(String)} with an automatically assigned ID.
+   * 
+   * @return The toggleable DIV to be filled
+   */
+  @Nonnull
+  public HCDiv addAndReturnToggleable ()
+  {
+    final String sIDToToggle = GlobalIDFactory.getNewStringID ();
+    addToggler (sIDToToggle);
+    return addAndReturnToggleable (sIDToToggle);
   }
 
   @Nonnull

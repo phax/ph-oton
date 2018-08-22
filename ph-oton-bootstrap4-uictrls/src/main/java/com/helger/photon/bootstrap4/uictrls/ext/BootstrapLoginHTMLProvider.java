@@ -24,6 +24,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.url.SimpleURL;
+import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCEditPassword;
@@ -35,8 +36,6 @@ import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
-import com.helger.photon.bootstrap4.grid.BootstrapCol;
-import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.bootstrap4.layout.BootstrapContainer;
 import com.helger.photon.bootstrap4.utils.BootstrapPageHeader;
 import com.helger.photon.core.EPhotonCoreText;
@@ -94,38 +93,6 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
    */
   @OverrideOnDemand
   protected void onAfterForm (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final BootstrapForm aForm)
-  {}
-
-  /**
-   * Customize the created container, where the form resides in
-   *
-   * @param aSWEC
-   *        Web execution context.
-   * @param aContainer
-   *        The empty container.
-   */
-  @OverrideOnDemand
-  protected void onBeforeContainer (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                    @Nonnull final BootstrapContainer aContainer)
-  {}
-
-  /**
-   * Customize the created container, where the form resides in
-   *
-   * @param aSWEC
-   *        Web execution context.
-   * @param aContainer
-   *        The pre-filled container.
-   * @param aRow
-   *        The pre-filled row
-   * @param aContentCol
-   *        The content column, where the form resides in,
-   */
-  @OverrideOnDemand
-  protected void onAfterContainer (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                   @Nonnull final BootstrapContainer aContainer,
-                                   @Nonnull final BootstrapRow aRow,
-                                   @Nonnull final BootstrapCol aContentCol)
   {}
 
   @Nullable
@@ -194,25 +161,17 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     // Customize
     onAfterForm (aSWEC, aForm);
 
-    // Layout the form
-    final BootstrapContainer aContentLayout = new BootstrapContainer ();
-
-    // Customize
-    onBeforeContainer (aSWEC, aContentLayout);
-
-    final BootstrapRow aRow = aContentLayout.addAndReturnChild (new BootstrapRow ());
-    aRow.createColumn (0, 0, 2, 3, 3);
-    final BootstrapCol aCol2 = aRow.createColumn (12, 12, 8, 6, 6);
-    aCol2.addChild (createPageHeader (m_aPageTitle));
-    aCol2.addChild (aForm);
-    aRow.createColumn (0, 0, 2, 3, 3);
-
-    // Customize
-    onAfterContainer (aSWEC, aContentLayout, aRow, aCol2);
-
     final HCSpan aSpan = new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN);
+    aSpan.addStyle (CCSSProperties.MIN_HEIGHT.newValue ("100%"));
+    aSpan.addStyle (CCSSProperties.MIN_HEIGHT.newValue ("100vh"));
+    aSpan.addStyle (CCSSProperties.DISPLAY.newValue ("flex"));
+    aSpan.addStyle (CCSSProperties.ALIGN_ITEMS.newValue ("center"));
     onBeforeLoginContainer (aSWEC, aSpan);
-    aSpan.addChild (aContentLayout);
+
+    final BootstrapContainer aDiv = new BootstrapContainer ();
+    aDiv.addChild (createPageHeader (m_aPageTitle));
+    aDiv.addChild (aForm);
+    aSpan.addChild (aDiv);
 
     // Customize
     onAfterLoginContainer (aSWEC, aSpan);
