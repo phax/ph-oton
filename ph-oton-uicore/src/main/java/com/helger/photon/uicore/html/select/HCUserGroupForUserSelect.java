@@ -41,7 +41,7 @@ public class HCUserGroupForUserSelect extends HCExtSelect
     super (aRF);
     setMultiple (true);
 
-    final ICommonsList <IUserGroup> aAllUserGroups = PhotonSecurityManager.getUserGroupMgr ().getAllUserGroups ();
+    final ICommonsList <IUserGroup> aAllUserGroups = PhotonSecurityManager.getUserGroupMgr ().getAllActiveUserGroups ();
     setSize (Math.min (10, aAllUserGroups.size ()));
 
     for (final IUserGroup aUserGroup : aAllUserGroups.getSortedInline (IHasName.getComparatorName ()))

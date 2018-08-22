@@ -66,7 +66,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
    * @return The role callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject ("design")
+  @ReturnsMutableObject
   public CallbackList <IRoleModificationCallback> roleModificationCallbacks ()
   {
     return m_aCallbacks;
@@ -172,43 +172,6 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
   }
 
   /**
-   * Undelete the role with the specified ID.
-   *
-   * @param sRoleID
-   *        The ID of the role to undelete
-   * @return {@link EChange#CHANGED} if the role was undeleted,
-   *         {@link EChange#UNCHANGED} otherwise.
-   */
-  @Nonnull
-  public EChange undeleteRole (@Nullable final String sRoleID)
-  {
-    final Role aRole = getOfID (sRoleID);
-    if (aRole == null)
-    {
-      AuditHelper.onAuditUndeleteFailure (Role.OT, sRoleID, "no-such-id");
-      return EChange.UNCHANGED;
-    }
-
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      if (BusinessObjectHelper.setUndeletionNow (aRole).isUnchanged ())
-        return EChange.UNCHANGED;
-      internalMarkItemUndeleted (aRole);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-    AuditHelper.onAuditUndeleteSuccess (Role.OT, sRoleID);
-
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onRoleUndeleted (aRole));
-
-    return EChange.CHANGED;
-  }
-
-  /**
    * Get the role with the specified ID
    *
    * @param sRoleID
@@ -224,32 +187,12 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
   /**
    * @return A non-<code>null</code> list of all available roles
    */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IRole> getAllRoles ()
   {
     return getAll ();
-  }
-
-  /**
-   * @return A non-<code>null</code> list of all available active (=not deleted)
-   *         roles
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IRole> getAllActiveRoles ()
-  {
-    return getAll (x -> !x.isDeleted ());
-  }
-
-  /**
-   * @return A non-<code>null</code> list of all deleted roles
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IRole> getAllDeletedRoles ()
-  {
-    return getAll (IRole::isDeleted);
   }
 
   /**

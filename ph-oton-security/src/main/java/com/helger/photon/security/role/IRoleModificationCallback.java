@@ -65,13 +65,4 @@ public interface IRoleModificationCallback extends ICallback
    */
   default void onRoleDeleted (@Nonnull final IRole aRole)
   {}
-
-  /**
-   * Called after a role was undeleted.
-   *
-   * @param aRole
-   *        The undeleted role. Never <code>null</code>.
-   */
-  default void onRoleUndeleted (@Nonnull final IRole aRole)
-  {}
 }

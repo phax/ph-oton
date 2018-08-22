@@ -40,7 +40,7 @@ public class HCRoleForUserGroupSelect extends HCExtSelect
     super (aRF);
     setMultiple (true);
 
-    final ICommonsList <IRole> aAllRoles = PhotonSecurityManager.getRoleMgr ().getAllActiveRoles ();
+    final ICommonsList <IRole> aAllRoles = PhotonSecurityManager.getRoleMgr ().getAll ();
     setSize (Math.min (10, aAllRoles.size ()));
     for (final IRole aRole : aAllRoles.getSortedInline (IHasName.getComparatorName ()))
     {

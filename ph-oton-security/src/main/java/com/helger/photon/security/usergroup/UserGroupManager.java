@@ -295,6 +295,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   /**
    * @return A non-<code>null</code> list of all available user groups
    */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroups ()

@@ -332,6 +332,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
    * @return A non-<code>null</code> collection of all contained users
    *         (enabled+disabled and deleted+not-deleted)
    */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllUsers ()
@@ -339,6 +340,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
     return getAll ();
   }
 
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllUsers (@Nullable final Predicate <? super IUser> aFilter)
@@ -346,6 +348,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
     return getAll (aFilter);
   }
 
+  @Deprecated
   @Nonnegative
   public int getUserCount (@Nullable final Predicate <? super IUser> aFilter)
   {
@@ -384,8 +387,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
   }
 
   /**
-   * @return A non-<code>null</code> collection of all contained not deleted
-   *         users
+   * @return A non-<code>null</code> collection of all contained not deleted users
    */
   @Nonnull
   @ReturnsMutableCopy
