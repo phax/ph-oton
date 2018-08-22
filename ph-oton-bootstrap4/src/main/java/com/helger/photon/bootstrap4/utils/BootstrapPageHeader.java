@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
  * Bootstrap 4 page header.
@@ -31,8 +32,9 @@ public class BootstrapPageHeader extends AbstractHCElementWithChildren <Bootstra
 {
   public BootstrapPageHeader ()
   {
-    // TODO page header needs more styling
-    super (EHTMLElement.H2);
+    super (EHTMLElement.H1);
+    addClass (CBootstrapCSS.MT_1);
+    addClass (CBootstrapCSS.MB_4);
   }
 
   @Nullable
