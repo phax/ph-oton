@@ -25,11 +25,12 @@ import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 
 public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                       extends IWebPageUIHandler
+                                       extends
+                                       IWebPageUIHandler
 {
   /**
    * Create a new in-page header
-   * 
+   *
    * @param sHeaderText
    *        The header text to be displayed. May be <code>null</code> or empty.
    * @return <code>null</code> if the passed header text is <code>null</code> or
@@ -44,7 +45,21 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    * @return A form that links to the current page.
    */
   @Nonnull
-  FORM_TYPE createFormSelf (@Nonnull ILayoutExecutionContext aLEC);
+  default FORM_TYPE createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  {
+    return createFormSelf (aLEC, false);
+  }
+
+  /**
+   * @param aLEC
+   *        Layout execution context
+   * @param bIsFormSubmitted
+   *        <code>true</code> if the form was submitted for validation,
+   *        <code>false</code> otherwise
+   * @return A form that links to the current page.
+   */
+  @Nonnull
+  FORM_TYPE createFormSelf (@Nonnull ILayoutExecutionContext aLEC, boolean bIsFormSubmitted);
 
   /**
    * @param aLEC
@@ -52,7 +67,21 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    * @return A file upload form that links to the current page.
    */
   @Nonnull
-  FORM_TYPE createFormFileUploadSelf (@Nonnull ILayoutExecutionContext aLEC);
+  default FORM_TYPE createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  {
+    return createFormFileUploadSelf (aLEC, false);
+  }
+
+  /**
+   * @param aLEC
+   *        Layout execution context
+   * @param bIsFormSubmitted
+   *        <code>true</code> if the form was submitted for validation,
+   *        <code>false</code> otherwise
+   * @return A file upload form that links to the current page.
+   */
+  @Nonnull
+  FORM_TYPE createFormFileUploadSelf (@Nonnull ILayoutExecutionContext aLEC, boolean bIsFormSubmitted);
 
   @Nonnull
   TOOLBAR_TYPE createToolbar (@Nonnull ILayoutExecutionContext aWPEC);

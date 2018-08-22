@@ -13,9 +13,3 @@
 .view-form .form-group {
   margin-bottom: 0.2em;
 }
-
-/* Align help text with form group labels */
-.form-group .form-group-help-text {
-  padding-left: 15px;
-  padding-right: 15px;
-}

@@ -46,6 +46,7 @@ import com.helger.html.hc.html.forms.IHCTextArea;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.textlevel.HCSmall;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.BootstrapHelper;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
@@ -216,7 +217,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
                                             @Nonnull final Locale aDisplayLocale)
   {
     final EBootstrapFormType eFormType = aForm.getFormType ();
-    HCFormLabel aLabel = aFormGroup.getLabel ();
+    final HCFormLabel aLabel = aFormGroup.getLabel ();
     final IHCNode aCtrls = aFormGroup.getCtrl ();
     final IHCNode aHelpText = aFormGroup.getHelpText ();
     final IErrorList aErrorList = aFormGroup.getErrorList ();
@@ -234,14 +235,30 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
           aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
     }
 
+    // Add marker on first control
     final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);
-
     if (aErrorList != null && aFirstControl != null)
     {
       if (aErrorList.containsAtLeastOneError ())
         aFirstControl.addClass (CBootstrapCSS.IS_INVALID);
-      else
-        aFirstControl.addClass (CBootstrapCSS.IS_VALID);
+    }
+
+    // Check form errors - highlighting
+    final HCNodeList aErrorListNode = new HCNodeList ();
+    if (aErrorList != null && aErrorList.isNotEmpty ())
+    {
+      for (final IError aError : aErrorList)
+        aErrorListNode.addChild (createSingleErrorNode (aError, aDisplayLocale));
+    }
+
+    // Help text (only if a control is present)
+    IHCElement <?> aHelpTextNode = null;
+    if (aHelpText != null && aCtrls != null)
+    {
+      aHelpTextNode = createHelpTextNode (aHelpText);
+
+      if (eFormType == EBootstrapFormType.INLINE)
+        aHelpTextNode.addClass (CBootstrapCSS.SR_ONLY);
     }
 
     AbstractHCDiv <?> aFinalNode;
@@ -261,29 +278,37 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     {
       // Never icons for check box/radio button
 
+      final boolean bCustom = false;
+
       // Check box or radio button
       final HCDiv aCtrlDiv = new HCDiv ();
-      aCtrlDiv.addClass (CBootstrapCSS.FORM_CHECK);
-
-      if (aLabel == null || aLabel.hasNoChildren ())
+      if (bCustom)
       {
-        aLabel = new HCFormLabel (aCtrls).addClass (CBootstrapCSS.FORM_CHECK_LABEL);
-        aCtrlDiv.addChild (aLabel);
+        aCtrlDiv.addClass (CBootstrapCSS.CUSTOM_CONTROL);
+        if (bFirstControlIsCheckBox)
+          aCtrlDiv.addClass (CBootstrapCSS.CUSTOM_CHECKBOX);
+        if (bFirstControlIsRadioButton)
+          aCtrlDiv.addClass (CBootstrapCSS.CUSTOM_CHECKBOX);
       }
       else
-      {
-        aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
-        if (aLabel.isTextLabel ())
-        {
-          // Use only the text
-          final String sLabelText = aLabel.getPlainText ();
-          aLabel.removeAllChildren ().addChild (sLabelText);
-        }
+        aCtrlDiv.addClass (CBootstrapCSS.FORM_CHECK);
 
-        aLabel.addChildAt (0, aCtrls);
-        aLabel.addChildAt (1, " ");
+      if (bCustom)
+        aFirstControl.addClass (CBootstrapCSS.CUSTOM_CONTROL_INPUT);
+      else
+        aFirstControl.addClass (CBootstrapCSS.FORM_CHECK_INPUT);
+      aCtrlDiv.addChild (aCtrls);
+
+      if (aLabel != null)
+      {
+        if (bCustom)
+          aLabel.addClass (CBootstrapCSS.CUSTOM_CONTROL_LABEL);
+        else
+          aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
         aCtrlDiv.addChild (aLabel);
       }
+
+      aCtrlDiv.addChild (aErrorListNode).addChild (aHelpTextNode);
 
       aFinalNode = aCtrlDiv;
     }
@@ -296,7 +321,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       if (aLabel == null || aLabel.hasNoChildren ())
       {
         // No label - just add controls
-        aFinalNode.addChild (aCtrls);
+        aFinalNode.addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
       }
       else
       {
@@ -315,33 +340,9 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         }
 
         aForm.getLeft ().applyTo (aLabel);
-        final HCDiv aDivRight = new HCDiv ().addChild (aCtrls);
+        final HCDiv aDivRight = new HCDiv ().addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
         aForm.getRight ().applyTo (aDivRight);
         aFinalNode.addChildren (aLabel, aDivRight);
-      }
-    }
-
-    // Help text (only if a control is present)
-    if (aHelpText != null && aCtrls != null)
-    {
-      final IHCElement <?> aHelpTextNode = createHelpTextNode (aHelpText);
-
-      if (eFormType == EBootstrapFormType.INLINE)
-        aHelpTextNode.addClass (CBootstrapCSS.SR_ONLY);
-
-      aFinalNode.addChild (aHelpTextNode);
-    }
-
-    // Check form errors - highlighting
-    if (aErrorList != null && aErrorList.isNotEmpty ())
-    {
-      for (final IError aError : aErrorList)
-      {
-        final IHCElement <?> aErrorNode = createSingleErrorNode (aError, aDisplayLocale);
-        if (aErrorNode != null)
-        {
-          aFinalNode.addChild (aErrorNode);
-        }
       }
     }
 

@@ -131,7 +131,8 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       final boolean bShowForm = true;
       final FormErrorList aFormErrors = new FormErrorList ();
 
-      if (aWPEC.hasAction (CPageParam.ACTION_PERFORM))
+      final boolean bFormWasSubmitted = aWPEC.hasAction (CPageParam.ACTION_PERFORM);
+      if (bFormWasSubmitted)
       {
         // Check if the CSRF nonce matches
         if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
@@ -166,7 +167,8 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       {
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
-        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC,
+                                                                                                 bFormWasSubmitted));
         aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                 SecurityHelper.getUserDisplayName (aCurrentUser,
                                                                                                                                    aDisplayLocale))));

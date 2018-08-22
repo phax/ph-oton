@@ -146,8 +146,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
    *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrorList)}
-   *         should be a file-upload form, <code>false</code> if a regular form
-   *         is sufficient.
+   *         should be a file-upload form, <code>false</code> if a regular form is
+   *         sufficient.
    */
   @OverrideOnDemand
   protected boolean isFileUploadForm (@Nonnull final WPECTYPE aWPEC)
@@ -303,8 +303,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC,
                                          @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT).add (CPageParam.PARAM_OBJECT,
-                                                                                          aCurObject.getID ());
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -775,8 +776,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        never {@link EWebPageFormAction#SHOW_LIST}.
    * @param aSelectedObject
    *        The currently selected object. May be <code>null</code>.
-   * @return <code>true</code> if the action is allowed, <code>false</code> if
-   *         not
+   * @return <code>true</code> if the action is allowed, <code>false</code> if not
    */
   @OverrideOnDemand
   protected boolean isActionAllowed (@Nonnull final WPECTYPE aWPEC,
@@ -810,8 +810,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
-   * Check if locking should be performed on the current request or not.
-   * Override with care!
+   * Check if locking should be performed on the current request or not. Override
+   * with care!
    *
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
@@ -834,14 +834,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
-   * This method is called before the main processing starts. It can e.g. be
-   * used to try to lock the specified object. When overriding the method make
-   * sure to emit all error messages on your own, when e.g. an object is locked.
-   * If {@link EContinue#BREAK} is returned, the list of objects is shown by
+   * This method is called before the main processing starts. It can e.g. be used
+   * to try to lock the specified object. When overriding the method make sure to
+   * emit all error messages on your own, when e.g. an object is locked. If
+   * {@link EContinue#BREAK} is returned, the list of objects is shown by
    * default.<br>
-   * If locking is enabled, try to lock the specified object. When overriding
-   * the method make sure to emit all error messages on your own, when e.g. an
-   * object is locked.
+   * If locking is enabled, try to lock the specified object. When overriding the
+   * method make sure to emit all error messages on your own, when e.g. an object
+   * is locked.
    *
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
@@ -938,8 +938,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
-   *        The currently selected object. May be <code>null</code> when
-   *        creating a new object
+   *        The currently selected object. May be <code>null</code> when creating
+   *        a new object
    * @param aFormErrors
    *        Object for storing the validation errors. Never <code>null</code>.
    * @param eFormAction
@@ -958,8 +958,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
-   *        The currently selected object. May be <code>null</code> when
-   *        creating a new object
+   *        The currently selected object. May be <code>null</code> when creating
+   *        a new object
    * @param aFormErrors
    *        Object for storing the validation errors. Never <code>null</code>.
    * @param eFormAction
@@ -1022,8 +1022,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The currently selected object. May be <code>null</code> for newly
    *        created objects.
    * @param aForm
-   *        The parent form. Use this as parent and not the node list from the
-   *        web page execution context! Never <code>null</code>.
+   *        The parent form. Use this as parent and not the node list from the web
+   *        page execution context! Never <code>null</code>.
    * @param eFormAction
    *        The form action used. Either create, copy or edit.
    * @param aFormErrors
@@ -1132,9 +1132,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
       {
         // Default back to custom
         LOGGER.warn ("Action " +
-                        eFormAction +
-                        " is not allowed on object " +
-                        (aSelectedObject == null ? "null" : aSelectedObject.getID ()));
+                     eFormAction +
+                     " is not allowed on object " +
+                     (aSelectedObject == null ? "null" : aSelectedObject.getID ()));
         eFormAction = EWebPageFormAction.DEFAULT;
       }
     }
@@ -1200,8 +1200,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
             bShowList = false;
-            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC)
-                                                             : getUIHandler ().createFormSelf (aWPEC);
+            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC,
+                                                                                                         bIsFormSubmitted)
+                                                             : getUIHandler ().createFormSelf (aWPEC, bIsFormSubmitted);
             aNodeList.addChild (aForm);
 
             // Set unique ID

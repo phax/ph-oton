@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
@@ -48,16 +49,22 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
 
   @Override
   @Nonnull
-  public BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  public BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC, final boolean bIsFormSubmitted)
   {
-    return new BootstrapForm (aLEC).setFormType (EBootstrapFormType.DEFAULT).setAction (aLEC.getSelfHref ());
+    final BootstrapForm ret = new BootstrapForm (aLEC).setFormType (EBootstrapFormType.DEFAULT)
+                                                      .setAction (aLEC.getSelfHref ());
+    if (false)
+      if (bIsFormSubmitted)
+        ret.addClass (CBootstrapCSS.WAS_VALIDATED);
+    return ret;
   }
 
   @Override
   @Nonnull
-  public BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  public BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC,
+                                                 final boolean bIsFormSubmitted)
   {
-    return createFormSelf (aLEC).setEncTypeFileUpload ();
+    return createFormSelf (aLEC, bIsFormSubmitted).setEncTypeFileUpload ();
   }
 
   @Override

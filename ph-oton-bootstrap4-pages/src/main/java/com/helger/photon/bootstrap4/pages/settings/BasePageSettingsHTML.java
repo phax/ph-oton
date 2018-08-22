@@ -128,7 +128,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettings ();
 
-    if (aWPEC.hasAction (CPageParam.ACTION_SAVE))
+    final boolean bFormSubmitted = aWPEC.hasAction (CPageParam.ACTION_SAVE);
+    if (bFormSubmitted)
     {
       // Save changes
       final boolean bFormatHTML = aWPEC.params ()
@@ -178,7 +179,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     }
     else
     {
-      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
+      final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC, bFormSubmitted));
 
       {
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HTML_VERSION.getDisplayText (aDisplayLocale))
