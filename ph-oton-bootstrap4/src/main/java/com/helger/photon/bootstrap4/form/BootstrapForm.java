@@ -39,7 +39,7 @@ import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements
                            IBootstrapFormGroupContainer <BootstrapForm>
 {
-  public static final int DEFAULT_LEFT_PART = 3;
+  public static final int DEFAULT_LEFT_PART = 2;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
 
   private final Locale m_aDisplayLocale;
