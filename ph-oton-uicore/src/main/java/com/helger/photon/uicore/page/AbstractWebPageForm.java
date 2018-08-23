@@ -992,9 +992,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Web page execution context
    * @param aForm
    *        the form to add the elements to
+   * @param bIsFormSubmitted
+   *        <code>true</code> if the form was already submitted,
+   *        <code>false</code> if not.
    */
   @OverrideOnDemand
-  protected void modifyFormBeforeShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final FORM_TYPE aForm)
+  protected void modifyFormBeforeShowInputForm (@Nonnull final WPECTYPE aWPEC,
+                                                @Nonnull final FORM_TYPE aForm,
+                                                final boolean bIsFormSubmitted)
   {}
 
   /**
@@ -1034,9 +1039,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Web page execution context
    * @param aForm
    *        the form to add the elements to
+   * @param bIsFormSubmitted
+   *        <code>true</code> if the form was already submitted,
+   *        <code>false</code> if not.
    */
   @OverrideOnDemand
-  protected void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final FORM_TYPE aForm)
+  protected void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC,
+                                               @Nonnull final FORM_TYPE aForm,
+                                               final boolean bIsFormSubmitted)
   {}
 
   /**
@@ -1216,13 +1226,13 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
             // Callback method
-            modifyFormBeforeShowInputForm (aWPEC, aForm);
+            modifyFormBeforeShowInputForm (aWPEC, aForm, bIsFormSubmitted);
 
             // Show the main input form
             showInputForm (aWPEC, aSelectedObject, aForm, bIsFormSubmitted, eFormAction, aFormErrors);
 
             // Callback method
-            modifyFormAfterShowInputForm (aWPEC, aForm);
+            modifyFormAfterShowInputForm (aWPEC, aForm, bIsFormSubmitted);
 
             // Toolbar on bottom
             if (eFormAction == EWebPageFormAction.EDIT)
