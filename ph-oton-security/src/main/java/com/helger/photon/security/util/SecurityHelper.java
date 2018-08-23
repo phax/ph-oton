@@ -80,9 +80,7 @@ public final class SecurityHelper
 
   public static boolean hasUserRole (@Nullable final String sUserID, @Nullable final String sRoleID)
   {
-    return PhotonSecurityManager.getUserGroupMgr ()
-                                .getAllUserGroupsWithAssignedUser (sUserID)
-                                .containsAny (aUG -> aUG.containsRoleID (sRoleID));
+    return PhotonSecurityManager.getUserGroupMgr ().containsAnyUserGroupWithAssignedUserAndRole (sUserID, sRoleID);
   }
 
   public static boolean hasUserAllRoles (@Nullable final String sUserID, @Nullable final Iterable <String> aRoleIDs)
@@ -159,9 +157,9 @@ public final class SecurityHelper
    *        User ID. May be <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used.
-   * @return The "guest" text if no user ID was provided, the display name of
-   *         the user if a valid user ID was provided or the ID of the user if
-   *         an invalid user was provided.
+   * @return The "guest" text if no user ID was provided, the display name of the
+   *         user if a valid user ID was provided or the ID of the user if an
+   *         invalid user was provided.
    */
   @Nullable
   public static String getUserDisplayName (@Nullable final String sUserID, @Nonnull final Locale aDisplayLocale)
@@ -182,8 +180,8 @@ public final class SecurityHelper
    * @param aDisplayLocale
    *        The display locale to be used to resolve the "Guest" text if the
    *        passed user is <code>null</code>.
-   * @return Never <code>null</code>. Either the display name or the login name
-   *         of the user.
+   * @return Never <code>null</code>. Either the display name or the login name of
+   *         the user.
    */
   @Nullable
   public static String getUserDisplayName (@Nullable final IUser aUser, @Nonnull final Locale aDisplayLocale)

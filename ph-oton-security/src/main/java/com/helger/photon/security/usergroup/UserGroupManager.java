@@ -591,6 +591,17 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
   }
 
+  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,
+                                                              @Nullable final String sRoleID)
+  {
+    if (StringHelper.hasNoText (sUserID))
+      return false;
+    if (StringHelper.hasNoText (sRoleID))
+      return false;
+
+    return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));
+  }
+
   /**
    * Get a collection of all user group IDs to which a certain user is assigned
    * to.
