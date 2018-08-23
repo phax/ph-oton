@@ -145,7 +145,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
-   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrorList)}
+   *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, boolean, EWebPageFormAction, FormErrorList)}
    *         should be a file-upload form, <code>false</code> if a regular form is
    *         sufficient.
    */
@@ -935,22 +935,6 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
-   * @param aWPEC
-   *        Web page execution context. Never <code>null</code>.
-   * @param aSelectedObject
-   *        The currently selected object. May be <code>null</code> when creating
-   *        a new object
-   * @param aFormErrors
-   *        Object for storing the validation errors. Never <code>null</code>.
-   * @param eFormAction
-   *        The form action mode. Either create, copy or edit.
-   */
-  protected abstract void validateAndSaveInputParameters (@Nonnull WPECTYPE aWPEC,
-                                                          @Nullable DATATYPE aSelectedObject,
-                                                          @Nonnull FormErrorList aFormErrors,
-                                                          @Nonnull EWebPageFormAction eFormAction);
-
-  /**
    * Show the input form again after successful
    * {@link #validateAndSaveInputParameters(IWebPageExecutionContext, IHasID, FormErrorList, EWebPageFormAction)}?
    * Only called in case of success because otherwise the form is shown anyway.
@@ -1001,7 +985,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called before
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrorList)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, boolean, EWebPageFormAction, FormErrorList)}
    * is called.
    *
    * @param aWPEC
@@ -1024,6 +1008,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aForm
    *        The parent form. Use this as parent and not the node list from the web
    *        page execution context! Never <code>null</code>.
+   * @param bIsFormSubmitted
+   *        <code>true</code> if the form was already submitted,
+   *        <code>false</code> if not.
    * @param eFormAction
    *        The form action used. Either create, copy or edit.
    * @param aFormErrors
@@ -1033,13 +1020,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   protected abstract void showInputForm (@Nonnull WPECTYPE aWPEC,
                                          @Nullable DATATYPE aSelectedObject,
                                          @Nonnull FORM_TYPE aForm,
+                                         boolean bIsFormSubmitted,
                                          @Nonnull EWebPageFormAction eFormAction,
                                          @Nonnull FormErrorList aFormErrors);
 
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
    * called after
-   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageFormAction, FormErrorList)}
+   * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, boolean, EWebPageFormAction, FormErrorList)}
    * was called but before the toolbars are added.
    *
    * @param aWPEC
@@ -1050,6 +1038,22 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   @OverrideOnDemand
   protected void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC, @Nonnull final FORM_TYPE aForm)
   {}
+
+  /**
+   * @param aWPEC
+   *        Web page execution context. Never <code>null</code>.
+   * @param aSelectedObject
+   *        The currently selected object. May be <code>null</code> when creating
+   *        a new object
+   * @param aFormErrors
+   *        Object for storing the validation errors. Never <code>null</code>.
+   * @param eFormAction
+   *        The form action mode. Either create, copy or edit.
+   */
+  protected abstract void validateAndSaveInputParameters (@Nonnull WPECTYPE aWPEC,
+                                                          @Nullable DATATYPE aSelectedObject,
+                                                          @Nonnull FormErrorList aFormErrors,
+                                                          @Nonnull EWebPageFormAction eFormAction);
 
   /**
    * @param aWPEC
@@ -1215,7 +1219,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             modifyFormBeforeShowInputForm (aWPEC, aForm);
 
             // Show the main input form
-            showInputForm (aWPEC, aSelectedObject, aForm, eFormAction, aFormErrors);
+            showInputForm (aWPEC, aSelectedObject, aForm, bIsFormSubmitted, eFormAction, aFormErrors);
 
             // Callback method
             modifyFormAfterShowInputForm (aWPEC, aForm);

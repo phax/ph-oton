@@ -498,8 +498,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final NamedSMTPSettings aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrorList aFormErrors)
+                                boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject == null ? null : aSelectedObject.getSMTPSettings ();

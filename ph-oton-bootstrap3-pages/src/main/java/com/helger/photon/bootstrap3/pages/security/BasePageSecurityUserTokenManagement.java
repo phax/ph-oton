@@ -458,8 +458,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUserToken aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrorList aFormErrors)
+                                boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bEdit = eFormAction.isEdit ();

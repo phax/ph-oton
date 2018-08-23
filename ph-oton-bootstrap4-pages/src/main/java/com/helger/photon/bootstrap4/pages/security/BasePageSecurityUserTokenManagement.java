@@ -458,6 +458,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUserToken aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
+                                final boolean bIsFormSubmitted,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrorList aFormErrors)
   {

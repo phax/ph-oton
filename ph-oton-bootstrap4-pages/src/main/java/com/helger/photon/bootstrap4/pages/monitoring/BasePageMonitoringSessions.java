@@ -287,6 +287,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final ISessionScope aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
+                                final boolean bIsFormSubmitted,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrorList aFormErrors)
   {

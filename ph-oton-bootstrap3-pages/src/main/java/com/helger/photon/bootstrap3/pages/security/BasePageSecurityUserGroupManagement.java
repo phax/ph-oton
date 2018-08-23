@@ -437,8 +437,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUserGroup aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrorList aFormErrors)
+                                boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     aForm.addChild (getUIHandler ().createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,

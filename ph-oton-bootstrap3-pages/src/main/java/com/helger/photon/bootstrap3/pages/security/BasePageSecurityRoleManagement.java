@@ -308,8 +308,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IRole aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrorList aFormErrors)
+                                boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
   {
     throw new UnsupportedOperationException ();
   }

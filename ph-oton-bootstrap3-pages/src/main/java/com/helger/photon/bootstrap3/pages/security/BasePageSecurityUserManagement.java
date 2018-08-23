@@ -734,8 +734,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUser aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final EWebPageFormAction eFormAction,
-                                @Nonnull final FormErrorList aFormErrors)
+                                boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
   {
     final boolean bEdit = eFormAction.isEdit ();
     final boolean bIsAdministrator = bEdit && aSelectedObject != null && aSelectedObject.isAdministrator ();

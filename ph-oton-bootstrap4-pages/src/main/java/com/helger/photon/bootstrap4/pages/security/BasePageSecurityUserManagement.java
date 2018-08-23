@@ -735,6 +735,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUser aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
+                                final boolean bIsFormSubmitted,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrorList aFormErrors)
   {

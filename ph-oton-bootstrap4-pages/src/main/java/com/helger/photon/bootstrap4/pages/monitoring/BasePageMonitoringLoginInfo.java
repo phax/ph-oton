@@ -274,6 +274,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final LoginInfo aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
+                                final boolean bIsFormSubmitted,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrorList aFormErrors)
   {

@@ -497,6 +497,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final NamedSMTPSettings aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
+                                final boolean bIsFormSubmitted,
                                 @Nonnull final EWebPageFormAction eFormAction,
                                 @Nonnull final FormErrorList aFormErrors)
   {
