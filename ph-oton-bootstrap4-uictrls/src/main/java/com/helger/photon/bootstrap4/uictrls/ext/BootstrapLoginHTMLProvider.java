@@ -95,9 +95,19 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
   protected void onAfterForm (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final BootstrapForm aForm)
   {}
 
+  /**
+   * Create the text above the login form.
+   * 
+   * @param aSWEC
+   *        Web page execution context.
+   * @param aPageTitle
+   *        Page title as provided in the constructor. May be <code>null</code>.
+   * @return The created node or <code>null</code>.
+   */
   @Nullable
   @OverrideOnDemand
-  protected IHCNode createPageHeader (@Nullable final IHCNode aPageTitle)
+  protected IHCNode createPageHeader (@Nonnull final ISimpleWebExecutionContext aSWEC,
+                                      @Nullable final IHCNode aPageTitle)
   {
     return BootstrapPageHeader.createOnDemand (aPageTitle);
   }
@@ -169,7 +179,7 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     onBeforeLoginContainer (aSWEC, aSpan);
 
     final BootstrapContainer aDiv = new BootstrapContainer ();
-    aDiv.addChild (createPageHeader (m_aPageTitle));
+    aDiv.addChild (createPageHeader (aSWEC, m_aPageTitle));
     aDiv.addChild (aForm);
     aSpan.addChild (aDiv);
 
