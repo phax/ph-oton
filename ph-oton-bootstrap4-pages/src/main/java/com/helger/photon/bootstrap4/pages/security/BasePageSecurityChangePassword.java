@@ -161,6 +161,8 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
             aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CHANGE_PW.getDisplayText (aDisplayLocale)));
             // Always show form
           }
+          else
+            aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
         }
       }
       if (bShowForm)
