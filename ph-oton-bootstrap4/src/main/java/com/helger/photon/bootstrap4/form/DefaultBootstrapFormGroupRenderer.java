@@ -166,6 +166,24 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     return aHelpBlock;
   }
 
+  @Nonnull
+  public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError,
+                                                                 @Nonnull final Locale aContentLocale)
+  {
+    String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
+    if (StringHelper.hasNoText (sErrorText))
+      LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
+
+    final String sErrorID = aError.getErrorID ();
+    if (StringHelper.hasText (sErrorID))
+      sErrorText = "[" + sErrorID + "] " + sErrorText;
+
+    final BootstrapInvalidFeedback aErrorBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
+    // Display it, even if it is empty (because of non-translation)
+    aErrorBlock.addChild (sErrorText);
+    return aErrorBlock;
+  }
+
   /**
    * Create the node for a single error.
    *
@@ -179,18 +197,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   @OverrideOnDemand
   protected IHCElement <?> createSingleErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
   {
-    String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
-    if (StringHelper.hasNoText (sErrorText))
-      LOGGER.warn ("Error " + aError + " has no test in locale " + aContentLocale);
-
-    final String sErrorID = aError.getErrorID ();
-    if (StringHelper.hasText (sErrorID))
-      sErrorText = "[" + sErrorID + "] " + sErrorText;
-
-    final BootstrapInvalidFeedback aErrorBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
-    // Display it, even if it is empty (because of non-translation)
-    aErrorBlock.addChild (sErrorText);
-    return aErrorBlock;
+    return createDefaultErrorNode (aError, aContentLocale);
   }
 
   /**

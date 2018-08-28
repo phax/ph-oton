@@ -116,8 +116,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   }
 
   /**
-   * Modify the first control that is inserted. This method is only called when
-   * a label is present.
+   * Modify the first control that is inserted. This method is only called when a
+   * label is present.
    *
    * @param aLabel
    *        The label that was provided. Never <code>null</code>.
@@ -163,8 +163,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
   /**
    * Retrieve an optional CSS class that is provided to the final node. This
-   * method is only called if a non-<code>null</code> and non-empty error list
-   * is present.
+   * method is only called if a non-<code>null</code> and non-empty error list is
+   * present.
    *
    * @param aErrorList
    *        The error list. May be <code>null</code>.
@@ -184,6 +184,24 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     return null;
   }
 
+  @Nonnull
+  public static BootstrapHelpBlock createDefaultErrorNode (@Nonnull final IError aError,
+                                                           @Nonnull final Locale aContentLocale)
+  {
+    String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
+    if (StringHelper.hasNoText (sErrorText))
+      LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
+
+    final String sErrorID = aError.getErrorID ();
+    if (StringHelper.hasText (sErrorID))
+      sErrorText = "[" + sErrorID + "] " + sErrorText;
+
+    final BootstrapHelpBlock aErrorBlock = new BootstrapHelpBlock ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
+    // Display it, even if it is empty (because of non-translation)
+    aErrorBlock.addChild (sErrorText);
+    return aErrorBlock;
+  }
+
   /**
    * Create the node for a single error.
    *
@@ -197,18 +215,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   @OverrideOnDemand
   protected IHCElement <?> createSingleErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
   {
-    String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
-    if (StringHelper.hasNoText (sErrorText))
-      LOGGER.warn ("Error " + aError + " has no test in locale " + aContentLocale);
-
-    final String sErrorID = aError.getErrorID ();
-    if (StringHelper.hasText (sErrorID))
-      sErrorText = "[" + sErrorID + "] " + sErrorText;
-
-    final BootstrapHelpBlock aErrorBlock = new BootstrapHelpBlock ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
-    // Display it, even if it is empty (because of non-translation)
-    aErrorBlock.addChild (sErrorText);
-    return aErrorBlock;
+    return createDefaultErrorNode (aError, aContentLocale);
   }
 
   /**
