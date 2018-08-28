@@ -45,7 +45,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class ExportRecord implements IExportRecord
 {
-  private final ICommonsList <IExportRecordField> m_aFields = new CommonsArrayList<> ();
+  private final ICommonsList <IExportRecordField> m_aFields = new CommonsArrayList <> ();
 
   public ExportRecord ()
   {}
@@ -141,7 +141,7 @@ public class ExportRecord implements IExportRecord
   }
 
   @Nonnull
-  public ExportRecord addField (final Integer aValue)
+  public ExportRecord addField (@Nullable final Integer aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
@@ -153,7 +153,7 @@ public class ExportRecord implements IExportRecord
   }
 
   @Nonnull
-  public ExportRecord addField (@Nonnull final Long aValue)
+  public ExportRecord addField (@Nullable final Long aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
@@ -171,7 +171,7 @@ public class ExportRecord implements IExportRecord
   }
 
   @Nonnull
-  public ExportRecord addField (@Nonnull final Double aValue)
+  public ExportRecord addField (@Nullable final Double aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }

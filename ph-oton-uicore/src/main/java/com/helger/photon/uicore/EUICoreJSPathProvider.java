@@ -46,11 +46,11 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JS_COOKIE ("uicore/jqueryplugins/js.cookie.js"),
   JS_STORAGE ("uicore/jqueryplugins/js.storage.js"),
   MOMENT ("uicore/moment/2.11.2/moment-with-locales.js"),
-  POPPER ("uicore/popper/1.14.3/popper.js"),
-  POPPER_UTILS ("uicore/popper/1.14.3/popper-utils.js"),
+  POPPER ("uicore/popper/1.14.4/popper.js"),
+  POPPER_UTILS ("uicore/popper/1.14.4/popper-utils.js"),
   /**
-   * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it
-   * only in a conditional comment!
+   * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it only
+   * in a conditional comment!
    */
   RESPOND ("uicore/respond/respond.js", "if lt IE 9"),
   SERVERLOG ("uicore/serverlog/serverlog.js"),

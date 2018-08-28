@@ -44,6 +44,7 @@ Contained subprojects are:
   * Improved state API slightly
   * User group and role user interfaces were improved
   * Updated to ph-web 9.0.3
+  * Updated to popper 1.14.4
 * v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled

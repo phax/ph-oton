@@ -19,6 +19,7 @@ package com.helger.photon.uicore.page;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -172,9 +173,15 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static HCSpan createEmptyAction ()
   {
     // Assume each icon has a width of 16px
+    return createEmptyAction (16);
+  }
+
+  @Nonnull
+  public static HCSpan createEmptyAction (@Nonnegative final int nPx)
+  {
     return new HCSpan ().addClass (CUICoreCSS.CSS_CLASS_EMPTY_ACTION)
                         .addStyle (CCSSProperties.DISPLAY_INLINE_BLOCK)
-                        .addStyle (CCSSProperties.WIDTH.newValue (ECSSUnit.px (16)));
+                        .addStyle (CCSSProperties.WIDTH.newValue (ECSSUnit.px (nPx)));
   }
 
   @Nonnull

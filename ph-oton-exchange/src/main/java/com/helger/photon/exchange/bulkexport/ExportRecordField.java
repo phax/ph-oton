@@ -185,7 +185,7 @@ public class ExportRecordField implements IExportRecordField
   }
 
   @Nonnull
-  public static ExportRecordField create (@Nonnull final Long aValue)
+  public static ExportRecordField create (@Nullable final Long aValue)
   {
     return new ExportRecordField (EExportDataType.INT, aValue);
   }
@@ -203,7 +203,7 @@ public class ExportRecordField implements IExportRecordField
   }
 
   @Nonnull
-  public static ExportRecordField create (@Nonnull final Double aValue)
+  public static ExportRecordField create (@Nullable final Double aValue)
   {
     return new ExportRecordField (EExportDataType.DOUBLE, aValue);
   }
