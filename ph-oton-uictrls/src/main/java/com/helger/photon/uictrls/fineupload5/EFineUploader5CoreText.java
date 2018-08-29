@@ -50,7 +50,7 @@ public enum EFineUploader5CoreText implements IHasDisplayText
                         "Too many items ({netItems}) would be uploaded. Item limit is {itemLimit}."),
   TYPE_ERROR ("{file} hat eine ungültige Dateierweiterung. Gültige Erweiterungen sind: {extensions}.",
               "{file} has an invalid extension. Valid extension(s): {extensions}."),
-  UNSUPPORTED_BROWSER_IOS8_SAFARI ("Fehler - dieser Browser unterstützt auf Grund von internen Fehlern keinen Datei-Upload. Stattdessen kann iOS8 Chrome verwendet werden.",
+  UNSUPPORTED_BROWSER_IOS8_SAFARI ("Fehler - dieser Browser unterstützt aufgrund von internen Fehlern keinen Datei-Upload. Stattdessen kann iOS8 Chrome verwendet werden.",
                                    "Unrecoverable error - this browser does not permit file uploading of any kind due to serious bugs in iOS8 Safari. Please use iOS8 Chrome until Apple fixes these issues."),
   // text
   DEFAULT_RESPONSE_ERROR ("Beim Hochladen ist ein unspezifizierter Fehler aufgetreten",

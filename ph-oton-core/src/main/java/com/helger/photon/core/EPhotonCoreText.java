@@ -47,7 +47,7 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   LOGIN_LOGOUT ("Abmelden", "Logout"),
   IMAGE_NONE ("keines", "none"),
   SAVE_CHANGES_SUCCESS ("Die Änderungen wurden erfolgreich gespeichert!", "The changes were saved successfully!"),
-  ERR_INCORRECT_INPUT ("Auf Grund fehlender oder falscher Eingaben konnte nicht gespeichert werden! Überprüfen Sie Ihre Eingaben und folgen Sie den Aufforderungen zur Fehlerbehebung.",
+  ERR_INCORRECT_INPUT ("Aufgrund fehlender oder falscher Eingaben konnte nicht gespeichert werden! Überprüfen Sie Ihre Eingaben und folgen Sie den Aufforderungen zur Fehlerbehebung.",
                        "Due to missing or incorrect input saving was not possible. Check your input and follow the suggestions for error correction."),
   PLEASE_SELECT ("(Wählen Sie einen Eintrag)", "(Select an item)"),
   SELECT_NONE ("(Kein)", "(None)"),

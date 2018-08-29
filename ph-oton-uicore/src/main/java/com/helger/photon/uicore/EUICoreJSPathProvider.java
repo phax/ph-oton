@@ -57,8 +57,8 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   /** https://github.com/stacktracejs/stacktrace.js/ */
   STACKTRACE ("uicore/stacktrace/stacktrace.js"),
   SWFOBJECT ("uicore/swf/swfobject.js"),
-  UICORE_FORM ("uicore/uicore-form.js"),
-  UICORE_JQUERY ("uicore/uicore-jquery.js");
+  UICORE_FORM ("uicore/photon/uicore-form.js"),
+  UICORE_JQUERY ("uicore/photon/uicore-jquery.js");
 
   private final ConstantJSPathProvider m_aPP;
 

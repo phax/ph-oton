@@ -32,7 +32,7 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EBootstrapUICtrlsCSSPathProvider implements ICSSPathProvider
 {
-  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.css"),
+  DATETIMEPICKER ("bootstrap/datetimepicker/5.0.1/css/tempusdominus-bootstrap-4.css"),
   TREE_VIEW ("bootstrap/treeview/1.2.0/bootstrap-treeview.css");
 
   private final ConstantCSSPathProvider m_aPP;
