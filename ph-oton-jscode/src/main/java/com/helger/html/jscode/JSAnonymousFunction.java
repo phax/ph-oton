@@ -27,6 +27,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -39,7 +40,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
   /**
    * List of parameters for this function's declaration
    */
-  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList<> ();
+  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList <> ();
 
   /**
    * JBlock of statements that makes up the body this function
@@ -124,6 +125,20 @@ public class JSAnonymousFunction extends AbstractJSExpression
     final JSVar aVar = new JSVar (sName, null);
     m_aParams.add (aVar);
     return aVar;
+  }
+
+  /**
+   * Add the specified variable to the list of parameters for this function
+   * signature using an arbitrary name.
+   *
+   * @return New parameter variable
+   * @see #param(String)
+   * @since 8.0.3
+   */
+  @Nonnull
+  public JSVar paramRandomName ()
+  {
+    return param ("v" + GlobalIDFactory.getNewIntID ());
   }
 
   @Nonnegative
