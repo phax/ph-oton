@@ -100,6 +100,15 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
     {
       return new ExporterJSON ();
     }
+  },
+  JSON_SIMPLE ("json-simple", ".json", CMimeType.APPLICATION_JSON, false, EExchangeFileTypeName.JSON_SIMPLE)
+  {
+    @Override
+    @Nonnull
+    public ExporterJSON createExporter ()
+    {
+      return new ExporterJSON ().setEmitType (false);
+    }
   };
 
   private final String m_sID;
@@ -176,6 +185,11 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
 
   @Nullable
   public abstract IExporter createExporter ();
+
+  public boolean isExporterAvailable ()
+  {
+    return createExporter () != null;
+  }
 
   @Nullable
   public static EExchangeFileType getFromIDOrNull (@Nullable final String sID)

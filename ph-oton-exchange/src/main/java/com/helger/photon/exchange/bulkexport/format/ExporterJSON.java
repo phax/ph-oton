@@ -117,12 +117,19 @@ public class ExporterJSON implements IExporterFile
     for (final IExportRecordField aField : aRecord.getAllFields ())
     {
       final Object aFieldValue = aField.getFieldValue ();
-      final IJsonObject aObject = new JsonObject ();
       if (m_bEmitType)
+      {
+        final IJsonObject aObject = new JsonObject ();
         aObject.add (ATTR_TYPE, aField.getFieldType ().getID ());
-      if (aFieldValue != null)
-        aObject.add (ATTR_VALUE, aFieldValue);
-      ret.add (aObject);
+        if (aFieldValue != null)
+          aObject.add (ATTR_VALUE, aFieldValue);
+        ret.add (aObject);
+      }
+      else
+      {
+        if (aFieldValue != null)
+          ret.add (aFieldValue);
+      }
     }
     return ret;
   }

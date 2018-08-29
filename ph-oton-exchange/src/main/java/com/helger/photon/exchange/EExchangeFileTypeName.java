@@ -46,7 +46,9 @@ public enum EExchangeFileTypeName implements IHasDisplayText
   /** Pure text file */
   TXT ("Text", "Text"),
   /** JSON file */
-  JSON ("JSON", "JSON");
+  JSON ("JSON", "JSON"),
+  /** JSON file without types */
+  JSON_SIMPLE ("JSON (einfach)", "JSON (simple)");
 
   private final IMultilingualText m_aTP;
 
