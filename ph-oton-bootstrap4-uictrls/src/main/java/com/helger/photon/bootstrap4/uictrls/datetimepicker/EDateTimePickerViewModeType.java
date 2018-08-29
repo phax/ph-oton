@@ -26,27 +26,21 @@ import com.helger.commons.annotation.Nonempty;
  *
  * @author Philip Helger
  */
-public enum EDateTimePickerViewType
+public enum EDateTimePickerViewModeType
 {
-  HOUR (0, "hour"),
-  DAY (1, "day"),
-  MONTH (2, "month"),
-  YEAR (3, "year"),
-  DECADE (4, "decade");
+  TIMES (0, "times"),
+  DAYS (1, "days"),
+  MONTHS (2, "months"),
+  YEARS (3, "years"),
+  DECADES (4, "decades");
 
-  private final int m_nJSValue;
+  private final int m_nOrder;
   private final String m_sJSValue;
 
-  private EDateTimePickerViewType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
+  private EDateTimePickerViewModeType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
   {
-    m_nJSValue = nJSValue;
+    m_nOrder = nJSValue;
     m_sJSValue = sJSValue;
-  }
-
-  @Nonnegative
-  public int getJSValueInt ()
-  {
-    return m_nJSValue;
   }
 
   @Nonnull
@@ -56,13 +50,13 @@ public enum EDateTimePickerViewType
     return m_sJSValue;
   }
 
-  public boolean isLessThan (@Nonnull final EDateTimePickerViewType eOther)
+  public boolean isLessThan (@Nonnull final EDateTimePickerViewModeType eOther)
   {
-    return m_nJSValue < eOther.m_nJSValue;
+    return m_nOrder < eOther.m_nOrder;
   }
 
-  public boolean isGreaterThan (@Nonnull final EDateTimePickerViewType eOther)
+  public boolean isGreaterThan (@Nonnull final EDateTimePickerViewModeType eOther)
   {
-    return m_nJSValue > eOther.m_nJSValue;
+    return m_nOrder > eOther.m_nOrder;
   }
 }

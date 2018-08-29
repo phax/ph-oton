@@ -19,13 +19,18 @@ package com.helger.photon.uictrls.famfam;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
+import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 
 /**
  * Contains all free FamFam 0.13 icons
@@ -1097,5 +1102,23 @@ public enum EFamFamIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.UNDELETE, ARROW_LEFT);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UP);
     DefaultIcons.set (EDefaultIcon.YES, ACCEPT);
+  }
+
+  @Nonnull
+  public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
+  {
+    return new CommonsArrayList <> (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
+  }
+
+  public static void registerResourcesForGlobal ()
+  {
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForGlobal (aItem);
+  }
+
+  public static void registerResourcesForThisRequest ()
+  {
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForThisRequest (aItem);
   }
 }

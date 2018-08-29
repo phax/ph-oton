@@ -21,26 +21,35 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 
 /**
- * Defines the different position types of DTP.
+ * Defines the different today types of DTP.<br>
+ * Source: https://momentjs.com/docs/#localized-formats
  *
  * @author Philip Helger
  */
-public enum EDateTimePickerPositionType
+public enum EDateTimePickerType
 {
-  BOTTOM_RIGHT ("bottom-right"),
-  BOTTOM_LEFT ("bottom-left");
+  TIME ("LT"),
+  TIME_WITH_SECONDS ("LTS"),
+  MONTHNUM_DAY_YEAR_FULL ("L"),
+  MONTHNUM_DAY_YEAR ("l"),
+  MONTHNAME_DAY_YEAR_FULL ("LL"),
+  MONTHNAME_DAY_YEAR ("ll"),
+  MONTHNAME_DAY_YEAR_TIME_FULL ("LLL"),
+  MONTHNAME_DAY_YEAR_TIME ("lll"),
+  DAYOFWEEK_MONTHNAME_DAY_YEAR_TIME_FULL ("LLLL"),
+  DAYOFWEEK_MONTHNAME_DAY_YEAR_TIME ("llll");
 
-  private final String m_sJSValue;
+  private final String m_sFormatString;
 
-  private EDateTimePickerPositionType (@Nonnull @Nonempty final String sJSValue)
+  private EDateTimePickerType (@Nonnull @Nonempty final String sFormatString)
   {
-    m_sJSValue = sJSValue;
+    m_sFormatString = sFormatString;
   }
 
   @Nonnull
   @Nonempty
-  public String getJSValue ()
+  public String getFormatString ()
   {
-    return m_sJSValue;
+    return m_sFormatString;
   }
 }

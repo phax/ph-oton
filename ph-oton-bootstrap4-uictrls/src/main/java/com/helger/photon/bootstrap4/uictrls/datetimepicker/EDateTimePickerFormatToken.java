@@ -23,28 +23,28 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 
 /**
- * Defines the possible tokens for the dtp format.
+ * Defines the possible tokens for the moments.js format.
  *
  * @author Philip Helger
  * @see SimpleDateFormat
  */
 public enum EDateTimePickerFormatToken
 {
-  AMPM_LOWER ("p", "a"),
-  AMPM_UPPER ("P", "a"),
+  AMPM_LOWER ("a", "a"),
+  AMPM_UPPER ("A", "a"),
   SECOND ("s", "s"),
-  MINUTE ("i", "m"),
-  HOUR23 ("h", "H"),
+  MINUTE ("m", "m"),
+  HOUR23 ("H", "H"),
   // hour 1-24 is not supported in JS
-  HOUR24 ("h", "k"),
+  HOUR24 ("k", "k"),
   // hour 0-12 is not supported in JS
-  HOUR11 ("H", "K"),
-  HOUR12 ("H", "h"),
-  DAY_OF_MONTH ("d", "d"),
-  MONTH ("m", "M"),
-  ABBR_MONTH_NAME ("M", "MMM"),
-  FULL_MONTH_NAME ("MM", "MMMM"),
-  YEAR ("y", "u");
+  HOUR11 ("h", "K"),
+  HOUR12 ("h", "h"),
+  DAY_OF_MONTH ("D", "d"),
+  MONTH ("M", "M"),
+  ABBR_MONTH_NAME ("MMM", "MMM"),
+  FULL_MONTH_NAME ("MMMM", "MMMM"),
+  YEAR ("Y", "u");
 
   private final String m_sJSToken;
   private final String m_sJavaToken;

@@ -19,10 +19,13 @@ package com.helger.photon.icon.fontawesome;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCI;
 import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
@@ -1382,8 +1385,21 @@ public enum EFontAwesome5Icon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }
 
+  @Nonnull
+  public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
+  {
+    return new CommonsArrayList <> (EIconCSSPathProvider.FONT_AWESOME5);
+  }
+
+  public static void registerResourcesForGlobal ()
+  {
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForGlobal (aItem);
+  }
+
   public static void registerResourcesForThisRequest ()
   {
-    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.FONT_AWESOME5);
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForThisRequest (aItem);
   }
 }

@@ -20,13 +20,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.uicore.icon.IIcon;
+import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 
 /**
  * Contains all free FamFam 0.13 icons
@@ -320,5 +325,23 @@ public enum EFamFamFlagIcon implements IIcon, IHasID <String>
   public static EFamFamFlagIcon getFromIDOrNull (@Nullable final String sID)
   {
     return EnumHelper.getFromIDCaseInsensitiveOrNull (EFamFamFlagIcon.class, sID);
+  }
+
+  @Nonnull
+  public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
+  {
+    return new CommonsArrayList <> (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
+  }
+
+  public static void registerResourcesForGlobal ()
+  {
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForGlobal (aItem);
+  }
+
+  public static void registerResourcesForThisRequest ()
+  {
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForThisRequest (aItem);
   }
 }

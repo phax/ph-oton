@@ -20,10 +20,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCI;
+import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
@@ -1072,10 +1075,23 @@ public enum EMaterialDesignIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }
 
-  public static void registerResources ()
+  @Nonnull
+  public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
-    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.MATERIAL_ICONS);
-    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.MATERIAL_ICONS_LIST);
-    PhotonCSS.registerCSSIncludeForThisRequest (EIconCSSPathProvider.PH_OTON_MATERIAL_DESIGN);
+    return new CommonsArrayList <> (EIconCSSPathProvider.MATERIAL_ICONS,
+                                    EIconCSSPathProvider.MATERIAL_ICONS_LIST,
+                                    EIconCSSPathProvider.PH_OTON_MATERIAL_DESIGN);
+  }
+
+  public static void registerResourcesForGlobal ()
+  {
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForGlobal (aItem);
+  }
+
+  public static void registerResourcesForThisRequest ()
+  {
+    for (final ICSSPathProvider aItem : getAllCSSFiles ())
+      PhotonCSS.registerCSSIncludeForThisRequest (aItem);
   }
 }

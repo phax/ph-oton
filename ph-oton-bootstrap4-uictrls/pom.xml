@@ -63,6 +63,11 @@
       <artifactId>ph-oton-bootstrap4</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-icon</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
@@ -107,6 +112,7 @@
         </executions>
         <configuration>
           <forceCreation>false</forceCreation>
+          <sourceDirectory>${basedir}/src/main/resources/bootstrap/photon</sourceDirectory>
         </configuration>
       </plugin>
       <plugin>
@@ -124,7 +130,7 @@
           <removeUnnecessaryCode>true</removeUnnecessaryCode>
           <quoteURLs>true</quoteURLs>
           <verbose>true</verbose>
-          <sourceDirectory>${basedir}/src/main/resources</sourceDirectory>
+          <sourceDirectory>${basedir}/src/main/resources/bootstrap/photon</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>

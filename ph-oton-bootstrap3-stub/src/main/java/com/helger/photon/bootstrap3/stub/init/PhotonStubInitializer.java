@@ -40,8 +40,8 @@ import com.helger.photon.core.servlet.AbstractSecureApplicationServlet;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
+import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.scope.ScopeHelper;
 import com.helger.servlet.response.UnifiedResponseDefaultSettings;
@@ -61,8 +61,8 @@ public final class PhotonStubInitializer
     // CSS
     for (final ICSSPathProvider aPP : BootstrapCustomConfig.getAllBootstrapCSS ())
       PhotonCSS.registerCSSIncludeForGlobal (aPP);
-    PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
-    PhotonCSS.registerCSSIncludeForGlobal (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);
+    EFamFamIcon.registerResourcesForGlobal ();
+    EFamFamFlagIcon.registerResourcesForGlobal ();
     PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.UICORE);
 
     // With conditional comments

@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -108,6 +109,20 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return m_aPrefixes.hasNoChildren () && m_aSuffixes.hasNoChildren ();
   }
 
+  @Nonnull
+  @OverrideOnDemand
+  protected HCDiv createPrependGroup ()
+  {
+    return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_PREPEND);
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  protected HCDiv createAppendGroup ()
+  {
+    return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_APPEND);
+  }
+
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -117,7 +132,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 
     if (m_aPrefixes.hasChildren ())
     {
-      final HCDiv aPrepend = addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_PREPEND));
+      final HCDiv aPrepend = addAndReturnChild (createPrependGroup ());
       for (final IHCNode aPrefix : m_aPrefixes.getChildren ())
       {
         if (aPrefix instanceof BootstrapButton)
@@ -131,7 +146,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 
     if (m_aSuffixes.hasChildren ())
     {
-      final HCDiv aAppend = addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_APPEND));
+      final HCDiv aAppend = addAndReturnChild (createAppendGroup ());
       for (final IHCNode aSuffix : m_aSuffixes.getChildren ())
       {
         if (aSuffix instanceof BootstrapButton)

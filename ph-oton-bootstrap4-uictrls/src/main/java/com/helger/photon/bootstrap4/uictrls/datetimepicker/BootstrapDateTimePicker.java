@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -34,6 +35,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.forms.HCEdit;
+import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.jscode.JSAssocArray;
@@ -46,8 +48,8 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldDate;
+import com.helger.photon.icon.fontawesome.EFontAwesome5Icon;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 
 /**
@@ -61,10 +63,13 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public static final ICSSClassProvider CSS_CLASS_DATE = DefaultCSSClassProvider.create ("date");
   public static final ICSSClassProvider CSS_CLASS_DATETIMEPICKER_INPUT = DefaultCSSClassProvider.create ("datetimepicker-input");
 
+  public static EDateTimePickerViewModeType DEFAULT_VIEW_MODE = EDateTimePickerViewModeType.DAYS;
+
   private static final Logger LOGGER = LoggerFactory.getLogger (BootstrapDateTimePicker.class);
 
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
+  private EDateTimePickerViewModeType m_eViewMode;
 
   //
   public BootstrapDateTimePicker (@Nonnull final RequestFieldDate aRFD)
@@ -98,8 +103,6 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     // Use the calendar icon as default prefix
     final IHCElement <?> aIcon = EFamFamIcon.CALENDAR.getAsNode ();
-    aIcon.customAttrs ().setDataAttr ("toggle", "datetimepicker");
-    aIcon.customAttrs ().setDataAttr ("target", "#" + getID ());
     prefixes ().addChild (aIcon);
   }
 
@@ -116,6 +119,19 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public BootstrapDateTimePicker setReadOnly (final boolean bReadOnly)
   {
     m_aEdit.setReadOnly (bReadOnly);
+    return this;
+  }
+
+  @Nullable
+  public EDateTimePickerViewModeType getViewMode ()
+  {
+    return m_eViewMode;
+  }
+
+  @Nonnull
+  public BootstrapDateTimePicker setViewMode (@Nullable final EDateTimePickerViewModeType eViewMode)
+  {
+    m_eViewMode = eViewMode;
     return this;
   }
 
@@ -158,8 +174,22 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     if (StringHelper.hasText (m_aDisplayLocale.getLanguage ()))
       aOptions.add ("locale", m_aDisplayLocale.getLanguage ());
+    if (m_eViewMode != null)
+      aOptions.add ("viewMode", m_eViewMode.getJSValueString ());
 
     return aOptions;
+  }
+
+  @Override
+  @Nonnull
+  @OverrideOnDemand
+  protected HCDiv createPrependGroup ()
+  {
+    // Make the whole prepend thing a toggle
+    final HCDiv ret = super.createPrependGroup ();
+    ret.customAttrs ().setDataAttr ("toggle", "datetimepicker");
+    ret.customAttrs ().setDataAttr ("target", "#" + getID ());
+    return ret;
   }
 
   @Override
@@ -179,12 +209,17 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
+    registerResourcesForThisRequest ();
+  }
 
+  public static void registerResourcesForThisRequest ()
+  {
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_3);
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.MOMENT);
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER);
+    PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER_PH);
 
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.DATETIMEPICKER);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.FAMFAM_ICONS);
+    EFontAwesome5Icon.registerResourcesForThisRequest ();
   }
 }

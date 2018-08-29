@@ -23,19 +23,19 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 
 /**
- * Defines the day of week constants used by DTP
+ * Defines the day of week constants used by moments.js
  *
  * @author Philip Helger
  */
 public enum EDateTimePickerDayOfWeek
 {
-  SUNDAY (0),
   MONDAY (1),
   TUESDAY (2),
   WEDNESDAY (3),
   THURSDAY (4),
   FRIDAY (5),
-  SATURDAY (6);
+  SATURDAY (6),
+  SUNDAY (7);
 
   private final int m_nJSValue;
 

@@ -42,7 +42,7 @@ public final class PagePublicIconMaterialDesign extends AbstractPagePublicIcon
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
-    EMaterialDesignIcon.registerResources ();
+    EMaterialDesignIcon.registerResourcesForThisRequest ();
     for (final EMaterialDesignIcon eIcon : EMaterialDesignIcon.values ())
       aNodeList.addChild (new HCDiv ().addClass (CSS_CLASS_ICON_CONTAINER)
                                       .addChild (new HCDiv ().addChild (eIcon.getAsNode48px ()))
