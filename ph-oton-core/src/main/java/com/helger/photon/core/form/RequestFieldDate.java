@@ -18,6 +18,7 @@ package com.helger.photon.core.form;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 
@@ -65,6 +66,13 @@ public class RequestFieldDate extends RequestField
 
   public RequestFieldDate (@Nonnull @Nonempty final String sFieldName,
                            @Nullable final LocalDate aDefaultValue,
+                           @Nonnull final Locale aDisplayLocale)
+  {
+    this (sFieldName, PDTToString.getAsString (aDefaultValue, aDisplayLocale), aDisplayLocale);
+  }
+
+  public RequestFieldDate (@Nonnull @Nonempty final String sFieldName,
+                           @Nullable final LocalTime aDefaultValue,
                            @Nonnull final Locale aDisplayLocale)
   {
     this (sFieldName, PDTToString.getAsString (aDefaultValue, aDisplayLocale), aDisplayLocale);
