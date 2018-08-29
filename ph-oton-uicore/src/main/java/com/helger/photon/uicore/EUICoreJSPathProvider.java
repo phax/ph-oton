@@ -45,7 +45,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
   JS_COOKIE ("uicore/jqueryplugins/js.cookie.js"),
   JS_STORAGE ("uicore/jqueryplugins/js.storage.js"),
-  MOMENT ("uicore/moment/2.11.2/moment-with-locales.js"),
+  MOMENT ("uicore/moment/2.22.2/moment-with-locales.js"),
   POPPER ("uicore/popper/1.14.4/popper.js"),
   POPPER_UTILS ("uicore/popper/1.14.4/popper-utils.js"),
   /**
