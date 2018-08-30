@@ -23,9 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.datetime.PDTFormatPatterns;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.functional.IFunction;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -63,32 +61,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
   public static EBootstrap4DateTimePickerViewModeType DEFAULT_VIEW_MODE = EBootstrap4DateTimePickerViewModeType.DAYS;
 
-  public static enum EMode
-  {
-    DATE (d -> PDTFormatPatterns.getDefaultPatternDate (d)),
-    DATE_TIME (d -> PDTFormatPatterns.getDefaultPatternDateTime (d)),
-    TIME (d -> PDTFormatPatterns.getDefaultPatternTime (d));
-
-    public static final EMode DEFAULT = DATE;
-
-    private final IFunction <Locale, String> m_aFormatSupplier;
-
-    private EMode (@Nonnull final IFunction <Locale, String> aFormatSupplier)
-    {
-      m_aFormatSupplier = aFormatSupplier;
-    }
-
-    @Nonnull
-    public String getFormat (@Nonnull final Locale aDisplayLocale)
-    {
-      final String s = m_aFormatSupplier.apply (aDisplayLocale);
-      return Bootstrap4DateTimePickerFormatBuilder.fromJavaPattern (s).getJSCalendarFormatString ();
-    }
-  }
-
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
-  private EMode m_eMode = EMode.DEFAULT;
+  private EBootstrap4DateTimePickerMode m_eMode = EBootstrap4DateTimePickerMode.DEFAULT;
   private EBootstrap4DateTimePickerViewModeType m_eViewMode;
   private ETriState m_eSideBySide = ETriState.UNDEFINED;
 
@@ -142,13 +117,13 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public EMode getMode ()
+  public EBootstrap4DateTimePickerMode getMode ()
   {
     return m_eMode;
   }
 
   @Nonnull
-  public final BootstrapDateTimePicker setMode (@Nullable final EMode eMode)
+  public final BootstrapDateTimePicker setMode (@Nullable final EBootstrap4DateTimePickerMode eMode)
   {
     m_eMode = eMode;
     return this;
@@ -275,7 +250,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     aOptions.add ("calendarWeeks", true);
 
-    aOptions.add ("format", m_eMode.getFormat (m_aDisplayLocale));
+    aOptions.add ("format", m_eMode.getJSFormat (m_aDisplayLocale));
 
     return aOptions;
   }
