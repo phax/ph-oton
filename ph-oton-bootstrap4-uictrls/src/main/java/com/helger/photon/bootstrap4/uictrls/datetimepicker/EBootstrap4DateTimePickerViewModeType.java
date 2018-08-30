@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
  *
  * @author Philip Helger
  */
-public enum EDateTimePickerViewModeType
+public enum EBootstrap4DateTimePickerViewModeType
 {
   TIMES (0, "times"),
   DAYS (1, "days"),
@@ -37,7 +37,7 @@ public enum EDateTimePickerViewModeType
   private final int m_nOrder;
   private final String m_sJSValue;
 
-  private EDateTimePickerViewModeType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
+  private EBootstrap4DateTimePickerViewModeType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
   {
     m_nOrder = nJSValue;
     m_sJSValue = sJSValue;
@@ -50,12 +50,12 @@ public enum EDateTimePickerViewModeType
     return m_sJSValue;
   }
 
-  public boolean isLessThan (@Nonnull final EDateTimePickerViewModeType eOther)
+  public boolean isLessThan (@Nonnull final EBootstrap4DateTimePickerViewModeType eOther)
   {
     return m_nOrder < eOther.m_nOrder;
   }
 
-  public boolean isGreaterThan (@Nonnull final EDateTimePickerViewModeType eOther)
+  public boolean isGreaterThan (@Nonnull final EBootstrap4DateTimePickerViewModeType eOther)
   {
     return m_nOrder > eOther.m_nOrder;
   }
