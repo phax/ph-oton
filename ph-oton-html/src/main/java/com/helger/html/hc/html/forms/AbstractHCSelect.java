@@ -307,7 +307,13 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   @ReturnsMutableCopy
   public final ICommonsList <HCOption> getAllSelectedOptions ()
   {
-    return m_aOptions.getAllMapped (PRED_SELECTED_OPTION, aChild -> (HCOption) aChild);
+    return m_aOptions.getAllMapped (PRED_SELECTED_OPTION, HCOption.class::cast);
+  }
+
+  @Nullable
+  public HCOption getFirstSelectedOption ()
+  {
+    return m_aOptions.findFirstMapped (PRED_SELECTED_OPTION, HCOption.class::cast);
   }
 
   @Nonnegative
