@@ -64,6 +64,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
   private EBootstrap4DateTimePickerMode m_eMode = EBootstrap4DateTimePickerMode.DEFAULT;
+  private String m_sFormat;
   private EBootstrap4DateTimePickerViewModeType m_eViewMode;
   private ETriState m_eSideBySide = ETriState.UNDEFINED;
 
@@ -122,10 +123,43 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     return m_eMode;
   }
 
+  /**
+   * Set the overall mode. By default DATE is selected. This implies, that the
+   * default format for the locale (as specified in the constructor is used). If
+   * you don't like the default, manually set the format but this should not be
+   * necessary.
+   *
+   * @param eMode
+   *        Mode to use. May not be <code>null</code>.
+   * @return this for chaining
+   * @see #setFormat(String)
+   */
   @Nonnull
-  public final BootstrapDateTimePicker setMode (@Nullable final EBootstrap4DateTimePickerMode eMode)
+  public final BootstrapDateTimePicker setMode (@Nonnull final EBootstrap4DateTimePickerMode eMode)
   {
+    ValueEnforcer.notNull (eMode, "Mode");
     m_eMode = eMode;
+    return this;
+  }
+
+  @Nullable
+  public String getFormat ()
+  {
+    return m_sFormat;
+  }
+
+  /**
+   * Set the format string to be used. This is only necessary, if the default one
+   * from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   *
+   * @param sFormat
+   *        Format string to be used. May be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public final BootstrapDateTimePicker setFormat (@Nullable final String sFormat)
+  {
+    m_sFormat = sFormat;
     return this;
   }
 
@@ -250,7 +284,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     aOptions.add ("calendarWeeks", true);
 
-    aOptions.add ("format", m_eMode.getJSFormat (m_aDisplayLocale));
+    // Explicit format present?
+    aOptions.add ("format", StringHelper.hasText (m_sFormat) ? m_sFormat : m_eMode.getJSFormat (m_aDisplayLocale));
 
     return aOptions;
   }
