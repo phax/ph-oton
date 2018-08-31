@@ -1,1 +1,17 @@
+/**
+ * Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 @-webkit-viewport{width:device-width}@-moz-viewport{width:device-width}@-ms-viewport{width:device-width}@-o-viewport{width:device-width}@viewport{width:device-width}form>label.form-label{text-align:right;display:inline-block}table>label.form-label{text-align:right;display:inline-block;width:100%}.nav-tabs>li.active>a,.nav-tabs>li>a:focus,.nav-tabs>li>a:link,.nav-tabs>li>a:visited,.nav-tabs>li>a:hover,.nav-tabs>li>a:active{outline-style:none}.nav .alert{margin-bottom:0}.dropdown,.dropup{display:inline-block}.action-header,.datagroup-header{margin-top:10px;margin-bottom:10px;font-size:18px;font-weight:500;line-height:1.1;color:inherit;font-family:inherit}.btn-toolbar+.nav-tabs{margin-top:1em}.view-form-condensed .form-group{margin-bottom:0}

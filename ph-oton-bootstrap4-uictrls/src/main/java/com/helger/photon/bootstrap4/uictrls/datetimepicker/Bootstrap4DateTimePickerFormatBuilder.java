@@ -38,15 +38,15 @@ import com.helger.commons.datetime.PDTFromString;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.uicore.datetime.IDateFormatBuilder;
 
-public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
+public class Bootstrap4DateTimePickerFormatBuilder implements IDateFormatBuilder
 {
   private final ICommonsList <Object> m_aList = new CommonsArrayList <> ();
 
-  public BootstrapDateTimePickerFormatBuilder ()
+  public Bootstrap4DateTimePickerFormatBuilder ()
   {}
 
   @Nonnull
-  public BootstrapDateTimePickerFormatBuilder append (@Nonnull final EDateTimePickerFormatToken eToken)
+  public Bootstrap4DateTimePickerFormatBuilder append (@Nonnull final EMomentsDateTimePickerFormatToken eToken)
   {
     ValueEnforcer.notNull (eToken, "Token");
     m_aList.add (eToken);
@@ -54,7 +54,7 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   }
 
   @Nonnull
-  public BootstrapDateTimePickerFormatBuilder append (final char c)
+  public Bootstrap4DateTimePickerFormatBuilder append (final char c)
   {
     m_aList.add (Character.valueOf (c));
     return this;
@@ -72,8 +72,8 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   {
     final StringBuilder aSB = new StringBuilder ();
     for (final Object o : m_aList)
-      if (o instanceof EDateTimePickerFormatToken)
-        aSB.append (((EDateTimePickerFormatToken) o).getJSToken ());
+      if (o instanceof EMomentsDateTimePickerFormatToken)
+        aSB.append (((EMomentsDateTimePickerFormatToken) o).getJSToken ());
       else
         aSB.append (((Character) o).charValue ());
     return aSB.toString ();
@@ -84,8 +84,8 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   {
     final StringBuilder aSB = new StringBuilder ();
     for (final Object o : m_aList)
-      if (o instanceof EDateTimePickerFormatToken)
-        aSB.append (((EDateTimePickerFormatToken) o).getJavaToken ());
+      if (o instanceof EMomentsDateTimePickerFormatToken)
+        aSB.append (((EMomentsDateTimePickerFormatToken) o).getJavaToken ());
       else
         aSB.append (((Character) o).charValue ());
     return aSB.toString ();
@@ -118,7 +118,7 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
   private static final class Searcher
   {
     private String m_sRest;
-    private final ICommonsMap <String, EDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap <> ();
+    private final ICommonsMap <String, EMomentsDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap <> ();
     private final Comparator <String> m_aComp = IComparator.getComparatorStringLongestFirst ();
 
     public Searcher (@Nonnull final String sRest)
@@ -133,10 +133,10 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
     }
 
     @Nullable
-    public EDateTimePickerFormatToken getNextToken ()
+    public EMomentsDateTimePickerFormatToken getNextToken ()
     {
       m_aAllMatching.clear ();
-      for (final EDateTimePickerFormatToken eToken : EDateTimePickerFormatToken.values ())
+      for (final EMomentsDateTimePickerFormatToken eToken : EMomentsDateTimePickerFormatToken.values ())
       {
         final String sJavaToken = eToken.getJavaToken ();
         if (m_sRest.startsWith (sJavaToken))
@@ -145,7 +145,7 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
       if (m_aAllMatching.isEmpty ())
         return null;
 
-      Map.Entry <String, EDateTimePickerFormatToken> aEntry;
+      Map.Entry <String, EMomentsDateTimePickerFormatToken> aEntry;
       if (m_aAllMatching.size () == 1)
         aEntry = m_aAllMatching.getFirstEntry ();
       else
@@ -162,7 +162,7 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
     }
   }
 
-  private static final class PatternCache extends Cache <String, BootstrapDateTimePickerFormatBuilder>
+  private static final class PatternCache extends Cache <String, Bootstrap4DateTimePickerFormatBuilder>
   {
     public PatternCache ()
     {
@@ -170,11 +170,11 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
         ValueEnforcer.notNull (sJavaPattern, "JavaPattern");
 
         // Do parsing
-        final BootstrapDateTimePickerFormatBuilder aDFB = new BootstrapDateTimePickerFormatBuilder ();
+        final Bootstrap4DateTimePickerFormatBuilder aDFB = new Bootstrap4DateTimePickerFormatBuilder ();
         final Searcher aSearcher = new Searcher (sJavaPattern);
         while (aSearcher.hasMore ())
         {
-          final EDateTimePickerFormatToken eToken = aSearcher.getNextToken ();
+          final EMomentsDateTimePickerFormatToken eToken = aSearcher.getNextToken ();
           if (eToken != null)
             aDFB.append (eToken);
           else

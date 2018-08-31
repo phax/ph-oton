@@ -190,8 +190,7 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    *
    * @param nIndex
    *        The index to retrieve. Should always be &ge; 0.
-   * @return <code>null</code> if no option is available for the specified
-   *         index.
+   * @return <code>null</code> if no option is available for the specified index.
    */
   @Nullable
   HCOption getOptionAtIndex (@Nonnegative int nIndex);
@@ -223,6 +222,19 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
   @Nonnull
   @ReturnsMutableCopy
   ICommonsList <HCOption> getAllSelectedOptions ();
+
+  /**
+   * @return The first selected option. May be <code>null</code>.
+   */
+  @Nullable
+  HCOption getFirstSelectedOption ();
+
+  @Nullable
+  default String getFirstSelectedOptionValue ()
+  {
+    final HCOption aOption = getFirstSelectedOption ();
+    return aOption == null ? null : aOption.getValue ();
+  }
 
   /**
    * @return The number of selected options. Always &ge; 0.

@@ -28,7 +28,7 @@ import com.helger.commons.annotation.Nonempty;
  * @author Philip Helger
  * @see SimpleDateFormat
  */
-public enum EDateTimePickerFormatToken
+public enum EMomentsDateTimePickerFormatToken
 {
   AMPM_LOWER ("a", "a"),
   AMPM_UPPER ("A", "a"),
@@ -44,13 +44,14 @@ public enum EDateTimePickerFormatToken
   MONTH ("M", "M"),
   ABBR_MONTH_NAME ("MMM", "MMM"),
   FULL_MONTH_NAME ("MMMM", "MMMM"),
+  YEAR_OLD ("Y", "y"),
   YEAR ("Y", "u");
 
   private final String m_sJSToken;
   private final String m_sJavaToken;
 
-  private EDateTimePickerFormatToken (@Nonnull @Nonempty final String sJSToken,
-                                      @Nonnull @Nonempty final String sJavaToken)
+  private EMomentsDateTimePickerFormatToken (@Nonnull @Nonempty final String sJSToken,
+                                             @Nonnull @Nonempty final String sJavaToken)
   {
     m_sJSToken = sJSToken;
     m_sJavaToken = sJavaToken;

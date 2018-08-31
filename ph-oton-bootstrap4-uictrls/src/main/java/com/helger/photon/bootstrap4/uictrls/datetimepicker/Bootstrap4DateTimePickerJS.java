@@ -31,12 +31,12 @@ import com.helger.html.hc.special.SpecialNodeListModifier;
  * @author Philip Helger
  */
 @OutOfBandNode
-@SpecialNodeListModifier (BootstrapDateTimePickerSpecialNodeListModifier.class)
-public class BootstrapDateTimePickerJS extends AbstractHCScriptInline <BootstrapDateTimePickerJS>
+@SpecialNodeListModifier (Bootstrap4DateTimePickerSpecialNodeListModifier.class)
+public class Bootstrap4DateTimePickerJS extends AbstractHCScriptInline <Bootstrap4DateTimePickerJS>
 {
   private final BootstrapDateTimePicker m_aDTP;
 
-  public BootstrapDateTimePickerJS (@Nonnull final BootstrapDateTimePicker aDTP)
+  public Bootstrap4DateTimePickerJS (@Nonnull final BootstrapDateTimePicker aDTP)
   {
     super (aDTP.invoke (aDTP.getJSOptions ()));
     m_aDTP = aDTP;

@@ -16,32 +16,30 @@
  */
 package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.annotation.Nonnull;
 
-import com.helger.html.jscode.IJSExpression;
-import com.helger.html.jscode.JSExpr;
+import org.junit.Test;
 
 /**
- * Defines the different today types of DTP.
- *
+ * Test class for class {@link Bootstrap4DateTimePickerFormatBuilder}.
+ * 
  * @author Philip Helger
  */
-public enum EDateTimePickerTodayType
+public final class Bootstrap4DateTimePickerFormatBuilderTest
 {
-  TRUE (JSExpr.TRUE),
-  FALSE (JSExpr.FALSE),
-  LINKED (JSExpr.lit ("linked"));
-
-  private final IJSExpression m_aJSValue;
-
-  private EDateTimePickerTodayType (@Nonnull final IJSExpression aJSValue)
+  @Nonnull
+  private static String _getAsJS (@Nonnull final String s)
   {
-    m_aJSValue = aJSValue;
+    return Bootstrap4DateTimePickerFormatBuilder.fromJavaPattern (s).getJSCalendarFormatString ();
   }
 
-  @Nonnull
-  public IJSExpression getJSValue ()
+  @Test
+  public void testBasic ()
   {
-    return m_aJSValue;
+    assertEquals ("DD.MM.YYYY", _getAsJS ("dd.MM.yyyy"));
+    assertEquals ("DD.MM.YYYY", _getAsJS ("dd.MM.uuuu"));
+    assertEquals ("DD/MM", _getAsJS ("dd/MM"));
   }
 }

@@ -21,19 +21,16 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.jquery.JQuery;
@@ -48,9 +45,8 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldDate;
-import com.helger.photon.icon.fontawesome.EFontAwesome5Icon;
+import com.helger.photon.icon.fontawesome.EFontAwesome4Icon;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.photon.uictrls.famfam.EFamFamIcon;
 
 /**
  * This class represents a wrapper around the DateTime Picker for Bootstrap from
@@ -63,15 +59,15 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public static final ICSSClassProvider CSS_CLASS_DATE = DefaultCSSClassProvider.create ("date");
   public static final ICSSClassProvider CSS_CLASS_DATETIMEPICKER_INPUT = DefaultCSSClassProvider.create ("datetimepicker-input");
 
-  public static EDateTimePickerViewModeType DEFAULT_VIEW_MODE = EDateTimePickerViewModeType.DAYS;
-
-  private static final Logger LOGGER = LoggerFactory.getLogger (BootstrapDateTimePicker.class);
+  public static EBootstrap4DateTimePickerViewModeType DEFAULT_VIEW_MODE = EBootstrap4DateTimePickerViewModeType.DAYS;
 
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
-  private EDateTimePickerViewModeType m_eViewMode;
+  private EBootstrap4DateTimePickerMode m_eMode = EBootstrap4DateTimePickerMode.DEFAULT;
+  private String m_sFormat;
+  private EBootstrap4DateTimePickerViewModeType m_eViewMode;
+  private ETriState m_eSideBySide = ETriState.UNDEFINED;
 
-  //
   public BootstrapDateTimePicker (@Nonnull final RequestFieldDate aRFD)
   {
     this (aRFD.getFieldName (), aRFD.getRequestValue (), aRFD.getDisplayLocale ());
@@ -102,8 +98,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     m_aEdit.customAttrs ().setDataAttr ("target", "#" + getID ());
 
     // Use the calendar icon as default prefix
-    final IHCElement <?> aIcon = EFamFamIcon.CALENDAR.getAsNode ();
-    prefixes ().addChild (aIcon);
+    prefixes ().addChild (EFontAwesome4Icon.CALENDAR.getAsNode ());
   }
 
   /**
@@ -116,22 +111,86 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public BootstrapDateTimePicker setReadOnly (final boolean bReadOnly)
+  public final BootstrapDateTimePicker setReadOnly (final boolean bReadOnly)
   {
     m_aEdit.setReadOnly (bReadOnly);
     return this;
   }
 
+  @Nonnull
+  public EBootstrap4DateTimePickerMode getMode ()
+  {
+    return m_eMode;
+  }
+
+  /**
+   * Set the overall mode. By default DATE is selected. This implies, that the
+   * default format for the locale (as specified in the constructor is used). If
+   * you don't like the default, manually set the format but this should not be
+   * necessary.
+   *
+   * @param eMode
+   *        Mode to use. May not be <code>null</code>.
+   * @return this for chaining
+   * @see #setFormat(String)
+   */
+  @Nonnull
+  public final BootstrapDateTimePicker setMode (@Nonnull final EBootstrap4DateTimePickerMode eMode)
+  {
+    ValueEnforcer.notNull (eMode, "Mode");
+    m_eMode = eMode;
+    return this;
+  }
+
   @Nullable
-  public EDateTimePickerViewModeType getViewMode ()
+  public String getFormat ()
+  {
+    return m_sFormat;
+  }
+
+  /**
+   * Set the format string to be used. This is only necessary, if the default one
+   * from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   *
+   * @param sFormat
+   *        Format string to be used. May be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public final BootstrapDateTimePicker setFormat (@Nullable final String sFormat)
+  {
+    m_sFormat = sFormat;
+    return this;
+  }
+
+  @Nullable
+  public EBootstrap4DateTimePickerViewModeType getViewMode ()
   {
     return m_eViewMode;
   }
 
   @Nonnull
-  public BootstrapDateTimePicker setViewMode (@Nullable final EDateTimePickerViewModeType eViewMode)
+  public final BootstrapDateTimePicker setViewMode (@Nullable final EBootstrap4DateTimePickerViewModeType eViewMode)
   {
     m_eViewMode = eViewMode;
+    return this;
+  }
+
+  /**
+   * Show date and time picker side by side?
+   *
+   * @return Never <code>null</code>
+   */
+  @Nonnull
+  public ETriState getSideBySide ()
+  {
+    return m_eSideBySide;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setSideBySide (final boolean bSideBySide)
+  {
+    m_eSideBySide = ETriState.valueOf (bSideBySide);
     return this;
   }
 
@@ -160,6 +219,45 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     return invoke ().arg (aOptions);
   }
 
+  private void _add (@Nonnull final JSAssocArray ret,
+                     @Nonnull final String sKey,
+                     @Nonnull final EBootstrap4DateTimePickerTexts eText)
+  {
+    final String sValue = eText.getDisplayText (m_aDisplayLocale);
+    if (StringHelper.hasText (sValue))
+      ret.add (sKey, sValue);
+  }
+
+  @Nonnull
+  public JSAssocArray getJSTooltipTexts ()
+  {
+    final JSAssocArray ret = new JSAssocArray ();
+    _add (ret, "today", EBootstrap4DateTimePickerTexts.TODAY);
+    _add (ret, "clear", EBootstrap4DateTimePickerTexts.CLEAR);
+    _add (ret, "close", EBootstrap4DateTimePickerTexts.CLOSE);
+    _add (ret, "selectMonth", EBootstrap4DateTimePickerTexts.SELECTMONTH);
+    _add (ret, "prevMonth", EBootstrap4DateTimePickerTexts.PREVMONTH);
+    _add (ret, "nextMonth", EBootstrap4DateTimePickerTexts.NEXTMONTH);
+    _add (ret, "selectYear", EBootstrap4DateTimePickerTexts.SELECTYEAR);
+    _add (ret, "prevYear", EBootstrap4DateTimePickerTexts.PREVYEAR);
+    _add (ret, "nextYear", EBootstrap4DateTimePickerTexts.NEXTYEAR);
+    _add (ret, "selectDecade", EBootstrap4DateTimePickerTexts.SELECTDECADE);
+    _add (ret, "prevDecade", EBootstrap4DateTimePickerTexts.PREVDECADE);
+    _add (ret, "nextDecade", EBootstrap4DateTimePickerTexts.NEXTDECADE);
+    _add (ret, "prevCentury", EBootstrap4DateTimePickerTexts.PREVCENTURY);
+    _add (ret, "nextCentury", EBootstrap4DateTimePickerTexts.NEXTCENTURY);
+    _add (ret, "incrementHour", EBootstrap4DateTimePickerTexts.INCREMENTHOUR);
+    _add (ret, "pickHour", EBootstrap4DateTimePickerTexts.PICKHOUR);
+    _add (ret, "decrementHour", EBootstrap4DateTimePickerTexts.DECREMENTHOUR);
+    _add (ret, "incrementMinute", EBootstrap4DateTimePickerTexts.INCREMENTMINUTE);
+    _add (ret, "pickMinute", EBootstrap4DateTimePickerTexts.PICKMINUTE);
+    _add (ret, "decrementMinute", EBootstrap4DateTimePickerTexts.DECREMENTMINUTE);
+    _add (ret, "incrementSecond", EBootstrap4DateTimePickerTexts.INCREMENTSECOND);
+    _add (ret, "pickSecond", EBootstrap4DateTimePickerTexts.PICKSECOND);
+    _add (ret, "decrementSecond", EBootstrap4DateTimePickerTexts.DECREMENTSECOND);
+    return ret;
+  }
+
   /**
    * @return A {@link JSAssocArray} with all options for this date and time
    *         Picker. Never <code>null</code>.
@@ -176,6 +274,18 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
       aOptions.add ("locale", m_aDisplayLocale.getLanguage ());
     if (m_eViewMode != null)
       aOptions.add ("viewMode", m_eViewMode.getJSValueString ());
+
+    final JSAssocArray aTooltips = getJSTooltipTexts ();
+    if (aTooltips.isNotEmpty ())
+      aOptions.add ("tooltips", aTooltips);
+
+    if (m_eSideBySide.isDefined ())
+      aOptions.add ("sideBySide", m_eSideBySide.getAsBooleanValue ());
+
+    aOptions.add ("calendarWeeks", true);
+
+    // Explicit format present?
+    aOptions.add ("format", StringHelper.hasText (m_sFormat) ? m_sFormat : m_eMode.getJSFormat (m_aDisplayLocale));
 
     return aOptions;
   }
@@ -201,7 +311,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     // Add JS if necessary
     if (!m_aEdit.isReadOnly ())
-      addChild (new BootstrapDateTimePickerJS (this));
+      addChild (new Bootstrap4DateTimePickerJS (this));
   }
 
   @Override
@@ -217,9 +327,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_3);
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.MOMENT);
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER);
-    PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER_PH);
 
+    EFontAwesome4Icon.registerResourcesForThisRequest ();
     PhotonCSS.registerCSSIncludeForThisRequest (EBootstrapUICtrlsCSSPathProvider.DATETIMEPICKER);
-    EFontAwesome5Icon.registerResourcesForThisRequest ();
   }
 }

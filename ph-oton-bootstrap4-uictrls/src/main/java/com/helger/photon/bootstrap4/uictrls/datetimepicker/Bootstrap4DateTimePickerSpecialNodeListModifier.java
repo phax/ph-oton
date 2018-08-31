@@ -30,19 +30,19 @@ import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.jscode.JSAssocArray;
 
-public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHCSpecialNodeListModifier
+public final class Bootstrap4DateTimePickerSpecialNodeListModifier implements IHCSpecialNodeListModifier
 {
   public ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull final ICommonsList <? extends IHCNode> aNodes)
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
-    final ICommonsList <BootstrapDateTimePickerJS> aDTPs = new CommonsArrayList <> ();
+    final ICommonsList <Bootstrap4DateTimePickerJS> aDTPs = new CommonsArrayList <> ();
     int nFirstIndex = -1;
     int nIndex = 0;
     for (final IHCNode aNode : aNodes)
     {
-      if (aNode instanceof BootstrapDateTimePickerJS)
+      if (aNode instanceof Bootstrap4DateTimePickerJS)
       {
-        aDTPs.add ((BootstrapDateTimePickerJS) aNode);
+        aDTPs.add ((Bootstrap4DateTimePickerJS) aNode);
         if (nFirstIndex < 0)
           nFirstIndex = nIndex;
       }
@@ -58,18 +58,18 @@ public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHC
     }
 
     final CollectingJSCodeProvider aMergedJS = new CollectingJSCodeProvider ();
-    final ICommonsList <BootstrapDateTimePickerJS> aRest = aDTPs.getClone ();
+    final ICommonsList <Bootstrap4DateTimePickerJS> aRest = aDTPs.getClone ();
     while (aRest.isNotEmpty ())
     {
-      final BootstrapDateTimePickerJS aCurrent = aRest.removeFirst ();
+      final Bootstrap4DateTimePickerJS aCurrent = aRest.removeFirst ();
       final JSAssocArray aCurrentJSOptions = aCurrent.getDateTimePicker ().getJSOptions ();
 
       // Find all other date time pickers with the same options
-      final ICommonsList <BootstrapDateTimePickerJS> aSameOptions = new CommonsArrayList <> ();
-      final Iterator <BootstrapDateTimePickerJS> itRest = aRest.iterator ();
+      final ICommonsList <Bootstrap4DateTimePickerJS> aSameOptions = new CommonsArrayList <> ();
+      final Iterator <Bootstrap4DateTimePickerJS> itRest = aRest.iterator ();
       while (itRest.hasNext ())
       {
-        final BootstrapDateTimePickerJS aCurrentRest = itRest.next ();
+        final Bootstrap4DateTimePickerJS aCurrentRest = itRest.next ();
         if (aCurrentRest.getDateTimePicker ().getJSOptions ().equals (aCurrentJSOptions))
         {
           aSameOptions.add (aCurrentRest);
@@ -87,7 +87,7 @@ public final class BootstrapDateTimePickerSpecialNodeListModifier implements IHC
         // We have multiple objects with the same options
         // Create a common selector
         IJQuerySelector aJQI = JQuerySelector.id (aCurrent.getDateTimePicker ());
-        for (final BootstrapDateTimePickerJS aSameOption : aSameOptions)
+        for (final Bootstrap4DateTimePickerJS aSameOption : aSameOptions)
           aJQI = aJQI.multiple (JQuerySelector.id (aSameOption.getDateTimePicker ()));
         // And apply once
         aMergedJS.append (BootstrapDateTimePicker.invoke (aJQI.invoke (), aCurrentJSOptions));
