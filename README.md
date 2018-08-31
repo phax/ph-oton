@@ -46,6 +46,8 @@ Contained subprojects are:
   * Updated to ph-web 9.0.3
   * Updated to popper 1.14.4
   * Added bulk export format "JSON (simple)" to have one without type information
+  * Added a new Bootstrap 4 DateTime picker UI ctrl
+  * Updated to Jetty 9.4.12
 * v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled
