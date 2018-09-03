@@ -38,7 +38,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
   private final String m_sServletContextPath;
   private boolean m_bOldWebFileIOSilentMode;
   private boolean m_bOldSCCtxHolderSilentMode;
-  private NonBlockingStack <Runnable> m_aCleansing;
+  private NonBlockingStack <Runnable> m_aCleansingRules;
 
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
@@ -81,7 +81,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
    * @return The used data path. Never <code>null</code>.
    */
   @Nonnull
-  public File getDataPath ()
+  public final File getDataPath ()
   {
     return m_aDataPath;
   }
@@ -91,7 +91,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
    */
   @Nonnull
   @Nonempty
-  public String getServletContextPath ()
+  public final String getServletContextPath ()
   {
     return m_sServletContextPath;
   }
@@ -102,17 +102,17 @@ public class PhotonBasicTestRule extends ScopeTestRule
     m_bOldWebFileIOSilentMode = WebFileIO.setSilentMode (true);
     m_bOldSCCtxHolderSilentMode = ServletContextPathHolder.setSilentMode (true);
     super.before ();
-    m_aCleansing = PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
+    m_aCleansingRules = PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
   }
 
   @Override
   public void after ()
   {
     // Perform cleanup in the correct order
-    if (m_aCleansing != null)
-      while (m_aCleansing.isNotEmpty ())
+    if (m_aCleansingRules != null)
+      while (m_aCleansingRules.isNotEmpty ())
       {
-        final Runnable r = m_aCleansing.pop ();
+        final Runnable r = m_aCleansingRules.pop ();
         r.run ();
       }
     // Default shutdown

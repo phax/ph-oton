@@ -41,7 +41,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   private boolean m_bDeleteAllData = false;
   private boolean m_bOldWebFileIOSilentMode;
   private boolean m_bOldSCCtxHolderSilentMode;
-  private NonBlockingStack <Runnable> m_aCleansing;
+  private NonBlockingStack <Runnable> m_aCleansingRules;
 
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
@@ -84,7 +84,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    * @return The used data path. Never <code>null</code>.
    */
   @Nonnull
-  public File getDataPath ()
+  public final File getDataPath ()
   {
     return m_aDataPath;
   }
@@ -94,7 +94,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    */
   @Nonnull
   @Nonempty
-  public String getServletContextPath ()
+  public final String getServletContextPath ()
   {
     return m_sServletContextPath;
   }
@@ -109,7 +109,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    * @return this for chaining
    */
   @Nonnull
-  public PhotonBasicWebTestRule setDeleteAllData (final boolean bDeleteAllData)
+  public final PhotonBasicWebTestRule setDeleteAllData (final boolean bDeleteAllData)
   {
     m_bDeleteAllData = bDeleteAllData;
     return this;
@@ -121,7 +121,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
     m_bOldWebFileIOSilentMode = WebFileIO.setSilentMode (true);
     m_bOldSCCtxHolderSilentMode = ServletContextPathHolder.setSilentMode (true);
     super.before ();
-    m_aCleansing = PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
+    m_aCleansingRules = PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
 
     if (m_bDeleteAllData)
     {
@@ -135,10 +135,10 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   public void after ()
   {
     // Perform cleanup in the correct order
-    if (m_aCleansing != null)
-      while (m_aCleansing.isNotEmpty ())
+    if (m_aCleansingRules != null)
+      while (m_aCleansingRules.isNotEmpty ())
       {
-        final Runnable r = m_aCleansing.pop ();
+        final Runnable r = m_aCleansingRules.pop ();
         r.run ();
       }
     // Default shutdown
