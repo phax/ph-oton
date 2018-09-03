@@ -24,6 +24,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.EValidity;
 import com.helger.commons.state.IValidityIndicator;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.basic.app.page.AbstractPage;
@@ -168,18 +169,33 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     }
   }
 
+  @Nonnull
+  public static final AjaxFunctionDeclaration addAjax (@Nonnull final IAjaxExecutor aExecutor)
+  {
+    return addAjax (null, aExecutor);
+  }
+
   /**
    * Add a per-page AJAX executor, with an automatically generated name. It is
    * automatically generated with the global AjaxInvoker.
    *
+   * @param sPrefix
+   *        Function name prefix. If one is provided, this will be used as URL
+   *        name so only limited chars are allowed.
    * @param aExecutor
    *        The executor to be executed. May not be <code>null</code>.
    * @return The create {@link AjaxFunctionDeclaration} to be invoked.
    */
   @Nonnull
-  public static final AjaxFunctionDeclaration addAjax (@Nonnull final IAjaxExecutor aExecutor)
+  public static final AjaxFunctionDeclaration addAjax (@Nullable final String sPrefix,
+                                                       @Nonnull final IAjaxExecutor aExecutor)
   {
-    final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder ().withExecutor (aExecutor).build ();
+    // null means random name
+    final String sFuncName = StringHelper.hasText (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID ()
+                                                            : null;
+    final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder (sFuncName)
+                                                                     .withExecutor (aExecutor)
+                                                                     .build ();
     GlobalAjaxInvoker.getInstance ().registerFunction (aFunction);
     return aFunction;
   }
