@@ -86,8 +86,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {}
 
     /**
-     * @return The instance of the current session. If none exists, an instance
-     *         is created. Never <code>null</code>.
+     * @return The instance of the current session. If none exists, an instance is
+     *         created. Never <code>null</code>.
      */
     @Nonnull
     private static InternalSessionUserHolder _getInstance ()
@@ -206,6 +206,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   public static final boolean DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER = false;
+  public static final boolean DEFAULT_ANONYMOUS_LOGGING = false;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggedInUserManager.class);
 
@@ -215,6 +216,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   private final CallbackList <IUserLoginCallback> m_aUserLoginCallbacks = new CallbackList <> ();
   private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
+  private boolean m_bAnonymousLogging = DEFAULT_ANONYMOUS_LOGGING;
 
   @Deprecated
   @UsedViaReflection
@@ -258,14 +260,32 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *         present session, <code>false</code> if a login should fail, if that
    *         user is already logged in.
    */
-  public boolean isLogoutAlreadyLoggedInUser ()
+  public final boolean isLogoutAlreadyLoggedInUser ()
   {
     return m_aRWLock.readLocked ( () -> m_bLogoutAlreadyLoggedInUser);
   }
 
-  public void setLogoutAlreadyLoggedInUser (final boolean bLogoutAlreadyLoggedInUser)
+  public final void setLogoutAlreadyLoggedInUser (final boolean bLogoutAlreadyLoggedInUser)
   {
     m_aRWLock.writeLocked ( () -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
+  }
+
+  public final boolean isAnonymousLogging ()
+  {
+    return m_aRWLock.readLocked ( () -> m_bAnonymousLogging);
+  }
+
+  public final void setAnonymousLogging (final boolean bAnonymousLogging)
+  {
+    m_aRWLock.writeLocked ( () -> m_bAnonymousLogging = bAnonymousLogging);
+  }
+
+  @Nonnull
+  private String _getUserIDLogText (@Nonnull final String sUserID)
+  {
+    if (isAnonymousLogging ())
+      return "a user";
+    return "user '" + sUserID + "'";
   }
 
   @Nonnull
@@ -389,13 +409,14 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       // This implicitly implies using the default hash creator algorithm
       // This automatically saves the file
       aUserMgr.setUserPassword (sUserID, sPlainTextPassword);
-      LOGGER.info ("Updated password hash of user '" +
-                      sUserID +
-                      "' from algorithm '" +
-                      sExistingPasswordHashAlgorithmName +
-                      "' to '" +
-                      sDefaultPasswordHashAlgorithmName +
-                      "'");
+      if (LOGGER.isInfoEnabled ())
+        LOGGER.info ("Updated password hash of " +
+                     _getUserIDLogText (sUserID) +
+                     " from algorithm '" +
+                     sExistingPasswordHashAlgorithmName +
+                     "' to '" +
+                     sDefaultPasswordHashAlgorithmName +
+                     "'");
     }
 
     boolean bLoggedOutUser = false;
@@ -431,11 +452,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       if (aSUH._hasUser ())
       {
         // This session already has a user
-        LOGGER.warn ("The session user holder already has the user ID '" +
-                        aSUH._getUserID () +
-                        "' so the new ID '" +
-                        sUserID +
-                        "' will not be set!");
+        if (LOGGER.isWarnEnabled ())
+          LOGGER.warn ("The session user holder already has the user ID '" +
+                       aSUH._getUserID () +
+                       "' so the new ID '" +
+                       sUserID +
+                       "' will not be set!");
         AuditHelper.onAuditExecuteFailure ("login", sUserID, "session-already-has-user");
         return _onLoginError (sUserID, ELoginResult.SESSION_ALREADY_HAS_USER);
       }
@@ -449,7 +471,10 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aRWLock.writeLock ().unlock ();
     }
 
-    LOGGER.info ("Logged in user '" + sUserID + "' with login name '" + aUser.getLoginName () + "'");
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("Logged in " +
+                   _getUserIDLogText (sUserID) +
+                   (isAnonymousLogging () ? "" : " with login name '" + aUser.getLoginName () + "'"));
     AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
 
     // Execute callback as the very last action
@@ -494,10 +519,11 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aRWLock.writeLock ().unlock ();
     }
 
-    LOGGER.info ("Logged out user '" +
-                    sUserID +
-                    "' after " +
-                    Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("Logged out " +
+                   _getUserIDLogText (sUserID) +
+                   " after " +
+                   Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
     AuditHelper.onAuditExecuteSuccess ("logout", sUserID);
 
     // Execute callback as the very last action
@@ -531,8 +557,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return A non-<code>null</code> but maybe empty set with all currently
-   *         logged in user IDs.
+   * @return A non-<code>null</code> but maybe empty set with all currently logged
+   *         in user IDs.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -575,8 +601,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return The ID of the user logged in this session or <code>null</code> if
-   *         no user is logged in.
+   * @return The ID of the user logged in this session or <code>null</code> if no
+   *         user is logged in.
    */
   @Nullable
   public String getCurrentUserID ()
@@ -596,8 +622,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return <code>true</code> if not user is currently logged into this
-   *         session, <code>false</code> if it is. This is the inverse of
+   * @return <code>true</code> if not user is currently logged into this session,
+   *         <code>false</code> if it is. This is the inverse of
    *         {@link #isUserLoggedInInCurrentSession()}.
    */
   public boolean isNoUserLoggedInInCurrentSession ()
@@ -606,8 +632,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return The user currently logged in this session or <code>null</code> if
-   *         no user is logged in.
+   * @return The user currently logged in this session or <code>null</code> if no
+   *         user is logged in.
    */
   @Nullable
   public IUser getCurrentUser ()
