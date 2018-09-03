@@ -125,12 +125,17 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     return builder (null);
   }
 
+  public static int getUniqueFunctionID ()
+  {
+    return s_aFunCounter.incrementAndGet ();
+  }
+
   @Nonnull
   public static Builder builder (@Nullable final String sFunctionName)
   {
     // Create dynamic name on demand
     final String sRealFunctionName = StringHelper.hasText (sFunctionName) ? sFunctionName
-                                                                          : "fun" + s_aFunCounter.incrementAndGet ();
+                                                                          : "fun" + getUniqueFunctionID ();
     return new Builder (sRealFunctionName);
   }
 
