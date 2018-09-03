@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.NonBlockingStack;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.photon.basic.PhotonBasic;
 import com.helger.photon.basic.app.io.WebFileIO;
@@ -38,16 +40,28 @@ public final class PhotonBasicTestInit
   private PhotonBasicTestInit ()
   {}
 
-  public static void init (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
+  @Nonnull
+  @ReturnsMutableCopy
+  public static NonBlockingStack <Runnable> init (@Nonnull final File aDataPath,
+                                                  @Nonnull @Nonempty final String sServletContextPath)
   {
+    final NonBlockingStack <Runnable> aCleansing = new NonBlockingStack <> ();
+
     PhotonBasic.startUp ();
+    aCleansing.push ( () -> PhotonBasic.shutdown ());
 
     // Init the base path once
     // don't check access rights in test, for performance reasons
     WebFileIO.initPaths (aDataPath, sServletContextPath, false);
+    aCleansing.push ( () -> WebFileIO.resetPaths ());
 
     // Init the IDs
     if (!GlobalIDFactory.hasPersistentIntIDFactory ())
+    {
       GlobalIDFactory.setPersistentIntIDFactory (new WebIOIntIDFactory ("ph-oton-basic.id"));
+      aCleansing.push ( () -> GlobalIDFactory.setPersistentIntIDFactory (null));
+    }
+
+    return aCleansing;
   }
 }
