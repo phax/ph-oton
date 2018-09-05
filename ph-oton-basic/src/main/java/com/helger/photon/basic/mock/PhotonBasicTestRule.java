@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.basic.PhotonBasic;
+import com.helger.commons.collection.NonBlockingStack;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.servlet.ServletContextPathHolder;
@@ -38,6 +38,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
   private final String m_sServletContextPath;
   private boolean m_bOldWebFileIOSilentMode;
   private boolean m_bOldSCCtxHolderSilentMode;
+  private NonBlockingStack <Runnable> m_aCleansingRules;
 
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
@@ -80,7 +81,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
    * @return The used data path. Never <code>null</code>.
    */
   @Nonnull
-  public File getDataPath ()
+  public final File getDataPath ()
   {
     return m_aDataPath;
   }
@@ -90,7 +91,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
    */
   @Nonnull
   @Nonempty
-  public String getServletContextPath ()
+  public final String getServletContextPath ()
   {
     return m_sServletContextPath;
   }
@@ -101,13 +102,20 @@ public class PhotonBasicTestRule extends ScopeTestRule
     m_bOldWebFileIOSilentMode = WebFileIO.setSilentMode (true);
     m_bOldSCCtxHolderSilentMode = ServletContextPathHolder.setSilentMode (true);
     super.before ();
-    PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
+    m_aCleansingRules = PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
   }
 
   @Override
   public void after ()
   {
-    PhotonBasic.shutdown ();
+    // Perform cleanup in the correct order
+    if (m_aCleansingRules != null)
+      while (m_aCleansingRules.isNotEmpty ())
+      {
+        final Runnable r = m_aCleansingRules.pop ();
+        r.run ();
+      }
+    // Default shutdown
     super.after ();
     ServletContextPathHolder.setSilentMode (m_bOldSCCtxHolderSilentMode);
     WebFileIO.setSilentMode (m_bOldWebFileIOSilentMode);

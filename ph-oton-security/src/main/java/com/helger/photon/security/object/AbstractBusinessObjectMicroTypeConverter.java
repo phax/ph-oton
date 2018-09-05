@@ -38,9 +38,10 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  *
  * @author Philip Helger
  * @param <T>
- *        Data type to handle
+ *        Data type to handle. Must extend {@link IBusinessObject}
  */
-public abstract class AbstractBusinessObjectMicroTypeConverter <T> implements IMicroTypeConverter <T>
+public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusinessObject> implements
+                                                               IMicroTypeConverter <T>
 {
   protected static final IMicroQName ATTR_ID = new MicroQName ("id");
   protected static final IMicroQName ATTR_CREATIONLDT = new MicroQName ("creationldt");

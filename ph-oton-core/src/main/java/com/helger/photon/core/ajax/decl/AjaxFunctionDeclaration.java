@@ -27,6 +27,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.factory.FactoryNewInstance;
 import com.helger.commons.functional.IPredicate;
 import com.helger.commons.functional.ISupplier;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.ajax.AjaxInvoker;
 import com.helger.photon.core.ajax.executor.IAjaxExecutor;
@@ -111,22 +112,31 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   /**
    * Create a function that is not named. The created name is ensured to be
    * unique. The registration is removed once the global context is shutdown so
-   * the created path is not durable, as the next time the context is
-   * initialized a different number might be assigned. Use
-   * {@link #builder(String)} for a permanent name.
+   * the created path is not durable, as the next time the context is initialized
+   * a different number might be assigned. Use {@link #builder(String)} for a
+   * permanent name.
    *
    * @return A new function declaration builder. Never <code>null</code>.
+   * @see #builder(String)
    */
   @Nonnull
   public static Builder builder ()
   {
-    return builder ("fun" + s_aFunCounter.incrementAndGet ());
+    return builder (null);
+  }
+
+  public static int getUniqueFunctionID ()
+  {
+    return s_aFunCounter.incrementAndGet ();
   }
 
   @Nonnull
-  public static Builder builder (@Nonnull @Nonempty final String sFunctionName)
+  public static Builder builder (@Nullable final String sFunctionName)
   {
-    return new Builder (sFunctionName);
+    // Create dynamic name on demand
+    final String sRealFunctionName = StringHelper.hasText (sFunctionName) ? sFunctionName
+                                                                          : "fun" + getUniqueFunctionID ();
+    return new Builder (sRealFunctionName);
   }
 
   /**
