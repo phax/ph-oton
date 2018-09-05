@@ -52,6 +52,7 @@ public enum ETinyMCE4Theme
                                           null,
                                           ETinyMCE4ToolbarControl.LINK,
                                           ETinyMCE4ToolbarControl.IMAGE)),
+  // MOBILE ("mobile"),
   MODERN ("modern",
           new TinyMCE4ToolbarControlList (ETinyMCE4ToolbarControl.UNDO,
                                           ETinyMCE4ToolbarControl.REDO,

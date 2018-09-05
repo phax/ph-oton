@@ -28,8 +28,8 @@ import com.helger.commons.version.Version;
 @Immutable
 public final class CTinyMCE4
 {
-  /** Edit version */
-  public static final Version TINYMCE_VERSION = new Version (4, 6, 6);
+  /** tinyMCE version */
+  public static final Version TINYMCE_VERSION = new Version (4, 8, 2);
 
   private CTinyMCE4 ()
   {}

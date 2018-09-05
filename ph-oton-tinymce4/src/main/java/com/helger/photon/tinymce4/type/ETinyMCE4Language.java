@@ -39,8 +39,11 @@ public enum ETinyMCE4Language
   AR ("ar"),
   BE ("be"),
   BG_BG ("bg_BG"),
+  /* Note: this is not a valid Java locale! */
+  BN_BD ("bn_BD"),
   CA ("ca"),
   CS ("cs"),
+  CS_CZ ("cs_CZ"),
   CY ("cy"),
   DA ("da"),
   DE ("de"),
@@ -52,14 +55,19 @@ public enum ETinyMCE4Language
   ES ("es"),
   ES_MX ("es_MX"),
   ET ("et"),
+  EU ("eu"),
   /* Note: this is not a valid Java locale! */
   FA_IR ("fa_IR"),
+  FI ("fi"),
   FR_FR ("fr_FR"),
   GA ("ga"),
+  GL ("gl"),
   /* Note: this is not a valid Java locale! */
   HE_IL ("he_IL"),
   HR ("hr"),
   HU_HU ("hu_HU"),
+  /* Note: this is not a valid Java locale! */
+  ID ("id"),
   IT ("it"),
   JA ("ja"),
   /* Note: this is not a valid Java locale! */
@@ -69,6 +77,9 @@ public enum ETinyMCE4Language
   KK ("kk"),
   /* Note: this is not a valid Java locale! */
   KM_KH ("km_KH"),
+  KO_KR ("ko_KR"),
+  LT ("lt"),
+  LV ("lv"),
   /* Note: this is not a valid Java locale! */
   NB_NO ("nb_NO"),
   NL ("nl"),
@@ -79,6 +90,7 @@ public enum ETinyMCE4Language
   RU ("ru"),
   SK ("sk"),
   SL_SI ("sl_SI"),
+  SR ("sr"),
   SV_SE ("sv_SE"),
   TA ("ta"),
   /* Note: this is not a valid Java locale! */
@@ -86,8 +98,10 @@ public enum ETinyMCE4Language
   TH_TH ("th_TH"),
   TR ("tr"),
   TR_TR ("tr_TR"),
+  UG ("ug"),
   UK ("uk"),
   UK_UA ("uk_UA"),
+  UZ ("uz"),
   VI_VN ("vi_VN"),
   ZH_CN ("zh_CN"),
   ZH_TW ("zh_TW");
