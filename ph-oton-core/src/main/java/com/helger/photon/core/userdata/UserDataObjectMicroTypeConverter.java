@@ -21,12 +21,19 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 
+/**
+ * XML converter for {@link UserDataObject} objects.
+ * 
+ * @author Philip Helger
+ */
 public final class UserDataObjectMicroTypeConverter implements IMicroTypeConverter <UserDataObject>
 {
-  private static final String ATTR_PATH = "path";
+  private static final IMicroQName ATTR_PATH = new MicroQName ("path");
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final UserDataObject aValue,
