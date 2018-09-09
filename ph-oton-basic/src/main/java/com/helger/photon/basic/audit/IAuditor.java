@@ -16,6 +16,8 @@
  */
 package com.helger.photon.basic.audit;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -29,11 +31,12 @@ import com.helger.commons.type.ObjectType;
  *
  * @author Philip Helger
  */
-public interface IAuditor
+@FunctionalInterface
+public interface IAuditor extends Serializable
 {
   /**
    * Create a new audit item.
-   * 
+   *
    * @param eActionType
    *        Action type. May not be <code>null</code>.
    * @param eSuccess
