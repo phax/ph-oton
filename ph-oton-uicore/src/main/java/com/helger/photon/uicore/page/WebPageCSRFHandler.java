@@ -34,6 +34,8 @@ import com.helger.photon.uicore.css.CPageParam;
  */
 public class WebPageCSRFHandler implements IWebPageCSRFHandler
 {
+  public static final boolean DEFAULT_CSRF_PREVENTION_ENABLED = true;
+
   /**
    * The global instance of this class. This is used by default. All changes to
    * this instance will effect all default occurrences.
@@ -42,7 +44,7 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
 
   private static final Logger LOGGER = LoggerFactory.getLogger (WebPageCSRFHandler.class);
 
-  private boolean m_bCSRFPreventionEnabled = true;
+  private boolean m_bCSRFPreventionEnabled = DEFAULT_CSRF_PREVENTION_ENABLED;
 
   protected WebPageCSRFHandler ()
   {}
@@ -62,12 +64,12 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
   public void onCSRFError (@Nonnull final IWebPageExecutionContext aWPEC, @Nullable final String sNonce)
   {
     LOGGER.error ("The expected CSRF nonce on page '" +
-                     aWPEC.getWebPage ().getID () +
-                     "' was not present.\nExpected: '" +
-                     CSRFSessionManager.getInstance ().getNonce () +
-                     "'\nBut got: '" +
-                     sNonce +
-                     "'");
+                  aWPEC.getWebPage ().getID () +
+                  "' was not present.\nExpected: '" +
+                  CSRFSessionManager.getInstance ().getNonce () +
+                  "'\nBut got: '" +
+                  sNonce +
+                  "'");
   }
 
   @Nonnull
