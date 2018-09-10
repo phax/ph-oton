@@ -21,39 +21,27 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.state.EContinue;
-import com.helger.html.hc.html.forms.HCHiddenField;
+import com.helger.commons.annotation.Nonempty;
 
 /**
- * Handle CSRF (Cross Site Request Forgery) issues on an {@link AbstractWebPage}
- * .
+ * Callback interface for CSRF error handling.
  *
  * @author Philip Helger
  */
-public interface IWebPageCSRFHandler extends Serializable
+@FunctionalInterface
+public interface ICSRFErrorHandler extends Serializable
 {
   /**
-   * @return <code>true</code> if CSRF prevention is enabled, <code>false</code>
-   *         otherwise.
-   */
-  boolean isCSRFPreventionEnabled ();
-
-  /**
-   * Check if the nonce if the passed WPEC is correct. The failure handling is
-   * implementation dependent.
+   * Callback method that is executed if a CSRF nonce mismatch occurs.
    *
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
-   * @return {@link EContinue#CONTINUE} if CSRF checking is disabled or was
-   *         successful.
+   * @param sProvidedNonce
+   *        The provided nonce. May be <code>null</code>.
+   * @param sExpectedNone
+   *        The expected nonce. May neither be <code>null</code> nor empty.
    */
-  @Nonnull
-  EContinue checkCSRFNonce (@Nonnull IWebPageExecutionContext aWPEC);
-
-  /**
-   * @return The HTML nonce hidden field or <code>null</code> if CSRF prevention
-   *         is disabled.
-   */
-  @Nullable
-  HCHiddenField createCSRFNonceField ();
+  void onCSRFError (@Nonnull IWebPageExecutionContext aWPEC,
+                    @Nullable String sProvidedNonce,
+                    @Nonnull @Nonempty String sExpectedNone);
 }

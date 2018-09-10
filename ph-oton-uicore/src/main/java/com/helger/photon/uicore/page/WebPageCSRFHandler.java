@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.photon.core.form.csrf.CSRFSessionManager;
@@ -45,6 +46,15 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
   private static final Logger LOGGER = LoggerFactory.getLogger (WebPageCSRFHandler.class);
 
   private boolean m_bCSRFPreventionEnabled = DEFAULT_CSRF_PREVENTION_ENABLED;
+  private ICSRFErrorHandler m_aErrorHdl = (aWPEC,
+                                           sProvidedNonce,
+                                           sExpectedNone) -> LOGGER.error ("The expected CSRF nonce on page '" +
+                                                                           aWPEC.getWebPage ().getID () +
+                                                                           "' was not present or modified.\nExpected: '" +
+                                                                           sExpectedNone +
+                                                                           "'\nBut got: '" +
+                                                                           sProvidedNonce +
+                                                                           "'");
 
   protected WebPageCSRFHandler ()
   {}
@@ -61,15 +71,18 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
     return this;
   }
 
-  public void onCSRFError (@Nonnull final IWebPageExecutionContext aWPEC, @Nullable final String sNonce)
+  @Nonnull
+  public final ICSRFErrorHandler getCSRFErrorHandler ()
   {
-    LOGGER.error ("The expected CSRF nonce on page '" +
-                  aWPEC.getWebPage ().getID () +
-                  "' was not present.\nExpected: '" +
-                  CSRFSessionManager.getInstance ().getNonce () +
-                  "'\nBut got: '" +
-                  sNonce +
-                  "'");
+    return m_aErrorHdl;
+  }
+
+  @Nonnull
+  public final WebPageCSRFHandler setCSRFErrorHandler (@Nonnull final ICSRFErrorHandler aErrorHdl)
+  {
+    ValueEnforcer.notNull (aErrorHdl, "ErrorHdl");
+    m_aErrorHdl = aErrorHdl;
+    return this;
   }
 
   @Nonnull
@@ -78,11 +91,11 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
     if (m_bCSRFPreventionEnabled)
     {
       final CSRFSessionManager aCSRFSessionMgr = CSRFSessionManager.getInstance ();
-      final String sNonce = aWPEC.params ().getAsString (CPageParam.FIELD_NONCE);
-      if (!aCSRFSessionMgr.isExpectedNonce (sNonce))
+      final String sRetrievedNonce = aWPEC.params ().getAsString (CPageParam.FIELD_NONCE);
+      if (!aCSRFSessionMgr.isExpectedNonce (sRetrievedNonce))
       {
         // CSRF failure!
-        onCSRFError (aWPEC, sNonce);
+        m_aErrorHdl.onCSRFError (aWPEC, sRetrievedNonce, aCSRFSessionMgr.getNonce ());
         return EContinue.BREAK;
       }
     }
