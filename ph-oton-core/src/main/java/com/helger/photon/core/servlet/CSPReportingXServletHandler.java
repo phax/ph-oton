@@ -140,6 +140,9 @@ public class CSPReportingXServletHandler implements IXServletHandler
     }
     else
       LOGGER.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
+
+    // Ack
+    aHttpResponse.setStatus (HttpServletResponse.SC_ACCEPTED);
   }
 
   @Nonnull
