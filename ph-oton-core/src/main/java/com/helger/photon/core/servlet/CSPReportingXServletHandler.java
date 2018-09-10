@@ -38,6 +38,7 @@ import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.http.EHttpVersion;
 import com.helger.json.IJson;
@@ -87,8 +88,8 @@ public class CSPReportingXServletHandler implements IXServletHandler
    * Enable or disable duplicate filtering.
    *
    * @param bFilterDuplicates
-   *        <code>true</code> to filter duplicates, <code>false</code> to
-   *        disable it.
+   *        <code>true</code> to filter duplicates, <code>false</code> to disable
+   *        it.
    */
   public final void setFilterDuplicates (final boolean bFilterDuplicates)
   {
@@ -135,7 +136,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
       }
       else
         LOGGER.error ("Weird JSON received: " +
-                         aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
+                      aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
     }
     else
       LOGGER.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
@@ -146,5 +147,11 @@ public class CSPReportingXServletHandler implements IXServletHandler
   public ICommonsSet <String> getAllBlockedURIs ()
   {
     return m_aRWLock.readLocked ( () -> m_aBlockedURIs.getClone ());
+  }
+
+  @Nonnull
+  public EChange clearAllBlockedURIs ()
+  {
+    return m_aRWLock.readLocked ( () -> m_aBlockedURIs.removeAll ());
   }
 }
