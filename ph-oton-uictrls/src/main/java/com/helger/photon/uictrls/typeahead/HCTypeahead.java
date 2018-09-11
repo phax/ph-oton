@@ -38,9 +38,7 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSInvocation;
-import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 @OutOfBandNode
@@ -290,7 +288,6 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
 
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_0_9);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_PH);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP3);
   }
 
   @Override
