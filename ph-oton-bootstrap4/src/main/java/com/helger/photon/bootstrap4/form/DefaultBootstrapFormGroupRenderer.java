@@ -247,7 +247,10 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     if (aErrorList != null && aFirstControl != null)
     {
       if (aErrorList.containsAtLeastOneError ())
+      {
+        // Required so that error text is shown
         aFirstControl.addClass (CBootstrapCSS.IS_INVALID);
+      }
     }
 
     // Check form errors - highlighting
@@ -255,7 +258,15 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     if (aErrorList != null && aErrorList.isNotEmpty ())
     {
       for (final IError aError : aErrorList)
-        aErrorListNode.addChild (createSingleErrorNode (aError, aDisplayLocale));
+      {
+        final IHCElement <?> aErrorNode = createSingleErrorNode (aError, aDisplayLocale);
+        if (aFirstControl == null)
+        {
+          // Enforce display!
+          aErrorNode.addClass (CBootstrapCSS.D_BLOCK);
+        }
+        aErrorListNode.addChild (aErrorNode);
+      }
     }
 
     // Help text (only if a control is present)
