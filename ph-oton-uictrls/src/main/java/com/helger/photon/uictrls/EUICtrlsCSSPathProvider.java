@@ -44,9 +44,11 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
   FINEUPLOADER_5 ("fineupload/5.11.10/fine-uploader.css"),
   JSCOLOR ("jscolor/1.4.4ph/jscolor.css"),
   PRISMJS ("prismjs/prism.css"),
-  PRISMJS_BOOTSTRAP ("prismjs/prism-bootstrap.css"),
+  PRISMJS_BOOTSTRAP3 ("prismjs/prism-bootstrap3.css"),
+  PRISMJS_BOOTSTRAP4 ("prismjs/prism-bootstrap4.css"),
   SELECT2 ("select2/4.0.3/css/select2.css"),
-  TYPEAHEAD_BOOTSTRAP ("typeahead/typeahead.js-bootstrap.css");
+  TYPEAHEAD_BOOTSTRAP3 ("typeahead/typeahead.js-bootstrap3.css"),
+  TYPEAHEAD_BOOTSTRAP4 ("typeahead/typeahead.js-bootstrap4.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

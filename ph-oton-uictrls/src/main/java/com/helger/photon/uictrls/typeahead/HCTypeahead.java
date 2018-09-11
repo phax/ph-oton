@@ -19,6 +19,7 @@ package com.helger.photon.uictrls.typeahead;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -53,7 +54,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   public static final ICSSClassProvider TT_IS_UNDER_CURSOR = DefaultCSSClassProvider.create ("tt-is-under-cursor");
 
   private final IJSExpression m_aSelector;
-  private final ICommonsList <TypeaheadDataset> m_aDatasets = new CommonsArrayList<> ();
+  private final ICommonsList <TypeaheadDataset> m_aDatasets = new CommonsArrayList <> ();
   private JSAnonymousFunction m_aOnInitialized;
   private JSAnonymousFunction m_aOnOpened;
   private JSAnonymousFunction m_aOnClosed;
@@ -126,8 +127,8 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * @return Triggered after initialization. If data needs to be prefetched,
-   *         this event will not be triggered until after the prefetched data is
+   * @return Triggered after initialization. If data needs to be prefetched, this
+   *         event will not be triggered until after the prefetched data is
    *         processed.
    */
   @Nullable
@@ -211,9 +212,9 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * Triggered when the query is autocompleted. The datum used for
-   * autocompletion is passed to the event handler as an argument in addition to
-   * the name of the dataset it originated from.
+   * Triggered when the query is autocompleted. The datum used for autocompletion
+   * is passed to the event handler as an argument in addition to the name of the
+   * dataset it originated from.
    *
    * @param aOnAutoCompleted
    *        Function to call. May be <code>null</code>.
@@ -271,6 +272,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   @Override
+  @OverridingMethodsMustInvokeSuper
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
@@ -280,6 +282,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   @Override
+  @OverridingMethodsMustInvokeSuper
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
@@ -287,7 +290,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
 
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_0_9);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.TYPEAHEAD_PH);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP);
+    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.TYPEAHEAD_BOOTSTRAP3);
   }
 
   @Override

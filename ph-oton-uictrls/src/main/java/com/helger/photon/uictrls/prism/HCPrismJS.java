@@ -19,6 +19,7 @@ package com.helger.photon.uictrls.prism;
 import java.util.EnumSet;
 
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.html.CHTMLAttributes;
@@ -51,14 +52,17 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
     m_eLanguage = ValueEnforcer.notNull (eLanguage, "Language");
   }
 
+  /**
+   * @return The language as specified in the constructor
+   */
   @Nonnull
-  public EPrismLanguage getPrismLanguage ()
+  public final EPrismLanguage getPrismLanguage ()
   {
     return m_eLanguage;
   }
 
   @Nonnull
-  public HCPrismJS addPlugin (@Nonnull final EPrismPlugin ePlugin)
+  public final HCPrismJS addPlugin (@Nonnull final EPrismPlugin ePlugin)
   {
     ValueEnforcer.notNull (ePlugin, "Plugin");
     m_aPlugins.add (ePlugin);
@@ -66,6 +70,7 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
   }
 
   @Override
+  @OverridingMethodsMustInvokeSuper
   protected void fillMicroElement (@Nonnull final IMicroElement aElement,
                                    @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
@@ -83,11 +88,11 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
   }
 
   @Override
+  @OverridingMethodsMustInvokeSuper
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.PRISMJS);
-    PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.PRISMJS_BOOTSTRAP);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.PRISMJS);
   }
 }

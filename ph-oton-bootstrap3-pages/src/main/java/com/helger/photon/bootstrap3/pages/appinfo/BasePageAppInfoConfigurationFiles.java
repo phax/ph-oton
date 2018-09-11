@@ -36,13 +36,13 @@ import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap3.button.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap3.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
+import com.helger.photon.bootstrap3.uictrls.prism.BootstrapPrismJS;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.prism.EPrismLanguage;
 import com.helger.photon.uictrls.prism.EPrismPlugin;
-import com.helger.photon.uictrls.prism.HCPrismJS;
 
 /**
  * This page displays information about the certificate configured in the SMP
@@ -125,8 +125,8 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
       if (aCF.exists ())
       {
         final String sContent = aCF.getContentAsString ();
-        aContent.addChild (new HCPrismJS (EPrismLanguage.find (aCF.getSyntaxHighlightLanguage ())).addPlugin (EPrismPlugin.LINE_NUMBERS)
-                                                                                                  .addChild (sContent));
+        aContent.addChild (new BootstrapPrismJS (EPrismLanguage.find (aCF.getSyntaxHighlightLanguage ())).addPlugin (EPrismPlugin.LINE_NUMBERS)
+                                                                                                         .addChild (sContent));
       }
       else
       {
