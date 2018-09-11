@@ -29,3 +29,8 @@
 .view-form .form-group {
   margin-bottom: 0.2em;
 }
+
+/* Tabs below button bars get a margin */
+.btn-toolbar + .nav-tabs {
+  margin-top: 1em;
+}
