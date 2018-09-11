@@ -45,7 +45,7 @@ import com.helger.html.request.IHCRequestField;
  */
 public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
 {
-  public static final String JSON_ID = "id";
+  public static final String JSON_ID = TypeaheadDatum.JSON_ID;
 
   private final IHCRequestField m_aRFHidden;
   private final String m_sHiddenFieldID;
@@ -105,8 +105,8 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
 
   /**
    * @return The JS callback function that is invoked, when an item is selected.
-   *         Never <code>null</code>. Do not modify the original body content,
-   *         as this is required to be present for the correct working of this
+   *         Never <code>null</code>. Do not modify the original body content, as
+   *         this is required to be present for the correct working of this
    *         control!
    */
   @Nonnull

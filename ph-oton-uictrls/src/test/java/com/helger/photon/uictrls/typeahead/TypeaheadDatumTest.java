@@ -17,10 +17,11 @@
 package com.helger.photon.uictrls.typeahead;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.html.jscode.JSExpr;
 
@@ -35,12 +36,24 @@ public final class TypeaheadDatumTest
   public void testBasic ()
   {
     final JSWriterSettings aJSWS = new JSWriterSettings ().setIndentAndAlign (false);
-    final TypeaheadDatum p = new TypeaheadDatum ("Value", "Token", "for", "this", "value");
+    final TypeaheadDatum p = new TypeaheadDatum ("Value",
+                                                 new CommonsArrayList <> ("Token", "for", "this", "value"),
+                                                 null);
     assertEquals ("Value", p.getValue ());
-    assertEquals (CollectionHelper.newList ("Token", "for", "this", "value"), p.getAllTokens ());
+    assertEquals (new CommonsArrayList <> ("Token", "for", "this", "value"), p.getAllTokens ());
     assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"]}",
                   p.getAsJson ().getAsJsonString ());
     assertEquals ("{value:'Value',tokens:['Token','for','this','value']}",
                   JSExpr.json (p.getAsJson ()).getJSCode (aJSWS));
+    assertNull (p.getID ());
+
+    p.setID ("abc");
+    assertEquals ("Value", p.getValue ());
+    assertEquals (new CommonsArrayList <> ("Token", "for", "this", "value"), p.getAllTokens ());
+    assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"],\"id\":\"abc\"}",
+                  p.getAsJson ().getAsJsonString ());
+    assertEquals ("{value:'Value',tokens:['Token','for','this','value'],id:'abc'}",
+                  JSExpr.json (p.getAsJson ()).getJSCode (aJSWS));
+    assertEquals ("abc", p.getID ());
   }
 }
