@@ -196,6 +196,11 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     }
   }
 
+  private boolean m_bAddDatumCount = true;
+
+  protected AbstractAjaxExecutorTypeaheadFinder ()
+  {}
+
   /**
    * Get the provided query string from the parameter map. By default the value
    * of parameter {@link #PARAM_QUERY} is used.
@@ -242,15 +247,17 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
                                                                                    @Nonnull LECTYPE aLEC);
 
   /**
-   * Override this method and return <code>false</code> if the default suffix
-   * "[x of y]" should not be added to the displayname!
-   *
-   * @return <code>true</code> by default
+   * @return <code>true</code> if the default suffix "[x of y]" should not be
+   *         added to the displayname!
    */
-  @OverrideOnDemand
-  protected boolean isAddDatumCount ()
+  public final boolean isAddDatumCount ()
   {
-    return true;
+    return m_bAddDatumCount;
+  }
+
+  public final void setAddDatumCount (final boolean bAddDatumCount)
+  {
+    m_bAddDatumCount = bAddDatumCount;
   }
 
   @Override
@@ -271,7 +278,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     // Map from ID to name
     final ICommonsList <? extends TypeaheadDatum> aMatchingDatums = getAllMatchingDatums (aFinder, aLEC);
 
-    if (isAddDatumCount ())
+    if (m_bAddDatumCount)
     {
       // Add "x of y" to the end
       final int nDatums = aMatchingDatums.size ();
@@ -291,6 +298,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
         }
       }
     }
+
     // Convert to JSON, sorted by display name using the current display locale
     final IJsonArray ret = new JsonArray ().addAllMapped (aMatchingDatums, TypeaheadDatum::getAsJson);
 
