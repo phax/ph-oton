@@ -35,6 +35,7 @@ import com.helger.html.js.UnparsedJSCodeProvider;
  */
 public class HCTestRuleOptimized extends ExternalResource
 {
+  private boolean m_bWasSilent;
   private IHCOnDocumentReadyProvider m_aOld;
 
   public HCTestRuleOptimized ()
@@ -45,6 +46,7 @@ public class HCTestRuleOptimized extends ExternalResource
   @OverridingMethodsMustInvokeSuper
   public void before ()
   {
+    m_bWasSilent = HCSettings.setSilentMode (true);
     HCSettings.setDefaultHTMLVersion (EHTMLVersion.XHTML11);
     HCSettings.getMutableConversionSettings ().setToOptimized ();
     m_aOld = HCSettings.getOnDocumentReadyProvider ();
@@ -60,5 +62,6 @@ public class HCTestRuleOptimized extends ExternalResource
   {
     HCSettings.setOnDocumentReadyProvider (m_aOld);
     HCSettings.getMutableConversionSettings ().setToDefault ();
+    HCSettings.setSilentMode (m_bWasSilent);
   }
 }

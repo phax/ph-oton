@@ -34,6 +34,7 @@ import com.helger.html.hc.config.HCSettings;
  */
 public class HCTestRuleHTMLVersion extends ExternalResource
 {
+  private boolean m_bWasSilent;
   private final EHTMLVersion m_eHTMLVersion;
   private EHTMLVersion m_ePrevHTMLVersion;
 
@@ -47,6 +48,7 @@ public class HCTestRuleHTMLVersion extends ExternalResource
   @OverridingMethodsMustInvokeSuper
   public void before ()
   {
+    m_bWasSilent = HCSettings.setSilentMode (true);
     m_ePrevHTMLVersion = HCSettings.getConversionSettings ().getHTMLVersion ();
     HCSettings.setDefaultHTMLVersion (m_eHTMLVersion);
   }
@@ -58,5 +60,6 @@ public class HCTestRuleHTMLVersion extends ExternalResource
   {
     // Reset to old version
     HCSettings.setDefaultHTMLVersion (m_ePrevHTMLVersion);
+    HCSettings.setSilentMode (m_bWasSilent);
   }
 }
