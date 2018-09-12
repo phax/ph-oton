@@ -88,6 +88,8 @@
             <exclude>src/main/resources/bootstrap/**</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>**/LICENSE</exclude>
+            <exclude>**/*.min.js</exclude>
+            <exclude>**/*.min.css</exclude>
           </excludes>
         </configuration>
       </plugin>

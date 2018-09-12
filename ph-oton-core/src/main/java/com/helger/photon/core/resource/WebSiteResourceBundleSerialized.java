@@ -36,6 +36,7 @@ import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.IMimeType;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
@@ -102,17 +103,17 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
         {
           // May happen if write access is denied for the file
           LOGGER.error ("Failed to serialize " +
-                           m_aBundle.getResourceType ().getID () +
-                           " bundle '" +
-                           m_sBundleID +
-                           "' with " +
-                           m_aBundle.getAllResourcePaths () +
-                           (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
-                                                                 m_aBundle.getConditionalComment () +
-                                                                 "'"
-                                                               : "") +
-                           " to path " +
-                           aTargetRes.getAsFile ().getAbsolutePath ());
+                        m_aBundle.getResourceType ().getID () +
+                        " bundle '" +
+                        m_sBundleID +
+                        "' with " +
+                        m_aBundle.getAllResourcePaths () +
+                        (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                              m_aBundle.getConditionalComment () +
+                                                              "'"
+                                                            : "") +
+                        " to path " +
+                        aTargetRes.getAsFile ().getAbsolutePath ());
         }
         else
         {
@@ -137,32 +138,43 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
             if (sContent != null)
             {
               aWriter.write (sContent);
-              if (bRegular)
+              if (StringHelper.getLastChar (sContent) != '\n')
               {
                 // For the sake of clarity if a script does not end with a "\n"
+                // Add this in minified mode as well, because if the last line of the previous
+                // script started with "//" and the next file starts with a multi line comment,
+                // we would run in a syntax error!
+                // As in:
+                /**
+                 * <pre>
+                 * // last line of previous file/*
+                 * * Multi line comment in next file
+                 * ... etc
+                 * </pre>
+                 */
                 aWriter.write ('\n');
               }
             }
             else
             {
               LOGGER.error ("Web site resource '" +
-                               aRes.getPath () +
-                               "' at '" +
-                               aRes.getAsURLString () +
-                               "' has no content/does not exist!");
+                            aRes.getPath () +
+                            "' at '" +
+                            aRes.getAsURLString () +
+                            "' has no content/does not exist!");
             }
           }
 
           LOGGER.info ("Serialized " +
-                          m_aBundle.getResourceType ().getID () +
-                          " bundle '" +
-                          m_sBundleID +
-                          "' with " +
-                          m_aBundle.getAllResourcePaths () +
-                          (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
-                                                                m_aBundle.getConditionalComment () +
-                                                                "'"
-                                                              : ""));
+                       m_aBundle.getResourceType ().getID () +
+                       " bundle '" +
+                       m_sBundleID +
+                       "' with " +
+                       m_aBundle.getAllResourcePaths () +
+                       (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                             m_aBundle.getConditionalComment () +
+                                                             "'"
+                                                           : ""));
         }
       }
       catch (final Throwable t)

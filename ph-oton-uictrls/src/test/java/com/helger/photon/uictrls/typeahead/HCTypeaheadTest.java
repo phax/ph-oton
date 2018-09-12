@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -35,7 +36,7 @@ public final class HCTypeaheadTest
   @Test
   public void testBasic ()
   {
-    final TypeaheadDatum d1 = new TypeaheadDatum ("v1", "a");
+    final TypeaheadDatum d1 = new TypeaheadDatum ("v1", new CommonsArrayList <> ("a"));
     final TypeaheadDataset d = new TypeaheadDataset ("test").setLocal (d1);
     final HCTypeahead t = new HCTypeahead (JQuery.idRef ("abc"));
     t.addDataset (d);
