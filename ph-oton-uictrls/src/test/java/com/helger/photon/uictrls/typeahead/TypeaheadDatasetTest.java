@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.js.JSWriterSettings;
@@ -37,8 +38,8 @@ public final class TypeaheadDatasetTest
   public void testBasic ()
   {
     final JSWriterSettings aJSWS = new JSWriterSettings ().setIndentAndAlign (false);
-    final TypeaheadDatum d1 = new TypeaheadDatum ("v1", "a");
-    final TypeaheadDatum d2 = new TypeaheadDatum ("v2", "b");
+    final TypeaheadDatum d1 = new TypeaheadDatum ("v1", new CommonsArrayList <> ("a"));
+    final TypeaheadDatum d2 = new TypeaheadDatum ("v2", new CommonsArrayList <> ("b"));
     final TypeaheadDataset d = new TypeaheadDataset ("test");
     assertEquals ("{name:'test'}", d.getAsJSObject ().getJSCode (new JSWriterSettings ().setIndentAndAlign (false)));
     d.setLocal (d1, d2);

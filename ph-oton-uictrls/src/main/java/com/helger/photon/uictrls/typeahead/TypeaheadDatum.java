@@ -63,21 +63,20 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    */
   public TypeaheadDatum (@Nonnull final String sValue)
   {
-    this (sValue, (String) null);
+    this (sValue, getTokensFromValue (sValue));
   }
 
   /**
-   * Constructor with a text and an ID using {@link #getTokensFromValue(String)}
-   * to tokenize the string.
+   * Constructor
    *
    * @param sValue
    *        Value to display. Must not be <code>null</code>.
-   * @param sID
-   *        Optional ID of the element. May be <code>null</code>.
+   * @param aTokens
+   *        All possible tokens. Must not be <code>null</code>.
    */
-  public TypeaheadDatum (@Nonnull final String sValue, @Nullable final String sID)
+  public TypeaheadDatum (@Nonnull final String sValue, @Nonnull final Collection <String> aTokens)
   {
-    this (sValue, getTokensFromValue (sValue), sID);
+    this (sValue, aTokens, (String) null);
   }
 
   /**
@@ -194,6 +193,22 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
                                        .append ("Tokens", m_aTokens)
                                        .appendIfNotNull ("ID", m_sID)
                                        .getToString ();
+  }
+
+  /**
+   * Create a new TypeaheadDatum with a text and an ID using
+   * {@link #getTokensFromValue(String)} to tokenize the string.
+   *
+   * @param sValue
+   *        Value to display. Must not be <code>null</code>.
+   * @param sID
+   *        Optional ID of the element. May be <code>null</code>.
+   * @return New {@link TypeaheadDatum}.
+   */
+  @Nonnull
+  public static TypeaheadDatum createWithID (@Nonnull final String sValue, @Nullable final String sID)
+  {
+    return new TypeaheadDatum (sValue, getTokensFromValue (sValue), sID);
   }
 
   /**
