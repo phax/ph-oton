@@ -17,6 +17,7 @@
 package com.helger.photon.core.resource;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -92,10 +93,14 @@ public class WebSiteResource
       byte [] aDigestBytes = ArrayHelper.EMPTY_BYTE_ARRAY;
       try
       {
-        aDigestBytes = MessageDigestValue.create (m_aResource.getInputStream (), EMessageDigestAlgorithm.SHA_512)
-                                         .bytes ();
+        // In some cases "getInputStream" fails even though the file exists!
+        final InputStream aIS = m_aResource.getInputStream ();
+        if (aIS != null)
+        {
+          aDigestBytes = MessageDigestValue.create (aIS, EMessageDigestAlgorithm.SHA_512).bytes ();
+        }
       }
-      catch (final IOException ex)
+      catch (final IOException | NullPointerException ex)
       {
         LOGGER.error ("Failed to create message digest of " + m_aResource.getPath (), ex);
       }
