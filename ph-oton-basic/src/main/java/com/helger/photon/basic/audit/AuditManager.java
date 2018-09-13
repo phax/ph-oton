@@ -130,8 +130,8 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
    * Constructor
    *
    * @param sBaseDir
-   *        The base directory, relative to the default IO base directory. May
-   *        be <code>null</code> to indicate an in-memory auditor only.
+   *        The base directory, relative to the default IO base directory. May be
+   *        <code>null</code> to indicate an in-memory auditor only.
    * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    * @throws DAOException
@@ -354,8 +354,9 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("items", m_aItems)
-                            .append ("auditor", m_aAuditor)
+                            .append ("BaseDir", m_sBaseDir)
+                            .append ("Items", m_aItems)
+                            .append ("Auditor", m_aAuditor)
                             .getToString ();
   }
 }
