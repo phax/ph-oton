@@ -48,9 +48,21 @@ public abstract class AbstractAuditor implements IAuditor
     setActionStringProvider (aActionStringProvider);
   }
 
+  @Nonnull
+  public final ICurrentUserIDProvider getCurrentUserIDProvider ()
+  {
+    return m_aCurrentUserIDProvider;
+  }
+
   public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     m_aCurrentUserIDProvider = ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
+  }
+
+  @Nonnull
+  public final IAuditActionStringProvider getActionStringProvider ()
+  {
+    return m_aActionStringProvider;
   }
 
   public final void setActionStringProvider (@Nonnull final IAuditActionStringProvider aActionStringProvider)
