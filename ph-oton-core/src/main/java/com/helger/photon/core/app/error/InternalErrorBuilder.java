@@ -66,8 +66,8 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_SAVE_AS_XML = true;
   /**
-   * By default the class path entries are not added, because the Tomcat
-   * classpath is not very interesting.
+   * By default the class path entries are not added, because the Tomcat classpath
+   * is not very interesting.
    *
    * @since 7.0.4
    */
@@ -77,8 +77,8 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER = true;
   /**
-   * By default only ever 100th internal errors with the same stack trace is
-   * send be email.
+   * By default only ever 100th internal errors with the same stack trace is send
+   * be email.
    *
    * @since 7.0.6
    */
@@ -135,7 +135,7 @@ public class InternalErrorBuilder
    * @since 7.0.6
    */
   @Nonnull
-  public InternalErrorBuilder setSendEmail (final boolean bSendEmail)
+  public final InternalErrorBuilder setSendEmail (final boolean bSendEmail)
   {
     m_bSendEmail = bSendEmail;
     return this;
@@ -160,7 +160,7 @@ public class InternalErrorBuilder
    * @since 7.0.6
    */
   @Nonnull
-  public InternalErrorBuilder setSaveAsXML (final boolean bSaveAsXML)
+  public final InternalErrorBuilder setSaveAsXML (final boolean bSaveAsXML)
   {
     m_bSaveAsXML = bSaveAsXML;
     return this;
@@ -177,13 +177,13 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder setUIErrorHandlerFor (@Nonnull final IHCNodeWithChildren <?> aParentNode)
+  public final InternalErrorBuilder setUIErrorHandlerFor (@Nonnull final IHCNodeWithChildren <?> aParentNode)
   {
     return setUIErrorHandler (new UIInternalErrorHandler (aParentNode));
   }
 
   @Nonnull
-  public InternalErrorBuilder setUIErrorHandler (@Nullable final IUIInternalErrorHandler aUIErrorHandler)
+  public final InternalErrorBuilder setUIErrorHandler (@Nullable final IUIInternalErrorHandler aUIErrorHandler)
   {
     m_aUIErrorHandler = aUIErrorHandler;
     return this;
@@ -196,7 +196,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder setThrowable (@Nullable final Throwable t)
+  public final InternalErrorBuilder setThrowable (@Nullable final Throwable t)
   {
     m_aThrowable = t;
     return this;
@@ -209,7 +209,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder setRequestScope (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
+  public final InternalErrorBuilder setRequestScope (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     m_aRequestScope = aRequestScope;
     return this;
@@ -222,7 +222,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder addErrorMessage (@Nullable final String sErrorMessage)
+  public final InternalErrorBuilder addErrorMessage (@Nullable final String sErrorMessage)
   {
     return addCustomData (KEY_ERROR_MSG, sErrorMessage);
   }
@@ -265,7 +265,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder addCustomData (@Nullable final Map <String, String> aCustomData)
+  public final InternalErrorBuilder addCustomData (@Nullable final Map <String, String> aCustomData)
   {
     if (aCustomData != null)
       m_aCustomData.putAll (aCustomData);
@@ -273,7 +273,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder setCustomData (@Nullable final Map <String, String> aCustomData)
+  public final InternalErrorBuilder setCustomData (@Nullable final Map <String, String> aCustomData)
   {
     m_aCustomData.setAll (aCustomData);
     return this;
@@ -292,7 +292,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder addEmailAttachment (@Nullable final IEmailAttachment aEmailAttachment)
+  public final InternalErrorBuilder addEmailAttachment (@Nullable final IEmailAttachment aEmailAttachment)
   {
     if (m_aEmailAttachments == null)
       m_aEmailAttachments = new EmailAttachmentList ();
@@ -301,7 +301,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder setEmailAttachmentList (@Nullable final IEmailAttachmentList aEmailAttachments)
+  public final InternalErrorBuilder setEmailAttachmentList (@Nullable final IEmailAttachmentList aEmailAttachments)
   {
     m_aEmailAttachments = aEmailAttachments == null ? null : new EmailAttachmentList (aEmailAttachments);
     return this;
@@ -315,7 +315,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder setDisplayLocale (@Nullable final Locale aDisplayLocale)
+  public final InternalErrorBuilder setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
     m_aDisplayLocale = aDisplayLocale;
     return this;
@@ -328,7 +328,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public InternalErrorBuilder setInvokeCustomExceptionHandler (final boolean bInvokeCustomExceptionHandler)
+  public final InternalErrorBuilder setInvokeCustomExceptionHandler (final boolean bInvokeCustomExceptionHandler)
   {
     m_bInvokeCustomExceptionHandler = bInvokeCustomExceptionHandler;
     return this;
@@ -343,13 +343,13 @@ public class InternalErrorBuilder
    * Add the class path to the internal errors?
    *
    * @param bAddClassPath
-   *        <code>true</code> to add the class path entries, <code>false</code>
-   *        to not do it.
+   *        <code>true</code> to add the class path entries, <code>false</code> to
+   *        not do it.
    * @return this for chaining
    * @since 7.0.4
    */
   @Nonnull
-  public InternalErrorBuilder setAddClassPath (final boolean bAddClassPath)
+  public final InternalErrorBuilder setAddClassPath (final boolean bAddClassPath)
   {
     m_bAddClassPath = bAddClassPath;
     return this;
@@ -374,7 +374,7 @@ public class InternalErrorBuilder
    * @since 7.0.6
    */
   @Nonnull
-  public InternalErrorBuilder setDuplicateEliminiationCounter (@Nonnegative final int nDuplicateEliminiationCounter)
+  public final InternalErrorBuilder setDuplicateEliminiationCounter (@Nonnegative final int nDuplicateEliminiationCounter)
   {
     ValueEnforcer.isGE0 (nDuplicateEliminiationCounter, "DuplicateEliminiationCounter");
     m_nDuplicateEliminiationCounter = nDuplicateEliminiationCounter;
@@ -401,7 +401,7 @@ public class InternalErrorBuilder
    * @return this
    */
   @Nonnull
-  public InternalErrorBuilder setFromWebExecutionContext (@Nullable final ISimpleWebExecutionContext aSWEC)
+  public final InternalErrorBuilder setFromWebExecutionContext (@Nullable final ISimpleWebExecutionContext aSWEC)
   {
     setDisplayLocale (aSWEC.getDisplayLocale ());
     setRequestScope (aSWEC.getRequestScope ());
