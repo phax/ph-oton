@@ -102,18 +102,19 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
         if (aWriter == null)
         {
           // May happen if write access is denied for the file
-          LOGGER.error ("Failed to serialize " +
-                        m_aBundle.getResourceType ().getID () +
-                        " bundle '" +
-                        m_sBundleID +
-                        "' with " +
-                        m_aBundle.getAllResourcePaths () +
-                        (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
-                                                              m_aBundle.getConditionalComment () +
-                                                              "'"
-                                                            : "") +
-                        " to path " +
-                        aTargetRes.getAsFile ().getAbsolutePath ());
+          if (LOGGER.isErrorEnabled ())
+            LOGGER.error ("Failed to serialize " +
+                          m_aBundle.getResourceType ().getID () +
+                          " bundle '" +
+                          m_sBundleID +
+                          "' with " +
+                          m_aBundle.getAllResourcePaths () +
+                          (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                                m_aBundle.getConditionalComment () +
+                                                                "'"
+                                                              : "") +
+                          " to path " +
+                          aTargetRes.getAsFile ().getAbsolutePath ());
         }
         else
         {
@@ -157,29 +158,32 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
             }
             else
             {
-              LOGGER.error ("Web site resource '" +
-                            aRes.getPath () +
-                            "' at '" +
-                            aRes.getAsURLString () +
-                            "' has no content/does not exist!");
+              if (LOGGER.isErrorEnabled ())
+                LOGGER.error ("Web site resource '" +
+                              aRes.getPath () +
+                              "' at '" +
+                              aRes.getAsURLString () +
+                              "' has no content/does not exist!");
             }
           }
 
-          LOGGER.info ("Serialized " +
-                       m_aBundle.getResourceType ().getID () +
-                       " bundle '" +
-                       m_sBundleID +
-                       "' with " +
-                       m_aBundle.getAllResourcePaths () +
-                       (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
-                                                             m_aBundle.getConditionalComment () +
-                                                             "'"
-                                                           : ""));
+          if (LOGGER.isInfoEnabled ())
+            LOGGER.info ("Serialized " +
+                         m_aBundle.getResourceType ().getID () +
+                         " bundle '" +
+                         m_sBundleID +
+                         "' with " +
+                         m_aBundle.getAllResourcePaths () +
+                         (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                               m_aBundle.getConditionalComment () +
+                                                               "'"
+                                                             : ""));
         }
       }
       catch (final Throwable t)
       {
-        LOGGER.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), t);
+        if (LOGGER.isErrorEnabled ())
+          LOGGER.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), t);
         throw new IllegalStateException (t);
       }
     }

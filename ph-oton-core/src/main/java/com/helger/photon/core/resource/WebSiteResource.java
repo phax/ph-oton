@@ -49,6 +49,7 @@ import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
+import com.helger.photon.core.url.LinkHelper;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -168,6 +169,12 @@ public class WebSiteResource
       @Override
       protected String getModifiedURI (@Nonnull final String sURI)
       {
+        if (LinkHelper.hasKnownProtocol (sURI))
+        {
+          // If e.g. an external resource is includes.
+          // Example: https://fonts.googleapis.com/css
+          return sURI;
+        }
         return FilenameHelper.getCleanConcatenatedUrlPath (sBasePath, sURI);
       }
     });
