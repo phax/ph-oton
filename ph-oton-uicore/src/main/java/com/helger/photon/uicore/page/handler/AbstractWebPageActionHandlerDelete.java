@@ -144,10 +144,16 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
     return aToolbar;
   }
 
+  @OverrideOnDemand
+  protected boolean isFormSubmitted (@Nonnull final WPECTYPE aWPEC)
+  {
+    return aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
+  }
+
   @Nonnull
   public final EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
   {
-    final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
+    final boolean bIsFormSubmitted = isFormSubmitted (aWPEC);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
     final EShowList eShowList;
 

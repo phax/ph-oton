@@ -54,13 +54,6 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
     setFormType (EBootstrapFormType.DEFAULT);
   }
 
-  @Deprecated
-  public BootstrapViewForm (@Nonnull final EBootstrapFormType eFormType)
-  {
-    this ();
-    setFormType (eFormType);
-  }
-
   @Nonnull
   public final EBootstrapFormType getFormType ()
   {
@@ -101,11 +94,11 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapViewForm setLeft (@Nonnegative final int nLeftPartsXS,
-                                    @Nonnegative final int nLeftPartsSM,
-                                    @Nonnegative final int nLeftPartsMD,
-                                    @Nonnegative final int nLeftPartsLG,
-                                    @Nonnegative final int nLeftPartsXL)
+  public final BootstrapViewForm setLeft (@Nonnegative final int nLeftPartsXS,
+                                          @Nonnegative final int nLeftPartsSM,
+                                          @Nonnegative final int nLeftPartsMD,
+                                          @Nonnegative final int nLeftPartsLG,
+                                          @Nonnegative final int nLeftPartsXL)
   {
     ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", 1, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", 1, CBootstrap.GRID_SYSTEM_MAX);
@@ -128,8 +121,8 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft,
-                                         @Nonnull final BootstrapGridSpec aRight)
+  public final BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft,
+                                               @Nonnull final BootstrapGridSpec aRight)
   {
     ValueEnforcer.notNull (aLeft, "Left");
     ValueEnforcer.notNull (aRight, "Right");
@@ -145,7 +138,7 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
   }
 
   @Nonnull
-  public BootstrapViewForm setFormGroupRenderer (@Nonnull final IBootstrapFormGroupRenderer aFormGroupRenderer)
+  public final BootstrapViewForm setFormGroupRenderer (@Nonnull final IBootstrapFormGroupRenderer aFormGroupRenderer)
   {
     m_aFormGroupRenderer = ValueEnforcer.notNull (aFormGroupRenderer, "FormGroupRenderer");
     return this;
@@ -160,7 +153,7 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
   }
 
   @Nonnull
-  public BootstrapViewForm addFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
+  public final BootstrapViewForm addFormGroup (@Nonnull final BootstrapFormGroup aFormGroup)
   {
     // Must be added directly and cannot be added via a proxy, because
     // otherwise, the adding may happen after the out of band nodes were
