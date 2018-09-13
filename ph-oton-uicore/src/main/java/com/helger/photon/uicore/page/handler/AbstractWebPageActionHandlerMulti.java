@@ -28,6 +28,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
@@ -78,7 +79,8 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
     return m_aUIHandler;
   }
 
-  public final boolean handleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
+  @Nonnull
+  public final EShowList handleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
   {
     final ICommonsList <DATATYPE> aSelectedObjects = getAllSelectedObjects (aWPEC);
     return handleMultiAction (aWPEC, aSelectedObjects);

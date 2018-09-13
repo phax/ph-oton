@@ -32,6 +32,7 @@ import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
@@ -151,12 +152,13 @@ public abstract class AbstractWebPageActionHandlerMultiDelete <DATATYPE extends 
     return aToolbar;
   }
 
-  public final boolean handleMultiAction (@Nonnull final WPECTYPE aWPEC,
-                                          @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
+  @Nonnull
+  public final EShowList handleMultiAction (@Nonnull final WPECTYPE aWPEC,
+                                            @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
-    boolean bShowList;
+    final EShowList eShowList;
 
     if (bIsFormSubmitted)
     {
@@ -167,7 +169,7 @@ public abstract class AbstractWebPageActionHandlerMultiDelete <DATATYPE extends 
         performDelete (aWPEC, aSelectedObjects);
       }
 
-      bShowList = true;
+      eShowList = EShowList.SHOW_LIST;
     }
     else
     {
@@ -186,9 +188,9 @@ public abstract class AbstractWebPageActionHandlerMultiDelete <DATATYPE extends 
       // Show the toolbar?
       if (showDeleteToolbar (aWPEC, aSelectedObjects))
         aForm.addChild (createDeleteToolbar (aWPEC, aForm, aSelectedObjects));
-      bShowList = false;
+      eShowList = EShowList.DONT_SHOW_LIST;
     }
 
-    return bShowList;
+    return eShowList;
   }
 }

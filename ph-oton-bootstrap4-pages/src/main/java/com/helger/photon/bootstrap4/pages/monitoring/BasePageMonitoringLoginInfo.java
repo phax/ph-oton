@@ -59,6 +59,7 @@ import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -116,7 +117,8 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
   {
     addCustomHandler (ACTION_LOGOUT_USER, new AbstractBootstrapWebPageActionHandler <LoginInfo, WPECTYPE> (true)
     {
-      public boolean handleAction (final WPECTYPE aWPEC, final LoginInfo aSelectedObject)
+      @Nonnull
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final LoginInfo aSelectedObject)
       {
         if (!canLogoutUser (aSelectedObject.getUser ()))
           throw new IllegalStateException ("Won't work!");
@@ -141,6 +143,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
             aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                          sUserName)));
           }
+          return EShowList.SHOW_LIST;
         }
 
         // Show question
@@ -154,7 +157,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
         aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
         aToolbar.addSubmitButtonYes (aDisplayLocale);
         aToolbar.addButtonNo (aDisplayLocale);
-        return false;
+        return EShowList.DONT_SHOW_LIST;
       }
     });
   }

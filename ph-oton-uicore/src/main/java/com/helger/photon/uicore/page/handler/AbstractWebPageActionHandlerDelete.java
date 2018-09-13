@@ -29,6 +29,7 @@ import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
@@ -143,11 +144,12 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
     return aToolbar;
   }
 
-  public final boolean handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  @Nonnull
+  public final EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
   {
     final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
-    boolean bShowList;
+    final EShowList eShowList;
 
     if (bIsFormSubmitted)
     {
@@ -158,7 +160,7 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
         performDelete (aWPEC, aSelectedObject);
       }
 
-      bShowList = true;
+      eShowList = EShowList.SHOW_LIST;
     }
     else
     {
@@ -177,9 +179,9 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
       // Show the toolbar?
       if (showDeleteToolbar (aWPEC, aSelectedObject))
         aForm.addChild (createDeleteToolbar (aWPEC, aForm, aSelectedObject));
-      bShowList = false;
+      eShowList = EShowList.DONT_SHOW_LIST;
     }
 
-    return bShowList;
+    return eShowList;
   }
 }

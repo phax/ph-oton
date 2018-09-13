@@ -89,6 +89,7 @@ import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.select.HCUserGroupForUserSelect;
 import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -265,7 +266,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         return SecurityUIHelper.canResetPassword (aSelectedObject);
       }
 
-      public boolean handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      @Nonnull
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
       {
         final HCNodeList aNodeList = aWPEC.getNodeList ();
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
@@ -293,10 +295,10 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
             if (aFormErrors.isEmpty ())
             {
               aUserMgr.setUserPassword (aSelectedObject.getID (), sPlainTextPassword);
-              aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                            SecurityHelper.getUserDisplayName (aSelectedObject,
-                                                                                                                                                               aDisplayLocale))));
-              return true;
+              aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_RESET_PASSWORD.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                       SecurityHelper.getUserDisplayName (aSelectedObject,
+                                                                                                                                                                          aDisplayLocale))));
+              return EShowList.SHOW_LIST;
             }
           }
         }
@@ -335,7 +337,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
           aToolbar.addSubmitButtonSave (aDisplayLocale);
           aToolbar.addButtonCancel (aDisplayLocale);
         }
-        return false;
+        return EShowList.DONT_SHOW_LIST;
       }
     });
   }
@@ -734,8 +736,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUser aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                boolean bIsFormSubmitted,
-                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
+                                final boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction,
+                                @Nonnull final FormErrorList aFormErrors)
   {
     final boolean bEdit = eFormAction.isEdit ();
     final boolean bIsAdministrator = bEdit && aSelectedObject != null && aSelectedObject.isAdministrator ();

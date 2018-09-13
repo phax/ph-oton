@@ -21,6 +21,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.id.IHasID;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
@@ -37,8 +38,8 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
                                        Serializable
 {
   /**
-   * @return <code>true</code> if this action can only be executed when an
-   *         object is selected, <code>false</code> otherwise.
+   * @return <code>true</code> if this action can only be executed when an object
+   *         is selected, <code>false</code> otherwise.
    */
   boolean isSelectedObjectRequired ();
 
@@ -52,8 +53,8 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    *        The selected object. May be <code>null</code> if
    *        {@link #isSelectedObjectRequired()} is <code>false</code>.
    * @return <code>true</code> if
-   *         {@link #handleAction(IWebPageExecutionContext, IHasID)} can be
-   *         called on the provided object, <code>false</code> otherwise.
+   *         {@link #handleAction(IWebPageExecutionContext, IHasID)} can be called
+   *         on the provided object, <code>false</code> otherwise.
    */
   default boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
   {
@@ -61,16 +62,18 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
   }
 
   /**
-   * This is the main entry to action handling. This method is only called if
-   * the passed action is provided and if the preconditions are met.
+   * This is the main entry to action handling. This method is only called if the
+   * passed action is provided and if the preconditions are met.
    *
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
    *        Currently selected object. May be <code>null</code> if
    *        {@link #isSelectedObjectRequired()} returned <code>false</code>.
-   * @return <code>true</code> to show the list of all objects afterwards,
-   *         <code>false</code> to not do so.
+   * @return Never <code>null</code>. {@link EShowList#SHOW_LIST} to show the list
+   *         of all objects afterwards, {@link EShowList#DONT_SHOW_LIST} to not do
+   *         so.
    */
-  boolean handleAction (@Nonnull WPECTYPE aWPEC, DATATYPE aSelectedObject);
+  @Nonnull
+  EShowList handleAction (@Nonnull WPECTYPE aWPEC, DATATYPE aSelectedObject);
 }

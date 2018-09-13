@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
@@ -33,28 +34,29 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web page execution context type
  */
 public interface IWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
-                                            extends IWebPageActionHandler <DATATYPE, WPECTYPE>
+                                            extends
+                                            IWebPageActionHandler <DATATYPE, WPECTYPE>
 {
   /**
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
-   * @return A list of all selected objects. May neither be <code>null</code>
-   *         nor empty.
+   * @return A list of all selected objects. May neither be <code>null</code> nor
+   *         empty.
    */
   @Nonnull
   @ReturnsMutableCopy
   ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull WPECTYPE aWPEC);
 
   /**
-   * This is the main entry to action handling. This method is only called if
-   * the passed action is provided and if the preconditions are met.
+   * This is the main entry to action handling. This method is only called if the
+   * passed action is provided and if the preconditions are met.
    *
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObjects
    *        Selected objects. May not be <code>null</code>.
-   * @return <code>true</code> to show the list of all objects afterwards,
-   *         <code>false</code> to not do so.
+   * @return Never <code>null</code>.
    */
-  boolean handleMultiAction (@Nonnull WPECTYPE aWPEC, @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
+  @Nonnull
+  EShowList handleMultiAction (@Nonnull WPECTYPE aWPEC, @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
 }

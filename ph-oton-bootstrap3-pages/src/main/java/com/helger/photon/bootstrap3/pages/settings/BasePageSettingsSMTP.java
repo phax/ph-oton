@@ -73,6 +73,7 @@ import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.select.HCCharsetSelect;
 import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -222,7 +223,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     });
     addCustomHandler (ACTION_TEST_MAIL, new AbstractBootstrapWebPageActionHandler <NamedSMTPSettings, WPECTYPE> (true)
     {
-      public boolean handleAction (final WPECTYPE aWPEC, final NamedSMTPSettings aSelectedObject)
+      @Nonnull
+      public EShowList handleAction (final WPECTYPE aWPEC, final NamedSMTPSettings aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final HCNodeList aNodeList = aWPEC.getNodeList ();
@@ -254,7 +256,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
             ScopedMailAPI.getInstance ().queueMail (aSelectedObject.getSMTPSettings (), aMailData);
 
             aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
-            return true;
+            return EShowList.SHOW_LIST;
           }
         }
 
@@ -290,7 +292,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
         aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
         aToolbar.addSubmitButton (EText.BUTTON_SEND_TEST_MAIL.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
         aToolbar.addButtonCancel (aDisplayLocale);
-        return false;
+        return EShowList.DONT_SHOW_LIST;
       }
     });
   }
@@ -498,8 +500,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final NamedSMTPSettings aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                boolean bIsFormSubmitted,
-                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
+                                final boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction,
+                                @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final ISMTPSettings aSettings = aSelectedObject == null ? null : aSelectedObject.getSMTPSettings ();

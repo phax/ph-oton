@@ -32,6 +32,7 @@ import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
@@ -155,13 +156,13 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
     return aToolbar;
   }
 
-  @Override
-  public final boolean handleMultiAction (@Nonnull final WPECTYPE aWPEC,
-                                          @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
+  @Nonnull
+  public final EShowList handleMultiAction (@Nonnull final WPECTYPE aWPEC,
+                                            @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
-    boolean bShowList;
+    final EShowList eShowList;
 
     if (bIsFormSubmitted)
     {
@@ -171,7 +172,7 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
         performUndelete (aWPEC, aSelectedObjects);
       }
 
-      bShowList = true;
+      eShowList = EShowList.SHOW_LIST;
     }
     else
     {
@@ -190,9 +191,9 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
       // Show the toolbar?
       if (showUndeleteToolbar (aWPEC, aSelectedObjects))
         aForm.addChild (createUndeleteToolbar (aWPEC, aForm, aSelectedObjects));
-      bShowList = false;
+      eShowList = EShowList.DONT_SHOW_LIST;
     }
 
-    return bShowList;
+    return eShowList;
   }
 }

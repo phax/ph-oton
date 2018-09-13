@@ -73,6 +73,7 @@ import com.helger.photon.security.user.UserManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.select.HCUserSelect;
 import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -181,8 +182,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           return canCreateNewAccessToken (aSelectedObject);
                         }
 
-                        public boolean handleAction (@Nonnull final WPECTYPE aWPEC,
-                                                     @Nonnull final IUserToken aSelectedObject)
+                        @Nonnull
+                        public EShowList handleAction (@Nonnull final WPECTYPE aWPEC,
+                                                       @Nonnull final IUserToken aSelectedObject)
                         {
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
                           final HCNodeList aNodeList = aWPEC.getNodeList ();
@@ -227,7 +229,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                                                                                                              aSelectedObject.getDisplayName ())
                                                                                                               : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                                                                   aSelectedObject.getDisplayName ())));
-                              return false;
+                              return EShowList.SHOW_LIST;
                             }
                             aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
                           }
@@ -270,7 +272,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                             aToolbar.addButtonNo (aDisplayLocale);
                           }
                           aNodeList.addChild (aForm);
-                          return false;
+                          return EShowList.DONT_SHOW_LIST;
                         }
                       });
     addCustomHandler (ACTION_REVOKE_ACCESS_TOKEN,
@@ -282,8 +284,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           return canRevokeAccessToken (aSelectedObject);
                         }
 
-                        public boolean handleAction (@Nonnull final WPECTYPE aWPEC,
-                                                     @Nonnull final IUserToken aSelectedObject)
+                        @Nonnull
+                        public EShowList handleAction (@Nonnull final WPECTYPE aWPEC,
+                                                       @Nonnull final IUserToken aSelectedObject)
                         {
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
                           final HCNodeList aNodeList = aWPEC.getNodeList ();
@@ -305,7 +308,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                sRevocationReason);
                               aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                                                 aSelectedObject.getDisplayName ())));
-                              return false;
+                              return EShowList.SHOW_LIST;
                             }
                             aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
                           }
@@ -325,7 +328,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                     EDefaultIcon.SAVE);
                           aToolbar.addButtonCancel (aDisplayLocale);
                           aNodeList.addChild (aForm);
-                          return false;
+                          return EShowList.DONT_SHOW_LIST;
                         }
                       });
   }
@@ -458,8 +461,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUserToken aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                boolean bIsFormSubmitted,
-                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
+                                final boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction,
+                                @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bEdit = eFormAction.isEdit ();

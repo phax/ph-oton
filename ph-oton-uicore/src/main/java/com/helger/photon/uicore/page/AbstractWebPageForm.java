@@ -1161,7 +1161,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     }
 
     // Try to lock object
-    boolean bShowList = true;
+    EShowList eShowList = EShowList.SHOW_LIST;
     if (beforeProcessing (aWPEC, aSelectedObject, eFormAction).isContinue ())
     {
       switch (eFormAction)
@@ -1177,7 +1177,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           handleViewObject (aWPEC, aSelectedObject);
 
           // Don't show object list
-          bShowList = false;
+          eShowList = EShowList.DONT_SHOW_LIST;
           break;
         }
         case CREATE:
@@ -1220,7 +1220,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           {
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
-            bShowList = false;
+            eShowList = EShowList.DONT_SHOW_LIST;
             final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC,
                                                                                                          bIsFormSubmitted)
                                                              : getUIHandler ().createFormSelf (aWPEC, bIsFormSubmitted);
@@ -1258,24 +1258,24 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
         }
         case DELETE:
         {
-          bShowList = m_aDeleteHandler.handleAction (aWPEC, aSelectedObject);
+          eShowList = m_aDeleteHandler.handleAction (aWPEC, aSelectedObject);
           break;
         }
         case UNDELETE:
         {
-          bShowList = m_aUndeleteHandler.handleAction (aWPEC, aSelectedObject);
+          eShowList = m_aUndeleteHandler.handleAction (aWPEC, aSelectedObject);
           break;
         }
         case CUSTOM:
         {
           // Other proprietary actions
-          bShowList = m_aCustomHandlers.get (sAction).handleAction (aWPEC, aSelectedObject);
+          eShowList = m_aCustomHandlers.get (sAction).handleAction (aWPEC, aSelectedObject);
           break;
         }
       }
     }
 
-    if (bShowList)
+    if (eShowList == EShowList.SHOW_LIST)
     {
       showListOfExistingObjects (aWPEC);
     }

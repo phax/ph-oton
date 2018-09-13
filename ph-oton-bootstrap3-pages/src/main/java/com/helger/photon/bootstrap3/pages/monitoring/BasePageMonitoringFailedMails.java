@@ -67,6 +67,7 @@ import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -174,12 +175,13 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     addCustomHandler (CPageParam.ACTION_DELETE_ALL,
                       new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
                       {
-                        public boolean handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+                        @Nonnull
+                        public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
                         {
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
                           // Delete all failed mails
-                          final List <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
+                          final ICommonsList <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
                           if (!aFailedMails.isEmpty ())
                           {
                             LOGGER.info ("Deleted " + aFailedMails.size () + " failed mails!");
@@ -188,12 +190,13 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                                                                                                                       Integer.toString (aFailedMails.size ()));
                             aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
                           }
-                          return true;
+                          return EShowList.SHOW_LIST;
                         }
                       });
     final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (true)
     {
-      public boolean handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+      @Nonnull
+      public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -204,10 +207,11 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                          .getDefaultSMTPSettings ()
                                                                                                       : null;
-          LOGGER.info ("Trying to resend single failed mail with ID " +
-                          aFailedMailData.getID () +
-                          (aDefaultSMTPSettings != null ? " with default settings" : "") +
-                          "!");
+          if (LOGGER.isInfoEnabled ())
+            LOGGER.info ("Trying to resend single failed mail with ID " +
+                         aFailedMailData.getID () +
+                         (aDefaultSMTPSettings != null ? " with default settings" : "") +
+                         "!");
 
           // Main resend
           final ISMTPSettings aSMTPSettings = aDefaultSMTPSettings != null ? aDefaultSMTPSettings
@@ -217,14 +221,15 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           // Success message
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.RESENT_SUCCESS.getDisplayText (aDisplayLocale)));
         }
-        return true;
+        return EShowList.SHOW_LIST;
       }
     };
     addCustomHandler (ACTION_RESEND, aResendHdl);
     addCustomHandler (ACTION_RESEND_DEFAULT_SETTINGS, aResendHdl);
     final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendAllHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
     {
-      public boolean handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+      @Nonnull
+      public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -235,11 +240,12 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_ALL_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                              .getDefaultSMTPSettings ()
                                                                                                           : null;
-          LOGGER.info ("Trying to resend " +
-                          aFailedMails.size () +
-                          " failed mails" +
-                          (aDefaultSMTPSettings != null ? " with default settings" : "") +
-                          "!");
+          if (LOGGER.isInfoEnabled ())
+            LOGGER.info ("Trying to resend " +
+                         aFailedMails.size () +
+                         " failed mails" +
+                         (aDefaultSMTPSettings != null ? " with default settings" : "") +
+                         "!");
 
           // Main resend
           for (final FailedMailData aFailedMailData : aFailedMails)
@@ -256,7 +262,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                                                                                                     Integer.toString (aFailedMails.size ()));
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
         }
-        return true;
+        return EShowList.SHOW_LIST;
       }
     };
     addCustomHandler (ACTION_RESEND_ALL, aResendAllHdl);
@@ -453,8 +459,9 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
         {
           final HCRow aRow = aDetailsTable.addBodyRow ();
           aRow.addCell (HCA_MailTo.createLinkedEmail (aMailSendDetail.getAddress ()));
-          aRow.addCell ().addChild (aMailSendDetail.isAddressValid () ? EDefaultIcon.YES.getAsNode ()
-                                                                      : EDefaultIcon.NO.getAsNode ());
+          aRow.addCell ()
+              .addChild (aMailSendDetail.isAddressValid () ? EDefaultIcon.YES.getAsNode ()
+                                                           : EDefaultIcon.NO.getAsNode ());
           aRow.addCell (HCExtHelper.nl2divList (aMailSendDetail.getErrorMessage ()));
         }
       }
@@ -479,8 +486,9 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final FailedMailData aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                boolean bIsFormSubmitted,
-                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
+                                final boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction,
+                                @Nonnull final FormErrorList aFormErrors)
   {
     throw new UnsupportedOperationException ();
   }
@@ -498,18 +506,20 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                         aWPEC.getSelfHref (),
                         EDefaultIcon.REFRESH);
     aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_RESEND_ALL.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
-                                                                                    ACTION_RESEND_ALL))
+                                             .setOnClick (aWPEC.getSelfHref ()
+                                                               .add (CPageParam.PARAM_ACTION, ACTION_RESEND_ALL))
                                              .setIcon (EDefaultIcon.YES)
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EText.MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
-                                                                                    ACTION_RESEND_ALL_DEFAULT_SETTINGS))
+                                             .setOnClick (aWPEC.getSelfHref ()
+                                                               .add (CPageParam.PARAM_ACTION,
+                                                                     ACTION_RESEND_ALL_DEFAULT_SETTINGS))
                                              .setIcon (EDefaultIcon.YES)
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
-                                                                                    CPageParam.ACTION_DELETE_ALL))
+                                             .setOnClick (aWPEC.getSelfHref ()
+                                                               .add (CPageParam.PARAM_ACTION,
+                                                                     CPageParam.ACTION_DELETE_ALL))
                                              .setIcon (EDefaultIcon.DELETE)
                                              .setDisabled (bDisabled));
 

@@ -66,6 +66,7 @@ import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.icon.EDefaultIcon;
+import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -173,7 +174,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     addCustomHandler (CPageParam.ACTION_DELETE_ALL,
                       new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
                       {
-                        public boolean handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+                        @Nonnull
+                        public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
                         {
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -187,12 +189,13 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                                                                                                                       Integer.toString (aFailedMails.size ()));
                             aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
                           }
-                          return true;
+                          return EShowList.SHOW_LIST;
                         }
                       });
     final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (true)
     {
-      public boolean handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+      @Nonnull
+      public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -203,10 +206,11 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                          .getDefaultSMTPSettings ()
                                                                                                       : null;
-          LOGGER.info ("Trying to resend single failed mail with ID " +
-                       aFailedMailData.getID () +
-                       (aDefaultSMTPSettings != null ? " with default settings" : "") +
-                       "!");
+          if (LOGGER.isInfoEnabled ())
+            LOGGER.info ("Trying to resend single failed mail with ID " +
+                         aFailedMailData.getID () +
+                         (aDefaultSMTPSettings != null ? " with default settings" : "") +
+                         "!");
 
           // Main resend
           final ISMTPSettings aSMTPSettings = aDefaultSMTPSettings != null ? aDefaultSMTPSettings
@@ -216,14 +220,15 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           // Success message
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.RESENT_SUCCESS.getDisplayText (aDisplayLocale)));
         }
-        return true;
+        return EShowList.SHOW_LIST;
       }
     };
     addCustomHandler (ACTION_RESEND, aResendHdl);
     addCustomHandler (ACTION_RESEND_DEFAULT_SETTINGS, aResendHdl);
     final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendAllHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
     {
-      public boolean handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+      @Nonnull
+      public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -234,11 +239,12 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_ALL_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                              .getDefaultSMTPSettings ()
                                                                                                           : null;
-          LOGGER.info ("Trying to resend " +
-                       aFailedMails.size () +
-                       " failed mails" +
-                       (aDefaultSMTPSettings != null ? " with default settings" : "") +
-                       "!");
+          if (LOGGER.isInfoEnabled ())
+            LOGGER.info ("Trying to resend " +
+                         aFailedMails.size () +
+                         " failed mails" +
+                         (aDefaultSMTPSettings != null ? " with default settings" : "") +
+                         "!");
 
           // Main resend
           for (final FailedMailData aFailedMailData : aFailedMails)
@@ -255,7 +261,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                                                                                                     Integer.toString (aFailedMails.size ()));
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
         }
-        return true;
+        return EShowList.SHOW_LIST;
       }
     };
     addCustomHandler (ACTION_RESEND_ALL, aResendAllHdl);
