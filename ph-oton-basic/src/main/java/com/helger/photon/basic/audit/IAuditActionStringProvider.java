@@ -19,6 +19,9 @@ package com.helger.photon.basic.audit;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.functional.IBiFunction;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.typeconvert.TypeConverter;
+import com.helger.commons.typeconvert.TypeConverterException;
+import com.helger.json.IJson;
 import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
@@ -39,6 +42,23 @@ public interface IAuditActionStringProvider extends IBiFunction <String, Object 
 
   IAuditActionStringProvider JSON = (sAction, aArgs) -> {
     final IJsonArray aData = new JsonArray ().addAll (aArgs);
+    return new JsonObject ().add (sAction, aData).getAsJsonString ();
+  };
+
+  IAuditActionStringProvider JSON_WITH_CONVERSION = (sAction, aArgs) -> {
+    final IJsonArray aData = new JsonArray ();
+    for (final Object aArg : aArgs)
+    {
+      try
+      {
+        aData.add (TypeConverter.convert (aArg, IJson.class));
+      }
+      catch (final TypeConverterException ex)
+      {
+        aData.add (aArg);
+      }
+    }
+
     return new JsonObject ().add (sAction, aData).getAsJsonString ();
   };
 }
