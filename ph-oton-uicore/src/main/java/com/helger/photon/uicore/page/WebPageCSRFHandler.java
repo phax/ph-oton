@@ -19,9 +19,6 @@ package com.helger.photon.uicore.page;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
@@ -43,18 +40,8 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
    */
   public static final WebPageCSRFHandler INSTANCE = new WebPageCSRFHandler ();
 
-  private static final Logger LOGGER = LoggerFactory.getLogger (WebPageCSRFHandler.class);
-
   private boolean m_bCSRFPreventionEnabled = DEFAULT_CSRF_PREVENTION_ENABLED;
-  private ICSRFErrorHandler m_aErrorHdl = (aWPEC,
-                                           sProvidedNonce,
-                                           sExpectedNone) -> LOGGER.error ("The expected CSRF nonce on page '" +
-                                                                           aWPEC.getWebPage ().getID () +
-                                                                           "' was not present or modified.\nExpected: '" +
-                                                                           sExpectedNone +
-                                                                           "'\nBut got: '" +
-                                                                           sProvidedNonce +
-                                                                           "'");
+  private ICSRFErrorHandler m_aErrorHdl = new LoggingCSRFErrorHandler ();
 
   protected WebPageCSRFHandler ()
   {}
