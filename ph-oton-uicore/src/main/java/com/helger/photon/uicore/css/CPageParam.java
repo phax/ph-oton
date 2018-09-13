@@ -42,6 +42,11 @@ public final class CPageParam
   public static final String PARAM_SUBACTION = "action2";
 
   /**
+   * Selector for a nested action within a nested action within a form.
+   */
+  public static final String PARAM_SUBSUBACTION = "action3";
+
+  /**
    * Selector for an object to perform an action on.
    */
   public static final String PARAM_OBJECT = "object";
