@@ -49,14 +49,19 @@ public interface IAuditActionStringProvider extends IBiFunction <String, Object 
     final IJsonArray aData = new JsonArray ();
     for (final Object aArg : aArgs)
     {
+      IJson aArgJson = null;
       try
       {
-        aData.add (TypeConverter.convert (aArg, IJson.class));
+        aArgJson = TypeConverter.convert (aArg, IJson.class);
       }
       catch (final TypeConverterException ex)
       {
-        aData.add (aArg);
+        // conversion failed
       }
+      if (aArgJson != null)
+        aData.add (aArgJson);
+      else
+        aData.add (aArg);
     }
 
     return new JsonObject ().add (sAction, aData).getAsJsonString ();
