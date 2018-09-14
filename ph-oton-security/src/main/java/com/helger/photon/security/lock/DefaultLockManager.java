@@ -63,13 +63,29 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private ICurrentUserIDProvider m_aCurrentUserIDProvider;
+  @GuardedBy ("s_aRWLock")
+  private boolean m_bSilentMode = false;
 
   // Key: lockedObjectID, value: lock-info
-  private final ICommonsMap <IDTYPE, ILockInfo> m_aLockedObjs = new CommonsHashMap<> ();
+  private final ICommonsMap <IDTYPE, ILockInfo> m_aLockedObjs = new CommonsHashMap <> ();
 
   public DefaultLockManager (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     setCurrentUserIDProvider (aCurrentUserIDProvider);
+  }
+
+  public boolean setSilentMode (final boolean bSilentMode)
+  {
+    return m_aRWLock.writeLocked ( () -> {
+      final boolean bOld = m_bSilentMode;
+      m_bSilentMode = bSilentMode;
+      return bOld;
+    });
+  }
+
+  public boolean isSilentMode ()
+  {
+    return m_aRWLock.readLocked ( () -> m_bSilentMode);
   }
 
   public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
@@ -121,17 +137,19 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     if (StringHelper.hasNoText (sUserID))
       return LockResult.createFailure (aObjID);
 
-    return m_aRWLock.writeLocked ( () -> {
-      ELocked eLocked;
-      boolean bIsNewLock = false;
-      ICommonsList <IDTYPE> aUnlockedObjects = null;
+    ELocked eLocked;
+    boolean bIsNewLock = false;
+    ICommonsList <IDTYPE> aUnlockedObjects = null;
 
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
       if (bUnlockOtherObjects)
       {
         // Unlock other objects first
-        aUnlockedObjects = new CommonsArrayList<> ();
+        aUnlockedObjects = new CommonsArrayList <> ();
         // Unlock all except the object to be locked
-        _unlockAllObjects (sUserID, new CommonsHashSet<> (aObjID), aUnlockedObjects);
+        _unlockAllObjects (sUserID, new CommonsHashSet <> (aObjID), aUnlockedObjects);
       }
 
       final ILockInfo aCurrentLock = m_aLockedObjs.get (aObjID);
@@ -148,23 +166,28 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
         eLocked = ELocked.LOCKED;
         bIsNewLock = true;
       }
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
 
+    if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
       {
         if (CollectionHelper.isNotEmpty (aUnlockedObjects))
           LOGGER.info ("Before locking, unlocked all objects of user '" +
-                          sUserID +
-                          "': " +
-                          aUnlockedObjects +
-                          " except '" +
-                          aObjID +
-                          "'");
+                       sUserID +
+                       "': " +
+                       aUnlockedObjects +
+                       " except '" +
+                       aObjID +
+                       "'");
         if (bIsNewLock)
           LOGGER.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
       }
 
-      return new LockResult<> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
-    });
+    return new LockResult <> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
   }
 
   @Nonnull
@@ -217,7 +240,9 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     if (aCurrentLock == null)
     {
       // Object is not locked at all
-      LOGGER.warn ("User '" + sUserID + "' could not unlock object '" + aObjID + "' because it is not locked");
+      if (!isSilentMode ())
+        if (LOGGER.isWarnEnabled ())
+          LOGGER.warn ("User '" + sUserID + "' could not unlock object '" + aObjID + "' because it is not locked");
       return EChange.UNCHANGED;
     }
 
@@ -225,13 +250,15 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     if (!aCurrentLock.getLockUserID ().equals (sUserID))
     {
       // This may happen if the user was manually unlocked!
-      LOGGER.warn ("User '" +
-                      sUserID +
-                      "' could not unlock object '" +
-                      aObjID +
-                      "' because it is locked by '" +
-                      aCurrentLock.getLockUserID () +
-                      "'");
+      if (!isSilentMode ())
+        if (LOGGER.isWarnEnabled ())
+          LOGGER.warn ("User '" +
+                       sUserID +
+                       "' could not unlock object '" +
+                       aObjID +
+                       "' because it is locked by '" +
+                       aCurrentLock.getLockUserID () +
+                       "'");
       return EChange.UNCHANGED;
     }
 
@@ -241,8 +268,9 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
         throw new IllegalStateException ("Internal inconsistency: removing '" + aObjID + "' from lock list failed!");
     });
 
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");
+    if (!isSilentMode ())
+      if (LOGGER.isInfoEnabled ())
+        LOGGER.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");
     return EChange.CHANGED;
   }
 
@@ -302,18 +330,19 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   public final ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable final String sUserID,
                                                                    @Nullable final Set <IDTYPE> aObjectsToKeepLocked)
   {
-    final ICommonsList <IDTYPE> aUnlockedObjects = new CommonsArrayList<> ();
+    final ICommonsList <IDTYPE> aUnlockedObjects = new CommonsArrayList <> ();
     if (StringHelper.hasText (sUserID))
     {
       m_aRWLock.writeLocked ( () -> _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects));
 
-      if (!aUnlockedObjects.isEmpty ())
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Unlocked all objects of user '" +
-                          sUserID +
-                          "': " +
-                          aUnlockedObjects +
-                          (CollectionHelper.isEmpty (aObjectsToKeepLocked) ? "" : " except " + aObjectsToKeepLocked));
+      if (aUnlockedObjects.isNotEmpty ())
+        if (!isSilentMode ())
+          if (LOGGER.isInfoEnabled ())
+            LOGGER.info ("Unlocked all objects of user '" +
+                         sUserID +
+                         "': " +
+                         aUnlockedObjects +
+                         (CollectionHelper.isEmpty (aObjectsToKeepLocked) ? "" : " except " + aObjectsToKeepLocked));
     }
     return aUnlockedObjects;
   }
@@ -373,7 +402,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   @ReturnsMutableCopy
   public ICommonsSet <IDTYPE> getAllLockedObjectsOfUser (@Nullable final String sUserID)
   {
-    final ICommonsSet <IDTYPE> ret = new CommonsHashSet<> ();
+    final ICommonsSet <IDTYPE> ret = new CommonsHashSet <> ();
     if (StringHelper.hasText (sUserID))
     {
       m_aRWLock.readLocked ( () -> {
@@ -388,8 +417,9 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("currentUserIDProvider", m_aCurrentUserIDProvider)
-                                       .append ("lockedObjects", m_aLockedObjs)
+    return new ToStringGenerator (this).append ("CurrentUserIDProvider", m_aCurrentUserIDProvider)
+                                       .append ("SilentMode", m_bSilentMode)
+                                       .append ("LockedObjects", m_aLockedObjs)
                                        .getToString ();
   }
 }
