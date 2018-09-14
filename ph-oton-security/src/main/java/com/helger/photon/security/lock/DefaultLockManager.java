@@ -63,11 +63,11 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private ICurrentUserIDProvider m_aCurrentUserIDProvider;
-  @GuardedBy ("s_aRWLock")
-  private boolean m_bSilentMode = false;
-
+  @GuardedBy ("m_aRWLock")
   // Key: lockedObjectID, value: lock-info
   private final ICommonsMap <IDTYPE, ILockInfo> m_aLockedObjs = new CommonsHashMap <> ();
+  @GuardedBy ("m_aRWLock")
+  private boolean m_bSilentMode = false;
 
   public DefaultLockManager (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
@@ -418,8 +418,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   public String toString ()
   {
     return new ToStringGenerator (this).append ("CurrentUserIDProvider", m_aCurrentUserIDProvider)
-                                       .append ("SilentMode", m_bSilentMode)
                                        .append ("LockedObjects", m_aLockedObjs)
+                                       .append ("SilentMode", m_bSilentMode)
                                        .getToString ();
   }
 }
