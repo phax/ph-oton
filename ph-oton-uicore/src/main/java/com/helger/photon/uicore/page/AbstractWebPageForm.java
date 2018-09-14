@@ -147,8 +147,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
    *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, boolean, EWebPageFormAction, FormErrorList)}
-   *         should be a file-upload form, <code>false</code> if a regular form is
-   *         sufficient.
+   *         should be a file-upload form, <code>false</code> if a regular form
+   *         is sufficient.
    */
   @OverrideOnDemand
   protected boolean isFileUploadForm (@Nonnull final WPECTYPE aWPEC)
@@ -337,22 +337,40 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   public static <T extends IHasDisplayName & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
                                                                                   @Nonnull final T aCurObject)
   {
+    return createCopyLink (aLEC, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject,
+                                                                                  @Nullable final Map <String, String> aParams)
+  {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createCopyLink (aLEC,
                            aCurObject,
                            EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayName ()));
+                                                                            aCurObject.getDisplayName ()),
+                           aParams);
   }
 
   @Nonnull
   public static <T extends IHasDisplayText & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
                                                                                   @Nonnull final T aCurObject)
   {
+    return createCopyLink (aLEC, aCurObject, (Map <String, String>) null);
+  }
+
+  @Nonnull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
+                                                                                  @Nonnull final T aCurObject,
+                                                                                  @Nullable final Map <String, String> aParams)
+  {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createCopyLink (aLEC,
                            aCurObject,
                            EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayText (aDisplayLocale)));
+                                                                            aCurObject.getDisplayText (aDisplayLocale)),
+                           aParams);
   }
 
   @Nonnull
@@ -783,7 +801,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        never {@link EWebPageFormAction#SHOW_LIST}.
    * @param aSelectedObject
    *        The currently selected object. May be <code>null</code>.
-   * @return <code>true</code> if the action is allowed, <code>false</code> if not
+   * @return <code>true</code> if the action is allowed, <code>false</code> if
+   *         not
    */
   @OverrideOnDemand
   protected boolean isActionAllowed (@Nonnull final WPECTYPE aWPEC,
@@ -817,8 +836,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
-   * Check if locking should be performed on the current request or not. Override
-   * with care!
+   * Check if locking should be performed on the current request or not.
+   * Override with care!
    *
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
@@ -841,14 +860,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
-   * This method is called before the main processing starts. It can e.g. be used
-   * to try to lock the specified object. When overriding the method make sure to
-   * emit all error messages on your own, when e.g. an object is locked. If
-   * {@link EContinue#BREAK} is returned, the list of objects is shown by
+   * This method is called before the main processing starts. It can e.g. be
+   * used to try to lock the specified object. When overriding the method make
+   * sure to emit all error messages on your own, when e.g. an object is locked.
+   * If {@link EContinue#BREAK} is returned, the list of objects is shown by
    * default.<br>
-   * If locking is enabled, try to lock the specified object. When overriding the
-   * method make sure to emit all error messages on your own, when e.g. an object
-   * is locked.
+   * If locking is enabled, try to lock the specified object. When overriding
+   * the method make sure to emit all error messages on your own, when e.g. an
+   * object is locked.
    *
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
@@ -949,8 +968,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
-   *        The currently selected object. May be <code>null</code> when creating
-   *        a new object
+   *        The currently selected object. May be <code>null</code> when
+   *        creating a new object
    * @param aFormErrors
    *        Object for storing the validation errors. Never <code>null</code>.
    * @param eFormAction
@@ -1018,8 +1037,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The currently selected object. May be <code>null</code> for newly
    *        created objects.
    * @param aForm
-   *        The parent form. Use this as parent and not the node list from the web
-   *        page execution context! Never <code>null</code>.
+   *        The parent form. Use this as parent and not the node list from the
+   *        web page execution context! Never <code>null</code>.
    * @param bIsFormSubmitted
    *        <code>true</code> if the form was already submitted,
    *        <code>false</code> if not.
@@ -1060,8 +1079,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
-   *        The currently selected object. May be <code>null</code> when creating
-   *        a new object
+   *        The currently selected object. May be <code>null</code> when
+   *        creating a new object
    * @param aFormErrors
    *        Object for storing the validation errors. Never <code>null</code>.
    * @param eFormAction
