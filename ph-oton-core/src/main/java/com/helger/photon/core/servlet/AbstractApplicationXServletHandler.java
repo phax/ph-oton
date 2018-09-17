@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.ServletException;
 
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
@@ -41,6 +42,17 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
   protected AbstractApplicationXServletHandler ()
   {}
 
+  @OverrideOnDemand
+  protected void invokeInternalErrorHandler (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                             @Nonnull final Throwable t)
+  {
+    // Send internal error mail if needed
+    new InternalErrorBuilder ().setThrowable (t)
+                               .setRequestScope (aRequestScope)
+                               .addErrorMessage ("Error running application servlet " + getClass ().getSimpleName ())
+                               .handle ();
+  }
+
   @Nonnull
   public EContinue onException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                 @Nonnull final UnifiedResponse aUnifiedResponse,
@@ -49,10 +61,7 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
     if (!GlobalDebug.isDebugMode ())
     {
       // Send internal error mail if needed
-      new InternalErrorBuilder ().setThrowable (t)
-                                 .setRequestScope (aRequestScope)
-                                 .addErrorMessage ("Error running application servlet " + getClass ().getSimpleName ())
-                                 .handle ();
+      invokeInternalErrorHandler (aRequestScope, t);
 
       // Do not propagate
       return EContinue.BREAK;
