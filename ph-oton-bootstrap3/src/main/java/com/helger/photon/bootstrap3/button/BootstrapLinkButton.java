@@ -73,7 +73,7 @@ public class BootstrapLinkButton extends AbstractHCA <BootstrapLinkButton>
   }
 
   @Nonnull
-  public BootstrapLinkButton setButtonType (@Nonnull final EBootstrapButtonType eButtonType)
+  public final BootstrapLinkButton setButtonType (@Nonnull final EBootstrapButtonType eButtonType)
   {
     m_eButtonType = ValueEnforcer.notNull (eButtonType, "ButtonType");
     return this;
@@ -86,7 +86,7 @@ public class BootstrapLinkButton extends AbstractHCA <BootstrapLinkButton>
   }
 
   @Nonnull
-  public BootstrapLinkButton setButtonSize (@Nonnull final EBootstrapButtonSize eButtonSize)
+  public final BootstrapLinkButton setButtonSize (@Nonnull final EBootstrapButtonSize eButtonSize)
   {
     m_eButtonSize = ValueEnforcer.notNull (eButtonSize, "ButtonSize");
     return this;
@@ -99,7 +99,7 @@ public class BootstrapLinkButton extends AbstractHCA <BootstrapLinkButton>
   }
 
   @Nonnull
-  public BootstrapLinkButton setIcon (@Nullable final IIcon aIcon)
+  public final BootstrapLinkButton setIcon (@Nullable final IIcon aIcon)
   {
     m_aIcon = aIcon;
     return this;

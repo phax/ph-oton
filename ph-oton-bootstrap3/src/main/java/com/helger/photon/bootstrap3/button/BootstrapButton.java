@@ -97,7 +97,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
   }
 
   @Nonnull
-  public BootstrapButton setIcon (@Nullable final IIcon aIcon)
+  public final BootstrapButton setIcon (@Nullable final IIcon aIcon)
   {
     m_aIcon = aIcon;
     return this;
