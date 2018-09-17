@@ -132,8 +132,9 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
     if (bShow)
       rememberMenuItemForDisplay (aItem.getID (), bExpanded);
     if (bAddAllChildrenOnThisLevel)
-      aItem.getParent ().forAllChildren (aSibling -> isMenuItemValidToBeDisplayed (aSibling.getData ()),
-                                         aSibling -> rememberMenuItemForDisplay (aSibling.getID (), false));
+      aItem.getParent ()
+           .forAllChildren (aSibling -> isMenuItemValidToBeDisplayed (aSibling.getData ()),
+                            aSibling -> rememberMenuItemForDisplay (aSibling.getID (), false));
 
     return EHierarchyVisitorReturn.CONTINUE;
   }

@@ -57,25 +57,25 @@ public class MenuItemExternal extends AbstractMenuObject <MenuItemExternal> impl
   }
 
   @Nonnull
-  public IHasSimpleURL getURLProvider ()
+  public final IHasSimpleURL getURLProvider ()
   {
     return m_aURLProvider;
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aDisplayLocale)
+  public final String getDisplayText (@Nonnull final Locale aDisplayLocale)
   {
     return m_aDisplayText.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
-  public String getTarget ()
+  public final String getTarget ()
   {
     return m_sTarget;
   }
 
   @Nonnull
-  public MenuItemExternal setTarget (@Nullable final String sTarget)
+  public final MenuItemExternal setTarget (@Nullable final String sTarget)
   {
     m_sTarget = sTarget;
     return this;
