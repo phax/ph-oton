@@ -18,7 +18,9 @@ package com.helger.photon.bootstrap3.uictrls.datatables.plugins;
 
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginScroller;
 
 public class BootstrapDataTablesPluginScroller extends DataTablesPluginScroller
@@ -27,6 +29,7 @@ public class BootstrapDataTablesPluginScroller extends DataTablesPluginScroller
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_SCROLLER_BOOTSTRAP3);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_SCROLLER);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_SCROLLER_BOOTSTRAP3);
