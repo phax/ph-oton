@@ -18,7 +18,9 @@ package com.helger.photon.bootstrap4.uictrls.datatables.plugins;
 
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginFixedHeader;
 
 public class BootstrapDataTablesPluginFixedHeader extends DataTablesPluginFixedHeader
@@ -27,6 +29,7 @@ public class BootstrapDataTablesPluginFixedHeader extends DataTablesPluginFixedH
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_FIXED_HEADER_BOOTSTRAP4);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_HEADER);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_HEADER_BOOTSTRAP4);
