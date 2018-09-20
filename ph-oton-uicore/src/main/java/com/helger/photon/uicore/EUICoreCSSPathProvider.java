@@ -43,7 +43,7 @@ public enum EUICoreCSSPathProvider implements ICSSPathProvider
   @Deprecated
   PLACEHOLDER_FIX ("uicore/placeholder/placeholder-fix.css", "if lt IE 10"),
   /** Custom development */
-  UICORE ("uicore/photon/uicore.css");
+  UICORE ("ph-oton/uicore.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

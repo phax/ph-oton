@@ -49,16 +49,16 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   POPPER ("uicore/popper/1.14.4/popper.js"),
   POPPER_UTILS ("uicore/popper/1.14.4/popper-utils.js"),
   /**
-   * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it only
-   * in a conditional comment!
+   * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it
+   * only in a conditional comment!
    */
   RESPOND ("uicore/respond/respond.js", "if lt IE 9"),
-  SERVERLOG ("uicore/serverlog/serverlog.js"),
+  SERVERLOG ("ph-oton/serverlog/serverlog.js"),
   /** https://github.com/stacktracejs/stacktrace.js/ */
   STACKTRACE ("uicore/stacktrace/stacktrace.js"),
   SWFOBJECT ("uicore/swf/swfobject.js"),
-  UICORE_FORM ("uicore/photon/uicore-form.js"),
-  UICORE_JQUERY ("uicore/photon/uicore-jquery.js");
+  UICORE_FORM ("ph-oton/uicore-form.js"),
+  UICORE_JQUERY ("ph-oton/uicore-jquery.js");
 
   private final ConstantJSPathProvider m_aPP;
 

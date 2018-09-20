@@ -105,9 +105,7 @@
         </executions>
         <configuration>
           <forceCreation>false</forceCreation>
-          <sourceDirectory>${basedir}/src/main/resources/bootstrap</sourceDirectory>
-          <!-- Non recursive! -->
-          <recursive>false</recursive>
+          <sourceDirectory>${basedir}/src/main/resources/ph-oton</sourceDirectory>
         </configuration>
       </plugin>
       <plugin>
@@ -125,8 +123,7 @@
           <removeUnnecessaryCode>true</removeUnnecessaryCode>
           <quoteURLs>true</quoteURLs>
           <verbose>false</verbose>
-          <sourceDirectory>${basedir}/src/main/resources/bootstrap</sourceDirectory>
-          <!-- Non recursive! -->          <recursive>false</recursive>
+          <sourceDirectory>${basedir}/src/main/resources/ph-oton</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>

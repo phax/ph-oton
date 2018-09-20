@@ -33,22 +33,22 @@ import com.helger.html.resource.css.ICSSPathProvider;
 public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
 {
   /** https://github.com/daneden/animate.css */
-  ANIMATE ("animate/animate.css"),
-  AUTONUMERIC ("autonumeric/autonumeric.css"),
-  CHART_1 ("chart/Chart.css"),
-  COLORBOX ("colorbox/1.6.0/colorbox.css"),
-  FAMFAM_ICONS ("famfam/013/famfam.css"),
-  FAMFAM_FLAGS ("famfam/flags/flags.css"),
-  FINEUPLOADER_320 ("fineupload/320/fineuploader.css"),
-  FINEUPLOADER_330 ("fineupload/330/fineuploader.css"),
-  FINEUPLOADER_5 ("fineupload/5.11.10/fine-uploader.css"),
-  JSCOLOR ("jscolor/1.4.4ph/jscolor.css"),
-  PRISMJS ("prismjs/prism.css"),
-  PRISMJS_BOOTSTRAP3 ("prismjs/prism-bootstrap3.css"),
-  PRISMJS_BOOTSTRAP4 ("prismjs/prism-bootstrap4.css"),
-  SELECT2 ("select2/4.0.3/css/select2.css"),
-  TYPEAHEAD_BOOTSTRAP3 ("typeahead/typeahead.js-bootstrap3.css"),
-  TYPEAHEAD_BOOTSTRAP4 ("typeahead/typeahead.js-bootstrap4.css");
+  ANIMATE ("uictrls/animate/animate.css"),
+  AUTONUMERIC ("uictrls/autonumeric/autonumeric.css"),
+  CHART_1 ("uictrls/chart/Chart.css"),
+  COLORBOX ("uictrls/colorbox/1.6.0/colorbox.css"),
+  FAMFAM_ICONS ("uictrls/famfam/013/famfam.css"),
+  FAMFAM_FLAGS ("uictrls/famfam/flags/flags.css"),
+  FINEUPLOADER_320 ("uictrls/fineupload/320/fineuploader.css"),
+  FINEUPLOADER_330 ("uictrls/fineupload/330/fineuploader.css"),
+  FINEUPLOADER_5 ("uictrls/fineupload/5.11.10/fine-uploader.css"),
+  JSCOLOR ("uictrls/jscolor/1.4.4ph/jscolor.css"),
+  PRISMJS ("uictrls/prismjs/prism.css"),
+  PRISMJS_BOOTSTRAP3 ("uictrls/prismjs/prism-bootstrap3.css"),
+  PRISMJS_BOOTSTRAP4 ("uictrls/prismjs/prism-bootstrap4.css"),
+  SELECT2 ("uictrls/select2/4.0.3/css/select2.css"),
+  TYPEAHEAD_BOOTSTRAP3 ("uictrls/typeahead/typeahead.js-bootstrap3.css"),
+  TYPEAHEAD_BOOTSTRAP4 ("uictrls/typeahead/typeahead.js-bootstrap4.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

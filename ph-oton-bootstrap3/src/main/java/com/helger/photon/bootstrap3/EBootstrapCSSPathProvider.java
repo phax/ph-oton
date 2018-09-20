@@ -37,9 +37,9 @@ public enum EBootstrapCSSPathProvider implements ICSSPathProvider
   /** Bootstrap theme CSS */
   BOOTSTRAP_THEME ("bootstrap/3.3.7/css/bootstrap-theme.css"),
   /** Special Bootstrap CSS for IE &lt; 10 */
-  BOOTSTRAP_IE9 ("custom/bootstrap3-ie9.css", "if lt IE 10"),
+  BOOTSTRAP_IE9 ("ph-oton/bootstrap3-ie9.css", "if lt IE 10"),
   /** A some of default Bootstrap CSS adoptions etc. */
-  BOOTSTRAP_PH ("custom/bootstrap3-ph.css");
+  BOOTSTRAP_PH ("ph-oton/bootstrap3-ph.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

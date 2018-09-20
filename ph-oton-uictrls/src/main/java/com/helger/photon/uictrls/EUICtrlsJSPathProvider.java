@@ -31,32 +31,32 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EUICtrlsJSPathProvider implements IJSPathProvider
 {
-  AUTONUMERIC ("autonumeric/1.9.37/autoNumeric.js"),
-  AUTOSIZE ("autosize/1.18.18/jquery.autosize.js"),
-  AUTOSIZE_ALL ("autosize/autosize-all.js"),
-  AUTOSIZE3 ("autosize/3.0.20/autosize.js"),
-  AUTOSIZE3_ALL ("autosize/autosize3-all.js"),
+  AUTONUMERIC ("uictrls/autonumeric/1.9.37/autoNumeric.js"),
+  AUTOSIZE ("uictrls/autosize/1.18.18/jquery.autosize.js"),
+  AUTOSIZE_ALL ("uictrls/autosize/autosize-all.js"),
+  AUTOSIZE3 ("uictrls/autosize/3.0.20/autosize.js"),
+  AUTOSIZE3_ALL ("uictrls/autosize/autosize3-all.js"),
   /** BigDecimal support for JS */
-  BIG_DECIMAL ("js/big.js"),
-  CHART_1 ("chart/1.0.2/Chart.js"),
-  CHART_2 ("chart/2.2.1/Chart.js"),
-  COLORBOX ("colorbox/1.6.0/jquery.colorbox.js"),
-  EXCANVAS ("chart/excanvas.js", "if lt IE 9"),
-  FINEUPLOADER_320 ("fineupload/320/fineuploader.js"),
-  FINEUPLOADER_330 ("fineupload/330/fineuploader.js"),
-  FINEUPLOADER_5 ("fineupload/5.11.10/fine-uploader.js"),
-  HANDLEBARS_3 ("handlebars/3.0.3/handlebars-v3.0.3.js"),
-  JSCOLOR ("jscolor/1.4.4ph/jscolor.js"),
-  PDFOBJECT1 ("pdfobject/1.2/pdfobject.js"),
-  PDFOBJECT2 ("pdfobject/2.0/pdfobject.js"),
-  PRISMJS ("prismjs/prism.js"),
-  SELECT2 ("select2/4.0.3/js/select2.js"),
-  SELECT2_LOCALE ("select2/4.0.3/js/i18n/{0}.js", false),
+  BIG_DECIMAL ("uictrls/js/big.js"),
+  CHART_1 ("uictrls/chart/1.0.2/Chart.js"),
+  CHART_2 ("uictrls/chart/2.2.1/Chart.js"),
+  COLORBOX ("uictrls/colorbox/1.6.0/jquery.colorbox.js"),
+  EXCANVAS ("uictrls/chart/excanvas.js", "if lt IE 9"),
+  FINEUPLOADER_320 ("uictrls/fineupload/320/fineuploader.js"),
+  FINEUPLOADER_330 ("uictrls/fineupload/330/fineuploader.js"),
+  FINEUPLOADER_5 ("uictrls/fineupload/5.11.10/fine-uploader.js"),
+  HANDLEBARS_3 ("uictrls/handlebars/3.0.3/handlebars-v3.0.3.js"),
+  JSCOLOR ("uictrls/jscolor/1.4.4ph/jscolor.js"),
+  PDFOBJECT1 ("uictrls/pdfobject/1.2/pdfobject.js"),
+  PDFOBJECT2 ("uictrls/pdfobject/2.0/pdfobject.js"),
+  PRISMJS ("uictrls/prismjs/prism.js"),
+  SELECT2 ("uictrls/select2/4.0.3/js/select2.js"),
+  SELECT2_LOCALE ("uictrls/select2/4.0.3/js/i18n/{0}.js", false),
   /** https://github.com/twitter/typeahead.js/ */
-  TYPEAHEAD_0_9 ("typeahead/0.9.3/typeahead.js"),
-  TYPEAHEAD_PH ("typeahead/ph-typeahead.js"),
+  TYPEAHEAD_0_9 ("uictrls/typeahead/0.9.3/typeahead.js"),
+  TYPEAHEAD_PH ("ph-oton/ph-typeahead.js"),
   /** JS library to use animate.css - https://github.com/matthieua/WOW */
-  WOW ("js/wow.js");
+  WOW ("uictrls/js/wow.js");
 
   private final ConstantJSPathProvider m_aPP;
 
