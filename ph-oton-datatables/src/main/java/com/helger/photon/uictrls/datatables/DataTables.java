@@ -1074,7 +1074,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {}
 
   @Nonnull
-  public static IJsonObject createLanguageJson (@Nonnull final Locale aDisplayLocale)
+  public static JsonObject createLanguageJson (@Nonnull final Locale aDisplayLocale)
   {
     final JsonObject aLanguage = new JsonObject ();
     aLanguage.add ("aria",

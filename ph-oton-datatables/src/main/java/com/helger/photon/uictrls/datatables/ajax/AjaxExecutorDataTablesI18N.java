@@ -22,9 +22,11 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
+import com.helger.json.JsonObject;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -56,6 +58,12 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
     m_aDefaultLocale = aDefaultLocale;
   }
 
+  @OverrideOnDemand
+  protected JsonObject getText (@Nonnull final Locale aLanguage)
+  {
+    return DataTables.createLanguageJson (aLanguage);
+  }
+
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
@@ -69,7 +77,7 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
     }
 
     // Main action
-    final IJsonObject aData = DataTables.createLanguageJson (aLanguage);
+    final IJsonObject aData = getText (aLanguage);
     aAjaxResponse.json (aData);
     aAjaxResponse.enableCaching (ResponseHelperSettings.getExpirationSeconds ());
   }
