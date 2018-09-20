@@ -50,6 +50,7 @@ Contained subprojects are:
   * Updated to Jetty 9.4.12
   * Updated to TinyMCE 4.8.2
   * Separated `HCPrismJS` and `TypeaheadEdit` in Bootstrap 3 and 4 versions
+  * Dropped jQuery 1.x and 2.x files
 * v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled
