@@ -38,6 +38,7 @@ import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.request.IHCRequestField;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsJSPathProvider;
@@ -93,6 +94,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     m_aEdit = (HCEdit) getInput ();
     m_aEdit.setPlaceholder ("");
+    m_aEdit.addClass (CBootstrapCSS.FORM_CONTROL);
     m_aEdit.addClass (CSS_CLASS_DATETIMEPICKER_INPUT);
     m_aEdit.customAttrs ().setDataAttr ("toggle", "datetimepicker");
     m_aEdit.customAttrs ().setDataAttr ("target", "#" + getID ());
@@ -149,8 +151,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * Set the format string to be used. This is only necessary, if the default one
-   * from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   * Set the format string to be used. This is only necessary, if the default
+   * one from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
    *
    * @param sFormat
    *        Format string to be used. May be <code>null</code>.
