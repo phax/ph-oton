@@ -32,6 +32,7 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginFixedHeader extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "fixedHeader";
   public static final boolean DEFAULT_FOOTER = false;
   public static final int DEFAULT_FOOTER_OFFSET = 0;
   public static final boolean DEFAULT_HEADER = true;
@@ -44,7 +45,7 @@ public class DataTablesPluginFixedHeader extends AbstractDataTablesPlugin
 
   public DataTablesPluginFixedHeader ()
   {
-    super ("fixedHeader");
+    super (PLUGIN_NAME);
   }
 
   @Nonnull

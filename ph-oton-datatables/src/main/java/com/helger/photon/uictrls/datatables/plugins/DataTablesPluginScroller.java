@@ -44,6 +44,7 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
  */
 public class DataTablesPluginScroller extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "scroller";
   public static final double DEFAULT_BOUNDARY_SCALE = 0.5;
   public static final int DEFAULT_DISPLAY_BUFFER = 9;
   public static final boolean DEFAULT_LOADING_INDICATOR = false;
@@ -58,7 +59,7 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
 
   public DataTablesPluginScroller ()
   {
-    super ("scroller");
+    super (PLUGIN_NAME);
   }
 
   @Nonnull
@@ -163,8 +164,8 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
   public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSVar aJSTable)
   {
     // See http://legacy.datatables.net/ref#fnAdjustColumnSizing
-    aJSCode.add (JQuery.jQueryWindow ().on ("resize",
-                                            new JSAnonymousFunction (aJSTable.invoke ("fnAdjustColumnSizing"))));
+    aJSCode.add (JQuery.jQueryWindow ()
+                       .on ("resize", new JSAnonymousFunction (aJSTable.invoke ("fnAdjustColumnSizing"))));
   }
 
   @Override

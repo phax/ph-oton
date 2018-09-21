@@ -41,6 +41,7 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginButtons extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "buttons";
   public static final String DEFAULT_NAME = "main";
 
   /** List of buttons to be created. */
@@ -52,7 +53,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
 
   public DataTablesPluginButtons ()
   {
-    super ("buttons");
+    super (PLUGIN_NAME);
   }
 
   @Nonnull
@@ -124,7 +125,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
           aButtons.add ((String) aObj);
         else
           aButtons.add (((DTPButtonsButton) aObj).getAsJS ());
-      ret.add ("buttons", aButtons);
+      ret.add (PLUGIN_NAME, aButtons);
     }
     if (m_aDom != null)
       ret.add ("dom", m_aDom.getAsJS ());
@@ -133,7 +134,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
 
     if (ret.size () == 1)
     {
-      final IJSExpression aValue = ret.get (new JSAtom ("buttons"));
+      final IJSExpression aValue = ret.get (new JSAtom (PLUGIN_NAME));
       if (aValue != null)
         return aValue;
     }

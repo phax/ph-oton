@@ -29,9 +29,11 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginColumnReorder extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "colReorder";
+
   public DataTablesPluginColumnReorder ()
   {
-    super ("colReorder");
+    super (PLUGIN_NAME);
   }
 
   @Nullable

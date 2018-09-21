@@ -29,9 +29,11 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginSearchHighlight extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "searchHighlight";
+
   public DataTablesPluginSearchHighlight ()
   {
-    super ("searchHighlight");
+    super (PLUGIN_NAME);
   }
 
   @Nullable

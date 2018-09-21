@@ -30,6 +30,7 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginFixedColumns extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "fixedColumns";
   public static final EDTPFixedColumnsHeightMatch DEFAULT_HEIGHT_MATCH = EDTPFixedColumnsHeightMatch.SEMI_AUTO;
   public static final int DEFAULT_LEFT_COLUMNS = 1;
   public static final int DEFAULT_RIGHT_COLUMNS = 0;
@@ -40,7 +41,7 @@ public class DataTablesPluginFixedColumns extends AbstractDataTablesPlugin
 
   public DataTablesPluginFixedColumns ()
   {
-    super ("fixedColumns");
+    super (PLUGIN_NAME);
   }
 
   @Nonnull

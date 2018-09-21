@@ -29,9 +29,11 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginKeyTable extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "keyTable";
+
   public DataTablesPluginKeyTable ()
   {
-    super ("KeyTable");
+    super (PLUGIN_NAME);
   }
 
   @Nullable

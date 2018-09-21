@@ -34,9 +34,11 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
  */
 public class DataTablesPluginSelect extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "select";
+
   public DataTablesPluginSelect ()
   {
-    super ("select");
+    super (PLUGIN_NAME);
   }
 
   // TODO Add DT Select plugin parameters

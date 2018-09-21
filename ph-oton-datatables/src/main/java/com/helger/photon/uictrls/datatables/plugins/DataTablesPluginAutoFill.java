@@ -29,9 +29,11 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 public class DataTablesPluginAutoFill extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "autoFill";
+
   public DataTablesPluginAutoFill ()
   {
-    super ("autofill");
+    super (PLUGIN_NAME);
   }
 
   @Nullable

@@ -40,6 +40,7 @@ import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 
 public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "responsive";
   public static final ICSSClassProvider CSS_CLASS_ALL = DefaultCSSClassProvider.create ("all");
   public static final ICSSClassProvider CSS_CLASS_CONTROL = DefaultCSSClassProvider.create ("control");
   public static final ICSSClassProvider CSS_CLASS_NONE = DefaultCSSClassProvider.create ("none");
@@ -54,7 +55,7 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
 
   public DataTablesPluginResponsive ()
   {
-    super ("responsive");
+    super (PLUGIN_NAME);
   }
 
   @Nonnull

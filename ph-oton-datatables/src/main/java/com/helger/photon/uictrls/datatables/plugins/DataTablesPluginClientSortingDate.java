@@ -46,11 +46,12 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  */
 public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
 {
+  public static final String PLUGIN_NAME = "clientSortingDate";
   private final ICommonsSet <EDTColType> m_aDateTimeTypes;
 
   public DataTablesPluginClientSortingDate (@Nonnull @Nonempty final Set <EDTColType> aDateTimeTypes)
   {
-    super ("clientSortingDate");
+    super (PLUGIN_NAME);
     ValueEnforcer.notEmptyNoNullValue (aDateTimeTypes, "DateTimeTypes");
     m_aDateTimeTypes = new CommonsHashSet <> (aDateTimeTypes);
   }
