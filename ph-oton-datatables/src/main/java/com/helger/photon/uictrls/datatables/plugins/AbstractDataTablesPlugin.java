@@ -30,6 +30,11 @@ public abstract class AbstractDataTablesPlugin implements IDataTablesPlugin
 {
   private final String m_sName;
 
+  /**
+   * @param sName
+   *        Name of the plugin. May neither be <code>null</code> empty. This
+   *        name is only internally used to make sure that no such
+   */
   public AbstractDataTablesPlugin (@Nonnull @Nonempty final String sName)
   {
     m_sName = ValueEnforcer.notEmpty (sName, "Name");
