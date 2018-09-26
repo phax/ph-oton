@@ -163,8 +163,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return setID (sID, false);
   }
 
-  @Nonnull
-  public final IMPLTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
+  public static boolean isValidID (@Nullable final String sID)
   {
     if (StringHelper.hasText (sID))
     {
@@ -174,25 +173,40 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
 
       // Check if a whitespace is contained
       if (RegExHelper.stringMatchesPattern (".*\\s.*", sID))
-        throw new IllegalArgumentException ("ID '" + sID + "' may not contains whitespace chars!");
+        return false;
     }
-    if (!bImSureToOverwriteAnExistingID && m_sID != null)
-      if (StringHelper.hasText (sID))
-      {
-        if (!m_sID.equals (sID))
-          HCConsistencyChecker.consistencyError ("Overwriting HC object ID '" +
+
+    return true;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
+  {
+    if (!isValidID (sID))
+    {
+      // If the ID is absolutely invalid, log an error and don't set it
+      HCConsistencyChecker.consistencyError ("HC object ID '" + sID + "' is invalid!");
+    }
+    else
+    {
+      if (!bImSureToOverwriteAnExistingID && m_sID != null)
+        if (StringHelper.hasText (sID))
+        {
+          if (!m_sID.equals (sID))
+            HCConsistencyChecker.consistencyError ("Overwriting HC object ID '" +
+                                                   m_sID +
+                                                   "' with '" +
+                                                   sID +
+                                                   "' - this may have side effects!");
+        }
+        else
+        {
+          HCConsistencyChecker.consistencyError ("The HC object ID '" +
                                                  m_sID +
-                                                 "' with '" +
-                                                 sID +
-                                                 "' - this may have side effects!");
-      }
-      else
-      {
-        HCConsistencyChecker.consistencyError ("The HC object ID '" +
-                                               m_sID +
-                                               "' will be removed - this may have side effects");
-      }
-    m_sID = sID;
+                                                 "' will be removed - this may have side effects");
+        }
+      m_sID = sID;
+    }
     return thisAsT ();
   }
 
@@ -810,8 +824,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   {}
 
   /*
-   * Note: return type cannot by IMicroElement since the checkbox object
-   * delivers an IMicroNodeList!
+   * Note: return type cannot by IMicroElement since the checkbox object delivers
+   * an IMicroNodeList!
    */
   @Override
   @Nonnull
