@@ -31,7 +31,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.random.RandomHelper;
+import com.helger.commons.random.VerySecureRandom;
 import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
@@ -78,7 +78,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
       {
         // Ensure a unique nonce
         final byte [] aNonce = new byte [NONCE_BYTES];
-        RandomHelper.getRandom ().nextBytes (aNonce);
+        VerySecureRandom.getInstance ().nextBytes (aNonce);
         sNonce = StringHelper.getHexEncoded (aNonce);
 
         // Avoid endless loop
