@@ -18,7 +18,6 @@ package com.helger.photon.security.user;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -329,33 +328,6 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
   }
 
   /**
-   * @return A non-<code>null</code> collection of all contained users
-   *         (enabled+disabled and deleted+not-deleted)
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUser> getAllUsers ()
-  {
-    return getAll ();
-  }
-
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUser> getAllUsers (@Nullable final Predicate <? super IUser> aFilter)
-  {
-    return getAll (aFilter);
-  }
-
-  @Deprecated
-  @Nonnegative
-  public int getUserCount (@Nullable final Predicate <? super IUser> aFilter)
-  {
-    return getCount (aFilter);
-  }
-
-  /**
    * @return A non-<code>null</code> collection of all contained enabled and
    *         not-deleted users
    */
@@ -387,7 +359,8 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
   }
 
   /**
-   * @return A non-<code>null</code> collection of all contained not deleted users
+   * @return A non-<code>null</code> collection of all contained not deleted
+   *         users
    */
   @Nonnull
   @ReturnsMutableCopy

@@ -123,10 +123,11 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    * Create a new user group.
    *
    * @param sName
-   *        The name of the user group to create. May neither be <code>null</code>
-   *        nor empty.
+   *        The name of the user group to create. May neither be
+   *        <code>null</code> nor empty.
    * @param sDescription
-   *        The optional description of the user group. May be <code>null</code> .
+   *        The optional description of the user group. May be <code>null</code>
+   *        .
    * @param aCustomAttrs
    *        A set of custom attributes. May be <code>null</code>.
    * @return The created user group.
@@ -158,10 +159,11 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    * @param sID
    *        The ID to use
    * @param sName
-   *        The name of the user group to create. May neither be <code>null</code>
-   *        nor empty.
+   *        The name of the user group to create. May neither be
+   *        <code>null</code> nor empty.
    * @param sDescription
-   *        The optional description of the user group. May be <code>null</code> .
+   *        The optional description of the user group. May be <code>null</code>
+   *        .
    * @param aCustomAttrs
    *        A set of custom attributes. May be <code>null</code>.
    * @return The created user group.
@@ -290,17 +292,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   public IUserGroup getUserGroupOfID (@Nullable final String sUserGroupID)
   {
     return getOfID (sUserGroupID);
-  }
-
-  /**
-   * @return A non-<code>null</code> list of all available user groups
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUserGroup> getAllUserGroups ()
-  {
-    return getAll ();
   }
 
   /**
@@ -561,8 +552,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    *        ID of the user group to check
    * @param sUserID
    *        ID of the user to be checked.
-   * @return <code>true</code> if the specified user is assigned to the specified
-   *         user group.
+   * @return <code>true</code> if the specified user is assigned to the
+   *         specified user group.
    */
   public boolean isUserAssignedToUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
@@ -578,8 +569,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    *
    * @param sUserID
    *        The user ID to search
-   * @return A non-<code>null</code>but may be empty collection with all matching
-   *         user groups.
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user groups.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -608,8 +599,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    *
    * @param sUserID
    *        The user ID to search
-   * @return A non-<code>null</code>but may be empty collection with all matching
-   *         user group IDs.
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user group IDs.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -629,8 +620,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    *        The ID of the user group to assign the role to.
    * @param sRoleID
    *        The ID of the role to be assigned
-   * @return {@link EChange#CHANGED} if the passed user group ID was resolved, and
-   *         the role ID was not already previously contained
+   * @return {@link EChange#CHANGED} if the passed user group ID was resolved,
+   *         and the role ID was not already previously contained
    */
   @Nonnull
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
@@ -754,8 +745,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    *
    * @param sRoleID
    *        The role ID to search
-   * @return A non-<code>null</code>but may be empty collection with all matching
-   *         user groups.
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user groups.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -773,8 +764,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
    *
    * @param sRoleID
    *        The role ID to search
-   * @return A non-<code>null</code>but may be empty collection with all matching
-   *         user group IDs.
+   * @return A non-<code>null</code>but may be empty collection with all
+   *         matching user group IDs.
    */
   @Nonnull
   @ReturnsMutableCopy

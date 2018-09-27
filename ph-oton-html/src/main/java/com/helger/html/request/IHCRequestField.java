@@ -19,10 +19,8 @@ package com.helger.html.request;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.ICommonsList;
 
 /**
  * Defines an abstract request field for input controls. It encapsulates a name
@@ -59,12 +57,4 @@ public interface IHCRequestField extends Serializable
    */
   @Nonnull
   String getRequestValue ();
-
-  /**
-   * @return Value list.
-   * @deprecated Use {@link IHCRequestFieldMultiValue} instead!
-   */
-  @Deprecated
-  @Nullable
-  ICommonsList <String> getRequestValueAsList ();
 }

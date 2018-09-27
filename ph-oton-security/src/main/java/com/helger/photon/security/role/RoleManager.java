@@ -23,10 +23,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.dao.DAOException;
 import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
@@ -76,7 +74,8 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
    * Create a new role.
    *
    * @param sName
-   *        The name of the new role. May neither be <code>null</code> nor empty.
+   *        The name of the new role. May neither be <code>null</code> nor
+   *        empty.
    * @param sDescription
    *        Optional description text. May be <code>null</code>.
    * @param aCustomAttrs
@@ -185,25 +184,15 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
   }
 
   /**
-   * @return A non-<code>null</code> list of all available roles
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IRole> getAllRoles ()
-  {
-    return getAll ();
-  }
-
-  /**
    * Rename the role with the passed ID
    *
    * @param sRoleID
    *        The ID of the role to be renamed. May be <code>null</code>.
    * @param sNewName
-   *        The new name of the role. May neither be <code>null</code> nor empty.
-   * @return {@link EChange#CHANGED} if the passed role ID was found, and the new
-   *         name is different from the old name of he role
+   *        The new name of the role. May neither be <code>null</code> nor
+   *        empty.
+   * @return {@link EChange#CHANGED} if the passed role ID was found, and the
+   *         new name is different from the old name of he role
    */
   @Nonnull
   public EChange renameRole (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName)
@@ -243,7 +232,8 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
    * @param sRoleID
    *        The ID of the role to be renamed. May be <code>null</code>.
    * @param sNewName
-   *        The new name of the role. May neither be <code>null</code> nor empty.
+   *        The new name of the role. May neither be <code>null</code> nor
+   *        empty.
    * @param sNewDescription
    *        The new description text. May be <code>null</code>.
    * @param aNewCustomAttrs

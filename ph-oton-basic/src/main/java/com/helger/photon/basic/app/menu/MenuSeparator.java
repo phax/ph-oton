@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.factory.GlobalIDFactory;
 
 /**
  * Default implementation of the {@link IMenuSeparator} interface.
@@ -30,12 +29,6 @@ import com.helger.commons.id.factory.GlobalIDFactory;
 @NotThreadSafe
 public class MenuSeparator extends AbstractMenuObject <MenuSeparator> implements IMenuSeparator
 {
-  @Deprecated
-  public MenuSeparator ()
-  {
-    this (GlobalIDFactory.getNewStringID ());
-  }
-
   public MenuSeparator (@Nonnull @Nonempty final String sID)
   {
     super (sID);

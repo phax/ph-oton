@@ -114,7 +114,7 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
   {
     // Source:
     // https://github.com/DataTables/Responsive/issues/8
-    for (final DataTablesColumnDef aColumnDef : aDT.getAllColumns ())
+    for (final DataTablesColumnDef aColumnDef : aDT.columnDefs ())
       if (!aColumnDef.isVisible ())
         aColumnDef.addClass (CSS_CLASS_NEVER);
   }

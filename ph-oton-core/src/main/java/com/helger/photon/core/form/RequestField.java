@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.RequestFieldData;
 
@@ -63,23 +62,6 @@ public class RequestField extends RequestFieldData implements IHCRequestField
   public RequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
   {
     super (sFieldName, sDefaultValue);
-  }
-
-  /**
-   * Utility constructor that uses an optional default value provider that has
-   * an ID
-   *
-   * @param sFieldName
-   *        The field name to use. May neither be <code>null</code> nor empty.
-   * @param aDefaultValueProvider
-   *        The object who's ID is to be used. May be <code>null</code> in which
-   *        case no default value is used
-   */
-  @Deprecated
-  public RequestField (@Nonnull @Nonempty final String sFieldName,
-                       @Nullable final IHasID <String> aDefaultValueProvider)
-  {
-    super (sFieldName, aDefaultValueProvider);
   }
 
   /**

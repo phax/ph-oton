@@ -74,17 +74,6 @@ public final class JQueryProperty
   }
 
   /**
-   * @return <code>$.browser</code>
-   * @deprecated Deprecated since jQuery 1.3 Removed in jQuery 1.9
-   */
-  @Deprecated
-  @Nonnull
-  public static JSFieldRef browser ()
-  {
-    return jQueryField ().ref ("browser");
-  }
-
-  /**
    * @return <code>$.fx</code>
    */
   @Nonnull
@@ -124,18 +113,6 @@ public final class JQueryProperty
   }
 
   /**
-   * @return <code>$.selector</code>
-   * @since jQuery 1.3
-   * @deprecated Deprecated since jQuery 1.7 Removed in jQuery 1.9
-   */
-  @Deprecated
-  @Nonnull
-  public static JSFieldRef selector ()
-  {
-    return jQueryField ().ref ("selector");
-  }
-
-  /**
    * @return <code>$.cssHooks</code>
    * @since jQuery 1.4.3
    */
@@ -143,17 +120,6 @@ public final class JQueryProperty
   public static JSFieldRef cssHooks ()
   {
     return jQueryField ().ref ("cssHooks");
-  }
-
-  /**
-   * @return <code>$.boxModel</code>
-   * @deprecated Deprecated since jQuery 1.3
-   */
-  @Deprecated
-  @Nonnull
-  public static JSFieldRef boxModel ()
-  {
-    return jQueryField ().ref ("boxModel");
   }
 
   // Internals

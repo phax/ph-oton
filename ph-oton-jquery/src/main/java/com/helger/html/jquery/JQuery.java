@@ -1108,19 +1108,6 @@ public final class JQuery
 
   /**
    * @return The invocation of the static jQuery function
-   *         <code>jQuery.sub()</code> with return type jQuery
-   * @deprecated Deprecated since jQuery 1.7
-   * @since jQuery 1.5
-   */
-  @Nonnull
-  @Deprecated
-  public static JQueryInvocation sub ()
-  {
-    return new JQueryInvocation (JQueryProperty.jQueryField (), "sub");
-  }
-
-  /**
-   * @return The invocation of the static jQuery function
    *         <code>jQuery.trim()</code> with return type String
    */
   @Nonnull

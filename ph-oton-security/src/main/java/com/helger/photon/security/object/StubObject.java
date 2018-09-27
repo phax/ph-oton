@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.type.ObjectType;
@@ -78,21 +77,6 @@ public final class StubObject extends AbstractBusinessObject
   public ObjectType getObjectType ()
   {
     return OT_STUB;
-  }
-
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public StubObject internalGetWithForcedID (@Nonnull @Nonempty final String sID)
-  {
-    return new StubObject (sID,
-                           getCreationDateTime (),
-                           getCreationUserID (),
-                           getLastModificationDateTime (),
-                           getLastModificationUserID (),
-                           getDeletionDateTime (),
-                           getDeletionUserID (),
-                           attrs ());
   }
 
   /**

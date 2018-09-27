@@ -74,13 +74,6 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     super (EHTMLElement.SELECT);
   }
 
-  @Deprecated
-  public AbstractHCSelect (@Nullable final Iterable <String> aPreselectedValues)
-  {
-    this ();
-    m_aPreselectedValues.addAll (aPreselectedValues);
-  }
-
   public AbstractHCSelect (@Nonnull final IHCRequestField aRF)
   {
     this ();

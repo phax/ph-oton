@@ -41,7 +41,6 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.CloneHelper;
 import com.helger.commons.state.EChange;
@@ -731,13 +730,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nonnull
-  @Deprecated
-  public DataTables setInitialOrder (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
-  {
-    return setInitialOrder (new DataTablesOrder ().addColumn (nIndex, eSortOrder));
-  }
-
-  @Nonnull
   public DataTables setInitialOrder (@Nullable final DataTablesOrder aInitialOrder)
   {
     m_aInitialOrder = aInitialOrder;
@@ -826,34 +818,16 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // DataTables - Columns
   //
   @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <DataTablesColumnDef> getAllColumns ()
+  @ReturnsMutableObject
+  public ICommonsList <DataTablesColumnDef> columnDefs ()
   {
-    return m_aColumnDefs.getClone ();
+    return m_aColumnDefs;
   }
 
-  public boolean hasColumns ()
+  @Nullable
+  public DataTablesColumnDef findFirstColumnWithTarget (final int nTarget)
   {
-    return m_aColumnDefs.isNotEmpty ();
-  }
-
-  @Nonnegative
-  public int getColumnCount ()
-  {
-    return m_aColumnDefs.size ();
-  }
-
-  @Nonnull
-  @Deprecated
-  public DataTablesColumnDef getOrCreateColumnOfTarget (@Nonnegative final int nTarget)
-  {
-    for (final DataTablesColumnDef aCurColumn : m_aColumnDefs)
-      if (aCurColumn.hasTarget (nTarget))
-        return aCurColumn;
-
-    final DataTablesColumnDef aColumn = new DataTablesColumnDef (nTarget);
-    m_aColumnDefs.add (aColumn);
-    return aColumn;
+    return m_aColumnDefs.findFirst (x -> x.hasTarget (nTarget));
   }
 
   @Nonnull

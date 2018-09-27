@@ -51,7 +51,8 @@ import com.helger.xml.serialize.read.SAXReaderSettings;
  */
 @ThreadSafe
 public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends
-                                                     AbstractWebPage <WPECTYPE> implements IWebPageResourceContent
+                                                     AbstractWebPage <WPECTYPE> implements
+                                                     IWebPageResourceContent
 {
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
@@ -62,13 +63,6 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   private boolean m_bReadEveryTime = GlobalDebug.isDebugMode ();
 
   @Nonnull
-  @Deprecated
-  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource)
-  {
-    return readHTMLPageFragment (aResource, true);
-  }
-
-  @Nonnull
   public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
                                                       final boolean bPeformStandardCleansing)
   {
@@ -77,16 +71,6 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
                                  HCSettings.getConversionSettings ().getHTMLVersion (),
                                  (SAXReaderSettings) null,
                                  bPeformStandardCleansing);
-  }
-
-  @Nonnull
-  @Deprecated
-  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
-                                                      @Nonnull final Charset aCharset,
-                                                      @Nonnull final EHTMLVersion eHTMLVersion,
-                                                      @Nullable final SAXReaderSettings aAdditionalSaxReaderSettings)
-  {
-    return readHTMLPageFragment (aResource, aCharset, eHTMLVersion, aAdditionalSaxReaderSettings, true);
   }
 
   @Nonnull

@@ -54,13 +54,6 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
     setFormType (EBootstrapFormType.HORIZONTAL);
   }
 
-  @Deprecated
-  public BootstrapViewForm (@Nonnull final EBootstrapFormType eFormType)
-  {
-    this ();
-    setFormType (eFormType);
-  }
-
   @Nonnull
   public final EBootstrapFormType getFormType ()
   {

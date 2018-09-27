@@ -38,13 +38,6 @@ public class HCSelect extends AbstractHCSelect <HCSelect>
     setName (sName);
   }
 
-  @Deprecated
-  public HCSelect (@Nullable final String sName, @Nullable final Iterable <String> aPreselectedValues)
-  {
-    super (aPreselectedValues);
-    setName (sName);
-  }
-
   public HCSelect (@Nonnull final IHCRequestField aRF)
   {
     super (aRF);
