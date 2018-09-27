@@ -65,7 +65,7 @@ public final class HCPTest
       aElement.setID ("ID blank");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final IllegalStateException ex)
     {}
 
     try
@@ -74,7 +74,7 @@ public final class HCPTest
       aElement.setID (" IDblank");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final IllegalStateException ex)
     {}
 
     try
@@ -83,7 +83,7 @@ public final class HCPTest
       aElement.setID ("ID\tblank");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final IllegalStateException ex)
     {}
     assertEquals ("foo", aElement.getID ());
   }
