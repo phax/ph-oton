@@ -33,7 +33,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.0.3 - work in progress
+* v8.1.0 - work in progress
   * Extended the `Favorite` APIs
   * Initial versions of the subproject `ph-oton-bootstrap4-uictrls` is available 
   * Initial versions of the subproject `ph-oton-bootstrap4-pages` is available 
