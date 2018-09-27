@@ -16,8 +16,13 @@
  */
 package com.helger.html.hc.html.sections;
 
+import javax.annotation.Nonnull;
+
 import com.helger.html.EHTMLElement;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
+import com.helger.html.hc.html.HCHTMLHelper;
 
 /**
  * Represents an HTML &lt;H2&gt; element
@@ -35,5 +40,19 @@ public abstract class AbstractHCH2 <IMPLTYPE extends AbstractHCH2 <IMPLTYPE>> ex
   public AbstractHCH2 ()
   {
     super (EHTMLElement.H2);
+  }
+
+  @Override
+  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  {
+    super.onConsistencyCheck (aConversionSettings);
+    if (HCHTMLHelper.recursiveContainsChildWithDifferentTagName (this,
+                                                                 EHTMLElement.H1,
+                                                                 EHTMLElement.H2,
+                                                                 EHTMLElement.H4,
+                                                                 EHTMLElement.H5,
+                                                                 EHTMLElement.H5,
+                                                                 EHTMLElement.H6))
+      HCConsistencyChecker.consistencyError ("H2 contains other nested header");
   }
 }
