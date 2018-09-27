@@ -66,8 +66,8 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_SAVE_AS_XML = true;
   /**
-   * By default the class path entries are not added, because the Tomcat classpath
-   * is not very interesting.
+   * By default the class path entries are not added, because the Tomcat
+   * classpath is not very interesting.
    *
    * @since 7.0.4
    */
@@ -77,8 +77,8 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER = true;
   /**
-   * By default only ever 100th internal errors with the same stack trace is send
-   * be email.
+   * By default only ever 100th internal errors with the same stack trace is
+   * send be email.
    *
    * @since 7.0.6
    */
@@ -292,7 +292,7 @@ public class InternalErrorBuilder
   }
 
   @Nonnull
-  public final InternalErrorBuilder addEmailAttachment (@Nullable final IEmailAttachment aEmailAttachment)
+  public final InternalErrorBuilder addEmailAttachment (@Nonnull final IEmailAttachment aEmailAttachment)
   {
     if (m_aEmailAttachments == null)
       m_aEmailAttachments = new EmailAttachmentList ();
@@ -343,8 +343,8 @@ public class InternalErrorBuilder
    * Add the class path to the internal errors?
    *
    * @param bAddClassPath
-   *        <code>true</code> to add the class path entries, <code>false</code> to
-   *        not do it.
+   *        <code>true</code> to add the class path entries, <code>false</code>
+   *        to not do it.
    * @return this for chaining
    * @since 7.0.4
    */
@@ -401,7 +401,7 @@ public class InternalErrorBuilder
    * @return this
    */
   @Nonnull
-  public final InternalErrorBuilder setFromWebExecutionContext (@Nullable final ISimpleWebExecutionContext aSWEC)
+  public final InternalErrorBuilder setFromWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
     setDisplayLocale (aSWEC.getDisplayLocale ());
     setRequestScope (aSWEC.getRequestScope ());
