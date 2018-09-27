@@ -21,26 +21,29 @@ import javax.annotation.Nonnull;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.grouping.AbstractHCULBase;
+import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.nav.BootstrapNavItem;
 
 /**
- * Bootstrap 4 Navbar nav
+ * Bootstrap 4 Navbar toggleable
  *
  * @author Philip Helger
  */
-public class BootstrapNavbarNav extends AbstractHCULBase <BootstrapNavbarNav, BootstrapNavItem>
+public class BootstrapNavbarToggleable extends AbstractHCDiv <BootstrapNavbarToggleable>
 {
-  public BootstrapNavbarNav ()
+  public BootstrapNavbarToggleable ()
+  {}
+
+  @Nonnull
+  public BootstrapNavbarText addAndReturnText ()
   {
-    super (BootstrapNavItem.class);
+    return addAndReturnChild (new BootstrapNavbarText ());
   }
 
-  @Override
-  protected final BootstrapNavItem createEmptyItem ()
+  @Nonnull
+  public BootstrapNavbarNav addAndReturnNav ()
   {
-    return new BootstrapNavItem ();
+    return addAndReturnChild (new BootstrapNavbarNav ());
   }
 
   @Override
@@ -48,6 +51,7 @@ public class BootstrapNavbarNav extends AbstractHCULBase <BootstrapNavbarNav, Bo
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-    addClass (CBootstrapCSS.NAVBAR_NAV);
+    addClass (CBootstrapCSS.COLLAPSE);
+    addClass (CBootstrapCSS.NAVBAR_COLLAPSE);
   }
 }

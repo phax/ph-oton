@@ -27,7 +27,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElementWithChildren;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.sections.AbstractHCNav;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
@@ -126,11 +125,11 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
   /**
    * Shortcut for {@link #addToggler(String)} and
    * {@link #addAndReturnToggleable(String)} with an automatically assigned ID.
-   * 
-   * @return The toggleable DIV to be filled
+   *
+   * @return The toggleable to be filled
    */
   @Nonnull
-  public HCDiv addAndReturnToggleable ()
+  public BootstrapNavbarToggleable addAndReturnToggleable ()
   {
     final String sIDToToggle = GlobalIDFactory.getNewStringID ();
     addToggler (sIDToToggle);
@@ -138,11 +137,9 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
   }
 
   @Nonnull
-  public HCDiv addAndReturnToggleable (@Nonnull @Nonempty final String sIDToToggle)
+  public BootstrapNavbarToggleable addAndReturnToggleable (@Nonnull @Nonempty final String sIDToToggle)
   {
-    final HCDiv ret = new HCDiv ().addClass (CBootstrapCSS.COLLAPSE)
-                                  .addClass (CBootstrapCSS.NAVBAR_COLLAPSE)
-                                  .setID (sIDToToggle);
+    final BootstrapNavbarToggleable ret = new BootstrapNavbarToggleable ().setID (sIDToToggle);
     return addAndReturnChild (ret);
   }
 

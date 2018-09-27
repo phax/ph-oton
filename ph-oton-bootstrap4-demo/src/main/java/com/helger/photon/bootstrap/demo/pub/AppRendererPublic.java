@@ -61,7 +61,7 @@ import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.bootstrap4.layout.BootstrapContainer;
 import com.helger.photon.bootstrap4.navbar.BootstrapNavbar;
 import com.helger.photon.bootstrap4.navbar.BootstrapNavbarNav;
-import com.helger.photon.bootstrap4.navbar.BootstrapNavbarText;
+import com.helger.photon.bootstrap4.navbar.BootstrapNavbarToggleable;
 import com.helger.photon.bootstrap4.navbar.EBootstrapNavbarExpandType;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRendererHorz;
@@ -112,21 +112,21 @@ public final class AppRendererPublic
     aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
                       aLinkToStartPage);
 
-    final HCDiv aToggleable = aNavbar.addAndReturnToggleable ();
+    final BootstrapNavbarToggleable aToggleable = aNavbar.addAndReturnToggleable ();
     if (aUser != null)
     {
-      aToggleable.addChild (new BootstrapNavbarText ().addChild ("Logged in as ")
-                                                      .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
-                                                                                                                              aDisplayLocale))));
+      aToggleable.addAndReturnText ()
+                 .addChild ("Logged in as ")
+                 .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser, aDisplayLocale)));
 
-      final BootstrapNavbarNav aNavbarNav = aToggleable.addAndReturnChild (new BootstrapNavbarNav ());
-      aNavbarNav.addItem ()
-                .addNavLink (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH))
-                .addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale));
+      aToggleable.addAndReturnNav ()
+                 .addItem ()
+                 .addNavLink (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH))
+                 .addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale));
     }
     else
     {
-      final BootstrapNavbarNav aNavbarNav = aToggleable.addAndReturnChild (new BootstrapNavbarNav ());
+      final BootstrapNavbarNav aNavbarNav = aToggleable.addAndReturnNav ();
       final BootstrapDropdownMenu aDropDown = new BootstrapDropdownMenu ();
       {
         // 300px would lead to a messy layout - so 250px is fine

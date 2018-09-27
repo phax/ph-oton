@@ -17,7 +17,6 @@
 package com.helger.photon.bootstrap.demo.pub.page.icon;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -37,15 +36,6 @@ public abstract class AbstractPagePublicIcon extends AbstractAppWebPage
   public AbstractPagePublicIcon (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
-  }
-
-  @Override
-  @Nullable
-  public String getHeaderText (@Nonnull final WebPageExecutionContext aWPEC)
-  {
-    if (true)
-      return super.getHeaderText (aWPEC);
-    return null;
   }
 
   protected abstract void fillIcons (@Nonnull final WebPageExecutionContext aWPEC);
