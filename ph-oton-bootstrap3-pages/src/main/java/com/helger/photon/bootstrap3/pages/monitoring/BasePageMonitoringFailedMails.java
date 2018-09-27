@@ -267,6 +267,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     };
     addCustomHandler (ACTION_RESEND_ALL, aResendAllHdl);
     addCustomHandler (ACTION_RESEND_ALL_DEFAULT_SETTINGS, aResendAllHdl);
+    setObjectLockingEnabled (true);
   }
 
   public BasePageMonitoringFailedMails (@Nonnull @Nonempty final String sID,
@@ -304,12 +305,6 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     super (sID, aName, aDescription);
     m_aFailedMailQueue = ValueEnforcer.notNull (aFailedMailQueue, "FailedMailQueue");
     _init ();
-  }
-
-  @Override
-  protected boolean isObjectLockingEnabled ()
-  {
-    return true;
   }
 
   @Override

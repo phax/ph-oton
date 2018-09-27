@@ -294,6 +294,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
         return EShowList.DONT_SHOW_LIST;
       }
     });
+    setObjectLockingEnabled (true);
   }
 
   public BasePageSettingsSMTP (@Nonnull final NamedSMTPSettingsManager aMgr, @Nonnull @Nonempty final String sID)
@@ -330,12 +331,6 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     super (sID, aName, aDescription);
     m_aMgr = ValueEnforcer.notNull (aMgr, "NamedSMTPSettingsManager");
     _init ();
-  }
-
-  @Override
-  protected boolean isObjectLockingEnabled ()
-  {
-    return true;
   }
 
   @Override

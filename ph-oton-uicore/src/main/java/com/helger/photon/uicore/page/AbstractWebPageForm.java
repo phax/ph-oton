@@ -81,6 +81,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                           AbstractWebPage <WPECTYPE>
 {
   public static final String FORM_ID_INPUT = "inputform";
+  public static final boolean DEFAULT_OBJECT_LOCKING_ENABLED = false;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractWebPageForm.class);
 
@@ -88,6 +89,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aDeleteHandler;
   private IWebPageActionHandler <DATATYPE, WPECTYPE> m_aUndeleteHandler;
   private final ICommonsMap <String, IWebPageActionHandler <DATATYPE, WPECTYPE>> m_aCustomHandlers = new CommonsHashMap <> ();
+  private boolean m_bObjectLockingEnabled = DEFAULT_OBJECT_LOCKING_ENABLED;
 
   public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
                               @Nonnull final IMultilingualText aName,
@@ -127,6 +129,30 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
+   * Enable or disable object locking.
+   *
+   * @param bObjectLockingEnabled
+   *        <code>true</code> to enable object locking, <code>false</code> to
+   *        disable it.
+   * @see #isObjectLockingEnabled()
+   */
+  protected final void setObjectLockingEnabled (final boolean bObjectLockingEnabled)
+  {
+    m_bObjectLockingEnabled = bObjectLockingEnabled;
+  }
+
+  /**
+   * @return <code>true</code> if object locking should be active,
+   *         <code>false</code> if not. By default (for backwards compatibility
+   *         reasons) locking is disabled.
+   * @see #DEFAULT_OBJECT_LOCKING_ENABLED
+   */
+  protected final boolean isObjectLockingEnabled ()
+  {
+    return m_bObjectLockingEnabled;
+  }
+
+  /**
    * Get the display name of the passed object.
    *
    * @param aWPEC
@@ -147,8 +173,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
    *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, boolean, EWebPageFormAction, FormErrorList)}
-   *         should be a file-upload form, <code>false</code> if a regular form is
-   *         sufficient.
+   *         should be a file-upload form, <code>false</code> if a regular form
+   *         is sufficient.
    */
   @OverrideOnDemand
   protected boolean isFileUploadForm (@Nonnull final WPECTYPE aWPEC)
@@ -837,7 +863,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        never {@link EWebPageFormAction#SHOW_LIST}.
    * @param aSelectedObject
    *        The currently selected object. May be <code>null</code>.
-   * @return <code>true</code> if the action is allowed, <code>false</code> if not
+   * @return <code>true</code> if the action is allowed, <code>false</code> if
+   *         not
    */
   @OverrideOnDemand
   protected boolean isActionAllowed (@Nonnull final WPECTYPE aWPEC,
@@ -860,19 +887,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   protected abstract DATATYPE getSelectedObject (@Nonnull WPECTYPE aWPEC, @Nullable String sID);
 
   /**
-   * @return <code>true</code> if object locking should be active,
-   *         <code>false</code> if not. By default (for backwards compatibility
-   *         reasons) locking is disabled.
-   */
-  @OverrideOnDemand
-  protected boolean isObjectLockingEnabled ()
-  {
-    return false;
-  }
-
-  /**
-   * Check if locking should be performed on the current request or not. Override
-   * with care!
+   * Check if locking should be performed on the current request or not.
+   * Override with care!
    *
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
@@ -895,14 +911,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   /**
-   * This method is called before the main processing starts. It can e.g. be used
-   * to try to lock the specified object. When overriding the method make sure to
-   * emit all error messages on your own, when e.g. an object is locked. If
-   * {@link EContinue#BREAK} is returned, the list of objects is shown by
+   * This method is called before the main processing starts. It can e.g. be
+   * used to try to lock the specified object. When overriding the method make
+   * sure to emit all error messages on your own, when e.g. an object is locked.
+   * If {@link EContinue#BREAK} is returned, the list of objects is shown by
    * default.<br>
-   * If locking is enabled, try to lock the specified object. When overriding the
-   * method make sure to emit all error messages on your own, when e.g. an object
-   * is locked.
+   * If locking is enabled, try to lock the specified object. When overriding
+   * the method make sure to emit all error messages on your own, when e.g. an
+   * object is locked.
    *
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
@@ -1003,8 +1019,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
-   *        The currently selected object. May be <code>null</code> when creating
-   *        a new object
+   *        The currently selected object. May be <code>null</code> when
+   *        creating a new object
    * @param aFormErrors
    *        Object for storing the validation errors. Never <code>null</code>.
    * @param eFormAction
@@ -1072,8 +1088,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The currently selected object. May be <code>null</code> for newly
    *        created objects.
    * @param aForm
-   *        The parent form. Use this as parent and not the node list from the web
-   *        page execution context! Never <code>null</code>.
+   *        The parent form. Use this as parent and not the node list from the
+   *        web page execution context! Never <code>null</code>.
    * @param bIsFormSubmitted
    *        <code>true</code> if the form was already submitted,
    *        <code>false</code> if not.
@@ -1114,8 +1130,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
-   *        The currently selected object. May be <code>null</code> when creating
-   *        a new object
+   *        The currently selected object. May be <code>null</code> when
+   *        creating a new object
    * @param aFormErrors
    *        Object for storing the validation errors. Never <code>null</code>.
    * @param eFormAction

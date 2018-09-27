@@ -160,6 +160,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
         return EShowList.DONT_SHOW_LIST;
       }
     });
+    setObjectLockingEnabled (true);
   }
 
   public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID)
@@ -188,12 +189,6 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
   {
     super (sID, aName, aDescription);
     _init ();
-  }
-
-  @Override
-  protected boolean isObjectLockingEnabled ()
-  {
-    return true;
   }
 
   @Override
