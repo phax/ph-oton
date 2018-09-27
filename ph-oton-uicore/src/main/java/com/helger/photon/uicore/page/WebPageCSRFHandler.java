@@ -83,6 +83,10 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
       {
         // CSRF failure!
         m_aErrorHdl.onCSRFError (aWPEC, sRetrievedNonce, aCSRFSessionMgr.getNonce ());
+
+        // Create a new nonce after one failure
+        aCSRFSessionMgr.generateNewNonce ();
+
         return EContinue.BREAK;
       }
     }
