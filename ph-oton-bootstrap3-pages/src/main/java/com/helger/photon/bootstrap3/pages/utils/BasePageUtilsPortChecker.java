@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.bootstrap4.pages.sysinfo;
+package com.helger.photon.bootstrap3.pages.utils;
 
 import java.util.Locale;
 
@@ -39,16 +39,14 @@ import com.helger.html.hc.html.textlevel.HCCode;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.network.port.ENetworkPortStatus;
 import com.helger.network.port.NetworkPortHelper;
-import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap4.badge.BootstrapBadge;
-import com.helger.photon.bootstrap4.badge.EBootstrapBadgeType;
-import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
-import com.helger.photon.bootstrap4.card.BootstrapCard;
-import com.helger.photon.bootstrap4.card.BootstrapCardBody;
-import com.helger.photon.bootstrap4.form.BootstrapForm;
-import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
-import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
+import com.helger.photon.bootstrap3.alert.BootstrapInfoBox;
+import com.helger.photon.bootstrap3.button.BootstrapSubmitButton;
+import com.helger.photon.bootstrap3.form.BootstrapForm;
+import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap3.label.BootstrapLabel;
+import com.helger.photon.bootstrap3.label.EBootstrapLabelType;
+import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
+import com.helger.photon.bootstrap3.panel.BootstrapPanel;
 import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.uicore.css.CPageParam;
@@ -64,7 +62,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoPortChecker <WPECTYPE extends IWebPageExecutionContext> extends
+public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext> extends
                                         AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
@@ -101,24 +99,24 @@ public class BasePageSysInfoPortChecker <WPECTYPE extends IWebPageExecutionConte
   private static final String FIELD_HOST = "host";
   private static final String FIELD_PORT = "port";
 
-  public BasePageSysInfoPortChecker (@Nonnull @Nonempty final String sID)
+  public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID)
   {
-    super (sID, EWebPageText.PAGE_NAME_SYSINFO_PORT_CHECKER.getAsMLT ());
+    super (sID, EWebPageText.PAGE_NAME_UTILS_PORT_CHECKER.getAsMLT ());
   }
 
-  public BasePageSysInfoPortChecker (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {
     super (sID, sName);
   }
 
-  public BasePageSysInfoPortChecker (@Nonnull @Nonempty final String sID,
+  public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID,
                                      @Nonnull final String sName,
                                      @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
-  public BasePageSysInfoPortChecker (@Nonnull @Nonempty final String sID,
+  public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID,
                                      @Nonnull final IMultilingualText aName,
                                      @Nullable final IMultilingualText aDescription)
   {
@@ -156,19 +154,19 @@ public class BasePageSysInfoPortChecker <WPECTYPE extends IWebPageExecutionConte
 
       if (aFormErrors.isEmpty ())
       {
-        final BootstrapCard aResult = new BootstrapCard ();
-        aResult.createAndAddHeader ().addChild (EText.MSG_RESULT_HEADER.getDisplayText (aDisplayLocale));
-        final BootstrapCardBody aBody = aResult.createAndAddBody ();
+        final BootstrapPanel aResult = new BootstrapPanel ();
+        aResult.getOrCreateHeader ().addChild (EText.MSG_RESULT_HEADER.getDisplayText (aDisplayLocale));
+        final HCDiv aBody = aResult.getBody ();
         for (final Integer aPort : aPorts)
         {
           final ENetworkPortStatus eStatus = NetworkPortHelper.checkPortOpen (sHost, aPort.intValue (), 3_000);
           aBody.addChild (new HCDiv ().addChild (EText.MSG_RESULT_STATUS_PREFIX.getDisplayText (aDisplayLocale))
                                       .addChild (new HCCode ().addChild (sHost + ":" + aPort))
                                       .addChild (" = ")
-                                      .addChild (new BootstrapBadge (eStatus.isPortOpen () ? EBootstrapBadgeType.SUCCESS
-                                                                                           : EBootstrapBadgeType.DANGER).addChild (eStatus.toString ())));
+                                      .addChild (new BootstrapLabel (eStatus.isPortOpen () ? EBootstrapLabelType.SUCCESS
+                                                                                           : EBootstrapLabelType.DANGER).addChild (eStatus.toString ())));
         }
-        aNodeList.addChild (aResult.addClass (CBootstrapCSS.MB_2));
+        aNodeList.addChild (aResult);
       }
     }
 

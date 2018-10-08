@@ -59,13 +59,13 @@ import com.helger.photon.bootstrap3.pages.settings.BasePageSettingsSMTP;
 import com.helger.photon.bootstrap3.pages.settings.BasePageSettingsSystemMessage;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoEnvironmentVariables;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoNetwork;
-import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoPortChecker;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoRequest;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoSecurity;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoServletContext;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoSystemProperties;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThirdPartyLibraries;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThreads;
+import com.helger.photon.bootstrap3.pages.utils.BasePageUtilsPortChecker;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
@@ -98,7 +98,6 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_SYSINFO = "admin_sysinfo";
   public static final String MENU_ADMIN_SYSINFO_ENVVARS = "admin_sysinfo_envvars";
   public static final String MENU_ADMIN_SYSINFO_NETWORK = "admin_sysinfo_network";
-  public static final String MENU_ADMIN_SYSINFO_PORT_CHECKER = "admin_sysinfo_portchecker";
   public static final String MENU_ADMIN_SYSINFO_REQUEST = "admin_sysinfo_request";
   public static final String MENU_ADMIN_SYSINFO_SECURITY = "admin_sysinfo_security";
   public static final String MENU_ADMIN_SYSINFO_SERVLETCONTEXT = "admin_sysinfo_servletcontext";
@@ -122,6 +121,9 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_DATA_CURRENCIES = "admin_data_currencies";
   public static final String MENU_ADMIN_DATA_LANGUAGES = "admin_data_languages";
   public static final String MENU_ADMIN_DATA_TIMEZONES = "admin_data_timezones";
+
+  public static final String MENU_ADMIN_UTILS = "admin_utils";
+  public static final String MENU_ADMIN_UTILS_PORT_CHECKER = "admin_utils_portchecker";
 
   public static final String MENU_ADMIN_SETTINGS = "admin_settings";
   public static final String MENU_ADMIN_SETTINGS_GLOBAL = "admin_settings_global";
@@ -238,8 +240,6 @@ public final class BootstrapPagesMenuConfigurator
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoNetwork <WPECTYPE> (MENU_ADMIN_SYSINFO_NETWORK))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoPortChecker <WPECTYPE> (MENU_ADMIN_SYSINFO_PORT_CHECKER))
-             .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoRequest <WPECTYPE> (MENU_ADMIN_SYSINFO_REQUEST))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoSecurity <WPECTYPE> (MENU_ADMIN_SYSINFO_SECURITY))
@@ -334,6 +334,21 @@ public final class BootstrapPagesMenuConfigurator
   }
 
   @Nonnull
+  public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addUtilsItems (@Nonnull final IMenuTree aMenuTree,
+                                                                                         @Nonnull final IMenuItem aParent,
+                                                                                         @Nullable final IMenuObjectFilter aDisplayFilter)
+  {
+    final IMenuItemPage aAdminSysInfo = aMenuTree.createItem (aParent,
+                                                              new BasePageShowChildren <WPECTYPE> (MENU_ADMIN_UTILS,
+                                                                                                   EWebPageText.PAGE_NAME_UTILS.getAsMLT (),
+                                                                                                   aMenuTree))
+                                                 .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminSysInfo, new BasePageUtilsPortChecker <WPECTYPE> (MENU_ADMIN_UTILS_PORT_CHECKER))
+             .setDisplayFilter (aDisplayFilter);
+    return aAdminSysInfo;
+  }
+
+  @Nonnull
   public static <WPECTYPE extends IWebPageExecutionContext> IMenuItemPage addSettingsItems (@Nonnull final IMenuTree aMenuTree,
                                                                                             @Nonnull final IMenuItem aParent,
                                                                                             @Nullable final IMenuObjectFilter aDisplayFilter)
@@ -384,6 +399,7 @@ public final class BootstrapPagesMenuConfigurator
     BootstrapPagesMenuConfigurator.addSysInfoItems (aMenuTree, aParent, aDisplayFilter);
     BootstrapPagesMenuConfigurator.addAppInfoItems (aMenuTree, aParent, aDisplayFilter);
     BootstrapPagesMenuConfigurator.addDataItems (aMenuTree, aParent, aDisplayFilter);
+    BootstrapPagesMenuConfigurator.addUtilsItems (aMenuTree, aParent, aDisplayFilter);
     BootstrapPagesMenuConfigurator.addSettingsItems (aMenuTree, aParent, aDisplayFilter);
   }
 }
