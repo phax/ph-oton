@@ -61,6 +61,7 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
   PAGE_NAME_SYSINFO ("System Informationen", "System information"),
   PAGE_NAME_SYSINFO_ENV_VARS ("Umgebungsvariablen", "Environment variables"),
   PAGE_NAME_SYSINFO_NETWORK ("Netzwerk", "Network"),
+  PAGE_NAME_SYSINFO_PORT_CHECKER ("Port Checker", "Port checker"),
   PAGE_NAME_SYSINFO_REQUEST ("Request", "Request"),
   PAGE_NAME_SYSINFO_SECURITY ("Sicherheit", "Security"),
   PAGE_NAME_SYSINFO_SERVLETCONTEXT ("ServletContext", "ServletContext"),

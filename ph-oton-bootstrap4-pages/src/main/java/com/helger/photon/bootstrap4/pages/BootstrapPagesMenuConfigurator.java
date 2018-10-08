@@ -59,6 +59,7 @@ import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsSMTP;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsSystemMessage;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoEnvironmentVariables;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoNetwork;
+import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoPortChecker;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoRequest;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoSecurity;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoServletContext;
@@ -97,6 +98,7 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_SYSINFO = "admin_sysinfo";
   public static final String MENU_ADMIN_SYSINFO_ENVVARS = "admin_sysinfo_envvars";
   public static final String MENU_ADMIN_SYSINFO_NETWORK = "admin_sysinfo_network";
+  public static final String MENU_ADMIN_SYSINFO_PORT_CHECKER = "admin_sysinfo_portchecker";
   public static final String MENU_ADMIN_SYSINFO_REQUEST = "admin_sysinfo_request";
   public static final String MENU_ADMIN_SYSINFO_SECURITY = "admin_sysinfo_security";
   public static final String MENU_ADMIN_SYSINFO_SERVLETCONTEXT = "admin_sysinfo_servletcontext";
@@ -235,6 +237,8 @@ public final class BootstrapPagesMenuConfigurator
                           new BasePageSysInfoEnvironmentVariables <WPECTYPE> (MENU_ADMIN_SYSINFO_ENVVARS))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoNetwork <WPECTYPE> (MENU_ADMIN_SYSINFO_NETWORK))
+             .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoPortChecker <WPECTYPE> (MENU_ADMIN_SYSINFO_PORT_CHECKER))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoRequest <WPECTYPE> (MENU_ADMIN_SYSINFO_REQUEST))
              .setDisplayFilter (aDisplayFilter);

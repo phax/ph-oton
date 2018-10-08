@@ -43,7 +43,7 @@ Contained subprojects are:
   * Added FontAwesome 5.2.0 free icons
   * Improved state API slightly
   * User group and role user interfaces were improved
-  * Updated to ph-web 9.0.3
+  * Updated to ph-web 9.0.5
   * Updated to popper 1.14.4
   * Added bulk export format "JSON (simple)" to have one without type information
   * Added a new Bootstrap 4 DateTime picker UI ctrl
@@ -52,6 +52,7 @@ Contained subprojects are:
   * Separated `HCPrismJS` and `TypeaheadEdit` in Bootstrap 3 and 4 versions
   * Dropped jQuery 1.x and 2.x files
   * Updated DataTables to 1.10.18
+  * Added new base page "Port checker"
 * v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled
