@@ -22,12 +22,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -63,6 +67,37 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 public class BasePageSysInfoPortChecker <WPECTYPE extends IWebPageExecutionContext> extends
                                         AbstractBootstrapWebPage <WPECTYPE>
 {
+  @Translatable
+  protected static enum EText implements IHasDisplayText
+  {
+    MSG_NOTE ("Hinweis: es können nur TCP-Ports geprüft werden.", "Note: only TCP ports can be checked."),
+    MSG_HOSTNAME ("Hostname", "Hostnmame"),
+    MSG_HOSTNAME_HELPTEXT ("Es kann ein Hostname oder eine IP-Adresse angegeben werden.",
+                           "A hostname or an IP address can be provided"),
+    MSG_PORTS ("Port Nummer(n)", "Port(s)"),
+    MSG_PORTS_HELPTEXT ("Mehrere Port-Nummern können durch Leerzeichen getrennt angegeben werden.",
+                        "Multiple port numbers can be provided, separated by space characters."),
+    MSG_BUTTON_CHECK ("Prüfe Ports", "Check ports"),
+    MSG_ERROR_HOSTNAME_MISSING ("Es muss ein Hostname angegeben werden.", "The hostname to check is mandatory."),
+    MSG_ERROR_PORT_MISSING ("Es muss mindestens eine Port-Nummer angegeben werden.",
+                            "At least one port number must be provided."),
+    MSG_RESULT_HEADER ("Überprüfungsergebnisse", "Port check results"),
+    MSG_RESULT_STATUS_PREFIX ("Status von ", "Status for ");
+
+    private final IMultilingualText m_aTP;
+
+    private EText (final String sDE, final String sEN)
+    {
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
+    }
+
+    @Nullable
+    public String getDisplayText (@Nonnull final Locale aContentLocale)
+    {
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    }
+  }
+
   private static final String FIELD_HOST = "host";
   private static final String FIELD_PORT = "port";
 
@@ -96,8 +131,7 @@ public class BasePageSysInfoPortChecker <WPECTYPE extends IWebPageExecutionConte
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    // TODO translate
-    aNodeList.addChild (new BootstrapInfoBox ().addChild ("Only TCP ports can be checked"));
+    aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NOTE.getDisplayText (aDisplayLocale)));
 
     final FormErrorList aFormErrors = new FormErrorList ();
 
@@ -115,20 +149,20 @@ public class BasePageSysInfoPortChecker <WPECTYPE extends IWebPageExecutionConte
         }
 
       if (StringHelper.hasNoText (sHost))
-        aFormErrors.addFieldError (FIELD_HOST, "Please provide a host name to check!");
+        aFormErrors.addFieldError (FIELD_HOST, EText.MSG_ERROR_HOSTNAME_MISSING.getDisplayText (aDisplayLocale));
 
       if (aPorts.isEmpty ())
-        aFormErrors.addFieldError (FIELD_PORT, "Please provide at least one port number!");
+        aFormErrors.addFieldError (FIELD_PORT, EText.MSG_ERROR_PORT_MISSING.getDisplayText (aDisplayLocale));
 
       if (aFormErrors.isEmpty ())
       {
         final BootstrapCard aResult = new BootstrapCard ();
-        aResult.createAndAddHeader ().addChild ("Port check results");
+        aResult.createAndAddHeader ().addChild (EText.MSG_RESULT_HEADER.getDisplayText (aDisplayLocale));
         final BootstrapCardBody aBody = aResult.createAndAddBody ();
         for (final Integer aPort : aPorts)
         {
           final ENetworkPortStatus eStatus = NetworkPortHelper.checkPortOpen (sHost, aPort.intValue (), 3_000);
-          aBody.addChild (new HCDiv ().addChild ("Status for ")
+          aBody.addChild (new HCDiv ().addChild (EText.MSG_RESULT_STATUS_PREFIX.getDisplayText (aDisplayLocale))
                                       .addChild (new HCCode ().addChild (sHost + ":" + aPort))
                                       .addChild (" = ")
                                       .addChild (new BootstrapBadge (eStatus.isPortOpen () ? EBootstrapBadgeType.SUCCESS
@@ -139,17 +173,16 @@ public class BasePageSysInfoPortChecker <WPECTYPE extends IWebPageExecutionConte
     }
 
     final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-    aForm.setEncTypeFileUpload ();
     aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_PERFORM));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel ("Hostname")
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HOSTNAME.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_HOST)))
-                                                 .setHelpText ("You can put host names or IP addresses here")
+                                                 .setHelpText (EText.MSG_HOSTNAME_HELPTEXT.getDisplayText (aDisplayLocale))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_HOST)));
-
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel ("Port(s)")
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_PORTS.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_PORT)))
-                                                 .setHelpText ("You can add multiple ports here, separated by spaces")
+                                                 .setHelpText (EText.MSG_PORTS_HELPTEXT.getDisplayText (aDisplayLocale))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_PORT)));
-    aForm.addChild (new BootstrapSubmitButton ().addChild ("Check ports").setIcon (EDefaultIcon.YES));
+    aForm.addChild (new BootstrapSubmitButton ().addChild (EText.MSG_BUTTON_CHECK.getDisplayText (aDisplayLocale))
+                                                .setIcon (EDefaultIcon.YES));
   }
 }
