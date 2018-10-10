@@ -64,6 +64,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
+  private ETriState m_eShowCalendarWeeks = ETriState.TRUE;
   private EBootstrap4DateTimePickerMode m_eMode = EBootstrap4DateTimePickerMode.DEFAULT;
   private String m_sFormat;
   private EBootstrap4DateTimePickerViewModeType m_eViewMode;
@@ -151,8 +152,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * Set the format string to be used. This is only necessary, if the default
-   * one from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   * Set the format string to be used. This is only necessary, if the default one
+   * from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
    *
    * @param sFormat
    *        Format string to be used. May be <code>null</code>.
@@ -162,6 +163,26 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public final BootstrapDateTimePicker setFormat (@Nullable final String sFormat)
   {
     m_sFormat = sFormat;
+    return this;
+  }
+
+  @Nonnull
+  public ETriState getShowCalendarWeeks ()
+  {
+    return m_eShowCalendarWeeks;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowCalendarWeeks (final boolean bShowCalendarWeeks)
+  {
+    return setShowCalendarWeeks (ETriState.valueOf (bShowCalendarWeeks));
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowCalendarWeeks (@Nonnull final ETriState eShowCalendarWeeks)
+  {
+    ValueEnforcer.notNull (eShowCalendarWeeks, "ShowCalendarWeeks");
+    m_eShowCalendarWeeks = eShowCalendarWeeks;
     return this;
   }
 
@@ -274,6 +295,10 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     if (StringHelper.hasText (m_aDisplayLocale.getLanguage ()))
       aOptions.add ("locale", m_aDisplayLocale.getLanguage ());
+
+    if (m_eShowCalendarWeeks.isDefined ())
+      aOptions.add ("calendarWeeks", m_eShowCalendarWeeks.getAsBooleanValue ());
+
     if (m_eViewMode != null)
       aOptions.add ("viewMode", m_eViewMode.getJSValueString ());
 
@@ -283,8 +308,6 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     if (m_eSideBySide.isDefined ())
       aOptions.add ("sideBySide", m_eSideBySide.getAsBooleanValue ());
-
-    aOptions.add ("calendarWeeks", true);
 
     // Explicit format present?
     aOptions.add ("format", StringHelper.hasText (m_sFormat) ? m_sFormat : m_eMode.getJSFormat (m_aDisplayLocale));
