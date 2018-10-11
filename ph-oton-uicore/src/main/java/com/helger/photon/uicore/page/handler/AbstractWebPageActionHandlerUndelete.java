@@ -56,10 +56,9 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
    *        The object to be undeleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final FORM_TYPE aForm,
-                                    @Nonnull final DATATYPE aSelectedObject)
-  {}
+  protected abstract void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
+                                             @Nonnull final FORM_TYPE aForm,
+                                             @Nonnull final DATATYPE aSelectedObject);
 
   /**
    * Perform object undelete
@@ -70,8 +69,7 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
    *        The object to be undeleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
-  {}
+  protected abstract void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject);
 
   /**
    * @param aWPEC
