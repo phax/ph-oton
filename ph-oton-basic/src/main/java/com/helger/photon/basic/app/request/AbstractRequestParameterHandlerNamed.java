@@ -17,7 +17,7 @@
 package com.helger.photon.basic.app.request;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -30,7 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  * @since 7.0.2
  */
-@Immutable
+@NotThreadSafe
 public abstract class AbstractRequestParameterHandlerNamed implements IRequestParameterHandler
 {
   /** The default name of the parameter selecting the current display locale */

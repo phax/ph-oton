@@ -30,6 +30,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FilenameHelper;
+import com.helger.commons.lang.GenericReflection;
 import com.helger.http.EHttpVersion;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.api.APIPath;
@@ -105,7 +106,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
         try
         {
           // Main API invocation
-          aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, (PhotonUnifiedResponse) aUnifiedResponse);
+          aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, GenericReflection.uncheckedCast (aUnifiedResponse));
 
           if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
           {

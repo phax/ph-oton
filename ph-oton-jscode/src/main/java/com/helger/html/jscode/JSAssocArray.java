@@ -296,6 +296,8 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   @Nullable
   public IJSExpression get (@Nullable final String sKey)
   {
+    if (sKey == null)
+      return null;
     return get (getKey (sKey));
   }
 

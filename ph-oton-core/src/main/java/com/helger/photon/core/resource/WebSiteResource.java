@@ -54,6 +54,8 @@ import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A single web site resource. This class is only used internally in
  * {@link WebSiteResourceCache}.
@@ -61,6 +63,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @Immutable
+@SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public class WebSiteResource
 {
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;

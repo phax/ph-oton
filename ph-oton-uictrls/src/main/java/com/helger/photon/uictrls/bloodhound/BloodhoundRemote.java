@@ -19,7 +19,7 @@ package com.helger.photon.uictrls.bloodhound;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -37,7 +37,7 @@ import com.helger.html.jscode.JSAssocArray;
  *
  * @author Philip Helger
  */
-@Immutable
+@NotThreadSafe
 public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
 {
   public static final String JSON_URL = "url";

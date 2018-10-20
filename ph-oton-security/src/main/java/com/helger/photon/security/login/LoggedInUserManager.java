@@ -86,8 +86,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {}
 
     /**
-     * @return The instance of the current session. If none exists, an instance is
-     *         created. Never <code>null</code>.
+     * @return The instance of the current session. If none exists, an instance
+     *         is created. Never <code>null</code>.
      */
     @Nonnull
     private static InternalSessionUserHolder _getInstance ()
@@ -194,7 +194,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  final class InternalUserLogoutCallbackUnlockAllObjects implements IUserLogoutCallback
+  static final class InternalUserLogoutCallbackUnlockAllObjects implements IUserLogoutCallback
   {
     @Override
     public void onUserLogout (@Nonnull final LoginInfo aInfo)
@@ -557,8 +557,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return A non-<code>null</code> but maybe empty set with all currently logged
-   *         in user IDs.
+   * @return A non-<code>null</code> but maybe empty set with all currently
+   *         logged in user IDs.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -601,8 +601,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return The ID of the user logged in this session or <code>null</code> if no
-   *         user is logged in.
+   * @return The ID of the user logged in this session or <code>null</code> if
+   *         no user is logged in.
    */
   @Nullable
   public String getCurrentUserID ()
@@ -622,8 +622,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return <code>true</code> if not user is currently logged into this session,
-   *         <code>false</code> if it is. This is the inverse of
+   * @return <code>true</code> if not user is currently logged into this
+   *         session, <code>false</code> if it is. This is the inverse of
    *         {@link #isUserLoggedInInCurrentSession()}.
    */
   public boolean isNoUserLoggedInInCurrentSession ()
@@ -632,8 +632,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return The user currently logged in this session or <code>null</code> if no
-   *         user is logged in.
+   * @return The user currently logged in this session or <code>null</code> if
+   *         no user is logged in.
    */
   @Nullable
   public IUser getCurrentUser ()

@@ -22,7 +22,7 @@ import java.util.Comparator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.compare.ESortOrder;
@@ -38,7 +38,7 @@ import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
  *
  * @author Philip Helger
  */
-@Immutable
+@NotThreadSafe
 public final class DTSSRequestDataOrderColumn implements Serializable
 {
   private final int m_nColumnIndex;

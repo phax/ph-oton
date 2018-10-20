@@ -122,7 +122,10 @@ import com.helger.html.hc.html.textlevel.*;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 @Immutable
+@SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public final class HCExtHelper
 {
   public static final char PATTERN_NEWLINE = '\n';

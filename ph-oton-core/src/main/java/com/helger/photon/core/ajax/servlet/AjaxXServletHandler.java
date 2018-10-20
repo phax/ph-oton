@@ -32,6 +32,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
+import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.wrapper.Wrapper;
@@ -151,8 +152,8 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.attrs ()
                                                                   .getCastedValue (SCOPE_ATTR_INVOKER, Wrapper.class)
                                                                   .get ();
-    final IAjaxExecutor aAjaxExecutor = aRequestScope.attrs ().getCastedValue (SCOPE_ATTR_EXECUTOR,
-                                                                               IAjaxExecutor.class);
+    final IAjaxExecutor aAjaxExecutor = aRequestScope.attrs ()
+                                                     .getCastedValue (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
 
     // Never cache the result but the executor may overwrite it
     aUnifiedResponse.disableCaching ();
@@ -163,7 +164,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
       aAjaxInvoker.invokeFunction (sAjaxFunctionName,
                                    aAjaxExecutor,
                                    aRequestScope,
-                                   (PhotonUnifiedResponse) aUnifiedResponse);
+                                   GenericReflection.uncheckedCast (aUnifiedResponse));
 
       if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
       {

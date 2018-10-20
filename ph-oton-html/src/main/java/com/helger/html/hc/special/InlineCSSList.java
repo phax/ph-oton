@@ -59,7 +59,7 @@ public class InlineCSSList
   {
     private final ICSSMediaList m_aMediaList;
 
-    public Key (@Nonnull final ICSSMediaList aMediaList)
+    public Key (@Nullable final ICSSMediaList aMediaList)
     {
       m_aMediaList = getSafeCSSMediaList (aMediaList);
     }

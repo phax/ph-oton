@@ -137,7 +137,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
 
   @Nonnull
   @Since ("7.10")
-  public BootstrapNav addText (@Nullable final IHCElementWithChildren <?> aContent)
+  public BootstrapNav addText (@Nonnull final IHCElementWithChildren <?> aContent)
   {
     return addItem (aContent.addClass (CBootstrapCSS.NAVBAR_TEXT), DEFAULT_DISABLED);
   }

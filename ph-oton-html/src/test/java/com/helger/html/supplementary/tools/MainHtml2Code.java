@@ -404,7 +404,8 @@ public class MainHtml2Code
 
   }
 
-  private static String _camel (final String s)
+  @Nonnull
+  private static String _camel (@Nonnull final String s)
   {
     return s.substring (0, 1).toUpperCase (Locale.US) + s.substring (1).toLowerCase (Locale.US);
   }
@@ -419,7 +420,8 @@ public class MainHtml2Code
     return "HC" + _camel (sTagName);
   }
 
-  private static String _quote (final String s)
+  @Nonnull
+  private static String _quote (@Nonnull final String s)
   {
     return "\"" + s + "\"";
   }
@@ -441,16 +443,17 @@ public class MainHtml2Code
       else
         if (sName.equalsIgnoreCase ("class"))
         {
-          sParams = "";
           int nClasses = 0;
+          final StringBuilder aSB = new StringBuilder ();
           for (final String sPart : StringHelper.getExploded (" ", sValue))
             if (sPart.length () > 0)
             {
               ++nClasses;
-              if (sParams.length () > 0)
-                sParams += ", ";
-              sParams += "DefaultCSSClassProvider.create (" + _quote (sPart.trim ()) + ")";
+              if (aSB.length () > 0)
+                aSB.append (", ");
+              aSB.append ("DefaultCSSClassProvider.create (").append (_quote (sPart.trim ())).append (')');
             }
+          sParams = aSB.toString ();
           sMethod = nClasses == 1 ? "addClass" : "addClasses";
         }
         else

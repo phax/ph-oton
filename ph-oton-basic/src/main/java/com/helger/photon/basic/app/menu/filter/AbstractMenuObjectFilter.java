@@ -50,7 +50,8 @@ public abstract class AbstractMenuObjectFilter implements IMenuObjectFilter
   @Nonnull
   public AbstractMenuObjectFilter setDescription (@Nullable final String sDescription)
   {
-    return setDescription (new ReadOnlyMultilingualText (LocaleHelper.LOCALE_INDEPENDENT, sDescription));
+    return setDescription (sDescription == null ? null : new ReadOnlyMultilingualText (LocaleHelper.LOCALE_INDEPENDENT,
+                                                                                       sDescription));
   }
 
   @Nonnull

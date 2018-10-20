@@ -37,6 +37,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.mime.MimeType;
 import com.helger.commons.serialize.SerializationHelper;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
@@ -124,7 +125,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
   public void xml (@Nullable final String sXML, @Nonnull final Charset aCharset)
   {
-    setContentAndCharset (sXML, aCharset);
+    setContentAndCharset (StringHelper.getNotNull (sXML), aCharset);
     setMimeType (new MimeType (CMimeType.APPLICATION_XML).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
                                                                         aCharset.name ()));
   }
@@ -151,7 +152,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
   public void text (@Nullable final String sValue)
   {
-    setContentAndCharset (sValue, StandardCharsets.UTF_8);
+    setContentAndCharset (StringHelper.getNotNull (sValue), StandardCharsets.UTF_8);
     setMimeType (CMimeType.TEXT_PLAIN);
   }
 
@@ -360,7 +361,10 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    */
   public void htmlSimple (@Nullable final IHCNode aNode)
   {
-    setContentAndCharset (HCRenderer.getAsHTMLStringWithoutNamespaces (aNode), HCSettings.getHTMLCharset ());
+    if (aNode == null)
+      setContentAndCharset ("", HCSettings.getHTMLCharset ());
+    else
+      setContentAndCharset (HCRenderer.getAsHTMLStringWithoutNamespaces (aNode), HCSettings.getHTMLCharset ());
     setMimeType (PhotonHTMLHelper.getMimeType (m_aRequestScope));
   }
 

@@ -21,7 +21,7 @@ import java.util.List;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ import com.helger.html.jscode.JSStringLiteral;
  *
  * @author Philip Helger
  */
-@Immutable
+@NotThreadSafe
 public class TypeaheadDataset
 {
   public static final String JSON_NAME = "name";

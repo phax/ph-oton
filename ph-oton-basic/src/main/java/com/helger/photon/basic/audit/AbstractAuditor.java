@@ -18,7 +18,7 @@ package com.helger.photon.basic.audit;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
@@ -30,7 +30,7 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
  *
  * @author Philip Helger
  */
-@Immutable
+@NotThreadSafe
 public abstract class AbstractAuditor implements IAuditor
 {
   private ICurrentUserIDProvider m_aCurrentUserIDProvider;

@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
  *
  * @author Philip Helger
  */
-@Immutable
+@NotThreadSafe
 public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRenderer
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_HELP_TEXT = DefaultCSSClassProvider.create ("form-group-help-text");
@@ -116,8 +116,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   }
 
   /**
-   * Modify the first control that is inserted. This method is only called when a
-   * label is present.
+   * Modify the first control that is inserted. This method is only called when
+   * a label is present.
    *
    * @param aLabel
    *        The label that was provided. Never <code>null</code>.
@@ -163,8 +163,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
   /**
    * Retrieve an optional CSS class that is provided to the final node. This
-   * method is only called if a non-<code>null</code> and non-empty error list is
-   * present.
+   * method is only called if a non-<code>null</code> and non-empty error list
+   * is present.
    *
    * @param aErrorList
    *        The error list. May be <code>null</code>.

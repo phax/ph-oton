@@ -87,23 +87,32 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
             final int nMultiJavaTypeArgs = aSignature.getArgumentsWithMultipleJavaTypesCount ();
             if (nMultiJavaTypeArgs == 0)
             {
-              String sParams = "";
+              final StringBuilder aParams = new StringBuilder ();
               final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
               for (final Argument aArg : aSignature.getAllArguments ())
               {
-                if (sParams.length () > 0)
-                  sParams += ", ";
+                if (aParams.length () > 0)
+                  aParams.append (", ");
 
                 final String sJavaType = aArg.getFirstJavaType ();
-                sParams += _getAnnotation (sJavaType) + sJavaType + " " + aArg.getIdentifier ();
+                aParams.append (_getAnnotation (sJavaType))
+                       .append (sJavaType)
+                       .append (' ')
+                       .append (aArg.getIdentifier ());
                 aJavaTypeKey.add (sJavaType);
               }
               if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringHelper.getImploded (',', aJavaTypeKey)))
               {
-                String sLine = sRealPrefix + "(" + sParams + ") { return " + aEntry.getIdentifier () + " ()";
+                final StringBuilder aLine = new StringBuilder ();
+                aLine.append (sRealPrefix)
+                     .append ('(')
+                     .append (aParams)
+                     .append (") { return ")
+                     .append (aEntry.getIdentifier ())
+                     .append (" ()");
                 for (final Argument aArg : aSignature.getAllArguments ())
-                  sLine += ".arg (" + aArg.getIdentifier () + ")";
-                aLines.add (sLine + "; }");
+                  aLine.append (".arg (").append (aArg.getIdentifier ()).append (')');
+                aLines.add (aLine.append ("; }").toString ());
               }
             }
             else
@@ -112,31 +121,34 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
               final Argument [] aMultiJavaTypeArgs = new Argument [nArgCount];
 
               // Build template
-              String sTemplate = "";
+              final StringBuilder aTemplate = new StringBuilder ();
               final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
               int nArgIndex = 0;
               for (final Argument aArg : aSignature.getAllArguments ())
               {
-                if (sTemplate.length () > 0)
-                  sTemplate += ", ";
+                if (aTemplate.length () > 0)
+                  aTemplate.append (", ");
 
                 if (aArg.getJavaTypeCount () > 1)
                 {
                   final String sJavaType = "{" + nArgIndex + "}";
                   aMultiJavaTypeArgs[nArgIndex] = aArg;
-                  sTemplate += sJavaType + " " + aArg.getIdentifier ();
+                  aTemplate.append (sJavaType).append (' ').append (aArg.getIdentifier ());
                   aJavaTypeKey.add (sJavaType);
                 }
                 else
                 {
                   final String sJavaType = aArg.getFirstJavaType ();
-                  sTemplate += _getAnnotation (sJavaType) + sJavaType + " " + aArg.getIdentifier ();
+                  aTemplate.append (_getAnnotation (sJavaType))
+                           .append (sJavaType)
+                           .append (' ')
+                           .append (aArg.getIdentifier ());
                   aJavaTypeKey.add (sJavaType);
                 }
                 ++nArgIndex;
               }
 
-              ICommonsList <String> aAllParams = new CommonsArrayList <> (sTemplate);
+              ICommonsList <String> aAllParams = new CommonsArrayList <> (aTemplate.toString ());
               ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
                                                                                                       aJavaTypeKey));
 
@@ -162,15 +174,16 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
               for (int i = 0; i < aAllParams.size (); ++i)
                 if (aUsedJavaSignatures.add (sUsedSignaturePrefix + aAllJavaKeys.get (i)))
                 {
-                  String sLine = sRealPrefix +
-                                 "(" +
-                                 aAllParams.get (i) +
-                                 ") { return " +
-                                 aEntry.getIdentifier () +
-                                 " ()";
+                  final StringBuilder aLine = new StringBuilder ();
+                  aLine.append (sRealPrefix)
+                       .append ("(")
+                       .append (aAllParams.get (i))
+                       .append (") { return ")
+                       .append (aEntry.getIdentifier ())
+                       .append (" ()");
                   for (final Argument aArg : aSignature.getAllArguments ())
-                    sLine += ".arg (" + aArg.getIdentifier () + ")";
-                  aLines.add (sLine + "; }");
+                    aLine.append (".arg (").append (aArg.getIdentifier ()).append (")");
+                  aLines.add (aLine.append ("; }").toString ());
                 }
             }
           }

@@ -80,33 +80,37 @@ public class Main_JQueryInvocationExtendedFuncTest extends AbstractCreateJQueryA
             final int nMultiJavaTypeArgs = aSignature.getArgumentsWithMultipleJavaTypesCount ();
             if (nMultiJavaTypeArgs == 0)
             {
-              String sParams = "";
+              final StringBuilder aParams = new StringBuilder ();
               final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
               for (final Argument aArg : aSignature.getAllArguments ())
               {
-                if (sParams.length () > 0)
-                  sParams += ", ";
+                if (aParams.length () > 0)
+                  aParams.append (", ");
 
                 final String sJavaType = aArg.getFirstJavaType ();
-                sParams += _getAnnotation (sJavaType) + sJavaType + " " + aArg.getIdentifier ();
+                aParams.append (_getAnnotation (sJavaType))
+                       .append (sJavaType)
+                       .append (" ")
+                       .append (aArg.getIdentifier ());
                 aJavaTypeKey.add (sJavaType);
               }
               if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringHelper.getImploded (',', aJavaTypeKey)))
               {
-                String sLine = sRealPrefix +
-                               (nUniqueIndex++) +
-                               "() { assertNotNull (JQuery.idRef (\"any\")." +
-                               aEntry.getIdentifier () +
-                               " (";
+                final StringBuilder aLine = new StringBuilder ();
+                aLine.append (sRealPrefix)
+                     .append (nUniqueIndex++)
+                     .append ("() { assertNotNull (JQuery.idRef (\"any\").")
+                     .append (aEntry.getIdentifier ())
+                     .append (" (");
                 int i = 0;
                 for (final Argument aArg : aSignature.getAllArguments ())
                 {
                   if (i++ > 0)
-                    sLine += ", ";
+                    aLine.append (", ");
                   final String sJavaType = aArg.getFirstJavaType ();
-                  sLine += _getTestValue (sJavaType);
+                  aLine.append (_getTestValue (sJavaType));
                 }
-                aLines.add (sLine + ")); }");
+                aLines.add (aLine.append (")); }").toString ());
               }
             }
             else
@@ -115,31 +119,31 @@ public class Main_JQueryInvocationExtendedFuncTest extends AbstractCreateJQueryA
               final Argument [] aMultiJavaTypeArgs = new Argument [nArgCount];
 
               // Build template
-              String sTemplate = "";
+              final StringBuilder aTemplate = new StringBuilder ();
               final ICommonsList <String> aJavaTypeKey = new CommonsArrayList <> ();
               int nArgIndex = 0;
               for (final Argument aArg : aSignature.getAllArguments ())
               {
-                if (sTemplate.length () > 0)
-                  sTemplate += ", ";
+                if (aTemplate.length () > 0)
+                  aTemplate.append (", ");
 
                 if (aArg.getJavaTypeCount () > 1)
                 {
                   final String sJavaType = "{" + nArgIndex + "}";
                   aMultiJavaTypeArgs[nArgIndex] = aArg;
-                  sTemplate += sJavaType;
+                  aTemplate.append (sJavaType);
                   aJavaTypeKey.add (sJavaType);
                 }
                 else
                 {
                   final String sJavaType = aArg.getFirstJavaType ();
-                  sTemplate += _getTestValue (sJavaType);
+                  aTemplate.append (_getTestValue (sJavaType));
                   aJavaTypeKey.add (sJavaType);
                 }
                 ++nArgIndex;
               }
 
-              ICommonsList <String> aAllParams = new CommonsArrayList <> (sTemplate);
+              ICommonsList <String> aAllParams = new CommonsArrayList <> (aTemplate.toString ());
               ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
                                                                                                       aJavaTypeKey));
 

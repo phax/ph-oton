@@ -29,7 +29,10 @@ import com.helger.html.hc.html.forms.HCCtrlHelper;
 import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCInput;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 @Immutable
+@SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public final class BootstrapHelper
 {
   @PresentForCodeCoverage
