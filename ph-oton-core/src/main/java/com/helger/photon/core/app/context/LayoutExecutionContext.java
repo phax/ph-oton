@@ -60,13 +60,13 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   }
 
   @Nonnull
-  public IMenuItemPage getSelectedMenuItem ()
+  public final IMenuItemPage getSelectedMenuItem ()
   {
     return m_aSelectedMenuItem;
   }
 
   @Nonnull
-  public SimpleURL getSelfHref ()
+  public final SimpleURL getSelfHref ()
   {
     SimpleURL ret = m_aSelfHref;
     if (ret == null)
@@ -77,8 +77,8 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     return ret.getClone ();
   }
 
-  public void postRedirectGet (@Nonnull final ISimpleURL aTargetURL,
-                               @Nullable final IHCNode aContent) throws ForcedRedirectException
+  public final void postRedirectGet (@Nonnull final ISimpleURL aTargetURL,
+                                     @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
     throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, aContent);

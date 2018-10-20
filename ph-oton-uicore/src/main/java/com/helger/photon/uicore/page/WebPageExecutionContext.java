@@ -45,13 +45,13 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
   }
 
   @Nonnull
-  public IWebPage <? extends IWebPageExecutionContext> getWebPage ()
+  public final IWebPage <? extends IWebPageExecutionContext> getWebPage ()
   {
     return m_aWebPage;
   }
 
   @Nonnull
-  public HCNodeList getNodeList ()
+  public final HCNodeList getNodeList ()
   {
     return m_aNodeList;
   }
