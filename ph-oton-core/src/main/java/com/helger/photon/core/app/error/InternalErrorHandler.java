@@ -427,54 +427,48 @@ public final class InternalErrorHandler
     if (aRequestScope != null)
     {
       final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
-      if (aHttpRequest != null)
+      try
       {
-        try
-        {
-          for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
-            aMetadata.addRequestField (aEntry.getKey (), aEntry.getValue ());
-        }
-        catch (final Throwable t2)
-        {
-          LOGGER.error ("Failed to get request fields from " + aHttpRequest, t2);
-        }
-        try
-        {
-          RequestHelper.getRequestHeaderMap (aHttpRequest)
-                       .forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v));
-        }
-        catch (final Throwable t2)
-        {
-          LOGGER.error ("Failed to get request headers from " + aHttpRequest, t2);
-        }
-        try
-        {
-          for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest)
-                                                                      .entrySet ())
-            aMetadata.addRequestParameter (aEntry.getKey (), aEntry.getValue ());
-        }
-        catch (final Throwable t2)
-        {
-          LOGGER.error ("Failed to get request parameters from " + aHttpRequest, t2);
-        }
-
-        try
-        {
-          final Cookie [] aCookies = ServletHelper.getRequestCookies (aHttpRequest);
-          if (aCookies != null)
-            for (final Cookie aCookie : aCookies)
-              aMetadata.addRequestCookie (aCookie.getName (), aCookie.getValue ());
-        }
-        catch (final Throwable t2)
-        {
-          LOGGER.error ("Failed to get request cookies from " + aHttpRequest, t2);
-        }
+        for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
+          aMetadata.addRequestField (aEntry.getKey (), aEntry.getValue ());
       }
-      else
-        aMetadata.addField ("HttpServletRequest", "RequestScope does not contain an HttpServletRequest");
+      catch (final Throwable t2)
+      {
+        LOGGER.error ("Failed to get request fields from " + aHttpRequest, t2);
+      }
+      try
+      {
+        RequestHelper.getRequestHeaderMap (aHttpRequest)
+                     .forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v));
+      }
+      catch (final Throwable t2)
+      {
+        LOGGER.error ("Failed to get request headers from " + aHttpRequest, t2);
+      }
+      try
+      {
+        for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest).entrySet ())
+          aMetadata.addRequestParameter (aEntry.getKey (), aEntry.getValue ());
+      }
+      catch (final Throwable t2)
+      {
+        LOGGER.error ("Failed to get request parameters from " + aHttpRequest, t2);
+      }
+
+      try
+      {
+        final Cookie [] aCookies = ServletHelper.getRequestCookies (aHttpRequest);
+        if (aCookies != null)
+          for (final Cookie aCookie : aCookies)
+            aMetadata.addRequestCookie (aCookie.getName (), aCookie.getValue ());
+      }
+      catch (final Throwable t2)
+      {
+        LOGGER.error ("Failed to get request cookies from " + aHttpRequest, t2);
+      }
     }
     else
-      aMetadata.addField ("RequestScope", "None available");
+      aMetadata.addField ("HttpServletRequest", "RequestScope does not contain an HttpServletRequest");
     return aMetadata;
   }
 

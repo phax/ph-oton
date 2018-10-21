@@ -75,7 +75,7 @@ public class JSAssignment extends AbstractJSExpression implements IJSStatement
   }
 
   @Override
-  @Nullable
+  @Nonnull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, (IJSStatement) this);

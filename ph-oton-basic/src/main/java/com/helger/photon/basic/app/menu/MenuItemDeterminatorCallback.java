@@ -41,7 +41,7 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
 {
   private final ICommonsMap <String, Boolean> m_aItems = new CommonsHashMap <> ();
   private final String m_sSelectedItemID;
-  private final DefaultTreeItemWithID <String, IMenuObject> m_aSelectedItem;
+  private final transient DefaultTreeItemWithID <String, IMenuObject> m_aSelectedItem;
 
   public MenuItemDeterminatorCallback (@Nonnull final IMenuTree aMenuTree, @Nullable final String sSelectedMenuItemID)
   {

@@ -49,14 +49,14 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 @ThreadSafe
 public class AsynchronousAuditor extends AbstractAuditor
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (AsynchronousAuditor.class);
-
-  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private final ConcurrentCollectorMultiple <IAuditItem> m_aCollector;
   // Just to have custom named threads....
   private static final ThreadFactory s_aThreadFactory = new BasicThreadFactory.Builder ().setNamingPattern ("AsyncAuditor")
                                                                                          .setDaemon (true)
                                                                                          .build ();
+  private static final Logger LOGGER = LoggerFactory.getLogger (AsynchronousAuditor.class);
+
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+  private final ConcurrentCollectorMultiple <IAuditItem> m_aCollector;
   private final ExecutorService m_aSenderThreadPool;
 
   private static final class MyCollector extends ConcurrentCollectorMultiple <IAuditItem>

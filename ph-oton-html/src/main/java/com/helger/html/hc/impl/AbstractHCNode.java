@@ -285,7 +285,7 @@ public abstract class AbstractHCNode implements IHCNode
     }
   }
 
-  @Nonnull
+  @Nullable
   @OverrideOnDemand
   protected abstract IMicroNode internalConvertToMicroNode (@Nonnull IHCConversionSettingsToNode aConversionSettings);
 

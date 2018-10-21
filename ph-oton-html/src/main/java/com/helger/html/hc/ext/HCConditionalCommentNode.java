@@ -101,6 +101,8 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   {
     // First convert the contained node to a micro node
     final IMicroNode aWrappedMicroNode = super.internalConvertToMicroNode (aConversionSettings);
+    if (aWrappedMicroNode == null)
+      return null;
 
     // Only create a newline when alignment is enabled
     final IXMLWriterSettings aXMLWriterSettings = aConversionSettings.getXMLWriterSettings ();

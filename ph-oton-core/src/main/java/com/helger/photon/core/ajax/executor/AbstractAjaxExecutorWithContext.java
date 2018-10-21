@@ -63,8 +63,6 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final LECTYPE aLEC = createLayoutExecutionContext (aRequestScope);
-    if (aLEC == null)
-      throw new IllegalStateException ("Failed to create layout execution context for request scope " + aRequestScope);
     mainHandleRequest (aLEC, aAjaxResponse);
   }
 }
