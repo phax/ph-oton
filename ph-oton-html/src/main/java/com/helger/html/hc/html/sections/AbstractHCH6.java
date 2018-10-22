@@ -46,13 +46,13 @@ public abstract class AbstractHCH6 <IMPLTYPE extends AbstractHCH6 <IMPLTYPE>> ex
   protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
-    if (HCHTMLHelper.recursiveContainsChildWithDifferentTagName (this,
-                                                                 EHTMLElement.H1,
-                                                                 EHTMLElement.H2,
-                                                                 EHTMLElement.H4,
-                                                                 EHTMLElement.H5,
-                                                                 EHTMLElement.H5,
-                                                                 EHTMLElement.H6))
+    if (HCHTMLHelper.recursiveContainsChildWithTagName (this,
+                                                        EHTMLElement.H1,
+                                                        EHTMLElement.H2,
+                                                        EHTMLElement.H4,
+                                                        EHTMLElement.H5,
+                                                        EHTMLElement.H5,
+                                                        EHTMLElement.H6))
       HCConsistencyChecker.consistencyError ("H6 contains other nested header");
   }
 }

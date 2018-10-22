@@ -46,13 +46,13 @@ public abstract class AbstractHCH4 <IMPLTYPE extends AbstractHCH4 <IMPLTYPE>> ex
   protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
-    if (HCHTMLHelper.recursiveContainsChildWithDifferentTagName (this,
-                                                                 EHTMLElement.H1,
-                                                                 EHTMLElement.H2,
-                                                                 EHTMLElement.H4,
-                                                                 EHTMLElement.H5,
-                                                                 EHTMLElement.H5,
-                                                                 EHTMLElement.H6))
+    if (HCHTMLHelper.recursiveContainsChildWithTagName (this,
+                                                        EHTMLElement.H1,
+                                                        EHTMLElement.H2,
+                                                        EHTMLElement.H4,
+                                                        EHTMLElement.H5,
+                                                        EHTMLElement.H5,
+                                                        EHTMLElement.H6))
       HCConsistencyChecker.consistencyError ("H4 contains other nested header");
   }
 }
