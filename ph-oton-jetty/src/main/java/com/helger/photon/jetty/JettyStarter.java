@@ -67,6 +67,7 @@ public class JettyStarter
   public static final String DEFAULT_CONTEXT_PATH = "/";
   public static final String DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN = true ? null : ".*\\.jar$|.*/classes/.*";
   public static final String DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN = null;
+  public static final String DEFAULT_SESSION_COOKIE_NAME = "PHOTONSESSIONID";
   private static final Logger LOGGER = LoggerFactory.getLogger (JettyStarter.class);
 
   private final String m_sAppName;
@@ -83,6 +84,7 @@ public class JettyStarter
   private String m_sWebInfIncludeJarPattern = DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN;
   private ThreadPool m_aThreadPool;
   private boolean m_bAllowAnnotationBasedConfig = true;
+  private String m_sSessionCookieName = DEFAULT_SESSION_COOKIE_NAME;
 
   @Nonnull
   private static Resource _asRes (@Nonnull final String sPath)
@@ -379,6 +381,34 @@ public class JettyStarter
   }
 
   /**
+   * Set the session cookie name. Default is
+   * {@value #DEFAULT_SESSION_COOKIE_NAME}. When running different applications
+   * ensure to use different names to ensure you can test them in the same
+   * browser in the same session.
+   *
+   * @param sSessionCookieName
+   *        New name or <code>null</code> to use Jetty default.
+   * @return this for chaining
+   * @since 8.1.0
+   */
+  @Nonnull
+  public final JettyStarter setSessionCookieName (@Nullable final String sSessionCookieName)
+  {
+    m_sSessionCookieName = sSessionCookieName;
+    return this;
+  }
+
+  /**
+   * @return The name of the session cookie or null to use Jetty default. The
+   *         default values is {@link #DEFAULT_SESSION_COOKIE_NAME}.
+   */
+  @Nullable
+  public String getSessionCookieName ()
+  {
+    return m_sSessionCookieName;
+  }
+
+  /**
    * Customize
    *
    * @param aServerConnector
@@ -508,7 +538,8 @@ public class JettyStarter
       aWebAppCtx.setSessionHandler (aHdl);
     }
 
-    aWebAppCtx.getSessionHandler ().setSessionCookie ("PHOTONSESSIONID");
+    if (StringHelper.hasText (m_sSessionCookieName))
+      aWebAppCtx.getSessionHandler ().setSessionCookie (m_sSessionCookieName);
 
     customizeWebAppCtx (aWebAppCtx);
 

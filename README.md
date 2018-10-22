@@ -53,6 +53,7 @@ Contained subprojects are:
   * Dropped jQuery 1.x and 2.x files
   * Updated DataTables to 1.10.18
   * Added new base page "Port checker"
+  * Improved JettyStarter customizability
 * v8.0.2 - 2018-07-25
   * Updated to Bootstrap 4.1.3
   * Reworked meta element API so that `<meta charset="...">` can be handled
