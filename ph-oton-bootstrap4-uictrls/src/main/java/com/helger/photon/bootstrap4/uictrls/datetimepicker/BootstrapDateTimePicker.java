@@ -16,6 +16,11 @@
  */
 package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -23,6 +28,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
@@ -62,6 +68,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
   public static EBootstrap4DateTimePickerViewModeType DEFAULT_VIEW_MODE = EBootstrap4DateTimePickerViewModeType.DAYS;
 
+  private static final LocalDate DUMMY_DATE = PDTFactory.createLocalDate (2018, Month.OCTOBER, 24);
+  private static final LocalTime DUMMY_TIME = PDTFactory.createLocalTime (12, 10, 34);
+
   private final HCEdit m_aEdit;
   private final Locale m_aDisplayLocale;
   private ETriState m_eShowCalendarWeeks = ETriState.TRUE;
@@ -69,23 +78,61 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private String m_sFormat;
   private EBootstrap4DateTimePickerViewModeType m_eViewMode;
   private ETriState m_eSideBySide = ETriState.UNDEFINED;
+  private LocalDateTime m_aMinDate;
+  private LocalDateTime m_aMaxDate;
 
-  public BootstrapDateTimePicker (@Nonnull final RequestFieldDate aRFD)
+  /**
+   * Constructor.
+   *
+   * @param aRFD
+   *        Request field date. May not be <code>null</code>.
+   * @param eMode
+   *        Mode to use. May not be <code>null</code>.
+   */
+  public BootstrapDateTimePicker (@Nonnull final RequestFieldDate aRFD,
+                                  @Nonnull final EBootstrap4DateTimePickerMode eMode)
   {
-    this (aRFD.getFieldName (), aRFD.getRequestValue (), aRFD.getDisplayLocale ());
+    this (aRFD.getFieldName (), aRFD.getRequestValue (), aRFD.getDisplayLocale (), eMode);
   }
 
-  public BootstrapDateTimePicker (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  /**
+   * Constructor. Use {@link #setMode(EBootstrap4DateTimePickerMode)} to define
+   * if it is DATE, TIME or DATETIME.
+   *
+   * @param aRF
+   *        Request field with name and value. May not be <code>null</code>.
+   * @param aDisplayLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @param eMode
+   *        Mode to use. May not be <code>null</code>.
+   */
+  public BootstrapDateTimePicker (@Nonnull final IHCRequestField aRF,
+                                  @Nonnull final Locale aDisplayLocale,
+                                  @Nonnull final EBootstrap4DateTimePickerMode eMode)
   {
-    this (aRF.getFieldName (), aRF.getRequestValue (), aDisplayLocale);
+    this (aRF.getFieldName (), aRF.getRequestValue (), aDisplayLocale, eMode);
   }
 
+  /**
+   * Constructor.
+   *
+   * @param sName
+   *        Field name. May not be <code>null</code>.
+   * @param sValue
+   *        Field initial value. May be <code>null</code>.
+   * @param aDisplayLocale
+   *        The locale to use. May not be <code>null</code>.
+   * @param eMode
+   *        Mode to use. May not be <code>null</code>.
+   */
   public BootstrapDateTimePicker (@Nonnull final String sName,
                                   @Nullable final String sValue,
-                                  @Nonnull final Locale aDisplayLocale)
+                                  @Nonnull final Locale aDisplayLocale,
+                                  @Nonnull final EBootstrap4DateTimePickerMode eMode)
   {
     super (new HCEdit (new RequestField (sName, sValue)));
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
+    ValueEnforcer.notNull (eMode, "Mode");
 
     m_aDisplayLocale = aDisplayLocale;
 
@@ -102,13 +149,15 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     // Use the calendar icon as default prefix
     prefixes ().addChild (EFontAwesome4Icon.CALENDAR.getAsNode ());
+
+    setMode (eMode);
   }
 
   /**
    * @return The contained edit. You may modify the styles.
    */
   @Nonnull
-  public HCEdit getEdit ()
+  public final HCEdit getEdit ()
   {
     return m_aEdit;
   }
@@ -121,7 +170,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public EBootstrap4DateTimePickerMode getMode ()
+  public final EBootstrap4DateTimePickerMode getMode ()
   {
     return m_eMode;
   }
@@ -146,14 +195,14 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nullable
-  public String getFormat ()
+  public final String getFormat ()
   {
     return m_sFormat;
   }
 
   /**
-   * Set the format string to be used. This is only necessary, if the default one
-   * from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   * Set the format string to be used. This is only necessary, if the default
+   * one from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
    *
    * @param sFormat
    *        Format string to be used. May be <code>null</code>.
@@ -167,7 +216,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public ETriState getShowCalendarWeeks ()
+  public final ETriState getShowCalendarWeeks ()
   {
     return m_eShowCalendarWeeks;
   }
@@ -187,7 +236,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nullable
-  public EBootstrap4DateTimePickerViewModeType getViewMode ()
+  public final EBootstrap4DateTimePickerViewModeType getViewMode ()
   {
     return m_eViewMode;
   }
@@ -205,7 +254,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
    * @return Never <code>null</code>
    */
   @Nonnull
-  public ETriState getSideBySide ()
+  public final ETriState getSideBySide ()
   {
     return m_eSideBySide;
   }
@@ -217,6 +266,78 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     return this;
   }
 
+  @Nullable
+  public final LocalDateTime getMinDate ()
+  {
+    return m_aMinDate;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setMinDate (@Nullable final LocalTime aMinTime)
+  {
+    ValueEnforcer.isTrue (m_eMode == EBootstrap4DateTimePickerMode.TIME, "Current action mode is not TIME");
+    if (aMinTime == null)
+      m_aMinDate = null;
+    else
+      m_aMinDate = DUMMY_DATE.atTime (aMinTime);
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setMinDate (@Nullable final LocalDate aMinDate)
+  {
+    ValueEnforcer.isTrue (m_eMode == EBootstrap4DateTimePickerMode.DATE, "Current action mode is not DATE");
+    if (aMinDate == null)
+      m_aMinDate = null;
+    else
+      m_aMinDate = aMinDate.atTime (DUMMY_TIME);
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setMinDate (@Nullable final LocalDateTime aMinDateTime)
+  {
+    ValueEnforcer.isTrue (m_eMode == EBootstrap4DateTimePickerMode.DATE_TIME, "Current action mode is not DATE_TIME");
+    m_aMinDate = aMinDateTime;
+    return this;
+  }
+
+  @Nullable
+  public final LocalDateTime getMaxDate ()
+  {
+    return m_aMaxDate;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setMaxDate (@Nullable final LocalTime aMaxTime)
+  {
+    ValueEnforcer.isTrue (m_eMode == EBootstrap4DateTimePickerMode.TIME, "Current action mode is not TIME");
+    if (aMaxTime == null)
+      m_aMaxDate = null;
+    else
+      m_aMaxDate = DUMMY_DATE.atTime (aMaxTime);
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setMaxDate (@Nullable final LocalDate aMaxDate)
+  {
+    ValueEnforcer.isTrue (m_eMode == EBootstrap4DateTimePickerMode.DATE, "Current action mode is not DATE");
+    if (aMaxDate == null)
+      m_aMaxDate = null;
+    else
+      m_aMaxDate = aMaxDate.atTime (DUMMY_TIME);
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setMaxDate (@Nullable final LocalDateTime aMaxDateTime)
+  {
+    ValueEnforcer.isTrue (m_eMode == EBootstrap4DateTimePickerMode.DATE_TIME, "Current action mode is not DATE_TIME");
+    m_aMaxDate = aMaxDateTime;
+    return this;
+  }
+
   @Nonnull
   public static JSInvocation invoke (@Nonnull final JQueryInvocation aJQueryInvocation)
   {
@@ -224,7 +345,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public JSInvocation invoke ()
+  public final JSInvocation invoke ()
   {
     return invoke (JQuery.idRef (this));
   }
@@ -237,7 +358,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public JSInvocation invoke (@Nonnull final JSAssocArray aOptions)
+  public final JSInvocation invoke (@Nonnull final JSAssocArray aOptions)
   {
     return invoke ().arg (aOptions);
   }
@@ -281,6 +402,23 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     return ret;
   }
 
+  @Nonnull
+  private String _getAsModeSpecificString (@Nonnull final LocalDateTime aDT)
+  {
+    // Always format with ISO mode
+    switch (m_eMode)
+    {
+      case TIME:
+        return DateTimeFormatter.ISO_TIME.format (aDT.toLocalTime ());
+      case DATE:
+        return DateTimeFormatter.ISO_DATE.format (aDT.toLocalDate ());
+      case DATE_TIME:
+        return DateTimeFormatter.ISO_DATE_TIME.format (aDT);
+      default:
+        throw new IllegalStateException ("Unsupported mode " + m_eMode);
+    }
+  }
+
   /**
    * @return A {@link JSAssocArray} with all options for this date and time
    *         Picker. Never <code>null</code>.
@@ -311,6 +449,11 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     // Explicit format present?
     aOptions.add ("format", StringHelper.hasText (m_sFormat) ? m_sFormat : m_eMode.getJSFormat (m_aDisplayLocale));
+
+    if (m_aMinDate != null)
+      aOptions.add ("minDate", _getAsModeSpecificString (m_aMinDate));
+    if (m_aMaxDate != null)
+      aOptions.add ("maxDate", _getAsModeSpecificString (m_aMaxDate));
 
     return aOptions;
   }

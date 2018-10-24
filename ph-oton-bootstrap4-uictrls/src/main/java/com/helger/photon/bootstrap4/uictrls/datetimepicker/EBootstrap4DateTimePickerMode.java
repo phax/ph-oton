@@ -23,11 +23,16 @@ import javax.annotation.Nonnull;
 import com.helger.commons.datetime.PDTFormatPatterns;
 import com.helger.commons.functional.IFunction;
 
+/**
+ * Action mode for the {@link BootstrapDateTimePicker}.
+ * 
+ * @author Philip Helger
+ */
 public enum EBootstrap4DateTimePickerMode
 {
+  TIME (d -> PDTFormatPatterns.getDefaultPatternTime (d)),
   DATE (d -> PDTFormatPatterns.getDefaultPatternDate (d)),
-  DATE_TIME (d -> PDTFormatPatterns.getDefaultPatternDateTime (d)),
-  TIME (d -> PDTFormatPatterns.getDefaultPatternTime (d));
+  DATE_TIME (d -> PDTFormatPatterns.getDefaultPatternDateTime (d));
 
   public static final EBootstrap4DateTimePickerMode DEFAULT = DATE;
 
@@ -36,6 +41,16 @@ public enum EBootstrap4DateTimePickerMode
   private EBootstrap4DateTimePickerMode (@Nonnull final IFunction <Locale, String> aFormatSupplier)
   {
     m_aJavaFormatSupplier = aFormatSupplier;
+  }
+
+  public boolean isTimeContained ()
+  {
+    return this == TIME || this == DATE_TIME;
+  }
+
+  public boolean isDateContained ()
+  {
+    return this == DATE || this == DATE_TIME;
   }
 
   @Nonnull
