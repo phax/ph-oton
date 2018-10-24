@@ -104,7 +104,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return this;
   }
 
-  public boolean hasNeitherPrefixNoSuffix ()
+  public boolean hasNeitherPrefixNorSuffix ()
   {
     return m_aPrefixes.hasNoChildren () && m_aSuffixes.hasNoChildren ();
   }
