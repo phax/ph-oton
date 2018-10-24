@@ -1,5 +1,5 @@
 /*@preserve
- * Tempus Dominus Bootstrap4 v5.0.1 (https://tempusdominus.github.io/bootstrap-4/)
+ * Tempus Dominus Bootstrap4 v5.1.2 (https://tempusdominus.github.io/bootstrap-4/)
  * Copyright 2016-2018 Jonathan Peterson
  * Licensed under MIT (https://github.com/tempusdominus/bootstrap-3/blob/master/LICENSE)
  */
@@ -114,8 +114,7 @@ var DateTimePicker = function ($, moment) {
         keyState = {},
         keyPressHandled = {};
 
-    var MinViewModeNumber = 0,
-        Default = {
+    var Default = {
         timeZone: '',
         format: false,
         dayViewHeaderFormat: 'MMMM YYYY',
@@ -351,6 +350,7 @@ var DateTimePicker = function ($, moment) {
             this.actualFormat = null;
             this.parseFormats = null;
             this.currentViewMode = null;
+            this.MinViewModeNumber = 0;
 
             this._int();
         }
@@ -561,7 +561,7 @@ var DateTimePicker = function ($, moment) {
         };
 
         DateTimePicker.prototype._notifyEvent = function _notifyEvent(e) {
-            if (e.type === DateTimePicker.Event.CHANGE && e.date && e.date.isSame(e.oldDate) || !e.date && !e.oldDate) {
+            if (e.type === DateTimePicker.Event.CHANGE && (e.date && e.date.isSame(e.oldDate)) || !e.date && !e.oldDate) {
                 return;
             }
             this._element.trigger(e);
@@ -583,7 +583,7 @@ var DateTimePicker = function ($, moment) {
                 return;
             }
             if (dir) {
-                this.currentViewMode = Math.max(MinViewModeNumber, Math.min(3, this.currentViewMode + dir));
+                this.currentViewMode = Math.max(this.MinViewModeNumber, Math.min(3, this.currentViewMode + dir));
             }
             this.widget.find('.datepicker > div').hide().filter('.datepicker-' + DatePickerModes[this.currentViewMode].CLASS_NAME).show();
         };
@@ -759,16 +759,16 @@ var DateTimePicker = function ($, moment) {
             this.use24Hours = this.actualFormat.toLowerCase().indexOf('a') < 1 && this.actualFormat.replace(/\[.*?]/g, '').indexOf('h') < 1;
 
             if (this._isEnabled('y')) {
-                MinViewModeNumber = 2;
+                this.MinViewModeNumber = 2;
             }
             if (this._isEnabled('M')) {
-                MinViewModeNumber = 1;
+                this.MinViewModeNumber = 1;
             }
             if (this._isEnabled('d')) {
-                MinViewModeNumber = 0;
+                this.MinViewModeNumber = 0;
             }
 
-            this.currentViewMode = Math.max(MinViewModeNumber, this.currentViewMode);
+            this.currentViewMode = Math.max(this.MinViewModeNumber, this.currentViewMode);
 
             if (!this.unset) {
                 this._setValue(this._dates[0], 0);
@@ -1235,7 +1235,7 @@ var DateTimePicker = function ($, moment) {
             }
 
             this._options.viewMode = _viewMode;
-            this.currentViewMode = Math.max(DateTimePicker.ViewModes.indexOf(_viewMode) - 1, DateTimePicker.MinViewModeNumber);
+            this.currentViewMode = Math.max(DateTimePicker.ViewModes.indexOf(_viewMode) - 1, this.MinViewModeNumber);
 
             this._showMode();
         };
@@ -1544,16 +1544,6 @@ var DateTimePicker = function ($, moment) {
             key: 'ViewModes',
             get: function get() {
                 return ViewModes;
-            }
-
-            /**
-             * @return {number}
-             */
-
-        }, {
-            key: 'MinViewModeNumber',
-            get: function get() {
-                return MinViewModeNumber;
             }
         }, {
             key: 'Event',
@@ -2242,7 +2232,7 @@ var TempusDominusBootstrap4 = function ($) {
                     {
                         var month = $(e.target).closest('tbody').find('span').index($(e.target));
                         this._viewDate.month(month);
-                        if (this.currentViewMode === DateTimePicker.MinViewModeNumber) {
+                        if (this.currentViewMode === this.MinViewModeNumber) {
                             this._setValue(lastPicked.clone().year(this._viewDate.year()).month(this._viewDate.month()), this._getLastPickedDateIndex());
                             if (!this._options.inline) {
                                 this.hide();
@@ -2258,7 +2248,7 @@ var TempusDominusBootstrap4 = function ($) {
                     {
                         var year = parseInt($(e.target).text(), 10) || 0;
                         this._viewDate.year(year);
-                        if (this.currentViewMode === DateTimePicker.MinViewModeNumber) {
+                        if (this.currentViewMode === this.MinViewModeNumber) {
                             this._setValue(lastPicked.clone().year(this._viewDate.year()), this._getLastPickedDateIndex());
                             if (!this._options.inline) {
                                 this.hide();
@@ -2274,7 +2264,7 @@ var TempusDominusBootstrap4 = function ($) {
                     {
                         var _year = parseInt($(e.target).data('selection'), 10) || 0;
                         this._viewDate.year(_year);
-                        if (this.currentViewMode === DateTimePicker.MinViewModeNumber) {
+                        if (this.currentViewMode === this.MinViewModeNumber) {
                             this._setValue(lastPicked.clone().year(this._viewDate.year()), this._getLastPickedDateIndex());
                             if (!this._options.inline) {
                                 this.hide();
@@ -2295,8 +2285,21 @@ var TempusDominusBootstrap4 = function ($) {
                         if ($(e.target).is('.new')) {
                             day.add(1, 'M');
                         }
-                        this._setValue(day.date(parseInt($(e.target).text(), 10)), this._getLastPickedDateIndex());
-                        if (!this._hasTime() && !this._options.keepOpen && !this._options.inline) {
+
+                        var selectDate = day.date(parseInt($(e.target).text(), 10)),
+                            index = 0;
+                        if (this._options.allowMultidate) {
+                            index = this._datesFormatted.indexOf(selectDate.format('YYYY-MM-DD'));
+                            if (index !== -1) {
+                                this._setValue(null, index); //deselect multidate
+                            } else {
+                                this._setValue(selectDate, this._getLastPickedDateIndex() + 1);
+                            }
+                        } else {
+                            this._setValue(selectDate, this._getLastPickedDateIndex());
+                        }
+
+                        if (!this._hasTime() && !this._options.keepOpen && !this._options.inline && !this._options.allowMultidate) {
                             this.hide();
                         }
                         break;

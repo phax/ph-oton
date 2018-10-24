@@ -26,7 +26,7 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
 {
-  DATETIMEPICKER ("bootstrap/datetimepicker/5.0.1/js/tempusdominus-bootstrap-4.js"),
+  DATETIMEPICKER ("bootstrap/datetimepicker/5.1.2/js/tempusdominus-bootstrap-4.js"),
   DATETIMEPICKER_FONTAWESOME5 ("ph-oton/datetimepicker-fa5.js"),
   TREE_VIEW ("bootstrap/treeview/1.2.0/bootstrap-treeview.js");
 
