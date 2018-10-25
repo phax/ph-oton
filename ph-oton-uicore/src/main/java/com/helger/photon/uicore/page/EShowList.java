@@ -16,6 +16,11 @@
  */
 package com.helger.photon.uicore.page;
 
+/**
+ * Enumeration to replace a boolean.
+ * 
+ * @author Philip Helger
+ */
 public enum EShowList
 {
   SHOW_LIST,
