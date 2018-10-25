@@ -59,25 +59,35 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
   }
 
   @Nonnull
-  public EBootstrapAlertType getType ()
+  public final EBootstrapAlertType getType ()
   {
     return m_eType;
   }
 
   @Nonnull
-  public IMPLTYPE setType (@Nonnull final EBootstrapAlertType eType)
+  public final IMPLTYPE setType (@Nonnull final EBootstrapAlertType eType)
   {
-    m_eType = ValueEnforcer.notNull (eType, "Type");
+    ValueEnforcer.notNull (eType, "Type");
+    m_eType = eType;
     return thisAsT ();
   }
 
-  public boolean isShowClose ()
+  @Nonnull
+  public final IMPLTYPE setTypeIfWorse (@Nonnull final EBootstrapAlertType eType)
+  {
+    ValueEnforcer.notNull (eType, "Type");
+    if (m_eType == null || eType.ordinal () > m_eType.ordinal ())
+      m_eType = eType;
+    return thisAsT ();
+  }
+
+  public final boolean isShowClose ()
   {
     return m_bShowClose;
   }
 
   @Nonnull
-  public IMPLTYPE setShowClose (final boolean bShowClose)
+  public final IMPLTYPE setShowClose (final boolean bShowClose)
   {
     m_bShowClose = bShowClose;
     return thisAsT ();

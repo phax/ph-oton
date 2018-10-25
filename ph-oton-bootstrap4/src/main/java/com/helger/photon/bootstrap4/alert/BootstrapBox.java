@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap4.alert;
 import javax.annotation.Nonnull;
 
 /**
- * Generic Bootstrap3 box with a custom alert type.
+ * Generic Bootstrap 4 box with a custom alert type.
  *
  * @author Philip Helger
  */

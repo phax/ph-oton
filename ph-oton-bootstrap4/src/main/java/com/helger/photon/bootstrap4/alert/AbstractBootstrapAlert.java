@@ -68,7 +68,17 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
   @Nonnull
   public final IMPLTYPE setType (@Nonnull final EBootstrapAlertType eType)
   {
-    m_eType = ValueEnforcer.notNull (eType, "Type");
+    ValueEnforcer.notNull (eType, "Type");
+    m_eType = eType;
+    return thisAsT ();
+  }
+
+  @Nonnull
+  public final IMPLTYPE setTypeIfWorse (@Nonnull final EBootstrapAlertType eType)
+  {
+    ValueEnforcer.notNull (eType, "Type");
+    if (m_eType == null || eType.ordinal () > m_eType.ordinal ())
+      m_eType = eType;
     return thisAsT ();
   }
 
