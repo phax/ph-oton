@@ -33,7 +33,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.1.0 - work in progress
+* v8.1.0 - 2018-10-25
   * Extended the `Favorite` APIs
   * Initial versions of the subproject `ph-oton-bootstrap4-uictrls` is available 
   * Initial versions of the subproject `ph-oton-bootstrap4-pages` is available 
@@ -150,7 +150,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.0.2</version>
+        <version>8.1.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

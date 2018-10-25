@@ -87,22 +87,7 @@
             <exclude>**/*.min.css</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>**/LICENSE</exclude>
-            <exclude>src/main/resources/animate/**</exclude>
-            <exclude>src/main/resources/autonumeric/**</exclude>
-            <exclude>src/main/resources/autosize/**</exclude>
-            <exclude>src/main/resources/chart/**</exclude>
-            <exclude>src/main/resources/colorbox/**</exclude>
-            <exclude>src/main/resources/famfam/**</exclude>
-            <exclude>src/main/resources/fineupload/**</exclude>
-            <exclude>src/test/resources/fineupload/**</exclude>
-            <exclude>src/main/resources/handlebars/**</exclude>
-            <exclude>src/main/resources/js/big.*</exclude>
-            <exclude>src/main/resources/js/wow.*</exclude>
-            <exclude>src/main/resources/jscolor/**</exclude>
-            <exclude>src/main/resources/pdfobject/**</exclude>
-            <exclude>src/main/resources/prismjs/**</exclude>
-            <exclude>src/main/resources/select2/**</exclude>
-            <exclude>src/main/resources/typeahead/**</exclude>
+            <exclude>src/main/resources/uictrls/**</exclude>
           </excludes>
         </configuration>
       </plugin>
