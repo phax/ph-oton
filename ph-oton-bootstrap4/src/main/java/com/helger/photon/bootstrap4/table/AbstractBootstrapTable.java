@@ -120,9 +120,9 @@ public abstract class AbstractBootstrapTable <IMPLTYPE extends AbstractHCTable <
   }
 
   @Nonnull
-  public IMPLTYPE setResponsive (final boolean bCondensed)
+  public IMPLTYPE setResponsive (final boolean bResponsive)
   {
-    if (bCondensed)
+    if (bResponsive)
       addClass (CBootstrapCSS.TABLE_RESPONSIVE);
     else
       removeClass (CBootstrapCSS.TABLE_RESPONSIVE);
