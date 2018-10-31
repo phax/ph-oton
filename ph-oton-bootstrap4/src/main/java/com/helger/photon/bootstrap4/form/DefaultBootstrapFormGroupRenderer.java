@@ -324,6 +324,10 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         else
           aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
         aCtrlDiv.addChild (aLabel);
+
+        // We have a label for a control
+        aLabel.setFor (aFirstControl);
+        modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
       }
 
       aCtrlDiv.addChild (aErrorListNode).addChild (aHelpTextNode);
@@ -353,7 +357,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         {
           // We have a label for a control
           aLabel.setFor (aFirstControl);
-
           modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
         }
 
