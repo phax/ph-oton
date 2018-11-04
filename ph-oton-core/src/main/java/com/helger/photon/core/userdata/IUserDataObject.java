@@ -47,6 +47,12 @@ public interface IUserDataObject extends Serializable
   String getPath ();
 
   /**
+   * @return <code>true</code> if this user data object is temporary,
+   *         <code>false</code> if it is used in production.
+   */
+  boolean isTemporary ();
+
+  /**
    * @param aRequestScope
    *        The request web scope to be used. Required for cookie-less handling.
    *        May not be <code>null</code>.
@@ -57,7 +63,10 @@ public interface IUserDataObject extends Serializable
    */
   @Nonnull
   @Nonempty
-  String getAsURLPath (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  default String getAsURLPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return UserDataManager.getURLPath (aRequestScope, this);
+  }
 
   /**
    * @param aRequestScope
@@ -69,14 +78,20 @@ public interface IUserDataObject extends Serializable
    *         <code>/file.txt</code>.
    */
   @Nonnull
-  SimpleURL getAsURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  default SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return UserDataManager.getURL (aRequestScope, this);
+  }
 
   /**
    * @return The file system resource underlying this object. Never
    *         <code>null</code> but potentially not existing.
    */
   @Nonnull
-  FileSystemResource getAsResource ();
+  default FileSystemResource getAsResource ()
+  {
+    return UserDataManager.getResource (this);
+  }
 
   /**
    * Get the File of this UDO object.
@@ -85,13 +100,10 @@ public interface IUserDataObject extends Serializable
    *         or not!
    */
   @Nonnull
-  File getAsFile ();
-
-  /**
-   * @return <code>true</code> if this user data object is temporary,
-   *         <code>false</code> if it is used in production.
-   */
-  boolean isTemporary ();
+  default File getAsFile ()
+  {
+    return UserDataManager.getFile (this);
+  }
 
   /**
    * Create a clone of this object but for a different path. This is a utility

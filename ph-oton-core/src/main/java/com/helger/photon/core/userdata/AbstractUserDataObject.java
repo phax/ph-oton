@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.userdata;
 
-import java.io.File;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -25,10 +23,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.SimpleURL;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Represents a single web accessible object, that was provided by the user.
@@ -56,31 +51,6 @@ public abstract class AbstractUserDataObject implements IUserDataObject
   public String getPath ()
   {
     return m_sPath;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getAsURLPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    return UserDataManager.getURLPath (aRequestScope, this);
-  }
-
-  @Nonnull
-  public SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
-  {
-    return UserDataManager.getURL (aRequestScope, this);
-  }
-
-  @Nonnull
-  public FileSystemResource getAsResource ()
-  {
-    return UserDataManager.getResource (this);
-  }
-
-  @Nonnull
-  public File getAsFile ()
-  {
-    return UserDataManager.getFile (this);
   }
 
   public boolean isTemporary ()
