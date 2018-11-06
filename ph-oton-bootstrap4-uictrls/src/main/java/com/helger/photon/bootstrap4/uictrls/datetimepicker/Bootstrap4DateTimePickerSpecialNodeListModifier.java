@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.script.HCScriptInline;
+import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.special.IHCSpecialNodeListModifier;
 import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jquery.JQuerySelector;
@@ -95,7 +95,7 @@ public final class Bootstrap4DateTimePickerSpecialNodeListModifier implements IH
     }
 
     // Add at the first index, where it was in the source list
-    ret.add (nFirstIndex, new HCScriptInline (aMergedJS));
+    ret.add (nFirstIndex, new HCScriptInlineOnDocumentReady (aMergedJS));
     return ret;
   }
 }
