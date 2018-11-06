@@ -36,6 +36,7 @@ Contained subprojects are:
 * v8.1.1 - work in progress
     * Fixed error in quoting of B3 user group management page
     * Added special CSS Class to B4 `BootstrapPageHeader`
+    * Changed B4 `BootstrapDateTimePicker` initialization to correctly handle the default values
 * v8.1.0 - 2018-10-25
     * Extended the `Favorite` APIs
     * Initial versions of the subproject `ph-oton-bootstrap4-uictrls` is available 
