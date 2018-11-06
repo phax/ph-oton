@@ -19,6 +19,8 @@ package com.helger.photon.bootstrap4.utils;
 import javax.annotation.Nullable;
 
 import com.helger.html.EHTMLElement;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
@@ -30,11 +32,15 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
  */
 public class BootstrapPageHeader extends AbstractHCElementWithChildren <BootstrapPageHeader>
 {
+  public static final ICSSClassProvider CSS_CLASS_PAGE_HEADER = DefaultCSSClassProvider.create ("pageheader");
+
   public BootstrapPageHeader ()
   {
     super (EHTMLElement.H1);
     addClass (CBootstrapCSS.MT_1);
     addClass (CBootstrapCSS.MB_4);
+    // Special class to easily identify respective elements
+    addClass (CSS_CLASS_PAGE_HEADER);
   }
 
   @Nullable

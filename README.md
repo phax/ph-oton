@@ -33,114 +33,118 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.1.1 - work in progress
+    * Fixed error in quoting of B3 user group management page
+    * Added special CSS Class to B4 `BootstrapPageHeader`
 * v8.1.0 - 2018-10-25
-  * Extended the `Favorite` APIs
-  * Initial versions of the subproject `ph-oton-bootstrap4-uictrls` is available 
-  * Initial versions of the subproject `ph-oton-bootstrap4-pages` is available 
-  * Initial versions of the subproject `ph-oton-bootstrap4-demo` is available 
-  * Internal errors are stored in an additional "month" sub-directory
-  * Internal error storage paths are now customizable  
-  * Added FontAwesome 5.2.0 free icons
-  * Improved state API slightly
-  * User group and role user interfaces were improved
-  * Updated to ph-web 9.0.5
-  * Updated to popper 1.14.4
-  * Added bulk export format "JSON (simple)" to have one without type information
-  * Added a new Bootstrap 4 DateTime picker UI ctrl
-  * Updated to Jetty 9.4.12
-  * Updated to TinyMCE 4.8.2
-  * Separated `HCPrismJS` and `TypeaheadEdit` in Bootstrap 3 and 4 versions
-  * Dropped jQuery 1.x and 2.x files
-  * Updated DataTables to 1.10.18
-  * Added new base page "Port checker"
-  * Improved JettyStarter customizability
+    * Extended the `Favorite` APIs
+    * Initial versions of the subproject `ph-oton-bootstrap4-uictrls` is available 
+    * Initial versions of the subproject `ph-oton-bootstrap4-pages` is available 
+    * Initial versions of the subproject `ph-oton-bootstrap4-demo` is available 
+    * Internal errors are stored in an additional "month" sub-directory
+    * Internal error storage paths are now customizable  
+    * Added FontAwesome 5.2.0 free icons
+    * Improved state API slightly
+    * User group and role user interfaces were improved
+    * Updated to ph-web 9.0.5
+    * Updated to popper 1.14.4
+    * Added bulk export format "JSON (simple)" to have one without type information
+    * Added a new Bootstrap 4 DateTime picker UI ctrl
+    * Updated to Jetty 9.4.12
+    * Updated to TinyMCE 4.8.2
+    * Separated `HCPrismJS` and `TypeaheadEdit` in Bootstrap 3 and 4 versions
+    * Dropped jQuery 1.x and 2.x files
+    * Updated DataTables to 1.10.18
+    * Added new base page "Port checker"
+    * Improved JettyStarter customizability
 * v8.0.2 - 2018-07-25
-  * Updated to Bootstrap 4.1.3
-  * Reworked meta element API so that `<meta charset="...">` can be handled
-  * Fixed OSGI ServiceProvider configuration
-  * Updated to Jetty 9.4.11
-  * Updated to ph-commons 9.1.3
-  * Updated to ph-web 9.0.2
-  * Extended `*HCSelect` APIs for multi values
-  * The "Change log" page was removed
-  * Extended `JSSwitch` API
-  * Improved signatures of `AbstractJSBlock` (binary incompatible)
-  * Updated to ph-masterdata 6.1.0
+    * Updated to Bootstrap 4.1.3
+    * Reworked meta element API so that `<meta charset="...">` can be handled
+    * Fixed OSGI ServiceProvider configuration
+    * Updated to Jetty 9.4.11
+    * Updated to ph-commons 9.1.3
+    * Updated to ph-web 9.0.2
+    * Extended `*HCSelect` APIs for multi values
+    * The "Change log" page was removed
+    * Extended `JSSwitch` API
+    * Improved signatures of `AbstractJSBlock` (binary incompatible)
+    * Updated to ph-masterdata 6.1.0
 * v8.0.1 - 2018-04-18
-  * Updated to Jetty 9.4.9
-  * Updated to Bootstrap 4.0.0
-  * Bootstrap3Panel type can be changed
-  * Replaced some `StubjObject` with `IBusinessObject`
+    * Updated to Jetty 9.4.9
+    * Updated to Bootstrap 4.0.0
+    * Bootstrap3Panel type can be changed
+    * Replaced some `StubjObject` with `IBusinessObject`
 * v8.0.0 - 2018-01-05
-  * Updated to ph-commons 9.0.0
-  * Renamed 'Client' to 'Tenant' and moved to ph-tenancy in ph-masterdata project
-  * Updated to Bootstrap 4.0.0-beta
-  * Updated to TinyMCE 4.6.6
-  * Updated to Jetty 9.4.8
-  * Extracted ph-oton-atom
-  * Initial versions of the subproject `ph-oton-bootstrap4-stub` is available 
+    * Updated to ph-commons 9.0.0
+    * Renamed 'Client' to 'Tenant' and moved to ph-tenancy in ph-masterdata project
+    * Updated to Bootstrap 4.0.0-beta
+    * Updated to TinyMCE 4.6.6
+    * Updated to Jetty 9.4.8
+    * Extracted ph-oton-atom
+    * Initial versions of the subproject `ph-oton-bootstrap4-stub` is available 
 * v7.1.2 - 2017-07-19
-  * Fixed an error with path handling of resource bundles when deployed as JAR
+    * Fixed an error with path handling of resource bundles when deployed as JAR
 * v7.1.1 - 2017-07-18
-  * Requires ph-commons 8.6.6
-  * ServletContext base path can now be any URL (instead of a mandatory File)
-  * Made `ServletStatusManager` non-static
-  * Improved JS API (better Json support)
+    * Requires ph-commons 8.6.6
+    * ServletContext base path can now be any URL (instead of a mandatory File)
+    * Made `ServletStatusManager` non-static
+    * Improved JS API (better Json support)
 * v7.1.0 - 2017-07-05
-  * Updated to ph-web 8.8.x
-  * Improved rendering speed through internal optimizations
-  * Updated to Bootstrap Datetime picker 2.4.4
-  * Updated to Jetty 9.4.6
-  * `CharacterEncodingFilter` more flexible
-  * Updated to DataTables 1.10.15
+    * Updated to ph-web 8.8.x
+    * Improved rendering speed through internal optimizations
+    * Updated to Bootstrap Datetime picker 2.4.4
+    * Updated to Jetty 9.4.6
+    * `CharacterEncodingFilter` more flexible
+    * Updated to DataTables 1.10.15
 * v7.0.5 - 2017-03-30
-  * Updated to Jetty 9.4.3
-  * Updated to ph-schedule 3.6.1
-  * Improved SystemMessage API
+    * Updated to Jetty 9.4.3
+    * Updated to ph-schedule 3.6.1
+    * Improved SystemMessage API
 * v7.0.4 - 2017-03-09
-  * Updated to Jetty 9.4.2
-  * API extensions
-  * Updated to Apache commons-net 3.6
-  * Improved internal error handling API
-  * Internal changes in the ph-oton jobs.
-  * Removed some deprecated methods
+    * Updated to Jetty 9.4.2
+    * API extensions
+    * Updated to Apache commons-net 3.6
+    * Improved internal error handling API
+    * Internal changes in the ph-oton jobs.
+    * Removed some deprecated methods
 * v7.0.3 - 2017-01-10
-  * Integrated ph-html into ph-oton
-  * Binds to ph-commons 8.6.0
+    * Integrated ph-html into ph-oton
+    * Binds to ph-commons 8.6.0
 * v7.0.2 - 2017-01-03
-  * Updated to Jetty 9.4.0
-  * Binds to ph-commons 8.5.6
-  * Binds to ph-web 8.7.0
-  * Improved default request parameter handling customizability
-  * New artefact `ph-oton-icon`
+    * Updated to Jetty 9.4.0
+    * Binds to ph-commons 8.5.6
+    * Binds to ph-web 8.7.0
+    * Improved default request parameter handling customizability
+    * New artefact `ph-oton-icon`
 * v7.0.1 - 2016-11-14
-  * Improvements in request tracking logging
-  * Misc small improvements in different areas
-  * Updated to Jetty 9.3.14.v20161028
+    * Improvements in request tracking logging
+    * Misc small improvements in different areas
+    * Updated to Jetty 9.3.14.v20161028
 * v7.0.0 - 2016-10-24
-  * Requires ph-commons 8.5.2
+    * Requires ph-commons 8.5.2
 * v7.0.0-beta3 - 2016-09-22
-  * Based on ph-commons 8.5.x
+    * Based on ph-commons 8.5.x
 * v7.0.0-beta2 - 2016-08-31
-  * Based on ph-commons 8.4.x
+    * Based on ph-commons 8.4.x
 * v7.0.0-beta1 - 2016-07-27
-  * Updated to Java 1.8
-  * Based on ph-commons 8.2.x
+    * Updated to Java 1.8
+    * Based on ph-commons 8.2.x
 * v6.2.0 - 2015-12-03 
-  * extracted security module
-  * added support for app and user token management
-  * Last release for Java 1.7
+    * extracted security module
+    * added support for app and user token management
+    * Last release for Java 1.7
 * v6.1.0 - 2015-10-02 
-  * merged web actions and ajax functions
+    * merged web actions and ajax functions
 * v6.0.0 - 2015-09-14 
-  * first ph-oton release based on old webbasics and webctrls etc.
-  * requires ph-commons 6.x
+    * first ph-oton release based on old webbasics and webctrls etc.
+    * requires ph-commons 6.x
 
 # Requirements
-  * Java 1.8+ is required for building 
-  * Application server requirements:
-      * At least Tomcat 8.x
-      * Jetty 9.4.x with AnnotationConfiguration enabled
+
+* Java 1.8+ is required for building 
+* Application server requirements:
+    * At least Tomcat 8.x
+    * Jetty 9.4.x with AnnotationConfiguration enabled
       
 ## Maven usage
 
@@ -156,11 +160,26 @@ Contained subprojects are:
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+```
+
+To use Bootstrap 3 front end use:
+
+```xml
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-bootstrap3-stub</artifactId>
+    </dependency>
+  </dependencies>
+```
+
+To use Bootstrap 4 front end use:
+
+```xml
+  <dependencies>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-bootstrap4-stub</artifactId>
     </dependency>
   </dependencies>
 ```
