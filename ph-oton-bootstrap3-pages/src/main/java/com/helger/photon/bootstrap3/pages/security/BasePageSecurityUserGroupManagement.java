@@ -111,7 +111,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
     ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!",
                          "At least one selected role is invalid!"),
-    DELETE_QUERY ("Soll die Benutzergruppe ''0}'' wirklich gelöscht werden?",
+    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?",
                   "Are you sure to delete the user group ''{0}''?"),
     DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!",
                     "The user group ''{0}'' was successfully deleted!"),
@@ -437,8 +437,9 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   protected void showInputForm (@Nonnull final WPECTYPE aWPEC,
                                 @Nullable final IUserGroup aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
-                                boolean bIsFormSubmitted,
-                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
+                                final boolean bIsFormSubmitted,
+                                @Nonnull final EWebPageFormAction eFormAction,
+                                @Nonnull final FormErrorList aFormErrors)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     aForm.addChild (getUIHandler ().createActionHeader (eFormAction.isEdit () ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
