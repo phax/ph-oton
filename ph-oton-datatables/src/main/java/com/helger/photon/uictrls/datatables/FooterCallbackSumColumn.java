@@ -20,14 +20,16 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.html.jscode.JSAnonymousFunction;
 
 /**
  * Define how to sum up data tables columns.
- * 
+ *
  * @author Philip Helger
  */
+@Immutable
 public class FooterCallbackSumColumn implements Serializable
 {
   private final JSAnonymousFunction m_aFuncIntVal;

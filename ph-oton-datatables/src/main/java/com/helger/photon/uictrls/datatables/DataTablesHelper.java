@@ -138,7 +138,7 @@ public final class DataTablesHelper
    * @return A JS function to be used as the dataTables footer callback.
    */
   @Nonnull
-  public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull final Iterable <? extends FooterCallbackSumColumn> aColumns)
+  public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull final FooterCallbackSumColumn... aColumns)
   {
     ValueEnforcer.notEmpty (aColumns, "Columns");
 
