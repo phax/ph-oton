@@ -26,7 +26,7 @@ import com.helger.html.jscode.JSAnonymousFunction;
 
 /**
  * Define how to sum up data tables columns.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
