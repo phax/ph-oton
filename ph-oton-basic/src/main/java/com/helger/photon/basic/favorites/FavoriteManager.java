@@ -241,6 +241,18 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     return null;
   }
 
+  @Nullable
+  public IFavorite getFavorite (@Nullable final String sUserID, @Nullable final String sFavoriteID)
+  {
+    if (StringHelper.hasText (sUserID) && StringHelper.hasText (sFavoriteID))
+    {
+      final ICommonsList <Favorite> aFavs = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+      if (aFavs != null)
+        return aFavs.findFirst (aFavorite -> aFavorite.getID ().equals (sFavoriteID));
+    }
+    return null;
+  }
+
   /**
    * Create a new favorite object.
    *
