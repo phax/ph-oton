@@ -118,8 +118,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   }
 
   /**
-   * Modify the first control that is inserted. This method is only called when
-   * a label is present.
+   * Modify the first control that is inserted. This method is only called when a
+   * label is present.
    *
    * @param aLabel
    *        The label that was provided. Never <code>null</code>.
@@ -343,6 +343,11 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       if (aLabel == null || aLabel.hasNoChildren ())
       {
         // No label - just add controls
+
+        // Add an offset to the controls
+        if (aCtrls instanceof IHCElement <?>)
+          aForm.getLeft ().applyOffsetTo ((IHCElement <?>) aCtrls);
+
         aFinalNode.addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
       }
       else

@@ -118,6 +118,39 @@ public final class BootstrapGridSpec implements Serializable
     }
   }
 
+  public void applyOffsetTo (@Nonnull final IHCElement <?> aElement)
+  {
+    ValueEnforcer.notNull (aElement, "Element");
+
+    int nLastPartCount = IBootstrapGridElement.PARTS_NONE;
+    if (m_eXS != null && m_eXS.getParts () > 0)
+    {
+      aElement.addClass (m_eXS.getCSSClassOffset ());
+      nLastPartCount = m_eXS.getParts ();
+    }
+    // Apply only if different from the previous part count
+    if (m_eSM != null && m_eSM.getParts () > 0 && m_eSM.getParts () != nLastPartCount)
+    {
+      aElement.addClass (m_eSM.getCSSClassOffset ());
+      nLastPartCount = m_eSM.getParts ();
+    }
+    if (m_eMD != null && m_eMD.getParts () > 0 && m_eMD.getParts () != nLastPartCount)
+    {
+      aElement.addClass (m_eMD.getCSSClassOffset ());
+      nLastPartCount = m_eMD.getParts ();
+    }
+    if (m_eLG != null && m_eLG.getParts () > 0 && m_eLG.getParts () != nLastPartCount)
+    {
+      aElement.addClass (m_eLG.getCSSClassOffset ());
+      nLastPartCount = m_eLG.getParts ();
+    }
+    if (m_eXL != null && m_eXL.getParts () > 0 && m_eXL.getParts () != nLastPartCount)
+    {
+      aElement.addClass (m_eXL.getCSSClassOffset ());
+      nLastPartCount = m_eXL.getParts ();
+    }
+  }
+
   @Override
   public String toString ()
   {

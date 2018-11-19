@@ -30,28 +30,32 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
  */
 public enum EBootstrapGridXS implements IBootstrapGridElement
 {
-  XS_1 (1, CBootstrapCSS.COL_1),
-  XS_2 (2, CBootstrapCSS.COL_2),
-  XS_3 (3, CBootstrapCSS.COL_3),
-  XS_4 (4, CBootstrapCSS.COL_4),
-  XS_5 (5, CBootstrapCSS.COL_5),
-  XS_6 (6, CBootstrapCSS.COL_6),
-  XS_7 (7, CBootstrapCSS.COL_7),
-  XS_8 (8, CBootstrapCSS.COL_8),
-  XS_9 (9, CBootstrapCSS.COL_9),
-  XS_10 (10, CBootstrapCSS.COL_10),
-  XS_11 (11, CBootstrapCSS.COL_11),
-  XS_12 (12, CBootstrapCSS.COL_12),
-  AUTO (PARTS_AUTO, CBootstrapCSS.COL_AUTO),
-  EVENLY (PARTS_EVENLY, CBootstrapCSS.COL);
+  XS_1 (1, CBootstrapCSS.COL_1, CBootstrapCSS.OFFSET_1),
+  XS_2 (2, CBootstrapCSS.COL_2, CBootstrapCSS.OFFSET_2),
+  XS_3 (3, CBootstrapCSS.COL_3, CBootstrapCSS.OFFSET_3),
+  XS_4 (4, CBootstrapCSS.COL_4, CBootstrapCSS.OFFSET_4),
+  XS_5 (5, CBootstrapCSS.COL_5, CBootstrapCSS.OFFSET_5),
+  XS_6 (6, CBootstrapCSS.COL_6, CBootstrapCSS.OFFSET_6),
+  XS_7 (7, CBootstrapCSS.COL_7, CBootstrapCSS.OFFSET_7),
+  XS_8 (8, CBootstrapCSS.COL_8, CBootstrapCSS.OFFSET_8),
+  XS_9 (9, CBootstrapCSS.COL_9, CBootstrapCSS.OFFSET_9),
+  XS_10 (10, CBootstrapCSS.COL_10, CBootstrapCSS.OFFSET_10),
+  XS_11 (11, CBootstrapCSS.COL_11, CBootstrapCSS.OFFSET_11),
+  XS_12 (12, CBootstrapCSS.COL_12, null),
+  AUTO (PARTS_AUTO, CBootstrapCSS.COL_AUTO, null),
+  EVENLY (PARTS_EVENLY, CBootstrapCSS.COL, null);
 
   private final int m_nParts;
   private final ICSSClassProvider m_aCSSClass;
+  private final ICSSClassProvider m_aCSSClassOffset;
 
-  private EBootstrapGridXS (final int nParts, @Nonnull final ICSSClassProvider aCSSClass)
+  private EBootstrapGridXS (final int nParts,
+                            @Nonnull final ICSSClassProvider aCSSClass,
+                            @Nullable final ICSSClassProvider aCSSClassOffset)
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;
+    m_aCSSClassOffset = aCSSClassOffset;
   }
 
   @Nonnull
@@ -70,6 +74,12 @@ public enum EBootstrapGridXS implements IBootstrapGridElement
   public String getCSSClass ()
   {
     return m_aCSSClass.getCSSClass ();
+  }
+
+  @Nullable
+  public ICSSClassProvider getCSSClassOffset ()
+  {
+    return m_aCSSClassOffset;
   }
 
   public boolean isMax ()

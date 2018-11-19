@@ -29,28 +29,32 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
  */
 public enum EBootstrapGridMD implements IBootstrapGridElement
 {
-  MD_1 (1, CBootstrapCSS.COL_MD_1),
-  MD_2 (2, CBootstrapCSS.COL_MD_2),
-  MD_3 (3, CBootstrapCSS.COL_MD_3),
-  MD_4 (4, CBootstrapCSS.COL_MD_4),
-  MD_5 (5, CBootstrapCSS.COL_MD_5),
-  MD_6 (6, CBootstrapCSS.COL_MD_6),
-  MD_7 (7, CBootstrapCSS.COL_MD_7),
-  MD_8 (8, CBootstrapCSS.COL_MD_8),
-  MD_9 (9, CBootstrapCSS.COL_MD_9),
-  MD_10 (10, CBootstrapCSS.COL_MD_10),
-  MD_11 (11, CBootstrapCSS.COL_MD_11),
-  MD_12 (12, CBootstrapCSS.COL_MD_12),
-  AUTO (PARTS_AUTO, CBootstrapCSS.COL_MD_AUTO),
-  EVENLY (PARTS_EVENLY, CBootstrapCSS.COL_MD);
+  MD_1 (1, CBootstrapCSS.COL_MD_1, CBootstrapCSS.OFFSET_MD_1),
+  MD_2 (2, CBootstrapCSS.COL_MD_2, CBootstrapCSS.OFFSET_MD_2),
+  MD_3 (3, CBootstrapCSS.COL_MD_3, CBootstrapCSS.OFFSET_MD_3),
+  MD_4 (4, CBootstrapCSS.COL_MD_4, CBootstrapCSS.OFFSET_MD_4),
+  MD_5 (5, CBootstrapCSS.COL_MD_5, CBootstrapCSS.OFFSET_MD_5),
+  MD_6 (6, CBootstrapCSS.COL_MD_6, CBootstrapCSS.OFFSET_MD_6),
+  MD_7 (7, CBootstrapCSS.COL_MD_7, CBootstrapCSS.OFFSET_MD_7),
+  MD_8 (8, CBootstrapCSS.COL_MD_8, CBootstrapCSS.OFFSET_MD_8),
+  MD_9 (9, CBootstrapCSS.COL_MD_9, CBootstrapCSS.OFFSET_MD_9),
+  MD_10 (10, CBootstrapCSS.COL_MD_10, CBootstrapCSS.OFFSET_MD_10),
+  MD_11 (11, CBootstrapCSS.COL_MD_11, CBootstrapCSS.OFFSET_MD_11),
+  MD_12 (12, CBootstrapCSS.COL_MD_12, null),
+  AUTO (PARTS_AUTO, CBootstrapCSS.COL_MD_AUTO, null),
+  EVENLY (PARTS_EVENLY, CBootstrapCSS.COL_MD, null);
 
   private final int m_nParts;
   private final ICSSClassProvider m_aCSSClass;
+  private final ICSSClassProvider m_aCSSClassOffset;
 
-  private EBootstrapGridMD (final int nParts, @Nullable final ICSSClassProvider aCSSClass)
+  private EBootstrapGridMD (final int nParts,
+                            @Nullable final ICSSClassProvider aCSSClass,
+                            @Nullable final ICSSClassProvider aCSSClassOffset)
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;
+    m_aCSSClassOffset = aCSSClassOffset;
   }
 
   @Nonnull
@@ -68,6 +72,12 @@ public enum EBootstrapGridMD implements IBootstrapGridElement
   public String getCSSClass ()
   {
     return m_aCSSClass == null ? null : m_aCSSClass.getCSSClass ();
+  }
+
+  @Nullable
+  public ICSSClassProvider getCSSClassOffset ()
+  {
+    return m_aCSSClassOffset;
   }
 
   public boolean isMax ()
