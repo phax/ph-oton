@@ -65,6 +65,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public static final ICSSClassProvider CSS_CLASS_DATE = DefaultCSSClassProvider.create ("date");
   public static final ICSSClassProvider CSS_CLASS_DATETIMEPICKER_INPUT = DefaultCSSClassProvider.create ("datetimepicker-input");
 
+  private static final String EVENT_SUFFIX = ".datetimepicker";
+  public static final String EVENT_NAME_CHANGE = "change" + EVENT_SUFFIX;
+
   public static EBootstrap4DateTimePickerViewModeType DEFAULT_VIEW_MODE = EBootstrap4DateTimePickerViewModeType.DAYS;
 
   private static final LocalDate DUMMY_DATE = PDTFactory.createLocalDate (2018, Month.OCTOBER, 24);
@@ -80,6 +83,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private ETriState m_eSideBySide = ETriState.UNDEFINED;
   private LocalDateTime m_aMinDate;
   private LocalDateTime m_aMaxDate;
+  private ETriState m_eUseCurrent = ETriState.FALSE;
 
   @Nonnull
   static String getAsModeSpecificISOString (@Nonnull final EBootstrap4DateTimePickerMode eMode,
@@ -381,6 +385,31 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     return this;
   }
 
+  /**
+   * On show, will set the picker to the current date/time.?
+   *
+   * @return Never <code>null</code>
+   */
+  @Nonnull
+  public final ETriState getUseCurrent ()
+  {
+    return m_eUseCurrent;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setUseCurrent (final boolean bUseCurrent)
+  {
+    return setUseCurrent (ETriState.valueOf (bUseCurrent));
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setUseCurrent (@Nonnull final ETriState eUseCurrent)
+  {
+    ValueEnforcer.notNull (eUseCurrent, "UseCurrent");
+    m_eUseCurrent = eUseCurrent;
+    return this;
+  }
+
   @Nonnull
   public static JSInvocation invoke (@Nonnull final JQueryInvocation aJQueryInvocation)
   {
@@ -460,11 +489,11 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     if (StringHelper.hasText (m_aDisplayLocale.getLanguage ()))
       aOptions.add ("locale", m_aDisplayLocale.getLanguage ());
 
-    if (m_eShowCalendarWeeks.isDefined ())
-      aOptions.add ("calendarWeeks", m_eShowCalendarWeeks.getAsBooleanValue ());
-
     if (m_eViewMode != null)
       aOptions.add ("viewMode", m_eViewMode.getJSValueString ());
+
+    if (m_eShowCalendarWeeks.isDefined ())
+      aOptions.add ("calendarWeeks", m_eShowCalendarWeeks.getAsBooleanValue ());
 
     final JSAssocArray aTooltips = getJSTooltipTexts ();
     if (aTooltips.isNotEmpty ())
@@ -476,15 +505,20 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     // Explicit format present?
     aOptions.add ("format", StringHelper.hasText (m_sFormat) ? m_sFormat : m_eMode.getJSFormat (m_aDisplayLocale));
 
-    // Default date present?
-    if (m_aInitialDate != null)
-      aOptions.add ("date", getAsModeSpecificISOString (m_eMode, m_aInitialDate));
+    // Set before min, max and initial!
+    if (m_eUseCurrent.isDefined ())
+      aOptions.add ("useCurrent", m_eUseCurrent.getAsBooleanValue ());
 
     // min and max
     if (m_aMinDate != null)
       aOptions.add ("minDate", getAsModeSpecificISOString (m_eMode, m_aMinDate));
     if (m_aMaxDate != null)
       aOptions.add ("maxDate", getAsModeSpecificISOString (m_eMode, m_aMaxDate));
+
+    // Default date present?
+    // Put in options after minDate and maxDate
+    if (m_aInitialDate != null)
+      aOptions.add ("date", getAsModeSpecificISOString (m_eMode, m_aInitialDate));
 
     return aOptions;
   }
