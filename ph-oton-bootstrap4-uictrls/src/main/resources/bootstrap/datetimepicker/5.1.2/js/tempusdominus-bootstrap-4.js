@@ -410,6 +410,9 @@ var DateTimePicker = function ($, moment) {
                 if (!this._options.allowMultidate || this._dates.length === 1) {
                     this.unset = true;
                     this._dates = [];
+                    // [ph] added from https://github.com/tempusdominus/bootstrap-4/issues/34#issuecomment-414392321
+                    this._dates[0] = this.getMoment();
+                    this._viewDate = this.getMoment().clone();
                     this._datesFormatted = [];
                 } else {
                     outpValue = this._element.data('date') + ',';
