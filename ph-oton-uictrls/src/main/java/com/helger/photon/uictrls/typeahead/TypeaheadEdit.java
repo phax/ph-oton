@@ -98,19 +98,19 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
    */
   @Nonnull
   @Nonempty
-  public String getHiddenFieldID ()
+  public final String getHiddenFieldID ()
   {
     return m_sHiddenFieldID;
   }
 
   /**
    * @return The JS callback function that is invoked, when an item is selected.
-   *         Never <code>null</code>. Do not modify the original body content, as
-   *         this is required to be present for the correct working of this
+   *         Never <code>null</code>. Do not modify the original body content,
+   *         as this is required to be present for the correct working of this
    *         control!
    */
   @Nonnull
-  public JSAnonymousFunction getJSSelectionCallback ()
+  public final JSAnonymousFunction getJSSelectionCallback ()
   {
     return m_aSelectionCallback;
   }
@@ -121,7 +121,7 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
    *         effect if they are performed before this control is build!
    */
   @Nonnull
-  public HCTypeahead getScript ()
+  public final HCTypeahead getScript ()
   {
     return m_aScript;
   }
