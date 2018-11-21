@@ -1,9 +1,5 @@
 language: java
 
-# Required to avoid timeout!
-# This is still needed when "travis_wait" is used!
-sudo: true
-
 env:
   global:
     - SONATYPE_USERNAME=ph@phloc.com
@@ -16,8 +12,8 @@ Kda356zKNHhu/x04SR7PjmbSN8LUmiPZ2yh2F/ZCekDdUygdgsXWcsxf8LJ/9DgTRoXA5e3ZgNbthM5i
 51Arcl+fDNPOxN84o18L0JVawc83mgLNrk3TBZxofom0zQyp4KUrWiQT7Rb0o2Jvumo0t6YjAUCCEMrvp7fobzjUcbL9OA="
   
 install:
-#  - travis_wait 20 mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U -P jdeps
-  - travis_wait 20 mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U
+#  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U -P jdeps
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U
 
 cache:
   directories:
