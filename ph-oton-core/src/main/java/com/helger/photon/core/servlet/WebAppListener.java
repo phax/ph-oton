@@ -164,17 +164,17 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {
     // Print Java and Server (e.g. Tomcat) info
     LOGGER.info ("Java " +
-                    SystemProperties.getJavaVersion () +
-                    " running '" +
-                    aSC.getServletContextName () +
-                    "' on " +
-                    aSC.getServerInfo () +
-                    " with " +
-                    (Runtime.getRuntime ().maxMemory () / CGlobal.BYTES_PER_MEGABYTE) +
-                    "MB max RAM and Servlet API " +
-                    aSC.getMajorVersion () +
-                    "." +
-                    aSC.getMinorVersion ());
+                 SystemProperties.getJavaVersion () +
+                 " running '" +
+                 aSC.getServletContextName () +
+                 "' on " +
+                 aSC.getServerInfo () +
+                 " with " +
+                 (Runtime.getRuntime ().maxMemory () / CGlobal.BYTES_PER_MEGABYTE) +
+                 "MB max RAM and Servlet API " +
+                 aSC.getMajorVersion () +
+                 "." +
+                 aSC.getMinorVersion ());
 
     // Tell them to use the server VM if possible:
     final EJVMVendor eJVMVendor = EJVMVendor.getCurrentVendor ();
@@ -307,7 +307,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the value of the servlet context init-parameter that represents the
-   * <b>debug</b> flag. This value is than converted to a boolean internally.
+   * <b>{@value #DEFAULT_INIT_PARAMETER_DEBUG}</b> flag. This value is than
+   * converted to a boolean internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
@@ -323,8 +324,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the value of the servlet context init-parameter that represents the
-   * <b>production</b> flag. This value is than converted to a boolean
-   * internally.
+   * <b>{@value #DEFAULT_INIT_PARAMETER_PRODUCTION}</b> flag. This value is than
+   * converted to a boolean internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
@@ -340,8 +341,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the value of the servlet context init-parameter that represents the
-   * <b>no-startup-info</b> flag. This value is than converted to a boolean
-   * internally.
+   * <b>{@value #INIT_PARAMETER_NO_STARTUP_INFO}</b> flag. This value is than
+   * converted to a boolean internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
@@ -357,8 +358,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the value of the servlet context init-parameter that represents the
-   * <b>no-startup-info</b> flag. This value is than converted to a boolean
-   * internally.
+   * <b>{@value #INIT_PARAMETER_SERVER_URL_PRODUCTION}</b> or
+   * <b>{@value #INIT_PARAMETER_SERVER_URL}</b> flag. This value is than
+   * converted to a boolean internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
@@ -393,8 +395,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the data path to be used for this application. By default the servlet
-   * context init-parameter {@link #INIT_PARAMETER_DATA_PATH} is evaluated. If
-   * non is present, the servlet context path is used.
+   * context init-parameter <b>{@link #INIT_PARAMETER_DATA_PATH}</b> is
+   * evaluated. If non is present, the servlet context path is used.
    *
    * @param aSC
    *        The servlet context. Never <code>null</code>.
@@ -413,8 +415,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       if (StringHelper.hasText (sDataPath))
       {
         LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" +
-                         INIT_PARAMETER_DATA_PATH +
-                         "' instead!");
+                      INIT_PARAMETER_DATA_PATH +
+                      "' instead!");
       }
     }
     if (StringHelper.hasNoText (sDataPath))
@@ -423,10 +425,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       sDataPath = getServletContextPath (aSC);
       if (GlobalDebug.isDebugMode () && LOGGER.isInfoEnabled ())
         LOGGER.info ("No servlet context init-parameter '" +
-                        INIT_PARAMETER_DATA_PATH +
-                        "' found! Defaulting to servlet context path '" +
-                        sDataPath +
-                        "'");
+                     INIT_PARAMETER_DATA_PATH +
+                     "' found! Defaulting to servlet context path '" +
+                     sDataPath +
+                     "'");
     }
     return sDataPath;
   }
@@ -611,10 +613,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         }
         else
           LOGGER.error ("The init-parameter for the server URL" +
-                           (bProductionMode ? " (production mode)" : " (non-production mode)") +
-                           "contains the non-URL value '" +
-                           sInitParameter +
-                           "'");
+                        (bProductionMode ? " (production mode)" : " (non-production mode)") +
+                        "contains the non-URL value '" +
+                        sInitParameter +
+                        "'");
       }
     }
 
@@ -673,10 +675,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // Finally
     if (LOGGER.isInfoEnabled ())
       LOGGER.info ("Servlet context '" +
-                      aSC.getServletContextName () +
-                      "' was initialized in " +
-                      aSW.stopAndGetMillis () +
-                      " milli seconds");
+                   aSC.getServletContextName () +
+                   "' was initialized in " +
+                   aSW.stopAndGetMillis () +
+                   " milli seconds");
   }
 
   /**
@@ -814,10 +816,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     if (LOGGER.isInfoEnabled ())
       LOGGER.info ("Servlet context '" +
-                      aSC.getServletContextName () +
-                      "' was destroyed in " +
-                      aSW.stopAndGetMillis () +
-                      " milli seconds");
+                   aSC.getServletContextName () +
+                   "' was destroyed in " +
+                   aSW.stopAndGetMillis () +
+                   " milli seconds");
   }
 
   /**
