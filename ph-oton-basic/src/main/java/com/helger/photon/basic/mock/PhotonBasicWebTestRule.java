@@ -24,6 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.NonBlockingStack;
 import com.helger.commons.io.file.FileOperationManager;
+import com.helger.dao.AbstractDAO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.servlet.ServletContextPathHolder;
@@ -39,6 +40,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   private final File m_aDataPath;
   private final String m_sServletContextPath;
   private boolean m_bDeleteAllData = false;
+  private boolean m_bOldDAOSilentMode;
   private boolean m_bOldWebFileIOSilentMode;
   private boolean m_bOldSCCtxHolderSilentMode;
   private NonBlockingStack <Runnable> m_aCleansingRules;
@@ -118,6 +120,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   @Override
   public void before ()
   {
+    m_bOldDAOSilentMode = AbstractDAO.setSilentMode (true);
     m_bOldWebFileIOSilentMode = WebFileIO.setSilentMode (true);
     m_bOldSCCtxHolderSilentMode = ServletContextPathHolder.setSilentMode (true);
     super.before ();
@@ -145,5 +148,6 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
     super.after ();
     ServletContextPathHolder.setSilentMode (m_bOldSCCtxHolderSilentMode);
     WebFileIO.setSilentMode (m_bOldWebFileIOSilentMode);
+    AbstractDAO.setSilentMode (m_bOldDAOSilentMode);
   }
 }
