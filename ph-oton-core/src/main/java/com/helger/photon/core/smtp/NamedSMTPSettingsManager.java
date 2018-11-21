@@ -27,7 +27,6 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.lang.IHasSize;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -53,7 +52,6 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
 {
   private static final String ELEMENT_ROOT = "namedsmtpsettingslist";
   private static final String ELEMENT_ITEM = "namedsmtpsettings";
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   private static boolean s_bCreateDefaults = true;
 
   private final ICommonsMap <String, NamedSMTPSettings> m_aMap = new CommonsHashMap <> ();
