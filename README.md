@@ -39,6 +39,8 @@ Contained subprojects are:
     * Changed B4 `BootstrapDateTimePicker` initialization to correctly handle the default values
     * Extended `FavoriteManager` API
     * Updated to Jetty 9.4.14
+    * Changed B4 `BootstrapDateTimePicker` to not use currentDate by default 
+    * Requires ph-commons 9.2.0
 * v8.1.0 - 2018-10-25
     * Extended the `Favorite` APIs
     * Initial versions of the subproject `ph-oton-bootstrap4-uictrls` is available 
