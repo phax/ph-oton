@@ -55,7 +55,13 @@ public class BootstrapBreadcrumbList extends AbstractHCOLBase <BootstrapBreadcru
   @Nonnull
   public BootstrapBreadcrumbList addLink (@Nonnull final ISimpleURL aURL, @Nullable final IHCNode aLabel)
   {
-    addChild (new BootstrapBreadcrumbItem ().addChild (new HCA ().setHref (aURL).addChild (aLabel)));
+    return addLink (new HCA ().setHref (aURL).addChild (aLabel));
+  }
+
+  @Nonnull
+  public BootstrapBreadcrumbList addLink (@Nonnull final HCA aLink)
+  {
+    addChild (new BootstrapBreadcrumbItem ().addChild (aLink));
     return this;
   }
 
