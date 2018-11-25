@@ -33,7 +33,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.1.1 - work in progress
+* v8.1.1 - 2018-11-25
     * Fixed error in quoting of B3 user group management page
     * Added special CSS Class to B4 `BootstrapPageHeader`
     * Changed B4 `BootstrapDateTimePicker` initialization to correctly handle the default values
@@ -159,7 +159,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.1.0</version>
+        <version>8.1.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
