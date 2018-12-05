@@ -18,6 +18,7 @@ package com.helger.photon.core.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -221,11 +222,13 @@ public class WebSiteResource
     return m_bResourceExists;
   }
 
-  @Nonnull
-  @Nonempty
+  @Nullable
   public String getAsURLString ()
   {
-    return m_aResource.getAsURL ().toExternalForm ();
+    final URL aURL = m_aResource.getAsURL ();
+    if (aURL == null)
+      return null;
+    return aURL.toExternalForm ();
   }
 
   @Nonnull

@@ -38,6 +38,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.FileSystemIterator;
@@ -140,10 +141,10 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
           if (!aNewResource.isExisting ())
           {
             LOGGER.info ("Skipping resource bundle '" +
-                            sBundleID +
-                            "' skipping because resource '" +
-                            sPath +
-                            "' does not exist");
+                         sBundleID +
+                         "' skipping because resource '" +
+                         sPath +
+                         "' does not exist");
             bResourcesAreOutOfSync = true;
             continue;
           }
@@ -151,17 +152,17 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
           // The relocation check makes now sense, because the hash code is
           // the relevant enough...
           if (false)
-            if (!aNewResource.getAsURLString ().equals (sURL))
+            if (!EqualsHelper.equals (aNewResource.getAsURLString (), sURL))
             {
               LOGGER.info ("Skipping resource bundle '" +
-                              sBundleID +
-                              "' because resource '" +
-                              sPath +
-                              "' was relocated from '" +
-                              sURL +
-                              "' to '" +
-                              aNewResource.getAsURLString () +
-                              "'");
+                           sBundleID +
+                           "' because resource '" +
+                           sPath +
+                           "' was relocated from '" +
+                           sURL +
+                           "' to '" +
+                           aNewResource.getAsURLString () +
+                           "'");
               bResourcesAreOutOfSync = true;
               continue;
             }
@@ -169,10 +170,10 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
           if (!aNewResource.getContentHashAsString ().equals (sHash))
           {
             LOGGER.info ("Skipping resource bundle '" +
-                            sBundleID +
-                            "' skipping because resource '" +
-                            sPath +
-                            "' changed (hash mismatch)");
+                         sBundleID +
+                         "' skipping because resource '" +
+                         sPath +
+                         "' changed (hash mismatch)");
             bResourcesAreOutOfSync = true;
             continue;
           }
