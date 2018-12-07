@@ -41,7 +41,7 @@ import com.helger.photon.bootstrap4.utils.EBootstrapBackgroundType;
 public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
 {
   public static final EBootstrapNavbarColorSchemeType DEFAULT_COLOR_SCHEME = EBootstrapNavbarColorSchemeType.LIGHT;
-  public static final EBootstrapNavbarExpandType DEFAULT_EXPAND = EBootstrapNavbarExpandType.EXPAND_LG;
+  public static final EBootstrapNavbarExpandType DEFAULT_EXPAND = EBootstrapNavbarExpandType.EXPAND_MD;
   public static final EBootstrapBackgroundType DEFAULT_BACKGROUND = EBootstrapBackgroundType.LIGHT;
 
   private EBootstrapNavbarColorSchemeType m_eColorScheme = DEFAULT_COLOR_SCHEME;
