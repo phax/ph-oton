@@ -24,10 +24,19 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.css.decl.CSSDeclaration;
+import com.helger.css.decl.CSSExpression;
+import com.helger.css.decl.CSSSelector;
+import com.helger.css.decl.CSSSelectorSimpleMember;
+import com.helger.css.decl.CSSStyleRule;
+import com.helger.css.decl.CascadingStyleSheet;
+import com.helger.css.property.ECSSProperty;
+import com.helger.css.writer.CSSWriterSettings;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -70,6 +79,8 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
 
   private final String m_sFieldName;
   private final Locale m_aDisplayLocale;
+  private String m_sCustomPlaceholder;
+  private String m_sCustomButtonText;
 
   public BootstrapFileUpload (@Nonnull @Nonempty final String sName, @Nonnull final Locale aDisplayLocale)
   {
@@ -85,6 +96,32 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
     return m_sFieldName;
   }
 
+  @Nullable
+  public final String getCustomPlaceholder ()
+  {
+    return m_sCustomPlaceholder;
+  }
+
+  @Nonnull
+  public final BootstrapFileUpload setCustomPlaceholder (@Nullable final String sCustomPlaceholder)
+  {
+    m_sCustomPlaceholder = sCustomPlaceholder;
+    return this;
+  }
+
+  @Nullable
+  public final String getCustomButtonText ()
+  {
+    return m_sCustomButtonText;
+  }
+
+  @Nonnull
+  public final BootstrapFileUpload setCustomButtonText (@Nullable final String sCustomButtonText)
+  {
+    m_sCustomButtonText = sCustomButtonText;
+    return this;
+  }
+
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -96,15 +133,36 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
     aEditFile.addClass (CBootstrapCSS.CUSTOM_FILE_INPUT);
     addChild (aEditFile);
 
+    String sPlacehoder = m_sCustomPlaceholder;
+    if (StringHelper.hasNoText (sPlacehoder))
+      sPlacehoder = EText.BROWSE_LABEL.getDisplayText (m_aDisplayLocale);
+
     final HCLabel aLabel = new HCLabel ();
     aLabel.setFor (aEditFile);
     aLabel.addClass (CBootstrapCSS.CUSTOM_FILE_LABEL);
-    aLabel.addChild (EText.BROWSE_LABEL.getDisplayText (m_aDisplayLocale));
+    aLabel.addChild (sPlacehoder);
     addChild (aLabel);
 
-    addChild (new HCStyle (".custom-file-label::after { content: \"" +
-                           EText.BUTTON_BROWSE.getDisplayText (m_aDisplayLocale) +
-                           "\";  }"));
+    String sButtonText = m_sCustomButtonText;
+    if (StringHelper.hasNoText (sButtonText))
+      sButtonText = EText.BUTTON_BROWSE.getDisplayText (m_aDisplayLocale);
+
+    if (false)
+    {
+      final CascadingStyleSheet aCSS = new CascadingStyleSheet ();
+      final CSSStyleRule aStyleRule = new CSSStyleRule ();
+      final CSSSelector aSelector = new CSSSelector ();
+      aSelector.addMember (new CSSSelectorSimpleMember (".custom-file-label::after"));
+      aStyleRule.addSelector (aSelector);
+      aStyleRule.addDeclaration (new CSSDeclaration (ECSSProperty.CONTENT.getName (),
+                                                     CSSExpression.createString (sButtonText)));
+      aCSS.addRule (aStyleRule);
+      addChild (new HCStyle (aCSS, new CSSWriterSettings ().setOptimizedOutput (true)));
+    }
+    else
+      addChild (new HCStyle (".custom-file-label::after { content: \"" +
+                             StringHelper.replaceAll (sButtonText, "\"", "\\\"") +
+                             "\";  }"));
 
     if (false)
       aEditFile.addEventHandler (EJSEvent.CHANGE,
