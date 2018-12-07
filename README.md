@@ -33,6 +33,9 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.1.2 - work in progress
+    * Added B4 tooltips, Jumbotron and Modal dialog
+    * Added class `BootstrapPageRenderer` for consistent page rendering
 * v8.1.1 - 2018-11-25
     * Fixed error in quoting of B3 user group management page
     * Added special CSS Class to B4 `BootstrapPageHeader`
