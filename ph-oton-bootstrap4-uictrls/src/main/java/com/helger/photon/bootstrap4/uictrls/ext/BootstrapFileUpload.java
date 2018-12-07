@@ -79,6 +79,7 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
 
   private final String m_sFieldName;
   private final Locale m_aDisplayLocale;
+  private final HCEditFile m_aEditFile;
   private String m_sCustomPlaceholder;
   private String m_sCustomButtonText;
 
@@ -88,12 +89,23 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     m_sFieldName = sName;
     m_aDisplayLocale = aDisplayLocale;
+
+    m_aEditFile = new HCEditFile (m_sFieldName);
+    m_aEditFile.addClass (CBootstrapCSS.CUSTOM_FILE_INPUT);
+    m_aEditFile.ensureID ();
   }
 
   @Nonnull
+  @Nonempty
   public final String getFieldName ()
   {
     return m_sFieldName;
+  }
+
+  @Nonnull
+  public final HCEditFile getEditFile ()
+  {
+    return m_aEditFile;
   }
 
   @Nullable
@@ -129,16 +141,14 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClass (CBootstrapCSS.CUSTOM_FILE);
 
-    final HCEditFile aEditFile = new HCEditFile (m_sFieldName);
-    aEditFile.addClass (CBootstrapCSS.CUSTOM_FILE_INPUT);
-    addChild (aEditFile);
+    addChild (m_aEditFile);
 
     String sPlacehoder = m_sCustomPlaceholder;
     if (StringHelper.hasNoText (sPlacehoder))
       sPlacehoder = EText.BROWSE_LABEL.getDisplayText (m_aDisplayLocale);
 
     final HCLabel aLabel = new HCLabel ();
-    aLabel.setFor (aEditFile);
+    aLabel.setFor (m_aEditFile);
     aLabel.addClass (CBootstrapCSS.CUSTOM_FILE_LABEL);
     aLabel.addChild (sPlacehoder);
     addChild (aLabel);
@@ -164,8 +174,8 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
                              StringHelper.replaceAll (sButtonText, "\"", "\\\"") +
                              "\";  }"));
 
-    if (false)
-      aEditFile.addEventHandler (EJSEvent.CHANGE,
+    // Update label with selected file
+    m_aEditFile.addEventHandler (EJSEvent.CHANGE,
                                  false ? JSHtml.consoleLog (JSExpr.THIS.ref ("files").component0 ().ref ("name"))
                                        : JQuery.idRef (aLabel)
                                                .empty ()
