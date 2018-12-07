@@ -294,45 +294,28 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     }
     if (bFirstControlIsCheckBox || bFirstControlIsRadioButton)
     {
-      // Never icons for check box/radio button
-
-      final boolean bCustom = false;
-
       // Check box or radio button
-      final HCDiv aCtrlDiv = new HCDiv ();
-      if (bCustom)
-      {
-        aCtrlDiv.addClass (CBootstrapCSS.CUSTOM_CONTROL);
-        if (bFirstControlIsCheckBox)
-          aCtrlDiv.addClass (CBootstrapCSS.CUSTOM_CHECKBOX);
-        if (bFirstControlIsRadioButton)
-          aCtrlDiv.addClass (CBootstrapCSS.CUSTOM_CHECKBOX);
-      }
-      else
-        aCtrlDiv.addClass (CBootstrapCSS.FORM_CHECK);
+      aFirstControl.addClass (CBootstrapCSS.FORM_CHECK_INPUT);
 
-      if (bCustom)
-        aFirstControl.addClass (CBootstrapCSS.CUSTOM_CONTROL_INPUT);
-      else
-        aFirstControl.addClass (CBootstrapCSS.FORM_CHECK_INPUT);
-      aCtrlDiv.addChild (aCtrls);
+      final HCDiv aDivFormCheck = new HCDiv ().addClass (CBootstrapCSS.FORM_CHECK).addChild (aCtrls);
 
       if (aLabel != null)
       {
-        if (bCustom)
-          aLabel.addClass (CBootstrapCSS.CUSTOM_CONTROL_LABEL);
-        else
-          aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
-        aCtrlDiv.addChild (aLabel);
+        aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
+        aDivFormCheck.addChild (aLabel);
 
         // We have a label for a control
         aLabel.setFor (aFirstControl);
         modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
       }
 
-      aCtrlDiv.addChild (aErrorListNode).addChild (aHelpTextNode);
+      // Add an offset to the controls
+      final HCDiv aDivRight = new HCDiv ().addChild (aDivFormCheck).addChild (aErrorListNode).addChild (aHelpTextNode);
 
-      aFinalNode = aCtrlDiv;
+      aForm.getLeft ().applyOffsetTo (aDivRight);
+      aForm.getRight ().applyTo (aDivRight);
+
+      aFinalNode = new BootstrapRow ().addClass (CBootstrapCSS.FORM_GROUP).addChild (aDivRight);
     }
     else
     {
@@ -340,15 +323,17 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       aFinalNode = new BootstrapRow ();
       aFinalNode.addClass (CBootstrapCSS.FORM_GROUP);
 
+      final HCDiv aDivRight = new HCDiv ().addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
+      aForm.getRight ().applyTo (aDivRight);
+
       if (aLabel == null || aLabel.hasNoChildren ())
       {
         // No label - just add controls
 
         // Add an offset to the controls
-        if (aCtrls instanceof IHCElement <?>)
-          aForm.getLeft ().applyOffsetTo ((IHCElement <?>) aCtrls);
+        aForm.getLeft ().applyOffsetTo (aDivRight);
 
-        aFinalNode.addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
+        aFinalNode.addChild (aDivRight);
       }
       else
       {
@@ -366,8 +351,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         }
 
         aForm.getLeft ().applyTo (aLabel);
-        final HCDiv aDivRight = new HCDiv ().addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
-        aForm.getRight ().applyTo (aDivRight);
+
         aFinalNode.addChildren (aLabel, aDivRight);
       }
     }
