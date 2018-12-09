@@ -479,7 +479,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /**
    * This method is called to initialize the global ID factory. By default a
    * file-based {@link WebIOLongIDFactory} with the filename
-   * {@link #ID_FILENAME} is created.
+   * {@link #ID_FILENAME} is created. This is called init of the paths.
    */
   @OverrideOnDemand
   protected void initGlobalIDFactory ()
@@ -489,6 +489,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     GlobalIDFactory.setPersistentIntIDFactory ( () -> (int) GlobalIDFactory.getNewPersistentLongID ());
   }
 
+  /**
+   * Init the default global settings. This is called after init of the global
+   * ID factory.
+   */
   protected final void initDefaultGlobalSettings ()
   {
     // Enable when ready
@@ -522,6 +526,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {}
 
   /**
+   * Init all available locales. This is called after init of global settings.
+   *
    * @param aLocaleMgr
    *        Locale manager
    */
@@ -531,13 +537,15 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Init menu. If you have more than one menu tree, you need to init them all
-   * in here.
+   * in here. This is called after init locales.
    */
   @OverrideOnDemand
   protected void initMenu ()
   {}
 
   /**
+   * Init all Ajax functions. This is called after init of menu.
+   *
    * @param aAjaxInvoker
    *        Ajax invoker
    */
@@ -546,6 +554,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {}
 
   /**
+   * Init all APIs. This is called after init AJAX.
+   *
    * @param aAPIInvoker
    *        API invoker
    */
@@ -554,24 +564,33 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {}
 
   /**
-   * Init security stuff
+   * Init security stuff. This is called after init API.
    */
   @OverrideOnDemand
   protected void initSecurity ()
   {}
 
   /**
-   * Init UI stuff
+   * Init UI stuff. This is called after init security.
    */
   @OverrideOnDemand
   protected void initUI ()
   {}
 
   /**
-   * Init managers. This is called after all other initialization was done.
+   * Init managers. This is called after init UI.
    */
   @OverrideOnDemand
   protected void initManagers ()
+  {}
+
+  /**
+   * Init jobs. This is called after init managers.
+   * 
+   * @since 8.1.2
+   */
+  @OverrideOnDemand
+  protected void initJobs ()
   {}
 
   public final void contextInitialized (@Nonnull final ServletContextEvent aSCE)
@@ -664,6 +683,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
       // Init all managers
       initManagers ();
+
+      // Init all jobs, AFTER managers
+      initJobs ();
     }
 
     // Callback
