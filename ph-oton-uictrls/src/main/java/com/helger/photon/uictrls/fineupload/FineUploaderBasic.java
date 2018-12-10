@@ -35,9 +35,9 @@ import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.html.jscode.html.JSHtml;
 
 /**
  * Wrapper for Fineuploader 3.1.1
@@ -109,11 +109,11 @@ public class FineUploaderBasic
   }
 
   /**
-   * If enabled, this will result in log messages (such as server response)
-   * being written to the javascript console. If your browser does not support
-   * the [window.console
-   * object](https://developer.mozilla.org/en-US/docs/DOM/console.log), the
-   * value of this option is irrelevant.
+   * If enabled, this will result in log messages (such as server response) being
+   * written to the javascript console. If your browser does not support the
+   * [window.console
+   * object](https://developer.mozilla.org/en-US/docs/DOM/console.log), the value
+   * of this option is irrelevant.
    *
    * @param bDebug
    *        New value
@@ -134,9 +134,9 @@ public class FineUploaderBasic
 
   /**
    * The is the endpoint used by both the form and ajax uploader. In the case of
-   * the form uploader, it is part of the form's action attribute value along
-   * with all parameters. In the case of the ajax uploader, it is makes up part
-   * of the URL of the XHR request (again, along with the parameters).
+   * the form uploader, it is part of the form's action attribute value along with
+   * all parameters. In the case of the ajax uploader, it is makes up part of the
+   * URL of the XHR request (again, along with the parameters).
    *
    * @param aRequestEndpoint
    *        The new action URL. May not be <code>null</code>.
@@ -217,8 +217,7 @@ public class FineUploaderBasic
    * all requests to be multipart encoded. If the value is false all params will
    * be included in the query string. See the associated blog post
    * (http://blog.fineuploader
-   * .com/2012/11/include-params-in-request-body-or-query.html) for more
-   * details.
+   * .com/2012/11/include-params-in-request-body-or-query.html) for more details.
    *
    * @param bRequestParamsInBody
    *        <code>true</code> to put request params in bodx
@@ -239,8 +238,8 @@ public class FineUploaderBasic
   }
 
   /**
-   * Additional headers sent along with the XHR POST request. Note that is
-   * option is only relevant to the ajax/XHR uploader.
+   * Additional headers sent along with the XHR POST request. Note that is option
+   * is only relevant to the ajax/XHR uploader.
    *
    * @param aCustomHeaders
    *        Custom headers to be set.
@@ -254,8 +253,8 @@ public class FineUploaderBasic
   }
 
   /**
-   * Additional headers sent along with the XHR POST request. Note that is
-   * option is only relevant to the ajax/XHR uploader.
+   * Additional headers sent along with the XHR POST request. Note that is option
+   * is only relevant to the ajax/XHR uploader.
    *
    * @param aCustomHeaders
    *        Custom headers to be added.
@@ -269,8 +268,8 @@ public class FineUploaderBasic
   }
 
   /**
-   * Additional headers sent along with the XHR POST request. Note that is
-   * option is only relevant to the ajax/XHR uploader.
+   * Additional headers sent along with the XHR POST request. Note that is option
+   * is only relevant to the ajax/XHR uploader.
    *
    * @param sKey
    *        Custom header name
@@ -377,9 +376,9 @@ public class FineUploaderBasic
   }
 
   /**
-   * If true, the cancel link does not appear next to files when the form
-   * uploader is used. This may be desired since it may not be possible to
-   * interrupt a form-based upload in some cases.
+   * If true, the cancel link does not appear next to files when the form uploader
+   * is used. This may be desired since it may not be possible to interrupt a
+   * form-based upload in some cases.
    *
    * @param bDisableCancelForFormUploads
    *        disable?
@@ -398,8 +397,8 @@ public class FineUploaderBasic
   }
 
   /**
-   * Set to false if you want to be able to begin uploading selected/queued
-   * files later, by calling uploadStoredFiles().
+   * Set to false if you want to be able to begin uploading selected/queued files
+   * later, by calling uploadStoredFiles().
    *
    * @param bAutoUpload
    *        <code>false</code> to disable auto upload
@@ -423,9 +422,9 @@ public class FineUploaderBasic
    * This may be helpful if you want to restrict uploaded files to specific file
    * types. Note that this validation option is only enforced by examining the
    * extension of uploaded file names. For a more complete verification of the
-   * file type, you should use, for example, magic byte file identification on
-   * the server side and return {"success": false} in the response if the file
-   * type is not on your whitelist.
+   * file type, you should use, for example, magic byte file identification on the
+   * server side and return {"success": false} in the response if the file type is
+   * not on your whitelist.
    *
    * @param aAllowedExtensions
    *        The allowed extensions to be set.
@@ -442,9 +441,9 @@ public class FineUploaderBasic
    * This may be helpful if you want to restrict uploaded files to specific file
    * types. Note that this validation option is only enforced by examining the
    * extension of uploaded file names. For a more complete verification of the
-   * file type, you should use, for example, magic byte file identification on
-   * the server side and return {"success": false} in the response if the file
-   * type is not on your whitelist.
+   * file type, you should use, for example, magic byte file identification on the
+   * server side and return {"success": false} in the response if the file type is
+   * not on your whitelist.
    *
    * @param aAllowedExtensions
    *        The allowed extensions to be added.
@@ -462,9 +461,9 @@ public class FineUploaderBasic
    * This may be helpful if you want to restrict uploaded files to specific file
    * types. Note that this validation option is only enforced by examining the
    * extension of uploaded file names. For a more complete verification of the
-   * file type, you should use, for example, magic byte file identification on
-   * the server side and return {"success": false} in the response if the file
-   * type is not on your whitelist.
+   * file type, you should use, for example, magic byte file identification on the
+   * server side and return {"success": false} in the response if the file type is
+   * not on your whitelist.
    *
    * @param sAllowedExtension
    *        The allowed extension to be added. E.g. ("jpeg", "jpg", "gif")
@@ -527,13 +526,13 @@ public class FineUploaderBasic
 
   /**
    * If true, when submitting multiple files, once a file is determined to be
-   * invalid, the upload process will terminate. If false, all valid files will
-   * be uploaded. Note: One downside to a false value can be seen if the default
+   * invalid, the upload process will terminate. If false, all valid files will be
+   * uploaded. Note: One downside to a false value can be seen if the default
    * showMessage implementation is not overriden. In this case, an alert dialog
    * will appear for each invalid file in the batch, and the upload process will
    * not continue until the dialog is dismissed. If this is bothersome, simply
-   * override showMessage with a desirable implementation. 3.0 will likely have
-   * a showMessage default implementation that does not use the alert function.
+   * override showMessage with a desirable implementation. 3.0 will likely have a
+   * showMessage default implementation that does not use the alert function.
    *
    * @param bStopOnFirstInvalidFile
    *        <code>false</code> to not stop
@@ -554,10 +553,10 @@ public class FineUploaderBasic
   }
 
   /**
-   * This usually only useful with the ajax uploader, which sends the name of
-   * the file as a parameter, using a key name equal to the value of this
-   * options. In the case of the form uploader, this is simply the value of the
-   * name attribute of the file's associated input element.
+   * This usually only useful with the ajax uploader, which sends the name of the
+   * file as a parameter, using a key name equal to the value of this options. In
+   * the case of the form uploader, this is simply the value of the name attribute
+   * of the file's associated input element.
    *
    * @param sInputName
    *        The input name
@@ -640,8 +639,8 @@ public class FineUploaderBasic
 
   /**
    * If this property is present in the server response and contains a value of
-   * true, the uploader will not allow any further retries of this file (manual
-   * or automatic).
+   * true, the uploader will not allow any further retries of this file (manual or
+   * automatic).
    *
    * @param sRetryPreventRetryResponseProperty
    *        property name
@@ -658,8 +657,8 @@ public class FineUploaderBasic
    * @param aRoot
    *        The JSON messages object to extend
    * @param aDisplayLocale
-   *        The locale to be used for test resolving. May be <code>null</code>
-   *        if none passed.
+   *        The locale to be used for test resolving. May be <code>null</code> if
+   *        none passed.
    */
   @OverrideOnDemand
   protected void extendJSON (@Nonnull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
@@ -682,7 +681,7 @@ public class FineUploaderBasic
     if (m_bDebug != DEFAULT_DEBUG)
       ret.add ("debug", m_bDebug);
     if (StringHelper.hasText (m_sButtonElementID))
-      ret.add ("button", JQuery.idRef (m_sButtonElementID).component0 ());
+      ret.add ("button", JSHtml.documentGetElementById (m_sButtonElementID));
     if (m_bMultiple != DEFAULT_MULTIPLE)
       ret.add ("multiple", m_bMultiple);
     if (m_nMaxConnections != DEFAULT_MAX_CONNECTIONS)
