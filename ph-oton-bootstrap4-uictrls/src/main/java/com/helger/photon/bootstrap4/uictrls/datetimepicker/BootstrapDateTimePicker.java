@@ -28,6 +28,9 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.debug.GlobalDebug;
@@ -44,6 +47,8 @@ import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSInvocation;
+import com.helger.json.IJsonObject;
+import com.helger.json.JsonObject;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsCSSPathProvider;
@@ -77,6 +82,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private final Locale m_aDisplayLocale;
   private LocalDateTime m_aInitialDate;
   private ETriState m_eShowCalendarWeeks = ETriState.FALSE;
+  private ETriState m_eShowToday = ETriState.TRUE;
+  private ETriState m_eShowClear = ETriState.TRUE;
+  private ETriState m_eShowClose = ETriState.TRUE;
   private EBootstrap4DateTimePickerMode m_eMode = EBootstrap4DateTimePickerMode.DEFAULT;
   private String m_sFormat;
   private EBootstrap4DateTimePickerViewModeType m_eViewMode;
@@ -84,6 +92,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private LocalDateTime m_aMinDate;
   private LocalDateTime m_aMaxDate;
   private ETriState m_eUseCurrent = ETriState.FALSE;
+  private final ICommonsOrderedMap <String, String> m_aIcons = new CommonsLinkedHashMap <> ();
 
   @Nonnull
   static String getAsModeSpecificISOString (@Nonnull final EBootstrap4DateTimePickerMode eMode,
@@ -162,6 +171,10 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     prefixes ().addChild (EFontAwesome4Icon.CALENDAR.getAsNode ());
 
     setMode (eMode);
+
+    // Change default icons
+    m_aIcons.put ("clear", "fa fa-eraser");
+    m_aIcons.put ("close", "fa fa-close");
   }
 
   /**
@@ -243,6 +256,66 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   {
     ValueEnforcer.notNull (eShowCalendarWeeks, "ShowCalendarWeeks");
     m_eShowCalendarWeeks = eShowCalendarWeeks;
+    return this;
+  }
+
+  @Nonnull
+  public final ETriState getShowToday ()
+  {
+    return m_eShowToday;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowToday (final boolean bShowToday)
+  {
+    return setShowToday (ETriState.valueOf (bShowToday));
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowToday (@Nonnull final ETriState eShowToday)
+  {
+    ValueEnforcer.notNull (eShowToday, "ShowToday");
+    m_eShowToday = eShowToday;
+    return this;
+  }
+
+  @Nonnull
+  public final ETriState getShowClear ()
+  {
+    return m_eShowClear;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowClear (final boolean bShowClear)
+  {
+    return setShowClear (ETriState.valueOf (bShowClear));
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowClear (@Nonnull final ETriState eShowClear)
+  {
+    ValueEnforcer.notNull (eShowClear, "ShowClear");
+    m_eShowClear = eShowClear;
+    return this;
+  }
+
+  @Nonnull
+  public final ETriState getShowClose ()
+  {
+    return m_eShowClose;
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowClose (final boolean bShowClose)
+  {
+    return setShowClose (ETriState.valueOf (bShowClose));
+  }
+
+  @Nonnull
+  public final BootstrapDateTimePicker setShowClose (@Nonnull final ETriState eShowClose)
+  {
+    ValueEnforcer.notNull (eShowClose, "ShowClose");
+    m_eShowClose = eShowClose;
     return this;
   }
 
@@ -411,6 +484,13 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
+  @ReturnsMutableObject
+  public final ICommonsOrderedMap <String, String> icons ()
+  {
+    return m_aIcons;
+  }
+
+  @Nonnull
   public static JSInvocation invoke (@Nonnull final JQueryInvocation aJQueryInvocation)
   {
     return aJQueryInvocation.invoke ("datetimepicker");
@@ -495,6 +575,18 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     if (m_eShowCalendarWeeks.isDefined ())
       aOptions.add ("calendarWeeks", m_eShowCalendarWeeks.getAsBooleanValue ());
 
+    if (m_eShowToday.isDefined () || m_eShowClose.isDefined () || m_eShowClear.isDefined ())
+    {
+      final IJsonObject aButtons = new JsonObject ();
+      if (m_eShowToday.isDefined ())
+        aButtons.add ("showToday", m_eShowToday.getAsBooleanValue ());
+      if (m_eShowClear.isDefined ())
+        aButtons.add ("showClear", m_eShowClear.getAsBooleanValue ());
+      if (m_eShowClose.isDefined ())
+        aButtons.add ("showClose", m_eShowClose.getAsBooleanValue ());
+      aOptions.add ("buttons", aButtons);
+    }
+
     final JSAssocArray aTooltips = getJSTooltipTexts ();
     if (aTooltips.isNotEmpty ())
       aOptions.add ("tooltips", aTooltips);
@@ -519,6 +611,10 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     // Put in options after minDate and maxDate
     if (m_aInitialDate != null)
       aOptions.add ("date", getAsModeSpecificISOString (m_eMode, m_aInitialDate));
+
+    // Add icons
+    if (m_aIcons.isNotEmpty ())
+      aOptions.add ("icons", new JsonObject ().addAll (m_aIcons));
 
     return aOptions;
   }
