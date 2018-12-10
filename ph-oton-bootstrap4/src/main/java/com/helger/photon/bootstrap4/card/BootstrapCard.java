@@ -37,21 +37,21 @@ public class BootstrapCard extends AbstractBootstrapDiv <BootstrapCard>
 
   @Nonnull
   @ReturnsMutableCopy
-  public BootstrapCardHeader createAndAddHeader ()
+  public final BootstrapCardHeader createAndAddHeader ()
   {
     return addAndReturnChild (new BootstrapCardHeader ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public BootstrapCardBody createAndAddBody ()
+  public final BootstrapCardBody createAndAddBody ()
   {
     return addAndReturnChild (new BootstrapCardBody ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public BootstrapCardFooter createAndAddFooter ()
+  public final BootstrapCardFooter createAndAddFooter ()
   {
     return addAndReturnChild (new BootstrapCardFooter ());
   }
