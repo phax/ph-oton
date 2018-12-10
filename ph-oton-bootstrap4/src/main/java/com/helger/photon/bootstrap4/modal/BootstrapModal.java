@@ -72,7 +72,7 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   public static final boolean DEFAULT_VERTICALLY_CENTERED = true;
   public static final boolean DEFAULT_SHOW_CLOSE = true;
 
-  private final EBootstrapModalSize m_eSize;
+  private EBootstrapModalSize m_eSize;
   private boolean m_bFade = DEFAULT_FADE;
   private boolean m_bVerticallyCentered = DEFAULT_VERTICALLY_CENTERED;
   private boolean m_bShowClose = DEFAULT_SHOW_CLOSE;
@@ -87,124 +87,131 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
 
   public BootstrapModal (@Nonnull final EBootstrapModalSize eSize)
   {
-    ValueEnforcer.notNull (eSize, "Size");
     ensureID ();
-    m_eSize = eSize;
+    setSize (eSize);
   }
 
   @Nonnull
-  public EBootstrapModalSize getSize ()
+  public final EBootstrapModalSize getSize ()
   {
     return m_eSize;
   }
 
-  public boolean isFade ()
+  @Nonnull
+  public final BootstrapModal setSize (@Nonnull final EBootstrapModalSize eSize)
+  {
+    ValueEnforcer.notNull (eSize, "Size");
+    m_eSize = eSize;
+    return this;
+  }
+
+  public final boolean isFade ()
   {
     return m_bFade;
   }
 
   @Nonnull
-  public BootstrapModal setFade (final boolean bFade)
+  public final BootstrapModal setFade (final boolean bFade)
   {
     m_bFade = bFade;
     return this;
   }
 
-  public boolean isVerticallyCentered ()
+  public final boolean isVerticallyCentered ()
   {
     return m_bVerticallyCentered;
   }
 
   @Nonnull
-  public BootstrapModal setVerticallyCentered (final boolean bVerticallyCentered)
+  public final BootstrapModal setVerticallyCentered (final boolean bVerticallyCentered)
   {
     m_bVerticallyCentered = bVerticallyCentered;
     return this;
   }
 
-  public boolean isShowClose ()
+  public final boolean isShowClose ()
   {
     return m_bShowClose;
   }
 
   @Nonnull
-  public BootstrapModal setShowClose (final boolean bShowClose)
+  public final BootstrapModal setShowClose (final boolean bShowClose)
   {
     m_bShowClose = bShowClose;
     return this;
   }
 
   @Nonnull
-  public BootstrapModal setHeader (@Nullable final String sHeader)
+  public final BootstrapModal setHeader (@Nullable final String sHeader)
   {
     return setHeader (HCTextNode.createOnDemand (sHeader));
   }
 
   @Nonnull
-  public BootstrapModal setHeader (@Nullable final IHCNode aHeader)
+  public final BootstrapModal setHeader (@Nullable final IHCNode aHeader)
   {
     m_aHeader = aHeader;
     return this;
   }
 
   @Nonnull
-  public BootstrapModal setHeader (@Nullable final IHCNode... aHeader)
+  public final BootstrapModal setHeader (@Nullable final IHCNode... aHeader)
   {
     return setHeader (new HCNodeList ().addChildren (aHeader));
   }
 
   @Nonnull
-  public BootstrapModal setHeader (@Nullable final Iterable <? extends IHCNode> aHeader)
+  public final BootstrapModal setHeader (@Nullable final Iterable <? extends IHCNode> aHeader)
   {
     return setHeader (new HCNodeList ().addChildren (aHeader));
   }
 
   @Nonnull
-  public BootstrapModal setBody (@Nullable final String sBody)
+  public final BootstrapModal setBody (@Nullable final String sBody)
   {
     return setBody (HCTextNode.createOnDemand (sBody));
   }
 
   @Nonnull
-  public BootstrapModal setBody (@Nullable final IHCNode aBody)
+  public final BootstrapModal setBody (@Nullable final IHCNode aBody)
   {
     m_aBody = aBody;
     return this;
   }
 
   @Nonnull
-  public BootstrapModal setBody (@Nullable final IHCNode... aBody)
+  public final BootstrapModal setBody (@Nullable final IHCNode... aBody)
   {
     return setBody (new HCNodeList ().addChildren (aBody));
   }
 
   @Nonnull
-  public BootstrapModal setBody (@Nullable final Iterable <? extends IHCNode> aBody)
+  public final BootstrapModal setBody (@Nullable final Iterable <? extends IHCNode> aBody)
   {
     return setBody (new HCNodeList ().addChildren (aBody));
   }
 
   @Nonnull
-  public BootstrapModal setFooter (@Nullable final String sFooter)
+  public final BootstrapModal setFooter (@Nullable final String sFooter)
   {
     return setFooter (HCTextNode.createOnDemand (sFooter));
   }
 
   @Nonnull
-  public BootstrapModal setFooter (@Nullable final IHCNode aFooter)
+  public final BootstrapModal setFooter (@Nullable final IHCNode aFooter)
   {
     m_aFooter = aFooter;
     return this;
   }
 
   @Nonnull
-  public BootstrapModal setFooter (@Nullable final IHCNode... aFooter)
+  public final BootstrapModal setFooter (@Nullable final IHCNode... aFooter)
   {
     return setFooter (new HCNodeList ().addChildren (aFooter));
   }
 
   @Nonnull
-  public BootstrapModal setFooter (@Nullable final Iterable <? extends IHCNode> aFooter)
+  public final BootstrapModal setFooter (@Nullable final Iterable <? extends IHCNode> aFooter)
   {
     return setFooter (new HCNodeList ().addChildren (aFooter));
   }

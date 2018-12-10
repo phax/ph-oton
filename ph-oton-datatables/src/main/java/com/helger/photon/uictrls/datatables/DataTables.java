@@ -203,8 +203,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Since ("1.10.8")
   // missing rowId:string [DT_RowId]
   /**
-   * Allow the table to reduce in height when a limited number of rows are
-   * shown.
+   * Allow the table to reduce in height when a limited number of rows are shown.
    */
   private boolean m_bScrollCollapse = DEFAULT_SCROLL_COLLAPSE;
   /** Control case-sensitive filtering option. */
@@ -258,8 +257,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    * is created.
    *
    * @param aTable
-   *        The table to apply the data table to. May not be <code>null</code>
-   *        and must have a valid ID!
+   *        The table to apply the data table to. May not be <code>null</code> and
+   *        must have a valid ID!
    */
   public DataTables (@Nonnull final IHCTable <?> aTable)
   {
@@ -401,8 +400,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * Feature control the end user's ability to change the paging display length
-   * of the table.
+   * Feature control the end user's ability to change the paging display length of
+   * the table.
    *
    * @param bLengthChange
    *        <code>true</code> to enable it, <code>false</code> to disable it. If
@@ -784,12 +783,12 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * Retrieve the DataTables object for the given selector. Note that if the
-   * table has already been initialised, this parameter will cause DataTables to
-   * simply return the object that has already been set up - it will not take
-   * account of any changes you might have made to the initialisation object
-   * passed to DataTables (setting this parameter to true is an acknowledgement
-   * that you understand this!).
+   * Retrieve the DataTables object for the given selector. Note that if the table
+   * has already been initialised, this parameter will cause DataTables to simply
+   * return the object that has already been set up - it will not take account of
+   * any changes you might have made to the initialisation object passed to
+   * DataTables (setting this parameter to true is an acknowledgement that you
+   * understand this!).
    *
    * @param bRetrieve
    *        true to retrieve
