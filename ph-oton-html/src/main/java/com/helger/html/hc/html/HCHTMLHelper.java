@@ -57,7 +57,7 @@ public final class HCHTMLHelper
     ValueEnforcer.notEmpty (aElements, "Elements");
 
     final ICommonsList <IHCElement <?>> ret = new CommonsArrayList <> ();
-    HCHelper.iterateChildrenNoCopy (aOwner, (aParentNode, aChildNode) -> {
+    HCHelper.iterateChildrenNonBreakableNoCopy (aOwner, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCElement <?>)
       {
         final IHCElement <?> aCurrentElement = (IHCElement <?>) aChildNode;
@@ -69,7 +69,6 @@ public final class HCHTMLHelper
             break;
           }
       }
-      return EContinue.CONTINUE;
     });
     return ret;
   }

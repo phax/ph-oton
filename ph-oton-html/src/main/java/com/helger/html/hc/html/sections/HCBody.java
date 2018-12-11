@@ -22,7 +22,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.HCHelper;
@@ -50,7 +49,7 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
     super.onConsistencyCheck (aConversionSettings);
 
     final ICommonsSet <String> aUsedIDs = new CommonsHashSet <> ();
-    HCHelper.iterateTreeNoCopy (this, (aParentNode, aChildNode) -> {
+    HCHelper.iterateTreeNonBreakableNoCopy (this, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCHasID <?>)
       {
         final IHCHasID <?> aElement = (IHCHasID <?>) aChildNode;
@@ -62,7 +61,6 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
                                                  "' is used more than once within a single HTML page!");
         }
       }
-      return EContinue.CONTINUE;
     });
   }
 

@@ -24,7 +24,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.stream.NonBlockingStringWriter;
-import com.helger.commons.state.EContinue;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCConversionSettings;
@@ -103,8 +102,7 @@ public final class HCRenderer
    * Customize the passed base node and all child nodes recursively.
    *
    * @param aStartNode
-   *        Base node to start customizing (incl.). May not be <code>null</code>
-   *        .
+   *        Base node to start customizing (incl.). May not be <code>null</code> .
    * @param aGlobalTargetNode
    *        The target node where new nodes should be appended to in case the
    *        direct parent node is not suitable. May not be <code>null</code>.
@@ -126,7 +124,7 @@ public final class HCRenderer
     // Customize all elements before extracting out-of-band nodes, in case the
     // customizer adds some out-of-band nodes as well
     // Than finalize and register external resources
-    HCHelper.iterateTree (aStartNode, (aParentNode, aChildNode) -> {
+    HCHelper.iterateTreeNonBreakable (aStartNode, (aParentNode, aChildNode) -> {
       // If the parent node is suitable, use it, else use the global target
       // node
       IHCHasChildrenMutable <?, ? super IHCNode> aRealTargetNode;
@@ -161,8 +159,6 @@ public final class HCRenderer
         // have been added!
         prepareForConversion (aRealTargetNode, aRealTargetNode, aConversionSettings);
       }
-
-      return EContinue.CONTINUE;
     });
   }
 

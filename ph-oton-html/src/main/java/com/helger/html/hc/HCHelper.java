@@ -43,29 +43,9 @@ public final class HCHelper
   private HCHelper ()
   {}
 
-  public static boolean recursiveContainsAtLeastOneTextNode (@Nullable final IHCNode aStartNode)
-  {
-    if (aStartNode == null)
-      return false;
-
-    if (aStartNode instanceof IHCTextNode <?>)
-      return true;
-
-    final MutableBoolean ret = new MutableBoolean (false);
-    iterateChildrenNoCopy (aStartNode, (aParentNode, aChildNode) -> {
-      if (aChildNode instanceof IHCTextNode <?>)
-      {
-        ret.set (true);
-        return EContinue.BREAK;
-      }
-      return EContinue.CONTINUE;
-    });
-    return ret.booleanValue ();
-  }
-
   @Nonnull
-  private static EContinue _recursiveIterateTree (@Nonnull final IHCNode aNode,
-                                                  @Nonnull final IHCIteratorCallback aCallback)
+  private static EContinue _recursiveIterateTreeBreakable (@Nonnull final IHCNode aNode,
+                                                           @Nonnull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -78,7 +58,7 @@ public final class HCHelper
           return EContinue.BREAK;
 
         // does the node has children
-        if (_recursiveIterateTree (aChild, aCallback).isBreak ())
+        if (_recursiveIterateTreeBreakable (aChild, aCallback).isBreak ())
           return EContinue.BREAK;
       }
     }
@@ -86,8 +66,8 @@ public final class HCHelper
   }
 
   @Nonnull
-  private static EContinue _recursiveIterateTreeNoCopy (@Nonnull final IHCNode aNode,
-                                                        @Nonnull final IHCIteratorCallback aCallback)
+  private static EContinue _recursiveIterateTreeBreakableNoCopy (@Nonnull final IHCNode aNode,
+                                                                 @Nonnull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -100,17 +80,53 @@ public final class HCHelper
           return EContinue.BREAK;
 
         // does the node has children
-        if (_recursiveIterateTreeNoCopy (aChild, aCallback).isBreak ())
+        if (_recursiveIterateTreeBreakableNoCopy (aChild, aCallback).isBreak ())
           return EContinue.BREAK;
       }
     }
     return EContinue.CONTINUE;
   }
 
+  private static void _recursiveIterateTreeNonBreakable (@Nonnull final IHCNode aNode,
+                                                         @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  {
+    if (aNode.hasChildren ())
+    {
+      // Use getAllChildren because the tree might be modified internally!
+      // Using an iterable would be quicker but more error prone!
+      for (final IHCNode aChild : aNode.getAllChildren ())
+      {
+        // call callback
+        aCallback.call (aNode, aChild);
+
+        // does the node has children
+        _recursiveIterateTreeNonBreakable (aChild, aCallback);
+      }
+    }
+  }
+
+  private static void _recursiveIterateTreeNonBreakableNoCopy (@Nonnull final IHCNode aNode,
+                                                               @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  {
+    if (aNode.hasChildren ())
+    {
+      // Use getChildren because the tree might be modified internally!
+      // Using an iterable would be quicker but more error prone!
+      for (final IHCNode aChild : aNode.getChildren ())
+      {
+        // call callback
+        aCallback.call (aNode, aChild);
+
+        // does the node has children
+        _recursiveIterateTreeNonBreakableNoCopy (aChild, aCallback);
+      }
+    }
+  }
+
   /**
    * Recursively iterate the node and all child nodes of the passed node. The
-   * difference to {@link #iterateChildren(IHCNode, IHCIteratorCallback)} is,
-   * that the callback is also invoked on the passed node.
+   * difference to {@link #iterateChildren(IHCNode, IHCIteratorCallback)} is, that
+   * the callback is also invoked on the passed node.
    *
    * @param aNode
    *        The node to be iterated.
@@ -124,7 +140,7 @@ public final class HCHelper
 
     // call callback on start node
     if (aCallback.call (null, aNode).isContinue ())
-      _recursiveIterateTree (aNode, aCallback);
+      _recursiveIterateTreeBreakable (aNode, aCallback);
   }
 
   /**
@@ -144,7 +160,7 @@ public final class HCHelper
 
     // call callback on start node
     if (aCallback.call (null, aNode).isContinue ())
-      _recursiveIterateTreeNoCopy (aNode, aCallback);
+      _recursiveIterateTreeBreakableNoCopy (aNode, aCallback);
   }
 
   /**
@@ -160,7 +176,7 @@ public final class HCHelper
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
 
-    _recursiveIterateTree (aNode, aCallback);
+    _recursiveIterateTreeBreakable (aNode, aCallback);
   }
 
   /**
@@ -176,7 +192,105 @@ public final class HCHelper
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
 
-    _recursiveIterateTreeNoCopy (aNode, aCallback);
+    _recursiveIterateTreeBreakableNoCopy (aNode, aCallback);
+  }
+
+  /**
+   * Recursively iterate the node and all child nodes of the passed node. The
+   * difference to
+   * {@link #iterateChildrenNonBreakable(IHCNode, IHCIteratorNonBreakableCallback)}
+   * is, that the callback is also invoked on the passed node.
+   *
+   * @param aNode
+   *        The node to be iterated.
+   * @param aCallback
+   *        The callback to be invoked on every child
+   */
+  public static void iterateTreeNonBreakable (@Nonnull final IHCNode aNode,
+                                              @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  {
+    ValueEnforcer.notNull (aNode, "node");
+    ValueEnforcer.notNull (aCallback, "callback");
+
+    // call callback on start node
+    aCallback.call (null, aNode);
+    _recursiveIterateTreeNonBreakable (aNode, aCallback);
+  }
+
+  /**
+   * Recursively iterate the node and all child nodes of the passed node. The
+   * difference to
+   * {@link #iterateChildrenNonBreakableNoCopy(IHCNode, IHCIteratorNonBreakableCallback)}
+   * is, that the callback is also invoked on the passed node.
+   *
+   * @param aNode
+   *        The node to be iterated.
+   * @param aCallback
+   *        The callback to be invoked on every child
+   */
+  public static void iterateTreeNonBreakableNoCopy (@Nonnull final IHCNode aNode,
+                                                    @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  {
+    ValueEnforcer.notNull (aNode, "node");
+    ValueEnforcer.notNull (aCallback, "callback");
+
+    // call callback on start node
+    aCallback.call (null, aNode);
+    _recursiveIterateTreeNonBreakableNoCopy (aNode, aCallback);
+  }
+
+  /**
+   * Recursively iterate all child nodes of the passed node.
+   *
+   * @param aNode
+   *        The node who's children should be iterated.
+   * @param aCallback
+   *        The callback to be invoked on every child
+   */
+  public static void iterateChildrenNonBreakable (@Nonnull final IHCNode aNode,
+                                                  @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  {
+    ValueEnforcer.notNull (aNode, "node");
+    ValueEnforcer.notNull (aCallback, "callback");
+
+    _recursiveIterateTreeNonBreakable (aNode, aCallback);
+  }
+
+  /**
+   * Recursively iterate all child nodes of the passed node.
+   *
+   * @param aNode
+   *        The node who's children should be iterated.
+   * @param aCallback
+   *        The callback to be invoked on every child
+   */
+  public static void iterateChildrenNonBreakableNoCopy (@Nonnull final IHCNode aNode,
+                                                        @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  {
+    ValueEnforcer.notNull (aNode, "node");
+    ValueEnforcer.notNull (aCallback, "callback");
+
+    _recursiveIterateTreeNonBreakableNoCopy (aNode, aCallback);
+  }
+
+  public static boolean recursiveContainsAtLeastOneTextNode (@Nullable final IHCNode aStartNode)
+  {
+    if (aStartNode == null)
+      return false;
+
+    if (aStartNode instanceof IHCTextNode <?>)
+      return true;
+
+    final MutableBoolean ret = new MutableBoolean (false);
+    iterateChildrenNoCopy (aStartNode, (aParentNode, aChildNode) -> {
+      if (aChildNode instanceof IHCTextNode <?>)
+      {
+        ret.set (true);
+        return EContinue.BREAK;
+      }
+      return EContinue.CONTINUE;
+    });
+    return ret.booleanValue ();
   }
 
   /**
@@ -215,8 +329,8 @@ public final class HCHelper
    *        The element to search in
    * @param eHTMLElement
    *        The HTML element to search
-   * @return A non-<code>null</code> list where the lower-case elements are
-   *         listed before the upper-case elements.
+   * @return A non-<code>null</code> list where the lower-case elements are listed
+   *         before the upper-case elements.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -254,8 +368,8 @@ public final class HCHelper
    * Inline all contained node lists so that a "flat" list results. This only
    * flattens something if the passed node is an
    * {@link com.helger.html.hc.impl.HCNodeList} and all node-lists directly
-   * contained in the other node lists. Node-lists that are hidden deep inside
-   * the tree are not considered!
+   * contained in the other node lists. Node-lists that are hidden deep inside the
+   * tree are not considered!
    *
    * @param aNode
    *        The source node. May be <code>null</code>.
@@ -274,8 +388,8 @@ public final class HCHelper
    * Inline all contained node lists so that a "flat" list results. This only
    * flattens something if the passed node is an
    * {@link com.helger.html.hc.impl.HCNodeList} and all node-lists directly
-   * contained in the other node lists. Node-lists that are hidden deep inside
-   * the tree are not considered!
+   * contained in the other node lists. Node-lists that are hidden deep inside the
+   * tree are not considered!
    *
    * @param aNodes
    *        The source nodes. May be <code>null</code> or empty.
@@ -293,13 +407,13 @@ public final class HCHelper
   }
 
   /**
-   * Resolve all wrappings via {@link IHCWrappingNode} of the passed node. This
-   * is usually either an HCOutOfBandNode or a HCConditionalCommentNode.
+   * Resolve all wrappings via {@link IHCWrappingNode} of the passed node. This is
+   * usually either an HCOutOfBandNode or a HCConditionalCommentNode.
    *
    * @param aHCNode
    *        The node to be unwrapped. May be <code>null</code>.
-   * @return The unwrapped node. May be the same as the parameter, if the node
-   *         is not wrapped. May be <code>null</code> if the parameter node is
+   * @return The unwrapped node. May be the same as the parameter, if the node is
+   *         not wrapped. May be <code>null</code> if the parameter node is
    *         <code>null</code>.
    */
   @Nullable
@@ -333,8 +447,8 @@ public final class HCHelper
    *
    * @param sSrc
    *        The source string. May be <code>null</code>.
-   * @return An underscore instead of an empty string. The string cleaned from
-   *         the malicious characters.
+   * @return An underscore instead of an empty string. The string cleaned from the
+   *         malicious characters.
    */
   @Nonnull
   public static String getAsHTMLID (@Nullable final String sSrc)
