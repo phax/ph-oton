@@ -25,12 +25,14 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.lang.GenericReflection;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCCustomizer;
 import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCIteratorNonBreakableCallback;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.root.HCHtml;
@@ -110,7 +112,6 @@ public final class HCRenderer
    * @param aConversionSettings
    *        The conversion settings to use. May not be <code>null</code>.
    */
-  @SuppressWarnings ("unchecked")
   public static void prepareForConversion (@Nonnull final IHCNode aStartNode,
                                            @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aGlobalTargetNode,
                                            @Nonnull final IHCConversionSettingsToNode aConversionSettings)
@@ -125,14 +126,14 @@ public final class HCRenderer
     // Customize all elements before extracting out-of-band nodes, in case the
     // customizer adds some out-of-band nodes as well
     // Than finalize and register external resources
-    HCHelper.iterateTreeNonBreakable (aStartNode, (aParentNode, aChildNode) -> {
+    final IHCIteratorNonBreakableCallback aCB = (aParentNode, aChildNode) -> {
       // If the parent node is suitable, use it, else use the global target
       // node
       IHCHasChildrenMutable <?, ? super IHCNode> aRealTargetNode;
       if (aParentNode instanceof IHCHasChildrenMutable <?, ?>)
       {
         // Unchecked conversion
-        aRealTargetNode = (IHCHasChildrenMutable <?, IHCNode>) aParentNode;
+        aRealTargetNode = GenericReflection.uncheckedCast (aParentNode);
       }
       else
         aRealTargetNode = aGlobalTargetNode;
@@ -160,7 +161,8 @@ public final class HCRenderer
         // have been added!
         prepareForConversion (aRealTargetNode, aRealTargetNode, aConversionSettings);
       }
-    });
+    };
+    HCHelper.iterateTreeNonBreakable (aStartNode, aCB);
   }
 
   /**
