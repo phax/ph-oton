@@ -23,6 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.CGlobal;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.io.stream.HasInputStream;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
@@ -129,7 +130,9 @@ public final class PhotonHTMLHelper
       HCRenderer.writeHtmlTo (aHtml, aBAOS);
 
       // Write to response
-      aUnifiedResponse.setMimeType (aMimeType).setContent (aBAOS.toByteArray ()).disableCaching ();
+      aUnifiedResponse.setMimeType (aMimeType)
+                      .setContent (HasInputStream.multiple (aBAOS::getAsInputStream))
+                      .disableCaching ();
     }
   }
 
