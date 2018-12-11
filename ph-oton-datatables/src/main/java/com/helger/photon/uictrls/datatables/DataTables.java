@@ -178,7 +178,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    */
   private DataTablesDom m_aDom;
   /** Change the options in the page length select list. */
-  private DataTablesLengthMenu m_aLengthMenu;
+  private IDataTablesLengthMenu m_aLengthMenu;
   /** Initial order (sort) to apply to the table. */
   private DataTablesOrder m_aInitialOrder;
   /**
@@ -703,14 +703,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
-  @ReturnsMutableObject ("design")
-  public DataTablesLengthMenu getLengthMenu ()
+  public IDataTablesLengthMenu getLengthMenu ()
   {
     return m_aLengthMenu;
   }
 
   @Nonnull
-  public DataTables setLengthMenu (@Nullable final DataTablesLengthMenu aLengthMenu)
+  public DataTables setLengthMenu (@Nullable final IDataTablesLengthMenu aLengthMenu)
   {
     m_aLengthMenu = aLengthMenu;
     if (aLengthMenu != null && !aLengthMenu.isEmpty ())

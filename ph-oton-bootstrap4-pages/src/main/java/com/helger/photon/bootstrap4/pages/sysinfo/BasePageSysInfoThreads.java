@@ -54,8 +54,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
-                                    extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -189,8 +189,9 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext>
     // Use a client side DataTables since this page is mostly called in
     // situations where the machine is very busy
     final DataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-    aDT.setLengthMenu (new DataTablesLengthMenu ().addItemAll ());
+    aDT.setLengthMenu (DataTablesLengthMenu.INSTANCE_ALL);
     aDT.setAjaxBuilder (null);
+    aDT.setTextLoadingURL (null, null);
     aNodeList.addChild (aDT);
   }
 }

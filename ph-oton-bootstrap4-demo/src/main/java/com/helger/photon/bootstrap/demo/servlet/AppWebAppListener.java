@@ -173,15 +173,10 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
   @Override
   protected void initUI ()
   {
-    final DataTablesLengthMenu LENGTH_MENU = new DataTablesLengthMenu ().addItem (25)
-                                                                        .addItem (50)
-                                                                        .addItem (100)
-                                                                        .addItemAll ();
-
     BootstrapDataTables.setConfigurator ( (aLEC, aTable, aDataTables) -> {
       final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
       aDataTables.setAutoWidth (false)
-                 .setLengthMenu (LENGTH_MENU)
+                 .setLengthMenu (DataTablesLengthMenu.INSTANCE_25_50_100_ALL)
                  .setAjaxBuilder (new JQueryAjaxBuilder ().url (CAjax.DATATABLES.getInvocationURL (aRequestScope))
                                                           .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
                                                                                           aTable.getID ())))

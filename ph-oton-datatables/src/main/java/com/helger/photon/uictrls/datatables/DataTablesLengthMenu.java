@@ -35,12 +35,23 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.html.jscode.JSArray;
 
 @NotThreadSafe
-public class DataTablesLengthMenu
+public class DataTablesLengthMenu implements IDataTablesLengthMenu
 {
   /** The numerical value representing 'show all items' */
   public static final int COUNT_ALL = -1;
 
-  private final ICommonsList <DataTablesLengthMenuItem> m_aList = new CommonsArrayList<> ();
+  public static final IDataTablesLengthMenu INSTANCE_ALL = new DataTablesLengthMenu ().addItemAll ();
+  public static final IDataTablesLengthMenu INSTANCE_25_50_100_ALL = new DataTablesLengthMenu ().addItem (25)
+                                                                                                .addItem (50)
+                                                                                                .addItem (100)
+                                                                                                .addItemAll ();
+  public static final IDataTablesLengthMenu INSTANCE_10_25_50_100_ALL = new DataTablesLengthMenu ().addItem (10)
+                                                                                                   .addItem (25)
+                                                                                                   .addItem (50)
+                                                                                                   .addItem (100)
+                                                                                                   .addItemAll ();
+
+  private final ICommonsList <DataTablesLengthMenuItem> m_aList = new CommonsArrayList <> ();
 
   public DataTablesLengthMenu ()
   {}
@@ -75,7 +86,7 @@ public class DataTablesLengthMenu
   @ReturnsMutableCopy
   public ICommonsOrderedMap <Integer, String> getAsMap (@Nonnull final Locale aDisplayLocale)
   {
-    final ICommonsOrderedMap <Integer, String> ret = new CommonsLinkedHashMap<> ();
+    final ICommonsOrderedMap <Integer, String> ret = new CommonsLinkedHashMap <> ();
     for (final DataTablesLengthMenuItem aItem : m_aList)
       ret.put (Integer.valueOf (aItem.getItemCount ()), aItem.getDisplayText (aDisplayLocale));
     return ret;
