@@ -20,8 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.mime.MimeType;
@@ -120,19 +122,21 @@ public final class PhotonHTMLHelper
                             .setContent ("https://github.com/phax/ph-oton // phax // ASL 2.0"));
 
     // Convert HTML to String, including namespaces
-    final String sXMLCode = HCRenderer.getAsHTMLString (aHtml);
+    try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
+                                                                                              CGlobal.BYTES_PER_KILOBYTE))
+    {
+      final IMimeType aMimeType = getMimeType (aRequestScope);
+      HCRenderer.writeHtmlTo (aHtml, aBAOS);
 
-    // Write to response
-    final IMimeType aMimeType = getMimeType (aRequestScope);
-    aUnifiedResponse.setMimeType (aMimeType)
-                    .setContentAndCharset (sXMLCode, HCSettings.getHTMLCharset ())
-                    .disableCaching ();
+      // Write to response
+      aUnifiedResponse.setMimeType (aMimeType).setContent (aBAOS.toByteArray ()).disableCaching ();
+    }
   }
 
   /**
-   * Merge external CSS and JS contents to a single resource for improved
-   * browser performance. All source nodes are taken from the head and all
-   * target nodes are written to the head.
+   * Merge external CSS and JS contents to a single resource for improved browser
+   * performance. All source nodes are taken from the head and all target nodes
+   * are written to the head.
    *
    * @param aRequestScope
    *        Current request scope. Never <code>null</code>.

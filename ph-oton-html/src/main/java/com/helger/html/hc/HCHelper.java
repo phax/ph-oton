@@ -87,42 +87,6 @@ public final class HCHelper
     return EContinue.CONTINUE;
   }
 
-  private static void _recursiveIterateTreeNonBreakable (@Nonnull final IHCNode aNode,
-                                                         @Nonnull final IHCIteratorNonBreakableCallback aCallback)
-  {
-    if (aNode.hasChildren ())
-    {
-      // Use getAllChildren because the tree might be modified internally!
-      // Using an iterable would be quicker but more error prone!
-      for (final IHCNode aChild : aNode.getAllChildren ())
-      {
-        // call callback
-        aCallback.call (aNode, aChild);
-
-        // does the node has children
-        _recursiveIterateTreeNonBreakable (aChild, aCallback);
-      }
-    }
-  }
-
-  private static void _recursiveIterateTreeNonBreakableNoCopy (@Nonnull final IHCNode aNode,
-                                                               @Nonnull final IHCIteratorNonBreakableCallback aCallback)
-  {
-    if (aNode.hasChildren ())
-    {
-      // Use getChildren because the tree might be modified internally!
-      // Using an iterable would be quicker but more error prone!
-      for (final IHCNode aChild : aNode.getChildren ())
-      {
-        // call callback
-        aCallback.call (aNode, aChild);
-
-        // does the node has children
-        _recursiveIterateTreeNonBreakableNoCopy (aChild, aCallback);
-      }
-    }
-  }
-
   /**
    * Recursively iterate the node and all child nodes of the passed node. The
    * difference to {@link #iterateChildren(IHCNode, IHCIteratorCallback)} is, that
@@ -195,6 +159,32 @@ public final class HCHelper
     _recursiveIterateTreeBreakableNoCopy (aNode, aCallback);
   }
 
+  private static void _iterateTreeNonBreakable (@Nonnull final ICommonsList <IHCNode> aParentNodes,
+                                                @Nonnull final ICommonsList <IHCNode> aNodes,
+                                                @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  {
+    while (aParentNodes.isNotEmpty ())
+    {
+      final IHCNode aParentNode = aParentNodes.remove (0);
+      final IHCNode aNode = aNodes.remove (0);
+
+      // call callback
+      aCallback.call (aParentNode, aNode);
+
+      if (aNode.hasChildren ())
+      {
+        // Use getAllChildren because the tree might be modified internally!
+        // Using an iterable would be quicker but more error prone!
+        for (final IHCNode aChild : aNode.getChildren ())
+        {
+          // Remember nodes for later processing
+          aParentNodes.add (aNode);
+          aNodes.add (aChild);
+        }
+      }
+    }
+  }
+
   /**
    * Recursively iterate the node and all child nodes of the passed node. The
    * difference to
@@ -213,30 +203,11 @@ public final class HCHelper
     ValueEnforcer.notNull (aCallback, "callback");
 
     // call callback on start node
-    aCallback.call (null, aNode);
-    _recursiveIterateTreeNonBreakable (aNode, aCallback);
-  }
-
-  /**
-   * Recursively iterate the node and all child nodes of the passed node. The
-   * difference to
-   * {@link #iterateChildrenNonBreakableNoCopy(IHCNode, IHCIteratorNonBreakableCallback)}
-   * is, that the callback is also invoked on the passed node.
-   *
-   * @param aNode
-   *        The node to be iterated.
-   * @param aCallback
-   *        The callback to be invoked on every child
-   */
-  public static void iterateTreeNonBreakableNoCopy (@Nonnull final IHCNode aNode,
-                                                    @Nonnull final IHCIteratorNonBreakableCallback aCallback)
-  {
-    ValueEnforcer.notNull (aNode, "node");
-    ValueEnforcer.notNull (aCallback, "callback");
-
-    // call callback on start node
-    aCallback.call (null, aNode);
-    _recursiveIterateTreeNonBreakableNoCopy (aNode, aCallback);
+    final ICommonsList <IHCNode> aParentNodes = new CommonsArrayList <> ();
+    final ICommonsList <IHCNode> aNodes = new CommonsArrayList <> ();
+    aParentNodes.add (null);
+    aNodes.add (aNode);
+    _iterateTreeNonBreakable (aParentNodes, aNodes, aCallback);
   }
 
   /**
@@ -253,24 +224,16 @@ public final class HCHelper
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
 
-    _recursiveIterateTreeNonBreakable (aNode, aCallback);
-  }
-
-  /**
-   * Recursively iterate all child nodes of the passed node.
-   *
-   * @param aNode
-   *        The node who's children should be iterated.
-   * @param aCallback
-   *        The callback to be invoked on every child
-   */
-  public static void iterateChildrenNonBreakableNoCopy (@Nonnull final IHCNode aNode,
-                                                        @Nonnull final IHCIteratorNonBreakableCallback aCallback)
-  {
-    ValueEnforcer.notNull (aNode, "node");
-    ValueEnforcer.notNull (aCallback, "callback");
-
-    _recursiveIterateTreeNonBreakableNoCopy (aNode, aCallback);
+    final ICommonsList <IHCNode> aParentNodes = new CommonsArrayList <> ();
+    final ICommonsList <IHCNode> aNodes = new CommonsArrayList <> ();
+    if (aNode.hasChildren ())
+      for (final IHCNode aChild : aNode.getChildren ())
+      {
+        // Remember nodes for later processing
+        aParentNodes.add (aNode);
+        aNodes.add (aChild);
+      }
+    _iterateTreeNonBreakable (aParentNodes, aNodes, aCallback);
   }
 
   public static boolean recursiveContainsAtLeastOneTextNode (@Nullable final IHCNode aStartNode)

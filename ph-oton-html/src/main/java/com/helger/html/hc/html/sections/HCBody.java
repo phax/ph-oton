@@ -29,6 +29,7 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
+import com.helger.html.hc.html.IHCElement;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
@@ -49,7 +50,7 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
     super.onConsistencyCheck (aConversionSettings);
 
     final ICommonsSet <String> aUsedIDs = new CommonsHashSet <> ();
-    HCHelper.iterateTreeNonBreakableNoCopy (this, (aParentNode, aChildNode) -> {
+    HCHelper.iterateTreeNonBreakable (this, (aParentNode, aChildNode) -> {
       if (aChildNode instanceof IHCHasID <?>)
       {
         final IHCHasID <?> aElement = (IHCHasID <?>) aChildNode;
@@ -58,7 +59,11 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
         {
           HCConsistencyChecker.consistencyError ("The ID '" +
                                                  sID +
-                                                 "' is used more than once within a single HTML page!");
+                                                 "' is used more than once within a single HTML page!" +
+                                                 (aElement instanceof IHCElement <?> ? " The second usage is at an '" +
+                                                                                       ((IHCElement <?>) aElement).getTagName () +
+                                                                                       "' element"
+                                                                                     : ""));
         }
       }
     });
