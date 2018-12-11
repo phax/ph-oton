@@ -150,10 +150,10 @@ public final class BootstrapPageRenderer
   @Nonnull
   public static HCDiv getMenuAndPageNextToEachOther (@Nonnull final LayoutExecutionContext aLEC)
   {
-    final HCDiv aRow = new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX);
-    final HCDiv aCol1 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX)
-                                                            .addClass (CBootstrapCSS.MR_2));
-    final HCDiv aCol2 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.FLEX_FILL));
+    final HCDiv aRow = new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX).addClass (CBootstrapCSS.MT_1);
+    final HCDiv aCol1 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX));
+    final HCDiv aCol2 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.ML_3)
+                                                            .addClass (CBootstrapCSS.FLEX_FILL));
 
     // We need a wrapper span for easy AJAX content replacement
     aCol1.addClass (CBootstrapCSS.D_PRINT_NONE)
