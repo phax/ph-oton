@@ -29,6 +29,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCConditionalCommentNode;
@@ -123,23 +124,26 @@ public final class PhotonHTMLHelper
                             .setContent ("https://github.com/phax/ph-oton // phax // ASL 2.0"));
 
     // Convert HTML to String, including namespaces
-    try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
-                                                                                              CGlobal.BYTES_PER_KILOBYTE))
+    try (
+        final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
+                                                                                             CGlobal.BYTES_PER_KILOBYTE))
     {
       final IMimeType aMimeType = getMimeType (aRequestScope);
-      HCRenderer.writeHtmlTo (aHtml, aBAOS);
+      final IHCConversionSettings aCS = HCSettings.getConversionSettings ();
+      HCRenderer.writeHtmlTo (aHtml, aCS, aBAOS);
 
       // Write to response
       aUnifiedResponse.setMimeType (aMimeType)
+                      .setCharset (aCS.getCharset ())
                       .setContent (HasInputStream.multiple (aBAOS::getAsInputStream))
                       .disableCaching ();
     }
   }
 
   /**
-   * Merge external CSS and JS contents to a single resource for improved browser
-   * performance. All source nodes are taken from the head and all target nodes
-   * are written to the head.
+   * Merge external CSS and JS contents to a single resource for improved
+   * browser performance. All source nodes are taken from the head and all
+   * target nodes are written to the head.
    *
    * @param aRequestScope
    *        Current request scope. Never <code>null</code>.
