@@ -22,6 +22,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -37,6 +39,8 @@ import com.helger.photon.uicore.icon.IIcon;
  */
 public class BootstrapButton extends AbstractHCButton <BootstrapButton>
 {
+  public static final ICSSClassProvider CSS_CLASS_BTN_WITH_ICON = DefaultCSSClassProvider.create ("btn-with-icon");
+
   private EBootstrapButtonType m_eButtonType = EBootstrapButtonType.NONE;
   private EBootstrapButtonSize m_eButtonSize = EBootstrapButtonSize.DEFAULT;
   private IIcon m_aIcon;
@@ -66,7 +70,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
   }
 
   @Nonnull
-  public EBootstrapButtonType getButtonType ()
+  public final EBootstrapButtonType getButtonType ()
   {
     return m_eButtonType;
   }
@@ -79,7 +83,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
   }
 
   @Nullable
-  public EBootstrapButtonSize getButtonSize ()
+  public final EBootstrapButtonSize getButtonSize ()
   {
     return m_eButtonSize;
   }
@@ -91,26 +95,26 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
     return this;
   }
 
-  public boolean isBlockLevel ()
+  public final boolean isBlockLevel ()
   {
     return m_bBlockLevel;
   }
 
   @Nonnull
-  public BootstrapButton setBlockLevel (final boolean bBlockLevel)
+  public final BootstrapButton setBlockLevel (final boolean bBlockLevel)
   {
     m_bBlockLevel = bBlockLevel;
     return this;
   }
 
   @Nullable
-  public IIcon getIcon ()
+  public final IIcon getIcon ()
   {
     return m_aIcon;
   }
 
   @Nonnull
-  public BootstrapButton setIcon (@Nullable final IIcon aIcon)
+  public final BootstrapButton setIcon (@Nullable final IIcon aIcon)
   {
     m_aIcon = aIcon;
     return this;
@@ -130,10 +134,12 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
       addClass (CBootstrapCSS.BTN_BLOCK);
 
     // apply icon
-    if (getIcon () != null)
+    if (m_aIcon != null)
     {
+      // For CSS styling
+      addClass (CSS_CLASS_BTN_WITH_ICON);
       final boolean bAddSeparator = hasChildren ();
-      addChildAt (0, getIcon ().getAsNode ());
+      addChildAt (0, m_aIcon.getAsNode ());
       if (bAddSeparator)
       {
         // Add spacer
