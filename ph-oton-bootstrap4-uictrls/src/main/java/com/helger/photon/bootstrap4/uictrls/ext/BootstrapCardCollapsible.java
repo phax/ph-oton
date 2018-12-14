@@ -50,12 +50,17 @@ public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCar
 
   public BootstrapCardCollapsible (@Nullable final IHCNode aHeaderText)
   {
+    this (aHeaderText, true);
+  }
+
+  public BootstrapCardCollapsible (@Nullable final IHCNode aHeaderText, final boolean bIsOpen)
+  {
     m_aHeader = addAndReturnChild (new BootstrapCardHeader ());
 
     // Collapsible div
-    final HCDiv aCollapseDiv = addAndReturnChild (new HCDiv ().ensureID ()
-                                                              .addClass (CBootstrapCSS.COLLAPSE)
-                                                              .addClass (CBootstrapCSS.SHOW));
+    final HCDiv aCollapseDiv = addAndReturnChild (new HCDiv ().ensureID ().addClass (CBootstrapCSS.COLLAPSE));
+    if (bIsOpen)
+      aCollapseDiv.addClass (CBootstrapCSS.SHOW);
     aCollapseDiv.customAttrs ().setAriaLabeledBy (m_aHeader);
     m_aBody = aCollapseDiv.addAndReturnChild (new BootstrapCardBody ());
 
@@ -63,7 +68,7 @@ public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCar
     final HCA aToggle = m_aHeader.addAndReturnChild (new HCA ().setHref (new SimpleURL ("#" + aCollapseDiv.getID ()))
                                                                .addClass (CBootstrapCSS.D_BLOCK));
     aToggle.customAttrs ().setDataAttr ("toggle", "collapse");
-    aToggle.customAttrs ().setAriaExpanded (true);
+    aToggle.customAttrs ().setAriaExpanded (bIsOpen);
     aToggle.customAttrs ().setAriaControls (aCollapseDiv.getID ());
     aToggle.addChild (aHeaderText);
     aToggle.addChild (EFontAwesome4Icon.CHEVRON_DOWN.getAsNode ().addClass (CBootstrapCSS.FLOAT_RIGHT));
