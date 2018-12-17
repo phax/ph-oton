@@ -53,8 +53,8 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 
-public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext>
-                                           extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends
+                                           AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -133,7 +133,8 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           // Save message
-          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.params ().getAsString (FIELD_MESSAGE_TYPE));
+          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.params ()
+                                                                                                 .getAsString (FIELD_MESSAGE_TYPE));
           final String sNewMessage = aWPEC.params ().getAsString (FIELD_MESSAGE);
           final EChange eChange = aSystemMsgMgr.setSystemMessage (eNewMessageType, sNewMessage);
           if (eChange.isChanged ())
@@ -157,8 +158,9 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-        aToolbar.addButtonCancel (aDisplayLocale);
+        // Submit before cancel
         aToolbar.addSubmitButtonSave (aDisplayLocale);
+        aToolbar.addButtonCancel (aDisplayLocale);
         bShowList = false;
       }
     }

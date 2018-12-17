@@ -166,8 +166,9 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-        aToolbar.addButtonCancel (aDisplayLocale);
+        // Submit before cancel
         aToolbar.addSubmitButtonSave (aDisplayLocale);
+        aToolbar.addButtonCancel (aDisplayLocale);
         bShowList = false;
       }
     }
