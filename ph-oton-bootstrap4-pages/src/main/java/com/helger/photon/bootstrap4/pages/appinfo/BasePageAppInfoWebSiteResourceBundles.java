@@ -43,6 +43,7 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.button.BootstrapButton;
+import com.helger.photon.bootstrap4.button.EBootstrapButtonType;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap4.table.BootstrapTable;
@@ -197,15 +198,16 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
       if (bServletRegistered)
       {
         aRegisteredRow.addCell ();
-        aCacheRow.addCell (new BootstrapButton ().addChild (bCacheEnabled ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
-                                                                          : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
-                                                 .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION,
-                                                                                        ACTION_CHANGE_CACHE_STATE)));
-        aResBundleActiveRow.addCell (new BootstrapButton ().addChild (bResBundleActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
-                                                                                       : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
-                                                           .setOnClick (aWPEC.getSelfHref ()
-                                                                             .add (CPageParam.PARAM_ACTION,
-                                                                                   ACTION_CHANGE_RESBUNDLE_STATE)));
+        aCacheRow.addCell (new BootstrapButton (EBootstrapButtonType.OUTLINE_PRIMARY).addChild (bCacheEnabled ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
+                                                                                                              : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
+                                                                                     .setOnClick (aWPEC.getSelfHref ()
+                                                                                                       .add (CPageParam.PARAM_ACTION,
+                                                                                                             ACTION_CHANGE_CACHE_STATE)));
+        aResBundleActiveRow.addCell (new BootstrapButton (EBootstrapButtonType.OUTLINE_PRIMARY).addChild (bResBundleActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
+                                                                                                                           : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
+                                                                                               .setOnClick (aWPEC.getSelfHref ()
+                                                                                                                 .add (CPageParam.PARAM_ACTION,
+                                                                                                                       ACTION_CHANGE_RESBUNDLE_STATE)));
       }
       aNodeList.addChild (aTable);
 
