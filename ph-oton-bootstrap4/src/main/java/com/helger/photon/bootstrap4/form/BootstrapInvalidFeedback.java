@@ -16,6 +16,14 @@
  */
 package com.helger.photon.bootstrap4.form;
 
+import java.util.Locale;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.commons.error.IError;
+import com.helger.commons.error.list.IErrorList;
+import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 
@@ -24,5 +32,15 @@ public class BootstrapInvalidFeedback extends AbstractBootstrapDiv <BootstrapInv
   public BootstrapInvalidFeedback ()
   {
     addClass (CBootstrapCSS.INVALID_FEEDBACK);
+  }
+
+  @Nonnull
+  public static HCNodeList create (@Nullable final IErrorList aErrorList, @Nonnull final Locale aDisplayLocale)
+  {
+    final HCNodeList ret = new HCNodeList ();
+    if (aErrorList != null)
+      for (final IError aError : aErrorList)
+        ret.addChild (new BootstrapInvalidFeedback ().addChild (aError.getErrorText (aDisplayLocale)));
+    return ret;
   }
 }
