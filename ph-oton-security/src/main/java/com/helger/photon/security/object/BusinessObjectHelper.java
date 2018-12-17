@@ -19,6 +19,7 @@ package com.helger.photon.security.object;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -38,7 +39,9 @@ public final class BusinessObjectHelper
   private BusinessObjectHelper ()
   {}
 
-  public static void setLastModificationNow (@Nonnull final AbstractBusinessObject aObj)
+  @Nonnull
+  @Nonempty
+  private static String _getUserID ()
   {
     String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
     if (StringHelper.hasNoText (sCurrentUserID))
@@ -46,20 +49,23 @@ public final class BusinessObjectHelper
       // No user is logged in- use the internal guest user ID
       sCurrentUserID = CUserID.USER_ID_GUEST;
     }
-    aObj.setLastModification (PDTFactory.getCurrentLocalDateTime (), sCurrentUserID);
+    return sCurrentUserID;
+  }
+
+  public static void setLastModificationNow (@Nonnull final AbstractBusinessObject aObj)
+  {
+    aObj.setLastModification (PDTFactory.getCurrentLocalDateTime (), _getUserID ());
   }
 
   @Nonnull
   public static EChange setDeletionNow (@Nonnull final AbstractBusinessObject aObj)
   {
-    return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (),
-                             LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (), _getUserID ());
   }
 
   @Nonnull
   public static EChange setUndeletionNow (@Nonnull final AbstractBusinessObject aObj)
   {
-    return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (),
-                               LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (), _getUserID ());
   }
 }
