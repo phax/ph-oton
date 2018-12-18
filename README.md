@@ -39,6 +39,8 @@ Contained subprojects are:
     * Added B4 collapsible Card
     * Small improvement in rendering memory consumption and speed
     * Extracted `IDataTablesLengthMenu` interface
+    * Added B4 file upload control
+    * B4 `BootstrapHelper` became `BootstrapFormHelper`
 * v8.1.1 - 2018-11-25
     * Fixed error in quoting of B3 user group management page
     * Added special CSS Class to B4 `BootstrapPageHeader`

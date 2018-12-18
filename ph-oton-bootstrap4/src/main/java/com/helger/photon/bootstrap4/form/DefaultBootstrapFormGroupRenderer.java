@@ -22,17 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.string.StringHelper;
-import com.helger.html.css.DefaultCSSClassProvider;
-import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -45,13 +38,10 @@ import com.helger.html.hc.html.forms.IHCInput;
 import com.helger.html.hc.html.forms.IHCTextArea;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.hc.html.textlevel.HCSmall;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.BootstrapHelper;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
-import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 
 /**
  * This is the default implementation of {@link IBootstrapFormGroupRenderer}
@@ -63,10 +53,6 @@ import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 @NotThreadSafe
 public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRenderer
 {
-  public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_HELP_TEXT = DefaultCSSClassProvider.create ("form-group-help-text");
-  public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_ERROR_TEXT = DefaultCSSClassProvider.create ("form-group-error-text");
-  private static final Logger LOGGER = LoggerFactory.getLogger (DefaultBootstrapFormGroupRenderer.class);
-
   private boolean m_bUseIcons = false;
   private boolean m_bForceNoCheckBoxHandling = false;
 
@@ -99,24 +85,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     return this;
   }
 
-  @Nonnull
-  private static String _getPlaceholderText (@Nonnull final IHCElementWithChildren <?> aLabel)
-  {
-    if (aLabel instanceof HCFormLabel)
-    {
-      // Special handling for the form label, which has explicit support
-      // for label texts
-      return aLabel.getPlainText ();
-    }
-
-    // Trim eventually trailing ":" from string
-    String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelHelper.LABEL_END);
-    // Trim trailing "*" or "°" marker
-    sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
-    sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
-    return sNewPlaceholder;
-  }
-
   /**
    * Modify the first control that is inserted. This method is only called when
    * a label is present.
@@ -136,14 +104,14 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       final IHCInput <?> aEdit = (IHCInput <?>) aFirstControl;
       final EHCInputType eType = aEdit.getType ();
       if (eType != null && eType.hasPlaceholder () && !aEdit.hasPlaceholder ())
-        aEdit.setPlaceholder (_getPlaceholderText (aLabel));
+        aEdit.setPlaceholder (BootstrapFormHelper.getDefaultPlaceholderText (aLabel));
     }
     else
       if (aFirstControl instanceof IHCTextArea <?>)
       {
         final IHCTextArea <?> aTextArea = (IHCTextArea <?>) aFirstControl;
         if (!aTextArea.hasPlaceholder ())
-          aTextArea.setPlaceholder (_getPlaceholderText (aLabel));
+          aTextArea.setPlaceholder (BootstrapFormHelper.getDefaultPlaceholderText (aLabel));
       }
   }
 
@@ -158,30 +126,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   @OverrideOnDemand
   protected IHCElementWithChildren <?> createHelpTextNode (@Nonnull final IHCNode aHelpText)
   {
-    final HCSmall aHelpBlock = new HCSmall ();
-    aHelpBlock.addClass (CBootstrapCSS.FORM_TEXT);
-    aHelpBlock.addClass (CBootstrapCSS.TEXT_MUTED);
-    aHelpBlock.addClass (CSS_CLASS_FORM_GROUP_HELP_TEXT);
-    aHelpBlock.addChild (aHelpText);
-    return aHelpBlock;
-  }
-
-  @Nonnull
-  public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError,
-                                                                 @Nonnull final Locale aContentLocale)
-  {
-    String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
-    if (StringHelper.hasNoText (sErrorText))
-      LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
-
-    final String sErrorID = aError.getErrorID ();
-    if (StringHelper.hasText (sErrorID))
-      sErrorText = "[" + sErrorID + "] " + sErrorText;
-
-    final BootstrapInvalidFeedback aErrorBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
-    // Display it, even if it is empty (because of non-translation)
-    aErrorBlock.addChild (sErrorText);
-    return aErrorBlock;
+    return BootstrapFormHelper.createDefaultHelpTextNode (aHelpText);
   }
 
   /**
@@ -197,7 +142,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   @OverrideOnDemand
   protected IHCElement <?> createSingleErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
   {
-    return createDefaultErrorNode (aError, aContentLocale);
+    return BootstrapFormHelper.createDefaultErrorNode (aError, aContentLocale);
   }
 
   /**
@@ -230,28 +175,22 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     final IErrorList aErrorList = aFormGroup.getErrorList ();
 
     final ICommonsList <IHCControl <?>> aAllCtrls = HCCtrlHelper.getAllHCControls (aCtrls);
-
+    final IHCControl <?> aFirstControl;
     if (aAllCtrls != null)
     {
+      aFirstControl = aAllCtrls.getFirst ();
+
       // Set CSS class to all contained controls
-      BootstrapHelper.markAsFormControls (aAllCtrls);
+      BootstrapFormHelper.markAsFormControls (aAllCtrls);
 
       // Set "aria-labelledby"
-      if (aLabel != null)
-        for (final IHCControl <?> aCurCtrl : aAllCtrls)
-          aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
-    }
+      BootstrapFormHelper.connectFormControlsWithLabel (aAllCtrls, aLabel);
 
-    // Add marker on first control
-    final IHCControl <?> aFirstControl = CollectionHelper.getFirstElement (aAllCtrls);
-    if (aErrorList != null && aFirstControl != null)
-    {
-      if (aErrorList.containsAtLeastOneError ())
-      {
-        // Required so that error text is shown
-        aFirstControl.addClass (CBootstrapCSS.IS_INVALID);
-      }
+      // Required so that error text is shown
+      BootstrapFormHelper.applyFormControlValidityState (aAllCtrls, aErrorList);
     }
+    else
+      aFirstControl = null;
 
     // Check form errors - highlighting
     final HCNodeList aErrorListNode = new HCNodeList ();
