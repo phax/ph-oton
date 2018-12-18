@@ -62,9 +62,9 @@ public final class BootstrapFormHelper
   private BootstrapFormHelper ()
   {}
 
-  public static void markAsFormControl (@Nullable final IHCControl <?> aCtrl)
+  public static void markAsFormControl (@Nullable final IHCElement <?> aCtrl)
   {
-    if (aCtrl != null)
+    if (aCtrl instanceof IHCControl <?>)
     {
       ICSSClassProvider aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL;
       if (aCtrl instanceof IHCInput <?>)
@@ -225,7 +225,7 @@ public final class BootstrapFormHelper
   }
 
   @Nonnull
-  public static HCNodeList createStandaloneFormCtrl (@Nullable final IHCControl <?> aCtrl,
+  public static HCNodeList createStandaloneFormCtrl (@Nullable final IHCElement <?> aCtrl,
                                                      @Nullable final IErrorList aErrorList,
                                                      @Nonnull final Locale aContentLocale)
   {
