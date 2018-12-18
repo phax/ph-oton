@@ -124,11 +124,18 @@ public final class BootstrapFormHelper
   {
     // Set "aria-labelledby"
     if (aCtrls != null && aLabel != null)
+    {
+      boolean bSetLabel = false;
       for (final IHCControl <?> aCurCtrl : aCtrls)
       {
-        aLabel.setFor (aCurCtrl);
+        if (!bSetLabel)
+        {
+          aLabel.setFor (aCurCtrl);
+          bSetLabel = true;
+        }
         aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
       }
+    }
   }
 
   public static void applyFormControlValidityState (@Nullable final IHCElement <?> aElement,
