@@ -95,10 +95,10 @@ public final class BootstrapFormHelper
     }
   }
 
-  public static void markAsFormControls (@Nullable final Iterable <? extends IHCControl <?>> aCtrls)
+  public static void markAsFormControls (@Nullable final Iterable <? extends IHCElement <?>> aCtrls)
   {
     if (aCtrls != null)
-      for (final IHCControl <?> aCurCtrl : aCtrls)
+      for (final IHCElement <?> aCurCtrl : aCtrls)
         markAsFormControl (aCurCtrl);
   }
 
@@ -108,7 +108,7 @@ public final class BootstrapFormHelper
       aParent.forAllChildren (aChild -> markAsFormControls (HCCtrlHelper.getAllHCControls (aChild)));
   }
 
-  public static void connectFormControlWithLabel (@Nullable final IHCControl <?> aCtrl,
+  public static void connectFormControlWithLabel (@Nullable final IHCElement <?> aCtrl,
                                                   @Nullable final HCFormLabel aLabel)
   {
     // Set "aria-labelledby"
@@ -119,14 +119,14 @@ public final class BootstrapFormHelper
     }
   }
 
-  public static void connectFormControlsWithLabel (@Nullable final Iterable <? extends IHCControl <?>> aCtrls,
+  public static void connectFormControlsWithLabel (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
                                                    @Nullable final HCFormLabel aLabel)
   {
     // Set "aria-labelledby"
     if (aCtrls != null && aLabel != null)
     {
       boolean bSetLabel = false;
-      for (final IHCControl <?> aCurCtrl : aCtrls)
+      for (final IHCElement <?> aCurCtrl : aCtrls)
       {
         if (!bSetLabel)
         {
