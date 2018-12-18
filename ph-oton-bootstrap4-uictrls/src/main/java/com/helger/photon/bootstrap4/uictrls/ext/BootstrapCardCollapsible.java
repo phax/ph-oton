@@ -44,6 +44,7 @@ import com.helger.photon.icon.fontawesome.EFontAwesome4Icon;
 public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCardCollapsible>
 {
   public static final ICSSClassProvider CSS_CLASS_CARD_COLLAPSIBLE = DefaultCSSClassProvider.create ("card-collapsible");
+  public static final ICSSClassProvider CSS_CLASS_COLLAPSED = DefaultCSSClassProvider.create ("collapsed");
 
   private final BootstrapCardHeader m_aHeader;
   private final BootstrapCardBody m_aBody;
@@ -72,6 +73,8 @@ public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCar
     aToggle.customAttrs ().setAriaControls (aCollapseDiv.getID ());
     aToggle.addChild (aHeaderText);
     aToggle.addChild (EFontAwesome4Icon.CHEVRON_DOWN.getAsNode ().addClass (CBootstrapCSS.FLOAT_RIGHT));
+    if (!bIsOpen)
+      aToggle.addClass (CSS_CLASS_COLLAPSED);
   }
 
   @Nonnull
