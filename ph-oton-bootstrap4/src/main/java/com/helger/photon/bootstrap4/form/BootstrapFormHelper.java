@@ -62,10 +62,12 @@ public final class BootstrapFormHelper
   private BootstrapFormHelper ()
   {}
 
-  public static void markAsFormControl (@Nullable final IHCElement <?> aCtrl)
+  public static void markAsFormControl (@Nullable final IHCNode aNode)
   {
-    if (aCtrl instanceof IHCControl <?>)
+    if (aNode instanceof IHCControl <?>)
     {
+      final IHCControl <?> aCtrl = (IHCControl <?>) aNode;
+
       ICSSClassProvider aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL;
       if (aCtrl instanceof IHCInput <?>)
       {
@@ -95,11 +97,11 @@ public final class BootstrapFormHelper
     }
   }
 
-  public static void markAsFormControls (@Nullable final Iterable <? extends IHCElement <?>> aCtrls)
+  public static void markAsFormControls (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
-    if (aCtrls != null)
-      for (final IHCElement <?> aCurCtrl : aCtrls)
-        markAsFormControl (aCurCtrl);
+    if (aNodes != null)
+      for (final IHCNode aCurNode : aNodes)
+        markAsFormControl (aCurNode);
   }
 
   public static void markChildrenAsFormControls (@Nullable final IHCNode aParent)
