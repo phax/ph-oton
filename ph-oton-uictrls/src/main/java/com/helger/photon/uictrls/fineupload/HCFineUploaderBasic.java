@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -46,6 +47,7 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
 {
   private final FineUploaderBasic m_aUploader;
   private IHCElement <?> m_aButton;
+  private String m_sButtonID;
 
   public HCFineUploaderBasic (@Nonnull final FineUploaderBasic aUploader)
   {
@@ -61,9 +63,24 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
    * @return this
    */
   @Nonnull
-  public HCFineUploaderBasic setButtonToUse (@Nullable final IHCElement <?> aButton)
+  public final HCFineUploaderBasic setButtonToUse (@Nullable final IHCElement <?> aButton)
   {
     m_aButton = aButton;
+    return this;
+  }
+
+  /**
+   * Set the ID of the button object to use. The button element MUST be manually
+   * attached to the response tree!
+   *
+   * @param sButtonID
+   *        The button ID to use. May be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  public final HCFineUploaderBasic setButtonIDToUse (@Nullable final String sButtonID)
+  {
+    m_sButtonID = sButtonID;
     return this;
   }
 
@@ -81,6 +98,9 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
       addChild (m_aButton);
       m_aUploader.setButtonElementID (m_aButton.ensureID ().getID ());
     }
+    else
+      if (StringHelper.hasText (m_sButtonID))
+        m_aUploader.setButtonElementID (m_sButtonID);
 
     // Start building JS
     final JSPackage aPkg = new JSPackage ();

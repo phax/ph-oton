@@ -227,12 +227,13 @@ public final class BootstrapFormHelper
   }
 
   @Nonnull
-  public static HCNodeList createStandaloneFormCtrl (@Nullable final IHCElement <?> aCtrl,
+  public static HCNodeList createStandaloneFormCtrl (@Nullable final IHCNode aCtrl,
                                                      @Nullable final IErrorList aErrorList,
                                                      @Nonnull final Locale aContentLocale)
   {
     markAsFormControl (aCtrl);
-    applyFormControlValidityState (aCtrl, aErrorList);
+    if (aCtrl instanceof IHCElement <?>)
+      applyFormControlValidityState ((IHCElement <?>) aCtrl, aErrorList);
     return new HCNodeList ().addChild (aCtrl).addChild (createDefaultErrorNode (aErrorList, aContentLocale));
   }
 }
