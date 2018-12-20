@@ -25,6 +25,7 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCLI;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
 
@@ -70,12 +71,17 @@ public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
 
   public void addNavDropDown (@Nonnull final String sLabel, @Nonnull final BootstrapDropdownMenu aDropDown)
   {
+    addNavDropDown (new HCTextNode (sLabel), aDropDown);
+  }
+
+  public void addNavDropDown (@Nonnull final IHCNode aLabelText, @Nonnull final BootstrapDropdownMenu aDropDown)
+  {
     final BootstrapNavLink aLabel = new BootstrapNavLink ();
     aLabel.addClass (CBootstrapCSS.DROPDOWN_TOGGLE).ensureID ().setRole (EHTMLRole.BUTTON);
     aLabel.customAttrs ().setDataAttr ("toggle", "dropdown");
     aLabel.customAttrs ().setAriaHasPopup (true);
     aLabel.customAttrs ().setAriaExpanded (true);
-    aLabel.addChild (sLabel);
+    aLabel.addChild (aLabelText);
 
     aDropDown.customAttrs ().setAriaLabeledBy (aLabel);
 
