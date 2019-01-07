@@ -30,6 +30,10 @@
   margin-bottom: 0.2em;
 }
 
+.invalid-feedback {
+	font-size: 100%;
+}
+
 /* Tabs below button bars get a margin */
 .btn-toolbar + .nav-tabs {
   margin-top: 1em;

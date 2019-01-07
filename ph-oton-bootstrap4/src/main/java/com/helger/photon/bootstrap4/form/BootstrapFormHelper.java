@@ -29,11 +29,11 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCCtrlHelper;
@@ -62,11 +62,12 @@ public final class BootstrapFormHelper
   private BootstrapFormHelper ()
   {}
 
-  @Nonnull
-  public static EChange markAsFormControl (@Nullable final IHCControl <?> aCtrl)
+  public static void markAsFormControl (@Nullable final IHCNode aNode)
   {
-    if (aCtrl != null)
+    if (aNode instanceof IHCControl <?>)
     {
+      final IHCControl <?> aCtrl = (IHCControl <?>) aNode;
+
       ICSSClassProvider aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL;
       if (aCtrl instanceof IHCInput <?>)
       {
@@ -92,19 +93,15 @@ public final class BootstrapFormHelper
       }
 
       if (aCSSClassToAdd != null)
-      {
         aCtrl.addClass (aCSSClassToAdd);
-        return EChange.CHANGED;
-      }
     }
-    return EChange.UNCHANGED;
   }
 
-  public static void markAsFormControls (@Nullable final Iterable <? extends IHCControl <?>> aCtrls)
+  public static void markAsFormControls (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
-    if (aCtrls != null)
-      for (final IHCControl <?> aCurCtrl : aCtrls)
-        markAsFormControl (aCurCtrl);
+    if (aNodes != null)
+      for (final IHCNode aCurNode : aNodes)
+        markAsFormControl (aCurNode);
   }
 
   public static void markChildrenAsFormControls (@Nullable final IHCNode aParent)
@@ -113,16 +110,37 @@ public final class BootstrapFormHelper
       aParent.forAllChildren (aChild -> markAsFormControls (HCCtrlHelper.getAllHCControls (aChild)));
   }
 
-  public static void connectFormControlsWithLabel (@Nullable final Iterable <? extends IHCControl <?>> aCtrls,
+  public static void connectFormControlWithLabel (@Nullable final IHCElement <?> aCtrl,
+                                                  @Nullable final HCFormLabel aLabel)
+  {
+    // Set "aria-labelledby"
+    if (aCtrl != null && aLabel != null)
+    {
+      aLabel.setFor (aCtrl);
+      aCtrl.customAttrs ().setAriaLabeledBy (aLabel);
+    }
+  }
+
+  public static void connectFormControlsWithLabel (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
                                                    @Nullable final HCFormLabel aLabel)
   {
     // Set "aria-labelledby"
     if (aCtrls != null && aLabel != null)
-      for (final IHCControl <?> aCurCtrl : aCtrls)
+    {
+      boolean bSetLabel = false;
+      for (final IHCElement <?> aCurCtrl : aCtrls)
+      {
+        if (!bSetLabel)
+        {
+          aLabel.setFor (aCurCtrl);
+          bSetLabel = true;
+        }
         aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
+      }
+    }
   }
 
-  public static void applyFormControlValidityState (@Nullable final IHCControl <?> aElement,
+  public static void applyFormControlValidityState (@Nullable final IHCElement <?> aElement,
                                                     @Nullable final IErrorList aErrorList)
   {
     ValueEnforcer.notNull (aElement, "Element");
@@ -135,15 +153,19 @@ public final class BootstrapFormHelper
       }
   }
 
-  public static void applyFormControlValidityState (@Nullable final Iterable <? extends IHCControl <?>> aCtrls,
+  public static void applyFormControlValidityState (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
                                                     @Nullable final IErrorList aErrorList)
   {
-    if (aCtrls != null && aErrorList != null && aErrorList.containsAtLeastOneError ())
-      for (final IHCControl <?> aCurCtrl : aCtrls)
-      {
-        // Required so that error text is shown
-        aCurCtrl.addClass (CBootstrapCSS.IS_INVALID);
-      }
+    if (aCtrls != null && aErrorList != null)
+    {
+      final boolean bIsInvalid = aErrorList.containsAtLeastOneError ();
+      for (final IHCElement <?> aCurCtrl : aCtrls)
+        if (bIsInvalid)
+        {
+          // Required so that error text is shown
+          aCurCtrl.addClass (CBootstrapCSS.IS_INVALID);
+        }
+    }
   }
 
   @Nonnull
@@ -202,5 +224,16 @@ public final class BootstrapFormHelper
     sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
     sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
     return sNewPlaceholder;
+  }
+
+  @Nonnull
+  public static HCNodeList createStandaloneFormCtrl (@Nullable final IHCNode aCtrl,
+                                                     @Nullable final IErrorList aErrorList,
+                                                     @Nonnull final Locale aContentLocale)
+  {
+    markAsFormControl (aCtrl);
+    if (aCtrl instanceof IHCElement <?>)
+      applyFormControlValidityState ((IHCElement <?>) aCtrl, aErrorList);
+    return new HCNodeList ().addChild (aCtrl).addChild (createDefaultErrorNode (aErrorList, aContentLocale));
   }
 }

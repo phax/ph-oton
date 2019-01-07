@@ -49,7 +49,7 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
-import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.form.BootstrapFormHelper;
 import com.helger.photon.bootstrap4.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsJSPathProvider;
@@ -162,7 +162,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     m_aEdit = (HCEdit) getInput ();
     m_aEdit.setPlaceholder ("");
-    m_aEdit.addClass (CBootstrapCSS.FORM_CONTROL);
+    BootstrapFormHelper.markAsFormControl (m_aEdit);
     m_aEdit.addClass (CSS_CLASS_DATETIMEPICKER_INPUT);
     m_aEdit.customAttrs ().setDataAttr ("toggle", "datetimepicker");
     m_aEdit.customAttrs ().setDataAttr ("target", "#" + getID ());

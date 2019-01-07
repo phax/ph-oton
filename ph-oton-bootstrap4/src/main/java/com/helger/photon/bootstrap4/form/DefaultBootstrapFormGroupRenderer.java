@@ -86,8 +86,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   }
 
   /**
-   * Modify the first control that is inserted. This method is only called when
-   * a label is present.
+   * Modify the first control that is inserted. This method is only called when a
+   * label is present.
    *
    * @param aLabel
    *        The label that was provided. Never <code>null</code>.
@@ -244,7 +244,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         aDivFormCheck.addChild (aLabel);
 
         // We have a label for a control
-        aLabel.setFor (aFirstControl);
         modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
       }
 
@@ -285,7 +284,6 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         if (aFirstControl != null)
         {
           // We have a label for a control
-          aLabel.setFor (aFirstControl);
           modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
         }
 
