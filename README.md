@@ -33,7 +33,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.1.2 - work in progress
+* v8.1.2 - 2019-01-07
     * Added B4 tooltips, Jumbotron and Modal dialog
     * Added class `BootstrapPageRenderer` for consistent page rendering
     * Added B4 collapsible Card
@@ -167,7 +167,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.1.1</version>
+        <version>8.1.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
