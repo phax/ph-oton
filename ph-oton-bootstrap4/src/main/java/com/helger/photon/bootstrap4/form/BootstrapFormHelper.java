@@ -172,17 +172,40 @@ public final class BootstrapFormHelper
   public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError,
                                                                  @Nonnull final Locale aContentLocale)
   {
-    String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
-    if (StringHelper.hasNoText (sErrorText))
-      LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
+    return createDefaultErrorNode (aError, aContentLocale, false);
+  }
 
-    final String sErrorID = aError.getErrorID ();
-    if (StringHelper.hasText (sErrorID))
-      sErrorText = "[" + sErrorID + "] " + sErrorText;
+  @Nonnull
+  public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError,
+                                                                 @Nonnull final Locale aContentLocale,
+                                                                 final boolean bWithLocation)
+  {
+    String sText = "";
+
+    if (bWithLocation)
+    {
+      final String sErrorLocation = aError.getErrorLocation ().getAsString ();
+      if (StringHelper.hasText (sErrorLocation))
+        sText += sErrorLocation + " ";
+    }
+
+    {
+      final String sErrorID = aError.getErrorID ();
+      if (StringHelper.hasText (sErrorID))
+        sText += "[" + sErrorID + "] ";
+    }
+
+    {
+      final String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
+      if (StringHelper.hasNoText (sErrorText))
+        LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
+      else
+        sText += sErrorText;
+    }
 
     final BootstrapInvalidFeedback aErrorBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
     // Display it, even if it is empty (because of non-translation)
-    aErrorBlock.addChild (sErrorText);
+    aErrorBlock.addChild (sText);
     return aErrorBlock;
   }
 
@@ -190,10 +213,18 @@ public final class BootstrapFormHelper
   public static HCNodeList createDefaultErrorNode (@Nullable final IErrorList aErrorList,
                                                    @Nonnull final Locale aContentLocale)
   {
+    return createDefaultErrorNode (aErrorList, aContentLocale, false);
+  }
+
+  @Nonnull
+  public static HCNodeList createDefaultErrorNode (@Nullable final IErrorList aErrorList,
+                                                   @Nonnull final Locale aContentLocale,
+                                                   final boolean bWithLocation)
+  {
     final HCNodeList ret = new HCNodeList ();
     if (aErrorList != null)
       for (final IError aError : aErrorList)
-        ret.addChild (createDefaultErrorNode (aError, aContentLocale));
+        ret.addChild (createDefaultErrorNode (aError, aContentLocale, bWithLocation));
     return ret;
   }
 

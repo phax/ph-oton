@@ -111,11 +111,11 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements
                                 @Nonnegative final int nLeftPartsLG,
                                 @Nonnegative final int nLeftPartsXL)
   {
-    ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsXL, "LeftPartsXL", 1, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", 0, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", 0, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 0, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 0, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsXL, "LeftPartsXL", 0, CBootstrap.GRID_SYSTEM_MAX);
 
     final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
                                                                  nLeftPartsSM,
