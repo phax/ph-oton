@@ -168,7 +168,7 @@ public final class BootstrapPageRenderer
   {
     final HCDiv aRow = new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX).addClass (CBootstrapCSS.MT_1);
     final HCDiv aCol1 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX));
-    final HCDiv aCol2 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.ML_3)
+    final HCDiv aCol2 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.ML_4)
                                                             .addClass (CBootstrapCSS.FLEX_FILL));
 
     // We need a wrapper span for easy AJAX content replacement
