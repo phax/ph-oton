@@ -33,6 +33,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.1.2 - work in progress
+    * Updated to Bootstrap 4.2.1
 * v8.1.2 - 2019-01-07
     * Added B4 tooltips, Jumbotron and Modal dialog
     * Added class `BootstrapPageRenderer` for consistent page rendering

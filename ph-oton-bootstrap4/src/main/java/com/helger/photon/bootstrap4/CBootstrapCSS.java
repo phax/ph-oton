@@ -22,7 +22,7 @@ import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 
 /**
- * CSS Constants for the Twitter Bootstrap3 framework
+ * CSS Constants for the Bootstrap4 framework
  *
  * @author Philip Helger
  */
@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.1.3
+  // 4.2.1
   public static final ICSSClassProvider ACCORDION = DefaultCSSClassProvider.create ("accordion");
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
@@ -340,6 +340,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider CUSTOM_SELECT = DefaultCSSClassProvider.create ("custom-select");
   public static final ICSSClassProvider CUSTOM_SELECT_LG = DefaultCSSClassProvider.create ("custom-select-lg");
   public static final ICSSClassProvider CUSTOM_SELECT_SM = DefaultCSSClassProvider.create ("custom-select-sm");
+  public static final ICSSClassProvider CUSTOM_SWITCH = DefaultCSSClassProvider.create ("custom-switch");
   public static final ICSSClassProvider D_BLOCK = DefaultCSSClassProvider.create ("d-block");
   public static final ICSSClassProvider D_FLEX = DefaultCSSClassProvider.create ("d-flex");
   public static final ICSSClassProvider D_INLINE = DefaultCSSClassProvider.create ("d-inline");
@@ -405,7 +406,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider DROPDOWN_ITEM = DefaultCSSClassProvider.create ("dropdown-item");
   public static final ICSSClassProvider DROPDOWN_ITEM_TEXT = DefaultCSSClassProvider.create ("dropdown-item-text");
   public static final ICSSClassProvider DROPDOWN_MENU = DefaultCSSClassProvider.create ("dropdown-menu");
+  public static final ICSSClassProvider DROPDOWN_MENU_LEFT = DefaultCSSClassProvider.create ("dropdown-menu-left");
+  public static final ICSSClassProvider DROPDOWN_MENU_LG_LEFT = DefaultCSSClassProvider.create ("dropdown-menu-lg-left");
+  public static final ICSSClassProvider DROPDOWN_MENU_LG_RIGHT = DefaultCSSClassProvider.create ("dropdown-menu-lg-right");
+  public static final ICSSClassProvider DROPDOWN_MENU_MD_LEFT = DefaultCSSClassProvider.create ("dropdown-menu-md-left");
+  public static final ICSSClassProvider DROPDOWN_MENU_MD_RIGHT = DefaultCSSClassProvider.create ("dropdown-menu-md-right");
   public static final ICSSClassProvider DROPDOWN_MENU_RIGHT = DefaultCSSClassProvider.create ("dropdown-menu-right");
+  public static final ICSSClassProvider DROPDOWN_MENU_SM_LEFT = DefaultCSSClassProvider.create ("dropdown-menu-sm-left");
+  public static final ICSSClassProvider DROPDOWN_MENU_SM_RIGHT = DefaultCSSClassProvider.create ("dropdown-menu-sm-right");
+  public static final ICSSClassProvider DROPDOWN_MENU_XL_LEFT = DefaultCSSClassProvider.create ("dropdown-menu-xl-left");
+  public static final ICSSClassProvider DROPDOWN_MENU_XL_RIGHT = DefaultCSSClassProvider.create ("dropdown-menu-xl-right");
   public static final ICSSClassProvider DROPDOWN_TOGGLE = DefaultCSSClassProvider.create ("dropdown-toggle");
   public static final ICSSClassProvider DROPDOWN_TOGGLE_SPLIT = DefaultCSSClassProvider.create ("dropdown-toggle-split");
   public static final ICSSClassProvider DROPLEFT = DefaultCSSClassProvider.create ("dropleft");
@@ -415,7 +425,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider EMBED_RESPONSIVE_16BY9 = DefaultCSSClassProvider.create ("embed-responsive-16by9");
   public static final ICSSClassProvider EMBED_RESPONSIVE_1BY1 = DefaultCSSClassProvider.create ("embed-responsive-1by1");
   public static final ICSSClassProvider EMBED_RESPONSIVE_21BY9 = DefaultCSSClassProvider.create ("embed-responsive-21by9");
-  public static final ICSSClassProvider EMBED_RESPONSIVE_4BY3 = DefaultCSSClassProvider.create ("embed-responsive-4by3");
+  public static final ICSSClassProvider EMBED_RESPONSIVE_3BY4 = DefaultCSSClassProvider.create ("embed-responsive-3by4");
   public static final ICSSClassProvider EMBED_RESPONSIVE_ITEM = DefaultCSSClassProvider.create ("embed-responsive-item");
   public static final ICSSClassProvider FADE = DefaultCSSClassProvider.create ("fade");
   public static final ICSSClassProvider FIGURE = DefaultCSSClassProvider.create ("figure");
@@ -501,7 +511,9 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider FOCUS = DefaultCSSClassProvider.create ("focus");
   public static final ICSSClassProvider FONT_ITALIC = DefaultCSSClassProvider.create ("font-italic");
   public static final ICSSClassProvider FONT_WEIGHT_BOLD = DefaultCSSClassProvider.create ("font-weight-bold");
+  public static final ICSSClassProvider FONT_WEIGHT_BOLDER = DefaultCSSClassProvider.create ("font-weight-bolder");
   public static final ICSSClassProvider FONT_WEIGHT_LIGHT = DefaultCSSClassProvider.create ("font-weight-light");
+  public static final ICSSClassProvider FONT_WEIGHT_LIGHTER = DefaultCSSClassProvider.create ("font-weight-lighter");
   public static final ICSSClassProvider FONT_WEIGHT_NORMAL = DefaultCSSClassProvider.create ("font-weight-normal");
   public static final ICSSClassProvider FORM_CHECK = DefaultCSSClassProvider.create ("form-check");
   public static final ICSSClassProvider FORM_CHECK_INLINE = DefaultCSSClassProvider.create ("form-check-inline");
@@ -528,6 +540,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider H4 = DefaultCSSClassProvider.create ("h4");
   public static final ICSSClassProvider H5 = DefaultCSSClassProvider.create ("h5");
   public static final ICSSClassProvider H6 = DefaultCSSClassProvider.create ("h6");
+  public static final ICSSClassProvider HIDE = DefaultCSSClassProvider.create ("hide");
   public static final ICSSClassProvider IMG_FLUID = DefaultCSSClassProvider.create ("img-fluid");
   public static final ICSSClassProvider IMG_THUMBNAIL = DefaultCSSClassProvider.create ("img-thumbnail");
   public static final ICSSClassProvider INITIALISM = DefaultCSSClassProvider.create ("initialism");
@@ -599,6 +612,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider M_LG_4 = DefaultCSSClassProvider.create ("m-lg-4");
   public static final ICSSClassProvider M_LG_5 = DefaultCSSClassProvider.create ("m-lg-5");
   public static final ICSSClassProvider M_LG_AUTO = DefaultCSSClassProvider.create ("m-lg-auto");
+  public static final ICSSClassProvider M_LG_N1 = DefaultCSSClassProvider.create ("m-lg-n1");
+  public static final ICSSClassProvider M_LG_N2 = DefaultCSSClassProvider.create ("m-lg-n2");
+  public static final ICSSClassProvider M_LG_N3 = DefaultCSSClassProvider.create ("m-lg-n3");
+  public static final ICSSClassProvider M_LG_N4 = DefaultCSSClassProvider.create ("m-lg-n4");
+  public static final ICSSClassProvider M_LG_N5 = DefaultCSSClassProvider.create ("m-lg-n5");
   public static final ICSSClassProvider M_MD_0 = DefaultCSSClassProvider.create ("m-md-0");
   public static final ICSSClassProvider M_MD_1 = DefaultCSSClassProvider.create ("m-md-1");
   public static final ICSSClassProvider M_MD_2 = DefaultCSSClassProvider.create ("m-md-2");
@@ -606,6 +624,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider M_MD_4 = DefaultCSSClassProvider.create ("m-md-4");
   public static final ICSSClassProvider M_MD_5 = DefaultCSSClassProvider.create ("m-md-5");
   public static final ICSSClassProvider M_MD_AUTO = DefaultCSSClassProvider.create ("m-md-auto");
+  public static final ICSSClassProvider M_MD_N1 = DefaultCSSClassProvider.create ("m-md-n1");
+  public static final ICSSClassProvider M_MD_N2 = DefaultCSSClassProvider.create ("m-md-n2");
+  public static final ICSSClassProvider M_MD_N3 = DefaultCSSClassProvider.create ("m-md-n3");
+  public static final ICSSClassProvider M_MD_N4 = DefaultCSSClassProvider.create ("m-md-n4");
+  public static final ICSSClassProvider M_MD_N5 = DefaultCSSClassProvider.create ("m-md-n5");
+  public static final ICSSClassProvider M_N1 = DefaultCSSClassProvider.create ("m-n1");
+  public static final ICSSClassProvider M_N2 = DefaultCSSClassProvider.create ("m-n2");
+  public static final ICSSClassProvider M_N3 = DefaultCSSClassProvider.create ("m-n3");
+  public static final ICSSClassProvider M_N4 = DefaultCSSClassProvider.create ("m-n4");
+  public static final ICSSClassProvider M_N5 = DefaultCSSClassProvider.create ("m-n5");
   public static final ICSSClassProvider M_SM_0 = DefaultCSSClassProvider.create ("m-sm-0");
   public static final ICSSClassProvider M_SM_1 = DefaultCSSClassProvider.create ("m-sm-1");
   public static final ICSSClassProvider M_SM_2 = DefaultCSSClassProvider.create ("m-sm-2");
@@ -613,6 +641,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider M_SM_4 = DefaultCSSClassProvider.create ("m-sm-4");
   public static final ICSSClassProvider M_SM_5 = DefaultCSSClassProvider.create ("m-sm-5");
   public static final ICSSClassProvider M_SM_AUTO = DefaultCSSClassProvider.create ("m-sm-auto");
+  public static final ICSSClassProvider M_SM_N1 = DefaultCSSClassProvider.create ("m-sm-n1");
+  public static final ICSSClassProvider M_SM_N2 = DefaultCSSClassProvider.create ("m-sm-n2");
+  public static final ICSSClassProvider M_SM_N3 = DefaultCSSClassProvider.create ("m-sm-n3");
+  public static final ICSSClassProvider M_SM_N4 = DefaultCSSClassProvider.create ("m-sm-n4");
+  public static final ICSSClassProvider M_SM_N5 = DefaultCSSClassProvider.create ("m-sm-n5");
   public static final ICSSClassProvider M_XL_0 = DefaultCSSClassProvider.create ("m-xl-0");
   public static final ICSSClassProvider M_XL_1 = DefaultCSSClassProvider.create ("m-xl-1");
   public static final ICSSClassProvider M_XL_2 = DefaultCSSClassProvider.create ("m-xl-2");
@@ -620,6 +653,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider M_XL_4 = DefaultCSSClassProvider.create ("m-xl-4");
   public static final ICSSClassProvider M_XL_5 = DefaultCSSClassProvider.create ("m-xl-5");
   public static final ICSSClassProvider M_XL_AUTO = DefaultCSSClassProvider.create ("m-xl-auto");
+  public static final ICSSClassProvider M_XL_N1 = DefaultCSSClassProvider.create ("m-xl-n1");
+  public static final ICSSClassProvider M_XL_N2 = DefaultCSSClassProvider.create ("m-xl-n2");
+  public static final ICSSClassProvider M_XL_N3 = DefaultCSSClassProvider.create ("m-xl-n3");
+  public static final ICSSClassProvider M_XL_N4 = DefaultCSSClassProvider.create ("m-xl-n4");
+  public static final ICSSClassProvider M_XL_N5 = DefaultCSSClassProvider.create ("m-xl-n5");
   public static final ICSSClassProvider MARK = DefaultCSSClassProvider.create ("mark");
   public static final ICSSClassProvider MB_0 = DefaultCSSClassProvider.create ("mb-0");
   public static final ICSSClassProvider MB_1 = DefaultCSSClassProvider.create ("mb-1");
@@ -635,6 +673,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MB_LG_4 = DefaultCSSClassProvider.create ("mb-lg-4");
   public static final ICSSClassProvider MB_LG_5 = DefaultCSSClassProvider.create ("mb-lg-5");
   public static final ICSSClassProvider MB_LG_AUTO = DefaultCSSClassProvider.create ("mb-lg-auto");
+  public static final ICSSClassProvider MB_LG_N1 = DefaultCSSClassProvider.create ("mb-lg-n1");
+  public static final ICSSClassProvider MB_LG_N2 = DefaultCSSClassProvider.create ("mb-lg-n2");
+  public static final ICSSClassProvider MB_LG_N3 = DefaultCSSClassProvider.create ("mb-lg-n3");
+  public static final ICSSClassProvider MB_LG_N4 = DefaultCSSClassProvider.create ("mb-lg-n4");
+  public static final ICSSClassProvider MB_LG_N5 = DefaultCSSClassProvider.create ("mb-lg-n5");
   public static final ICSSClassProvider MB_MD_0 = DefaultCSSClassProvider.create ("mb-md-0");
   public static final ICSSClassProvider MB_MD_1 = DefaultCSSClassProvider.create ("mb-md-1");
   public static final ICSSClassProvider MB_MD_2 = DefaultCSSClassProvider.create ("mb-md-2");
@@ -642,6 +685,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MB_MD_4 = DefaultCSSClassProvider.create ("mb-md-4");
   public static final ICSSClassProvider MB_MD_5 = DefaultCSSClassProvider.create ("mb-md-5");
   public static final ICSSClassProvider MB_MD_AUTO = DefaultCSSClassProvider.create ("mb-md-auto");
+  public static final ICSSClassProvider MB_MD_N1 = DefaultCSSClassProvider.create ("mb-md-n1");
+  public static final ICSSClassProvider MB_MD_N2 = DefaultCSSClassProvider.create ("mb-md-n2");
+  public static final ICSSClassProvider MB_MD_N3 = DefaultCSSClassProvider.create ("mb-md-n3");
+  public static final ICSSClassProvider MB_MD_N4 = DefaultCSSClassProvider.create ("mb-md-n4");
+  public static final ICSSClassProvider MB_MD_N5 = DefaultCSSClassProvider.create ("mb-md-n5");
+  public static final ICSSClassProvider MB_N1 = DefaultCSSClassProvider.create ("mb-n1");
+  public static final ICSSClassProvider MB_N2 = DefaultCSSClassProvider.create ("mb-n2");
+  public static final ICSSClassProvider MB_N3 = DefaultCSSClassProvider.create ("mb-n3");
+  public static final ICSSClassProvider MB_N4 = DefaultCSSClassProvider.create ("mb-n4");
+  public static final ICSSClassProvider MB_N5 = DefaultCSSClassProvider.create ("mb-n5");
   public static final ICSSClassProvider MB_SM_0 = DefaultCSSClassProvider.create ("mb-sm-0");
   public static final ICSSClassProvider MB_SM_1 = DefaultCSSClassProvider.create ("mb-sm-1");
   public static final ICSSClassProvider MB_SM_2 = DefaultCSSClassProvider.create ("mb-sm-2");
@@ -649,6 +702,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MB_SM_4 = DefaultCSSClassProvider.create ("mb-sm-4");
   public static final ICSSClassProvider MB_SM_5 = DefaultCSSClassProvider.create ("mb-sm-5");
   public static final ICSSClassProvider MB_SM_AUTO = DefaultCSSClassProvider.create ("mb-sm-auto");
+  public static final ICSSClassProvider MB_SM_N1 = DefaultCSSClassProvider.create ("mb-sm-n1");
+  public static final ICSSClassProvider MB_SM_N2 = DefaultCSSClassProvider.create ("mb-sm-n2");
+  public static final ICSSClassProvider MB_SM_N3 = DefaultCSSClassProvider.create ("mb-sm-n3");
+  public static final ICSSClassProvider MB_SM_N4 = DefaultCSSClassProvider.create ("mb-sm-n4");
+  public static final ICSSClassProvider MB_SM_N5 = DefaultCSSClassProvider.create ("mb-sm-n5");
   public static final ICSSClassProvider MB_XL_0 = DefaultCSSClassProvider.create ("mb-xl-0");
   public static final ICSSClassProvider MB_XL_1 = DefaultCSSClassProvider.create ("mb-xl-1");
   public static final ICSSClassProvider MB_XL_2 = DefaultCSSClassProvider.create ("mb-xl-2");
@@ -656,9 +714,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MB_XL_4 = DefaultCSSClassProvider.create ("mb-xl-4");
   public static final ICSSClassProvider MB_XL_5 = DefaultCSSClassProvider.create ("mb-xl-5");
   public static final ICSSClassProvider MB_XL_AUTO = DefaultCSSClassProvider.create ("mb-xl-auto");
+  public static final ICSSClassProvider MB_XL_N1 = DefaultCSSClassProvider.create ("mb-xl-n1");
+  public static final ICSSClassProvider MB_XL_N2 = DefaultCSSClassProvider.create ("mb-xl-n2");
+  public static final ICSSClassProvider MB_XL_N3 = DefaultCSSClassProvider.create ("mb-xl-n3");
+  public static final ICSSClassProvider MB_XL_N4 = DefaultCSSClassProvider.create ("mb-xl-n4");
+  public static final ICSSClassProvider MB_XL_N5 = DefaultCSSClassProvider.create ("mb-xl-n5");
   public static final ICSSClassProvider MEDIA = DefaultCSSClassProvider.create ("media");
   public static final ICSSClassProvider MEDIA_BODY = DefaultCSSClassProvider.create ("media-body");
   public static final ICSSClassProvider MH_100 = DefaultCSSClassProvider.create ("mh-100");
+  public static final ICSSClassProvider MIN_VH_100 = DefaultCSSClassProvider.create ("min-vh-100");
+  public static final ICSSClassProvider MIN_VW_100 = DefaultCSSClassProvider.create ("min-vw-100");
   public static final ICSSClassProvider ML_0 = DefaultCSSClassProvider.create ("ml-0");
   public static final ICSSClassProvider ML_1 = DefaultCSSClassProvider.create ("ml-1");
   public static final ICSSClassProvider ML_2 = DefaultCSSClassProvider.create ("ml-2");
@@ -673,6 +738,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ML_LG_4 = DefaultCSSClassProvider.create ("ml-lg-4");
   public static final ICSSClassProvider ML_LG_5 = DefaultCSSClassProvider.create ("ml-lg-5");
   public static final ICSSClassProvider ML_LG_AUTO = DefaultCSSClassProvider.create ("ml-lg-auto");
+  public static final ICSSClassProvider ML_LG_N1 = DefaultCSSClassProvider.create ("ml-lg-n1");
+  public static final ICSSClassProvider ML_LG_N2 = DefaultCSSClassProvider.create ("ml-lg-n2");
+  public static final ICSSClassProvider ML_LG_N3 = DefaultCSSClassProvider.create ("ml-lg-n3");
+  public static final ICSSClassProvider ML_LG_N4 = DefaultCSSClassProvider.create ("ml-lg-n4");
+  public static final ICSSClassProvider ML_LG_N5 = DefaultCSSClassProvider.create ("ml-lg-n5");
   public static final ICSSClassProvider ML_MD_0 = DefaultCSSClassProvider.create ("ml-md-0");
   public static final ICSSClassProvider ML_MD_1 = DefaultCSSClassProvider.create ("ml-md-1");
   public static final ICSSClassProvider ML_MD_2 = DefaultCSSClassProvider.create ("ml-md-2");
@@ -680,6 +750,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ML_MD_4 = DefaultCSSClassProvider.create ("ml-md-4");
   public static final ICSSClassProvider ML_MD_5 = DefaultCSSClassProvider.create ("ml-md-5");
   public static final ICSSClassProvider ML_MD_AUTO = DefaultCSSClassProvider.create ("ml-md-auto");
+  public static final ICSSClassProvider ML_MD_N1 = DefaultCSSClassProvider.create ("ml-md-n1");
+  public static final ICSSClassProvider ML_MD_N2 = DefaultCSSClassProvider.create ("ml-md-n2");
+  public static final ICSSClassProvider ML_MD_N3 = DefaultCSSClassProvider.create ("ml-md-n3");
+  public static final ICSSClassProvider ML_MD_N4 = DefaultCSSClassProvider.create ("ml-md-n4");
+  public static final ICSSClassProvider ML_MD_N5 = DefaultCSSClassProvider.create ("ml-md-n5");
+  public static final ICSSClassProvider ML_N1 = DefaultCSSClassProvider.create ("ml-n1");
+  public static final ICSSClassProvider ML_N2 = DefaultCSSClassProvider.create ("ml-n2");
+  public static final ICSSClassProvider ML_N3 = DefaultCSSClassProvider.create ("ml-n3");
+  public static final ICSSClassProvider ML_N4 = DefaultCSSClassProvider.create ("ml-n4");
+  public static final ICSSClassProvider ML_N5 = DefaultCSSClassProvider.create ("ml-n5");
   public static final ICSSClassProvider ML_SM_0 = DefaultCSSClassProvider.create ("ml-sm-0");
   public static final ICSSClassProvider ML_SM_1 = DefaultCSSClassProvider.create ("ml-sm-1");
   public static final ICSSClassProvider ML_SM_2 = DefaultCSSClassProvider.create ("ml-sm-2");
@@ -687,6 +767,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ML_SM_4 = DefaultCSSClassProvider.create ("ml-sm-4");
   public static final ICSSClassProvider ML_SM_5 = DefaultCSSClassProvider.create ("ml-sm-5");
   public static final ICSSClassProvider ML_SM_AUTO = DefaultCSSClassProvider.create ("ml-sm-auto");
+  public static final ICSSClassProvider ML_SM_N1 = DefaultCSSClassProvider.create ("ml-sm-n1");
+  public static final ICSSClassProvider ML_SM_N2 = DefaultCSSClassProvider.create ("ml-sm-n2");
+  public static final ICSSClassProvider ML_SM_N3 = DefaultCSSClassProvider.create ("ml-sm-n3");
+  public static final ICSSClassProvider ML_SM_N4 = DefaultCSSClassProvider.create ("ml-sm-n4");
+  public static final ICSSClassProvider ML_SM_N5 = DefaultCSSClassProvider.create ("ml-sm-n5");
   public static final ICSSClassProvider ML_XL_0 = DefaultCSSClassProvider.create ("ml-xl-0");
   public static final ICSSClassProvider ML_XL_1 = DefaultCSSClassProvider.create ("ml-xl-1");
   public static final ICSSClassProvider ML_XL_2 = DefaultCSSClassProvider.create ("ml-xl-2");
@@ -694,6 +779,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ML_XL_4 = DefaultCSSClassProvider.create ("ml-xl-4");
   public static final ICSSClassProvider ML_XL_5 = DefaultCSSClassProvider.create ("ml-xl-5");
   public static final ICSSClassProvider ML_XL_AUTO = DefaultCSSClassProvider.create ("ml-xl-auto");
+  public static final ICSSClassProvider ML_XL_N1 = DefaultCSSClassProvider.create ("ml-xl-n1");
+  public static final ICSSClassProvider ML_XL_N2 = DefaultCSSClassProvider.create ("ml-xl-n2");
+  public static final ICSSClassProvider ML_XL_N3 = DefaultCSSClassProvider.create ("ml-xl-n3");
+  public static final ICSSClassProvider ML_XL_N4 = DefaultCSSClassProvider.create ("ml-xl-n4");
+  public static final ICSSClassProvider ML_XL_N5 = DefaultCSSClassProvider.create ("ml-xl-n5");
   public static final ICSSClassProvider MODAL = DefaultCSSClassProvider.create ("modal");
   public static final ICSSClassProvider MODAL_BACKDROP = DefaultCSSClassProvider.create ("modal-backdrop");
   public static final ICSSClassProvider MODAL_BODY = DefaultCSSClassProvider.create ("modal-body");
@@ -707,6 +797,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MODAL_SCROLLBAR_MEASURE = DefaultCSSClassProvider.create ("modal-scrollbar-measure");
   public static final ICSSClassProvider MODAL_SM = DefaultCSSClassProvider.create ("modal-sm");
   public static final ICSSClassProvider MODAL_TITLE = DefaultCSSClassProvider.create ("modal-title");
+  public static final ICSSClassProvider MODAL_XL = DefaultCSSClassProvider.create ("modal-xl");
   public static final ICSSClassProvider MR_0 = DefaultCSSClassProvider.create ("mr-0");
   public static final ICSSClassProvider MR_1 = DefaultCSSClassProvider.create ("mr-1");
   public static final ICSSClassProvider MR_2 = DefaultCSSClassProvider.create ("mr-2");
@@ -721,6 +812,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MR_LG_4 = DefaultCSSClassProvider.create ("mr-lg-4");
   public static final ICSSClassProvider MR_LG_5 = DefaultCSSClassProvider.create ("mr-lg-5");
   public static final ICSSClassProvider MR_LG_AUTO = DefaultCSSClassProvider.create ("mr-lg-auto");
+  public static final ICSSClassProvider MR_LG_N1 = DefaultCSSClassProvider.create ("mr-lg-n1");
+  public static final ICSSClassProvider MR_LG_N2 = DefaultCSSClassProvider.create ("mr-lg-n2");
+  public static final ICSSClassProvider MR_LG_N3 = DefaultCSSClassProvider.create ("mr-lg-n3");
+  public static final ICSSClassProvider MR_LG_N4 = DefaultCSSClassProvider.create ("mr-lg-n4");
+  public static final ICSSClassProvider MR_LG_N5 = DefaultCSSClassProvider.create ("mr-lg-n5");
   public static final ICSSClassProvider MR_MD_0 = DefaultCSSClassProvider.create ("mr-md-0");
   public static final ICSSClassProvider MR_MD_1 = DefaultCSSClassProvider.create ("mr-md-1");
   public static final ICSSClassProvider MR_MD_2 = DefaultCSSClassProvider.create ("mr-md-2");
@@ -728,6 +824,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MR_MD_4 = DefaultCSSClassProvider.create ("mr-md-4");
   public static final ICSSClassProvider MR_MD_5 = DefaultCSSClassProvider.create ("mr-md-5");
   public static final ICSSClassProvider MR_MD_AUTO = DefaultCSSClassProvider.create ("mr-md-auto");
+  public static final ICSSClassProvider MR_MD_N1 = DefaultCSSClassProvider.create ("mr-md-n1");
+  public static final ICSSClassProvider MR_MD_N2 = DefaultCSSClassProvider.create ("mr-md-n2");
+  public static final ICSSClassProvider MR_MD_N3 = DefaultCSSClassProvider.create ("mr-md-n3");
+  public static final ICSSClassProvider MR_MD_N4 = DefaultCSSClassProvider.create ("mr-md-n4");
+  public static final ICSSClassProvider MR_MD_N5 = DefaultCSSClassProvider.create ("mr-md-n5");
+  public static final ICSSClassProvider MR_N1 = DefaultCSSClassProvider.create ("mr-n1");
+  public static final ICSSClassProvider MR_N2 = DefaultCSSClassProvider.create ("mr-n2");
+  public static final ICSSClassProvider MR_N3 = DefaultCSSClassProvider.create ("mr-n3");
+  public static final ICSSClassProvider MR_N4 = DefaultCSSClassProvider.create ("mr-n4");
+  public static final ICSSClassProvider MR_N5 = DefaultCSSClassProvider.create ("mr-n5");
   public static final ICSSClassProvider MR_SM_0 = DefaultCSSClassProvider.create ("mr-sm-0");
   public static final ICSSClassProvider MR_SM_1 = DefaultCSSClassProvider.create ("mr-sm-1");
   public static final ICSSClassProvider MR_SM_2 = DefaultCSSClassProvider.create ("mr-sm-2");
@@ -735,6 +841,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MR_SM_4 = DefaultCSSClassProvider.create ("mr-sm-4");
   public static final ICSSClassProvider MR_SM_5 = DefaultCSSClassProvider.create ("mr-sm-5");
   public static final ICSSClassProvider MR_SM_AUTO = DefaultCSSClassProvider.create ("mr-sm-auto");
+  public static final ICSSClassProvider MR_SM_N1 = DefaultCSSClassProvider.create ("mr-sm-n1");
+  public static final ICSSClassProvider MR_SM_N2 = DefaultCSSClassProvider.create ("mr-sm-n2");
+  public static final ICSSClassProvider MR_SM_N3 = DefaultCSSClassProvider.create ("mr-sm-n3");
+  public static final ICSSClassProvider MR_SM_N4 = DefaultCSSClassProvider.create ("mr-sm-n4");
+  public static final ICSSClassProvider MR_SM_N5 = DefaultCSSClassProvider.create ("mr-sm-n5");
   public static final ICSSClassProvider MR_XL_0 = DefaultCSSClassProvider.create ("mr-xl-0");
   public static final ICSSClassProvider MR_XL_1 = DefaultCSSClassProvider.create ("mr-xl-1");
   public static final ICSSClassProvider MR_XL_2 = DefaultCSSClassProvider.create ("mr-xl-2");
@@ -742,6 +853,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MR_XL_4 = DefaultCSSClassProvider.create ("mr-xl-4");
   public static final ICSSClassProvider MR_XL_5 = DefaultCSSClassProvider.create ("mr-xl-5");
   public static final ICSSClassProvider MR_XL_AUTO = DefaultCSSClassProvider.create ("mr-xl-auto");
+  public static final ICSSClassProvider MR_XL_N1 = DefaultCSSClassProvider.create ("mr-xl-n1");
+  public static final ICSSClassProvider MR_XL_N2 = DefaultCSSClassProvider.create ("mr-xl-n2");
+  public static final ICSSClassProvider MR_XL_N3 = DefaultCSSClassProvider.create ("mr-xl-n3");
+  public static final ICSSClassProvider MR_XL_N4 = DefaultCSSClassProvider.create ("mr-xl-n4");
+  public static final ICSSClassProvider MR_XL_N5 = DefaultCSSClassProvider.create ("mr-xl-n5");
   public static final ICSSClassProvider MT_0 = DefaultCSSClassProvider.create ("mt-0");
   public static final ICSSClassProvider MT_1 = DefaultCSSClassProvider.create ("mt-1");
   public static final ICSSClassProvider MT_2 = DefaultCSSClassProvider.create ("mt-2");
@@ -756,6 +872,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MT_LG_4 = DefaultCSSClassProvider.create ("mt-lg-4");
   public static final ICSSClassProvider MT_LG_5 = DefaultCSSClassProvider.create ("mt-lg-5");
   public static final ICSSClassProvider MT_LG_AUTO = DefaultCSSClassProvider.create ("mt-lg-auto");
+  public static final ICSSClassProvider MT_LG_N1 = DefaultCSSClassProvider.create ("mt-lg-n1");
+  public static final ICSSClassProvider MT_LG_N2 = DefaultCSSClassProvider.create ("mt-lg-n2");
+  public static final ICSSClassProvider MT_LG_N3 = DefaultCSSClassProvider.create ("mt-lg-n3");
+  public static final ICSSClassProvider MT_LG_N4 = DefaultCSSClassProvider.create ("mt-lg-n4");
+  public static final ICSSClassProvider MT_LG_N5 = DefaultCSSClassProvider.create ("mt-lg-n5");
   public static final ICSSClassProvider MT_MD_0 = DefaultCSSClassProvider.create ("mt-md-0");
   public static final ICSSClassProvider MT_MD_1 = DefaultCSSClassProvider.create ("mt-md-1");
   public static final ICSSClassProvider MT_MD_2 = DefaultCSSClassProvider.create ("mt-md-2");
@@ -763,6 +884,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MT_MD_4 = DefaultCSSClassProvider.create ("mt-md-4");
   public static final ICSSClassProvider MT_MD_5 = DefaultCSSClassProvider.create ("mt-md-5");
   public static final ICSSClassProvider MT_MD_AUTO = DefaultCSSClassProvider.create ("mt-md-auto");
+  public static final ICSSClassProvider MT_MD_N1 = DefaultCSSClassProvider.create ("mt-md-n1");
+  public static final ICSSClassProvider MT_MD_N2 = DefaultCSSClassProvider.create ("mt-md-n2");
+  public static final ICSSClassProvider MT_MD_N3 = DefaultCSSClassProvider.create ("mt-md-n3");
+  public static final ICSSClassProvider MT_MD_N4 = DefaultCSSClassProvider.create ("mt-md-n4");
+  public static final ICSSClassProvider MT_MD_N5 = DefaultCSSClassProvider.create ("mt-md-n5");
+  public static final ICSSClassProvider MT_N1 = DefaultCSSClassProvider.create ("mt-n1");
+  public static final ICSSClassProvider MT_N2 = DefaultCSSClassProvider.create ("mt-n2");
+  public static final ICSSClassProvider MT_N3 = DefaultCSSClassProvider.create ("mt-n3");
+  public static final ICSSClassProvider MT_N4 = DefaultCSSClassProvider.create ("mt-n4");
+  public static final ICSSClassProvider MT_N5 = DefaultCSSClassProvider.create ("mt-n5");
   public static final ICSSClassProvider MT_SM_0 = DefaultCSSClassProvider.create ("mt-sm-0");
   public static final ICSSClassProvider MT_SM_1 = DefaultCSSClassProvider.create ("mt-sm-1");
   public static final ICSSClassProvider MT_SM_2 = DefaultCSSClassProvider.create ("mt-sm-2");
@@ -770,6 +901,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MT_SM_4 = DefaultCSSClassProvider.create ("mt-sm-4");
   public static final ICSSClassProvider MT_SM_5 = DefaultCSSClassProvider.create ("mt-sm-5");
   public static final ICSSClassProvider MT_SM_AUTO = DefaultCSSClassProvider.create ("mt-sm-auto");
+  public static final ICSSClassProvider MT_SM_N1 = DefaultCSSClassProvider.create ("mt-sm-n1");
+  public static final ICSSClassProvider MT_SM_N2 = DefaultCSSClassProvider.create ("mt-sm-n2");
+  public static final ICSSClassProvider MT_SM_N3 = DefaultCSSClassProvider.create ("mt-sm-n3");
+  public static final ICSSClassProvider MT_SM_N4 = DefaultCSSClassProvider.create ("mt-sm-n4");
+  public static final ICSSClassProvider MT_SM_N5 = DefaultCSSClassProvider.create ("mt-sm-n5");
   public static final ICSSClassProvider MT_XL_0 = DefaultCSSClassProvider.create ("mt-xl-0");
   public static final ICSSClassProvider MT_XL_1 = DefaultCSSClassProvider.create ("mt-xl-1");
   public static final ICSSClassProvider MT_XL_2 = DefaultCSSClassProvider.create ("mt-xl-2");
@@ -777,6 +913,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MT_XL_4 = DefaultCSSClassProvider.create ("mt-xl-4");
   public static final ICSSClassProvider MT_XL_5 = DefaultCSSClassProvider.create ("mt-xl-5");
   public static final ICSSClassProvider MT_XL_AUTO = DefaultCSSClassProvider.create ("mt-xl-auto");
+  public static final ICSSClassProvider MT_XL_N1 = DefaultCSSClassProvider.create ("mt-xl-n1");
+  public static final ICSSClassProvider MT_XL_N2 = DefaultCSSClassProvider.create ("mt-xl-n2");
+  public static final ICSSClassProvider MT_XL_N3 = DefaultCSSClassProvider.create ("mt-xl-n3");
+  public static final ICSSClassProvider MT_XL_N4 = DefaultCSSClassProvider.create ("mt-xl-n4");
+  public static final ICSSClassProvider MT_XL_N5 = DefaultCSSClassProvider.create ("mt-xl-n5");
   public static final ICSSClassProvider MW_100 = DefaultCSSClassProvider.create ("mw-100");
   public static final ICSSClassProvider MX_0 = DefaultCSSClassProvider.create ("mx-0");
   public static final ICSSClassProvider MX_1 = DefaultCSSClassProvider.create ("mx-1");
@@ -792,6 +933,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MX_LG_4 = DefaultCSSClassProvider.create ("mx-lg-4");
   public static final ICSSClassProvider MX_LG_5 = DefaultCSSClassProvider.create ("mx-lg-5");
   public static final ICSSClassProvider MX_LG_AUTO = DefaultCSSClassProvider.create ("mx-lg-auto");
+  public static final ICSSClassProvider MX_LG_N1 = DefaultCSSClassProvider.create ("mx-lg-n1");
+  public static final ICSSClassProvider MX_LG_N2 = DefaultCSSClassProvider.create ("mx-lg-n2");
+  public static final ICSSClassProvider MX_LG_N3 = DefaultCSSClassProvider.create ("mx-lg-n3");
+  public static final ICSSClassProvider MX_LG_N4 = DefaultCSSClassProvider.create ("mx-lg-n4");
+  public static final ICSSClassProvider MX_LG_N5 = DefaultCSSClassProvider.create ("mx-lg-n5");
   public static final ICSSClassProvider MX_MD_0 = DefaultCSSClassProvider.create ("mx-md-0");
   public static final ICSSClassProvider MX_MD_1 = DefaultCSSClassProvider.create ("mx-md-1");
   public static final ICSSClassProvider MX_MD_2 = DefaultCSSClassProvider.create ("mx-md-2");
@@ -799,6 +945,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MX_MD_4 = DefaultCSSClassProvider.create ("mx-md-4");
   public static final ICSSClassProvider MX_MD_5 = DefaultCSSClassProvider.create ("mx-md-5");
   public static final ICSSClassProvider MX_MD_AUTO = DefaultCSSClassProvider.create ("mx-md-auto");
+  public static final ICSSClassProvider MX_MD_N1 = DefaultCSSClassProvider.create ("mx-md-n1");
+  public static final ICSSClassProvider MX_MD_N2 = DefaultCSSClassProvider.create ("mx-md-n2");
+  public static final ICSSClassProvider MX_MD_N3 = DefaultCSSClassProvider.create ("mx-md-n3");
+  public static final ICSSClassProvider MX_MD_N4 = DefaultCSSClassProvider.create ("mx-md-n4");
+  public static final ICSSClassProvider MX_MD_N5 = DefaultCSSClassProvider.create ("mx-md-n5");
+  public static final ICSSClassProvider MX_N1 = DefaultCSSClassProvider.create ("mx-n1");
+  public static final ICSSClassProvider MX_N2 = DefaultCSSClassProvider.create ("mx-n2");
+  public static final ICSSClassProvider MX_N3 = DefaultCSSClassProvider.create ("mx-n3");
+  public static final ICSSClassProvider MX_N4 = DefaultCSSClassProvider.create ("mx-n4");
+  public static final ICSSClassProvider MX_N5 = DefaultCSSClassProvider.create ("mx-n5");
   public static final ICSSClassProvider MX_SM_0 = DefaultCSSClassProvider.create ("mx-sm-0");
   public static final ICSSClassProvider MX_SM_1 = DefaultCSSClassProvider.create ("mx-sm-1");
   public static final ICSSClassProvider MX_SM_2 = DefaultCSSClassProvider.create ("mx-sm-2");
@@ -806,6 +962,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MX_SM_4 = DefaultCSSClassProvider.create ("mx-sm-4");
   public static final ICSSClassProvider MX_SM_5 = DefaultCSSClassProvider.create ("mx-sm-5");
   public static final ICSSClassProvider MX_SM_AUTO = DefaultCSSClassProvider.create ("mx-sm-auto");
+  public static final ICSSClassProvider MX_SM_N1 = DefaultCSSClassProvider.create ("mx-sm-n1");
+  public static final ICSSClassProvider MX_SM_N2 = DefaultCSSClassProvider.create ("mx-sm-n2");
+  public static final ICSSClassProvider MX_SM_N3 = DefaultCSSClassProvider.create ("mx-sm-n3");
+  public static final ICSSClassProvider MX_SM_N4 = DefaultCSSClassProvider.create ("mx-sm-n4");
+  public static final ICSSClassProvider MX_SM_N5 = DefaultCSSClassProvider.create ("mx-sm-n5");
   public static final ICSSClassProvider MX_XL_0 = DefaultCSSClassProvider.create ("mx-xl-0");
   public static final ICSSClassProvider MX_XL_1 = DefaultCSSClassProvider.create ("mx-xl-1");
   public static final ICSSClassProvider MX_XL_2 = DefaultCSSClassProvider.create ("mx-xl-2");
@@ -813,6 +974,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MX_XL_4 = DefaultCSSClassProvider.create ("mx-xl-4");
   public static final ICSSClassProvider MX_XL_5 = DefaultCSSClassProvider.create ("mx-xl-5");
   public static final ICSSClassProvider MX_XL_AUTO = DefaultCSSClassProvider.create ("mx-xl-auto");
+  public static final ICSSClassProvider MX_XL_N1 = DefaultCSSClassProvider.create ("mx-xl-n1");
+  public static final ICSSClassProvider MX_XL_N2 = DefaultCSSClassProvider.create ("mx-xl-n2");
+  public static final ICSSClassProvider MX_XL_N3 = DefaultCSSClassProvider.create ("mx-xl-n3");
+  public static final ICSSClassProvider MX_XL_N4 = DefaultCSSClassProvider.create ("mx-xl-n4");
+  public static final ICSSClassProvider MX_XL_N5 = DefaultCSSClassProvider.create ("mx-xl-n5");
   public static final ICSSClassProvider MY_0 = DefaultCSSClassProvider.create ("my-0");
   public static final ICSSClassProvider MY_1 = DefaultCSSClassProvider.create ("my-1");
   public static final ICSSClassProvider MY_2 = DefaultCSSClassProvider.create ("my-2");
@@ -827,6 +993,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MY_LG_4 = DefaultCSSClassProvider.create ("my-lg-4");
   public static final ICSSClassProvider MY_LG_5 = DefaultCSSClassProvider.create ("my-lg-5");
   public static final ICSSClassProvider MY_LG_AUTO = DefaultCSSClassProvider.create ("my-lg-auto");
+  public static final ICSSClassProvider MY_LG_N1 = DefaultCSSClassProvider.create ("my-lg-n1");
+  public static final ICSSClassProvider MY_LG_N2 = DefaultCSSClassProvider.create ("my-lg-n2");
+  public static final ICSSClassProvider MY_LG_N3 = DefaultCSSClassProvider.create ("my-lg-n3");
+  public static final ICSSClassProvider MY_LG_N4 = DefaultCSSClassProvider.create ("my-lg-n4");
+  public static final ICSSClassProvider MY_LG_N5 = DefaultCSSClassProvider.create ("my-lg-n5");
   public static final ICSSClassProvider MY_MD_0 = DefaultCSSClassProvider.create ("my-md-0");
   public static final ICSSClassProvider MY_MD_1 = DefaultCSSClassProvider.create ("my-md-1");
   public static final ICSSClassProvider MY_MD_2 = DefaultCSSClassProvider.create ("my-md-2");
@@ -834,6 +1005,16 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MY_MD_4 = DefaultCSSClassProvider.create ("my-md-4");
   public static final ICSSClassProvider MY_MD_5 = DefaultCSSClassProvider.create ("my-md-5");
   public static final ICSSClassProvider MY_MD_AUTO = DefaultCSSClassProvider.create ("my-md-auto");
+  public static final ICSSClassProvider MY_MD_N1 = DefaultCSSClassProvider.create ("my-md-n1");
+  public static final ICSSClassProvider MY_MD_N2 = DefaultCSSClassProvider.create ("my-md-n2");
+  public static final ICSSClassProvider MY_MD_N3 = DefaultCSSClassProvider.create ("my-md-n3");
+  public static final ICSSClassProvider MY_MD_N4 = DefaultCSSClassProvider.create ("my-md-n4");
+  public static final ICSSClassProvider MY_MD_N5 = DefaultCSSClassProvider.create ("my-md-n5");
+  public static final ICSSClassProvider MY_N1 = DefaultCSSClassProvider.create ("my-n1");
+  public static final ICSSClassProvider MY_N2 = DefaultCSSClassProvider.create ("my-n2");
+  public static final ICSSClassProvider MY_N3 = DefaultCSSClassProvider.create ("my-n3");
+  public static final ICSSClassProvider MY_N4 = DefaultCSSClassProvider.create ("my-n4");
+  public static final ICSSClassProvider MY_N5 = DefaultCSSClassProvider.create ("my-n5");
   public static final ICSSClassProvider MY_SM_0 = DefaultCSSClassProvider.create ("my-sm-0");
   public static final ICSSClassProvider MY_SM_1 = DefaultCSSClassProvider.create ("my-sm-1");
   public static final ICSSClassProvider MY_SM_2 = DefaultCSSClassProvider.create ("my-sm-2");
@@ -841,6 +1022,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MY_SM_4 = DefaultCSSClassProvider.create ("my-sm-4");
   public static final ICSSClassProvider MY_SM_5 = DefaultCSSClassProvider.create ("my-sm-5");
   public static final ICSSClassProvider MY_SM_AUTO = DefaultCSSClassProvider.create ("my-sm-auto");
+  public static final ICSSClassProvider MY_SM_N1 = DefaultCSSClassProvider.create ("my-sm-n1");
+  public static final ICSSClassProvider MY_SM_N2 = DefaultCSSClassProvider.create ("my-sm-n2");
+  public static final ICSSClassProvider MY_SM_N3 = DefaultCSSClassProvider.create ("my-sm-n3");
+  public static final ICSSClassProvider MY_SM_N4 = DefaultCSSClassProvider.create ("my-sm-n4");
+  public static final ICSSClassProvider MY_SM_N5 = DefaultCSSClassProvider.create ("my-sm-n5");
   public static final ICSSClassProvider MY_XL_0 = DefaultCSSClassProvider.create ("my-xl-0");
   public static final ICSSClassProvider MY_XL_1 = DefaultCSSClassProvider.create ("my-xl-1");
   public static final ICSSClassProvider MY_XL_2 = DefaultCSSClassProvider.create ("my-xl-2");
@@ -848,6 +1034,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MY_XL_4 = DefaultCSSClassProvider.create ("my-xl-4");
   public static final ICSSClassProvider MY_XL_5 = DefaultCSSClassProvider.create ("my-xl-5");
   public static final ICSSClassProvider MY_XL_AUTO = DefaultCSSClassProvider.create ("my-xl-auto");
+  public static final ICSSClassProvider MY_XL_N1 = DefaultCSSClassProvider.create ("my-xl-n1");
+  public static final ICSSClassProvider MY_XL_N2 = DefaultCSSClassProvider.create ("my-xl-n2");
+  public static final ICSSClassProvider MY_XL_N3 = DefaultCSSClassProvider.create ("my-xl-n3");
+  public static final ICSSClassProvider MY_XL_N4 = DefaultCSSClassProvider.create ("my-xl-n4");
+  public static final ICSSClassProvider MY_XL_N5 = DefaultCSSClassProvider.create ("my-xl-n5");
   public static final ICSSClassProvider NAV = DefaultCSSClassProvider.create ("nav");
   public static final ICSSClassProvider NAV_FILL = DefaultCSSClassProvider.create ("nav-fill");
   public static final ICSSClassProvider NAV_ITEM = DefaultCSSClassProvider.create ("nav-item");
@@ -1004,6 +1195,8 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ORDER_XL_9 = DefaultCSSClassProvider.create ("order-xl-9");
   public static final ICSSClassProvider ORDER_XL_FIRST = DefaultCSSClassProvider.create ("order-xl-first");
   public static final ICSSClassProvider ORDER_XL_LAST = DefaultCSSClassProvider.create ("order-xl-last");
+  public static final ICSSClassProvider OVERFLOW_AUTO = DefaultCSSClassProvider.create ("overflow-auto");
+  public static final ICSSClassProvider OVERFLOW_HIDDEN = DefaultCSSClassProvider.create ("overflow-hidden");
   public static final ICSSClassProvider P_0 = DefaultCSSClassProvider.create ("p-0");
   public static final ICSSClassProvider P_1 = DefaultCSSClassProvider.create ("p-1");
   public static final ICSSClassProvider P_2 = DefaultCSSClassProvider.create ("p-2");
@@ -1099,6 +1292,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider PL_XL_3 = DefaultCSSClassProvider.create ("pl-xl-3");
   public static final ICSSClassProvider PL_XL_4 = DefaultCSSClassProvider.create ("pl-xl-4");
   public static final ICSSClassProvider PL_XL_5 = DefaultCSSClassProvider.create ("pl-xl-5");
+  public static final ICSSClassProvider POINTER_EVENT = DefaultCSSClassProvider.create ("pointer-event");
   public static final ICSSClassProvider POPOVER = DefaultCSSClassProvider.create ("popover");
   public static final ICSSClassProvider POPOVER_BODY = DefaultCSSClassProvider.create ("popover-body");
   public static final ICSSClassProvider POPOVER_HEADER = DefaultCSSClassProvider.create ("popover-header");
@@ -1237,6 +1431,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ROUNDED_BOTTOM = DefaultCSSClassProvider.create ("rounded-bottom");
   public static final ICSSClassProvider ROUNDED_CIRCLE = DefaultCSSClassProvider.create ("rounded-circle");
   public static final ICSSClassProvider ROUNDED_LEFT = DefaultCSSClassProvider.create ("rounded-left");
+  public static final ICSSClassProvider ROUNDED_PILL = DefaultCSSClassProvider.create ("rounded-pill");
   public static final ICSSClassProvider ROUNDED_RIGHT = DefaultCSSClassProvider.create ("rounded-right");
   public static final ICSSClassProvider ROUNDED_TOP = DefaultCSSClassProvider.create ("rounded-top");
   public static final ICSSClassProvider ROW = DefaultCSSClassProvider.create ("row");
@@ -1245,7 +1440,12 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider SHADOW_NONE = DefaultCSSClassProvider.create ("shadow-none");
   public static final ICSSClassProvider SHADOW_SM = DefaultCSSClassProvider.create ("shadow-sm");
   public static final ICSSClassProvider SHOW = DefaultCSSClassProvider.create ("show");
+  public static final ICSSClassProvider SHOWING = DefaultCSSClassProvider.create ("showing");
   public static final ICSSClassProvider SMALL = DefaultCSSClassProvider.create ("small");
+  public static final ICSSClassProvider SPINNER_BORDER = DefaultCSSClassProvider.create ("spinner-border");
+  public static final ICSSClassProvider SPINNER_BORDER_SM = DefaultCSSClassProvider.create ("spinner-border-sm");
+  public static final ICSSClassProvider SPINNER_GROW = DefaultCSSClassProvider.create ("spinner-grow");
+  public static final ICSSClassProvider SPINNER_GROW_SM = DefaultCSSClassProvider.create ("spinner-grow-sm");
   public static final ICSSClassProvider SR_ONLY = DefaultCSSClassProvider.create ("sr-only");
   public static final ICSSClassProvider SR_ONLY_FOCUSABLE = DefaultCSSClassProvider.create ("sr-only-focusable");
   public static final ICSSClassProvider STICKY_TOP = DefaultCSSClassProvider.create ("sticky-top");
@@ -1277,6 +1477,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TEXT_CENTER = DefaultCSSClassProvider.create ("text-center");
   public static final ICSSClassProvider TEXT_DANGER = DefaultCSSClassProvider.create ("text-danger");
   public static final ICSSClassProvider TEXT_DARK = DefaultCSSClassProvider.create ("text-dark");
+  public static final ICSSClassProvider TEXT_DECORATION_NONE = DefaultCSSClassProvider.create ("text-decoration-none");
   public static final ICSSClassProvider TEXT_HIDE = DefaultCSSClassProvider.create ("text-hide");
   public static final ICSSClassProvider TEXT_INFO = DefaultCSSClassProvider.create ("text-info");
   public static final ICSSClassProvider TEXT_JUSTIFY = DefaultCSSClassProvider.create ("text-justify");
@@ -1293,6 +1494,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TEXT_MUTED = DefaultCSSClassProvider.create ("text-muted");
   public static final ICSSClassProvider TEXT_NOWRAP = DefaultCSSClassProvider.create ("text-nowrap");
   public static final ICSSClassProvider TEXT_PRIMARY = DefaultCSSClassProvider.create ("text-primary");
+  public static final ICSSClassProvider TEXT_RESET = DefaultCSSClassProvider.create ("text-reset");
   public static final ICSSClassProvider TEXT_RIGHT = DefaultCSSClassProvider.create ("text-right");
   public static final ICSSClassProvider TEXT_SECONDARY = DefaultCSSClassProvider.create ("text-secondary");
   public static final ICSSClassProvider TEXT_SM_CENTER = DefaultCSSClassProvider.create ("text-sm-center");
@@ -1304,16 +1506,22 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TEXT_WARNING = DefaultCSSClassProvider.create ("text-warning");
   public static final ICSSClassProvider TEXT_WHITE = DefaultCSSClassProvider.create ("text-white");
   public static final ICSSClassProvider TEXT_WHITE_50 = DefaultCSSClassProvider.create ("text-white-50");
+  public static final ICSSClassProvider TEXT_WRAP = DefaultCSSClassProvider.create ("text-wrap");
   public static final ICSSClassProvider TEXT_XL_CENTER = DefaultCSSClassProvider.create ("text-xl-center");
   public static final ICSSClassProvider TEXT_XL_LEFT = DefaultCSSClassProvider.create ("text-xl-left");
   public static final ICSSClassProvider TEXT_XL_RIGHT = DefaultCSSClassProvider.create ("text-xl-right");
   public static final ICSSClassProvider THEAD_DARK = DefaultCSSClassProvider.create ("thead-dark");
   public static final ICSSClassProvider THEAD_LIGHT = DefaultCSSClassProvider.create ("thead-light");
+  public static final ICSSClassProvider TOAST = DefaultCSSClassProvider.create ("toast");
+  public static final ICSSClassProvider TOAST_BODY = DefaultCSSClassProvider.create ("toast-body");
+  public static final ICSSClassProvider TOAST_HEADER = DefaultCSSClassProvider.create ("toast-header");
   public static final ICSSClassProvider TOOLTIP = DefaultCSSClassProvider.create ("tooltip");
   public static final ICSSClassProvider TOOLTIP_INNER = DefaultCSSClassProvider.create ("tooltip-inner");
   public static final ICSSClassProvider VALID_FEEDBACK = DefaultCSSClassProvider.create ("valid-feedback");
   public static final ICSSClassProvider VALID_TOOLTIP = DefaultCSSClassProvider.create ("valid-tooltip");
+  public static final ICSSClassProvider VH_100 = DefaultCSSClassProvider.create ("vh-100");
   public static final ICSSClassProvider VISIBLE = DefaultCSSClassProvider.create ("visible");
+  public static final ICSSClassProvider VW_100 = DefaultCSSClassProvider.create ("vw-100");
   public static final ICSSClassProvider W_100 = DefaultCSSClassProvider.create ("w-100");
   public static final ICSSClassProvider W_25 = DefaultCSSClassProvider.create ("w-25");
   public static final ICSSClassProvider W_50 = DefaultCSSClassProvider.create ("w-50");

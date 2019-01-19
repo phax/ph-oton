@@ -30,7 +30,7 @@ public enum EBootstrapEmbedAspectRatio implements ICSSClassProvider
 {
   AR_21_9 (CBootstrapCSS.EMBED_RESPONSIVE_21BY9),
   AR_16_9 (CBootstrapCSS.EMBED_RESPONSIVE_16BY9),
-  AR_4_3 (CBootstrapCSS.EMBED_RESPONSIVE_4BY3),
+  AR_4_3 (CBootstrapCSS.EMBED_RESPONSIVE_3BY4),
   AR_1_1 (CBootstrapCSS.EMBED_RESPONSIVE_1BY1);
 
   private final ICSSClassProvider m_aCSSClass;
