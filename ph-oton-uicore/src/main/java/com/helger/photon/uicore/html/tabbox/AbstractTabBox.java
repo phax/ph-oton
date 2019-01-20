@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.html.tabbox;
 
+import java.util.Comparator;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -158,5 +160,11 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     if (m_sActiveTabID != null && m_sActiveTabID.equals (sTabID))
       m_sActiveTabID = null;
     return EChange.CHANGED;
+  }
+
+  public void sortTabs (@Nonnull final Comparator <? super Tab> aComparator)
+  {
+    ValueEnforcer.notNull (aComparator, "Comparator");
+    m_aTabs.setAll (m_aTabs.getSortedByValue (aComparator));
   }
 }

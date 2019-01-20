@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.html.tabbox;
 
+import java.util.Comparator;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -115,4 +117,6 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeLi
 
   @Nonnull
   EChange removeTab (@Nullable String sTabID);
+
+  void sortTabs (@Nonnull Comparator <? super Tab> aComparator);
 }
