@@ -32,6 +32,7 @@
 
 .invalid-feedback {
 	font-size: 100%;
+	display: block;
 }
 
 /* Tabs below button bars get a margin */
