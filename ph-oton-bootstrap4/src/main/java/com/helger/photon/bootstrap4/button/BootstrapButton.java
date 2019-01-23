@@ -41,14 +41,14 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
 {
   public static final ICSSClassProvider CSS_CLASS_BTN_WITH_ICON = DefaultCSSClassProvider.create ("btn-with-icon");
 
-  private EBootstrapButtonType m_eButtonType = EBootstrapButtonType.NONE;
+  private EBootstrapButtonType m_eButtonType = EBootstrapButtonType.DEFAULT;
   private EBootstrapButtonSize m_eButtonSize = EBootstrapButtonSize.DEFAULT;
   private IIcon m_aIcon;
   private boolean m_bBlockLevel = false;
 
   public BootstrapButton ()
   {
-    this (EBootstrapButtonType.NONE, EBootstrapButtonSize.DEFAULT);
+    this (EBootstrapButtonType.DEFAULT, EBootstrapButtonSize.DEFAULT);
   }
 
   public BootstrapButton (@Nonnull final EBootstrapButtonType eButtonType)
@@ -58,7 +58,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
 
   public BootstrapButton (@Nonnull final EBootstrapButtonSize eButtonSize)
   {
-    this (EBootstrapButtonType.NONE, eButtonSize);
+    this (EBootstrapButtonType.DEFAULT, eButtonSize);
   }
 
   public BootstrapButton (@Nonnull final EBootstrapButtonType eButtonType,
