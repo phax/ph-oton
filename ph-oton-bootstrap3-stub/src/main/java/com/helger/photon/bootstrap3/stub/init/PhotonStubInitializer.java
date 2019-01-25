@@ -44,7 +44,6 @@ import com.helger.photon.uictrls.autonumeric.AbstractHCAutoNumeric;
 import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.scope.ScopeHelper;
-import com.helger.servlet.response.UnifiedResponseDefaultSettings;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xservlet.requesttrack.RequestTracker;
 
@@ -116,10 +115,6 @@ public final class PhotonStubInitializer
       // Disable in debug mode
       RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
     }
-
-    // Default response headers to be added
-    UnifiedResponseDefaultSettings.setAllowMimeSniffing (false);
-    UnifiedResponseDefaultSettings.setEnableXSSFilter (true);
 
     // Set new customizer only if the default customizer is present
     if (HCConversionSettings.isDefaultCustomizer (HCSettings.getConversionSettings ().getCustomizer ()))
