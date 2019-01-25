@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -38,7 +40,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class PathDescriptorPart
+public final class PathDescriptorPart implements Serializable
 {
   public static final String VARIABLE_START = "{";
   public static final String VARIABLE_END = "}";
@@ -87,7 +89,7 @@ public final class PathDescriptorPart
   @ReturnsMutableCopy
   public ICommonsList <PathDescriptorVariableConstraint> getAllVariableConstraints ()
   {
-    return new CommonsArrayList<> (m_aVariableConstraints);
+    return new CommonsArrayList <> (m_aVariableConstraints);
   }
 
   /**
@@ -204,7 +206,7 @@ public final class PathDescriptorPart
           if (aConstraint != null)
           {
             if (aVariableConstraints == null)
-              aVariableConstraints = new CommonsArrayList<> ();
+              aVariableConstraints = new CommonsArrayList <> ();
             aVariableConstraints.add (aConstraint);
           }
         }

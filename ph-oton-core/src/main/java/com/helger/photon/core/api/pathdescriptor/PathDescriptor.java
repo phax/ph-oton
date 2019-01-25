@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -39,9 +40,9 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class PathDescriptor
+public final class PathDescriptor implements Serializable
 {
-  private final ICommonsList <PathDescriptorPart> m_aPathParts = new CommonsArrayList<> ();
+  private final ICommonsList <PathDescriptorPart> m_aPathParts = new CommonsArrayList <> ();
 
   private PathDescriptor (@Nonnull @Nonempty final List <String> aPathParts)
   {
@@ -58,9 +59,9 @@ public final class PathDescriptor
   }
 
   /**
-   * Check if this path descriptor matches the provided path parts. This
-   * requires that this path descriptor and the provided collection have the
-   * same number of elements and that all static and variable parts match.
+   * Check if this path descriptor matches the provided path parts. This requires
+   * that this path descriptor and the provided collection have the same number of
+   * elements and that all static and variable parts match.
    *
    * @param aPathParts
    *        The parts to
@@ -78,7 +79,7 @@ public final class PathDescriptor
       return PathMatchingResult.NO_MATCH;
     }
 
-    final ICommonsOrderedMap <String, String> aVariableValues = new CommonsLinkedHashMap<> ();
+    final ICommonsOrderedMap <String, String> aVariableValues = new CommonsLinkedHashMap <> ();
     for (int i = 0; i < nPartCount; ++i)
     {
       final PathDescriptorPart aPart = m_aPathParts.get (i);
@@ -110,7 +111,7 @@ public final class PathDescriptor
 
   public boolean containsVariables ()
   {
-    return m_aPathParts.containsAny (aPart -> aPart.isVariable ());
+    return m_aPathParts.containsAny (PathDescriptorPart::isVariable);
   }
 
   @Override

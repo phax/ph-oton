@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -31,7 +33,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public final class PathMatchingResult
+public final class PathMatchingResult implements Serializable
 {
   public static final PathMatchingResult NO_MATCH = new PathMatchingResult ();
 
@@ -73,7 +75,7 @@ public final class PathMatchingResult
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllVariableValues ()
   {
-    return new CommonsLinkedHashMap<> (m_aVariableValues);
+    return new CommonsLinkedHashMap <> (m_aVariableValues);
   }
 
   @Override

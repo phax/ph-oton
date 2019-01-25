@@ -16,8 +16,11 @@
  */
 package com.helger.photon.core.api.pathdescriptor;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +40,8 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public final class PathDescriptorVariableConstraint
+@Immutable
+public final class PathDescriptorVariableConstraint implements Serializable
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (PathDescriptorVariableConstraint.class);
 
@@ -149,8 +153,8 @@ public final class PathDescriptorVariableConstraint
     if (eConstraintType.isRequiresValue () && StringHelper.hasNoText (sConstraintValue))
     {
       LOGGER.error ("Variable constraint type '" +
-                       sConstraintType +
-                       "' requires a value but no value provided! Separate type and value with a '=' character.");
+                    sConstraintType +
+                    "' requires a value but no value provided! Separate type and value with a '=' character.");
       return null;
     }
 
