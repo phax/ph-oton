@@ -30,7 +30,9 @@ public enum EBootstrapModalSize implements ICSSClassProvider
 {
   SMALL (CBootstrapCSS.MODAL_SM),
   NORMAL (null),
-  LARGE (CBootstrapCSS.MODAL_LG);
+  LARGE (CBootstrapCSS.MODAL_LG),
+  // Added in 4.2
+  XLARGE (CBootstrapCSS.MODAL_XL);
 
   public static final EBootstrapModalSize DEFAULT = NORMAL;
 
