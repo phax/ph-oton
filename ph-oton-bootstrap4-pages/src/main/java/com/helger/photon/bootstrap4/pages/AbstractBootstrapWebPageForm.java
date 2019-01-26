@@ -25,6 +25,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.IHCNode;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
@@ -76,5 +77,18 @@ public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <Str
   {
     final String sHeaderText = getHeaderText (aWPEC);
     return getUIHandler ().createPageHeader (sHeaderText);
+  }
+
+  @Override
+  protected void modifyFormBeforeShowInputForm (@Nonnull final WPECTYPE aWPEC,
+                                                @Nonnull final BootstrapForm aForm,
+                                                final boolean bIsFormSubmitted)
+  {
+    // That class is only suitable when using JS only validation, because it
+    // uses the ":valid" and ":invalid" CSS pseudoclasses - as in
+    // https://css-tricks.com/almanac/selectors/v/valid
+    if (false)
+      if (bIsFormSubmitted)
+        aForm.addClass (CBootstrapCSS.WAS_VALIDATED);
   }
 }
