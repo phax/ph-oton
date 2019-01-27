@@ -18,12 +18,19 @@ package com.helger.photon.bootstrap4.form;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.hc.html.forms.HCCheckBox;
-import com.helger.html.hc.html.forms.HCRadioButton;
+import com.helger.html.hc.html.forms.AbstractHCCheckBox;
+import com.helger.html.hc.html.forms.AbstractHCRadioButton;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 
-public class BootstrapCheckInline extends AbstractHCDiv <BootstrapCheckInline>
+/**
+ * Special wrapper for a DIV with classes "form-check" and "form-check-inline"
+ * to handle check boxes and radio buttons. An optional label can be added as a
+ * child.
+ *
+ * @author Philip Helger
+ */
+public class BootstrapFormCheckInline extends AbstractHCDiv <BootstrapFormCheckInline>
 {
   private void _init ()
   {
@@ -31,15 +38,17 @@ public class BootstrapCheckInline extends AbstractHCDiv <BootstrapCheckInline>
     addClass (CBootstrapCSS.FORM_CHECK_INLINE);
   }
 
-  public BootstrapCheckInline (@Nonnull final HCCheckBox aCheckBox)
+  public BootstrapFormCheckInline (@Nonnull final AbstractHCCheckBox <?> aCheckBox)
   {
     _init ();
     addChild (aCheckBox);
+    aCheckBox.addClass (CBootstrapCSS.FORM_CHECK_INPUT);
   }
 
-  public BootstrapCheckInline (@Nonnull final HCRadioButton aRadioButton)
+  public BootstrapFormCheckInline (@Nonnull final AbstractHCRadioButton <?> aRadioButton)
   {
     _init ();
     addChild (aRadioButton);
+    aRadioButton.addClass (CBootstrapCSS.FORM_CHECK_INPUT);
   }
 }
