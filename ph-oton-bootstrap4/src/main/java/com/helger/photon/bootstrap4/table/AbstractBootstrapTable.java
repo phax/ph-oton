@@ -84,6 +84,16 @@ public abstract class AbstractBootstrapTable <IMPLTYPE extends AbstractHCTable <
   }
 
   @Nonnull
+  public IMPLTYPE setBorderless (final boolean bBorderless)
+  {
+    if (bBorderless)
+      addClass (CBootstrapCSS.TABLE_BORDERLESS);
+    else
+      removeClass (CBootstrapCSS.TABLE_BORDERLESS);
+    return thisAsT ();
+  }
+
+  @Nonnull
   public IMPLTYPE setHover (final boolean bHover)
   {
     if (bHover)
@@ -101,12 +111,6 @@ public abstract class AbstractBootstrapTable <IMPLTYPE extends AbstractHCTable <
     else
       removeClass (CBootstrapCSS.TABLE_SM);
     return thisAsT ();
-  }
-
-  @Nonnull
-  public IMPLTYPE setInverse (final boolean bInverse)
-  {
-    return setDark (bInverse);
   }
 
   @Nonnull
