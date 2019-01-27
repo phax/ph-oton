@@ -48,7 +48,7 @@ public enum EBootstrapButtonType implements ICSSClassProvider
   OUTLINE_DARK (CBootstrapCSS.BTN_OUTLINE_DARK);
 
   // Difference between 4.1.x and 4.2.x
-  public static final EBootstrapButtonType DEFAULT = LIGHT;
+  public static final EBootstrapButtonType DEFAULT = OUTLINE_SECONDARY;
 
   private final ICSSClassProvider m_aCSSClass;
 
