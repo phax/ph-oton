@@ -85,7 +85,8 @@ public final class BootstrapGridSpec implements Serializable
     return m_eXL;
   }
 
-  public void applyTo (@Nonnull final IHCElement <?> aElement)
+  @Nonnull
+  public <T extends IHCElement <T>> T applyTo (@Nonnull final T aElement)
   {
     ValueEnforcer.notNull (aElement, "Element");
 
@@ -116,9 +117,11 @@ public final class BootstrapGridSpec implements Serializable
       aElement.addClass (m_eXL);
       nLastPartCount = m_eXL.getParts ();
     }
+    return aElement;
   }
 
-  public void applyOffsetTo (@Nonnull final IHCElement <?> aElement)
+  @Nonnull
+  public <T extends IHCElement <T>> T applyOffsetTo (@Nonnull final T aElement)
   {
     ValueEnforcer.notNull (aElement, "Element");
 
@@ -149,6 +152,7 @@ public final class BootstrapGridSpec implements Serializable
       aElement.addClass (m_eXL.getCSSClassOffset ());
       nLastPartCount = m_eXL.getParts ();
     }
+    return aElement;
   }
 
   @Override

@@ -31,15 +31,20 @@ public class BootstrapCol extends AbstractBootstrapDiv <BootstrapCol>
   public BootstrapCol ()
   {}
 
+  public BootstrapCol (@Nullable final EBootstrapColOrder eOrder)
+  {
+    setOrder (eOrder);
+  }
+
   @Nonnull
-  public BootstrapCol setOrder (@Nullable final EBootstrapColOrder eOrder)
+  public final BootstrapCol setOrder (@Nullable final EBootstrapColOrder eOrder)
   {
     m_eOrder = eOrder;
     return this;
   }
 
   @Nullable
-  public EBootstrapColOrder getOrder ()
+  public final EBootstrapColOrder getOrder ()
   {
     return m_eOrder;
   }
