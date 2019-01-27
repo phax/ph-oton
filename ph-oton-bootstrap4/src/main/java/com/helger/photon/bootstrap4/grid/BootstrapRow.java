@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -147,5 +148,38 @@ public class BootstrapRow extends AbstractBootstrapDiv <BootstrapRow>
     addClass (m_eVertAlign);
     if (!m_bWithPadding)
       addClass (CBootstrapCSS.NO_GUTTERS);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static BootstrapRow createRowWithOneColumn (final int nParts, @Nonnull final IHCNode aCtrl)
+  {
+    final BootstrapRow aRow = new BootstrapRow ();
+    aRow.createColumn (nParts).addChild (aCtrl);
+    return aRow;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static BootstrapRow createRowWithOneColumn (final int nPartsXS,
+                                                     final int nPartsSM,
+                                                     final int nPartsMD,
+                                                     final int nPartsLG,
+                                                     final int nPartsXL,
+                                                     @Nonnull final IHCNode aCtrl)
+  {
+    final BootstrapRow aRow = new BootstrapRow ();
+    aRow.createColumn (nPartsXS, nPartsSM, nPartsMD, nPartsLG, nPartsXL).addChild (aCtrl);
+    return aRow;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static BootstrapRow createRowWithOneColumn (@Nonnull final BootstrapGridSpec aParts,
+                                                     @Nonnull final IHCNode aCtrl)
+  {
+    final BootstrapRow aRow = new BootstrapRow ();
+    aRow.createColumn (aParts).addChild (aCtrl);
+    return aRow;
   }
 }
