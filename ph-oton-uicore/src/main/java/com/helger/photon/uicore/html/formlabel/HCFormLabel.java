@@ -28,6 +28,7 @@ import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.AbstractHCLabel;
+import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
 
 public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormLabel
@@ -163,5 +164,12 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   public static HCFormLabel createAlternative (@Nonnull final IHCElementWithChildren <?> aNode)
   {
     return new HCFormLabel (aNode, ELabelType.ALTERNATIVE);
+  }
+
+  @Nonnull
+  public static HCFormLabel createForCheckBox (@Nonnull final String sText)
+  {
+    // Avoid adding ":" or "?" at the end
+    return new HCFormLabel (new HCSpan ().addChild (sText));
   }
 }

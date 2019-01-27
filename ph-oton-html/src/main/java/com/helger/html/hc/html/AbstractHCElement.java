@@ -418,7 +418,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   @Nullable
-  @ReturnsMutableObject ("design")
+  @ReturnsMutableObject
   public final JSEventMap getEventMap ()
   {
     return m_aJSHandler;
@@ -824,8 +824,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   {}
 
   /*
-   * Note: return type cannot by IMicroElement since the checkbox object delivers
-   * an IMicroNodeList!
+   * Note: return type cannot by IMicroElement since the checkbox object
+   * delivers an IMicroNodeList!
    */
   @Override
   @Nonnull

@@ -22,6 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.request.IHCRequestFieldBoolean;
+import com.helger.web.scope.IRequestParamContainer;
 
 /**
  * Special request field specially for check boxes with a fixed value.
@@ -66,9 +67,14 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
     return bValue ? VALUE_CHECKED : VALUE_UNCHECKED;
   }
 
+  public boolean isChecked (@Nonnull final IRequestParamContainer aParams)
+  {
+    return aParams.isCheckBoxChecked (getFieldName (), m_bDefaultValue);
+  }
+
   public boolean isChecked ()
   {
-    return getParams ().isCheckBoxChecked (getFieldName (), m_bDefaultValue);
+    return isChecked (getParams ());
   }
 
   @Override
