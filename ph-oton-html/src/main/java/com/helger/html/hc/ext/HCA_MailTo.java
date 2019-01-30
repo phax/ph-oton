@@ -68,7 +68,7 @@ public class HCA_MailTo extends AbstractHCA <HCA_MailTo>
       return null;
 
     final HCA_MailTo ret = new HCA_MailTo (sAddress);
-    ret.addChild (StringHelper.getNotNull (sPersonal, sAddress));
+    ret.addChild (StringHelper.getNotEmpty (sPersonal, sAddress));
     return ret;
   }
 }
