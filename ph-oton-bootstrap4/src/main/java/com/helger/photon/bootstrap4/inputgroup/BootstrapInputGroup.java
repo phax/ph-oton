@@ -30,11 +30,14 @@ import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
 
 /**
  * Bootstrap input group. Children must be added in the correct order. Use
- * {@link #addChildPrefix(String)} and {@link #addChildSuffix(String)} for the
- * prepends and appends.
+ * {@link #addChildPrefix(String)}, {@link #addChildPrefix(IHCNode)},
+ * {@link #addChildSuffix(String)} and {@link #addChildSuffix(IHCNode)} for the
+ * prepends and appends. The API was reworked in 8.1.3 for correct parent/child
+ * relationship management.
  *
  * @author Philip Helger
  */
@@ -66,6 +69,9 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return this;
   }
 
+  /**
+   * @return The DIV with class "input-group-prepend". Never <code>null</code>.
+   */
   @Nonnull
   @OverrideOnDemand
   protected HCDiv createGroupPrepend ()
@@ -73,6 +79,9 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_PREPEND);
   }
 
+  /**
+   * @return The DIV with class "input-group-append". Never <code>null</code>.
+   */
   @Nonnull
   @OverrideOnDemand
   protected HCDiv createGroupAppend ()
@@ -83,18 +92,18 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   @Nonnull
   private HCDiv _getOrCreatePrepend ()
   {
-    final HCDiv aDiv = findFirstChildMapped (x -> x instanceof HCDiv &&
-                                                  ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_PREPEND),
-                                             x -> (HCDiv) x);
+    // Existing "prepend" present?
+    final HCDiv aDiv = (HCDiv) findFirstChild (x -> x instanceof HCDiv &&
+                                                    ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_PREPEND));
     return aDiv != null ? aDiv : addAndReturnChild (createGroupPrepend ());
   }
 
   @Nonnull
   private HCDiv _getOrCreateAppend ()
   {
-    final HCDiv aDiv = findFirstChildMapped (x -> x instanceof HCDiv &&
-                                                  ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_APPEND),
-                                             x -> (HCDiv) x);
+    // Existing "append" present?
+    final HCDiv aDiv = (HCDiv) findFirstChild (x -> x instanceof HCDiv &&
+                                                    ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_APPEND));
     return aDiv != null ? aDiv : addAndReturnChild (createGroupAppend ());
   }
 
@@ -107,7 +116,8 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   @Nonnull
   private static IHCNode _getWrapped (@Nonnull final IHCNode aNode)
   {
-    if (aNode instanceof AbstractHCButton <?>)
+    // Buttons and dropdowns don't need a surrounding div
+    if (aNode instanceof AbstractHCButton <?> || aNode instanceof BootstrapDropdownMenu)
       return aNode;
     return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_TEXT).addChild (aNode);
   }
