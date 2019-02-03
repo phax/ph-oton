@@ -49,7 +49,6 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
-import com.helger.photon.bootstrap4.form.BootstrapFormHelper;
 import com.helger.photon.bootstrap4.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsJSPathProvider;
@@ -149,7 +148,6 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
                                      @Nonnull final Locale aDisplayLocale,
                                      @Nonnull final EBootstrap4DateTimePickerMode eMode)
   {
-    super (new HCEdit (new RequestField (sName, getAsModeSpecificUIString (eMode, aInitialValue, aDisplayLocale))));
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.notNull (eMode, "Mode");
 
@@ -160,15 +158,15 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     ensureID ();
     customAttrs ().setDataAttr ("target-input", "nearest");
 
-    m_aEdit = (HCEdit) getInput ();
+    m_aEdit = new HCEdit (new RequestField (sName, getAsModeSpecificUIString (eMode, aInitialValue, aDisplayLocale)));
     m_aEdit.setPlaceholder ("");
-    BootstrapFormHelper.markAsFormControl (m_aEdit);
     m_aEdit.addClass (CSS_CLASS_DATETIMEPICKER_INPUT);
     m_aEdit.customAttrs ().setDataAttr ("toggle", "datetimepicker");
     m_aEdit.customAttrs ().setDataAttr ("target", "#" + getID ());
 
     // Use the calendar icon as default prefix
-    prefixes ().addChild (EFontAwesome4Icon.CALENDAR.getAsNode ());
+    addChildPrefix (EFontAwesome4Icon.CALENDAR.getAsNode ());
+    addChild (m_aEdit);
 
     setMode (eMode);
 
@@ -225,8 +223,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * Set the format string to be used. This is only necessary, if the default one
-   * from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   * Set the format string to be used. This is only necessary, if the default
+   * one from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
    *
    * @param sFormat
    *        Format string to be used. May be <code>null</code>.
@@ -622,10 +620,10 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   @Override
   @Nonnull
   @OverrideOnDemand
-  protected HCDiv createPrependGroup ()
+  protected HCDiv createGroupPrepend ()
   {
     // Make the whole prepend thing a toggle
-    final HCDiv ret = super.createPrependGroup ();
+    final HCDiv ret = super.createGroupPrepend ();
     ret.customAttrs ().setDataAttr ("toggle", "datetimepicker");
     ret.customAttrs ().setDataAttr ("target", "#" + getID ());
     return ret;

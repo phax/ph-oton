@@ -36,6 +36,7 @@ Contained subprojects are:
 * v8.1.3 - work in progress
     * Updated to Bootstrap 4.2.1
     * Updated to Bootstrap 3.4.0
+    * Bootstrap 4 `BootstrapInputGroup` API was reworked, so that the parent/child relationship holds true (incompatible)
 * v8.1.2 - 2019-01-07
     * Added B4 tooltips, Jumbotron and Modal dialog
     * Added class `BootstrapPageRenderer` for consistent page rendering

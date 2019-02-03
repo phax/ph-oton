@@ -21,33 +21,35 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.forms.AbstractHCButton;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.textlevel.HCSpan;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.button.BootstrapButton;
 
+/**
+ * Bootstrap input group. Children must be added in the correct order. Use
+ * {@link #addChildPrefix(String)} and {@link #addChildSuffix(String)} for the
+ * prepends and appends.
+ *
+ * @author Philip Helger
+ */
 public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
 {
-  private final EBootstrapInputGroupSize m_eSize;
-  private final HCNodeList m_aPrefixes = new HCNodeList ();
-  private final IHCNode m_aInput;
-  private final HCNodeList m_aSuffixes = new HCNodeList ();
+  private EBootstrapInputGroupSize m_eSize;
 
-  public BootstrapInputGroup (@Nonnull final IHCNode aInput)
+  public BootstrapInputGroup ()
   {
-    this (EBootstrapInputGroupSize.DEFAULT, aInput);
+    this (EBootstrapInputGroupSize.DEFAULT);
   }
 
-  public BootstrapInputGroup (@Nonnull final EBootstrapInputGroupSize eSize, @Nonnull final IHCNode aInput)
+  public BootstrapInputGroup (@Nonnull final EBootstrapInputGroupSize eSize)
   {
-    m_eSize = ValueEnforcer.notNull (eSize, "Size");
-    m_aInput = ValueEnforcer.notNull (aInput, "Input");
+    setSize (eSize);
   }
 
   @Nonnull
@@ -57,70 +59,89 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   }
 
   @Nonnull
-  @ReturnsMutableObject
-  public final HCNodeList prefixes ()
+  public final BootstrapInputGroup setSize (@Nonnull final EBootstrapInputGroupSize eSize)
   {
-    return m_aPrefixes;
-  }
-
-  @Nonnull
-  public BootstrapInputGroup setPrefix (@Nullable final String sText)
-  {
-    m_aPrefixes.setChild (sText);
+    ValueEnforcer.notNull (eSize, "Size");
+    m_eSize = eSize;
     return this;
-  }
-
-  @Nonnull
-  public BootstrapInputGroup setPrefix (@Nullable final IHCNode aNode)
-  {
-    m_aPrefixes.setChild (aNode);
-    return this;
-  }
-
-  @Nonnull
-  public final IHCNode getInput ()
-  {
-    return m_aInput;
-  }
-
-  @Nonnull
-  @ReturnsMutableObject
-  public final HCNodeList suffixes ()
-  {
-    return m_aSuffixes;
-  }
-
-  @Nonnull
-  public BootstrapInputGroup setSuffix (@Nullable final String sText)
-  {
-    m_aSuffixes.setChild (sText);
-    return this;
-  }
-
-  @Nonnull
-  public BootstrapInputGroup setSuffix (@Nullable final IHCNode aNode)
-  {
-    m_aSuffixes.setChild (aNode);
-    return this;
-  }
-
-  public boolean hasNeitherPrefixNorSuffix ()
-  {
-    return m_aPrefixes.hasNoChildren () && m_aSuffixes.hasNoChildren ();
   }
 
   @Nonnull
   @OverrideOnDemand
-  protected HCDiv createPrependGroup ()
+  protected HCDiv createGroupPrepend ()
   {
     return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_PREPEND);
   }
 
   @Nonnull
   @OverrideOnDemand
-  protected HCDiv createAppendGroup ()
+  protected HCDiv createGroupAppend ()
   {
     return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_APPEND);
+  }
+
+  @Nonnull
+  private HCDiv _getOrCreatePrepend ()
+  {
+    final HCDiv aDiv = findFirstChildMapped (x -> x instanceof HCDiv &&
+                                                  ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_PREPEND),
+                                             x -> (HCDiv) x);
+    return aDiv != null ? aDiv : addAndReturnChild (createGroupPrepend ());
+  }
+
+  @Nonnull
+  private HCDiv _getOrCreateAppend ()
+  {
+    final HCDiv aDiv = findFirstChildMapped (x -> x instanceof HCDiv &&
+                                                  ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_APPEND),
+                                             x -> (HCDiv) x);
+    return aDiv != null ? aDiv : addAndReturnChild (createGroupAppend ());
+  }
+
+  @Nonnull
+  private static HCSpan _getWrapped (@Nonnull final String sText)
+  {
+    return new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_TEXT).addChild (sText);
+  }
+
+  @Nonnull
+  private static IHCNode _getWrapped (@Nonnull final IHCNode aNode)
+  {
+    if (aNode instanceof AbstractHCButton <?>)
+      return aNode;
+    return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_TEXT).addChild (aNode);
+  }
+
+  @Nonnull
+  public final BootstrapInputGroup addChildPrefix (@Nullable final String sText)
+  {
+    if (StringHelper.hasText (sText))
+      _getOrCreatePrepend ().addChild (_getWrapped (sText));
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapInputGroup addChildPrefix (@Nullable final IHCNode aNode)
+  {
+    if (aNode != null)
+      _getOrCreatePrepend ().addChild (_getWrapped (aNode));
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapInputGroup addChildSuffix (@Nullable final String sText)
+  {
+    if (StringHelper.hasText (sText))
+      _getOrCreateAppend ().addChild (_getWrapped (sText));
+    return this;
+  }
+
+  @Nonnull
+  public final BootstrapInputGroup addChildSuffix (@Nullable final IHCNode aNode)
+  {
+    if (aNode != null)
+      _getOrCreateAppend ().addChild (_getWrapped (aNode));
+    return this;
   }
 
   @Override
@@ -129,31 +150,5 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClasses (CBootstrapCSS.INPUT_GROUP, m_eSize);
-
-    if (m_aPrefixes.hasChildren ())
-    {
-      final HCDiv aPrepend = addAndReturnChild (createPrependGroup ());
-      for (final IHCNode aPrefix : m_aPrefixes.getChildren ())
-      {
-        if (aPrefix instanceof BootstrapButton)
-          aPrepend.addChild (aPrefix);
-        else
-          aPrepend.addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_TEXT).addChild (aPrefix));
-      }
-    }
-
-    addChild (m_aInput);
-
-    if (m_aSuffixes.hasChildren ())
-    {
-      final HCDiv aAppend = addAndReturnChild (createAppendGroup ());
-      for (final IHCNode aSuffix : m_aSuffixes.getChildren ())
-      {
-        if (aSuffix instanceof BootstrapButton)
-          aAppend.addChild (aSuffix);
-        else
-          aAppend.addChild (new HCSpan ().addClass (CBootstrapCSS.INPUT_GROUP_TEXT).addChild (aSuffix));
-      }
-    }
   }
 }
