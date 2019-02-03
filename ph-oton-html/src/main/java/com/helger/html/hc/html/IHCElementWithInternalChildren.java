@@ -16,6 +16,10 @@
  */
 package com.helger.html.hc.html;
 
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotation.Nonempty;
+import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 
@@ -33,5 +37,17 @@ public interface IHCElementWithInternalChildren <IMPLTYPE extends IHCElementWith
                                                 IHCElement <IMPLTYPE>,
                                                 IHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>
 {
-  /** empty */
+  /**
+   * Check if this element contains any of the specified elements.
+   * 
+   * @param aElements
+   *        The list of HTML elements to query. May neither be <code>null</code>
+   *        nor empty.
+   * @return <code>true</code> if such an element is contained,
+   *         <code>false</code> if not.
+   */
+  default boolean recursiveContainsChildWithTagName (@Nonnull @Nonempty final EHTMLElement... aElements)
+  {
+    return HCHTMLHelper.recursiveGetFirstChildWithTagName (this, aElements) != null;
+  }
 }

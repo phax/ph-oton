@@ -284,11 +284,6 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
     return CollectionHelper.getLastElement (m_aChildren);
   }
 
-  public final boolean recursiveContainsChildWithTagName (@Nonnull @Nonempty final EHTMLElement... aElements)
-  {
-    return HCHTMLHelper.recursiveGetFirstChildWithTagName (this, aElements) != null;
-  }
-
   @Nonnull
   public final IMPLTYPE sortAllChildren (@Nonnull final Comparator <? super CHILDTYPE> aComparator)
   {
