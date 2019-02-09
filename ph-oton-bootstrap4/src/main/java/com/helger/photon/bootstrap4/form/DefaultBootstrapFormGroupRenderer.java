@@ -86,8 +86,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   }
 
   /**
-   * Modify the first control that is inserted. This method is only called when a
-   * label is present.
+   * Modify the first control that is inserted. This method is only called when
+   * a label is present.
    *
    * @param aLabel
    *        The label that was provided. Never <code>null</code>.
@@ -176,7 +176,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
     final ICommonsList <IHCControl <?>> aAllCtrls = HCCtrlHelper.getAllHCControls (aCtrls);
     final IHCControl <?> aFirstControl;
-    if (aAllCtrls != null)
+    if (aAllCtrls.isNotEmpty ())
     {
       aFirstControl = aAllCtrls.getFirst ();
 

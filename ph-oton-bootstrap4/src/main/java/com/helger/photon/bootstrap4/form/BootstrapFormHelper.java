@@ -41,6 +41,7 @@ import com.helger.html.hc.html.forms.IHCControl;
 import com.helger.html.hc.html.forms.IHCInput;
 import com.helger.html.hc.html.textlevel.HCSmall;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
@@ -228,9 +229,17 @@ public final class BootstrapFormHelper
     return ret;
   }
 
-  @Nonnull
-  public static IHCElementWithChildren <?> createDefaultHelpTextNode (@Nonnull final IHCNode aHelpText)
+  @Nullable
+  public static IHCElementWithChildren <?> createDefaultHelpTextNode (@Nullable final String sHelpText)
   {
+    return createDefaultHelpTextNode (HCTextNode.createOnDemand (sHelpText));
+  }
+
+  @Nullable
+  public static IHCElementWithChildren <?> createDefaultHelpTextNode (@Nullable final IHCNode aHelpText)
+  {
+    if (aHelpText == null)
+      return null;
     final HCSmall aHelpBlock = new HCSmall ();
     aHelpBlock.addClass (CBootstrapCSS.FORM_TEXT);
     aHelpBlock.addClass (CBootstrapCSS.TEXT_MUTED);

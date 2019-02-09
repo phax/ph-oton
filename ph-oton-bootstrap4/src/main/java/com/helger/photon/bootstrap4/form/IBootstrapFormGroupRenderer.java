@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap4.form;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -27,7 +28,7 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  *
  * @author Philip Helger
  */
-public interface IBootstrapFormGroupRenderer
+public interface IBootstrapFormGroupRenderer extends Serializable
 {
   boolean isUseIcons ();
 
