@@ -25,6 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
+import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.servlet.request.IRequestParamMap;
 import com.helger.web.scope.IRequestParamContainer;
@@ -104,6 +105,24 @@ public interface ISimpleWebExecutionContext
    * @since 8.1.3
    */
   boolean isLoggedInUserAdministrator ();
+
+  /**
+   * Check if the currently logged in user has the specified role.
+   *
+   * @param sRoleID
+   *        The role ID to check. May be <code>null</code> but that would make
+   *        no sense.
+   * @return <code>true</code> if a user is logged in and if it has the role,
+   *         <code>false</code> otherwise.
+   * @since 8.1.3
+   */
+  default boolean hasLoggedInUserRole (@Nullable final String sRoleID)
+  {
+    final String sLoggedInUserID = getLoggedInUserID ();
+    return sLoggedInUserID != null &&
+           PhotonSecurityManager.getUserGroupMgr ()
+                                .containsAnyUserGroupWithAssignedUserAndRole (sLoggedInUserID, sRoleID);
+  }
 
   /**
    * Get the URL to the specified menu item using the current display locale.
