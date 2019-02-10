@@ -36,10 +36,10 @@ import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumb;
 import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumbProvider;
 import com.helger.photon.bootstrap4.ext.BootstrapSystemMessage;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.error.InternalErrorBuilder;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.uicore.page.IWebPage;
+import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
@@ -76,8 +76,8 @@ public final class BootstrapPageRenderer
   }
 
   @Nonnull
-  public static <LEC extends LayoutExecutionContext, WPEC extends WebPageExecutionContext> HCNodeList getPageContent (@Nonnull final LEC aLEC,
-                                                                                                                      @Nonnull final BiFunction <LEC, IWebPage <WPEC>, WPEC> aWPECFactory)
+  public static <LEC extends ILayoutExecutionContext, WPEC extends IWebPageExecutionContext> HCNodeList getPageContent (@Nonnull final LEC aLEC,
+                                                                                                                        @Nonnull final BiFunction <LEC, IWebPage <WPEC>, WPEC> aWPECFactory)
   {
     // Get the requested menu item
     final IMenuItemPage aSelectedMenuItem = aLEC.getSelectedMenuItem ();
@@ -158,13 +158,13 @@ public final class BootstrapPageRenderer
   }
 
   @Nonnull
-  public static HCNodeList getPageContent (@Nonnull final LayoutExecutionContext aLEC)
+  public static HCNodeList getPageContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
     return getPageContent (aLEC, WebPageExecutionContext::new);
   }
 
   @Nonnull
-  public static HCDiv getMenuAndPageNextToEachOther (@Nonnull final LayoutExecutionContext aLEC)
+  public static HCDiv getMenuAndPageNextToEachOther (@Nonnull final ILayoutExecutionContext aLEC)
   {
     final HCDiv aRow = new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX).addClass (CBootstrapCSS.MT_1);
     final HCDiv aCol1 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX));
