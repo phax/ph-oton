@@ -19,11 +19,14 @@ package com.helger.photon.core.app.context;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.security.CSecurity;
+import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -38,37 +41,54 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   private final IRequestWebScopeWithoutResponse m_aRequestScope;
   private final Locale m_aDisplayLocale;
   private final IMenuTree m_aMenuTree;
+  private final IUser m_aLoggedInUser;
+  private final boolean m_bIsLoggedInUserAdministrator;
 
   public SimpleWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
-    this (aSWEC.getRequestScope (), aSWEC.getDisplayLocale (), aSWEC.getMenuTree ());
+    this (aSWEC.getRequestScope (), aSWEC.getDisplayLocale (), aSWEC.getMenuTree (), aSWEC.getLoggedInUser ());
   }
 
   public SimpleWebExecutionContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                     @Nonnull final Locale aDisplayLocale,
-                                    @Nonnull final IMenuTree aMenuTree)
+                                    @Nonnull final IMenuTree aMenuTree,
+                                    @Nullable final IUser aLoggedInUser)
   {
     m_aRequestScope = ValueEnforcer.notNull (aRequestScope, "RequestScope");
     m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
+    m_aLoggedInUser = aLoggedInUser;
+    m_bIsLoggedInUserAdministrator = aLoggedInUser != null &&
+                                     aLoggedInUser.getID ().equals (CSecurity.USER_ADMINISTRATOR_ID);
   }
 
   @Nonnull
-  public IRequestWebScopeWithoutResponse getRequestScope ()
+  public final IRequestWebScopeWithoutResponse getRequestScope ()
   {
     return m_aRequestScope;
   }
 
   @Nonnull
-  public Locale getDisplayLocale ()
+  public final Locale getDisplayLocale ()
   {
     return m_aDisplayLocale;
   }
 
   @Nonnull
-  public IMenuTree getMenuTree ()
+  public final IMenuTree getMenuTree ()
   {
     return m_aMenuTree;
+  }
+
+  @Nullable
+  public final IUser getLoggedInUser ()
+  {
+    return m_aLoggedInUser;
+  }
+
+  public final boolean isLoggedInUserAdministrator ()
+  {
+    return m_bIsLoggedInUserAdministrator;
   }
 
   @Override
@@ -77,6 +97,8 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     return new ToStringGenerator (this).append ("RequestURL", m_aRequestScope.getURL ())
                                        .append ("DisplayLocale", m_aDisplayLocale)
                                        .append ("MenuTree#", m_aMenuTree.getItemCount ())
+                                       .append ("LoggedInUserID", getLoggedInUserID ())
+                                       .append ("LoggedInUserAdministrator", m_bIsLoggedInUserAdministrator)
                                        .getToString ();
   }
 }

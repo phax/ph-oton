@@ -30,6 +30,8 @@ import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuTree;
+import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
@@ -98,10 +100,15 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     // Get the locale from the session
     final Locale aDisplayLocale = RequestSettings.getDisplayLocale (aRequestScope);
     final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
+    final IUser aLoggedInUser = LoggedInUserManager.getInstance ().getCurrentUser ();
+
     final IMenuItemPage aMenuItem = RequestSettings.getMenuItem (aRequestScope);
 
     // Since no menu item is selected, use the default menu item
-    return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree),
+    return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope,
+                                                                      aDisplayLocale,
+                                                                      aMenuTree,
+                                                                      aLoggedInUser),
                                        aMenuItem);
   }
 }

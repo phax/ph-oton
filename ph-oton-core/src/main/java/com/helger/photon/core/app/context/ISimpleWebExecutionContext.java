@@ -19,15 +19,26 @@ package com.helger.photon.core.app.context;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.basic.app.request.RequestParameterManager;
+import com.helger.photon.security.user.IUser;
 import com.helger.servlet.request.IRequestParamMap;
 import com.helger.web.scope.IRequestParamContainer;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+/**
+ * Interface with the simple web execution context. It consist of a request
+ * scope (servlet request etc.), a display locale (determined from URL, session
+ * or a default), a menu tree (determined from the application ID in the URL,
+ * the session or the default application ID) and the currently logged in user
+ * (which may be optional).
+ *
+ * @author Philip Helger
+ */
 public interface ISimpleWebExecutionContext
 {
   /**
@@ -67,6 +78,32 @@ public interface ISimpleWebExecutionContext
    */
   @Nonnull
   IMenuTree getMenuTree ();
+
+  /**
+   * @return The currently logged in user. May be <code>null</code>.
+   * @since 8.1.3
+   */
+  @Nullable
+  IUser getLoggedInUser ();
+
+  /**
+   * @return The ID of the currently logged in user. May be <code>null</code>.
+   * @since 8.1.3
+   */
+  @Nullable
+  default String getLoggedInUserID ()
+  {
+    final IUser aLoggedInUser = getLoggedInUser ();
+    return aLoggedInUser == null ? null : aLoggedInUser.getID ();
+  }
+
+  /**
+   * @return <code>true</code> if a user is logged in, and if the current user
+   *         is the special "Administrator" user. This is a shortcut to
+   *         <code>CSecurity.USER_ADMINISTRATOR_ID.equals (getLoggedInUserID ())</code>
+   * @since 8.1.3
+   */
+  boolean isLoggedInUserAdministrator ();
 
   /**
    * Get the URL to the specified menu item using the current display locale.

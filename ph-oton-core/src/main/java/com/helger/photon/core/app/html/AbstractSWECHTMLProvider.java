@@ -28,6 +28,8 @@ import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.SimpleWebExecutionContext;
+import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
@@ -92,8 +94,13 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
                                   @Nonnull final Locale aDisplayLocale)
   {
     final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
+    final IUser aLoggedInUser = LoggedInUserManager.getInstance ().getCurrentUser ();
+
     // Build the execution scope
-    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree);
+    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope,
+                                                                            aDisplayLocale,
+                                                                            aMenuTree,
+                                                                            aLoggedInUser);
 
     // fill body
     fillBody (aSWEC, aHtml);
