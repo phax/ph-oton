@@ -52,6 +52,7 @@ import com.helger.photon.bootstrap4.pages.handler.AbstractBootstrapWebPageAction
 import com.helger.photon.bootstrap4.uictrls.datatables.BootstrapDTColAction;
 import com.helger.photon.bootstrap4.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
@@ -120,7 +121,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       @Nonnull
       public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final LoginInfo aSelectedObject)
       {
-        if (!canLogoutUser (aSelectedObject.getUser ()))
+        if (!canLogoutUser (aWPEC, aSelectedObject.getUser ()))
           throw new IllegalStateException ("Won't work!");
 
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
@@ -279,7 +280,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     throw new UnsupportedOperationException ();
   }
 
-  protected final boolean canLogoutUser (@Nullable final IUser aUser)
+  protected final boolean canLogoutUser (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nullable final IUser aUser)
   {
     if (aUser == null)
       return false;
@@ -288,7 +289,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     return aUser.isEnabled () &&
            !aUser.isDeleted () &&
            !aUser.isAdministrator () &&
-           !aUser.equals (LoggedInUserManager.getInstance ().getCurrentUser ());
+           !aUser.equals (aSWEC.getLoggedInUser ());
   }
 
   @Nullable
@@ -328,7 +329,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       aRow.addCell (PDTToString.getAsString (aLoginInfo.getLastAccessDT (), aDisplayLocale));
 
       final IHCCell <?> aActionCell = aRow.addCell ();
-      if (canLogoutUser (aLoginInfo.getUser ()))
+      if (canLogoutUser (aWPEC, aLoginInfo.getUser ()))
       {
         final String sUserName = SecurityHelper.getUserDisplayName (aLoginInfo.getUser (), aDisplayLocale);
         aActionCell.addChild (new HCA (aWPEC.getSelfHref ()

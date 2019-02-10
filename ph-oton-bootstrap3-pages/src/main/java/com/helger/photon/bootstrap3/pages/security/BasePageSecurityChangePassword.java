@@ -39,7 +39,6 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.ext.BootstrapSecurityUI;
 import com.helger.photon.core.form.FormErrorList;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.user.IUser;
@@ -121,7 +120,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IUser aCurrentUser = LoggedInUserManager.getInstance ().getCurrentUser ();
+    final IUser aCurrentUser = aWPEC.getLoggedInUser ();
     if (aCurrentUser == null)
     {
       aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.ERROR_NO_USER_PRESENT.getDisplayText (aDisplayLocale)));

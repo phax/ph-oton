@@ -47,7 +47,6 @@ import com.helger.photon.core.app.context.SimpleWebExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -79,7 +78,7 @@ public final class AppRendererSecure
                       aLinkToStartPage);
 
     final BootstrapNav aNav = new BootstrapNav ();
-    final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
+    final IUser aUser = aSWEC.getLoggedInUser ();
     aNav.addText (new HCSpan ().addChild ("Logged in as ")
                                .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
                                                                                                        aDisplayLocale))));

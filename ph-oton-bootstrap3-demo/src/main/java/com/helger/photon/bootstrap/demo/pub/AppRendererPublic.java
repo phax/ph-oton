@@ -67,7 +67,6 @@ import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.page.IWebPage;
@@ -100,7 +99,7 @@ public final class AppRendererPublic
                                              @Nonnull final BootstrapNavbar aNavbar)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
-    final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
+    final IUser aUser = aLEC.getLoggedInUser ();
     if (aUser != null)
     {
       final Locale aDisplayLocale = aLEC.getDisplayLocale ();

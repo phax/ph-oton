@@ -25,7 +25,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -58,8 +57,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
     m_aLoggedInUser = aLoggedInUser;
-    m_bIsLoggedInUserAdministrator = aLoggedInUser != null &&
-                                     aLoggedInUser.getID ().equals (CSecurity.USER_ADMINISTRATOR_ID);
+    m_bIsLoggedInUserAdministrator = aLoggedInUser != null && aLoggedInUser.isAdministrator ();
   }
 
   @Nonnull

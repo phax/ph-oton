@@ -40,12 +40,11 @@ import com.helger.photon.bootstrap4.navbar.BootstrapNavbar;
 import com.helger.photon.bootstrap4.navbar.BootstrapNavbarNav;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.core.app.context.LayoutExecutionContext;
-import com.helger.photon.core.app.context.SimpleWebExecutionContext;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -61,7 +60,7 @@ public final class AppRendererSecure
   {}
 
   @Nonnull
-  private static IHCNode _getNavbar (@Nonnull final SimpleWebExecutionContext aSWEC)
+  private static IHCNode _getNavbar (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
@@ -75,7 +74,7 @@ public final class AppRendererSecure
                                                                .addChild (" Administration")),
                       aLinkToStartPage);
 
-    final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
+    final IUser aUser = aSWEC.getLoggedInUser ();
     aNavbar.addAndReturnText ()
            .addChild ("Logged in as ")
            .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser, aDisplayLocale)));
@@ -89,14 +88,14 @@ public final class AppRendererSecure
   }
 
   @Nonnull
-  public static IHCElement <?> getMenuContent (@Nonnull final LayoutExecutionContext aLEC)
+  public static IHCElement <?> getMenuContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
     final IHCElement <?> ret = BootstrapMenuItemRenderer.createSideBarMenu (aLEC);
     return ret;
   }
 
   @Nonnull
-  public static IHCNode getContent (@Nonnull final LayoutExecutionContext aLEC)
+  public static IHCNode getContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
     final HCNodeList ret = new HCNodeList ();
 

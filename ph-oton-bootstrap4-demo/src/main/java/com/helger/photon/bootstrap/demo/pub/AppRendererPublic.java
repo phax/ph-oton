@@ -66,11 +66,10 @@ import com.helger.photon.bootstrap4.navbar.EBootstrapNavbarExpandType;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRendererHorz;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.core.app.context.LayoutExecutionContext;
+import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.photon.core.app.layout.CLayout;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.core.url.LinkHelper;
-import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.page.IWebPage;
@@ -101,12 +100,12 @@ public final class AppRendererPublic
   {}
 
   @Nonnull
-  private static BootstrapNavbar _getNavbar (@Nonnull final LayoutExecutionContext aLEC)
+  private static BootstrapNavbar _getNavbar (@Nonnull final ILayoutExecutionContext aLEC)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     final ISimpleURL aLinkToStartPage = aLEC.getLinkToMenuItem (aLEC.getMenuTree ().getDefaultMenuItemID ());
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
-    final IUser aUser = LoggedInUserManager.getInstance ().getCurrentUser ();
+    final IUser aUser = aLEC.getLoggedInUser ();
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar ().setExpand (EBootstrapNavbarExpandType.EXPAND_MD);
     aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
@@ -141,7 +140,7 @@ public final class AppRendererPublic
   }
 
   @Nonnull
-  public static IHCNode getMenuContent (@Nonnull final LayoutExecutionContext aLEC)
+  public static IHCNode getMenuContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
     // Main menu
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
@@ -164,7 +163,7 @@ public final class AppRendererPublic
   }
 
   @Nonnull
-  public static IHCNode getPageContent (@Nonnull final LayoutExecutionContext aLEC)
+  public static IHCNode getPageContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
 
@@ -212,7 +211,7 @@ public final class AppRendererPublic
   }
 
   @Nonnull
-  public static IHCNode getContent (@Nonnull final LayoutExecutionContext aLEC)
+  public static IHCNode getContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     final HCNodeList ret = new HCNodeList ();
