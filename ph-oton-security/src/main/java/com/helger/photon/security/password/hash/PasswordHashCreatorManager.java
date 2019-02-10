@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.collection.impl.ICommonsMap;
@@ -51,7 +50,7 @@ public class PasswordHashCreatorManager
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IPasswordHashCreator> m_aPasswordHashCreators = new CommonsHashMap<> ();
+  private final ICommonsMap <String, IPasswordHashCreator> m_aPasswordHashCreators = new CommonsHashMap <> ();
   @GuardedBy ("m_aRWLock")
   private IPasswordHashCreator m_aDefaultPasswordHashCreator;
 
@@ -83,10 +82,7 @@ public class PasswordHashCreatorManager
     });
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Registered password hash creator algorithm '" +
-                       sAlgorithmName +
-                       "' to " +
-                       aPasswordHashCreator);
+      LOGGER.debug ("Registered password hash creator algorithm '" + sAlgorithmName + "' to " + aPasswordHashCreator);
   }
 
   public void unregisterPasswordHashCreator (@Nullable final IPasswordHashCreator aPasswordHashCreator)
@@ -121,14 +117,14 @@ public class PasswordHashCreatorManager
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllPasswordHashCreatorAlgorithms ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newSet (m_aPasswordHashCreators.keySet ()));
+    return m_aRWLock.readLocked ( () -> m_aPasswordHashCreators.copyOfKeySet ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsCollection <IPasswordHashCreator> getAllPasswordHashCreators ()
   {
-    return m_aRWLock.readLocked ( () -> CollectionHelper.newList (m_aPasswordHashCreators.values ()));
+    return m_aRWLock.readLocked ( () -> m_aPasswordHashCreators.copyOfValues ());
   }
 
   /**

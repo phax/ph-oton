@@ -16,7 +16,6 @@
  */
 package com.helger.photon.security.util;
 
-import java.util.Collection;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -31,6 +30,7 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.login.LoggedInUserManager;
@@ -87,8 +87,8 @@ public final class SecurityHelper
   {
     if (CollectionHelper.isNotEmpty (aRoleIDs))
     {
-      final Collection <? extends IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                                 .getAllUserGroupsWithAssignedUser (sUserID);
+      final ICommonsList <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                         .getAllUserGroupsWithAssignedUser (sUserID);
       for (final String sRoleID : aRoleIDs)
       {
         boolean bFoundRole = false;
@@ -110,8 +110,8 @@ public final class SecurityHelper
   public static ICommonsSet <String> getAllUserRoleIDs (@Nullable final String sUserID)
   {
     final ICommonsSet <String> ret = new CommonsHashSet <> ();
-    final Collection <? extends IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                               .getAllUserGroupsWithAssignedUser (sUserID);
+    final ICommonsList <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
+                                                                       .getAllUserGroupsWithAssignedUser (sUserID);
     for (final IUserGroup aUserGroup : aUserGroups)
       ret.addAll (aUserGroup.getAllContainedRoleIDs ());
     return ret;
@@ -157,9 +157,9 @@ public final class SecurityHelper
    *        User ID. May be <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used.
-   * @return The "guest" text if no user ID was provided, the display name of the
-   *         user if a valid user ID was provided or the ID of the user if an
-   *         invalid user was provided.
+   * @return The "guest" text if no user ID was provided, the display name of
+   *         the user if a valid user ID was provided or the ID of the user if
+   *         an invalid user was provided.
    */
   @Nullable
   public static String getUserDisplayName (@Nullable final String sUserID, @Nonnull final Locale aDisplayLocale)
@@ -180,8 +180,8 @@ public final class SecurityHelper
    * @param aDisplayLocale
    *        The display locale to be used to resolve the "Guest" text if the
    *        passed user is <code>null</code>.
-   * @return Never <code>null</code>. Either the display name or the login name of
-   *         the user.
+   * @return Never <code>null</code>. Either the display name or the login name
+   *         of the user.
    */
   @Nullable
   public static String getUserDisplayName (@Nullable final IUser aUser, @Nonnull final Locale aDisplayLocale)

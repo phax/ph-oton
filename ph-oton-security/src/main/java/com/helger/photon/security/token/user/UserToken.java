@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.security.object.StubObject;
@@ -48,7 +48,7 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
                     @Nonnull final IUser aUser)
   {
     this (StubObject.createForCurrentUser (aCustomAttrs),
-          CollectionHelper.newList (AccessToken.createAccessTokenValidFromNow (sTokenString)),
+          new CommonsArrayList <> (AccessToken.createAccessTokenValidFromNow (sTokenString)),
           aUser);
   }
 

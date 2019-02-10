@@ -16,10 +16,11 @@
  */
 package com.helger.photon.security.usergroup;
 
+import java.util.Comparator;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
@@ -43,9 +44,9 @@ public final class UserGroupMicroTypeConverter extends AbstractBusinessObjectMic
     aElement.setAttribute (ATTR_NAME, aUserGroup.getName ());
     if (StringHelper.hasText (aUserGroup.getDescription ()))
       aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUserGroup.getDescription ());
-    for (final String sUserID : CollectionHelper.getSorted (aUserGroup.getAllContainedUserIDs ()))
+    for (final String sUserID : aUserGroup.getAllContainedUserIDs ().getSorted (Comparator.naturalOrder ()))
       aElement.appendElement (sNamespaceURI, ELEMENT_USER).setAttribute (ATTR_ID, sUserID);
-    for (final String sRoleID : CollectionHelper.getSorted (aUserGroup.getAllContainedRoleIDs ()))
+    for (final String sRoleID : aUserGroup.getAllContainedRoleIDs ().getSorted (Comparator.naturalOrder ()))
       aElement.appendElement (sNamespaceURI, ELEMENT_ROLE).setAttribute (ATTR_ID, sRoleID);
     return aElement;
   }
