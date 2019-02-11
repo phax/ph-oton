@@ -27,6 +27,7 @@ import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
+import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
@@ -58,15 +59,33 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   }
 
   @Nonnull
+  public final BootstrapFormGroup setLabel (@Nullable final IHCElementWithChildren <?> aLabel)
+  {
+    return setLabel (aLabel == null ? null : HCFormLabel.createOptional (aLabel));
+  }
+
+  @Nonnull
   public final BootstrapFormGroup setLabelMandatory (@Nullable final String sLabel)
   {
     return setLabel (sLabel == null ? null : HCFormLabel.createMandatory (sLabel));
   }
 
   @Nonnull
+  public final BootstrapFormGroup setLabelMandatory (@Nullable final IHCElementWithChildren <?> aLabel)
+  {
+    return setLabel (aLabel == null ? null : HCFormLabel.createMandatory (aLabel));
+  }
+
+  @Nonnull
   public final BootstrapFormGroup setLabelAlternative (@Nullable final String sLabel)
   {
     return setLabel (sLabel == null ? null : HCFormLabel.createAlternative (sLabel));
+  }
+
+  @Nonnull
+  public final BootstrapFormGroup setLabelAlternative (@Nullable final IHCElementWithChildren <?> aLabel)
+  {
+    return setLabel (aLabel == null ? null : HCFormLabel.createAlternative (aLabel));
   }
 
   @Nonnull
