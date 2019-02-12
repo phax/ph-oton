@@ -33,7 +33,7 @@ import com.helger.commons.mime.MimeType;
 import com.helger.commons.mime.MimeTypeParser;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -191,7 +191,7 @@ public final class InvokableAPIDescriptor implements Serializable
    *         In case the executor factory creates a <code>null</code> executor.
    */
   public void invokeAPI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                         @Nonnull final PhotonUnifiedResponse aUnifiedResponse) throws Exception
+                         @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     final IAPIExecutor aExecutor = m_aDescriptor.getExecutorFactory ().get ();
     if (aExecutor == null)

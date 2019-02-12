@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -56,5 +56,5 @@ public interface IAPIExecutor extends Serializable
                   @Nonnull @Nonempty String sPath,
                   @Nonnull Map <String, String> aPathVariables,
                   @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                  @Nonnull PhotonUnifiedResponse aUnifiedResponse) throws Exception;
+                  @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;
 }

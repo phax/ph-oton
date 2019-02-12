@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.state.EHandled;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -33,6 +33,6 @@ public interface IAPIExceptionMapper extends Serializable
   @Nonnull
   EHandled applyExceptionOnResponse (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
                                      @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull PhotonUnifiedResponse aUnifiedResponse,
+                                     @Nonnull UnifiedResponse aUnifiedResponse,
                                      @Nonnull Throwable aThrowable);
 }
