@@ -22,15 +22,18 @@ import com.helger.commons.callback.ICallback;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to handle thrown exception objects from the API servlet.
+ * Callback interface to handle thrown but unmapped exception objects from the
+ * API servlet.
  *
  * @author Philip Helger
+ * @see IAPIExceptionMapper for mapping exceptions to the response
  */
 @FunctionalInterface
 public interface IAPIExceptionCallback extends ICallback
 {
   /**
-   * Called when an exception of the specified type occurred
+   * Called when an unmapped exception occurred while executing the server side
+   * code.
    *
    * @param aInvoker
    *        The {@link IAPIInvoker} object that invoked the API function

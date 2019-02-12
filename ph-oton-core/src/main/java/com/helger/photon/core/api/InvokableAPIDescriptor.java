@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.api;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,7 +43,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public final class InvokableAPIDescriptor
+public final class InvokableAPIDescriptor implements Serializable
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (InvokableAPIDescriptor.class);
 
@@ -77,7 +79,7 @@ public final class InvokableAPIDescriptor
    * @return The original API descriptor. Never <code>null</code>.
    */
   @Nonnull
-  public IAPIDescriptor getAPIDescriptor ()
+  public final IAPIDescriptor getAPIDescriptor ()
   {
     return m_aDescriptor;
   }
@@ -88,7 +90,7 @@ public final class InvokableAPIDescriptor
    */
   @Nonnull
   @Nonempty
-  public String getPath ()
+  public final String getPath ()
   {
     return m_sPath;
   }
@@ -99,7 +101,7 @@ public final class InvokableAPIDescriptor
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsOrderedMap <String, String> getAllPathVariables ()
+  public final ICommonsOrderedMap <String, String> getAllPathVariables ()
   {
     return m_aPathVariables.getClone ();
   }

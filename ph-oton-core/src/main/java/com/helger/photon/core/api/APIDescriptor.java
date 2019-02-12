@@ -41,11 +41,12 @@ public class APIDescriptor implements IAPIDescriptor
 {
   private final APIPath m_aAPIPath;
   private final PathDescriptor m_aPathDescriptor;
+  private final ISupplier <? extends IAPIExecutor> m_aExecutorFactory;
   private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet <> ();
   private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet <> ();
   private final ICommonsOrderedSet <String> m_aAllowedMimeTypes = new CommonsLinkedHashSet <> ();
   private IAPIExecutionFilter m_aExecutionFilter;
-  private final ISupplier <? extends IAPIExecutor> m_aExecutorFactory;
+  private IAPIExceptionMapper m_aExceptionMapper;
 
   /**
    * Constructor
@@ -121,7 +122,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @see #addRequiredHeaders(String...)
    */
   @Nonnull
-  public APIDescriptor addRequiredHeader (@Nullable final String sHeaderName)
+  public final APIDescriptor addRequiredHeader (@Nullable final String sHeaderName)
   {
     if (StringHelper.hasText (sHeaderName))
       m_aRequiredHeaders.add (sHeaderName);
@@ -139,7 +140,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @see #addRequiredHeader(String)
    */
   @Nonnull
-  public APIDescriptor addRequiredHeaders (@Nullable final String... aHeaderNames)
+  public final APIDescriptor addRequiredHeaders (@Nullable final String... aHeaderNames)
   {
     if (aHeaderNames != null)
       for (final String sHeaderName : aHeaderNames)
@@ -165,7 +166,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @see #addRequiredParams(String...)
    */
   @Nonnull
-  public APIDescriptor addRequiredParam (@Nullable final String sParamName)
+  public final APIDescriptor addRequiredParam (@Nullable final String sParamName)
   {
     if (StringHelper.hasText (sParamName))
       m_aRequiredParams.add (sParamName);
@@ -183,7 +184,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @see #addRequiredParam(String)
    */
   @Nonnull
-  public APIDescriptor addRequiredParams (@Nullable final String... aParamNames)
+  public final APIDescriptor addRequiredParams (@Nullable final String... aParamNames)
   {
     if (aParamNames != null)
       for (final String sParamName : aParamNames)
@@ -211,15 +212,23 @@ public class APIDescriptor implements IAPIDescriptor
     return m_aExecutionFilter;
   }
 
-  public final boolean hasExecutionFilter ()
-  {
-    return m_aExecutionFilter != null;
-  }
-
   @Nonnull
   public final APIDescriptor setExecutionFilter (@Nullable final IAPIExecutionFilter aExecutionFilter)
   {
     m_aExecutionFilter = aExecutionFilter;
+    return this;
+  }
+
+  @Nullable
+  public final IAPIExceptionMapper getExceptionMapper ()
+  {
+    return m_aExceptionMapper;
+  }
+
+  @Nonnull
+  public final APIDescriptor setExceptionMapper (@Nullable final IAPIExceptionMapper aExceptionMapper)
+  {
+    m_aExceptionMapper = aExceptionMapper;
     return this;
   }
 
@@ -228,11 +237,12 @@ public class APIDescriptor implements IAPIDescriptor
   {
     return new ToStringGenerator (null).append ("APIPath", m_aAPIPath)
                                        .append ("PathDescriptor", m_aPathDescriptor)
+                                       .append ("ExecutionFactory", m_aExecutorFactory)
                                        .appendIf ("RequiredHeaders", m_aRequiredHeaders, CollectionHelper::isNotEmpty)
                                        .appendIf ("RequiredParams", m_aRequiredParams, CollectionHelper::isNotEmpty)
                                        .appendIf ("AllowedMimeTypes", m_aAllowedMimeTypes, CollectionHelper::isNotEmpty)
-                                       .append ("ExecutionFactory", m_aExecutorFactory)
                                        .appendIfNotNull ("ExecutionFilter", m_aExecutionFilter)
+                                       .appendIfNotNull ("ExceptionMapper", m_aExceptionMapper)
                                        .getToString ();
   }
 }

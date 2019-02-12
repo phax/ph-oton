@@ -101,4 +101,21 @@ public interface IAPIDescriptor extends Serializable
   {
     return getExecutionFilter () != null;
   }
+
+  /**
+   * @return The exception mapper for this descriptor. May be <code>null</code>.
+   * @since 8.1.3
+   */
+  @Nullable
+  IAPIExceptionMapper getExceptionMapper ();
+
+  /**
+   * @return <code>true</code> if an exception mapper is configured,
+   *         <code>false</code> if not.
+   * @since 8.1.3
+   */
+  default boolean hasExceptionMapper ()
+  {
+    return getExceptionMapper () != null;
+  }
 }

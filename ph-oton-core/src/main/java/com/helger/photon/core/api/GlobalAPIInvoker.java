@@ -134,13 +134,25 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
     }
     catch (final Throwable t)
     {
-      APISettings.exceptionCallbacks ()
-                 .forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, t));
+      boolean bHandled = false;
+      final IAPIExceptionMapper aExMapper = aInvokableDescriptor.getAPIDescriptor ().getExceptionMapper ();
+      if (aExMapper != null)
+      {
+        // Apply exception mapper
+        bHandled = aExMapper.applyExceptionOnResponse (aInvokableDescriptor, aRequestScope, aUnifiedResponse, t)
+                            .isHandled ();
+      }
 
-      // Re-throw
-      if (t instanceof Exception)
-        throw (Exception) t;
-      throw new Exception (t);
+      if (!bHandled)
+      {
+        APISettings.exceptionCallbacks ()
+                   .forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, t));
+
+        // Re-throw
+        if (t instanceof Exception)
+          throw (Exception) t;
+        throw new Exception (t);
+      }
     }
   }
 
