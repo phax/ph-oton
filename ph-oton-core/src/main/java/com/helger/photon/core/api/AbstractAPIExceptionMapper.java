@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.servlet.response.UnifiedResponse;
 
 /**
  * Abstract implementation of {@link IAPIExceptionMapper} with some helper
@@ -33,7 +33,7 @@ public abstract class AbstractAPIExceptionMapper implements IAPIExceptionMapper
     return StackTraceHelper.getStackAsString (ex);
   }
 
-  protected static void setSimpleTextResponse (@Nonnull final PhotonUnifiedResponse aUnifiedResponse,
+  protected static void setSimpleTextResponse (@Nonnull final UnifiedResponse aUnifiedResponse,
                                                final int nStatusCode,
                                                @Nullable final String sContent)
   {
