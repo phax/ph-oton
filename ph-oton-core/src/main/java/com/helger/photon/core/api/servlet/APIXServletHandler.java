@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.http.EHttpVersion;
@@ -78,14 +77,13 @@ public class APIXServletHandler implements IXServletSimpleHandler
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
-    // ensure leading "/"
-    final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
+    final APIPath aAPIPath = APIPath.createFromRequest (aRequestScope);
     final EHttpMethod eHTTPMethod = aRequestScope.getHttpMethod ();
     final IAPIInvoker aAPIMgr = m_aFactory.get ();
-    final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (new APIPath (eHTTPMethod, sAPIPath));
+    final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (aAPIPath);
     if (aInvokableDescriptor == null)
     {
-      LOGGER.warn ("Unknown API " + eHTTPMethod + " '" + sAPIPath + "' requested!");
+      LOGGER.warn ("Unknown API " + eHTTPMethod + " '" + aAPIPath.getPath () + "' requested!");
 
       // No such action
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -101,7 +99,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
         LOGGER.warn ("API " +
                      eHTTPMethod +
                      " '" +
-                     sAPIPath +
+                     aAPIPath.getPath () +
                      "' cannot be executed for the current request. Returning HTTP " +
                      nStatusCode);
         aUnifiedResponse.setStatus (nStatusCode);
@@ -137,7 +135,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
         }
         catch (final Throwable t)
         {
-          throw new ServletException ("Error invoking API " + eHTTPMethod + " '" + sAPIPath + "'", t);
+          throw new ServletException ("Error invoking API " + eHTTPMethod + " '" + aAPIPath.getPath () + "'", t);
         }
       }
     }

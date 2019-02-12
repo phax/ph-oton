@@ -25,8 +25,10 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.http.EHttpMethod;
+import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * This class contains a combination of path and HTTP method.
@@ -135,5 +137,13 @@ public class APIPath implements Serializable
   public static APIPath delete (@Nonnull @Nonempty final String sPath)
   {
     return new APIPath (EHttpMethod.DELETE, sPath);
+  }
+
+  @Nonnull
+  public static APIPath createFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    // ensure leading "/"
+    final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
+    return new APIPath (aRequestScope.getHttpMethod (), sAPIPath);
   }
 }
