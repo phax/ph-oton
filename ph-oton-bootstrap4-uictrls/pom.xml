@@ -97,6 +97,8 @@
             <exclude>src/main/resources/bootstrap/**</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>**/LICENSE</exclude>
+            <exclude>**/*.min.css</exclude>
+            <exclude>**/*.min.js</exclude>
           </excludes>
         </configuration>
       </plugin>

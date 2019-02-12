@@ -21,8 +21,6 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -34,22 +32,6 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public interface IAPIInvoker extends Serializable
 {
-  /**
-   * Register a new API.
-   *
-   * @param aDescriptor
-   *        The API to be registered. May not be <code>null</code>.
-   */
-  void registerAPI (@Nonnull APIDescriptor aDescriptor);
-
-  /**
-   * @return A list of all registered API descriptors. Never <code>null</code>
-   *         but maybe empty.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  ICommonsList <IAPIDescriptor> getAllAPIDescriptors ();
-
   @Nullable
   InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath);
 
