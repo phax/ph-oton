@@ -317,6 +317,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
    * @param sEmailAddress
    *        The email address to be checked. May be <code>null</code>.
    * @return <code>null</code> if no such user exists
+   * @see #getUserOfEmailAddressIgnoreCase(String)
    */
   @Nullable
   public IUser getUserOfEmailAddress (@Nullable final String sEmailAddress)
@@ -325,6 +326,24 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
       return null;
 
     return findFirst (x -> sEmailAddress.equals (x.getEmailAddress ()));
+  }
+
+  /**
+   * Get the user with the specified email address
+   *
+   * @param sEmailAddress
+   *        The email address to be checked. May be <code>null</code>.
+   * @return <code>null</code> if no such user exists
+   * @see #getUserOfEmailAddress(String)
+   * @since 8.1.3
+   */
+  @Nullable
+  public IUser getUserOfEmailAddressIgnoreCase (@Nullable final String sEmailAddress)
+  {
+    if (StringHelper.hasNoText (sEmailAddress))
+      return null;
+
+    return findFirst (x -> sEmailAddress.equalsIgnoreCase (x.getEmailAddress ()));
   }
 
   /**
@@ -359,8 +378,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
   }
 
   /**
-   * @return A non-<code>null</code> collection of all contained not deleted
-   *         users
+   * @return A non-<code>null</code> collection of all contained not deleted users
    */
   @Nonnull
   @ReturnsMutableCopy
