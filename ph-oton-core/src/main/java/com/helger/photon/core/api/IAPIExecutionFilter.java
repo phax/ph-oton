@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.api;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,7 +30,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @since 7.0.2
  */
 @FunctionalInterface
-public interface IAPIExecutionFilter
+public interface IAPIExecutionFilter extends Serializable
 {
   /**
    * Check if the passed request can be executed or not.

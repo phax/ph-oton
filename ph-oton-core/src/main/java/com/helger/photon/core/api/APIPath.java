@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.api;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -32,7 +34,7 @@ import com.helger.commons.url.SimpleURL;
  * @author Philip Helger
  */
 @Immutable
-public class APIPath
+public class APIPath implements Serializable
 {
   private final EHttpMethod m_eMethod;
   private final String m_sPath;

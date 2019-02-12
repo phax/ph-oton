@@ -16,10 +16,12 @@
  */
 package com.helger.photon.core.api;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
@@ -30,7 +32,7 @@ import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
  *
  * @author Philip Helger
  */
-public interface IAPIDescriptor
+public interface IAPIDescriptor extends Serializable
 {
   /**
    * @return The API path used. Never <code>null</code>.
@@ -60,30 +62,30 @@ public interface IAPIDescriptor
   ISupplier <? extends IAPIExecutor> getExecutorFactory ();
 
   /**
-   * @return <code>true</code> if this API has required HTTP headers.
-   */
-  boolean hasRequiredHeaders ();
-
-  /**
    * @return The names of all required HTTP headers. Never <code>null</code> but
    *         maybe empty.
    */
   @Nonnull
-  @ReturnsMutableCopy
-  ICommonsOrderedSet <String> getAllRequiredHeaders ();
-
-  /**
-   * @return <code>true</code> if this API has required request parameters.
-   */
-  boolean hasRequiredParams ();
+  @ReturnsMutableObject
+  ICommonsOrderedSet <String> requiredHeaders ();
 
   /**
    * @return The names of all required request parameters. Never
    *         <code>null</code> but maybe empty.
    */
   @Nonnull
-  @ReturnsMutableCopy
-  ICommonsOrderedSet <String> getAllRequiredParams ();
+  @ReturnsMutableObject
+  ICommonsOrderedSet <String> requiredParams ();
+
+  /**
+   * @return The names of all allowed MIME types for the data. Never
+   *         <code>null</code> but maybe empty. Only MIME types without
+   *         parameters (as in ";x=y") should be added here. Also unified casing
+   *         should be considered.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  ICommonsOrderedSet <String> allowedMimeTypes ();
 
   /**
    * @return The current execution filter. May be <code>null</code>.

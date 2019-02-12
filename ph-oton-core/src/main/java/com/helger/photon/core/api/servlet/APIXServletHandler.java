@@ -31,6 +31,7 @@ import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.lang.GenericReflection;
+import com.helger.commons.mutable.MutableInt;
 import com.helger.http.EHttpVersion;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.api.APIPath;
@@ -93,10 +94,17 @@ public class APIXServletHandler implements IXServletSimpleHandler
     {
       // Is the declaration applicable for the current scope?
       // Check for required headers and parameters
-      if (!aInvokableDescriptor.canExecute (aRequestScope))
+      final MutableInt aStatusCode = new MutableInt (HttpServletResponse.SC_BAD_REQUEST);
+      if (!aInvokableDescriptor.canExecute (aRequestScope, aStatusCode))
       {
-        LOGGER.warn ("API " + eHTTPMethod + " '" + sAPIPath + "' cannot be executed for the current request.");
-        aUnifiedResponse.setStatus (HttpServletResponse.SC_BAD_REQUEST);
+        final int nStatusCode = aStatusCode.intValue ();
+        LOGGER.warn ("API " +
+                     eHTTPMethod +
+                     " '" +
+                     sAPIPath +
+                     "' cannot be executed for the current request. Returning HTTP " +
+                     nStatusCode);
+        aUnifiedResponse.setStatus (nStatusCode);
       }
       else
       {

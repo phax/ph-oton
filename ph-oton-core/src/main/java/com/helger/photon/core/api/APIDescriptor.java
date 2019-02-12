@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
@@ -43,6 +43,7 @@ public class APIDescriptor implements IAPIDescriptor
   private final PathDescriptor m_aPathDescriptor;
   private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet <> ();
   private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet <> ();
+  private final ICommonsOrderedSet <String> m_aAllowedMimeTypes = new CommonsLinkedHashSet <> ();
   private IAPIExecutionFilter m_aExecutionFilter;
   private final ISupplier <? extends IAPIExecutor> m_aExecutorFactory;
 
@@ -92,19 +93,19 @@ public class APIDescriptor implements IAPIDescriptor
   }
 
   @Nonnull
-  public APIPath getAPIPath ()
+  public final APIPath getAPIPath ()
   {
     return m_aAPIPath;
   }
 
   @Nonnull
-  public PathDescriptor getPathDescriptor ()
+  public final PathDescriptor getPathDescriptor ()
   {
     return m_aPathDescriptor;
   }
 
   @Nonnull
-  public ISupplier <? extends IAPIExecutor> getExecutorFactory ()
+  public final ISupplier <? extends IAPIExecutor> getExecutorFactory ()
   {
     return m_aExecutorFactory;
   }
@@ -146,16 +147,11 @@ public class APIDescriptor implements IAPIDescriptor
     return this;
   }
 
-  public boolean hasRequiredHeaders ()
-  {
-    return m_aRequiredHeaders.isNotEmpty ();
-  }
-
   @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsOrderedSet <String> getAllRequiredHeaders ()
+  @ReturnsMutableObject
+  public final ICommonsOrderedSet <String> requiredHeaders ()
   {
-    return m_aRequiredHeaders.getClone ();
+    return m_aRequiredHeaders;
   }
 
   /**
@@ -195,31 +191,33 @@ public class APIDescriptor implements IAPIDescriptor
     return this;
   }
 
-  public boolean hasRequiredParams ()
+  @Nonnull
+  @ReturnsMutableObject
+  public final ICommonsOrderedSet <String> requiredParams ()
   {
-    return m_aRequiredParams.isNotEmpty ();
+    return m_aRequiredParams;
   }
 
   @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsOrderedSet <String> getAllRequiredParams ()
+  @ReturnsMutableObject
+  public final ICommonsOrderedSet <String> allowedMimeTypes ()
   {
-    return m_aRequiredParams.getClone ();
+    return m_aAllowedMimeTypes;
   }
 
   @Nullable
-  public IAPIExecutionFilter getExecutionFilter ()
+  public final IAPIExecutionFilter getExecutionFilter ()
   {
     return m_aExecutionFilter;
   }
 
-  public boolean hasExecutionFilter ()
+  public final boolean hasExecutionFilter ()
   {
-    return getExecutionFilter () != null;
+    return m_aExecutionFilter != null;
   }
 
   @Nonnull
-  public APIDescriptor setExecutionFilter (@Nullable final IAPIExecutionFilter aExecutionFilter)
+  public final APIDescriptor setExecutionFilter (@Nullable final IAPIExecutionFilter aExecutionFilter)
   {
     m_aExecutionFilter = aExecutionFilter;
     return this;
@@ -232,6 +230,7 @@ public class APIDescriptor implements IAPIDescriptor
                                        .append ("PathDescriptor", m_aPathDescriptor)
                                        .appendIf ("RequiredHeaders", m_aRequiredHeaders, CollectionHelper::isNotEmpty)
                                        .appendIf ("RequiredParams", m_aRequiredParams, CollectionHelper::isNotEmpty)
+                                       .appendIf ("AllowedMimeTypes", m_aAllowedMimeTypes, CollectionHelper::isNotEmpty)
                                        .append ("ExecutionFactory", m_aExecutorFactory)
                                        .appendIfNotNull ("ExecutionFilter", m_aExecutionFilter)
                                        .getToString ();

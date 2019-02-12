@@ -17,14 +17,19 @@
 package com.helger.photon.core.api;
 
 import javax.annotation.Nonnull;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.commons.mime.MimeType;
+import com.helger.commons.mime.MimeTypeParser;
+import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -105,9 +110,13 @@ public final class InvokableAPIDescriptor
    *
    * @param aRequestScope
    *        The request scope to validate.
+   * @param aStatusCode
+   *        The mutable int to hold the status code to be returned in case of
+   *        error. Default is HTTP 400, bad request.
    * @return <code>true</code> if all prerequisites are fulfilled.
    */
-  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final MutableInt aStatusCode)
   {
     if (aRequestScope == null)
       return false;
@@ -115,22 +124,20 @@ public final class InvokableAPIDescriptor
     // Note: HTTP method was already checked in APIDescriptorList
 
     // Check required headers
-    if (m_aDescriptor.hasRequiredHeaders ())
-      for (final String sRequiredHeader : m_aDescriptor.getAllRequiredHeaders ())
-        if (aRequestScope.headers ().getFirstHeaderValue (sRequiredHeader) == null)
-        {
-          LOGGER.warn ("Request '" + m_sPath + "' is missing required HTTP header '" + sRequiredHeader + "'");
-          return false;
-        }
+    for (final String sRequiredHeader : m_aDescriptor.requiredHeaders ())
+      if (aRequestScope.headers ().getFirstHeaderValue (sRequiredHeader) == null)
+      {
+        LOGGER.warn ("Request '" + m_sPath + "' is missing required HTTP header '" + sRequiredHeader + "'");
+        return false;
+      }
 
     // Check required parameters
-    if (m_aDescriptor.hasRequiredParams ())
-      for (final String sRequiredParam : m_aDescriptor.getAllRequiredParams ())
-        if (!aRequestScope.params ().containsKey (sRequiredParam))
-        {
-          LOGGER.warn ("Request '" + m_sPath + "' is missing required HTTP parameter '" + sRequiredParam + "'");
-          return false;
-        }
+    for (final String sRequiredParam : m_aDescriptor.requiredParams ())
+      if (!aRequestScope.params ().containsKey (sRequiredParam))
+      {
+        LOGGER.warn ("Request '" + m_sPath + "' is missing required HTTP parameter '" + sRequiredParam + "'");
+        return false;
+      }
 
     // Check explicit filter
     if (m_aDescriptor.hasExecutionFilter ())
@@ -140,13 +147,36 @@ public final class InvokableAPIDescriptor
         return false;
       }
 
+    if (m_aDescriptor.allowedMimeTypes ().isNotEmpty ())
+    {
+      final String sContentType = aRequestScope.getContentType ();
+      // Parse to extract any parameters etc.
+      final MimeType aMT = MimeTypeParser.safeParseMimeType (sContentType);
+      // If parsing fails, use the provided String
+      final String sMimeTypeToCheck = aMT == null ? sContentType : aMT.getAsStringWithoutParameters ();
+
+      if (!m_aDescriptor.allowedMimeTypes ().contains (sMimeTypeToCheck) &&
+          !m_aDescriptor.allowedMimeTypes ().contains (sMimeTypeToCheck.toLowerCase (CGlobal.DEFAULT_LOCALE)))
+      {
+        LOGGER.warn ("Request '" +
+                     m_sPath +
+                     "' contains the Content-Type '" +
+                     sContentType +
+                     "' which is not in the allowed list of " +
+                     m_aDescriptor.allowedMimeTypes ());
+        // Special error code HTTP 415
+        aStatusCode.set (HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+        return false;
+      }
+    }
+
     return true;
   }
 
   /**
    * Invoke the Java callback underlying this API descriptor. Note: this method
    * may only be invoked after
-   * {@link #canExecute(IRequestWebScopeWithoutResponse)} returned
+   * {@link #canExecute(IRequestWebScopeWithoutResponse,MutableInt)} returned
    * <code>true</code>!
    *
    * @param aRequestScope
