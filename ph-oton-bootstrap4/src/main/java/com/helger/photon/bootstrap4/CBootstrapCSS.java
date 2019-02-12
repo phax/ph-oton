@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.2.1
+  // 4.3.0
   public static final ICSSClassProvider ACCORDION = DefaultCSSClassProvider.create ("accordion");
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
@@ -425,7 +425,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider EMBED_RESPONSIVE_16BY9 = DefaultCSSClassProvider.create ("embed-responsive-16by9");
   public static final ICSSClassProvider EMBED_RESPONSIVE_1BY1 = DefaultCSSClassProvider.create ("embed-responsive-1by1");
   public static final ICSSClassProvider EMBED_RESPONSIVE_21BY9 = DefaultCSSClassProvider.create ("embed-responsive-21by9");
-  public static final ICSSClassProvider EMBED_RESPONSIVE_3BY4 = DefaultCSSClassProvider.create ("embed-responsive-3by4");
+  public static final ICSSClassProvider EMBED_RESPONSIVE_4BY3 = DefaultCSSClassProvider.create ("embed-responsive-4by3");
   public static final ICSSClassProvider EMBED_RESPONSIVE_ITEM = DefaultCSSClassProvider.create ("embed-responsive-item");
   public static final ICSSClassProvider FADE = DefaultCSSClassProvider.create ("fade");
   public static final ICSSClassProvider FIGURE = DefaultCSSClassProvider.create ("figure");
@@ -585,6 +585,11 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider LEAD = DefaultCSSClassProvider.create ("lead");
   public static final ICSSClassProvider LIST_GROUP = DefaultCSSClassProvider.create ("list-group");
   public static final ICSSClassProvider LIST_GROUP_FLUSH = DefaultCSSClassProvider.create ("list-group-flush");
+  public static final ICSSClassProvider LIST_GROUP_HORIZONTAL = DefaultCSSClassProvider.create ("list-group-horizontal");
+  public static final ICSSClassProvider LIST_GROUP_HORIZONTAL_LG = DefaultCSSClassProvider.create ("list-group-horizontal-lg");
+  public static final ICSSClassProvider LIST_GROUP_HORIZONTAL_MD = DefaultCSSClassProvider.create ("list-group-horizontal-md");
+  public static final ICSSClassProvider LIST_GROUP_HORIZONTAL_SM = DefaultCSSClassProvider.create ("list-group-horizontal-sm");
+  public static final ICSSClassProvider LIST_GROUP_HORIZONTAL_XL = DefaultCSSClassProvider.create ("list-group-horizontal-xl");
   public static final ICSSClassProvider LIST_GROUP_ITEM = DefaultCSSClassProvider.create ("list-group-item");
   public static final ICSSClassProvider LIST_GROUP_ITEM_ACTION = DefaultCSSClassProvider.create ("list-group-item-action");
   public static final ICSSClassProvider LIST_GROUP_ITEM_DANGER = DefaultCSSClassProvider.create ("list-group-item-danger");
@@ -790,6 +795,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MODAL_CONTENT = DefaultCSSClassProvider.create ("modal-content");
   public static final ICSSClassProvider MODAL_DIALOG = DefaultCSSClassProvider.create ("modal-dialog");
   public static final ICSSClassProvider MODAL_DIALOG_CENTERED = DefaultCSSClassProvider.create ("modal-dialog-centered");
+  public static final ICSSClassProvider MODAL_DIALOG_SCROLLABLE = DefaultCSSClassProvider.create ("modal-dialog-scrollable");
   public static final ICSSClassProvider MODAL_FOOTER = DefaultCSSClassProvider.create ("modal-footer");
   public static final ICSSClassProvider MODAL_HEADER = DefaultCSSClassProvider.create ("modal-header");
   public static final ICSSClassProvider MODAL_LG = DefaultCSSClassProvider.create ("modal-lg");
@@ -1431,8 +1437,10 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ROUNDED_BOTTOM = DefaultCSSClassProvider.create ("rounded-bottom");
   public static final ICSSClassProvider ROUNDED_CIRCLE = DefaultCSSClassProvider.create ("rounded-circle");
   public static final ICSSClassProvider ROUNDED_LEFT = DefaultCSSClassProvider.create ("rounded-left");
+  public static final ICSSClassProvider ROUNDED_LG = DefaultCSSClassProvider.create ("rounded-lg");
   public static final ICSSClassProvider ROUNDED_PILL = DefaultCSSClassProvider.create ("rounded-pill");
   public static final ICSSClassProvider ROUNDED_RIGHT = DefaultCSSClassProvider.create ("rounded-right");
+  public static final ICSSClassProvider ROUNDED_SM = DefaultCSSClassProvider.create ("rounded-sm");
   public static final ICSSClassProvider ROUNDED_TOP = DefaultCSSClassProvider.create ("rounded-top");
   public static final ICSSClassProvider ROW = DefaultCSSClassProvider.create ("row");
   public static final ICSSClassProvider SHADOW = DefaultCSSClassProvider.create ("shadow");
@@ -1449,6 +1457,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider SR_ONLY = DefaultCSSClassProvider.create ("sr-only");
   public static final ICSSClassProvider SR_ONLY_FOCUSABLE = DefaultCSSClassProvider.create ("sr-only-focusable");
   public static final ICSSClassProvider STICKY_TOP = DefaultCSSClassProvider.create ("sticky-top");
+  public static final ICSSClassProvider STRETCHED_LINK = DefaultCSSClassProvider.create ("stretched-link");
   public static final ICSSClassProvider TAB_CONTENT = DefaultCSSClassProvider.create ("tab-content");
   public static final ICSSClassProvider TAB_PANE = DefaultCSSClassProvider.create ("tab-pane");
   public static final ICSSClassProvider TABLE = DefaultCSSClassProvider.create ("table");
@@ -1473,6 +1482,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TABLE_WARNING = DefaultCSSClassProvider.create ("table-warning");
   public static final ICSSClassProvider TEXT_BLACK_50 = DefaultCSSClassProvider.create ("text-black-50");
   public static final ICSSClassProvider TEXT_BODY = DefaultCSSClassProvider.create ("text-body");
+  public static final ICSSClassProvider TEXT_BREAK = DefaultCSSClassProvider.create ("text-break");
   public static final ICSSClassProvider TEXT_CAPITALIZE = DefaultCSSClassProvider.create ("text-capitalize");
   public static final ICSSClassProvider TEXT_CENTER = DefaultCSSClassProvider.create ("text-center");
   public static final ICSSClassProvider TEXT_DANGER = DefaultCSSClassProvider.create ("text-danger");

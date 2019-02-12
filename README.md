@@ -34,7 +34,7 @@ Contained subprojects are:
 ## News and noteworthy
 
 * v8.1.3 - work in progress
-    * Updated to Bootstrap 4.2.1
+    * Updated to Bootstrap 4.3.0
     * Updated to Bootstrap 3.4.0
     * Bootstrap 4 `BootstrapInputGroup` API was reworked, so that the parent/child relationship holds true (incompatible)
     * Updated to log4j 2.11.2
