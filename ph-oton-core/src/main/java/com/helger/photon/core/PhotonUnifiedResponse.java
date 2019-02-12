@@ -60,6 +60,8 @@ import com.helger.json.IJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.json.serialize.IJsonWriterSettings;
+import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
@@ -81,6 +83,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 {
   private final IRequestWebScopeWithoutResponse m_aRequestScope;
   private IXMLWriterSettings m_aXWS = XMLWriterSettings.DEFAULT_XML_SETTINGS;
+  private IJsonWriterSettings m_aJWS = JsonWriterSettings.DEFAULT_SETTINGS;
 
   public PhotonUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
                                 @Nonnull final EHttpMethod eHttpMethod,
@@ -108,6 +111,18 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     m_aXWS = aXWS;
   }
 
+  @Nonnull
+  public final IJsonWriterSettings getJsonWriterSettings ()
+  {
+    return m_aJWS;
+  }
+
+  public final void setJsonWriterSettings (@Nonnull final IJsonWriterSettings aJWS)
+  {
+    ValueEnforcer.notNull (aJWS, "JWS");
+    m_aJWS = aJWS;
+  }
+
   public void jsonEmpty ()
   {
     json (null);
@@ -116,7 +131,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   public void json (@Nullable final IJson aValue)
   {
     // Ensure it is valid JSON
-    final String sResponse = aValue != null ? aValue.getAsJsonString () : "{}";
+    final String sResponse = aValue != null ? aValue.getAsJsonString (m_aJWS) : "{}";
     final Charset aCharset = StandardCharsets.UTF_8;
     setContentAndCharset (sResponse, aCharset);
     setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
@@ -378,7 +393,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
   /**
    * HTTP 202 Accepted
-   * 
+   *
    * @since 8.1.3
    */
   public void createAccepted ()
