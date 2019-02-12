@@ -70,11 +70,13 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
 
   public static final boolean DEFAULT_FADE = true;
   public static final boolean DEFAULT_VERTICALLY_CENTERED = true;
+  public static final boolean DEFAULT_SCROLL_BODY = false;
   public static final boolean DEFAULT_SHOW_CLOSE = true;
 
   private EBootstrapModalSize m_eSize;
   private boolean m_bFade = DEFAULT_FADE;
   private boolean m_bVerticallyCentered = DEFAULT_VERTICALLY_CENTERED;
+  private boolean m_bScrollBody = DEFAULT_SCROLL_BODY;
   private boolean m_bShowClose = DEFAULT_SHOW_CLOSE;
   private IHCNode m_aHeader;
   private IHCNode m_aBody;
@@ -126,6 +128,18 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   public final BootstrapModal setVerticallyCentered (final boolean bVerticallyCentered)
   {
     m_bVerticallyCentered = bVerticallyCentered;
+    return this;
+  }
+
+  public final boolean isScrollBody ()
+  {
+    return m_bScrollBody;
+  }
+
+  @Nonnull
+  public final BootstrapModal setScrollBody (final boolean bScrollBody)
+  {
+    m_bScrollBody = bScrollBody;
     return this;
   }
 
@@ -245,6 +259,8 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
                                                               .setRole (EHTMLRole.DOCUMENT));
     if (m_bVerticallyCentered)
       aModalDialog.addClass (CBootstrapCSS.MODAL_DIALOG_CENTERED);
+    if (m_bScrollBody)
+      aModalDialog.addClass (CBootstrapCSS.MODAL_DIALOG_SCROLLABLE);
 
     final HCDiv aModalContent = aModalDialog.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_CONTENT)
                                                                             .setID (_getContentID ()));
@@ -280,8 +296,8 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
    * Activates your content as a modal. Accepts an optional options object.
    *
    * @param aBackdrop
-   *        Includes a modal-backdrop element. Alternatively, specify static for a
-   *        backdrop which doesn't close the modal on click.
+   *        Includes a modal-backdrop element. Alternatively, specify static for
+   *        a backdrop which doesn't close the modal on click.
    * @param aKeyboard
    *        Closes the modal when escape key is pressed
    * @param aFocus
@@ -322,9 +338,9 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
   }
 
   /**
-   * Manually toggles a modal. Returns to the caller before the modal has actually
-   * been shown or hidden (i.e. before the shown.bs.modal or hidden.bs.modal event
-   * occurs).
+   * Manually toggles a modal. Returns to the caller before the modal has
+   * actually been shown or hidden (i.e. before the shown.bs.modal or
+   * hidden.bs.modal event occurs).
    *
    * @return JS invocation
    */
