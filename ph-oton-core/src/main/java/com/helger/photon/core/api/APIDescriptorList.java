@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.api;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.function.Function;
 
@@ -41,18 +42,18 @@ import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
  *
  * @author Philip Helger
  */
-public class APIDescriptorList
+public class APIDescriptorList implements Serializable
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (APIDescriptorList.class);
 
   /** Store APIDescriptor per HTTP method for quick access. */
-  private final ICommonsMap <EHttpMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap<> (EHttpMethod.class);
+  private final ICommonsMap <EHttpMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap <> (EHttpMethod.class);
 
   public APIDescriptorList ()
   {
     // Init map
     for (final EHttpMethod e : EHttpMethod.values ())
-      m_aMap.put (e, new CommonsArrayList<> ());
+      m_aMap.put (e, new CommonsArrayList <> ());
   }
 
   public void addDescriptor (@Nonnull final APIDescriptor aDescriptor)
@@ -67,7 +68,7 @@ public class APIDescriptorList
   @ReturnsMutableCopy
   public ICommonsList <IAPIDescriptor> getAllDescriptors ()
   {
-    final ICommonsList <IAPIDescriptor> ret = new CommonsArrayList<> ();
+    final ICommonsList <IAPIDescriptor> ret = new CommonsArrayList <> ();
     for (final ICommonsList <APIDescriptor> aList : m_aMap.values ())
       ret.addAll (aList);
     return ret;
@@ -85,7 +86,7 @@ public class APIDescriptorList
 
   @Nullable
   public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath,
-                                             @Nonnull final Function <List <InvokableAPIDescriptor>, InvokableAPIDescriptor> aAmbiguityResolver)
+                                             @Nonnull final Function <? super List <InvokableAPIDescriptor>, ? extends InvokableAPIDescriptor> aAmbiguityResolver)
   {
     ValueEnforcer.notNull (aPath, "Path");
 
@@ -93,7 +94,7 @@ public class APIDescriptorList
     final String sSourcePath = aPath.getPath ();
     final ICommonsList <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
 
-    final ICommonsList <InvokableAPIDescriptor> aMatching = new CommonsArrayList<> ();
+    final ICommonsList <InvokableAPIDescriptor> aMatching = new CommonsArrayList <> ();
 
     // HTTP Method must match
     for (final APIDescriptor aDescriptor : m_aMap.get (aPath.getHTTPMethod ()))

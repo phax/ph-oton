@@ -58,4 +58,25 @@ public final class APIDescriptorTest
     // Matches the regex but invalid HTTP method
     assertNull (aList.getMatching (APIPath.get ("/r2o/v24/invoice")));
   }
+
+  @Test
+  public void testBasic2 ()
+  {
+    final APIDescriptorList aList = new APIDescriptorList ();
+    // Dummy executor
+    final IAPIExecutor aExec = (a, b, c, d, e) -> {};
+    aList.addDescriptor (new APIDescriptor (APIPath.get ("/{a}/b/{c}/d"), aExec));
+
+    assertNotNull (aList.getMatching (APIPath.get ("/a/b/c/d")));
+    assertNotNull (aList.getMatching (APIPath.get ("/hakjhyhxkj/b/hakjhyhxkj/d")));
+    assertNotNull (aList.getMatching (APIPath.get ("/hakjh%3Ayhxkj/b/hakjh%2Fyhxkj/d")));
+    assertNull (aList.getMatching (APIPath.get ("/")));
+    assertNull (aList.getMatching (APIPath.get ("/a")));
+    assertNull (aList.getMatching (APIPath.get ("/a/b")));
+    assertNull (aList.getMatching (APIPath.get ("/a/b/c")));
+    assertNull (aList.getMatching (APIPath.get ("/a/c/c/d")));
+    assertNull (aList.getMatching (APIPath.get ("/a/b2/c/d")));
+    assertNull (aList.getMatching (APIPath.get ("/a/b/c/e")));
+    assertNull (aList.getMatching (APIPath.get ("/a/b/c/d2")));
+  }
 }

@@ -29,7 +29,7 @@ import com.helger.photon.core.api.callback.LoggingAPIExceptionCallback;
 import com.helger.photon.core.api.callback.LoggingAPILongRunningExecutionCallback;
 
 /**
- * A central helper class that centrally manages the API callbacks.
+ * A central helper class that centrally configures all API callbacks.
  *
  * @author Philip Helger
  */

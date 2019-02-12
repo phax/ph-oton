@@ -78,8 +78,10 @@ public class APIPath implements Serializable
    * Get the invocation URL of this API path.
    *
    * @param sBasePath
-   *        The HTTP base path of the server (e.g. http://www.example.org/api");
+   *        The HTTP base path of the server (e.g. http://www.example.org/api"),
+   *        which is prepended to the relative path of this object.
    * @return The new URL. Never <code>null</code>.
+   * @see #getPath()
    */
   @Nonnull
   public SimpleURL getInvocationURL (@Nonnull @Nonempty final String sBasePath)

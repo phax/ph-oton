@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -48,7 +48,7 @@ public interface IAPIInvoker extends Serializable
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsCollection <? extends IAPIDescriptor> getAllAPIDescriptors ();
+  ICommonsList <IAPIDescriptor> getAllAPIDescriptors ();
 
   @Nullable
   InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath);

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
@@ -75,7 +75,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsCollection <? extends IAPIDescriptor> getAllAPIDescriptors ()
+  public ICommonsList <IAPIDescriptor> getAllAPIDescriptors ()
   {
     return m_aRWLock.readLocked (m_aApiDecls::getAllDescriptors);
   }
