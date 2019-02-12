@@ -36,10 +36,10 @@ public final class PathDescriptorHelper
   {}
 
   /**
-   * Clean the provided path and split it into parts.
+   * Clean the provided path and split it into parts, separated by slashes.
    *
    * @param sPath
-   *        Source path
+   *        Source path. May not be <code>null</code>.
    * @return The list with all path parts. Never <code>null</code>.
    */
   @Nonnull

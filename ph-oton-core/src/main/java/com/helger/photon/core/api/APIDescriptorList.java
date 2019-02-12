@@ -89,6 +89,7 @@ public class APIDescriptorList implements Serializable
                                              @Nonnull final Function <? super List <InvokableAPIDescriptor>, ? extends InvokableAPIDescriptor> aAmbiguityResolver)
   {
     ValueEnforcer.notNull (aPath, "Path");
+    ValueEnforcer.notNull (aAmbiguityResolver, "AmbiguityResolver");
 
     // Split only once for performance reasons
     final String sSourcePath = aPath.getPath ();
@@ -101,7 +102,10 @@ public class APIDescriptorList implements Serializable
     {
       final PathMatchingResult aMatchResult = aDescriptor.getPathDescriptor ().matchesParts (aPathParts);
       if (aMatchResult.isMatch ())
+      {
+        // A match was found
         aMatching.add (new InvokableAPIDescriptor (aDescriptor, sSourcePath, aMatchResult.getAllVariableValues ()));
+      }
     }
 
     // Now get the result
