@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.state.EHandled;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -19,20 +18,6 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public interface IAPIExceptionMapper extends Serializable
 {
-  @Nonnull
-  static String getResponseEntityWithoutStackTrace (@Nonnull final Throwable ex)
-  {
-    // The class name does not really matter
-    return ex.getMessage ();
-  }
-
-  @Nonnull
-  static String getResponseEntityWithStackTrace (@Nonnull final Throwable ex)
-  {
-    // Includes class name and message
-    return StackTraceHelper.getStackAsString (ex);
-  }
-
   /**
    * @param aInvokableDescriptor
    *        The current invokable descriptor. Never <code>null</code>.
