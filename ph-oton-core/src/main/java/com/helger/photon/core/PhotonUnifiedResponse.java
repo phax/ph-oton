@@ -377,6 +377,16 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   }
 
   /**
+   * HTTP 202 Accepted
+   * 
+   * @since 8.1.3
+   */
+  public void createAccepted ()
+  {
+    setStatus (HttpServletResponse.SC_ACCEPTED);
+  }
+
+  /**
    * HTTP 204 No Content
    */
   public void createNoContent ()
