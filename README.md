@@ -41,6 +41,7 @@ Contained subprojects are:
     * `ISimpleWebExecutionContext` was extended with the `LoggedInUser`
     * API API was extended to support only different MIME types
     * Added an exception mapper to the API handling
+    * Requires ph-web 9.1.1
 * v8.1.2 - 2019-01-07
     * Added B4 tooltips, Jumbotron and Modal dialog
     * Added class `BootstrapPageRenderer` for consistent page rendering
