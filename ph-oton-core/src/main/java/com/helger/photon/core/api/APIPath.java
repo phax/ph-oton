@@ -143,7 +143,10 @@ public class APIPath implements Serializable
   public static APIPath createFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // ensure leading "/"
-    final String sAPIPath = FilenameHelper.ensurePathStartingWithSeparator (aRequestScope.getPathWithinServlet ());
-    return new APIPath (aRequestScope.getHttpMethod (), sAPIPath);
+    String sPath = aRequestScope.getPathWithinServlet ();
+    if (sPath != null && !FilenameHelper.startsWithPathSeparatorChar (sPath))
+      sPath = '/' + sPath;
+
+    return new APIPath (aRequestScope.getHttpMethod (), sPath);
   }
 }
