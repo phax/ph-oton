@@ -28,6 +28,7 @@ import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.SimpleURL;
+import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -140,10 +141,21 @@ public class APIPath implements Serializable
   }
 
   @Nonnull
-  public static APIPath createFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static APIPath createForFilter (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // ensure leading "/"
-    String sPath = aRequestScope.getPathWithinServlet ();
+    String sPath = RequestHelper.getPathWithinServletContext (aRequestScope.getRequest ());
+    if (sPath != null && !FilenameHelper.startsWithPathSeparatorChar (sPath))
+      sPath = '/' + sPath;
+
+    return new APIPath (aRequestScope.getHttpMethod (), sPath);
+  }
+
+  @Nonnull
+  public static APIPath createForServlet (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    // ensure leading "/"
+    String sPath = RequestHelper.getPathWithinServlet (aRequestScope.getRequest ());
     if (sPath != null && !FilenameHelper.startsWithPathSeparatorChar (sPath))
       sPath = '/' + sPath;
 

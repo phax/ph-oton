@@ -77,7 +77,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
-    final APIPath aAPIPath = APIPath.createFromRequest (aRequestScope);
+    final APIPath aAPIPath = APIPath.createForServlet (aRequestScope);
     final EHttpMethod eHTTPMethod = aRequestScope.getHttpMethod ();
     final IAPIInvoker aAPIMgr = m_aFactory.get ();
     final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (aAPIPath);

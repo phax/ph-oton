@@ -16,6 +16,7 @@
  */
 package com.helger.photon.jetty;
 
+import java.io.IOException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -93,7 +94,7 @@ public class JettyRunner extends JettyStarter
                                          " - see log files");
   }
 
-  public synchronized void shutDownServer () throws Exception
+  public synchronized void shutDownServer () throws IOException, InterruptedException
   {
     if (m_aThread != null)
     {
