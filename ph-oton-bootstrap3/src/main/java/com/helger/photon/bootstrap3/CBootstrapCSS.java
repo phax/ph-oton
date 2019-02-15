@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap3CSSClasses for
-  // 3.3.7
+  // 3.4.1
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider AFFIX = DefaultCSSClassProvider.create ("affix");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
@@ -726,6 +726,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider RADIO_INLINE = DefaultCSSClassProvider.create ("radio-inline");
   public static final ICSSClassProvider RIGHT = DefaultCSSClassProvider.create ("right");
   public static final ICSSClassProvider ROW = DefaultCSSClassProvider.create ("row");
+  public static final ICSSClassProvider ROW_NO_GUTTERS = DefaultCSSClassProvider.create ("row-no-gutters");
   public static final ICSSClassProvider SHOW = DefaultCSSClassProvider.create ("show");
   public static final ICSSClassProvider SMALL = DefaultCSSClassProvider.create ("small");
   public static final ICSSClassProvider SR_ONLY = DefaultCSSClassProvider.create ("sr-only");
