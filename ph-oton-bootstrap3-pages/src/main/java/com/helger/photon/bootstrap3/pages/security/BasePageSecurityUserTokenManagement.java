@@ -472,7 +472,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                           aSelectedObject.getDisplayName ())
                                                               : EText.HEADER_CREATE.getDisplayText (aDisplayLocale)));
 
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USER.getDisplayText (aDisplayLocale))
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_USER.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCUserSelect (new RequestField (FIELD_USER,
                                                                                                aSelectedObject == null ? null
                                                                                                                        : aSelectedObject.getUserID ()),

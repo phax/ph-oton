@@ -54,10 +54,10 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
     LABEL_TOKEN_STRING ("Zugriffs-Token", "Access token"),
     HELPTEXT_TOKEN_STRING ("Hier kann ein existierender Zugriffs-Token (Mindestlänge von " +
                            TOKEN_STRING_MIN_LENGTH +
-                           ") von einem anderen System eingegeben werden. Wenn das Feld leer gelassen wird, wird ein neuer Zugriffs-Token erstellt.",
+                           ") von einem anderen System eingegeben werden. Wenn das Feld leer gelassen wird, wird ein neuer zufälliger Zugriffs-Token erstellt.",
                            "An existing access token (minimum length of " +
-                                                                                                                                                      TOKEN_STRING_MIN_LENGTH +
-                                                                                                                                                      ") from another system can be provided here. If the field stays empty, a new access token is created."),
+                                                                                                                                                                 TOKEN_STRING_MIN_LENGTH +
+                                                                                                                                                                 ") from another system can be provided here. If the field stays empty, a new random access token is created."),
     LABEL_ACCESS_TOKENS ("Zugriffs-Token", "Access tokens"),
     SHOW_REVOKED ("Zurückgezogen von {0} um {1}; Begründung: {2}", "Revoked by {0} on {1}; reason: {2}"),
     SHOW_INVALID_NOW ("Jetzt nicht mehr gültig", "Not valid now"),
