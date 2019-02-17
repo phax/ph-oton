@@ -61,6 +61,10 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
  * project. Currently the contained managers are:
  * <ul>
  * <li>{@link AuditManager}</li>
+ * <li>{@link UserManager}</li>
+ * <li>{@link RoleManager}</li>
+ * <li>{@link UserGroupManager}</li>
+ * <li>{@link UserTokenManager}</li>
  * </ul>
  *
  * @author Philip Helger
