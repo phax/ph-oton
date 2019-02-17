@@ -98,10 +98,9 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Invoking API '" + sPath + "'");
 
+    final StopWatch aSW = StopWatch.createdStarted ();
     try
     {
-      final StopWatch aSW = StopWatch.createdStarted ();
-
       // Global increment before invocation
       s_aStatsGlobalInvoke.increment ();
 
@@ -109,6 +108,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
       APISettings.beforeExecutionCallbacks ()
                  .forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
 
+      // Main invocation
       aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
 
       // Invoke after handler
@@ -117,20 +117,6 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
 
       // Increment statistics after successful call
       s_aStatsFunctionInvoke.increment (sPath);
-
-      // Long running API request?
-      final long nExecutionMillis = aSW.stopAndGetMillis ();
-      s_aStatsFunctionTimer.addTime (sPath, nExecutionMillis);
-      final long nLimitMS = APISettings.getLongRunningExecutionLimitTime ();
-      if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
-      {
-        // Long running execution
-        APISettings.longRunningExecutionCallbacks ()
-                   .forEach (aCB -> aCB.onLongRunningExecution (this,
-                                                                aInvokableDescriptor,
-                                                                aRequestScope,
-                                                                nExecutionMillis));
-      }
     }
     catch (final Throwable t)
     {
@@ -152,6 +138,22 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
         if (t instanceof Exception)
           throw (Exception) t;
         throw new Exception (t);
+      }
+    }
+    finally
+    {
+      // Long running API request?
+      final long nExecutionMillis = aSW.stopAndGetMillis ();
+      s_aStatsFunctionTimer.addTime (sPath, nExecutionMillis);
+      final long nLimitMS = APISettings.getLongRunningExecutionLimitTime ();
+      if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
+      {
+        // Long running execution
+        APISettings.longRunningExecutionCallbacks ()
+                   .forEach (aCB -> aCB.onLongRunningExecution (this,
+                                                                aInvokableDescriptor,
+                                                                aRequestScope,
+                                                                nExecutionMillis));
       }
     }
   }
