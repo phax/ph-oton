@@ -28,10 +28,13 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.html.hc.ext.HCExtHelper;
+import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap4.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.api.APISettings;
 import com.helger.photon.core.api.GlobalAPIInvoker;
 import com.helger.photon.core.api.IAPIAfterExecutionCallback;
@@ -56,8 +59,14 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
-    MSG_FACTORY ("Factory", "Factory"),
+    MSG_HTTP_METHOD ("Verb", "Verb"),
     MSG_URL ("Ziel-URL", "Target URL"),
+    MSG_FACTORY ("Factory", "Factory"),
+    MSG_REQUIRED_HEADERS ("Header", "Headers"),
+    MSG_REQUIRED_PARAMS ("Parameter", "Parameters"),
+    MSG_ALLOWED_MIME_TYPES ("MIME Typen", "MIME types"),
+    MSG_HAS_EXECUTION_FILTER ("Filter?", "Filter?"),
+    MSG_HAS_EXCEPTION_MAPPER ("Exception?", "Exception?"),
     MSG_CALLBACKS ("Callbacks", "Callbacks"),
     MSG_TYPE ("Typ", "Type"),
     MSG_CALLBACK ("Callback", "Callback"),
@@ -113,12 +122,25 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
 
     // Show all registered AJAX functions
     {
-      final HCTable aTable = new HCTable (new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                          new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale))).setID (getID () + "-api");
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_HTTP_METHOD.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_REQUIRED_HEADERS.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_REQUIRED_PARAMS.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_ALLOWED_MIME_TYPES.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_HAS_EXECUTION_FILTER.getDisplayText (aDisplayLocale)),
+                                          new DTCol (EText.MSG_HAS_EXCEPTION_MAPPER.getDisplayText (aDisplayLocale))).setID (getID () + "-api");
       for (final IAPIDescriptor aDescriptor : aMgr.getAllAPIDescriptors ())
       {
-        aTable.addBodyRow ().addCells (aDescriptor.getPathDescriptor ().getAsURLString (),
-                                       aDescriptor.getExecutorFactory ().toString ());
+        final HCRow aRow = aTable.addBodyRow ();
+        aRow.addCells (aDescriptor.getHTTPMethod ().getName (),
+                       aDescriptor.getPathDescriptor ().getAsURLString (),
+                       aDescriptor.getExecutorFactory ().toString ());
+        aRow.addCell (HCExtHelper.list2divList (aDescriptor.requiredHeaders ()));
+        aRow.addCell (HCExtHelper.list2divList (aDescriptor.requiredParams ()));
+        aRow.addCell (HCExtHelper.list2divList (aDescriptor.allowedMimeTypes ()));
+        aRow.addCell (EPhotonCoreText.getYesOrNo (aDescriptor.hasExecutionFilter (), aDisplayLocale));
+        aRow.addCell (EPhotonCoreText.getYesOrNo (aDescriptor.hasExceptionMapper (), aDisplayLocale));
       }
       aTab.addChild (aTable);
 
