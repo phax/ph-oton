@@ -138,7 +138,7 @@ public final class DataTablesServerDataRow implements Serializable
   }
 
   @Nonnull
-  @ReturnsMutableObject ("speed")
+  @ReturnsMutableObject
   public ICommonsList <DataTablesServerDataCell> directGetAllCells ()
   {
     return m_aCells;

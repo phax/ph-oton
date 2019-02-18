@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -24,7 +26,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.html.jscode.JSArray;
 
-public class DataTablesOrder
+public class DataTablesOrder implements Serializable
 {
   private final ICommonsList <DataTablesOrderColumn> m_aColumns = new CommonsArrayList <> ();
 

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -29,7 +31,7 @@ import com.helger.html.jscode.JSArray;
  *
  * @author Philip Helger
  */
-public final class DataTablesOrderColumn
+public final class DataTablesOrderColumn implements Serializable
 {
   private final int m_nIndex;
   private final ESortOrder m_eSortOrder;

@@ -26,6 +26,11 @@ import com.helger.html.jscode.JSVar;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.IDataTablesPlugin;
 
+/**
+ * Abstract implementation of {@link IDataTablesPlugin}.
+ * 
+ * @author Philip Helger
+ */
 public abstract class AbstractDataTablesPlugin implements IDataTablesPlugin
 {
   private final String m_sName;

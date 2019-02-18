@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import java.io.Serializable;
+
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -29,7 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public final class DTSSRequestDataSearch
+public final class DTSSRequestDataSearch implements Serializable
 {
   private final String [] m_aSearchTexts;
   private final boolean m_bRegEx;

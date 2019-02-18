@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -32,7 +33,7 @@ import com.helger.html.jscode.JSArray;
  * @author Philip Helger
  * @since 8.1.2
  */
-public interface IDataTablesLengthMenu
+public interface IDataTablesLengthMenu extends Serializable
 {
   /**
    * @return <code>true</code> if no entry is contained, <code>false</code>

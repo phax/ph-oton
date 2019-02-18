@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -30,7 +32,7 @@ import com.helger.html.jscode.JSVar;
  *
  * @author Philip Helger
  */
-public interface IDataTablesPlugin
+public interface IDataTablesPlugin extends Serializable
 {
   /**
    * @return The name used as the key for the JS options.

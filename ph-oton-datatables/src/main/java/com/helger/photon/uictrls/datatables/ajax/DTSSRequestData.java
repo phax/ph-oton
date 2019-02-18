@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +35,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public final class DTSSRequestData
+public final class DTSSRequestData implements Serializable
 {
   private final int m_nDraw;
   private final int m_nDisplayStart;

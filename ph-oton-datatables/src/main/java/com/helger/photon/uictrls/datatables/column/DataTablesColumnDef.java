@@ -16,6 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -46,7 +47,7 @@ import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
  *
  * @author Philip Helger
  */
-public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDef>
+public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDef>, Serializable
 {
   public static final String DEFAULT_CELLTYPE = "td";
   public static final boolean DEFAULT_ORDERABLE = true;

@@ -20,32 +20,41 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.helger.commons.mock.CommonsTestHelper;
+
 public final class DataTablesDomTest
 {
   @Test
   public void testBasic ()
   {
-    assertEquals ("", new DataTablesDom ().getAsString ());
-    assertEquals ("t", new DataTablesDom ().addTable ().getAsString ());
+    DataTablesDom aDTD = new DataTablesDom ();
+    assertEquals ("", aDTD.getAsString ());
+    CommonsTestHelper.testDefaultSerialization (aDTD);
+
+    aDTD = new DataTablesDom ().addTable ();
+    assertEquals ("t", aDTD.getAsString ());
+    CommonsTestHelper.testDefaultSerialization (aDTD);
+
+    aDTD = new DataTablesDom ().openDiv ("row hidden-print")
+                               .openDiv ("col-xs-6")
+                               .addLengthMenu ()
+                               .closeDiv ()
+                               .openDiv ("col-xs-6")
+                               .addFiltering ()
+                               .closeDiv ()
+                               .addProcessing ()
+                               .closeDiv ()
+                               .addTable ()
+                               .openDiv ("row hidden-print")
+                               .openDiv ("col-xs-12 col-sm-4")
+                               .addInformationSummary ()
+                               .closeDiv ()
+                               .openDiv ("col-xs-12 col-sm-8")
+                               .addPagination ()
+                               .closeDiv ()
+                               .closeDiv ();
     assertEquals ("<'row hidden-print'<'col-xs-6'l><'col-xs-6'f>r>t<'row hidden-print'<'col-xs-12 col-sm-4'i><'col-xs-12 col-sm-8'p>>",
-                  new DataTablesDom ().openDiv ("row hidden-print")
-                                      .openDiv ("col-xs-6")
-                                      .addLengthMenu ()
-                                      .closeDiv ()
-                                      .openDiv ("col-xs-6")
-                                      .addFiltering ()
-                                      .closeDiv ()
-                                      .addProcessing ()
-                                      .closeDiv ()
-                                      .addTable ()
-                                      .openDiv ("row hidden-print")
-                                      .openDiv ("col-xs-12 col-sm-4")
-                                      .addInformationSummary ()
-                                      .closeDiv ()
-                                      .openDiv ("col-xs-12 col-sm-8")
-                                      .addPagination ()
-                                      .closeDiv ()
-                                      .closeDiv ()
-                                      .getAsString ());
+                  aDTD.getAsString ());
+    CommonsTestHelper.testDefaultSerialization (aDTD);
   }
 }

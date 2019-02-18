@@ -30,6 +30,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -48,13 +49,13 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
 
   public DataTablesDom ()
   {
-    m_aElements = new CommonsArrayList<> ();
+    m_aElements = new CommonsArrayList <> ();
   }
 
   public DataTablesDom (@Nonnull final DataTablesDom aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    m_aElements = new CommonsArrayList<> (aOther.m_aElements);
+    m_aElements = new CommonsArrayList <> (aOther.m_aElements);
   }
 
   @CheckForSigned
@@ -306,8 +307,7 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   {
     if (m_nOpenDivs != 0)
       LOGGER.error ("The DIVs are not balanced: " +
-                       (m_nOpenDivs > 0 ? m_nOpenDivs + " DIVs are open!"
-                                        : m_nOpenDivs + " DIVs too many are closed!"));
+                    (m_nOpenDivs > 0 ? m_nOpenDivs + " DIVs are open!" : m_nOpenDivs + " DIVs too many are closed!"));
     return StringHelper.getImploded (m_aElements);
   }
 
@@ -315,6 +315,23 @@ public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
   public DataTablesDom getClone ()
   {
     return new DataTablesDom (this);
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final DataTablesDom rhs = (DataTablesDom) o;
+    return m_aElements.equals (rhs.m_aElements);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aElements).getHashCode ();
   }
 
   @Override
