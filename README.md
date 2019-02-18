@@ -33,7 +33,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.1.3 - work in progress
+* v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1
     * Bootstrap 4 `BootstrapInputGroup` API was reworked, so that the parent/child relationship holds true (incompatible)
@@ -176,7 +176,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.1.2</version>
+        <version>8.1.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
