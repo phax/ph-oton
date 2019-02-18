@@ -101,7 +101,7 @@ public interface ISimpleWebExecutionContext
   /**
    * @return <code>true</code> if a user is logged in, and if the current user
    *         is the special "Administrator" user. This is a shortcut to
-   *         <code>getLoggedInUser() != null && getLoggedInUser().isAdmin()</code>
+   *         <code>getLoggedInUser() != null &amp;&amp; getLoggedInUser().isAdmin()</code>
    * @since 8.1.3
    */
   boolean isLoggedInUserAdministrator ();
