@@ -223,8 +223,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * Set the format string to be used. This is only necessary, if the default
-   * one from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   * Set the format string to be used. This is only necessary, if the default one
+   * from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
    *
    * @param sFormat
    *        Format string to be used. May be <code>null</code>.
@@ -620,7 +620,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   @Override
   @Nonnull
   @OverrideOnDemand
-  protected HCDiv createGroupPrepend ()
+  public HCDiv createGroupPrepend ()
   {
     // Make the whole prepend thing a toggle
     final HCDiv ret = super.createGroupPrepend ();
