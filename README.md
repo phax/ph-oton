@@ -33,6 +33,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.1.4 - work in progress
+    * Updated to Jetty 9.4.15.v20190215
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1
