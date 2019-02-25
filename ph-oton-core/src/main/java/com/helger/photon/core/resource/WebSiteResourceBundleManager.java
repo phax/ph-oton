@@ -33,7 +33,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.charset.CharsetHelper;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -306,13 +305,13 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
 
     // Create a copy for modification
     boolean bCreatedAnyBundle = false;
-    final ICommonsList <WebSiteResourceWithCondition> aCopy = CollectionHelper.newList (aList);
+    final ICommonsList <WebSiteResourceWithCondition> aCopy = new CommonsArrayList <> (aList);
     while (aCopy.isNotEmpty ())
     {
       final WebSiteResourceWithCondition aFirst = aCopy.removeFirst ();
 
       // Find all resources that can be bundled with aFirst
-      final ICommonsList <WebSiteResourceWithCondition> aBundleResources = CollectionHelper.newList (aFirst);
+      final ICommonsList <WebSiteResourceWithCondition> aBundleResources = new CommonsArrayList <> (aFirst);
       while (aCopy.isNotEmpty ())
       {
         final WebSiteResourceWithCondition aBundleCandidate = aCopy.getFirst ();
