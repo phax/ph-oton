@@ -168,11 +168,11 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
                                             @Nonnull final BootstrapFormGroup aFormGroup,
                                             @Nonnull final Locale aDisplayLocale)
   {
-    final EBootstrapFormType eFormType = aForm.getFormType ();
     final HCFormLabel aLabel = aFormGroup.getLabel ();
     final IHCNode aCtrls = aFormGroup.getCtrl ();
     final IHCNode aHelpText = aFormGroup.getHelpText ();
     final IErrorList aErrorList = aFormGroup.getErrorList ();
+    final boolean bIsInline = aForm.getFormType ().isInline ();
 
     final ICommonsList <IHCControl <?>> aAllCtrls = HCCtrlHelper.getAllHCControls (aCtrls);
     final IHCControl <?> aFirstControl;
@@ -214,7 +214,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     {
       aHelpTextNode = createHelpTextNode (aHelpText);
 
-      if (eFormType == EBootstrapFormType.INLINE)
+      if (bIsInline)
         aHelpTextNode.addClass (CBootstrapCSS.SR_ONLY);
     }
 
@@ -238,58 +238,115 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
 
       final HCDiv aDivFormCheck = new HCDiv ().addClass (CBootstrapCSS.FORM_CHECK).addChild (aCtrls);
 
-      if (aLabel != null)
+      if (bIsInline)
       {
-        aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
-        aDivFormCheck.addChild (aLabel);
-
-        // We have a label for a control
-        modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
-      }
-
-      // Add an offset to the controls
-      final HCDiv aDivRight = new HCDiv ().addChild (aDivFormCheck).addChild (aErrorListNode).addChild (aHelpTextNode);
-
-      aForm.getLeft ().applyOffsetTo (aDivRight);
-      aForm.getRight ().applyTo (aDivRight);
-
-      aFinalNode = new BootstrapRow ().addClass (CBootstrapCSS.FORM_GROUP).addChild (aDivRight);
-    }
-    else
-    {
-      // Other control - add in form group
-      aFinalNode = new BootstrapRow ();
-      aFinalNode.addClass (CBootstrapCSS.FORM_GROUP);
-
-      final HCDiv aDivRight = new HCDiv ().addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
-      aForm.getRight ().applyTo (aDivRight);
-
-      if (aLabel == null || aLabel.hasNoChildren ())
-      {
-        // No label - just add controls
-
-        // Add an offset to the controls
-        aForm.getLeft ().applyOffsetTo (aDivRight);
-
-        aFinalNode.addChild (aDivRight);
-      }
-      else
-      {
-        // We have a label
-
-        // Screen reader only....
-        if (eFormType == EBootstrapFormType.INLINE)
-          aLabel.addClass (CBootstrapCSS.SR_ONLY);
-
-        if (aFirstControl != null)
+        if (aLabel != null)
         {
+          aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
+          aDivFormCheck.addChild (aLabel);
+
           // We have a label for a control
           modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
         }
 
-        aForm.getLeft ().applyTo (aLabel);
+        aFinalNode = aDivFormCheck.addClass (CBootstrapCSS.MR_SM_2).addChild (aErrorListNode).addChild (aHelpTextNode);
+      }
+      else
+      {
+        if (aLabel != null)
+        {
+          aLabel.addClass (CBootstrapCSS.FORM_CHECK_LABEL);
+          aDivFormCheck.addChild (aLabel);
 
-        aFinalNode.addChildren (aLabel, aDivRight);
+          // We have a label for a control
+          modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
+        }
+
+        // Add an offset to the controls
+        final HCDiv aDivRight = new HCDiv ().addChild (aDivFormCheck)
+                                            .addChild (aErrorListNode)
+                                            .addChild (aHelpTextNode);
+
+        if (!bIsInline)
+        {
+          aForm.getLeft ().applyOffsetTo (aDivRight);
+          aForm.getRight ().applyTo (aDivRight);
+        }
+
+        aFinalNode = bIsInline ? new HCDiv () : new BootstrapRow ();
+        aFinalNode.addClass (CBootstrapCSS.FORM_GROUP).addChild (aDivRight);
+      }
+    }
+    else
+    {
+      // Other control
+      if (bIsInline)
+      {
+        if (aFirstControl != null)
+          aFirstControl.addClass (CBootstrapCSS.MR_SM_2);
+
+        final HCDiv aDivRight = new HCDiv ().addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
+        if (aLabel == null || aLabel.hasNoChildren ())
+        {
+          // No label - just add controls
+          aFinalNode = aDivRight;
+        }
+        else
+        {
+          // We have a label
+
+          // Screen reader only....
+          aLabel.addClass (CBootstrapCSS.SR_ONLY);
+
+          if (aFirstControl != null)
+          {
+            // We have a label for a control
+            modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
+          }
+
+          // DIV is unnecessary
+          aFinalNode = new HCDiv ().addChild (aLabel).addChild (aDivRight);
+        }
+      }
+      else
+      {
+        // add in form group
+        aFinalNode = new BootstrapRow ().addClass (CBootstrapCSS.FORM_GROUP);
+
+        final HCDiv aDivRight = new HCDiv ().addChild (aCtrls).addChild (aErrorListNode).addChild (aHelpTextNode);
+        aForm.getRight ().applyTo (aDivRight);
+
+        if (aLabel == null || aLabel.hasNoChildren ())
+        {
+          // No label - just add controls
+
+          if (!bIsInline)
+          {
+            // Add an offset to the controls
+            aForm.getLeft ().applyOffsetTo (aDivRight);
+          }
+
+          aFinalNode.addChild (aDivRight);
+        }
+        else
+        {
+          // We have a label
+
+          // Screen reader only....
+          if (bIsInline)
+            aLabel.addClass (CBootstrapCSS.SR_ONLY);
+
+          if (aFirstControl != null)
+          {
+            // We have a label for a control
+            modifyFirstControlIfLabelIsPresent (aLabel, aFirstControl);
+          }
+
+          if (!bIsInline)
+            aForm.getLeft ().applyTo (aLabel);
+
+          aFinalNode.addChild (aLabel).addChild (aDivRight);
+        }
       }
     }
 

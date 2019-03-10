@@ -43,4 +43,9 @@ public enum EBootstrapFormType implements ICSSClassProvider
   {
     return m_aCSSClass == null ? null : m_aCSSClass.getCSSClass ();
   }
+
+  public boolean isInline ()
+  {
+    return this == INLINE;
+  }
 }
