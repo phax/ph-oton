@@ -281,7 +281,8 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * @param aRenderer
    *        The renderer to use
    * @param aDisplayMenuItemIDs
-   *        The menu items to display as a map from menu item ID to expanded state
+   *        The menu items to display as a map from menu item ID to expanded
+   *        state
    * @return Never <code>null</code>.
    * @param <T>
    *        HC list type to be instantiated
