@@ -34,7 +34,8 @@ Contained subprojects are:
 ## News and noteworthy
 
 * v8.1.4 - work in progress
-    * Updated to Jetty 9.4.15.v20190215
+    * Improved B4 InputGroup API for easier extension
+    * Updated to Jetty 9.4.15
     * Improved Bootstrap 4 inline form UI creation
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
@@ -187,6 +188,8 @@ Contained subprojects are:
   </dependencyManagement>
 ```
 
+### Bootstrap 3
+
 To use Bootstrap 3 front end use:
 
 ```xml
@@ -198,6 +201,10 @@ To use Bootstrap 3 front end use:
   </dependencies>
 ```
 
+See the submodule `ph-oton-bootstrap3-demo` for a working example project with Bootstrap 3 UI.
+
+### Bootstrap 4
+
 To use Bootstrap 4 front end use:
 
 ```xml
@@ -208,6 +215,8 @@ To use Bootstrap 4 front end use:
     </dependency>
   </dependencies>
 ```
+
+See the submodule `ph-oton-bootstrap4-demo` for a working example project with Bootstrap 4 UI.
 
 ---
 
