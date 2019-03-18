@@ -33,13 +33,14 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.1.4 - work in progress
+* v8.2.0 - work in progress
     * Improved B4 InputGroup API for easier extension
     * Updated to Jetty 9.4.15
     * Improved Bootstrap 4 inline form UI creation
     * Improved API path ambiguity resolution API (interface `IAPIPathAmbiguityResolver` et. al.)
     * Added new API Interface `IAPIRegistry` and let `GlobalAPIInvoker` implement it
     * Clearly separate between `AjaxRegistry` and `AjaxInvoker` similar to new API API 
+    * Reworked module structure (created `ph-oton-app`, `ph-oton-ajax`, `ph-oton-api`)
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1
