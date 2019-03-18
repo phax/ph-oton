@@ -158,6 +158,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-oton-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-oton-basic</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -330,6 +335,7 @@
     <module>ph-oton-atom</module>
     <module>ph-oton-app</module>
     <module>ph-oton-ajax</module>
+    <module>ph-oton-api</module>
     <module>ph-oton-basic</module>
     <module>ph-oton-security</module>
     <module>ph-oton-exchange</module>

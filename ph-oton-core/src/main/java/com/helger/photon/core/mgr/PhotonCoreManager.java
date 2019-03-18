@@ -50,14 +50,12 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
   public static final String FAILED_MAILS_XML = "failedmails.xml";
   public static final String GO_XML = "go.xml";
   public static final String SMTP_SETTINGS_XML = "smtpsettings.xml";
-  public static final String WEBSITE_RESOURCE_BUNDLES_XML = "resource-bundles.xml";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonCoreManager.class);
 
   private FailedMailQueueWithDAO m_aFailedMailQueue;
   private GoMappingManager m_aGoMappingMgr;
   private NamedSMTPSettingsManager m_aSMTPSettingsMgr;
-  private WebSiteResourceBundleManager m_aWebSiteResourceBundleMgr;
 
   @Deprecated
   @UsedViaReflection
@@ -75,8 +73,6 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
       ScopedMailAPI.getInstance ().setFailedMailQueue (m_aFailedMailQueue);
 
       m_aGoMappingMgr = new GoMappingManager (GO_XML);
-
-      m_aWebSiteResourceBundleMgr = new WebSiteResourceBundleManager (WEBSITE_RESOURCE_BUNDLES_XML);
 
       LOGGER.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }
@@ -108,11 +104,5 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
   public static GoMappingManager getGoMappingMgr ()
   {
     return getInstance ().m_aGoMappingMgr;
-  }
-
-  @Nonnull
-  public static WebSiteResourceBundleManager getWebSiteResourceBundleMgr ()
-  {
-    return getInstance ().m_aWebSiteResourceBundleMgr;
   }
 }

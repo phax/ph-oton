@@ -24,12 +24,13 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>8.2.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-core</artifactId>
+  <artifactId>ph-oton-api</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-core</name>
-  <description>ph-oton core</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-core</url>
+  <name>ph-oton-api</name>
+  <description>ph-oton API stuff</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-api</url>
   <inceptionYear>2014</inceptionYear>
+
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -37,12 +38,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
+
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
-  
+
   <developers>
     <developer>
       <id>philip</id>
@@ -51,63 +52,29 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
-  
+
   <dependencies>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-html</artifactId>
-    </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-app</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-ajax</artifactId>
+      <artifactId>ph-xservlet</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-basic</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-smtp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-http</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schedule</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-atom</artifactId>
-      <optional>true</optional>
-    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <optional>true</optional>
+      <scope>test</scope>
     </dependency>
-    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
+
   <build>
     <plugins>
       <plugin>
@@ -116,25 +83,10 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.photon.core</Automatic-Module-Name>
-            <Export-Package>com.helger.photon.core.*</Export-Package>
+            <Automatic-Module-Name>com.helger.photon.api</Automatic-Module-Name>
+            <Export-Package>com.helger.photon.api.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI</Provide-Capability>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/schemas/servlet/**</exclude>
-            <exclude>src/test/resources/res/**</exclude>
-            <exclude>**/NOTICE</exclude>
-            <exclude>**/LICENSE</exclude>
-            <exclude>**/*.dat</exclude>
-          </excludes>
         </configuration>
       </plugin>
     </plugins>

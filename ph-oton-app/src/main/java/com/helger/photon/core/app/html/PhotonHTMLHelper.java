@@ -44,6 +44,7 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.photon.core.PhotonAppSettings;
 import com.helger.photon.core.resource.IWebSiteResourceBundleProvider;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceWithCondition;
@@ -81,7 +82,7 @@ public final class PhotonHTMLHelper
                                     @Nonnull final ICSSPathProvider aCSS,
                                     final boolean bRegular)
   {
-    final HCLink aLink = HCLink.createCSSLink (PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular))
+    final HCLink aLink = HCLink.createCSSLink (PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular))
                                .setMedia (aCSS.getMediaList ())
                                .setPathProvider (aCSS);
 
@@ -97,9 +98,7 @@ public final class PhotonHTMLHelper
                                    @Nonnull final IJSPathProvider aJS,
                                    final boolean bRegular)
   {
-    final HCScriptFile aScript = new HCScriptFile ().setSrc (PhotonHTMLSettings.getJSPath (aRequestScope,
-                                                                                           aJS,
-                                                                                           bRegular))
+    final HCScriptFile aScript = new HCScriptFile ().setSrc (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular))
                                                     .setPathProvider (aJS);
 
     final String sConditionalComment = aJS.getConditionalComment ();
@@ -153,7 +152,7 @@ public final class PhotonHTMLHelper
    * @param bMergeJS
    *        <code>true</code> to aggregate JS entries.
    * @param aWSRBMgr
-   *        The rsource bundle provider. May not be <code>null</code>.
+   *        The resource bundle provider. May not be <code>null</code>.
    */
   public static void mergeExternalCSSAndJSNodes (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                  @Nonnull final HCHead aHead,

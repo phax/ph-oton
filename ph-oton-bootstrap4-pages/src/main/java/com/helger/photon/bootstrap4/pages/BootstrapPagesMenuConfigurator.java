@@ -66,6 +66,7 @@ import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoSystemPropertie
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoThirdPartyLibraries;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoThreads;
 import com.helger.photon.bootstrap4.pages.utils.BasePageUtilsPortChecker;
+import com.helger.photon.core.PhotonAppManager;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.resource.WebSiteResourceBundleManager;
@@ -266,7 +267,7 @@ public final class BootstrapPagesMenuConfigurator
                                                                       aParent,
                                                                       aDisplayFilter,
                                                                       PhotonCoreManager.getGoMappingMgr (),
-                                                                      PhotonCoreManager.getWebSiteResourceBundleMgr ());
+                                                                      PhotonAppManager.getWebSiteResourceBundleMgr ());
   }
 
   @Nonnull

@@ -39,6 +39,7 @@ import com.helger.css.media.ECSSMedium;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.css.ICSSProvider;
+import com.helger.photon.core.PhotonAppSettings;
 import com.helger.photon.core.app.resource.CSSResourceSet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -82,7 +83,7 @@ public final class PhotonCSS
         }
 
         // Just a consistency check to see if the resource is valid
-        final IReadableResource aChildRes = PhotonHTMLSettings.getURIToURLConverter ().getAsResource (sPath);
+        final IReadableResource aChildRes = PhotonAppSettings.getURIToURLConverter ().getAsResource (sPath);
         if (!aChildRes.exists ())
           throw new IllegalStateException ("The provided global CSS resource '" +
                                            sPath +
@@ -101,12 +102,12 @@ public final class PhotonCSS
             if (eMedium == null)
             {
               LOGGER.warn ("CSS item '" +
-                              sPath +
-                              "' in " +
-                              aRes.getPath () +
-                              " has an invalid medium '" +
-                              sMedium +
-                              "' - ignoring");
+                           sPath +
+                           "' in " +
+                           aRes.getPath () +
+                           " has an invalid medium '" +
+                           sMedium +
+                           "' - ignoring");
               continue;
             }
             aMediaList.addMedium (eMedium);

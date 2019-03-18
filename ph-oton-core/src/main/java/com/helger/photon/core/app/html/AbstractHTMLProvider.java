@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.app.html;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -172,7 +171,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     // Extract and merge all inline out-of-band nodes
     if (aConversionSettings.isExtractOutOfBandNodes ())
     {
-      final List <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
+      final ICommonsList <IHCNode> aOOBNodes = aHtml.getAllOutOfBandNodesWithMergedInlineNodes ();
       aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
     }
 

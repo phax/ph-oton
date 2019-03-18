@@ -36,6 +36,7 @@ import com.helger.html.js.JSFilenameHelper;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.html.resource.js.IJSProvider;
+import com.helger.photon.core.PhotonAppSettings;
 import com.helger.photon.core.app.resource.JSResourceSet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -79,7 +80,7 @@ public final class PhotonJS
         }
 
         // Just a consistency check to see if the resource is valid
-        final IReadableResource aChildRes = PhotonHTMLSettings.getURIToURLConverter ().getAsResource (sPath);
+        final IReadableResource aChildRes = PhotonAppSettings.getURIToURLConverter ().getAsResource (sPath);
         if (!aChildRes.exists ())
           throw new IllegalStateException ("The provided global JS resource '" +
                                            sPath +

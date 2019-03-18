@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.CGlobal;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.state.EContinue;
-import com.helger.photon.core.mgr.PhotonCoreManager;
+import com.helger.photon.core.PhotonAppManager;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -57,7 +57,7 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
     // Allow only valid bundle IDs
     final String sBundleID = _getBundleIDFromFilename (aRequestScope.attrs ()
                                                                     .getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
-    if (!PhotonCoreManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
+    if (!PhotonAppManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
     {
       LOGGER.info ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -81,8 +81,8 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
                                     @Nonnull final String sFilename) throws IOException
   {
     final String sBundleID = _getBundleIDFromFilename (sFilename);
-    final WebSiteResourceBundleSerialized aBundle = PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                     .getResourceBundleOfID (sBundleID);
+    final WebSiteResourceBundleSerialized aBundle = PhotonAppManager.getWebSiteResourceBundleMgr ()
+                                                                    .getResourceBundleOfID (sBundleID);
 
     final int nCachingDays = getCachingDays ();
     aUnifiedResponse.enableCaching (CGlobal.SECONDS_PER_DAY * nCachingDays)

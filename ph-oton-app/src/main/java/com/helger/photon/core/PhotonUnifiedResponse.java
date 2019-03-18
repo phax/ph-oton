@@ -64,7 +64,6 @@ import com.helger.json.serialize.IJsonWriterSettings;
 import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
-import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.servlet.mock.MockHttpServletRequest;
 import com.helger.servlet.request.RequestHelper;
@@ -285,12 +284,12 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
         aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
-                                      PhotonHTMLSettings.getCSSPath (aRequestScope, aCSS, bRegular)
-                                                        .getAsStringWithEncodedParameters ());
+                                      PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular)
+                                                       .getAsStringWithEncodedParameters ());
 
       for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
-        aSpecialNodes.addExternalJS (PhotonHTMLSettings.getJSPath (aRequestScope, aJS, bRegular)
-                                                       .getAsStringWithEncodedParameters ());
+        aSpecialNodes.addExternalJS (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular)
+                                                      .getAsStringWithEncodedParameters ());
     }
 
     @Nonnull

@@ -27,10 +27,22 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.photon.core.url.IWebURIToURLConverter;
+import com.helger.photon.core.url.StreamOrLocalURIToURLConverter;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Global photon-app settings
+ * Global photon-app settings. It contains the following settings:
+ * <ul>
+ * <li>The converter from URI to URL</li>
+ * <li>To merge all CSS together or not to merge them</li>
+ * <li>To merge all JS together or not to merge them</li>
+ * <li>The name of the resource bundle servlet</li>
+ * </ul>
  *
  * @author Philip Helger
  */
@@ -42,6 +54,9 @@ public final class PhotonAppSettings
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonAppSettings.class);
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+
+  @GuardedBy ("s_aRWLock")
+  private static IWebURIToURLConverter s_aURIToURLConverter = new StreamOrLocalURIToURLConverter ();
 
   /** Merge CSS resources into one (if possible) */
   @GuardedBy ("s_aRWLock")
@@ -56,6 +71,37 @@ public final class PhotonAppSettings
 
   private PhotonAppSettings ()
   {}
+
+  @Nonnull
+  public static IWebURIToURLConverter getURIToURLConverter ()
+  {
+    return s_aRWLock.readLocked ( () -> s_aURIToURLConverter);
+  }
+
+  public static void setURIToURLConverter (@Nonnull final IWebURIToURLConverter aURIToURLConverter)
+  {
+    ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
+
+    s_aRWLock.writeLocked ( () -> s_aURIToURLConverter = aURIToURLConverter);
+  }
+
+  @Nonnull
+  public static ISimpleURL getCSSPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @Nonnull final ICSSPathProvider aCSS,
+                                       final boolean bRegular)
+  {
+    final String sPath = aCSS.getCSSItemPath (bRegular);
+    return getURIToURLConverter ().getAsURL (aRequestScope, sPath);
+  }
+
+  @Nonnull
+  public static ISimpleURL getJSPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                      @Nonnull final IJSPathProvider aJS,
+                                      final boolean bRegular)
+  {
+    final String sPath = aJS.getJSItemPath (bRegular);
+    return getURIToURLConverter ().getAsURL (aRequestScope, sPath);
+  }
 
   /**
    * @return <code>true</code> to merge CSS resources if possible or
@@ -91,6 +137,10 @@ public final class PhotonAppSettings
         LOGGER.info (bMergeJSResources ? "Merging JS resources" : "Using separate JS resources");
   }
 
+  /**
+   * @return The name of the resource bundle servlet without a leading nor a
+   *         trailing slash. Neither <code>null</code> nor empty.
+   */
   @Nonnull
   @Nonempty
   public static String getResourceBundleServletName ()

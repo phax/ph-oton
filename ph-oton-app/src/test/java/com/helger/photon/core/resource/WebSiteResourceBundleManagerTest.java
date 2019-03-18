@@ -27,8 +27,8 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
-import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.core.mock.PhotonCoreTestRule;
+import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.core.PhotonAppManager;
 
 /**
  * Test class for class {@link WebSiteResourceBundleManager}.
@@ -38,16 +38,16 @@ import com.helger.photon.core.mock.PhotonCoreTestRule;
 public final class WebSiteResourceBundleManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonCoreTestRule ();
+  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
 
   @Test
   public void testBasicJS ()
   {
     final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
-    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("/res/serverlog.js"), true));
-    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("/res/stacktrace.js"), true));
-    final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                                     .getResourceBundles (aList, true);
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("res/serverlog.js"), true));
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("res/stacktrace.js"), true));
+    final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonAppManager.getWebSiteResourceBundleMgr ()
+                                                                                    .getResourceBundles (aList, true);
     assertNotNull (aBundles);
     assertEquals (1, aBundles.size ());
   }
@@ -56,10 +56,10 @@ public final class WebSiteResourceBundleManagerTest
   public void testBasicCSS ()
   {
     final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
-    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("/res/animate.css"), true));
-    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("/res/famfam.css"), true));
-    final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonCoreManager.getWebSiteResourceBundleMgr ()
-                                                                                     .getResourceBundles (aList, true);
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("res/animate.css"), true));
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("res/famfam.css"), true));
+    final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonAppManager.getWebSiteResourceBundleMgr ()
+                                                                                    .getResourceBundles (aList, true);
     assertNotNull (aBundles);
     assertEquals (1, aBundles.size ());
   }

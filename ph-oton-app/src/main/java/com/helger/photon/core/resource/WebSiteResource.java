@@ -49,7 +49,7 @@ import com.helger.css.decl.visit.AbstractModifyingCSSUrlVisitor;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
-import com.helger.photon.core.app.html.PhotonHTMLSettings;
+import com.helger.photon.core.PhotonAppSettings;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
@@ -89,7 +89,7 @@ public class WebSiteResource
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
 
-    m_aResource = PhotonHTMLSettings.getURIToURLConverter ().getAsResource (sPath);
+    m_aResource = PhotonAppSettings.getURIToURLConverter ().getAsResource (sPath);
     m_bResourceExists = m_aResource.exists ();
 
     // No hash for external resources
@@ -208,9 +208,9 @@ public class WebSiteResource
         // Remove the filename from the path
         // Not using a requestScope is okay here, because we don't want to link
         // anything right now
-        final String sBasePath = FilenameHelper.getPath (PhotonHTMLSettings.getURIToURLConverter ()
-                                                                           .getAsURL (m_sPath)
-                                                                           .getAsStringWithEncodedParameters ());
+        final String sBasePath = FilenameHelper.getPath (PhotonAppSettings.getURIToURLConverter ()
+                                                                          .getAsURL (m_sPath)
+                                                                          .getAsStringWithEncodedParameters ());
         return _readAndParseCSS (m_aResource, sBasePath, bRegular);
       default:
         throw new IllegalStateException ("Unsupported resource type " + m_eResourceType);
@@ -251,9 +251,9 @@ public class WebSiteResource
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
     // long
     final String sVersion = m_sContentHash.length () >= 16 ? m_sContentHash.substring (0, 16) : "";
-    return PhotonHTMLSettings.getURIToURLConverter ()
-                             .getAsURL (aRequestScope, m_sPath)
-                             .addIf ("version", sVersion, StringHelper::hasText);
+    return PhotonAppSettings.getURIToURLConverter ()
+                            .getAsURL (aRequestScope, m_sPath)
+                            .addIf ("version", sVersion, StringHelper::hasText);
   }
 
   @Override
