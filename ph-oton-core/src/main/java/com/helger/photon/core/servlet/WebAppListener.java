@@ -71,7 +71,7 @@ import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
 import com.helger.photon.core.api.GlobalAPIInvoker;
-import com.helger.photon.core.api.IAPIInvoker;
+import com.helger.photon.core.api.IAPIRegistry;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
@@ -347,8 +347,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
-   * @return The string value of the <b>no-startup-info</b> init-parameter. May be
-   *         <code>null</code> if no such init-parameter is present.
+   * @return The string value of the <b>no-startup-info</b> init-parameter. May
+   *         be <code>null</code> if no such init-parameter is present.
    */
   @Nullable
   @OverrideOnDemand
@@ -360,16 +360,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /**
    * Get the value of the servlet context init-parameter that represents the
    * <b>{@value #INIT_PARAMETER_SERVER_URL_PRODUCTION}</b> or
-   * <b>{@value #INIT_PARAMETER_SERVER_URL}</b> flag. This value is than converted
-   * to a boolean internally.
+   * <b>{@value #INIT_PARAMETER_SERVER_URL}</b> flag. This value is than
+   * converted to a boolean internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
    * @param bProductionMode
    *        <code>true</code> if we're in production mode, <code>false</code> if
    *        not.
-   * @return The string value of the <b>no-startup-info</b> init-parameter. May be
-   *         <code>null</code> if no such init-parameter is present.
+   * @return The string value of the <b>no-startup-info</b> init-parameter. May
+   *         be <code>null</code> if no such init-parameter is present.
    */
   @Nullable
   @OverrideOnDemand
@@ -388,8 +388,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the data path to be used for this application. By default the servlet
-   * context init-parameter <b>{@link #INIT_PARAMETER_DATA_PATH}</b> is evaluated.
-   * If non is present, the servlet context path is used.
+   * context init-parameter <b>{@link #INIT_PARAMETER_DATA_PATH}</b> is
+   * evaluated. If non is present, the servlet context path is used.
    *
    * @param aSC
    *        The servlet context. Never <code>null</code>.
@@ -427,8 +427,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * Determine if the file access should be checked upon startup. By default this
-   * is done by evaluating the servlet context init-parameter
+   * Determine if the file access should be checked upon startup. By default
+   * this is done by evaluating the servlet context init-parameter
    * {@link #INIT_PARAMETER_NO_CHECK_FILE_ACCESS}.
    *
    * @param aSC
@@ -471,8 +471,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * This method is called to initialize the global ID factory. By default a
-   * file-based {@link WebIOLongIDFactory} with the filename {@link #ID_FILENAME}
-   * is created. This is called init of the paths.
+   * file-based {@link WebIOLongIDFactory} with the filename
+   * {@link #ID_FILENAME} is created. This is called init of the paths.
    */
   @OverrideOnDemand
   protected void initGlobalIDFactory ()
@@ -483,8 +483,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * Init the default global settings. This is called after init of the global ID
-   * factory.
+   * Init the default global settings. This is called after init of the global
+   * ID factory.
    */
   protected final void initDefaultGlobalSettings ()
   {
@@ -529,8 +529,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {}
 
   /**
-   * Init menu. If you have more than one menu tree, you need to init them all in
-   * here. This is called after init locales.
+   * Init menu. If you have more than one menu tree, you need to init them all
+   * in here. This is called after init locales.
    */
   @OverrideOnDemand
   protected void initMenu ()
@@ -549,11 +549,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /**
    * Init all APIs. This is called after init AJAX.
    *
-   * @param aAPIInvoker
-   *        API invoker
+   * @param aAPIRegistry
+   *        API registry
    */
   @OverrideOnDemand
-  protected void initAPI (@Nonnull final IAPIInvoker aAPIInvoker)
+  protected void initAPI (@Nonnull final IAPIRegistry aAPIRegistry)
   {}
 
   /**
@@ -707,9 +707,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * @return The date time when the initialization ended. May be <code>null</code>
-   *         if the context was never initialized or is just in the middle of
-   *         initialization.
+   * @return The date time when the initialization ended. May be
+   *         <code>null</code> if the context was never initialized or is just
+   *         in the middle of initialization.
    */
   @Nullable
   public final LocalDateTime getInitializationEndDT ()

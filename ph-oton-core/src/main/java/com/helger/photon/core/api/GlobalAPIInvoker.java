@@ -44,7 +44,7 @@ import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
  * @author Philip Helger
  */
 @ThreadSafe
-public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPIInvoker
+public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPIRegistry, IAPIInvoker
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (GlobalAPIInvoker.class);
   private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (GlobalAPIInvoker.class.getName () +

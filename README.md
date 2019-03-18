@@ -38,6 +38,7 @@ Contained subprojects are:
     * Updated to Jetty 9.4.15
     * Improved Bootstrap 4 inline form UI creation
     * Improved API path ambiguity resolution API (interface `IAPIPathAmbiguityResolver` et. al.)
+    * Added new API Interface `IAPIRegistry` and let `GlobalAPIInvoker` implement it
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1

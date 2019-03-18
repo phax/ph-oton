@@ -40,6 +40,7 @@ import com.helger.photon.core.api.pathdescriptor.PathDescriptor;
 public class APIDescriptor implements IAPIDescriptor
 {
   private final APIPath m_aAPIPath;
+  // The path descriptor is automatically build from the APIPath
   private final PathDescriptor m_aPathDescriptor;
   private final ISupplier <? extends IAPIExecutor> m_aExecutorFactory;
   private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet <> ();

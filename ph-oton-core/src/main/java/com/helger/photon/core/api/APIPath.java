@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.http.EHttpMethod;
@@ -37,6 +38,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @author Philip Helger
  */
 @Immutable
+@MustImplementEqualsAndHashcode
 public class APIPath implements Serializable
 {
   private final EHttpMethod m_eMethod;
@@ -82,14 +84,15 @@ public class APIPath implements Serializable
    *
    * @param sBasePath
    *        The HTTP base path of the server (e.g. http://www.example.org/api"),
-   *        which is prepended to the relative path of this object.
+   *        which is prepended to the relative path of this object. May not be
+   *        <code>null</code> but maybe empty (since v8.1.4)
    * @return The new URL. Never <code>null</code>.
    * @see #getPath()
    */
   @Nonnull
-  public SimpleURL getInvocationURL (@Nonnull @Nonempty final String sBasePath)
+  public SimpleURL getInvocationURL (@Nonnull final String sBasePath)
   {
-    ValueEnforcer.notEmpty (sBasePath, "BasePath");
+    ValueEnforcer.notNull (sBasePath, "BasePath");
     return new SimpleURL (sBasePath + m_sPath);
   }
 
