@@ -68,6 +68,14 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
     return m_aRWLock.readLocked ( () -> m_aRegistry);
   }
 
+  /**
+   * Set the global registry to be used. Note: this API can only called BEFORE
+   * registrations are performed. Afterwards an {@link IllegalStateException} is
+   * thrown if this API is invoked.
+   *
+   * @param aRegistry
+   *        The registry to use. May not be <code>null</code>.
+   */
   @Nonnull
   public void setRegistry (@Nonnull final IAjaxRegistry aRegistry)
   {
@@ -84,6 +92,14 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
     return m_aRWLock.readLocked ( () -> m_aInvoker);
   }
 
+  /**
+   * Set the global invoker to be used. This can be changed during the runtime
+   * of the application and is independent of the registry state. Use this to
+   * e.g. increase the debug logging or tracing of the invocations.
+   *
+   * @param aInvoker
+   *        The invoker to be used. May not be <code>null</code>.
+   */
   @Nonnull
   public void setInvoker (@Nonnull final IAjaxInvoker aInvoker)
   {

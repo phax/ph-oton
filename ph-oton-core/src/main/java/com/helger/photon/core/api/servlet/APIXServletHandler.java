@@ -44,8 +44,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
- * Abstract API servlet. Use {@link GlobalAPIInvoker} to register API functions
- * dynamically.
+ * Abstract API servlet. Use {@link IAPIRegistry} to register API functions
+ * dynamically and {@link IAPIInvoker} to invoke them afterwards.
  *
  * @author Philip Helger
  */

@@ -25,9 +25,9 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * API exception mapper to convert exceptions into reasonable responses. It is
- * called from inside {@link GlobalAPIInvoker} in case an exception is thrown.
- * See {@link IAPIDescriptor} for the assignment.
+ * API exception mapper to convert exceptions into reasonable HTTP responses. It
+ * is called from inside {@link APIInvoker} in case an exception is thrown. See
+ * {@link IAPIDescriptor} for the assignment.
  *
  * @author Philip Helger
  * @since 8.1.3

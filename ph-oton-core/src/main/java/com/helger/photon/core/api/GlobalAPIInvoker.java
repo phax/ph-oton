@@ -26,7 +26,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
- * Central API manager. Runs in an application scope.
+ * Central API manager. Was reworked in v8.1.4 to clearly separate between
+ * registry and invoker.
  *
  * @author Philip Helger
  */
@@ -64,6 +65,14 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
     return m_aRWLock.readLocked ( () -> m_aRegistry);
   }
 
+  /**
+   * Set the global registry to be used. Note: this API can only called BEFORE
+   * registrations are performed. Afterwards an {@link IllegalStateException} is
+   * thrown if this API is invoked.
+   *
+   * @param aRegistry
+   *        The registry to use. May not be <code>null</code>.
+   */
   @Nonnull
   public void setRegistry (@Nonnull final IAPIRegistry aRegistry)
   {
@@ -80,6 +89,14 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
     return m_aRWLock.readLocked ( () -> m_aInvoker);
   }
 
+  /**
+   * Set the global invoker to be used. This can be changed during the runtime
+   * of the application and is independent of the registry state. Use this to
+   * e.g. increase the debug logging or tracing of the invocations.
+   *
+   * @param aInvoker
+   *        The invoker to be used. May not be <code>null</code>.
+   */
   @Nonnull
   public void setInvoker (@Nonnull final IAPIInvoker aInvoker)
   {
