@@ -66,7 +66,6 @@ import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.core.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.app.html.PhotonHTMLSettings;
 import com.helger.photon.core.app.html.PhotonJS;
-import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.servlet.mock.MockHttpServletRequest;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.EContentDispositionType;
@@ -244,9 +243,11 @@ public class PhotonUnifiedResponse extends UnifiedResponse
           aHtml.addAllOutOfBandNodesToHead (aOOBNodes);
         }
 
-        final boolean bMergeCSS = ResourceBundleServlet.isEnabled ();
-        final boolean bMergeJS = ResourceBundleServlet.isEnabled ();
-        PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.head (), bMergeCSS, bMergeJS);
+        PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope,
+                                                     aHtml.head (),
+                                                     PhotonAppSettings.isMergeCSSResources (),
+                                                     PhotonAppSettings.isMergeJSResources (),
+                                                     PhotonAppManager.getWebSiteResourceBundleMgr ());
 
         // Move scripts to body? If so, after aggregation!
         if (HCSettings.isScriptsInBody ())

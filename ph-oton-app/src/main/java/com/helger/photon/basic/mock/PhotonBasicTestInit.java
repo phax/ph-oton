@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.NonBlockingStack;
 import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.photon.basic.PhotonBasic;
+import com.helger.photon.basic.PhotonAppInit;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.photon.basic.app.io.WebIOIntIDFactory;
 
@@ -47,8 +47,8 @@ public final class PhotonBasicTestInit
   {
     final NonBlockingStack <Runnable> aCleansing = new NonBlockingStack <> ();
 
-    PhotonBasic.startUp ();
-    aCleansing.push ( () -> PhotonBasic.shutdown ());
+    PhotonAppInit.startUp ();
+    aCleansing.push ( () -> PhotonAppInit.shutdown ());
 
     // Init the base path once
     // don't check access rights in test, for performance reasons

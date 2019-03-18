@@ -24,12 +24,13 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>8.1.4-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-core</artifactId>
+  <artifactId>ph-oton-ajax</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-core</name>
-  <description>ph-oton core</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-core</url>
+  <name>ph-oton-ajax</name>
+  <description>ph-oton ajax handling library</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-ajax</url>
   <inceptionYear>2014</inceptionYear>
+  
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -55,48 +56,18 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-html</artifactId>
+      <artifactId>ph-xservlet</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-app</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-ajax</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-basic</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-smtp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-http</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schedule</artifactId>
-    </dependency>
     
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-atom</artifactId>
-      <optional>true</optional>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <optional>true</optional>
     </dependency>
-    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -112,25 +83,10 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.photon.core</Automatic-Module-Name>
-            <Export-Package>com.helger.photon.core.*</Export-Package>
+            <Automatic-Module-Name>com.helger.photon.ajax</Automatic-Module-Name>
+            <Export-Package>com.helger.photon.ajax.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI</Provide-Capability>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/schemas/servlet/**</exclude>
-            <exclude>src/test/resources/res/**</exclude>
-            <exclude>**/NOTICE</exclude>
-            <exclude>**/LICENSE</exclude>
-            <exclude>**/*.dat</exclude>
-          </excludes>
         </configuration>
       </plugin>
     </plugins>

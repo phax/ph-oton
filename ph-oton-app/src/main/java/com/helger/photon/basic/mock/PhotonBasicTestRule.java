@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.NonBlockingStack;
+import com.helger.commons.io.file.FileOperationManager;
 import com.helger.dao.AbstractDAO;
 import com.helger.photon.basic.app.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
@@ -37,6 +38,7 @@ public class PhotonBasicTestRule extends ScopeTestRule
 {
   private final File m_aDataPath;
   private final String m_sServletContextPath;
+  private boolean m_bDeleteAllData = false;
   private boolean m_bOldDAOSilentMode;
   private boolean m_bOldWebFileIOSilentMode;
   private boolean m_bOldSCCtxHolderSilentMode;
@@ -98,6 +100,22 @@ public class PhotonBasicTestRule extends ScopeTestRule
     return m_sServletContextPath;
   }
 
+  /**
+   * Delete the directories with data and servlet context path before each
+   * iteration?
+   *
+   * @param bDeleteAllData
+   *        <code>true</code> to delete them in {@link #before()},
+   *        <code>false</code> if not.
+   * @return this for chaining
+   */
+  @Nonnull
+  public final PhotonBasicTestRule setDeleteAllData (final boolean bDeleteAllData)
+  {
+    m_bDeleteAllData = bDeleteAllData;
+    return this;
+  }
+
   @Override
   public void before ()
   {
@@ -106,6 +124,13 @@ public class PhotonBasicTestRule extends ScopeTestRule
     m_bOldSCCtxHolderSilentMode = ServletContextPathHolder.setSilentMode (true);
     super.before ();
     m_aCleansingRules = PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
+
+    if (m_bDeleteAllData)
+    {
+      // Clean all contained files
+      FileOperationManager.INSTANCE.deleteDirRecursiveIfExisting (WebFileIO.getDataIO ().getBasePathFile ());
+      FileOperationManager.INSTANCE.createDir (WebFileIO.getDataIO ().getBasePathFile ());
+    }
   }
 
   @Override

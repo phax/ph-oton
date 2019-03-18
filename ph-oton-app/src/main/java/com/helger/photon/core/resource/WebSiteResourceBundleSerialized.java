@@ -41,6 +41,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.basic.app.io.WebFileIO;
+import com.helger.photon.core.PhotonAppSettings;
 import com.helger.photon.core.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -142,8 +143,10 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
               if (StringHelper.getLastChar (sContent) != '\n')
               {
                 // For the sake of clarity if a script does not end with a "\n"
-                // Add this in minified mode as well, because if the last line of the previous
-                // script started with "//" and the next file starts with a multi line comment,
+                // Add this in minified mode as well, because if the last line
+                // of the previous
+                // script started with "//" and the next file starts with a
+                // multi line comment,
                 // we would run in a syntax error!
                 // As in:
                 /**
@@ -248,7 +251,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     {
       // Use the ResourceBundleServlet path by default
       aURL = LinkHelper.getURLWithContext (aRequestScope,
-                                           ResourceBundleServlet.SERVLET_DEFAULT_PATH +
+                                           PhotonAppSettings.getResourceBundleServletName () +
                                                           "/" +
                                                           m_sBundleID +
                                                           m_aBundle.getResourceType ().getFileExtension ());

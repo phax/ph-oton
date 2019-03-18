@@ -20,7 +20,6 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -53,7 +52,8 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 
-public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
+public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO implements
+                                                IWebSiteResourceBundleProvider
 {
   private static final String ELEMENT_RESOURCE_BUNDLES = "resource-bundles";
   private static final String ELEMENT_RESOURCE_BUNDLE = "resource-bundle";
@@ -296,7 +296,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <WebSiteResourceBundleSerialized> getResourceBundles (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aList,
+  public ICommonsList <WebSiteResourceBundleSerialized> getResourceBundles (@Nonnull @Nonempty final ICommonsList <WebSiteResourceWithCondition> aList,
                                                                             final boolean bRegular)
   {
     ValueEnforcer.notEmptyNoNullValue (aList, "List");

@@ -41,7 +41,8 @@ import com.helger.html.meta.IMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.basic.app.appid.RequestSettings;
-import com.helger.photon.core.resource.ResourceBundleServlet;
+import com.helger.photon.core.PhotonAppManager;
+import com.helger.photon.core.PhotonAppSettings;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
@@ -54,18 +55,6 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
 {
   public AbstractHTMLProvider ()
   {}
-
-  @OverrideOnDemand
-  protected boolean isMergeExternalCSSNodes ()
-  {
-    return ResourceBundleServlet.isEnabled ();
-  }
-
-  @OverrideOnDemand
-  protected boolean isMergeExternalJSNodes ()
-  {
-    return ResourceBundleServlet.isEnabled ();
-  }
 
   @OverrideOnDemand
   @Nonnull
@@ -188,9 +177,11 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
     }
 
     // Merge all external CSS and JS nodes
-    final boolean bMergeCSS = isMergeExternalCSSNodes ();
-    final boolean bMergeJS = isMergeExternalJSNodes ();
-    PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope, aHtml.head (), bMergeCSS, bMergeJS);
+    PhotonHTMLHelper.mergeExternalCSSAndJSNodes (aRequestScope,
+                                                 aHtml.head (),
+                                                 PhotonAppSettings.isMergeCSSResources (),
+                                                 PhotonAppSettings.isMergeJSResources (),
+                                                 PhotonAppManager.getWebSiteResourceBundleMgr ());
 
     // Move scripts to body? If so, after aggregation!
     if (HCSettings.isScriptsInBody ())

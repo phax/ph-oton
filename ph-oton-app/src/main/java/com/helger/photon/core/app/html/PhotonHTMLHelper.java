@@ -44,8 +44,7 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.core.resource.WebSiteResourceBundleManager;
+import com.helger.photon.core.resource.IWebSiteResourceBundleProvider;
 import com.helger.photon.core.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.resource.WebSiteResourceWithCondition;
 import com.helger.servlet.response.UnifiedResponse;
@@ -153,11 +152,14 @@ public final class PhotonHTMLHelper
    *        <code>true</code> to aggregate CSS entries.
    * @param bMergeJS
    *        <code>true</code> to aggregate JS entries.
+   * @param aWSRBMgr
+   *        The rsource bundle provider. May not be <code>null</code>.
    */
   public static void mergeExternalCSSAndJSNodes (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                                  @Nonnull final HCHead aHead,
                                                  final boolean bMergeCSS,
-                                                 final boolean bMergeJS)
+                                                 final boolean bMergeJS,
+                                                 @Nonnull final IWebSiteResourceBundleProvider aWSRBMgr)
   {
     if (!bMergeCSS && !bMergeJS)
     {
@@ -165,7 +167,6 @@ public final class PhotonHTMLHelper
       return;
     }
 
-    final WebSiteResourceBundleManager aWSRBMgr = PhotonCoreManager.getWebSiteResourceBundleMgr ();
     final boolean bRegular = HCSettings.isUseRegularResources ();
 
     if (bMergeCSS)
