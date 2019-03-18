@@ -666,7 +666,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       initAjax (GlobalAjaxInvoker.getInstance ().getRegistry ());
 
       // Register all API functions here
-      initAPI (GlobalAPIInvoker.getInstance ());
+      initAPI (GlobalAPIInvoker.getInstance ().getRegistry ());
 
       // Set all security related stuff
       initSecurity ();

@@ -17,7 +17,7 @@
 package com.helger.photon.core.ajax;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-@ThreadSafe
+@Immutable
 public class AjaxInvoker implements IAjaxInvoker
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AjaxInvoker.class);

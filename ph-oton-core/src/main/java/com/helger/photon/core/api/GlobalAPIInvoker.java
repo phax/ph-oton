@@ -17,25 +17,12 @@
 package com.helger.photon.core.api;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
-import com.helger.commons.statistics.StatisticsManager;
+import com.helger.commons.annotation.VisibleForTesting;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.timing.StopWatch;
-import com.helger.servlet.response.UnifiedResponse;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
@@ -44,18 +31,10 @@ import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
  * @author Philip Helger
  */
 @ThreadSafe
-public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPIRegistry, IAPIInvoker
+public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (GlobalAPIInvoker.class);
-  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (GlobalAPIInvoker.class.getName () +
-                                                                                                                    "$invocations");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (GlobalAPIInvoker.class.getName () +
-                                                                                                                                "$func");
-  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (GlobalAPIInvoker.class.getName () +
-                                                                                                                           "$timer");
-
-  @GuardedBy ("m_aRWLock")
-  private final APIDescriptorList m_aApiDecls = new APIDescriptorList ();
+  private IAPIRegistry m_aRegistry = new APIRegistry ();
+  private IAPIInvoker m_aInvoker = new APIInvoker ();
 
   @Deprecated
   @UsedViaReflection
@@ -68,100 +47,52 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
     return getGlobalSingleton (GlobalAPIInvoker.class);
   }
 
-  public void registerAPI (@Nonnull final APIDescriptor aDescriptor)
+  /**
+   * Reset all values to default. This is only intended for testing purposes.
+   * ATTENTION: this removes ALL registrations!
+   */
+  @VisibleForTesting
+  public void resetToDefault ()
   {
-    m_aRWLock.writeLocked ( () -> m_aApiDecls.addDescriptor (aDescriptor));
+    m_aRegistry = new APIRegistry ();
+    m_aInvoker = new APIInvoker ();
   }
 
   @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IAPIDescriptor> getAllAPIDescriptors ()
+  public IAPIRegistry getRegistry ()
   {
-    return m_aRWLock.readLocked (m_aApiDecls::getAllDescriptors);
+    return m_aRWLock.readLocked ( () -> m_aRegistry);
   }
 
-  @Nullable
-  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath,
-                                              @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
+  @Nonnull
+  public void setRegistry (@Nonnull final IAPIRegistry aRegistry)
   {
-    return m_aRWLock.readLocked ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
+    ValueEnforcer.notNull (aRegistry, "Registry");
+    if (m_aRWLock.readLocked ( () -> m_aRegistry.getAllAPIDescriptors ().isNotEmpty ()))
+      throw new IllegalStateException ("Cannot change the registry after an API was already registered!");
+
+    m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
   }
 
-  public void invoke (@Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
-                      @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                      @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  @Nonnull
+  public IAPIInvoker getInvoker ()
   {
-    ValueEnforcer.notNull (aInvokableDescriptor, "InvokableDescriptor");
-    ValueEnforcer.notNull (aRequestScope, "RequestScope");
-    ValueEnforcer.notNull (aUnifiedResponse, "UnifiedResponse");
+    return m_aRWLock.readLocked ( () -> m_aInvoker);
+  }
 
-    final String sPath = aInvokableDescriptor.getPath ();
-    if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Invoking API '" + sPath + "'");
-
-    final StopWatch aSW = StopWatch.createdStarted ();
-    try
-    {
-      // Global increment before invocation
-      s_aStatsGlobalInvoke.increment ();
-
-      // Invoke before handler
-      APISettings.beforeExecutionCallbacks ()
-                 .forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
-
-      // Main invocation
-      aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
-
-      // Invoke after handler
-      APISettings.afterExecutionCallbacks ()
-                 .forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
-
-      // Increment statistics after successful call
-      s_aStatsFunctionInvoke.increment (sPath);
-    }
-    catch (final Throwable t)
-    {
-      boolean bHandled = false;
-      final IAPIExceptionMapper aExMapper = aInvokableDescriptor.getAPIDescriptor ().getExceptionMapper ();
-      if (aExMapper != null)
-      {
-        // Apply exception mapper
-        bHandled = aExMapper.applyExceptionOnResponse (aInvokableDescriptor, aRequestScope, aUnifiedResponse, t)
-                            .isHandled ();
-      }
-
-      if (!bHandled)
-      {
-        APISettings.exceptionCallbacks ()
-                   .forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, t));
-
-        // Re-throw
-        if (t instanceof Exception)
-          throw (Exception) t;
-        throw new Exception (t);
-      }
-    }
-    finally
-    {
-      // Long running API request?
-      final long nExecutionMillis = aSW.stopAndGetMillis ();
-      s_aStatsFunctionTimer.addTime (sPath, nExecutionMillis);
-      final long nLimitMS = APISettings.getLongRunningExecutionLimitTime ();
-      if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
-      {
-        // Long running execution
-        APISettings.longRunningExecutionCallbacks ()
-                   .forEach (aCB -> aCB.onLongRunningExecution (this,
-                                                                aInvokableDescriptor,
-                                                                aRequestScope,
-                                                                nExecutionMillis));
-      }
-    }
+  @Nonnull
+  public void setInvoker (@Nonnull final IAPIInvoker aInvoker)
+  {
+    ValueEnforcer.notNull (aInvoker, "Invoker");
+    m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("APIDeclarations", m_aApiDecls).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Registry", m_aRegistry)
+                            .append ("Invoker", m_aInvoker)
+                            .getToString ();
   }
 }

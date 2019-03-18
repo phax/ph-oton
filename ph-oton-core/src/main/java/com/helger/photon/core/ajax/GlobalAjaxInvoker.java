@@ -21,6 +21,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.annotation.VisibleForTesting;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
@@ -48,6 +49,17 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   public static GlobalAjaxInvoker getInstance ()
   {
     return getGlobalSingleton (GlobalAjaxInvoker.class);
+  }
+
+  /**
+   * Reset all values to default. This is only intended for testing purposes.
+   * ATTENTION: this removes ALL registrations!
+   */
+  @VisibleForTesting
+  public void resetToDefault ()
+  {
+    m_aRegistry = new AjaxRegistry ();
+    m_aInvoker = new AjaxInvoker ();
   }
 
   @Nonnull

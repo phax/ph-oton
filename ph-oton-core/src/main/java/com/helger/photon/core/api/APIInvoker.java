@@ -17,7 +17,7 @@
 package com.helger.photon.core.api;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-@ThreadSafe
+@Immutable
 public class APIInvoker implements IAPIInvoker
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (APIInvoker.class);
@@ -123,6 +123,6 @@ public class APIInvoker implements IAPIInvoker
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).getToString ();
+    return new ToStringGenerator (super.toString ()).getToString ();
   }
 }

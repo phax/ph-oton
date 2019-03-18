@@ -42,6 +42,7 @@ import com.helger.photon.core.api.IAPIBeforeExecutionCallback;
 import com.helger.photon.core.api.IAPIDescriptor;
 import com.helger.photon.core.api.IAPIExceptionCallback;
 import com.helger.photon.core.api.IAPILongRunningExecutionCallback;
+import com.helger.photon.core.api.IAPIRegistry;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -117,7 +118,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final GlobalAPIInvoker aMgr = GlobalAPIInvoker.getInstance ();
+    final IAPIRegistry aRegistry = GlobalAPIInvoker.getInstance ().getRegistry ();
     final HCNodeList aTab = new HCNodeList ();
 
     // Show all registered AJAX functions
@@ -130,7 +131,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
                                           new DTCol (EText.MSG_ALLOWED_MIME_TYPES.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_HAS_EXECUTION_FILTER.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_HAS_EXCEPTION_MAPPER.getDisplayText (aDisplayLocale))).setID (getID () + "-api");
-      for (final IAPIDescriptor aDescriptor : aMgr.getAllAPIDescriptors ())
+      for (final IAPIDescriptor aDescriptor : aRegistry.getAllAPIDescriptors ())
       {
         final HCRow aRow = aTable.addBodyRow ();
         aRow.addCells (aDescriptor.getHTTPMethod ().getName (),

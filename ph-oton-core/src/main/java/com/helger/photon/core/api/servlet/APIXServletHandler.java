@@ -58,7 +58,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
 
   public APIXServletHandler ()
   {
-    this ( () -> GlobalAPIInvoker.getInstance (), () -> GlobalAPIInvoker.getInstance ());
+    this ( () -> GlobalAPIInvoker.getInstance ().getRegistry (), () -> GlobalAPIInvoker.getInstance ().getInvoker ());
   }
 
   public APIXServletHandler (@Nonnull final ISupplier <? extends IAPIRegistry> aRegistryFactory,
