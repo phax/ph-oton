@@ -92,6 +92,7 @@ public final class HCSettings
   @GuardedBy ("s_aRWLock")
   private static boolean s_bScriptsInBody = true;
 
+  /** Use regular or minified resources */
   @GuardedBy ("s_aRWLock")
   private static boolean s_bUseRegularResources = GlobalDebug.isDebugMode ();
 
