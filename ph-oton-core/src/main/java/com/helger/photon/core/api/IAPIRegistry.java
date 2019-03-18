@@ -19,6 +19,7 @@ package com.helger.photon.core.api;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -48,4 +49,32 @@ public interface IAPIRegistry extends Serializable
   @Nonnull
   @ReturnsMutableCopy
   ICommonsList <IAPIDescriptor> getAllAPIDescriptors ();
+
+  /**
+   * Find an {@link InvokableAPIDescriptor} that matches the provided path.
+   *
+   * @param aPath
+   *        The path to search. May not be <code>null</code>.
+   * @return <code>null</code> if no matching invoker is registered meaning the
+   *         path cannot be handled by this invoker.
+   */
+  @Nullable
+  default InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath)
+  {
+    return getAPIByPath (aPath, new LoggingAPIPathAmbiguityResolver ());
+  }
+
+  /**
+   * Find an {@link InvokableAPIDescriptor} that matches the provided path.
+   *
+   * @param aPath
+   *        The path to search. May not be <code>null</code>.
+   * @param aAmbiguityResolver
+   *        The ambiguity resolver to be used. May not be <code>null</code>.
+   * @return <code>null</code> if no matching invoker is registered meaning the
+   *         path cannot be handled by this invoker.
+   * @since 8.1.4
+   */
+  @Nullable
+  InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath, @Nonnull IAPIPathAmbiguityResolver aAmbiguityResolver);
 }

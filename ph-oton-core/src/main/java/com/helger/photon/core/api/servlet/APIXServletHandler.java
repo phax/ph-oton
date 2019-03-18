@@ -36,6 +36,7 @@ import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.api.APIPath;
 import com.helger.photon.core.api.GlobalAPIInvoker;
 import com.helger.photon.core.api.IAPIInvoker;
+import com.helger.photon.core.api.IAPIRegistry;
 import com.helger.photon.core.api.InvokableAPIDescriptor;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
@@ -52,16 +53,19 @@ public class APIXServletHandler implements IXServletSimpleHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (APIXServletHandler.class);
 
-  private final ISupplier <? extends IAPIInvoker> m_aFactory;
+  private final ISupplier <? extends IAPIRegistry> m_aRegistryFactory;
+  private final ISupplier <? extends IAPIInvoker> m_aInvokerFactory;
 
   public APIXServletHandler ()
   {
-    this ( () -> GlobalAPIInvoker.getInstance ());
+    this ( () -> GlobalAPIInvoker.getInstance (), () -> GlobalAPIInvoker.getInstance ());
   }
 
-  public APIXServletHandler (@Nonnull final ISupplier <? extends IAPIInvoker> aFactory)
+  public APIXServletHandler (@Nonnull final ISupplier <? extends IAPIRegistry> aRegistryFactory,
+                             @Nonnull final ISupplier <? extends IAPIInvoker> aInvokerFactory)
   {
-    m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
+    m_aRegistryFactory = ValueEnforcer.notNull (aRegistryFactory, "RegistryFactory");
+    m_aInvokerFactory = ValueEnforcer.notNull (aInvokerFactory, "InvokerFactory");
   }
 
   @Nonnull
@@ -79,8 +83,10 @@ public class APIXServletHandler implements IXServletSimpleHandler
   {
     final APIPath aAPIPath = APIPath.createForServlet (aRequestScope);
     final EHttpMethod eHTTPMethod = aRequestScope.getHttpMethod ();
-    final IAPIInvoker aAPIMgr = m_aFactory.get ();
-    final InvokableAPIDescriptor aInvokableDescriptor = aAPIMgr.getAPIByPath (aAPIPath);
+    final IAPIRegistry aRegistry = m_aRegistryFactory.get ();
+    final IAPIInvoker aInvoker = m_aInvokerFactory.get ();
+
+    final InvokableAPIDescriptor aInvokableDescriptor = aRegistry.getAPIByPath (aAPIPath);
     if (aInvokableDescriptor == null)
     {
       LOGGER.warn ("Unknown API " + eHTTPMethod + " '" + aAPIPath.getPath () + "' requested!");
@@ -112,7 +118,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
         try
         {
           // Main API invocation
-          aAPIMgr.invoke (aInvokableDescriptor, aRequestScope, GenericReflection.uncheckedCast (aUnifiedResponse));
+          aInvoker.invoke (aInvokableDescriptor, aRequestScope, GenericReflection.uncheckedCast (aUnifiedResponse));
 
           if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
           {

@@ -19,7 +19,6 @@ package com.helger.photon.core.api;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -33,34 +32,6 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public interface IAPIInvoker extends Serializable
 {
   /**
-   * Find an {@link InvokableAPIDescriptor} that matches the provided path.
-   *
-   * @param aPath
-   *        The path to search. May not be <code>null</code>.
-   * @return <code>null</code> if no matching invoker is registered meaning the
-   *         path cannot be handled by this invoker.
-   */
-  @Nullable
-  default InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath)
-  {
-    return getAPIByPath (aPath, new LoggingAPIPathAmbiguityResolver ());
-  }
-
-  /**
-   * Find an {@link InvokableAPIDescriptor} that matches the provided path.
-   *
-   * @param aPath
-   *        The path to search. May not be <code>null</code>.
-   * @param aAmbiguityResolver
-   *        The ambiguity resolver to be used. May not be <code>null</code>.
-   * @return <code>null</code> if no matching invoker is registered meaning the
-   *         path cannot be handled by this invoker.
-   * @since 8.1.4
-   */
-  @Nullable
-  InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath, @Nonnull IAPIPathAmbiguityResolver aAmbiguityResolver);
-
-  /**
    * Invoke the specified API
    *
    * @param aInvokableDescriptor
@@ -72,7 +43,6 @@ public interface IAPIInvoker extends Serializable
    *        <code>null</code>.
    * @throws Exception
    *         In case something goes wrong
-   * @see #getAPIByPath(APIPath)
    */
   void invoke (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
