@@ -81,9 +81,10 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
   }
 
   @Nullable
-  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath)
+  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath,
+                                              @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
-    return m_aRWLock.readLocked ( () -> m_aApiDecls.getMatching (aPath));
+    return m_aRWLock.readLocked ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
   }
 
   public void invoke (@Nonnull final InvokableAPIDescriptor aInvokableDescriptor,

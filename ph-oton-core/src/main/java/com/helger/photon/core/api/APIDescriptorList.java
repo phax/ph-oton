@@ -17,14 +17,9 @@
 package com.helger.photon.core.api;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -44,8 +39,6 @@ import com.helger.photon.core.api.pathdescriptor.PathMatchingResult;
  */
 public class APIDescriptorList implements Serializable
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (APIDescriptorList.class);
-
   /** Store APIDescriptor per HTTP method for quick access. */
   private final ICommonsMap <EHttpMethod, ICommonsList <APIDescriptor>> m_aMap = new CommonsEnumMap <> (EHttpMethod.class);
 
@@ -77,16 +70,12 @@ public class APIDescriptorList implements Serializable
   @Nullable
   public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath)
   {
-    return getMatching (aPath, aDescriptors -> {
-      if (!aDescriptors.isEmpty ())
-        LOGGER.warn ("Found more than one API descriptor matching path '" + aPath.getPath () + "': " + aDescriptors);
-      return null;
-    });
+    return getMatching (aPath, new LoggingAPIPathAmbiguityResolver ());
   }
 
   @Nullable
   public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath,
-                                             @Nonnull final Function <? super List <InvokableAPIDescriptor>, ? extends InvokableAPIDescriptor> aAmbiguityResolver)
+                                             @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
     ValueEnforcer.notNull (aPath, "Path");
     ValueEnforcer.notNull (aAmbiguityResolver, "AmbiguityResolver");
@@ -117,7 +106,7 @@ public class APIDescriptorList implements Serializable
     }
 
     // Use the resolver...
-    return aAmbiguityResolver.apply (aMatching);
+    return aAmbiguityResolver.apply (aPath, aMatching);
   }
 
   @Override
