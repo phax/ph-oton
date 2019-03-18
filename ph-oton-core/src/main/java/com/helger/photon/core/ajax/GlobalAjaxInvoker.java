@@ -17,28 +17,24 @@
 package com.helger.photon.core.ajax;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.core.PhotonUnifiedResponse;
-import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
-import com.helger.photon.core.ajax.executor.IAjaxExecutor;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
- * Global AJAX invoker
+ * Global AJAX invoker. Was reworked in v8.1.4 to clearly separate between
+ * registry and invoker.
  *
  * @author Philip Helger
  */
 @ThreadSafe
-public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton implements IAjaxInvoker
+public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
 {
-  private final IAjaxInvoker m_aInvoker = new AjaxInvoker ();
+  private IAjaxRegistry m_aRegistry = new AjaxRegistry ();
+  private IAjaxInvoker m_aInvoker = new AjaxInvoker ();
 
   /**
    * Constructor. Used only internally.
@@ -55,39 +51,40 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton implemen
   }
 
   @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
+  public IAjaxRegistry getRegistry ()
   {
-    return m_aInvoker.getAllRegisteredFunctions ();
+    return m_aRWLock.readLocked ( () -> m_aRegistry);
   }
 
-  @Nullable
-  public IAjaxFunctionDeclaration getRegisteredFunction (@Nullable final String sFunctionName)
+  @Nonnull
+  public void setRegistry (@Nonnull final IAjaxRegistry aRegistry)
   {
-    return m_aInvoker.getRegisteredFunction (sFunctionName);
+    ValueEnforcer.notNull (aRegistry, "Registry");
+    if (m_aRWLock.readLocked ( () -> m_aRegistry.getAllRegisteredFunctions ().isNotEmpty ()))
+      throw new IllegalStateException ("Cannot change the registry after a function was already registered!");
+
+    m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
   }
 
-  public boolean isRegisteredFunction (@Nullable final String sFunctionName)
+  @Nonnull
+  public IAjaxInvoker getInvoker ()
   {
-    return m_aInvoker.isRegisteredFunction (sFunctionName);
+    return m_aRWLock.readLocked ( () -> m_aInvoker);
   }
 
-  public void registerFunction (@Nonnull final IAjaxFunctionDeclaration aFunction)
+  @Nonnull
+  public void setInvoker (@Nonnull final IAjaxInvoker aInvoker)
   {
-    m_aInvoker.registerFunction (aFunction);
-  }
-
-  public void invokeFunction (@Nonnull final String sFunctionName,
-                              @Nonnull final IAjaxExecutor aAjaxExecutor,
-                              @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
-  {
-    m_aInvoker.invokeFunction (sFunctionName, aAjaxExecutor, aRequestScope, aAjaxResponse);
+    ValueEnforcer.notNull (aInvoker, "Invoker");
+    m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("Invoker", m_aInvoker).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Registry", m_aRegistry)
+                            .append ("Invoker", m_aInvoker)
+                            .getToString ();
   }
 }

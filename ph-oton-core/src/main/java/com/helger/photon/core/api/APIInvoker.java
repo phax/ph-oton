@@ -17,17 +17,12 @@
 package com.helger.photon.core.api;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
@@ -36,56 +31,22 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
- * Central API manager. Runs in an application scope.
+ * Default implementation of {@link IAPIInvoker}.
  *
  * @author Philip Helger
  */
 @ThreadSafe
-public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPIRegistry, IAPIInvoker
+public class APIInvoker implements IAPIInvoker
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (GlobalAPIInvoker.class);
-  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (GlobalAPIInvoker.class.getName () +
+  private static final Logger LOGGER = LoggerFactory.getLogger (APIInvoker.class);
+  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (APIInvoker.class.getName () +
                                                                                                                     "$invocations");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (GlobalAPIInvoker.class.getName () +
+  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (APIInvoker.class.getName () +
                                                                                                                                 "$func");
-  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (GlobalAPIInvoker.class.getName () +
+  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (APIInvoker.class.getName () +
                                                                                                                            "$timer");
-
-  @GuardedBy ("m_aRWLock")
-  private final APIDescriptorList m_aApiDecls = new APIDescriptorList ();
-
-  @Deprecated
-  @UsedViaReflection
-  public GlobalAPIInvoker ()
-  {}
-
-  @Nonnull
-  public static GlobalAPIInvoker getInstance ()
-  {
-    return getGlobalSingleton (GlobalAPIInvoker.class);
-  }
-
-  public void registerAPI (@Nonnull final APIDescriptor aDescriptor)
-  {
-    m_aRWLock.writeLocked ( () -> m_aApiDecls.addDescriptor (aDescriptor));
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IAPIDescriptor> getAllAPIDescriptors ()
-  {
-    return m_aRWLock.readLocked (m_aApiDecls::getAllDescriptors);
-  }
-
-  @Nullable
-  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath,
-                                              @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
-  {
-    return m_aRWLock.readLocked ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
-  }
 
   public void invoke (@Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -162,6 +123,6 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton implements IAPI
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("APIDeclarations", m_aApiDecls).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).getToString ();
   }
 }

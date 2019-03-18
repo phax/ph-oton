@@ -17,28 +17,19 @@
 package com.helger.photon.core.ajax;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.commons.statistics.StatisticsManager;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.photon.core.PhotonUnifiedResponse;
-import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -58,64 +49,8 @@ public class AjaxInvoker implements IAjaxInvoker
   private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (AjaxInvoker.class.getName () +
                                                                                                                            "$timer");
 
-  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <String, IAjaxFunctionDeclaration> m_aFuncDecls = new CommonsHashMap <> ();
-
   public AjaxInvoker ()
   {}
-
-  public static boolean isValidFunctionName (@Nullable final String sFunctionName)
-  {
-    // All characters allowed should be valid in URLs without masking
-    return StringHelper.hasText (sFunctionName) &&
-           RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
-  {
-    return m_aRWLock.readLocked ( () -> m_aFuncDecls.getClone ());
-  }
-
-  @Nullable
-  public IAjaxFunctionDeclaration getRegisteredFunction (@Nullable final String sFunctionName)
-  {
-    if (StringHelper.hasNoText (sFunctionName))
-      return null;
-
-    return m_aRWLock.readLocked ( () -> m_aFuncDecls.get (sFunctionName));
-  }
-
-  public boolean isRegisteredFunction (@Nullable final String sFunctionName)
-  {
-    if (StringHelper.hasNoText (sFunctionName))
-      return false;
-
-    return m_aRWLock.readLocked ( () -> m_aFuncDecls.containsKey (sFunctionName));
-  }
-
-  public void registerFunction (@Nonnull final IAjaxFunctionDeclaration aFunctionDeclaration)
-  {
-    ValueEnforcer.notNull (aFunctionDeclaration, "FunctionDeclaration");
-
-    final String sFunctionName = aFunctionDeclaration.getName ();
-
-    m_aRWLock.writeLocked ( () -> {
-      if (m_aFuncDecls.containsKey (sFunctionName))
-        throw new IllegalArgumentException ("An Ajax function with the name '" +
-                                            sFunctionName +
-                                            "' is already registered");
-      m_aFuncDecls.put (sFunctionName, aFunctionDeclaration);
-    });
-
-    if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Registered AJAX function '" +
-                       sFunctionName +
-                       "' with executor factory " +
-                       aFunctionDeclaration.getExecutorFactory ());
-  }
 
   public void invokeFunction (@Nonnull final String sFunctionName,
                               @Nonnull final IAjaxExecutor aAjaxExecutor,
@@ -192,6 +127,6 @@ public class AjaxInvoker implements IAjaxInvoker
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("FuncDecls", m_aFuncDecls).getToString ();
+    return new ToStringGenerator (this).getToString ();
   }
 }

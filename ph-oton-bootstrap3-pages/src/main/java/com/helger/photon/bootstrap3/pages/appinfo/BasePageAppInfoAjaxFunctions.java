@@ -35,6 +35,7 @@ import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxRegistry;
 import com.helger.photon.core.ajax.callback.IAjaxAfterExecutionCallback;
 import com.helger.photon.core.ajax.callback.IAjaxBeforeExecutionCallback;
 import com.helger.photon.core.ajax.callback.IAjaxExceptionCallback;
@@ -112,18 +113,20 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
 
-    final GlobalAjaxInvoker aMgr = GlobalAjaxInvoker.getInstance ();
+    final IAjaxRegistry aRegistry = GlobalAjaxInvoker.getInstance ().getRegistry ();
 
     // Show all registered AJAX functions
     {
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () + "-ajax");
-      for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aMgr.getAllRegisteredFunctions ().entrySet ())
+      for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aRegistry.getAllRegisteredFunctions ()
+                                                                                .entrySet ())
       {
-        aTable.addBodyRow ().addCells (aEntry.getKey (),
-                                       aEntry.getValue ().getExecutorFactory ().toString (),
-                                       aEntry.getValue ().getInvocationURI (aRequestScope));
+        aTable.addBodyRow ()
+              .addCells (aEntry.getKey (),
+                         aEntry.getValue ().getExecutorFactory ().toString (),
+                         aEntry.getValue ().getInvocationURI (aRequestScope));
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);

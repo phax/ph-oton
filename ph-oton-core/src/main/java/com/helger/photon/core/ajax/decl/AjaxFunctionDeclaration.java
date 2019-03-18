@@ -29,7 +29,7 @@ import com.helger.commons.functional.IPredicate;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.core.ajax.AjaxInvoker;
+import com.helger.photon.core.ajax.AjaxRegistry;
 import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.ajax.servlet.PhotonAjaxServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -52,7 +52,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
                                   @Nullable final IPredicate <? super IRequestWebScopeWithoutResponse> aExecutionFilter,
                                   @Nonnull @Nonempty final String sServletPath)
   {
-    ValueEnforcer.isTrue (AjaxInvoker.isValidFunctionName (sFunctionName), "Invalid Ajax functionName provided");
+    ValueEnforcer.isTrue (AjaxRegistry.isValidFunctionName (sFunctionName), "Invalid Ajax functionName provided");
     ValueEnforcer.notNull (aExecutorFactory, "ExecutorFactory");
     ValueEnforcer.notEmpty (sServletPath, "ServletPath");
     ValueEnforcer.isTrue (sServletPath.startsWith ("/"), "Servlet path must start with /");
@@ -112,9 +112,9 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   /**
    * Create a function that is not named. The created name is ensured to be
    * unique. The registration is removed once the global context is shutdown so
-   * the created path is not durable, as the next time the context is initialized
-   * a different number might be assigned. Use {@link #builder(String)} for a
-   * permanent name.
+   * the created path is not durable, as the next time the context is
+   * initialized a different number might be assigned. Use
+   * {@link #builder(String)} for a permanent name.
    *
    * @return A new function declaration builder. Never <code>null</code>.
    * @see #builder(String)

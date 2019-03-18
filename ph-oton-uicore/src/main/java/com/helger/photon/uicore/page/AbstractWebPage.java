@@ -196,7 +196,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder (sFuncName)
                                                                      .withExecutor (aExecutor)
                                                                      .build ();
-    GlobalAjaxInvoker.getInstance ().registerFunction (aFunction);
+    GlobalAjaxInvoker.getInstance ().getRegistry ().registerFunction (aFunction);
     return aFunction;
   }
 }

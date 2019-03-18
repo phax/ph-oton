@@ -39,6 +39,7 @@ Contained subprojects are:
     * Improved Bootstrap 4 inline form UI creation
     * Improved API path ambiguity resolution API (interface `IAPIPathAmbiguityResolver` et. al.)
     * Added new API Interface `IAPIRegistry` and let `GlobalAPIInvoker` implement it
+    * Clearly separate between `AjaxRegistry` and `AjaxInvoker` similar to new API API 
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1

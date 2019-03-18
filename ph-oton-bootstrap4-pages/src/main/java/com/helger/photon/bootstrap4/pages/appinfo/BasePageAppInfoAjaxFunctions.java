@@ -35,6 +35,7 @@ import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap4.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.core.ajax.AjaxSettings;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxRegistry;
 import com.helger.photon.core.ajax.callback.IAjaxAfterExecutionCallback;
 import com.helger.photon.core.ajax.callback.IAjaxBeforeExecutionCallback;
 import com.helger.photon.core.ajax.callback.IAjaxExceptionCallback;
@@ -112,7 +113,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
 
-    final GlobalAjaxInvoker aMgr = GlobalAjaxInvoker.getInstance ();
+    final IAjaxRegistry aMgr = GlobalAjaxInvoker.getInstance ().getRegistry ();
 
     // Show all registered AJAX functions
     {
@@ -121,9 +122,10 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
                                           new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () + "-ajax");
       for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aMgr.getAllRegisteredFunctions ().entrySet ())
       {
-        aTable.addBodyRow ().addCells (aEntry.getKey (),
-                                       aEntry.getValue ().getExecutorFactory ().toString (),
-                                       aEntry.getValue ().getInvocationURI (aRequestScope));
+        aTable.addBodyRow ()
+              .addCells (aEntry.getKey (),
+                         aEntry.getValue ().getExecutorFactory ().toString (),
+                         aEntry.getValue ().getInvocationURI (aRequestScope));
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);

@@ -69,7 +69,7 @@ import com.helger.photon.basic.app.io.WebIOLongIDFactory;
 import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 import com.helger.photon.basic.app.locale.ILocaleManager;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
-import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxRegistry;
 import com.helger.photon.core.api.GlobalAPIInvoker;
 import com.helger.photon.core.api.IAPIRegistry;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
@@ -539,11 +539,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /**
    * Init all Ajax functions. This is called after init of menu.
    *
-   * @param aAjaxInvoker
-   *        Ajax invoker
+   * @param aAjaxRegistry
+   *        Ajax registry
    */
   @OverrideOnDemand
-  protected void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  protected void initAjax (@Nonnull final IAjaxRegistry aAjaxRegistry)
   {}
 
   /**
@@ -663,7 +663,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       initMenu ();
 
       // Register all Ajax functions here
-      initAjax (GlobalAjaxInvoker.getInstance ());
+      initAjax (GlobalAjaxInvoker.getInstance ().getRegistry ());
 
       // Register all API functions here
       initAPI (GlobalAPIInvoker.getInstance ());

@@ -38,7 +38,7 @@ import com.helger.photon.bootstrap.demo.pub.MenuPublic;
 import com.helger.photon.bootstrap.demo.secure.MenuSecure;
 import com.helger.photon.bootstrap3.servlet.WebAppListenerBootstrap;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxRegistry;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.user.UserManager;
@@ -98,13 +98,13 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
   }
 
   @Override
-  protected void initAjax (@Nonnull final IAjaxInvoker aAjaxInvoker)
+  protected void initAjax (@Nonnull final IAjaxRegistry aAjaxRegistry)
   {
-    aAjaxInvoker.registerFunction (CAjax.DATATABLES);
-    aAjaxInvoker.registerFunction (CAjax.LOGIN);
-    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_PUB);
-    aAjaxInvoker.registerFunction (CAjax.DATATABLES_I18N);
-    aAjaxInvoker.registerFunction (CAjax.UPDATE_MENU_VIEW_SEC);
+    aAjaxRegistry.registerFunction (CAjax.DATATABLES);
+    aAjaxRegistry.registerFunction (CAjax.DATATABLES_I18N);
+    aAjaxRegistry.registerFunction (CAjax.LOGIN);
+    aAjaxRegistry.registerFunction (CAjax.UPDATE_MENU_VIEW_PUB);
+    aAjaxRegistry.registerFunction (CAjax.UPDATE_MENU_VIEW_SEC);
   }
 
   @Override

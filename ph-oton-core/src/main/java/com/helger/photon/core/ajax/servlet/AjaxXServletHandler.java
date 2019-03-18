@@ -40,6 +40,7 @@ import com.helger.http.EHttpVersion;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.GlobalAjaxInvoker;
 import com.helger.photon.core.ajax.IAjaxInvoker;
+import com.helger.photon.core.ajax.IAjaxRegistry;
 import com.helger.photon.core.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.scope.mgr.ScopeManager;
@@ -69,16 +70,19 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                     "ajaxservlet.executor";
 
-  private final ISupplier <? extends IAjaxInvoker> m_aFactory;
+  private final ISupplier <? extends IAjaxRegistry> m_aRegistryFactory;
+  private final ISupplier <? extends IAjaxInvoker> m_aInvokerFactory;
 
   public AjaxXServletHandler ()
   {
-    this ( () -> GlobalAjaxInvoker.getInstance ());
+    this ( () -> GlobalAjaxInvoker.getInstance ().getRegistry (), () -> GlobalAjaxInvoker.getInstance ().getInvoker ());
   }
 
-  public AjaxXServletHandler (@Nonnull final ISupplier <? extends IAjaxInvoker> aFactory)
+  public AjaxXServletHandler (@Nonnull final ISupplier <? extends IAjaxRegistry> aRegistryFactory,
+                              @Nonnull final ISupplier <? extends IAjaxInvoker> aInvokerFactory)
   {
-    m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
+    m_aRegistryFactory = ValueEnforcer.notNull (aRegistryFactory, "aRegistryFactory");
+    m_aInvokerFactory = ValueEnforcer.notNull (aInvokerFactory, "InvokerFactory");
   }
 
   @Nonnull
@@ -101,8 +105,10 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     if (StringHelper.startsWith (sFunctionName, '/'))
       sFunctionName = sFunctionName.substring (1);
 
-    final IAjaxInvoker aAjaxInvoker = m_aFactory.get ();
-    final IAjaxFunctionDeclaration aAjaxDeclaration = aAjaxInvoker.getRegisteredFunction (sFunctionName);
+    final IAjaxRegistry aRegistry = m_aRegistryFactory.get ();
+    final IAjaxInvoker aInvoker = m_aInvokerFactory.get ();
+
+    final IAjaxFunctionDeclaration aAjaxDeclaration = aRegistry.getRegisteredFunction (sFunctionName);
     if (aAjaxDeclaration == null)
     {
       LOGGER.warn ("Unknown Ajax function '" + sFunctionName + "' provided!");
@@ -138,7 +144,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     // Remember in scope
     // Important: use a wrapper to avoid scope destruction
     aRequestScope.attrs ().putIn (SCOPE_ATTR_NAME, sFunctionName);
-    aRequestScope.attrs ().putIn (SCOPE_ATTR_INVOKER, new Wrapper <> (aAjaxInvoker));
+    aRequestScope.attrs ().putIn (SCOPE_ATTR_INVOKER, new Wrapper <> (aInvoker));
     aRequestScope.attrs ().putIn (SCOPE_ATTR_EXECUTOR, aAjaxExecutor);
     return EContinue.CONTINUE;
   }
