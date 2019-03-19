@@ -56,15 +56,11 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-security</artifactId>
+      <artifactId>ph-oton-audit</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-tenancy</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-basic</artifactId>
     </dependency>
     
     <dependency>

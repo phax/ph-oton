@@ -25,7 +25,7 @@ import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicLogin;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconMaterialDesign;
-import com.helger.photon.security.menu.MenuObjectFilterNoUserLoggedIn;
+import com.helger.photon.core.app.menu.security.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.BasePageViewExternal;
 import com.helger.photon.uicore.page.system.BasePageShowChildren;

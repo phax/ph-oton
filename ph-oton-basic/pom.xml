@@ -56,15 +56,15 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-app</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-tree</artifactId>
+      <artifactId>ph-oton-audit</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-xservlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-tree</artifactId>
     </dependency>
     
     <dependency>

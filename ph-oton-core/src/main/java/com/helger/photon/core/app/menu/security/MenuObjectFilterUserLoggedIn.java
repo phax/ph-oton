@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.security.menu;
+package com.helger.photon.core.app.menu.security;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -25,20 +25,20 @@ import com.helger.photon.basic.app.menu.filter.AbstractMenuObjectFilter;
 import com.helger.photon.security.login.LoggedInUserManager;
 
 /**
- * This filter matches any menu item if no user is logged in.
+ * This filter matches any menu item if a user is logged in.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MenuObjectFilterNoUserLoggedIn extends AbstractMenuObjectFilter
+public class MenuObjectFilterUserLoggedIn extends AbstractMenuObjectFilter
 {
-  public MenuObjectFilterNoUserLoggedIn ()
+  public MenuObjectFilterUserLoggedIn ()
   {
-    setDescription (EPhotonBasicText.MENU_OBJECT_FILTER_NO_USER_LOGGED_IN.getMultilingualText ());
+    setDescription (EPhotonBasicText.MENU_OBJECT_FILTER_USER_LOGGED_IN.getMultilingualText ());
   }
 
   public boolean test (@Nullable final IMenuObject aValue)
   {
-    return !LoggedInUserManager.getInstance ().isUserLoggedInInCurrentSession ();
+    return LoggedInUserManager.getInstance ().isUserLoggedInInCurrentSession ();
   }
 }

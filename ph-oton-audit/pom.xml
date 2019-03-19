@@ -24,11 +24,11 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>8.2.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-atom</artifactId>
+  <artifactId>ph-oton-audit</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-atom</name>
-  <description>ph-oton ATOM newsfeed stuff</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-atom</url>
+  <name>ph-oton-audit</name>
+  <description>ph-oton audit library</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-audit</url>
   <inceptionYear>2014</inceptionYear>
 
   <licenses>
@@ -56,7 +56,7 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-html</artifactId>
+      <artifactId>ph-oton-app</artifactId>
     </dependency>
 
     <dependency>
@@ -80,8 +80,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.photon.atom</Automatic-Module-Name>
-            <Export-Package>com.helger.photon.atom.*</Export-Package>
+            <Automatic-Module-Name>com.helger.photon.audit</Automatic-Module-Name>
+            <Export-Package>com.helger.photon.audit.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
