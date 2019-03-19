@@ -40,7 +40,7 @@ Contained subprojects are:
     * Improved API path ambiguity resolution API (interface `IAPIPathAmbiguityResolver` et. al.)
     * Added new API Interface `IAPIRegistry` and let `GlobalAPIInvoker` implement it
     * Clearly separate between `AjaxRegistry` and `AjaxInvoker` similar to new API API 
-    * Reworked module structure (created `ph-oton-app`, `ph-oton-audit`, `ph-oton-ajax`, `ph-oton-api`)
+    * Reworked module structure (created `ph-oton-app`, `ph-oton-audit`, `ph-oton-ajax`, `ph-oton-api`, removed `ph-oton-basic`)
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1

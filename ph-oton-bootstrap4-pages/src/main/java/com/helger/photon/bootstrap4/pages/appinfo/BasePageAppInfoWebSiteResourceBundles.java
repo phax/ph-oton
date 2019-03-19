@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018-2019 Philip Helger (www.helger.com)
+ * Copyright (C) 2014-2019 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,13 +40,13 @@ import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.textlevel.HCBR;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.app.resource.WebSiteResourceBundleManager;
 import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.app.resource.WebSiteResourceCache;
 import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.button.BootstrapButton;
-import com.helger.photon.bootstrap4.button.EBootstrapButtonType;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap4.table.BootstrapTable;
@@ -76,12 +76,14 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
   {
     MSG_CACHE_NOW_ENABLED ("Der Cache ist jetzt aktiviert", "Cache is now enabled"),
     MSG_CACHE_NOW_DISABLED ("Der Cache ist jetzt deaktiviert", "Cache is now disabled"),
-    MSG_RESBUNDLE_NOW_ENABLED ("Das ResourceBundleServlet ist jetzt aktiviert", "ResourceBundleServlet is now enabled"),
-    MSG_RESBUNDLE_NOW_DISABLED ("Das ResourceBundleServlet ist jetzt deaktiviert",
-                                "ResourceBundleServlet is now disabled"),
+    MSG_MERGE_CSS_NOW_ENABLED ("Das Zusammenführen von CSS ist jetzt aktiviert", "CSS merging is now enabled"),
+    MSG_MERGE_CSS_NOW_DISABLED ("Das Zusammenführen von CSS ist jetzt deaktiviert", "CSS merging is now disabled"),
+    MSG_MERGE_JS_NOW_ENABLED ("Das Zusammenführen von JS ist jetzt aktiviert", "JS merging is now enabled"),
+    MSG_MERGE_JS_NOW_DISABLED ("Das Zusammenführen von JS ist jetzt deaktiviert", "JS merging is now disabled"),
     MSG_RESBUNDLE_SERVLET ("ResourceBundleServlet registriert", "ResourceBundleServlet registered"),
     MSG_CACHE_ENABLED ("Cache aktiv", "Cache enabled"),
-    MSG_RESBUNDLE_ENABLED ("ResourceBundleServlet aktiviert", "ResourceBundleServlet enabled"),
+    MSG_MERGE_CSS_ENABLED ("Das Zusammenführen von CSS ist aktiviert", "CSS merging is enabled"),
+    MSG_MERGE_JS_ENABLED ("Das Zusammenführen von JS ist aktiviert", "JS merging is enabled"),
     MSG_ID ("ID", "ID"),
     MSG_DATE ("Datum", "Date"),
     MSG_RESOURCES ("Resourcen", "Resources"),
@@ -104,7 +106,8 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
   }
 
   private static final String ACTION_CHANGE_CACHE_STATE = "changecachestate";
-  private static final String ACTION_CHANGE_RESBUNDLE_STATE = "changeresbundlestate";
+  private static final String ACTION_CHANGE_MERGE_CSS_STATE = "changemergecssstate";
+  private static final String ACTION_CHANGE_MERGE_JS_STATE = "changemergejsstate";
 
   private final WebSiteResourceBundleManager m_aResBundleMgr;
 
@@ -162,12 +165,21 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
       return;
     }
 
-    if (aWPEC.hasAction (ACTION_CHANGE_RESBUNDLE_STATE))
+    if (aWPEC.hasAction (ACTION_CHANGE_MERGE_CSS_STATE))
     {
-      ResourceBundleServlet.setEnabled (!ResourceBundleServlet.isEnabled ());
-      final boolean bResBundleActive = ResourceBundleServlet.isEnabled ();
-      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bResBundleActive ? EText.MSG_RESBUNDLE_NOW_ENABLED.getDisplayText (aDisplayLocale)
-                                                                                           : EText.MSG_RESBUNDLE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+      PhotonAppSettings.setMergeCSSResources (!PhotonAppSettings.isMergeCSSResources ());
+      final boolean bResBundleActive = PhotonAppSettings.isMergeCSSResources ();
+      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bResBundleActive ? EText.MSG_MERGE_CSS_NOW_ENABLED.getDisplayText (aDisplayLocale)
+                                                                                           : EText.MSG_MERGE_CSS_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+      return;
+    }
+
+    if (aWPEC.hasAction (ACTION_CHANGE_MERGE_JS_STATE))
+    {
+      PhotonAppSettings.setMergeJSResources (!PhotonAppSettings.isMergeJSResources ());
+      final boolean bResBundleActive = PhotonAppSettings.isMergeJSResources ();
+      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bResBundleActive ? EText.MSG_MERGE_JS_NOW_ENABLED.getDisplayText (aDisplayLocale)
+                                                                                           : EText.MSG_MERGE_JS_NOW_DISABLED.getDisplayText (aDisplayLocale)));
       return;
     }
 
@@ -181,7 +193,8 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     {
       final boolean bCacheEnabled = WebSiteResourceCache.isCacheEnabled ();
       final boolean bServletRegistered = ResourceBundleServlet.isServletRegisteredInServletContext ();
-      final boolean bResBundleActive = ResourceBundleServlet.isEnabled ();
+      final boolean bMergeCSSActive = PhotonAppSettings.isMergeCSSResources ();
+      final boolean bMergeJSActive = PhotonAppSettings.isMergeJSResources ();
 
       final BootstrapTable aTable = new BootstrapTable (HCCol.star (),
                                                         HCCol.star (),
@@ -192,22 +205,30 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
       final HCRow aCacheRow = aTable.addBodyRow ()
                                     .addCell (EText.MSG_CACHE_ENABLED.getDisplayText (aDisplayLocale))
                                     .addCell (EPhotonCoreText.getYesOrNo (bCacheEnabled, aDisplayLocale));
-      final HCRow aResBundleActiveRow = aTable.addBodyRow ()
-                                              .addCell (EText.MSG_RESBUNDLE_ENABLED.getDisplayText (aDisplayLocale))
-                                              .addCell (EPhotonCoreText.getYesOrNo (bResBundleActive, aDisplayLocale));
+      final HCRow aMergeCSSRow = aTable.addBodyRow ()
+                                       .addCell (EText.MSG_MERGE_CSS_ENABLED.getDisplayText (aDisplayLocale))
+                                       .addCell (EPhotonCoreText.getYesOrNo (bMergeCSSActive, aDisplayLocale));
+      final HCRow aMergeJSRow = aTable.addBodyRow ()
+                                      .addCell (EText.MSG_MERGE_JS_ENABLED.getDisplayText (aDisplayLocale))
+                                      .addCell (EPhotonCoreText.getYesOrNo (bMergeJSActive, aDisplayLocale));
       if (bServletRegistered)
       {
         aRegisteredRow.addCell ();
-        aCacheRow.addCell (new BootstrapButton (EBootstrapButtonType.OUTLINE_PRIMARY).addChild (bCacheEnabled ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
-                                                                                                              : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
-                                                                                     .setOnClick (aWPEC.getSelfHref ()
-                                                                                                       .add (CPageParam.PARAM_ACTION,
-                                                                                                             ACTION_CHANGE_CACHE_STATE)));
-        aResBundleActiveRow.addCell (new BootstrapButton (EBootstrapButtonType.OUTLINE_PRIMARY).addChild (bResBundleActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
-                                                                                                                           : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
-                                                                                               .setOnClick (aWPEC.getSelfHref ()
-                                                                                                                 .add (CPageParam.PARAM_ACTION,
-                                                                                                                       ACTION_CHANGE_RESBUNDLE_STATE)));
+        aCacheRow.addCell (new BootstrapButton ().addChild (bCacheEnabled ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
+                                                                          : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
+                                                 .setOnClick (aWPEC.getSelfHref ()
+                                                                   .add (CPageParam.PARAM_ACTION,
+                                                                         ACTION_CHANGE_CACHE_STATE)));
+        aMergeCSSRow.addCell (new BootstrapButton ().addChild (bMergeCSSActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
+                                                                               : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
+                                                    .setOnClick (aWPEC.getSelfHref ()
+                                                                      .add (CPageParam.PARAM_ACTION,
+                                                                            ACTION_CHANGE_MERGE_CSS_STATE)));
+        aMergeJSRow.addCell (new BootstrapButton ().addChild (bMergeJSActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
+                                                                             : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
+                                                   .setOnClick (aWPEC.getSelfHref ()
+                                                                     .add (CPageParam.PARAM_ACTION,
+                                                                           ACTION_CHANGE_MERGE_JS_STATE)));
       }
       aNodeList.addChild (aTable);
 

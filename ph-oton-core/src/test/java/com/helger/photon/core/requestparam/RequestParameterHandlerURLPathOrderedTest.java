@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.request;
+package com.helger.photon.core.requestparam;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -33,8 +33,8 @@ import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.MenuTree;
 import com.helger.photon.core.page.AbstractPage;
-import com.helger.photon.core.request.PhotonRequestParameters;
-import com.helger.photon.core.request.RequestParameterHandlerURLPathOrdered;
+import com.helger.photon.core.requestparam.PhotonRequestParameters;
+import com.helger.photon.core.requestparam.RequestParameterHandlerURLPathOrdered;
 import com.helger.servlet.mock.MockHttpServletRequest;
 import com.helger.servlet.mock.MockHttpServletResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;

@@ -16,13 +16,8 @@
  */
 package com.helger.photon.core.resource;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.http.EHttpMethod;
+import com.helger.photon.app.PhotonAppSettings;
 import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;
 
@@ -49,12 +44,8 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  */
 public final class ResourceBundleServlet extends AbstractXServlet
 {
-  public static final String SERVLET_DEFAULT_NAME = "resbundle";
+  public static final String SERVLET_DEFAULT_NAME = PhotonAppSettings.getResourceBundleServletName ();
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
-
-  private static final Logger LOGGER = LoggerFactory.getLogger (ResourceBundleServlet.class);
-  private static final AtomicBoolean s_bIsEnabled = new AtomicBoolean (isServletRegisteredInServletContext () &&
-                                                                       GlobalDebug.isProductionMode ());
 
   public ResourceBundleServlet ()
   {
@@ -64,18 +55,5 @@ public final class ResourceBundleServlet extends AbstractXServlet
   public static boolean isServletRegisteredInServletContext ()
   {
     return ServletStatusManager.getInstance ().isServletRegistered (ResourceBundleServlet.class);
-  }
-
-  public static void setEnabled (final boolean bEnable)
-  {
-    if (bEnable && !isServletRegisteredInServletContext ())
-      throw new IllegalStateException ("Cannot enable the servlet, since it is not registered!");
-    s_bIsEnabled.set (bEnable);
-    LOGGER.info ("ResourceBundleServlet is now: " + (bEnable ? "enabled" : "disabled"));
-  }
-
-  public static boolean isEnabled ()
-  {
-    return s_bIsEnabled.get ();
   }
 }

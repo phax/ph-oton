@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.request;
+package com.helger.photon.core.requestparam;
 
 import java.util.Locale;
 

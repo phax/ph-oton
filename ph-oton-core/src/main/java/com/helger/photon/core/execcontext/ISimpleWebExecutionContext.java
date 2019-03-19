@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.core.menu.IMenuTree;
-import com.helger.photon.core.request.RequestParameterManager;
+import com.helger.photon.core.requestparam.RequestParameterManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.servlet.request.IRequestParamMap;

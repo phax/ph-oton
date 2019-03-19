@@ -35,7 +35,7 @@ import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.core.request.RequestParameterManager;
+import com.helger.photon.core.requestparam.RequestParameterManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;

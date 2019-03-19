@@ -60,7 +60,8 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
                                                                     .getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
     if (!PhotonAppManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
     {
-      LOGGER.info ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
+      if (LOGGER.isWarnEnabled ())
+        LOGGER.warn ("Failed to resolve resource bundle with ID '" + sBundleID + "'");
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
       return EContinue.BREAK;
     }
