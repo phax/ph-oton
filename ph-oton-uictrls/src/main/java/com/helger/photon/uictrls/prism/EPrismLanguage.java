@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
-import com.helger.photon.basic.configfile.EConfigurationFileSyntax;
+import com.helger.photon.core.configfile.EConfigurationFileSyntax;
 
 public enum EPrismLanguage implements ICSSClassProvider
 {

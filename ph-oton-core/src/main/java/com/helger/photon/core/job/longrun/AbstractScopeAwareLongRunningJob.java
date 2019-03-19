@@ -24,10 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.state.ESuccess;
-import com.helger.photon.basic.longrun.ILongRunningJob;
-import com.helger.photon.basic.longrun.LongRunningJobManager;
-import com.helger.photon.basic.longrun.LongRunningJobResult;
-import com.helger.photon.basic.mgr.PhotonBasicManager;
+import com.helger.photon.core.longrun.ILongRunningJob;
+import com.helger.photon.core.longrun.LongRunningJobManager;
+import com.helger.photon.core.longrun.LongRunningJobResult;
+import com.helger.photon.core.mgr.PhotonBasicManager;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
 import com.helger.scope.mgr.ScopeManager;

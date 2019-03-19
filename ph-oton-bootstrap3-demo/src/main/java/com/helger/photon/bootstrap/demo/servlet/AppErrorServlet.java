@@ -17,8 +17,8 @@
 package com.helger.photon.bootstrap.demo.servlet;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.xservlet.ErrorXServletHandler;
 import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
+import com.helger.photon.core.xservlet.ErrorXServletHandler;
 import com.helger.xservlet.AbstractXServlet;
 
 public class AppErrorServlet extends AbstractXServlet

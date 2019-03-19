@@ -51,7 +51,7 @@ import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.app.appid.RequestSettings;
+import com.helger.photon.core.app.appid.RequestSettings;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.servlet.ServletHelper;

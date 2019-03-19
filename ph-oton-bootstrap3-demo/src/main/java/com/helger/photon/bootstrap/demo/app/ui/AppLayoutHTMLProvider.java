@@ -26,12 +26,12 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.sections.HCBody;
-import com.helger.photon.basic.app.appid.RequestSettings;
-import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.bootstrap.demo.app.CApp;
+import com.helger.photon.core.app.appid.RequestSettings;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.context.LayoutExecutionContext;
 import com.helger.photon.core.app.html.AbstractSWECHTMLProvider;
+import com.helger.photon.core.app.menu.IMenuItemPage;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 

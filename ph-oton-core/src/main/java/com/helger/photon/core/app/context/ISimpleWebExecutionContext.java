@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.app.request.RequestParameterManager;
+import com.helger.photon.core.app.menu.IMenuTree;
+import com.helger.photon.core.app.request.RequestParameterManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.servlet.request.IRequestParamMap;

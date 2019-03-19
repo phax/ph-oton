@@ -28,11 +28,11 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCA;
-import com.helger.photon.basic.app.menu.EMenuObjectType;
-import com.helger.photon.basic.app.menu.IMenuItemExternal;
-import com.helger.photon.basic.app.menu.IMenuItemPage;
-import com.helger.photon.basic.app.menu.IMenuObject;
-import com.helger.photon.basic.app.menu.IMenuSeparator;
+import com.helger.photon.core.app.menu.EMenuObjectType;
+import com.helger.photon.core.app.menu.IMenuItemExternal;
+import com.helger.photon.core.app.menu.IMenuItemPage;
+import com.helger.photon.core.app.menu.IMenuObject;
+import com.helger.photon.core.app.menu.IMenuSeparator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**

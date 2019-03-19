@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.basic.app.appid.XServletFilterAppIDExplicit;
+import com.helger.photon.core.app.appid.XServletFilterAppIDExplicit;
 import com.helger.xservlet.AbstractXServlet;
 
 /**

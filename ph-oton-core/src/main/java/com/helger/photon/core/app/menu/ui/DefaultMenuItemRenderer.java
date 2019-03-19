@@ -28,10 +28,10 @@ import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCEntityNode;
-import com.helger.photon.basic.app.menu.IMenuItemExternal;
-import com.helger.photon.basic.app.menu.IMenuItemPage;
-import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
+import com.helger.photon.core.app.menu.IMenuItemExternal;
+import com.helger.photon.core.app.menu.IMenuItemPage;
+import com.helger.photon.core.app.menu.IMenuSeparator;
 
 /**
  * Default implementation of {@link IMenuItemRenderer}

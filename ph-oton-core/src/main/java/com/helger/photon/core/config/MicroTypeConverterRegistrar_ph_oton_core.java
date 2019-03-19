@@ -20,6 +20,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.photon.audit.AuditItem;
+import com.helger.photon.audit.AuditItemMicroTypeConverter;
+import com.helger.photon.core.favorites.Favorite;
+import com.helger.photon.core.favorites.FavoriteMicroTypeConverter;
+import com.helger.photon.core.longrun.LongRunningJobData;
+import com.helger.photon.core.longrun.LongRunningJobDataMicroTypeConverter;
+import com.helger.photon.core.migration.SystemMigrationResult;
+import com.helger.photon.core.migration.SystemMigrationResultMicroTypeConverter;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettingsMicroTypeConverter;
 import com.helger.photon.core.userdata.UserDataObject;
@@ -38,6 +46,11 @@ public final class MicroTypeConverterRegistrar_ph_oton_core implements IMicroTyp
 {
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
+    aRegistry.registerMicroElementTypeConverter (AuditItem.class, new AuditItemMicroTypeConverter ());
+    aRegistry.registerMicroElementTypeConverter (Favorite.class, new FavoriteMicroTypeConverter ());
+    aRegistry.registerMicroElementTypeConverter (LongRunningJobData.class, new LongRunningJobDataMicroTypeConverter ());
+    aRegistry.registerMicroElementTypeConverter (SystemMigrationResult.class,
+                                                 new SystemMigrationResultMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (NamedSMTPSettings.class, new NamedSMTPSettingsMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (UserDataObject.class, new UserDataObjectMicroTypeConverter ());
   }

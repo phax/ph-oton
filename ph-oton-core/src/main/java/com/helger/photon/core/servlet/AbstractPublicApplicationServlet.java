@@ -18,7 +18,7 @@ package com.helger.photon.core.servlet;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.basic.app.appid.CApplicationID;
+import com.helger.photon.core.app.appid.CApplicationID;
 
 /**
  * The servlet to show the public application

@@ -25,9 +25,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.EPhotonBasicText;
-import com.helger.photon.basic.app.menu.IMenuObject;
-import com.helger.photon.basic.app.menu.filter.AbstractMenuObjectFilter;
+import com.helger.photon.core.EPhotonBasicText;
+import com.helger.photon.core.app.menu.IMenuObject;
+import com.helger.photon.core.app.menu.filter.AbstractMenuObjectFilter;
 import com.helger.photon.security.util.SecurityHelper;
 
 /**

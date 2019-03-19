@@ -26,11 +26,11 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.photon.basic.app.systemmsg.ESystemMessageType;
-import com.helger.photon.basic.app.systemmsg.SystemMessageManager;
-import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.bootstrap4.alert.AbstractBootstrapAlert;
 import com.helger.photon.bootstrap4.alert.EBootstrapAlertType;
+import com.helger.photon.core.app.systemmsg.ESystemMessageType;
+import com.helger.photon.core.app.systemmsg.SystemMessageManager;
+import com.helger.photon.core.mgr.PhotonBasicManager;
 import com.helger.photon.uicore.UITextFormatter;
 
 /**

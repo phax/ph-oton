@@ -20,12 +20,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.photon.basic.app.menu.IMenuItemPage;
-import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicLogin;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome4;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome5;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconMaterialDesign;
+import com.helger.photon.core.app.menu.IMenuItemPage;
+import com.helger.photon.core.app.menu.IMenuTree;
 import com.helger.photon.core.app.menu.security.MenuObjectFilterNoUserLoggedIn;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.BasePageViewExternal;

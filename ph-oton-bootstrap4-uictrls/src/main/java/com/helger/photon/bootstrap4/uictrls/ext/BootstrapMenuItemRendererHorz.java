@@ -22,8 +22,8 @@ import javax.annotation.Nonnull;
 
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCLI;
-import com.helger.photon.basic.app.menu.IMenuSeparator;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
+import com.helger.photon.core.app.menu.IMenuSeparator;
 
 /**
  * A special menu item renderer for the footer area, where the items are
