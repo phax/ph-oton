@@ -24,11 +24,11 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.photon.app.PhotonAppManager;
 import com.helger.photon.app.resource.WebSiteResourceBundleManager;
+import com.helger.photon.audit.IAuditManager;
 import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObjectFilter;
 import com.helger.photon.basic.app.menu.IMenuTree;
-import com.helger.photon.basic.audit.IAuditManager;
 import com.helger.photon.basic.mgr.PhotonBasicManager;
 import com.helger.photon.basic.migration.SystemMigrationManager;
 import com.helger.photon.bootstrap3.pages.appinfo.BasePageAppInfoAPI;

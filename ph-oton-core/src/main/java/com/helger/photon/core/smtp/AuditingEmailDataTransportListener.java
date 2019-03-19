@@ -19,7 +19,7 @@ package com.helger.photon.core.smtp;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.audit.AuditHelper;
+import com.helger.photon.audit.AuditHelper;
 import com.helger.smtp.listener.EmailDataTransportEvent;
 import com.helger.smtp.listener.IEmailDataTransportListener;
 import com.helger.smtp.transport.listener.LoggingTransportListener;

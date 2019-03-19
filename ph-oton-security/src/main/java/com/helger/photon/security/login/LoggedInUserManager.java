@@ -41,7 +41,7 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.audit.AuditHelper;
+import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;

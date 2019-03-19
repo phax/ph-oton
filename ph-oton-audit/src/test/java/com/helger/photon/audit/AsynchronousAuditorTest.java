@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.audit;
+package com.helger.photon.audit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,6 +30,9 @@ import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.app.mock.MockCurrentUserIDProvider;
+import com.helger.photon.audit.AsynchronousAuditor;
+import com.helger.photon.audit.AuditHelper;
+import com.helger.photon.audit.IAuditItem;
 
 /**
  * Test class for class {@link AsynchronousAuditor}.

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.basic.audit.AuditHelper;
+import com.helger.photon.audit.AuditHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
 

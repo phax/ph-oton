@@ -32,7 +32,7 @@ import com.helger.commons.exception.InitializationException;
 import com.helger.commons.state.EChange;
 import com.helger.dao.DAOException;
 import com.helger.photon.app.dao.AbstractPhotonSimpleDAO;
-import com.helger.photon.basic.audit.AuditHelper;
+import com.helger.photon.audit.AuditHelper;
 import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.failed.FailedMailQueue;
 import com.helger.xml.microdom.IMicroDocument;

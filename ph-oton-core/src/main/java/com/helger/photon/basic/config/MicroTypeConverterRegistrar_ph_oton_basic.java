@@ -19,8 +19,8 @@ package com.helger.photon.basic.config;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.photon.basic.audit.AuditItem;
-import com.helger.photon.basic.audit.AuditItemMicroTypeConverter;
+import com.helger.photon.audit.AuditItem;
+import com.helger.photon.audit.AuditItemMicroTypeConverter;
 import com.helger.photon.basic.favorites.Favorite;
 import com.helger.photon.basic.favorites.FavoriteMicroTypeConverter;
 import com.helger.photon.basic.longrun.LongRunningJobData;

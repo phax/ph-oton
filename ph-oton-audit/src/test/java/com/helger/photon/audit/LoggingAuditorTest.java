@@ -14,12 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.basic.audit;
+package com.helger.photon.audit;
 
 import org.junit.Test;
 
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.app.mock.MockCurrentUserIDProvider;
+import com.helger.photon.audit.AuditHelper;
+import com.helger.photon.audit.LoggingAuditor;
 
 /**
  * Test class for class {@link LoggingAuditor}.
