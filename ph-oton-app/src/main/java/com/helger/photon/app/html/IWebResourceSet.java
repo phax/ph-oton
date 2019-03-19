@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.resource;
+package com.helger.photon.app.html;
 
 import java.util.Collection;
 
@@ -24,6 +24,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.state.EChange;
+import com.helger.html.resource.IHTMLResourceProvider;
 
 /**
  * Base interface for CSS and JS resource sets.
@@ -32,7 +33,7 @@ import com.helger.commons.state.EChange;
  * @param <T>
  *        The contained data type.
  */
-public interface IWebResourceSet <T> extends ICommonsIterable <T>
+public interface IWebResourceSet <T extends IHTMLResourceProvider> extends ICommonsIterable <T>
 {
   /**
    * Add an item
@@ -129,9 +130,4 @@ public interface IWebResourceSet <T> extends ICommonsIterable <T>
    * @return <code>true</code> if at least a single item is contained
    */
   boolean isNotEmpty ();
-
-  /**
-   * @return The number of contained items. Always &ge; 0.
-   */
-  int getCount ();
 }

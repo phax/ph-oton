@@ -30,7 +30,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.core.app.locale.GlobalLocaleManager;
 import com.helger.photon.core.app.menu.IMenuItemPage;
 import com.helger.photon.core.app.menu.MenuTree;
@@ -48,7 +48,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
 public final class RequestParameterHandlerURLParameterTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   private static final Locale LOCALE = LocaleCache.getInstance ().getLocale ("de_AT");
 

@@ -25,7 +25,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 
@@ -37,7 +37,7 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 public final class LoggedInUserManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   @Test
   public void testInit ()

@@ -24,14 +24,14 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import com.helger.dao.DAOException;
-import com.helger.photon.app.mock.PhotonBasicTestRule;
+import com.helger.photon.app.mock.PhotonAppTestRule;
 import com.helger.photon.core.migration.SystemMigrationManager;
 import com.helger.photon.core.migration.SystemMigrationResult;
 
 public final class SystemMigrationManagerTest
 {
   @Rule
-  public final PhotonBasicTestRule m_aRule = new PhotonBasicTestRule ();
+  public final PhotonAppTestRule m_aRule = new PhotonAppTestRule ();
 
   @Test
   public void testBasicSuccess () throws DAOException

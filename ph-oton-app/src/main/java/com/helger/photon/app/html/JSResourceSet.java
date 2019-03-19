@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.resource;
+package com.helger.photon.app.html;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
@@ -39,48 +38,48 @@ import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.html.resource.js.IJSPathProvider;
 
 /**
- * This class keeps track of all the CSS files that must be included for a
- * single request, so that the controls are working properly.
+ * This class keeps track of all the JS files that must be included for a single
+ * request, so that the controls are working properly.
  *
  * @author Philip Helger
  */
 @ThreadSafe
-public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
+public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (CSSResourceSet.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSResourceSet.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsList <ICSSPathProvider> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <IJSPathProvider> m_aList = new CommonsArrayList <> ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsSet <ICSSPathProvider> m_aItems = new CommonsHashSet<> ();
+  private final ICommonsSet <IJSPathProvider> m_aItems = new CommonsLinkedHashSet <> ();
   @GuardedBy ("m_aRWLock")
   private boolean m_bIsCollected = false;
 
-  public CSSResourceSet ()
+  public JSResourceSet ()
   {}
 
-  public CSSResourceSet (@Nonnull final CSSResourceSet aOther)
+  public JSResourceSet (@Nonnull final JSResourceSet aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
-    for (final ICSSPathProvider aItem : aOther)
+    for (final IJSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  public CSSResourceSet (@Nonnull final Collection <? extends ICSSPathProvider> aOther)
+  public JSResourceSet (@Nonnull final Collection <? extends IJSPathProvider> aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
-    for (final ICSSPathProvider aItem : aOther)
+    for (final IJSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  public CSSResourceSet (@Nonnull final ICSSPathProvider... aOther)
+  public JSResourceSet (@Nonnull final IJSPathProvider... aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
-    for (final ICSSPathProvider aItem : aOther)
+    for (final IJSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
@@ -90,46 +89,46 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   }
 
   @Nonnull
-  public EChange addItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  public EChange addItem (@Nonnull final IJSPathProvider aJSPathProvider)
   {
-    return addItem (-1, aCSSPathProvider);
+    return addItem (-1, aJSPathProvider);
   }
 
   @Nonnull
-  public EChange addItem (final int nIndex, @Nonnull final ICSSPathProvider aCSSPathProvider)
+  public EChange addItem (final int nIndex, @Nonnull final IJSPathProvider aJSPathProvider)
   {
-    ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
+    ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
     return m_aRWLock.writeLocked ( () -> {
       // Check uniqueness
-      if (!m_aItems.add (aCSSPathProvider))
+      if (!m_aItems.add (aJSPathProvider))
         return EChange.UNCHANGED;
 
-      // Honour index
+      // Honor index
       if (nIndex >= 0)
-        m_aList.add (nIndex, aCSSPathProvider);
+        m_aList.add (nIndex, aJSPathProvider);
       else
-        m_aList.add (aCSSPathProvider);
+        m_aList.add (aJSPathProvider);
 
       if (m_bIsCollected)
-        _collectWarn ("Adding item " + aCSSPathProvider + " after collection!");
+        _collectWarn ("Adding item " + aJSPathProvider + " after collection!");
       return EChange.CHANGED;
     });
   }
 
   @Nonnull
-  public EChange addItems (@Nonnull final IWebResourceSet <? extends ICSSPathProvider> aItems)
+  public EChange addItems (@Nonnull final IWebResourceSet <? extends IJSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
 
     EChange ret = EChange.UNCHANGED;
-    for (final ICSSPathProvider aItem : aItems)
+    for (final IJSPathProvider aItem : aItems)
       ret = ret.or (addItem (aItem));
     return ret;
   }
 
   @Nonnull
-  public EChange addItems (final int nIndex, @Nonnull final IWebResourceSet <? extends ICSSPathProvider> aItems)
+  public EChange addItems (final int nIndex, @Nonnull final IWebResourceSet <? extends IJSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
 
@@ -138,7 +137,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 
     EChange ret = EChange.UNCHANGED;
     int nCurIndex = nIndex;
-    for (final ICSSPathProvider aItem : aItems)
+    for (final IJSPathProvider aItem : aItems)
       if (addItem (nCurIndex, aItem).isChanged ())
       {
         ret = EChange.CHANGED;
@@ -148,17 +147,17 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   }
 
   @Nonnull
-  public EChange removeItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  public EChange removeItem (@Nonnull final IJSPathProvider aJSPathProvider)
   {
-    ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
+    ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
     return m_aRWLock.writeLocked ( () -> {
-      if (!m_aItems.remove (aCSSPathProvider))
+      if (!m_aItems.remove (aJSPathProvider))
         return EChange.UNCHANGED;
-      m_aList.remove (aCSSPathProvider);
+      m_aList.remove (aJSPathProvider);
 
       if (m_bIsCollected)
-        _collectWarn ("Removed item " + aCSSPathProvider + " after collection!");
+        _collectWarn ("Removed item " + aJSPathProvider + " after collection!");
       return EChange.CHANGED;
     });
   }
@@ -171,6 +170,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
         return EChange.UNCHANGED;
       m_aItems.clear ();
       m_aList.clear ();
+
       if (m_bIsCollected)
         _collectWarn ("Removed all items after collection!");
       return EChange.CHANGED;
@@ -179,12 +179,12 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsOrderedSet <ICSSPathProvider> getAllItems ()
+  public ICommonsOrderedSet <IJSPathProvider> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet<> (m_aList));
+    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet <> (m_aList));
   }
 
-  public void getAllItems (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
+  public void getAllItems (@Nonnull final Collection <? super IJSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
@@ -208,7 +208,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   }
 
   @Nonnull
-  public Iterator <ICSSPathProvider> iterator ()
+  public Iterator <IJSPathProvider> iterator ()
   {
     return m_aRWLock.readLocked (m_aList::iterator);
   }
@@ -229,7 +229,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final CSSResourceSet rhs = (CSSResourceSet) o;
+    final JSResourceSet rhs = (JSResourceSet) o;
     return m_aList.equals (rhs.m_aList);
   }
 

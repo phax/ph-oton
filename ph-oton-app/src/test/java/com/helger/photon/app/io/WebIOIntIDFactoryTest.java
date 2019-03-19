@@ -26,7 +26,7 @@ import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.id.factory.IIntIDFactory;
 import com.helger.photon.app.io.WebIOIntIDFactory;
-import com.helger.photon.app.mock.PhotonBasicTestRule;
+import com.helger.photon.app.mock.PhotonAppTestRule;
 
 /**
  * Test class for class {@link WebIOIntIDFactory}.
@@ -36,7 +36,7 @@ import com.helger.photon.app.mock.PhotonBasicTestRule;
 public final class WebIOIntIDFactoryTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicTestRule ();
+  public final TestRule m_aRule = new PhotonAppTestRule ();
 
   @Test
   public void testFileBasedIDProvider ()

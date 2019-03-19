@@ -28,14 +28,13 @@ import com.helger.dao.AbstractDAO;
 import com.helger.photon.app.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.servlet.ServletContextPathHolder;
-import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
- * Web scope aware test rule, with a defined storage root directory
+ * Non-web scope aware test rule, with a defined storage root directory
  *
  * @author Philip Helger
  */
-public class PhotonBasicWebTestRule extends WebScopeTestRule
+public class PhotonAppTestRule extends ScopeTestRule
 {
   private final File m_aDataPath;
   private final String m_sServletContextPath;
@@ -48,7 +47,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
    */
-  public PhotonBasicWebTestRule ()
+  public PhotonAppTestRule ()
   {
     this (ScopeTestRule.STORAGE_PATH);
   }
@@ -61,7 +60,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    *        <code>null</code>.
    * @since 8.0.1
    */
-  public PhotonBasicWebTestRule (@Nonnull final File aPath)
+  public PhotonAppTestRule (@Nonnull final File aPath)
   {
     this (aPath, aPath.getAbsolutePath ());
   }
@@ -74,10 +73,10 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    * @param sServletContextPath
    *        The servlet context path to be used. May not be <code>null</code>.
    */
-  public PhotonBasicWebTestRule (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
+  public PhotonAppTestRule (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
-    ValueEnforcer.notNull (sServletContextPath, "ServletContextPath");
+    ValueEnforcer.notEmpty (sServletContextPath, "ServletContextPath");
     m_aDataPath = aDataPath.getAbsoluteFile ();
     m_sServletContextPath = sServletContextPath;
   }
@@ -111,7 +110,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
    * @return this for chaining
    */
   @Nonnull
-  public final PhotonBasicWebTestRule setDeleteAllData (final boolean bDeleteAllData)
+  public final PhotonAppTestRule setDeleteAllData (final boolean bDeleteAllData)
   {
     m_bDeleteAllData = bDeleteAllData;
     return this;
@@ -124,7 +123,7 @@ public class PhotonBasicWebTestRule extends WebScopeTestRule
     m_bOldWebFileIOSilentMode = WebFileIO.setSilentMode (true);
     m_bOldSCCtxHolderSilentMode = ServletContextPathHolder.setSilentMode (true);
     super.before ();
-    m_aCleansingRules = PhotonBasicTestInit.init (m_aDataPath, m_sServletContextPath);
+    m_aCleansingRules = PhotonAppTestInit.init (m_aDataPath, m_sServletContextPath);
 
     if (m_bDeleteAllData)
     {

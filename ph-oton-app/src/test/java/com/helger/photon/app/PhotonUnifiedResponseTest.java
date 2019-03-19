@@ -29,7 +29,7 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.photon.app.PhotonUnifiedResponse;
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.web.scope.mgr.WebScoped;
 
 /**
@@ -40,7 +40,7 @@ import com.helger.web.scope.mgr.WebScoped;
 public final class PhotonUnifiedResponseTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   @Test
   public void testFullHtml ()

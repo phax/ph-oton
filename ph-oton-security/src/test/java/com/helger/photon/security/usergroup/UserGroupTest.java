@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.commons.collection.attr.StringMap;
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.object.StubObject;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
@@ -38,7 +38,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
 public final class UserGroupTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   @Test
   public void testBasic ()

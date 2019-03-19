@@ -30,7 +30,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.salt.PasswordSalt;
@@ -45,7 +45,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
 public final class UserTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   @Test
   public void testBasic ()

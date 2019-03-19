@@ -29,7 +29,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.UserManager;
@@ -43,7 +43,7 @@ import com.helger.xml.mock.XMLTestHelper;
 public final class UserTokenTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ().setDeleteAllData (true);
+  public final TestRule m_aRule = new PhotonAppWebTestRule ().setDeleteAllData (true);
 
   @Test
   public void testCreate ()

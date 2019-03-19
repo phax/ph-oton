@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.helger.dao.DAOException;
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
@@ -42,7 +42,7 @@ import com.helger.tenancy.tenant.ITenant;
 public final class TenantManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   @Test
   public void testAny () throws DAOException

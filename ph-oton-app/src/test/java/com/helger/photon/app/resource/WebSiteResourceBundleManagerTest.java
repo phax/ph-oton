@@ -28,7 +28,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.PhotonAppManager;
-import com.helger.photon.app.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.app.resource.WebSiteResourceBundleManager;
 import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.app.resource.WebSiteResourceWithCondition;
@@ -41,7 +41,7 @@ import com.helger.photon.app.resource.WebSiteResourceWithCondition;
 public final class WebSiteResourceBundleManagerTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonBasicWebTestRule ();
+  public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   @Test
   public void testBasicJS ()

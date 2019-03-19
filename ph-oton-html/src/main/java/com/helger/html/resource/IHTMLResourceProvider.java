@@ -14,33 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.resource.js;
+package com.helger.html.resource;
 
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.html.resource.IHTMLResourceProvider;
+import java.io.Serializable;
 
 /**
- * Base for external JS provider with all constraints
- *
+ * Base interface of CSS and JS providers.
+ * 
  * @author Philip Helger
  */
-@MustImplementEqualsAndHashcode
-public interface IJSProvider extends IHTMLResourceProvider
+public interface IHTMLResourceProvider extends Serializable
 {
-  String DEFAULT_CONDITIONAL_COMMENT = null;
+  boolean DEFAULT_IS_BUNDLABLE = true;
 
   /**
-   * @return The conditional comment required for this JS item or
-   *         <code>null</code> if it applies to all browsers.
-   */
-  @Nullable
-  String getConditionalComment ();
-
-  /**
-   * @return Whether or not this script can be bundled to a big JS profile. For
-   *         some files this is not possible.
+   * @return Whether or not this resource can be bundled into a big resource.
    */
   boolean isBundlable ();
 }

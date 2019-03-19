@@ -16,14 +16,13 @@
  */
 package com.helger.html.resource.css;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.css.media.ICSSMediaList;
+import com.helger.html.resource.IHTMLResourceProvider;
 
 /**
  * Base for external CSS provider with all constraints
@@ -31,11 +30,10 @@ import com.helger.css.media.ICSSMediaList;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface ICSSProvider extends Serializable
+public interface ICSSProvider extends IHTMLResourceProvider
 {
   String DEFAULT_CONDITIONAL_COMMENT = null;
   ICSSMediaList DEFAULT_CSS_MEDIA_LIST = null;
-  boolean DEFAULT_IS_BUNDLABLE = true;
 
   /**
    * @return The conditional comment required for this JS item or

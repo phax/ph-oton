@@ -36,11 +36,10 @@ import com.helger.commons.string.StringHelper;
 import com.helger.css.CSSFilenameHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
+import com.helger.html.resource.IHTMLResourceProvider;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
-import com.helger.html.resource.css.ICSSProvider;
 import com.helger.photon.app.PhotonAppSettings;
-import com.helger.photon.app.resource.CSSResourceSet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
@@ -118,7 +117,7 @@ public final class PhotonCSS
                                                       CSSFilenameHelper.getMinifiedCSSFilename (sPath),
                                                       sConditionalComment,
                                                       aMediaList,
-                                                      ICSSProvider.DEFAULT_IS_BUNDLABLE));
+                                                      IHTMLResourceProvider.DEFAULT_IS_BUNDLABLE));
       }
   }
 

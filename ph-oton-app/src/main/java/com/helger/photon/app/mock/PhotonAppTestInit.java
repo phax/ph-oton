@@ -35,9 +35,9 @@ import com.helger.photon.app.io.WebIOIntIDFactory;
  * @author Philip Helger
  */
 @Immutable
-public final class PhotonBasicTestInit
+public final class PhotonAppTestInit
 {
-  private PhotonBasicTestInit ()
+  private PhotonAppTestInit ()
   {}
 
   @Nonnull
