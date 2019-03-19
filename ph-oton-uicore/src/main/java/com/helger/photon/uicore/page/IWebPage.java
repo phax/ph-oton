@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.sections.HCH1;
-import com.helger.photon.core.app.page.IPage;
+import com.helger.photon.core.page.IPage;
 
 /**
  * The base interface for a single web page of content.

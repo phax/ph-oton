@@ -26,7 +26,7 @@ import com.helger.html.EHTMLRole;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.IIcon;
 

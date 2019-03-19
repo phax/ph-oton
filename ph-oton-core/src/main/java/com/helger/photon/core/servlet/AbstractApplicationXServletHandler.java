@@ -27,7 +27,7 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
-import com.helger.photon.core.app.error.InternalErrorBuilder;
+import com.helger.photon.core.interror.InternalErrorBuilder;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;

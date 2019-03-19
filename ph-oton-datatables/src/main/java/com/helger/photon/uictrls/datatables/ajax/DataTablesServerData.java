@@ -46,7 +46,7 @@ import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.hc.impl.HCCustomizerList;
-import com.helger.photon.core.state.IHasUIState;
+import com.helger.photon.core.uistate.IHasUIState;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;

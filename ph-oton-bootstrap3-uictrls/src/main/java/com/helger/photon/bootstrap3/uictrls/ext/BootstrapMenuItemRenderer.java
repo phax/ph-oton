@@ -33,17 +33,17 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.well.BootstrapWell;
 import com.helger.photon.bootstrap3.well.EBootstrapWellType;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
-import com.helger.photon.core.app.menu.IMenuItemDeterminatorCallback;
-import com.helger.photon.core.app.menu.IMenuItemExternal;
-import com.helger.photon.core.app.menu.IMenuItemPage;
-import com.helger.photon.core.app.menu.IMenuSeparator;
-import com.helger.photon.core.app.menu.IMenuTree;
-import com.helger.photon.core.app.menu.MenuItemDeterminatorCallback;
-import com.helger.photon.core.app.menu.ui.AbstractMenuItemRenderer;
-import com.helger.photon.core.app.menu.ui.IMenuItemRenderer;
-import com.helger.photon.core.app.menu.ui.MenuRendererCallback;
+import com.helger.photon.core.execcontext.ILayoutExecutionContext;
+import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
+import com.helger.photon.core.menu.IMenuItemDeterminatorCallback;
+import com.helger.photon.core.menu.IMenuItemExternal;
+import com.helger.photon.core.menu.IMenuItemPage;
+import com.helger.photon.core.menu.IMenuSeparator;
+import com.helger.photon.core.menu.IMenuTree;
+import com.helger.photon.core.menu.MenuItemDeterminatorCallback;
+import com.helger.photon.core.menu.ui.AbstractMenuItemRenderer;
+import com.helger.photon.core.menu.ui.IMenuItemRenderer;
+import com.helger.photon.core.menu.ui.MenuRendererCallback;
 
 /**
  * Default implementation of {@link IMenuItemRenderer}

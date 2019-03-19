@@ -29,7 +29,7 @@ import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.AbstractHCForm;
 import com.helger.photon.bootstrap3.CBootstrap;
 import com.helger.photon.bootstrap3.grid.BootstrapGridSpec;
-import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
+import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 
 @NotThreadSafe
 public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMutableBootstrapFormGroupContainer

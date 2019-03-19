@@ -23,10 +23,10 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
-import com.helger.photon.core.app.menu.IMenuItem;
-import com.helger.photon.core.app.menu.IMenuObject;
-import com.helger.photon.core.app.menu.IMenuTree;
+import com.helger.photon.core.execcontext.ILayoutExecutionContext;
+import com.helger.photon.core.menu.IMenuItem;
+import com.helger.photon.core.menu.IMenuObject;
+import com.helger.photon.core.menu.IMenuTree;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 
 @Immutable

@@ -34,7 +34,7 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
-import com.helger.photon.core.app.appid.PhotonGlobalState;
+import com.helger.photon.core.appid.PhotonGlobalState;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;

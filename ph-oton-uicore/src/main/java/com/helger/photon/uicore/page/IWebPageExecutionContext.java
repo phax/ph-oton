@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.css.CPageParam;
 
 public interface IWebPageExecutionContext extends ILayoutExecutionContext

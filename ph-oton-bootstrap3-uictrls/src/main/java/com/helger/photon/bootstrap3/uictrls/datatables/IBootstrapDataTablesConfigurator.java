@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap3.uictrls.datatables;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.html.tabular.IHCTable;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 
 /**
  * Interface for bootstrap datatables configurator.

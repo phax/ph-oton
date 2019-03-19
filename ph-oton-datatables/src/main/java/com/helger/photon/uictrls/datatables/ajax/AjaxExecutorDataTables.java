@@ -37,7 +37,7 @@ import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.JsonObject;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
-import com.helger.photon.core.state.UIStateRegistry;
+import com.helger.photon.core.uistate.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;

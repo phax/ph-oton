@@ -20,8 +20,8 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.core.app.systemmsg.ESystemMessageType;
 import com.helger.photon.core.form.RequestField;
+import com.helger.photon.core.systemmsg.ESystemMessageType;
 
 public class HCSystemMessageTypeSelect extends HCExtSelect
 {

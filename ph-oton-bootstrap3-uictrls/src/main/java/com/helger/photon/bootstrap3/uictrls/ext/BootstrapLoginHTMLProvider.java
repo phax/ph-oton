@@ -41,7 +41,7 @@ import com.helger.photon.bootstrap3.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap3.grid.BootstrapRow;
 import com.helger.photon.bootstrap3.pageheader.BootstrapPageHeader;
 import com.helger.photon.core.EPhotonCoreText;
-import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
+import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
 import com.helger.photon.uicore.login.AbstractLoginHTMLProvider;
 import com.helger.photon.uicore.login.SimpleLoginHTMLProvider;

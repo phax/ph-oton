@@ -25,7 +25,7 @@ import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;

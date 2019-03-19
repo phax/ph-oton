@@ -24,11 +24,11 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ClassHelper;
-import com.helger.photon.core.app.systemmsg.SystemMessageManager;
 import com.helger.photon.core.favorites.FavoriteManager;
 import com.helger.photon.core.longrun.LongRunningJobManager;
 import com.helger.photon.core.longrun.LongRunningJobResultManager;
-import com.helger.photon.core.migration.SystemMigrationManager;
+import com.helger.photon.core.sysmigration.SystemMigrationManager;
+import com.helger.photon.core.systemmsg.SystemMessageManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 

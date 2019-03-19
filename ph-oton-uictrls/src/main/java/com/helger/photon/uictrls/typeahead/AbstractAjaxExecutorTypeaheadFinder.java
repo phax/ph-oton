@@ -36,7 +36,7 @@ import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
-import com.helger.photon.core.app.context.ILayoutExecutionContext;
+import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 
 /**
  * Abstract AJAX handler that can be used as the source for a Bootstrap

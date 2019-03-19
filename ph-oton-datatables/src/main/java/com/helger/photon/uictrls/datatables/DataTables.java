@@ -73,7 +73,7 @@ import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
-import com.helger.photon.core.state.UIStateRegistry;
+import com.helger.photon.core.uistate.UIStateRegistry;
 import com.helger.photon.uicore.js.JSJQueryHelper;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
 import com.helger.photon.uictrls.datatables.column.DTCol;

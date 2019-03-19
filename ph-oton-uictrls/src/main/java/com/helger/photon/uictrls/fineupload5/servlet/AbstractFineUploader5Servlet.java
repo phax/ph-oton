@@ -30,7 +30,7 @@ import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
-import com.helger.photon.core.app.error.InternalErrorBuilder;
+import com.helger.photon.core.interror.InternalErrorBuilder;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
