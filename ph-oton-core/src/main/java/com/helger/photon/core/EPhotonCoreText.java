@@ -35,6 +35,19 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EPhotonCoreText implements IHasDisplayTextWithArgs
 {
+  // Menu object filters
+  MENU_OBJECT_FILTER_USER_LOGGED_IN ("ein Benutzer ist angemeldet", "a user is logged in"),
+  MENU_OBJECT_FILTER_NO_USER_LOGGED_IN ("es ist kein Benutzer angemeldet", "no user is logged in"),
+  MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP ("ein Benutzer ist der Benutzergruppe {0} zugeordnet",
+                                             "a user is assigned to user group {0}"),
+  MENU_OBJECT_FILTER_USER_HAS_ROLE ("ein Benutzer hat die Rolle {0}", "a user has role {0}"),
+
+  // System messages
+  SYSTEM_MESSAGE_TYPE_INFO ("Information", "Information"),
+  SYSTEM_MESSAGE_TYPE_WARNING ("Warnung", "Warning"),
+  SYSTEM_MESSAGE_TYPE_ERROR ("Fehler", "Error"),
+  SYSTEM_MESSAGE_TYPE_SUCCESS ("Erfolg", "Success"),
+
   // Misc texts
   PAGE_HELP_TITLE ("Hilfe zu ''{0}'' anzeigen", "Show help for ''{0}''"),
   DOWNLOAD ("Download", "Download"),
@@ -137,6 +150,12 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+  }
+
+  @Nonnull
+  public IMultilingualText getMultilingualText ()
+  {
+    return m_aTP;
   }
 
   @Nullable

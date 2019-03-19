@@ -26,11 +26,11 @@ import com.helger.photon.core.xservlet.AuditingParallelRunningRequestCallback;
 import com.helger.xservlet.requesttrack.RequestTracker;
 
 @Immutable
-public final class PhotonBasic
+public final class PhotonCoreInit
 {
   private static final AtomicBoolean s_aRegisteredRequestTracker = new AtomicBoolean (false);
 
-  private PhotonBasic ()
+  private PhotonCoreInit ()
   {}
 
   public static void startUp ()

@@ -19,7 +19,7 @@ package com.helger.photon.core.app.menu.security;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.photon.core.EPhotonBasicText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.menu.IMenuObject;
 import com.helger.photon.core.app.menu.filter.AbstractMenuObjectFilter;
 import com.helger.photon.security.login.LoggedInUserManager;
@@ -34,7 +34,7 @@ public class MenuObjectFilterNoUserLoggedIn extends AbstractMenuObjectFilter
 {
   public MenuObjectFilterNoUserLoggedIn ()
   {
-    setDescription (EPhotonBasicText.MENU_OBJECT_FILTER_NO_USER_LOGGED_IN.getMultilingualText ());
+    setDescription (EPhotonCoreText.MENU_OBJECT_FILTER_NO_USER_LOGGED_IN.getMultilingualText ());
   }
 
   public boolean test (@Nullable final IMenuObject aValue)

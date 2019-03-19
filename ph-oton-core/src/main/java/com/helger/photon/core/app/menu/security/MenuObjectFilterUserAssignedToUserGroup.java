@@ -25,7 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.photon.core.EPhotonBasicText;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.app.menu.IMenuObject;
 import com.helger.photon.core.app.menu.filter.AbstractMenuObjectFilter;
 import com.helger.photon.security.util.SecurityHelper;
@@ -57,8 +57,8 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
   @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return EPhotonBasicText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale,
-                                                                                              m_sUserGroupID);
+    return EPhotonCoreText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale,
+                                                                                             m_sUserGroupID);
   }
 
   public boolean test (@Nullable final IMenuObject aValue)

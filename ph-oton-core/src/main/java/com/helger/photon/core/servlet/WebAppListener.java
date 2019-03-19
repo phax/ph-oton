@@ -69,7 +69,7 @@ import com.helger.photon.api.GlobalAPIInvoker;
 import com.helger.photon.api.IAPIRegistry;
 import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.app.io.WebIOLongIDFactory;
-import com.helger.photon.core.PhotonBasic;
+import com.helger.photon.core.PhotonCoreInit;
 import com.helger.photon.core.app.locale.GlobalLocaleManager;
 import com.helger.photon.core.app.locale.ILocaleManager;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
@@ -642,7 +642,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       WebScopeManager.onGlobalBegin (aSC);
 
       // right order?
-      PhotonBasic.startUp ();
+      PhotonCoreInit.startUp ();
 
       // Init IO
       initPaths (aSC);
@@ -821,7 +821,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       handleStatisticsOnEnd ();
 
     // Clean commons stuff etc
-    PhotonBasic.shutdown ();
+    PhotonCoreInit.shutdown ();
 
     if (isOnlyOneInstanceAllowed ())
     {
