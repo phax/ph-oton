@@ -29,7 +29,7 @@ import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
 import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 

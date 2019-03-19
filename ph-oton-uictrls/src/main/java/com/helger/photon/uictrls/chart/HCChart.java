@@ -44,8 +44,8 @@ import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSRef;
 import com.helger.html.jscode.JSVar;
 import com.helger.html.jscode.html.JSHtml;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 

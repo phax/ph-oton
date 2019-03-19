@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.photon.app.PhotonAppInit;
 import com.helger.photon.basic.xservlet.AuditingLongRunningRequestCallback;
 import com.helger.photon.basic.xservlet.AuditingParallelRunningRequestCallback;
 import com.helger.xservlet.requesttrack.RequestTracker;

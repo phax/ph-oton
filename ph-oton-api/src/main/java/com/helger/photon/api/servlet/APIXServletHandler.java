@@ -37,7 +37,7 @@ import com.helger.photon.api.GlobalAPIInvoker;
 import com.helger.photon.api.IAPIInvoker;
 import com.helger.photon.api.IAPIRegistry;
 import com.helger.photon.api.InvokableAPIDescriptor;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;

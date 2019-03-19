@@ -29,7 +29,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.UserManager;

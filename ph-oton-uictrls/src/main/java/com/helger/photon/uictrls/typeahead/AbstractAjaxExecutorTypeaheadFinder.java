@@ -34,7 +34,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 

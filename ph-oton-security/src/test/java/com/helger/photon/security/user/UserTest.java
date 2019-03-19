@@ -30,7 +30,7 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.salt.PasswordSalt;

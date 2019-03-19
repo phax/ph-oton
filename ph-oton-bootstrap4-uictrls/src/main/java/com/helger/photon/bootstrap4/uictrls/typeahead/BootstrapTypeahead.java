@@ -24,7 +24,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.typeahead.TypeaheadEdit;
 

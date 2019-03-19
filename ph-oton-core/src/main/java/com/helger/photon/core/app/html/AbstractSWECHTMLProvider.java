@@ -24,6 +24,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.html.hc.html.root.HCHtml;
+import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.basic.app.appid.RequestSettings;
 import com.helger.photon.basic.app.menu.IMenuTree;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;

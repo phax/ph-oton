@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.core.app.html.IHTMLProvider;
+import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.core.login.AbstractLoginManager;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
 

@@ -24,8 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;

@@ -30,11 +30,11 @@ import org.junit.rules.TestRule;
 
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.url.SimpleURL;
+import com.helger.photon.app.mock.PhotonBasicWebTestRule;
 import com.helger.photon.basic.app.locale.GlobalLocaleManager;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.MenuTree;
 import com.helger.photon.basic.app.page.AbstractPage;
-import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 

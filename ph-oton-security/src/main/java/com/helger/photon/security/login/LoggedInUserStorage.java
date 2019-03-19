@@ -31,7 +31,7 @@ import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.basic.app.io.WebFileIO;
+import com.helger.photon.app.io.WebFileIO;
 
 /**
  * This class encapsulates the file IO base directory for the current user

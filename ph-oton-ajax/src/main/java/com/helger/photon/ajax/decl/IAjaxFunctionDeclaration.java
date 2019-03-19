@@ -28,7 +28,7 @@ import com.helger.commons.functional.ISupplier;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
-import com.helger.photon.core.url.LinkHelper;
+import com.helger.photon.app.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

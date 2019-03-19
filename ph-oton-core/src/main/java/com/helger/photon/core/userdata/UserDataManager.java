@@ -27,8 +27,8 @@ import com.helger.commons.io.relative.IFileRelativeIO;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.basic.app.io.WebFileIO;
-import com.helger.photon.core.url.LinkHelper;
+import com.helger.photon.app.io.WebFileIO;
+import com.helger.photon.app.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

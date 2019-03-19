@@ -28,8 +28,8 @@ import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.resource.css.ICSSPathProvider;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 

@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.photon.app.PhotonAppManager;
+import com.helger.photon.app.resource.WebSiteResourceBundleManager;
 import com.helger.photon.basic.app.menu.IMenuItem;
 import com.helger.photon.basic.app.menu.IMenuItemPage;
 import com.helger.photon.basic.app.menu.IMenuObjectFilter;
@@ -66,10 +68,8 @@ import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoSystemPropertie
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThirdPartyLibraries;
 import com.helger.photon.bootstrap3.pages.sysinfo.BasePageSysInfoThreads;
 import com.helger.photon.bootstrap3.pages.utils.BasePageUtilsPortChecker;
-import com.helger.photon.core.PhotonAppManager;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.mgr.PhotonCoreManager;
-import com.helger.photon.core.resource.WebSiteResourceBundleManager;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;

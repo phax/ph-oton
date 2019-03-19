@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSInvocation;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
 @Immutable

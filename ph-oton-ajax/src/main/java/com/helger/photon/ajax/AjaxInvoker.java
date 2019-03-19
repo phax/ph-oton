@@ -30,7 +30,7 @@ import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

@@ -29,7 +29,7 @@ import com.helger.commons.concurrent.ThreadHelper;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
+import com.helger.photon.app.mock.MockCurrentUserIDProvider;
 
 /**
  * Test class for class {@link AsynchronousAuditor}.

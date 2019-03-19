@@ -48,7 +48,7 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.json.JsonObject;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.tinymce4.type.ETinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.ETinyMCE4Language;

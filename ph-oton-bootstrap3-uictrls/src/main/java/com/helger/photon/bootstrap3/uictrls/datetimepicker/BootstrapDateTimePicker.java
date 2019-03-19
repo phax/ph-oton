@@ -47,12 +47,12 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.request.IHCRequestField;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.bootstrap3.EBootstrapIcon;
 import com.helger.photon.bootstrap3.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.bootstrap3.uictrls.EBootstrapUICtrlsJSPathProvider;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.form.RequestFieldDate;
 

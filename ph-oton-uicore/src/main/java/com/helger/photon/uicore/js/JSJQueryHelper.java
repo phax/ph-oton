@@ -24,7 +24,7 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSVar;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
 /**

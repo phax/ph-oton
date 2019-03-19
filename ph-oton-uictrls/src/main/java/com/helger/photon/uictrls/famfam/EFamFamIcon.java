@@ -26,7 +26,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.resource.css.ICSSPathProvider;
-import com.helger.photon.core.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;

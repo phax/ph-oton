@@ -19,7 +19,7 @@ package com.helger.photon.tinymce4.type;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.photon.core.url.LinkHelper;
+import com.helger.photon.app.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public enum ETinyMCE4ExternalPlugin

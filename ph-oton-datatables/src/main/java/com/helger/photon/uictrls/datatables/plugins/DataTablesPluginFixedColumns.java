@@ -23,8 +23,8 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 

@@ -28,7 +28,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.jquery.JQuerySelector;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 /**

@@ -28,8 +28,8 @@ import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.html.js.UnparsedJSCodeProvider;
-import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.app.PhotonUnifiedResponse;
+import com.helger.photon.app.mock.PhotonBasicWebTestRule;
 import com.helger.web.scope.mgr.WebScoped;
 
 /**

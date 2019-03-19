@@ -32,7 +32,7 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.dao.DAOException;
-import com.helger.photon.basic.app.dao.AbstractPhotonSimpleDAO;
+import com.helger.photon.app.dao.AbstractPhotonSimpleDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.smtp.CSMTP;
 import com.helger.smtp.settings.ISMTPSettings;

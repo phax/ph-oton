@@ -39,9 +39,14 @@ import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.photon.app.PhotonAppManager;
+import com.helger.photon.app.PhotonAppSettings;
+import com.helger.photon.app.html.IHTMLProvider;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonHTMLHelper;
+import com.helger.photon.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonMetaElements;
 import com.helger.photon.basic.app.appid.RequestSettings;
-import com.helger.photon.core.PhotonAppManager;
-import com.helger.photon.core.PhotonAppSettings;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 

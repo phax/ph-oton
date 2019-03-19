@@ -24,7 +24,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.name.IHasName;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 /**

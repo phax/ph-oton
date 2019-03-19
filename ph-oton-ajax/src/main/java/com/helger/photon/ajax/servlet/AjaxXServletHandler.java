@@ -42,7 +42,7 @@ import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.IAjaxRegistry;
 import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;

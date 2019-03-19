@@ -33,7 +33,7 @@ import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.html.hc.IHCNodeWithChildren;
-import com.helger.photon.basic.app.io.WebFileIO;
+import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.core.app.context.ISimpleWebExecutionContext;
 import com.helger.photon.core.app.error.uihandler.IUIInternalErrorHandler;
 import com.helger.photon.core.app.error.uihandler.UIInternalErrorHandler;

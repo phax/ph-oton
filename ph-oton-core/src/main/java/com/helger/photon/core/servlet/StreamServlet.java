@@ -17,7 +17,7 @@
 package com.helger.photon.core.servlet;
 
 import com.helger.commons.http.EHttpMethod;
-import com.helger.photon.core.url.LinkHelper;
+import com.helger.photon.app.url.LinkHelper;
 import com.helger.xservlet.AbstractXServlet;
 
 /**

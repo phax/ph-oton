@@ -28,7 +28,7 @@ import org.junit.rules.TestRule;
 import com.helger.masterdata.address.EPostalAddressType;
 import com.helger.masterdata.address.PostalAddress;
 import com.helger.masterdata.currency.ECurrency;
-import com.helger.photon.basic.mock.PhotonBasicWebTestRule;
+import com.helger.photon.app.mock.PhotonBasicWebTestRule;
 import com.helger.photon.security.object.tenant.Tenant;
 import com.helger.tenancy.tenant.ITenant;
 import com.helger.xml.mock.XMLTestHelper;

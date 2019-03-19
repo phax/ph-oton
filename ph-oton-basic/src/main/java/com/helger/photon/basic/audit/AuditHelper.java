@@ -25,7 +25,7 @@ import com.helger.commons.annotation.DevelopersNote;
 import com.helger.commons.annotation.UnsupportedOperation;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
+import com.helger.photon.app.mock.MockCurrentUserIDProvider;
 
 /**
  * Simplify system auditing calls.

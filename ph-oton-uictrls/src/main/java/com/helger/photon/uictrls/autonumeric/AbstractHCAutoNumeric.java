@@ -42,8 +42,8 @@ import com.helger.html.jscode.JSGlobal;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.html.IHCNodeWithJSOptions;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 

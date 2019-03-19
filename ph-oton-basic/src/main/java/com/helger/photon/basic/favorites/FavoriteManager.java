@@ -40,7 +40,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.dao.DAOException;
 import com.helger.dao.EDAOActionType;
-import com.helger.photon.basic.app.dao.AbstractPhotonWALDAO;
+import com.helger.photon.app.dao.AbstractPhotonWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;

@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.forms.AbstractHCTextArea;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 /**

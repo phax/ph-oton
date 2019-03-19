@@ -28,7 +28,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.photon.core.url.LinkHelper;
+import com.helger.photon.app.url.LinkHelper;
 
 /**
  * Default implementation of go-mapping for absolute URLs.

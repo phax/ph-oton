@@ -29,7 +29,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.io.misc.SizeHelper;
-import com.helger.photon.basic.app.io.WebFileIO;
+import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.core.app.error.InternalErrorHandler;
 import com.helger.photon.core.app.error.InternalErrorSettings;
 import com.helger.quartz.DisallowConcurrentExecution;

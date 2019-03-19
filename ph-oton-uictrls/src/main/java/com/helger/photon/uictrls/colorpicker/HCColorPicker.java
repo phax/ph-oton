@@ -31,8 +31,8 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.AbstractHCInput;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.request.IHCRequestField;
-import com.helger.photon.core.app.html.PhotonCSS;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 

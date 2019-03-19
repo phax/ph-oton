@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

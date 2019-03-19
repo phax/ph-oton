@@ -19,7 +19,7 @@ package com.helger.photon.basic.audit;
 import org.junit.Test;
 
 import com.helger.commons.type.ObjectType;
-import com.helger.photon.basic.mock.MockCurrentUserIDProvider;
+import com.helger.photon.app.mock.MockCurrentUserIDProvider;
 
 /**
  * Test class for class {@link LoggingAuditor}.

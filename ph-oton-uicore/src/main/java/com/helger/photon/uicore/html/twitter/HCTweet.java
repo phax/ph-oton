@@ -26,7 +26,7 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
 import com.helger.html.resource.js.ConstantJSPathProvider;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 
 /**
  * <pre>

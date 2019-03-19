@@ -19,7 +19,7 @@ package com.helger.photon.uictrls.ajax;
 import javax.annotation.Nonnull;
 
 import com.helger.photon.ajax.executor.IAjaxExecutor;
-import com.helger.photon.core.PhotonUnifiedResponse;
+import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.util.statistics.StatisticsExporter;

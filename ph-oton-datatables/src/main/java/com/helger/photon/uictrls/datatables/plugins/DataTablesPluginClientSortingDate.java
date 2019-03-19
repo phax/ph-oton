@@ -32,7 +32,7 @@ import com.helger.commons.datetime.PDTFormatter;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;

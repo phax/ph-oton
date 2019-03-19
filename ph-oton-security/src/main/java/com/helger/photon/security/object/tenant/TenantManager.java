@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.state.EChange;
 import com.helger.dao.DAOException;
-import com.helger.photon.basic.app.dao.AbstractPhotonMapBasedWALDAO;
+import com.helger.photon.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.basic.audit.AuditHelper;
 import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.tenancy.tenant.CTenant;

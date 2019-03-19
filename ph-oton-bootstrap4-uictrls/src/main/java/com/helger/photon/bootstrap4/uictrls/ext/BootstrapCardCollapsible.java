@@ -27,12 +27,12 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.textlevel.HCA;
+import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.card.BootstrapCardBody;
 import com.helger.photon.bootstrap4.card.BootstrapCardHeader;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsCSSPathProvider;
-import com.helger.photon.core.app.html.PhotonCSS;
 import com.helger.photon.icon.fontawesome.EFontAwesome4Icon;
 
 /**

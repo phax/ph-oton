@@ -32,7 +32,7 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.jscode.JSFunction;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.resource.js.ConstantJSPathProvider;
-import com.helger.photon.core.app.html.PhotonJS;
+import com.helger.photon.app.html.PhotonJS;
 
 /**
  * Handle Google reCAPTCHA according to
