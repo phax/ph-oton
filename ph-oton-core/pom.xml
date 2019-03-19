@@ -71,11 +71,15 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-oton-basic</artifactId>
+      <artifactId>ph-oton-audit</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-xservlet</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
@@ -88,6 +92,10 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-schedule</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-tree</artifactId>
     </dependency>
     
     <dependency>
