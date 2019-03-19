@@ -19,6 +19,7 @@ package com.helger.photon.core.ajax.executor;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.PhotonUnifiedResponse;
 import com.helger.photon.core.app.context.ILayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;

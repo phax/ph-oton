@@ -27,10 +27,10 @@ import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.photon.ajax.GlobalAjaxInvoker;
+import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
+import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.basic.app.page.AbstractPage;
-import com.helger.photon.core.ajax.GlobalAjaxInvoker;
-import com.helger.photon.core.ajax.decl.AjaxFunctionDeclaration;
-import com.helger.photon.core.ajax.executor.IAjaxExecutor;
 import com.helger.photon.uicore.css.CUICoreCSS;
 
 /**

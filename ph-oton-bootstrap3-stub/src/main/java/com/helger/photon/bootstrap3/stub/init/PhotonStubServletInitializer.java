@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.photon.ajax.servlet.PhotonAjaxServlet;
+import com.helger.photon.api.servlet.PhotonAPIServlet;
 import com.helger.photon.bootstrap3.stub.PhotonStubServletContextListener;
-import com.helger.photon.core.ajax.servlet.PhotonAjaxServlet;
-import com.helger.photon.core.api.servlet.PhotonAPIServlet;
 import com.helger.photon.core.go.GoServlet;
 import com.helger.photon.core.resource.ResourceBundleServlet;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
