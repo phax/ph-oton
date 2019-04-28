@@ -30,6 +30,7 @@ import org.junit.Test;
 import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLVersion;
+import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
@@ -70,8 +71,8 @@ public final class MetaElementTest
   @Nullable
   private static String _getAsString (final MetaElement aElement)
   {
-    final IMicroNode aNode = aElement.convertToNode (HCSettings.getMutableConversionSettings ()
-                                                               .setHTMLVersion (EHTMLVersion.HTML5));
+    final HCConversionSettings aCS = HCSettings.getMutableConversionSettings ().getClone (EHTMLVersion.HTML5);
+    final IMicroNode aNode = aElement.convertToNode (aCS);
     assertNotNull (aNode);
     return StringHelper.trim (MicroWriter.getNodeAsString (aNode));
   }

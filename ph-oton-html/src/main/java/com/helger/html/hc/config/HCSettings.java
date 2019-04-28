@@ -140,7 +140,7 @@ public final class HCSettings
    * @return The global mutable conversion settings. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject ("design")
+  @ReturnsMutableObject
   public static HCConversionSettings getMutableConversionSettings ()
   {
     return s_aRWLock.readLocked ( () -> s_aConversionSettings);
