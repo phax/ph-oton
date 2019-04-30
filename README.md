@@ -41,6 +41,7 @@ Contained subprojects are:
     * Added new API Interface `IAPIRegistry` and let `GlobalAPIInvoker` implement it
     * Clearly separate between `AjaxRegistry` and `AjaxInvoker` similar to new API API 
     * Reworked module structure (created `ph-oton-app`, `ph-oton-audit`, `ph-oton-ajax`, `ph-oton-api`, removed `ph-oton-basic`)
+    * Updated to jQuery 3.4.0
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1
