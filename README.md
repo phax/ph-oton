@@ -35,7 +35,7 @@ Contained subprojects are:
 
 * v8.2.0 - work in progress
     * Improved B4 InputGroup API for easier extension
-    * Updated to Jetty 9.4.17
+    * Updated to Jetty 9.4.18
     * Improved Bootstrap 4 inline form UI creation
     * Improved API path ambiguity resolution API (interface `IAPIPathAmbiguityResolver` et. al.)
     * Added new API Interface `IAPIRegistry` and let `GlobalAPIInvoker` implement it
