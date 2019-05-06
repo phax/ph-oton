@@ -42,6 +42,7 @@ Contained subprojects are:
     * Clearly separate between `AjaxRegistry` and `AjaxInvoker` similar to new API API 
     * Reworked module structure (created `ph-oton-app`, `ph-oton-audit`, `ph-oton-ajax`, `ph-oton-api`, removed `ph-oton-basic`)
     * Updated to jQuery 3.4.1
+    * Requires ph-commons 9.3.3
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1

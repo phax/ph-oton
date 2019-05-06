@@ -57,7 +57,9 @@ public class MainExtractFontAwesome5CSSClasses
   {
     // find all brands
     final ICommonsSet <String> aBrandFields = new CommonsHashSet <> ();
-    final IJsonObject aObject = (IJsonObject) JsonReader.readFromStream (new ClassPathResource ("fontawesome/5.2.0/icons.json"));
+    final IJsonObject aObject = (IJsonObject) JsonReader.builder ()
+                                                        .setSource (new ClassPathResource ("fontawesome/5.2.0/icons.json"))
+                                                        .read ();
     for (final Map.Entry <String, IJson> aEntry : aObject)
     {
       final String sID = aEntry.getKey ();

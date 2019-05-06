@@ -88,8 +88,8 @@ public class CSPReportingXServletHandler implements IXServletHandler
    * Enable or disable duplicate filtering.
    *
    * @param bFilterDuplicates
-   *        <code>true</code> to filter duplicates, <code>false</code> to disable
-   *        it.
+   *        <code>true</code> to filter duplicates, <code>false</code> to
+   *        disable it.
    */
   public final void setFilterDuplicates (final boolean bFilterDuplicates)
   {
@@ -111,7 +111,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
     final byte [] aBytes = StreamHelper.getAllBytes (aHttpRequest.getInputStream ());
 
     // Try to parse as JSON
-    final IJson aJson = JsonReader.readFromStream (new NonBlockingByteArrayInputStream (aBytes));
+    final IJson aJson = JsonReader.builder ().setSource (new NonBlockingByteArrayInputStream (aBytes)).read ();
     if (aJson != null)
     {
       if (aJson.isObject ())
