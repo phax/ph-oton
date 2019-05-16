@@ -284,7 +284,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         // Startup time
         aTable.addBodyRow ()
               .addCells (EText.MSG_STARTUP_DATE_TIME.getDisplayText (aDisplayLocale),
-                         PDTToString.getAsString (WebScopeManager.getGlobalScope ().getScopeCreationDateTime (),
+                         PDTToString.getAsString (WebScopeManager.getGlobalScope ().getCreationDateTime (),
                                                   aDisplayLocale));
 
         _addDirectoryContent (aTable,
