@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.deadlock.IThreadDeadlockCallback;
@@ -45,8 +46,10 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
   private static final Logger LOGGER = LoggerFactory.getLogger (MailingThreadDeadlockCallback.class);
 
   @Nonnull
-  private static String _getAsString (@Nonnull final ThreadDeadlockInfo aTDI)
+  public static String getAsString (@Nonnull final ThreadDeadlockInfo aTDI)
   {
+    ValueEnforcer.notNull (aTDI, "TDI");
+
     // Always ends with a newline char
     final StringBuilder aTI = new StringBuilder (aTDI.getThreadInfo ().toString ());
     final StackTraceElement [] aSTE = aTDI.getAllStackTraceElements ();
@@ -62,7 +65,7 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
     final StringBuilder aSB = new StringBuilder ();
     aSB.append (InternalErrorHandler.fillInternalErrorMetaData (null, null, null).getAsString ());
     for (final ThreadDeadlockInfo aTDI : aDeadlockedThreads)
-      aSB.append ('\n').append (_getAsString (aTDI));
+      aSB.append ('\n').append (getAsString (aTDI));
 
     aSB.append ("\n---------------------------------------------------------------\n")
        .append (ThreadDescriptor.createForCurrentThread (null).getAsString ())
