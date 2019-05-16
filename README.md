@@ -44,6 +44,7 @@ Contained subprojects are:
     * Updated to jQuery 3.4.1
     * Requires ph-commons 9.3.3
     * Requires ph-web 9.1.2
+    * `CheckDiskUsableSpaceJob` can now be scheduled more than once for different paths
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1
