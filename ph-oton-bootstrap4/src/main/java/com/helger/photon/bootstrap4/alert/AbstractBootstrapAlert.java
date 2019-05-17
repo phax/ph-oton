@@ -95,6 +95,15 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
   }
 
   @Override
+  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  {
+    if (hasNoChildren ())
+      return false;
+
+    return super.canConvertToMicroNode (aConversionSettings);
+  }
+
+  @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
