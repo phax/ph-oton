@@ -23,6 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.type.ObjectType;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
@@ -81,10 +82,13 @@ public abstract class AbstractAuditor implements IAuditor
 
   public void createAuditItem (@Nonnull final EAuditActionType eActionType,
                                @Nonnull final ESuccess eSuccess,
-                               @Nonnull final String sAction,
+                               @Nullable final ObjectType aActionObjectType,
+                               @Nullable final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = m_aActionStringProvider.apply (sAction, aArgs);
+    final String sFullAction = m_aActionStringProvider.apply (aActionObjectType != null ? aActionObjectType.getName ()
+                                                                                        : sAction,
+                                                              aArgs);
     final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
                                                 eActionType,
                                                 eSuccess,

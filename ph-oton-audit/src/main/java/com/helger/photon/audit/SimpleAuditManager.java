@@ -27,10 +27,12 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.IsLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.type.ObjectType;
 import com.helger.dao.DAOException;
 import com.helger.dao.EDAOActionType;
 import com.helger.photon.app.dao.AbstractPhotonWALDAO;
@@ -114,10 +116,13 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
 
   public void createAuditItem (@Nonnull final EAuditActionType eActionType,
                                @Nonnull final ESuccess eSuccess,
-                               @Nonnull final String sAction,
+                               @Nullable final ObjectType aActionObjectType,
+                               @Nullable final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = IAuditActionStringProvider.JSON.apply (sAction, aArgs);
+    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType.getName ()
+                                                                                                : sAction,
+                                                                      aArgs);
     final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
                                                 eActionType,
                                                 eSuccess,
@@ -138,7 +143,7 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IAuditItem> getAllAuditItems ()
+  public ICommonsList <IAuditItem> getAllAuditItems ()
   {
     return m_aRWLock.readLocked ( () -> m_aItems.getAllItems ());
   }

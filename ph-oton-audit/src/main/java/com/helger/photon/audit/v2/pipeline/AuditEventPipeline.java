@@ -17,6 +17,7 @@
 package com.helger.photon.audit.v2.pipeline;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
@@ -27,11 +28,13 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.photon.audit.v2.domain.AuditEvent;
 
 /**
- * Pipeline of {@link IAuditEventConsumer}
+ * Pipeline of {@link IAuditEventConsumer} being itself an
+ * {@link IAuditEventConsumer}. So a list of other consumers.
  *
  * @author Philip Helger
  */
-public class AuditEventPipeline
+@NotThreadSafe
+public class AuditEventPipeline implements IAuditEventConsumer
 {
   private final ICommonsList <IAuditEventConsumer> m_aConsumers = new CommonsArrayList <> ();
   private final CallbackList <IExceptionCallback <? super Exception>> m_aExCallbacks = new CallbackList <> ();
@@ -65,7 +68,7 @@ public class AuditEventPipeline
     return m_aExCallbacks;
   }
 
-  public void handleEvent (@Nonnull final AuditEvent aAuditEvent)
+  public void handleAuditEvent (@Nonnull final AuditEvent aAuditEvent)
   {
     for (final IAuditEventConsumer aConsumer : m_aConsumers)
       try

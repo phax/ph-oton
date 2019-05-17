@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -40,6 +41,7 @@ import com.helger.photon.audit.EAuditActionType;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTime
 {
   private final long m_nID;

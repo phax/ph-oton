@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -38,6 +39,7 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class AuditEventBuilder
 {
   // Avoid constructing settings every time
@@ -104,13 +106,16 @@ public class AuditEventBuilder
   }
 
   @Nonnull
-  public AuditEventBuilder addField (@Nonnull final String sFieldName, @Nullable final String sFieldValue)
+  public AuditEventBuilder addField (@Nullable final String sFieldName, @Nullable final String sFieldValue)
   {
-    return addField (new AuditField (sFieldName, sFieldValue));
+    // Avoid adding an empty field
+    if (sFieldName != null || sFieldValue != null)
+      return addField (new AuditField (sFieldName, sFieldValue));
+    return this;
   }
 
   @Nonnull
-  public AuditEventBuilder addFieldHiddenValue (@Nonnull final String sFieldName)
+  public AuditEventBuilder addFieldHiddenValue (@Nullable final String sFieldName)
   {
     return addField (AuditField.createWithHiddenValue (sFieldName));
   }

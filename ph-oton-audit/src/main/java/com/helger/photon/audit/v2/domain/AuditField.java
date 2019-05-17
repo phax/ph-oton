@@ -20,10 +20,11 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -32,6 +33,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class AuditField implements Serializable
 {
   private final String m_sName;
@@ -41,24 +43,31 @@ public class AuditField implements Serializable
    * Constructor
    *
    * @param sName
-   *        the name
+   *        The field name. May be <code>null</code>.
    * @param sValue
-   *        the value
+   *        The field value. May be <code>null</code>.
    */
-  public AuditField (@Nonnull final String sName, @Nullable final String sValue)
+  public AuditField (@Nullable final String sName, @Nullable final String sValue)
   {
-    ValueEnforcer.notNull (sName, "Name");
     m_sName = sName;
     m_sValue = sValue;
   }
 
   /**
-   * @return The name from the constructor. Never <code>null</code>.
+   * @return The name from the constructor. May be <code>null</code>.
    */
-  @Nonnull
+  @Nullable
   public String getName ()
   {
     return m_sName;
+  }
+
+  /**
+   * @return <code>true</code> if a name is present, <code>false</code> if not.
+   */
+  public boolean hasName ()
+  {
+    return StringHelper.hasText (m_sName);
   }
 
   /**
@@ -70,6 +79,14 @@ public class AuditField implements Serializable
     return m_sValue;
   }
 
+  /**
+   * @return <code>true</code> if a value is present, <code>false</code> if not.
+   */
+  public boolean hasValue ()
+  {
+    return StringHelper.hasText (m_sValue);
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -78,7 +95,7 @@ public class AuditField implements Serializable
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AuditField rhs = (AuditField) o;
-    return m_sName.equals (rhs.m_sName) && EqualsHelper.equals (m_sValue, rhs.m_sValue);
+    return EqualsHelper.equals (m_sName, rhs.m_sName) && EqualsHelper.equals (m_sValue, rhs.m_sValue);
   }
 
   @Override
@@ -98,11 +115,11 @@ public class AuditField implements Serializable
    * that the real value is not to be persisted or displayed.
    *
    * @param sFieldName
-   *        Field name. May not be <code>null</code>.
+   *        Field name. May be <code>null</code>.
    * @return A new {@link AuditField} and never <code>null</code>.
    */
   @Nonnull
-  public static AuditField createWithHiddenValue (@Nonnull final String sFieldName)
+  public static AuditField createWithHiddenValue (@Nullable final String sFieldName)
   {
     return new AuditField (sFieldName, ToStringGenerator.CONSTANT_PASSWORD);
   }

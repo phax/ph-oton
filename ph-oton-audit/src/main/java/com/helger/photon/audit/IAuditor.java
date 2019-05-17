@@ -39,14 +39,18 @@ public interface IAuditor
    *        Action type. May not be <code>null</code>.
    * @param eSuccess
    *        Success or failure? May not be <code>null</code>.
+   * @param aActionObjectType
+   *        Action object type. May be <code>null</code> if sAction is set.
    * @param sAction
-   *        The performed action. May not be <code>null</code>.
+   *        The performed action. May be <code>null</code> if aActionObjectType
+   *        is set.
    * @param aArgs
    *        An optional array of arguments. May be <code>null</code> or empty.
    */
   void createAuditItem (@Nonnull EAuditActionType eActionType,
                         @Nonnull ESuccess eSuccess,
-                        @Nonnull final String sAction,
+                        @Nullable ObjectType aActionObjectType,
+                        @Nullable final String sAction,
                         @Nullable final Object... aArgs);
 
   /**
@@ -60,7 +64,7 @@ public interface IAuditor
   default void onCreateSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
-    createAuditItem (EAuditActionType.CREATE, ESuccess.SUCCESS, aObjectType.getName (), aArgs);
+    createAuditItem (EAuditActionType.CREATE, ESuccess.SUCCESS, aObjectType, null, aArgs);
   }
 
   /**
@@ -74,7 +78,7 @@ public interface IAuditor
   default void onCreateFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
-    createAuditItem (EAuditActionType.CREATE, ESuccess.FAILURE, aObjectType.getName (), aArgs);
+    createAuditItem (EAuditActionType.CREATE, ESuccess.FAILURE, aObjectType, null, aArgs);
   }
 
   /**
@@ -94,7 +98,8 @@ public interface IAuditor
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.MODIFY,
                      ESuccess.SUCCESS,
-                     aObjectType.getName (),
+                     aObjectType,
+                     null,
                      ArrayHelper.getConcatenated (sWhat, aArgs, Object.class));
   }
 
@@ -115,7 +120,8 @@ public interface IAuditor
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.MODIFY,
                      ESuccess.FAILURE,
-                     aObjectType.getName (),
+                     aObjectType,
+                     null,
                      ArrayHelper.getConcatenated (sWhat, aArgs, Object.class));
   }
 
@@ -130,7 +136,7 @@ public interface IAuditor
   default void onDeleteSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
-    createAuditItem (EAuditActionType.DELETE, ESuccess.SUCCESS, aObjectType.getName (), aArgs);
+    createAuditItem (EAuditActionType.DELETE, ESuccess.SUCCESS, aObjectType, null, aArgs);
   }
 
   /**
@@ -144,7 +150,7 @@ public interface IAuditor
   default void onDeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
-    createAuditItem (EAuditActionType.DELETE, ESuccess.FAILURE, aObjectType.getName (), aArgs);
+    createAuditItem (EAuditActionType.DELETE, ESuccess.FAILURE, aObjectType, null, aArgs);
   }
 
   /**
@@ -158,7 +164,7 @@ public interface IAuditor
   default void onUndeleteSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
-    createAuditItem (EAuditActionType.UNDELETE, ESuccess.SUCCESS, aObjectType.getName (), aArgs);
+    createAuditItem (EAuditActionType.UNDELETE, ESuccess.SUCCESS, aObjectType, null, aArgs);
   }
 
   /**
@@ -172,7 +178,7 @@ public interface IAuditor
   default void onUndeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
-    createAuditItem (EAuditActionType.UNDELETE, ESuccess.FAILURE, aObjectType.getName (), aArgs);
+    createAuditItem (EAuditActionType.UNDELETE, ESuccess.FAILURE, aObjectType, null, aArgs);
   }
 
   /**
@@ -185,7 +191,7 @@ public interface IAuditor
    */
   default void onExecuteSuccess (@Nonnull final String sWhat, @Nullable final Object... aArgs)
   {
-    createAuditItem (EAuditActionType.EXECUTE, ESuccess.SUCCESS, sWhat, aArgs);
+    createAuditItem (EAuditActionType.EXECUTE, ESuccess.SUCCESS, null, sWhat, aArgs);
   }
 
   /**
@@ -198,7 +204,7 @@ public interface IAuditor
    */
   default void onExecuteFailure (@Nonnull final String sWhat, @Nullable final Object... aArgs)
   {
-    createAuditItem (EAuditActionType.EXECUTE, ESuccess.FAILURE, sWhat, aArgs);
+    createAuditItem (EAuditActionType.EXECUTE, ESuccess.FAILURE, null, sWhat, aArgs);
   }
 
   /**
@@ -218,7 +224,8 @@ public interface IAuditor
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.EXECUTE,
                      ESuccess.SUCCESS,
-                     aObjectType.getName (),
+                     aObjectType,
+                     null,
                      ArrayHelper.getConcatenated (sWhat, aArgs, Object.class));
   }
 
@@ -239,7 +246,8 @@ public interface IAuditor
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.EXECUTE,
                      ESuccess.FAILURE,
-                     aObjectType.getName (),
+                     aObjectType,
+                     null,
                      ArrayHelper.getConcatenated (sWhat, aArgs, Object.class));
   }
 }

@@ -34,6 +34,9 @@ public interface IAuditEventConsumer extends Serializable
    *
    * @param aAuditEvent
    *        The event to be handled. Never <code>null</code>.
+   * @throws RuntimeException
+   *         in case something goes wrong. This exception will be handled
+   *         separately.
    */
   void handleAuditEvent (@Nonnull AuditEvent aAuditEvent);
 }
