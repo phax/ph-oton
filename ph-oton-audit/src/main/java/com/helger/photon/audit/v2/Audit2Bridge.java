@@ -14,7 +14,8 @@ import com.helger.photon.audit.v2.pipeline.IAuditEventConsumer;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
- * Implementation of V1 {@link IAuditor} in terms of V2 {@link AuditEvent} etc
+ * Implementation of V1 {@link IAuditor} in terms of V2 {@link AuditEvent} etc.
+ * This class is mainly meant for easy transition without adopting all APIs.
  *
  * @author Philip Helger
  */

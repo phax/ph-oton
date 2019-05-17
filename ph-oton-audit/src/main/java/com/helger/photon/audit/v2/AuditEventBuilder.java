@@ -135,6 +135,13 @@ public class AuditEventBuilder
     return null;
   }
 
+  /**
+   * Build a new {@link AuditEvent} based on the provided parameters. Each
+   * invocation creates a new instance. The ID and the date time are retrieved
+   * from the providers registered in the {@link IAuditSettings}.
+   *
+   * @return The created {@link AuditEvent} and never <code>null</code>.
+   */
   @Nonnull
   public AuditEvent build ()
   {
