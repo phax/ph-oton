@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -32,6 +32,7 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.id.IHasLongID;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.datetime.domain.IHasCreationDateTime;
 import com.helger.photon.audit.EAuditActionType;
@@ -41,7 +42,7 @@ import com.helger.photon.audit.EAuditActionType;
  *
  * @author Philip Helger
  */
-@NotThreadSafe
+@Immutable
 public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTime
 {
   private final long m_nID;
@@ -106,10 +107,20 @@ public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTim
     return m_sActor;
   }
 
+  public boolean hasActor ()
+  {
+    return StringHelper.hasText (m_sActor);
+  }
+
   @Nullable
   public String getOrigin ()
   {
     return m_sOrigin;
+  }
+
+  public boolean hasOrigin ()
+  {
+    return StringHelper.hasText (m_sOrigin);
   }
 
   @Nullable
@@ -119,9 +130,25 @@ public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTim
   }
 
   @Nullable
+  public String getActionID ()
+  {
+    return m_eAction == null ? null : m_eAction.getID ();
+  }
+
+  public boolean hasAction ()
+  {
+    return m_eAction != null;
+  }
+
+  @Nullable
   public ESuccess getSuccess ()
   {
     return m_eSuccess;
+  }
+
+  public boolean hasSuccess ()
+  {
+    return m_eSuccess != null;
   }
 
   @Nonnull

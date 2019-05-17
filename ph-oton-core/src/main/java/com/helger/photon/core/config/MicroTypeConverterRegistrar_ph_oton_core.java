@@ -20,8 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.photon.audit.AuditItem;
-import com.helger.photon.audit.AuditItemMicroTypeConverter;
 import com.helger.photon.core.favorites.Favorite;
 import com.helger.photon.core.favorites.FavoriteMicroTypeConverter;
 import com.helger.photon.core.longrun.LongRunningJobData;
@@ -46,7 +44,6 @@ public final class MicroTypeConverterRegistrar_ph_oton_core implements IMicroTyp
 {
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
-    aRegistry.registerMicroElementTypeConverter (AuditItem.class, new AuditItemMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (Favorite.class, new FavoriteMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (LongRunningJobData.class, new LongRunningJobDataMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (SystemMigrationResult.class,
