@@ -17,6 +17,8 @@
 package com.helger.photon.bootstrap4.pages.sysinfo;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.misc.SizeHelper;
@@ -97,6 +100,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
                               "Usable space in the WebApp directory"),
     MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis: {0}", "Not a directory: {0}"),
     MSG_STARTUP_DATE_TIME ("Startzeit der Anwendung", "Application startup time"),
+    MSG_UPTIME ("Uptime", "Uptime"),
     MSG_ENDORSED_DIR ("Endorsed Verzeichnis", "Endorsed directory"),
     MSG_EXT_DIR ("Extension Verzeichnis", "Extension directory"),
     MSG_DIR_NOT_EXISTING ("Das Verzeichnis existiert nicht", "The directory does not exist"),
@@ -282,10 +286,13 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         }
 
         // Startup time
+        final LocalDateTime aCreationDT = WebScopeManager.getGlobalScope ().getCreationDateTime ();
         aTable.addBodyRow ()
               .addCells (EText.MSG_STARTUP_DATE_TIME.getDisplayText (aDisplayLocale),
-                         PDTToString.getAsString (WebScopeManager.getGlobalScope ().getCreationDateTime (),
-                                                  aDisplayLocale));
+                         PDTToString.getAsString (aCreationDT, aDisplayLocale));
+        aTable.addBodyRow ()
+              .addCells (EText.MSG_UPTIME.getDisplayText (aDisplayLocale),
+                         Duration.between (aCreationDT, PDTFactory.getCurrentLocalDateTime ()).toString ());
 
         _addDirectoryContent (aTable,
                               "java.endorsed.dirs",
