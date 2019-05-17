@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.functional.IFunction;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.audit.EAuditActionType;
@@ -19,16 +20,23 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
  */
 public class Audit2Bridge implements IAuditor
 {
+  public static final String AUDIT_FIELD_OBJECT_TYPE = "ObjectType";
+  public static final String AUDIT_FIELD_USER_ACTION = "UserAction";
+
   private final ICurrentUserIDProvider m_aCurrentUserIDProvider;
   private final IAuditEventConsumer m_aAuditEventConsumer;
+  private final IFunction <Object, String> m_aToStringConverter;
 
   public Audit2Bridge (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider,
-                       @Nonnull final IAuditEventConsumer aAuditEventConsumer)
+                       @Nonnull final IAuditEventConsumer aAuditEventConsumer,
+                       @Nonnull final IFunction <Object, String> aToStringConverter)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
     ValueEnforcer.notNull (aAuditEventConsumer, "AuditEventConsumer");
+    ValueEnforcer.notNull (aToStringConverter, "ToStringConverter");
     m_aCurrentUserIDProvider = aCurrentUserIDProvider;
     m_aAuditEventConsumer = aAuditEventConsumer;
+    m_aToStringConverter = aToStringConverter;
   }
 
   @Nonnull
@@ -47,7 +55,7 @@ public class Audit2Bridge implements IAuditor
   public void createAuditItem (@Nonnull final EAuditActionType eActionType,
                                @Nonnull final ESuccess eSuccess,
                                @Nullable final ObjectType aActionObjectType,
-                               @Nullable final String sAction,
+                               @Nullable final String sUserAction,
                                @Nullable final Object... aArgs)
   {
     // No need to change settings
@@ -56,9 +64,17 @@ public class Audit2Bridge implements IAuditor
                                                                .setAction (eActionType)
                                                                .setSucces (eSuccess);
     if (aActionObjectType != null)
-      aBuilder.addField ("ObjectType", aActionObjectType.getName ());
-    if (sAction != null)
-      aBuilder.addField ("Action", sAction);
+      aBuilder.addField (AUDIT_FIELD_OBJECT_TYPE, aActionObjectType.getName ());
+    if (sUserAction != null)
+      aBuilder.addField (AUDIT_FIELD_USER_ACTION, sUserAction);
+    if (aArgs != null)
+      for (final Object aArg : aArgs)
+      {
+        // Use custom toString converter
+        final String sValue = m_aToStringConverter.apply (aArg);
+        // Add field without name
+        aBuilder.addField (null, sValue);
+      }
     final AuditEvent aAuditEvent = aBuilder.build ();
     m_aAuditEventConsumer.handleAuditEvent (aAuditEvent);
   }
