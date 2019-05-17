@@ -29,12 +29,12 @@ import com.helger.photon.audit.v2.domain.AuditEvent;
 
 /**
  * Pipeline of {@link IAuditEventConsumer} being itself an
- * {@link IAuditEventConsumer}. So a list of other consumers.
+ * {@link IAuditEventConsumer}. So basically a list of other consumers.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class AuditEventPipeline implements IAuditEventConsumer
+public class AuditEventConsumerPipeline implements IAuditEventConsumer
 {
   private final ICommonsList <IAuditEventConsumer> m_aConsumers = new CommonsArrayList <> ();
   private final CallbackList <IExceptionCallback <? super Exception>> m_aExCallbacks = new CallbackList <> ();
@@ -42,7 +42,7 @@ public class AuditEventPipeline implements IAuditEventConsumer
   /**
    * Constructor. Registers a logging exception callback by default.
    */
-  public AuditEventPipeline ()
+  public AuditEventConsumerPipeline ()
   {
     m_aExCallbacks.add (new LoggingExceptionCallback ());
   }
@@ -68,12 +68,12 @@ public class AuditEventPipeline implements IAuditEventConsumer
     return m_aExCallbacks;
   }
 
-  public void handleAuditEvent (@Nonnull final AuditEvent aAuditEvent)
+  public void consumeAuditEvent (@Nonnull final AuditEvent aAuditEvent)
   {
     for (final IAuditEventConsumer aConsumer : m_aConsumers)
       try
       {
-        aConsumer.handleAuditEvent (aAuditEvent);
+        aConsumer.consumeAuditEvent (aAuditEvent);
       }
       catch (final Exception ex)
       {

@@ -38,5 +38,5 @@ public interface IAuditEventConsumer extends Serializable
    *         in case something goes wrong. This exception will be handled
    *         separately.
    */
-  void handleAuditEvent (@Nonnull AuditEvent aAuditEvent);
+  void consumeAuditEvent (@Nonnull AuditEvent aAuditEvent);
 }
