@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.lang.ClassHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
@@ -62,6 +63,7 @@ public class BasePageAppInfoGlobalScope <WPECTYPE extends IWebPageExecutionConte
   protected static enum EText implements IHasDisplayTextWithArgs
   {
     MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
+    MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),
     MSG_SCOPE_VALID ("Kontext gültig?", "Scope valid?"),
     MSG_SCOPE_IN_DESTRUCTION ("Kontext in Zerstörung?", "Scope in destruction?"),
     MSG_SCOPE_DESTROYED ("Kontext zerstört?", "Scope destroyed?"),
@@ -117,6 +119,9 @@ public class BasePageAppInfoGlobalScope <WPECTYPE extends IWebPageExecutionConte
     final BootstrapViewForm aViewForm = new BootstrapViewForm ();
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aScope.getID ()));
+    aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_CREATION_DT.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (PDTToString.getAsString (aScope.getCreationDateTime (),
+                                                                                        aDisplayLocale)));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
                                                      .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
                                                                                            aDisplayLocale)));
