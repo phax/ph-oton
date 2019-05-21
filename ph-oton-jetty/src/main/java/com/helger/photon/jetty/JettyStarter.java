@@ -65,7 +65,8 @@ public class JettyStarter
   public static final String DEFAULT_STOP_KEY = InternalJettyStopMonitorThread.STOP_KEY;
   public static final int DEFAULT_STOP_PORT = InternalJettyStopMonitorThread.STOP_PORT;
   public static final String DEFAULT_CONTEXT_PATH = "/";
-  public static final String DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN = true ? null : ".*\\.jar$|.*/classes/.*";
+  public static final String CONTAINER_INCLUDE_JAR_PATTERN_ALL = ".*\\.jar$|.*/classes/.*";
+  public static final String DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN = null;
   public static final String DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN = null;
   public static final String DEFAULT_SESSION_COOKIE_NAME = "PHOTONSESSIONID";
   private static final Logger LOGGER = LoggerFactory.getLogger (JettyStarter.class);
