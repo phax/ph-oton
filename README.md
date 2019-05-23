@@ -47,6 +47,7 @@ Contained subprojects are:
     * `CheckDiskUsableSpaceJob` can now be scheduled more than once for different paths
     * Application startup time is now displayed in the "System Properties" Administration page
     * Started extending audit library to be more flexible and efficient
+    * Added support for `loading` attribute in `HCImg` and `HCIFrame`
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1

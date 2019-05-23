@@ -49,6 +49,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   private SizeInt m_aExtent;
   private String m_sAlt;
   private EHCCORSSettings m_eCrossOrigin;
+  private EHCLoadingType m_eLoading;
 
   public AbstractHCImg ()
   {
@@ -190,6 +191,19 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return thisAsT ();
   }
 
+  @Nullable
+  public final EHCLoadingType getLoading ()
+  {
+    return m_eLoading;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setLoading (@Nullable final EHCLoadingType eLoading)
+  {
+    m_eLoading = eLoading;
+    return thisAsT ();
+  }
+
   @Override
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
@@ -219,6 +233,8 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
       aElement.setAttribute (CHTMLAttributes.TITLE, m_sAlt);
     if (m_eCrossOrigin != null)
       aElement.setAttribute (CHTMLAttributes.CROSSORIGIN, m_eCrossOrigin);
+    if (m_eLoading != null)
+      aElement.setAttribute (CHTMLAttributes.LOADING, m_eLoading);
   }
 
   @Override
@@ -231,6 +247,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
                             .appendIfNotNull ("Extent", m_aExtent)
                             .appendIfNotNull ("Alt", m_sAlt)
                             .appendIfNotNull ("CrossOrigin", m_eCrossOrigin)
+                            .appendIfNotNull ("Loading", m_eLoading)
                             .getToString ();
   }
 }

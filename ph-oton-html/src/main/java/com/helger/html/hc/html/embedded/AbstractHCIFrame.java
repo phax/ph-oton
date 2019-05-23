@@ -64,6 +64,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
   private int m_nMarginHeight = CGlobal.ILLEGAL_UINT;
   private boolean m_bSandbox = DEFAULT_SANDBOX;
   private final EnumSet <EHCSandboxAllow> m_aSandboxAllows = EnumSet.noneOf (EHCSandboxAllow.class);
+  private EHCLoadingType m_eLoading;
 
   public AbstractHCIFrame ()
   {
@@ -243,6 +244,19 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return thisAsT ();
   }
 
+  @Nullable
+  public final EHCLoadingType getLoading ()
+  {
+    return m_eLoading;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setLoading (@Nullable final EHCLoadingType eLoading)
+  {
+    m_eLoading = eLoading;
+    return thisAsT ();
+  }
+
   @Override
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
@@ -278,23 +292,25 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
       }
       aElement.setAttribute (CHTMLAttributes.SANDBOX, aValue.toString ());
     }
+    if (m_eLoading != null)
+      aElement.setAttribute (CHTMLAttributes.LOADING, m_eLoading);
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("src", m_aSrc)
-                            .appendIfNotNull ("src", m_aSrc)
-                            .appendIfNotNull ("name", m_sName)
-                            .appendIfNotNull ("longDesc", m_sLongDesc)
-                            .appendIfNotNull ("scrolling", m_eScrolling)
-                            .appendIfNotNull ("align", m_eAlign)
-                            .append ("frameBorder", m_bFrameBorder)
-                            .appendIfNotNull ("width", m_sWidth)
-                            .appendIfNotNull ("height", m_sHeight)
-                            .append ("marginWidth", m_nMarginWidth)
-                            .append ("marginHeight", m_nMarginHeight)
+                            .appendIfNotNull ("Src", m_aSrc)
+                            .appendIfNotNull ("Name", m_sName)
+                            .appendIfNotNull ("LongDesc", m_sLongDesc)
+                            .appendIfNotNull ("Scrolling", m_eScrolling)
+                            .appendIfNotNull ("Align", m_eAlign)
+                            .append ("FrameBorder", m_bFrameBorder)
+                            .appendIfNotNull ("Width", m_sWidth)
+                            .appendIfNotNull ("Height", m_sHeight)
+                            .append ("MarginWidth", m_nMarginWidth)
+                            .append ("MarginHeight", m_nMarginHeight)
+                            .appendIfNotNull ("Loading", m_eLoading)
                             .getToString ();
   }
 }

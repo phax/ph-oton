@@ -122,6 +122,7 @@ public final class CHTMLAttributes
   public static final IMicroQName LANG = new MicroQName ("lang");
   public static final IMicroQName LANGUAGE = new MicroQName ("language");
   public static final IMicroQName LIST = new MicroQName ("list");
+  public static final IMicroQName LOADING = new MicroQName ("loading");
   public static final IMicroQName LOOP = new MicroQName ("loop");
   public static final IMicroQName LONGDESC = new MicroQName ("longdesc");
   public static final IMicroQName LOW = new MicroQName ("low");
