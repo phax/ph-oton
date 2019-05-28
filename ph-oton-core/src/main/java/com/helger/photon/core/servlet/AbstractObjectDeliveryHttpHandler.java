@@ -18,6 +18,7 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,7 +36,6 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.math.MathHelper;
-import com.helger.commons.random.RandomHelper;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
@@ -74,8 +74,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
    * classpath resources.
    */
   protected static final String ETAG_VALUE_OBJECT_DELIVERY_SERVLET = '"' +
-                                                                     Long.toString (MathHelper.abs (RandomHelper.getRandom ()
-                                                                                                                .nextLong ()),
+                                                                     Long.toString (MathHelper.abs (new Random ().nextLong ()),
                                                                                     16) +
                                                                      '"';
 
@@ -164,43 +163,43 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     if (LOGGER.isDebugEnabled ())
     {
       LOGGER.debug ("Settings for " +
-                       getClass ().getName () +
-                       ": " +
-                       INITPARAM_DENIED_FILENAMES +
-                       "=" +
-                       m_aDeniedFilenames +
-                       "; " +
-                       INITPARAM_DENIED_EXTENSIONS +
-                       "=" +
-                       m_aDeniedExtensions +
-                       "; " +
-                       INITPARAM_DENIED_REG_EXS +
-                       "=" +
-                       m_aDeniedRegExs +
-                       "; " +
-                       INITPARAM_ALLOWED_FILENAMES +
-                       "=" +
-                       m_aAllowedFilenames +
-                       "; " +
-                       INITPARAM_ALLOWED_EXTENSIONS +
-                       "=" +
-                       m_aAllowedExtensions +
-                       "; " +
-                       INITPARAM_ALLOWED_REG_EXS +
-                       "=" +
-                       m_aAllowedRegExs);
+                    getClass ().getName () +
+                    ": " +
+                    INITPARAM_DENIED_FILENAMES +
+                    "=" +
+                    m_aDeniedFilenames +
+                    "; " +
+                    INITPARAM_DENIED_EXTENSIONS +
+                    "=" +
+                    m_aDeniedExtensions +
+                    "; " +
+                    INITPARAM_DENIED_REG_EXS +
+                    "=" +
+                    m_aDeniedRegExs +
+                    "; " +
+                    INITPARAM_ALLOWED_FILENAMES +
+                    "=" +
+                    m_aAllowedFilenames +
+                    "; " +
+                    INITPARAM_ALLOWED_EXTENSIONS +
+                    "=" +
+                    m_aAllowedExtensions +
+                    "; " +
+                    INITPARAM_ALLOWED_REG_EXS +
+                    "=" +
+                    m_aAllowedRegExs);
     }
 
     // Short hint, as this may render the whole servlet senseless...
     if (m_bDeniedAllExtensions)
       LOGGER.warn ("All extensions are denied in " +
-                      getClass ().getName () +
-                      ". This means that this servlet will not deliver any resource!");
+                   getClass ().getName () +
+                   ". This means that this servlet will not deliver any resource!");
     else
       if (m_aAllowedFilenames.isEmpty () && m_aAllowedExtensions.isEmpty () && m_aAllowedRegExs.isEmpty ())
         LOGGER.warn ("No allowance rules are defined in " +
-                        getClass ().getName () +
-                        ". This means that this servlet will not deliver any resource!");
+                     getClass ().getName () +
+                     ". This means that this servlet will not deliver any resource!");
   }
 
   @Nonnull
@@ -274,18 +273,14 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     if (m_aDeniedFilenames.contains (sFilename))
     {
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Denied object with name '" +
-                         sRelativeFilename +
-                         "' because it is in the denied filenames list");
+        LOGGER.debug ("Denied object with name '" + sRelativeFilename + "' because it is in the denied filenames list");
       return false;
     }
 
     if (m_bDeniedAllExtensions || m_aDeniedExtensions.contains (sUnifiedExt))
     {
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Denied object with name '" +
-                         sRelativeFilename +
-                         "' because it is in the denied extension list");
+        LOGGER.debug ("Denied object with name '" + sRelativeFilename + "' because it is in the denied extension list");
       return false;
     }
 
@@ -294,9 +289,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
         if (RegExHelper.stringMatchesPattern (sDeniedRegEx, sFilename))
         {
           if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Denied object with name '" +
-                             sRelativeFilename +
-                             "' because it is in the denied regex list");
+            LOGGER.debug ("Denied object with name '" + sRelativeFilename + "' because it is in the denied regex list");
           return false;
         }
 
@@ -305,8 +298,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     {
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Allowed object with name '" +
-                         sRelativeFilename +
-                         "' because it is in the allowed filenames list");
+                      sRelativeFilename +
+                      "' because it is in the allowed filenames list");
       return true;
     }
 
@@ -314,8 +307,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     {
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Allowed object with name '" +
-                         sRelativeFilename +
-                         "' because it is in the allowed extension list");
+                      sRelativeFilename +
+                      "' because it is in the allowed extension list");
       return true;
     }
 
@@ -325,8 +318,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
         {
           if (LOGGER.isDebugEnabled ())
             LOGGER.debug ("Allowed object with name '" +
-                             sRelativeFilename +
-                             "' because it is in the allowed regex list");
+                          sRelativeFilename +
+                          "' because it is in the allowed regex list");
           return true;
         }
 

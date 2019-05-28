@@ -19,26 +19,20 @@ package com.helger.photon.atom;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Random;
+
 import org.junit.Test;
 
-import com.helger.commons.random.RandomHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.photon.atom.Feed;
-import com.helger.photon.atom.FeedDate;
-import com.helger.photon.atom.FeedEntry;
-import com.helger.photon.atom.FeedLink;
-import com.helger.photon.atom.FeedPerson;
-import com.helger.photon.atom.FeedPlainTextConstruct;
-import com.helger.photon.atom.FeedXHTMLContent;
 
 public final class FeedTest
 {
   private Feed _createSimpleFeed (final int nEntryCount)
   {
     final Feed aFeed = new Feed ();
-    aFeed.setID (Integer.toString (RandomHelper.getRandom ().nextInt ()));
+    aFeed.setID (Integer.toString (new Random ().nextInt ()));
     aFeed.setTitle (new FeedPlainTextConstruct ("Title of the feed"));
     aFeed.setUpdated (FeedDate.createNow ());
     aFeed.addLink (new FeedLink ("http://localhost/feedtest", FeedLink.REL_SELF));

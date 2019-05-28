@@ -16,12 +16,13 @@
  */
 package com.helger.photon.uicore.serverlog;
 
+import java.util.Random;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.random.RandomHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
@@ -41,7 +42,7 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
   public ServerLogSessionKey ()
   {
     final byte [] aKey = new byte [8];
-    RandomHelper.getRandom ().nextBytes (aKey);
+    new Random ().nextBytes (aKey);
     m_sGeneratedKey = StringHelper.getHexEncoded (aKey);
   }
 

@@ -17,6 +17,7 @@
 package com.helger.photon.security.token.accesstoken;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -27,7 +28,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.base64.Base64;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.random.RandomHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 
@@ -125,7 +125,7 @@ public final class AccessToken implements IAccessToken
   public static String createNewTokenString (@Nonnegative final int nBytes)
   {
     final byte [] aBytes = new byte [nBytes];
-    RandomHelper.getRandom ().nextBytes (aBytes);
+    new Random ().nextBytes (aBytes);
     // Returns a +33% longer byte string
     return Base64.encodeBytes (aBytes);
   }

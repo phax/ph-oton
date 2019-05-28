@@ -17,12 +17,12 @@
 package com.helger.html.markdown;
 
 import java.util.Locale;
+import java.util.Random;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.random.RandomHelper;
 
 /**
  * Utilities.
@@ -57,7 +57,7 @@ final class MarkdownHelper
    */
   public static int rnd ()
   {
-    return RandomHelper.getRandom ().nextInt (1024);
+    return new Random ().nextInt (1024);
   }
 
   /**
