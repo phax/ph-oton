@@ -33,7 +33,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.2.0 - work in progress
+* v8.2.0 - 2019-06-24
     * Improved B4 InputGroup API for easier extension
     * Updated to Jetty 9.4.19
     * Improved Bootstrap 4 inline form UI creation
@@ -46,8 +46,8 @@ Contained subprojects are:
     * Requires ph-web 9.1.2
     * `CheckDiskUsableSpaceJob` can now be scheduled more than once for different paths
     * Application startup time is now displayed in the "System Properties" Administration page
-    * Started extending audit library to be more flexible and efficient
     * Added support for `loading` attribute in `HCImg` and `HCIFrame`
+    * Started extending audit library to be more flexible and efficient - not used yet
 * v8.1.3 - 2019-02-18
     * Updated to Bootstrap 4.3.1
     * Updated to Bootstrap 3.4.1
@@ -191,7 +191,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.1.3</version>
+        <version>8.2.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
