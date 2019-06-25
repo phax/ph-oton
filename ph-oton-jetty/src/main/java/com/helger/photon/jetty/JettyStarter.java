@@ -414,9 +414,11 @@ public class JettyStarter
    *
    * @param aServerConnector
    *        Server connector
+   * @throws Exception
+   *         in case of error
    */
   @OverrideOnDemand
-  protected void customizeServerConnector (@Nonnull final ServerConnector aServerConnector)
+  protected void customizeServerConnector (@Nonnull final ServerConnector aServerConnector) throws Exception
   {}
 
   /**
@@ -424,9 +426,11 @@ public class JettyStarter
    *
    * @param aServer
    *        Server
+   * @throws Exception
+   *         in case of error
    */
   @OverrideOnDemand
-  protected void customizeServer (@Nonnull final Server aServer)
+  protected void customizeServer (@Nonnull final Server aServer) throws Exception
   {}
 
   /**
@@ -434,9 +438,11 @@ public class JettyStarter
    *
    * @param aWebAppCtx
    *        Web application context
+   * @throws Exception
+   *         in case of error
    */
   @OverrideOnDemand
-  protected void customizeWebAppCtx (@Nonnull final WebAppContext aWebAppCtx)
+  protected void customizeWebAppCtx (@Nonnull final WebAppContext aWebAppCtx) throws Exception
   {}
 
   /**
@@ -444,10 +450,12 @@ public class JettyStarter
    *
    * @param aServer
    *        The server that was started. Never <code>null</code>.
+   * @throws Exception
+   *         in case of error
    * @since 7.0.2
    */
   @OverrideOnDemand
-  protected void onServerStarted (@Nonnull final Server aServer)
+  protected void onServerStarted (@Nonnull final Server aServer) throws Exception
   {}
 
   /**
@@ -457,10 +465,12 @@ public class JettyStarter
    *        The server that was started. Never <code>null</code>.
    * @param t
    *        The exception that occurred
+   * @throws Exception
+   *         in case of error
    * @since 7.0.2
    */
   @OverrideOnDemand
-  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t)
+  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t) throws Exception
   {}
 
   /**
@@ -490,6 +500,7 @@ public class JettyStarter
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));
     }
 
+    // Customize call
     customizeServer (aServer);
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
@@ -542,6 +553,7 @@ public class JettyStarter
     if (StringHelper.hasText (m_sSessionCookieName))
       aWebAppCtx.getSessionHandler ().setSessionCookie (m_sSessionCookieName);
 
+    // Customize call
     customizeWebAppCtx (aWebAppCtx);
 
     aServer.setHandler (aWebAppCtx);
