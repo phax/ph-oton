@@ -33,6 +33,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.2.1 - work in progress
+    * Updated to log4j 2.12.0
 * v8.2.0 - 2019-06-24
     * Improved B4 InputGroup API for easier extension
     * Updated to Jetty 9.4.19
