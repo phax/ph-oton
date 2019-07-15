@@ -20,11 +20,13 @@ import java.io.OutputStream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillClose;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
@@ -105,7 +107,8 @@ public final class HCRenderer
    * Customize the passed base node and all child nodes recursively.
    *
    * @param aStartNode
-   *        Base node to start customizing (incl.). May not be <code>null</code> .
+   *        Base node to start customizing (incl.). May not be <code>null</code>
+   *        .
    * @param aGlobalTargetNode
    *        The target node where new nodes should be appended to in case the
    *        direct parent node is not suitable. May not be <code>null</code>.
@@ -273,11 +276,18 @@ public final class HCRenderer
 
   public static void writeHtmlTo (@Nonnull final IHCNode aHCNode,
                                   @Nonnull final IHCConversionSettings aConversionSettings,
-                                  @Nonnull final OutputStream aOS)
+                                  @Nonnull @WillClose final OutputStream aOS)
   {
-    final IMicroNode aMicroNode = getAsNode (aHCNode, aConversionSettings);
-    if (aMicroNode != null)
-      MicroWriter.writeToStream (aMicroNode, aOS, aConversionSettings.getXMLWriterSettings ());
+    try
+    {
+      final IMicroNode aMicroNode = getAsNode (aHCNode, aConversionSettings);
+      if (aMicroNode != null)
+        MicroWriter.writeToStream (aMicroNode, aOS, aConversionSettings.getXMLWriterSettings ());
+    }
+    finally
+    {
+      StreamHelper.close (aOS);
+    }
   }
 
   /**
