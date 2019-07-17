@@ -35,6 +35,7 @@ Contained subprojects are:
 
 * v8.2.1 - work in progress
     * Updated to log4j 2.12.0
+    * Fixed the automatic module name of project `ph-oton-bootstrap4-pages`
 * v8.2.0 - 2019-06-24
     * Improved B4 InputGroup API for easier extension
     * Updated to Jetty 9.4.19
