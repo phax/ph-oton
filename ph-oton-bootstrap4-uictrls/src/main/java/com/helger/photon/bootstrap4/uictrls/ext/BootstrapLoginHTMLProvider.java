@@ -114,7 +114,7 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
 
   /**
    * After form
-   * 
+   *
    * @param aSWEC
    *        Web page execution context
    * @return May be <code>null</code>
@@ -156,7 +156,8 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
 
-    final BootstrapForm aForm = new BootstrapForm (aSWEC).setAction (new SimpleURL (aRequestScope.getURL ()));
+    // Use the server-relative version without the hostname
+    final BootstrapForm aForm = new BootstrapForm (aSWEC).setAction (new SimpleURL (aRequestScope.getURI ()));
 
     // Customize
     onBeforeForm (aSWEC, aForm);
