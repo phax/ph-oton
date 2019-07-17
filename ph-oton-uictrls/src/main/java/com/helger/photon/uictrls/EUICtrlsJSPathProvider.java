@@ -45,7 +45,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   FINEUPLOADER_320 ("uictrls/fineupload/320/fineuploader.js"),
   FINEUPLOADER_330 ("uictrls/fineupload/330/fineuploader.js"),
   FINEUPLOADER_5 ("uictrls/fineupload/5.11.10/fine-uploader.js"),
-  HANDLEBARS_3 ("uictrls/handlebars/3.0.3/handlebars-v3.0.3.js"),
+  HANDLEBARS_4 ("uictrls/handlebars/4.1.2/handlebars.runtime-v4.1.2.js"),
   JSCOLOR ("uictrls/jscolor/1.4.4ph/jscolor.js"),
   PDFOBJECT1 ("uictrls/pdfobject/1.2/pdfobject.js"),
   PDFOBJECT2 ("uictrls/pdfobject/2.0/pdfobject.js"),

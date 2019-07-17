@@ -38,6 +38,7 @@ Contained subprojects are:
     * Fixed the automatic module name of project `ph-oton-bootstrap4-pages`
     * Requires ph-web 9.1.3
     * `BootstrapLoginHTMLProvider` now uses a form URL without the leading hostname
+    * Updated to HandleBars 4.x
 * v8.2.0 - 2019-06-24
     * Improved B4 InputGroup API for easier extension
     * Updated to Jetty 9.4.19
