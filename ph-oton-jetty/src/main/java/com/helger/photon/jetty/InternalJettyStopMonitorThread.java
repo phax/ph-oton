@@ -53,6 +53,7 @@ final class InternalJettyStopMonitorThread extends Thread
     setDaemon (true);
     setName ("JettyStopMonitor");
     m_aServerSocket = new ServerSocket (m_nPort, 1, InetAddress.getByName (null));
+    m_aServerSocket.setReuseAddress (true);
     m_aAction = aAction;
   }
 
@@ -62,11 +63,11 @@ final class InternalJettyStopMonitorThread extends Thread
     outer: while (true)
     {
       try (final Socket aSocket = m_aServerSocket.accept ();
-           final LineNumberReader lin = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
-                                                                                     StandardCharsets.UTF_8)))
+          final LineNumberReader aReader = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
+                                                                                    StandardCharsets.UTF_8)))
       {
         // First line: key
-        final String sKey = lin.readLine ();
+        final String sKey = aReader.readLine ();
         if (!m_sKey.equals (sKey))
         {
           LOGGER.warn ("Stop key mismatch. Got '" + sKey + "' but was expecting something else");
@@ -74,7 +75,7 @@ final class InternalJettyStopMonitorThread extends Thread
         }
 
         // Second line: stop
-        final String sCmd = lin.readLine ();
+        final String sCmd = aReader.readLine ();
         if (false)
           LOGGER.info ("Got command: " + sCmd);
         if ("stop".equals (sCmd))

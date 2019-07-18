@@ -91,7 +91,7 @@ public class JettyRunner extends JettyStarter
                                          getPort () +
                                          ":" +
                                          getStopPort () +
-                                         " - see log files");
+                                         " - see logs for details");
   }
 
   public synchronized void shutDownServer () throws IOException, InterruptedException
