@@ -34,7 +34,8 @@ Contained subprojects are:
 ## News and noteworthy
 
 * v8.2.1 - work in progress
-    * Updated to log4j 2.12.0
+    * Updated to log4j 2.12.1
+    * Updated to Jetty 9.4.20
     * Fixed the automatic module name of project `ph-oton-bootstrap4-pages`
     * Requires ph-web 9.1.3
     * `BootstrapLoginHTMLProvider` now uses a form URL without the leading hostname
