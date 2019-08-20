@@ -171,6 +171,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
           }
 
           if (LOGGER.isInfoEnabled ())
+          {
             LOGGER.info ("Serialized " +
                          m_aBundle.getResourceType ().getID () +
                          " bundle '" +
@@ -181,6 +182,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
                                                                m_aBundle.getConditionalComment () +
                                                                "'"
                                                              : ""));
+          }
         }
       }
       catch (final Throwable t)
