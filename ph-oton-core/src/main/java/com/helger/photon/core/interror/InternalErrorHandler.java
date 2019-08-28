@@ -439,7 +439,7 @@ public final class InternalErrorHandler
       try
       {
         RequestHelper.getRequestHeaderMap (aHttpRequest)
-                     .forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v));
+                     .forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v), true);
       }
       catch (final Throwable t2)
       {

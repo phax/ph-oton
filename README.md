@@ -40,6 +40,7 @@ Contained subprojects are:
     * Requires ph-web 9.1.3
     * `BootstrapLoginHTMLProvider` now uses a form URL without the leading hostname
     * Updated to HandleBars 4.x
+    * Requires ph-commons 9.3.6
 * v8.2.0 - 2019-06-24
     * Improved B4 InputGroup API for easier extension
     * Updated to Jetty 9.4.19
