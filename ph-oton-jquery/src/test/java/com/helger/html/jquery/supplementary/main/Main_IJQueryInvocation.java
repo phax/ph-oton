@@ -27,7 +27,7 @@ import com.helger.commons.io.file.SimpleFileIO;
 
 public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
 {
-  public static void main (final String [] args) throws Exception
+  public static void main (final String [] args)
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();

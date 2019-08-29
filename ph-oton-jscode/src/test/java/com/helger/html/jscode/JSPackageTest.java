@@ -112,13 +112,13 @@ public final class JSPackageTest
       aFuncMain.body ().invoke (aArray1a, "push").arg ("pushed");
 
       // Associative Array
-      final JSVar aArray2 = aFuncMain.body ().var ("array2",
-                                                   new JSAssocArray ().add ("num", 1)
-                                                                      .add ("array", aArray1)
-                                                                      .add ("assocarray",
-                                                                            new JSAssocArray ().add ("key", "value")
-                                                                                               .add ("key2",
-                                                                                                     "anything else")));
+      final JSVar aArray2 = aFuncMain.body ()
+                                     .var ("array2",
+                                           new JSAssocArray ().add ("num", 1)
+                                                              .add ("array", aArray1)
+                                                              .add ("assocarray",
+                                                                    new JSAssocArray ().add ("key", "value")
+                                                                                       .add ("key2", "anything else")));
       aFuncMain.body ().assign (aArray2.component ("num"), 6);
 
       // concatenate misc things
@@ -157,10 +157,11 @@ public final class JSPackageTest
       final JSVar sComment = anonFunction.param ("sComment");
       anonFunction.body ().assignPlus (sComments, sComment.plus ('\n'));
       anonFunction.body ()._return (JSExpr.lit (""));
-      aFuncMain.body ().assign (sHTML,
-                                sHTML.invoke ("replace")
-                                     .arg (JSExpr.regex ("<!--([\\s\\S]*?)-->").global (true))
-                                     .arg (anonFunction));
+      aFuncMain.body ()
+               .assign (sHTML,
+                        sHTML.invoke ("replace")
+                             .arg (JSExpr.regex ("<!--([\\s\\S]*?)-->").global (true))
+                             .arg (anonFunction));
       aFuncMain.body ().comment ("Remaining HTML + comments content");
       aFuncMain.body ()._return (new JSAssocArray ().add ("html", sHTML).add ("comments", sComments));
 
@@ -205,7 +206,7 @@ public final class JSPackageTest
   }
 
   @Test
-  public void testMinimumCodeSize () throws Exception
+  public void testMinimumCodeSize ()
   {
     final JSPackage aPkg = _createMockPackage ();
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aPkg, _createMockPackage ());
@@ -258,10 +259,10 @@ public final class JSPackageTest
                   "}",
                   sCompressedCode);
     LOGGER.info ("Saved " +
-                    (sCode.length () - sCompressedCode.length ()) +
-                    " chars. " +
-                    sCompressedCode.length () +
-                    " chars are left");
+                 (sCode.length () - sCompressedCode.length ()) +
+                 " chars. " +
+                 sCompressedCode.length () +
+                 " chars are left");
     LOGGER.info ("--------");
   }
 

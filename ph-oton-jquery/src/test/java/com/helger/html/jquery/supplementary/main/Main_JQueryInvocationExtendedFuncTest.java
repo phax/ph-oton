@@ -28,7 +28,7 @@ import com.helger.commons.string.StringHelper;
 
 public class Main_JQueryInvocationExtendedFuncTest extends AbstractCreateJQueryAPIList
 {
-  public static void main (final String [] args) throws Exception
+  public static void main (final String [] args)
   {
     // Read all data
     final ICommonsList <Entry> aAllEntries = readAllEntries ();
