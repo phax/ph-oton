@@ -37,6 +37,7 @@ import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.misc.SizeHelper;
 import com.helger.commons.lang.ClassLoaderHelper;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.system.CryptoPolicy;
 import com.helger.commons.system.SystemHelper;
 import com.helger.commons.system.SystemProperties;
 import com.helger.commons.text.IMultilingualText;
@@ -57,6 +58,7 @@ import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.bootstrap3.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap3.table.BootstrapTable;
 import com.helger.photon.bootstrap3.uictrls.datatables.BootstrapDataTables;
+import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -101,6 +103,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis: {0}", "Not a directory: {0}"),
     MSG_STARTUP_DATE_TIME ("Startzeit der Anwendung", "Application startup time"),
     MSG_UPTIME ("Uptime", "Uptime"),
+    MSG_JCE_UNLIMITED_STRENGTH ("JCE Unlimited Strength Policy", "JCE Unlimited Strength Policy"),
     MSG_ENDORSED_DIR ("Endorsed Verzeichnis", "Endorsed directory"),
     MSG_EXT_DIR ("Extension Verzeichnis", "Extension directory"),
     MSG_DIR_NOT_EXISTING ("Das Verzeichnis existiert nicht", "The directory does not exist"),
@@ -293,6 +296,12 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         aTable.addBodyRow ()
               .addCells (EText.MSG_UPTIME.getDisplayText (aDisplayLocale),
                          Duration.between (aCreationDT, PDTFactory.getCurrentLocalDateTime ()).toString ());
+
+        // JCE unlimited strength available?
+        aTable.addBodyRow ()
+              .addCells (EText.MSG_JCE_UNLIMITED_STRENGTH.getDisplayText (aDisplayLocale),
+                         EPhotonCoreText.getYesOrNo (CryptoPolicy.isUnlimitedStrengthCryptoAvailable (),
+                                                     aDisplayLocale));
 
         _addDirectoryContent (aTable,
                               "java.endorsed.dirs",
