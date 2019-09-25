@@ -20,6 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
@@ -33,6 +36,8 @@ import com.helger.commons.string.StringHelper;
 @Immutable
 public final class JSMarshaller
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (JSMarshaller.class);
+
   private static final char [] CHARS_TO_MASK = new char [] { '"', '\'', '\\', '/', '\t', '\r', '\n', '\f' };
   private static final char [] CHARS_TO_MASK_REGEX = new char [] { '\\',
                                                                    '^',
@@ -229,8 +234,10 @@ public final class JSMarshaller
     if (!ArrayHelper.contains (aInput, MASK_CHAR))
       return sInput;
 
+    // Result is at last as long as the input as e.g. "\x3a" is squeezed to ":"
+    // so 1 char instead of 4
     final char [] ret = new char [aInput.length];
-    int nIndex = 0;
+    int nRetIndex = 0;
     char cPrevChar = '\u0000';
     for (int i = 0; i < aInput.length; i++)
     {
@@ -243,25 +250,36 @@ public final class JSMarshaller
           case '\'':
           case '\\':
           case '/':
-            ret[nIndex++] = cCurrent;
+            ret[nRetIndex++] = cCurrent;
             break;
           case 't':
-            ret[nIndex++] = '\t';
+            ret[nRetIndex++] = '\t';
             break;
           case 'n':
-            ret[nIndex++] = '\n';
+            ret[nRetIndex++] = '\n';
             break;
           case 'f':
-            ret[nIndex++] = '\f';
+            ret[nRetIndex++] = '\f';
             break;
           case 'x':
+            if (i + 2 >= aInput.length)
+            {
+              LOGGER.warn ("Failed to unescape '" + sInput + "' - EOF in hex values");
+              return sInput;
+            }
             final char cHex1 = aInput[++i];
             final char cHex2 = aInput[++i];
-            ret[nIndex++] = (char) StringHelper.getHexByte (cHex1, cHex2);
+            final int nHexByte = StringHelper.getHexByte (cHex1, cHex2);
+            if (nHexByte < 0)
+            {
+              LOGGER.warn ("Failed to unescape '" + sInput + "' - invalid hex values");
+              return sInput;
+            }
+            ret[nRetIndex++] = (char) nHexByte;
             break;
           default:
-            ret[nIndex++] = MASK_CHAR;
-            ret[nIndex++] = cCurrent;
+            ret[nRetIndex++] = MASK_CHAR;
+            ret[nRetIndex++] = cCurrent;
             break;
         }
         cPrevChar = 0;
@@ -269,16 +287,16 @@ public final class JSMarshaller
       else
       {
         if (cCurrent != MASK_CHAR)
-          ret[nIndex++] = cCurrent;
+          ret[nRetIndex++] = cCurrent;
         cPrevChar = cCurrent;
       }
     }
 
     // Last char is a mask char? append!
     if (cPrevChar == MASK_CHAR)
-      ret[nIndex++] = MASK_CHAR;
+      ret[nRetIndex++] = MASK_CHAR;
 
-    return new String (ret, 0, nIndex);
+    return new String (ret, 0, nRetIndex);
   }
 
   public static boolean isJSIdentifier (@Nullable final String s)

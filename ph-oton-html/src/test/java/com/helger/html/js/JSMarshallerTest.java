@@ -217,6 +217,17 @@ public final class JSMarshallerTest
   }
 
   @Test
+  public void testUnescapeError ()
+  {
+    // Expect 2 digits
+    assertEquals ("\\x1", JSMarshaller.javaScriptUnescape ("\\x1"));
+    assertEquals ("\\x", JSMarshaller.javaScriptUnescape ("\\x"));
+    assertEquals ("\\xz1", JSMarshaller.javaScriptUnescape ("\\xz1"));
+    assertEquals ("\\x1z", JSMarshaller.javaScriptUnescape ("\\x1z"));
+    assertEquals ("\\xzz", JSMarshaller.javaScriptUnescape ("\\xzz"));
+  }
+
+  @Test
   public void testIsJSIdentifier ()
   {
     assertTrue (JSMarshaller.isJSIdentifier ("$"));
