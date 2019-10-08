@@ -33,14 +33,14 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.2.1 - work in progress
+* v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21
+    * Updated to ph-web 9.1.4
+    * Updated to ph-commons 9.3.7
     * Fixed the automatic module name of project `ph-oton-bootstrap4-pages`
-    * Requires ph-web 9.1.3
     * `BootstrapLoginHTMLProvider` now uses a form URL without the leading hostname
     * Updated to HandleBars 4.x
-    * Requires ph-commons 9.3.6
 * v8.2.0 - 2019-06-24
     * Improved B4 InputGroup API for easier extension
     * Updated to Jetty 9.4.19
@@ -199,7 +199,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.0</version>
+        <version>8.2.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
