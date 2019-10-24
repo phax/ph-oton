@@ -40,9 +40,9 @@ public final class StubObject extends AbstractBusinessObject
 {
   public static final ObjectType OT_STUB = new ObjectType ("stub-object");
 
-  private StubObject (@Nonnull @Nonempty final String sID,
-                      @Nullable final String sCreationUserID,
-                      @Nullable final Map <String, String> aCustomAttrs)
+  public StubObject (@Nonnull @Nonempty final String sID,
+                     @Nullable final String sCreationUserID,
+                     @Nullable final Map <String, String> aCustomAttrs)
   {
     this (sID,
           PDTFactory.getCurrentLocalDateTime (),

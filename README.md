@@ -33,6 +33,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.2.2 - work in progress
+    * Made a `StubObject` constructor public
 * v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21
