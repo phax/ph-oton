@@ -36,6 +36,7 @@ Contained subprojects are:
 * v8.2.2 - work in progress
     * Made a `StubObject` constructor public
     * Updated to Jetty 9.4.22
+    * Added a version number constant to access information at runtime
 * v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21

@@ -69,6 +69,7 @@ import com.helger.photon.api.GlobalAPIInvoker;
 import com.helger.photon.api.IAPIRegistry;
 import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.app.io.WebIOLongIDFactory;
+import com.helger.photon.core.CPhotonVersion;
 import com.helger.photon.core.PhotonCoreInit;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.locale.ILocaleManager;
@@ -159,6 +160,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   public static boolean isOnlyOneInstanceAllowed ()
   {
     return s_aOnlyOneInstanceAllowed.get ();
+  }
+
+  protected final void logLogo ()
+  {
+    LOGGER.info ("       _                 _              ");
+    LOGGER.info (" _ __ | |__         ___ | |_ ___  _ __  ");
+    LOGGER.info ("| '_ \\| '_ \\ _____ / _ \\| __/ _ \\| '_ \\ ");
+    LOGGER.info ("| |_) | | | |_____| (_) | || (_) | | | |");
+    LOGGER.info ("| .__/|_| |_|      \\___/ \\__\\___/|_| |_|");
+    LOGGER.info ("|_|                               v" + CPhotonVersion.BUILD_VERSION);
   }
 
   protected final void logServerInfo (@Nonnull final ServletContext aSC)
@@ -269,6 +280,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   @OverrideOnDemand
   protected void logStartupInfo (@Nonnull final ServletContext aSC)
   {
+    logLogo ();
     logServerInfo (aSC);
     logClassPath ();
     logInitParameters (aSC);
