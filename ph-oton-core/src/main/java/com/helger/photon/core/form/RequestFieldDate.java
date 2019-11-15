@@ -99,8 +99,12 @@ public class RequestFieldDate extends RequestField
     this (sFieldName, PDTXMLConverter.getZonedDateTime (aDefaultValue), aDisplayLocale);
   }
 
+  /**
+   * @return The locale as specified in the constructor. Never
+   *         <code>null</code>.
+   */
   @Nonnull
-  public Locale getDisplayLocale ()
+  public final Locale getDisplayLocale ()
   {
     return m_aDisplayLocale;
   }
