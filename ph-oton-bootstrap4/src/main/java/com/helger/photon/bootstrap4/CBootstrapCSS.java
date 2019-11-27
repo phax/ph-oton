@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.3.1
+  // 4.4.0
   public static final ICSSClassProvider ACCORDION = DefaultCSSClassProvider.create ("accordion");
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
@@ -327,6 +327,10 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider COLLAPSING = DefaultCSSClassProvider.create ("collapsing");
   public static final ICSSClassProvider CONTAINER = DefaultCSSClassProvider.create ("container");
   public static final ICSSClassProvider CONTAINER_FLUID = DefaultCSSClassProvider.create ("container-fluid");
+  public static final ICSSClassProvider CONTAINER_LG = DefaultCSSClassProvider.create ("container-lg");
+  public static final ICSSClassProvider CONTAINER_MD = DefaultCSSClassProvider.create ("container-md");
+  public static final ICSSClassProvider CONTAINER_SM = DefaultCSSClassProvider.create ("container-sm");
+  public static final ICSSClassProvider CONTAINER_XL = DefaultCSSClassProvider.create ("container-xl");
   public static final ICSSClassProvider CUSTOM_CHECKBOX = DefaultCSSClassProvider.create ("custom-checkbox");
   public static final ICSSClassProvider CUSTOM_CONTROL = DefaultCSSClassProvider.create ("custom-control");
   public static final ICSSClassProvider CUSTOM_CONTROL_INLINE = DefaultCSSClassProvider.create ("custom-control-inline");
@@ -802,6 +806,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider MODAL_OPEN = DefaultCSSClassProvider.create ("modal-open");
   public static final ICSSClassProvider MODAL_SCROLLBAR_MEASURE = DefaultCSSClassProvider.create ("modal-scrollbar-measure");
   public static final ICSSClassProvider MODAL_SM = DefaultCSSClassProvider.create ("modal-sm");
+  public static final ICSSClassProvider MODAL_STATIC = DefaultCSSClassProvider.create ("modal-static");
   public static final ICSSClassProvider MODAL_TITLE = DefaultCSSClassProvider.create ("modal-title");
   public static final ICSSClassProvider MODAL_XL = DefaultCSSClassProvider.create ("modal-xl");
   public static final ICSSClassProvider MR_0 = DefaultCSSClassProvider.create ("mr-0");
@@ -1443,6 +1448,36 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider ROUNDED_SM = DefaultCSSClassProvider.create ("rounded-sm");
   public static final ICSSClassProvider ROUNDED_TOP = DefaultCSSClassProvider.create ("rounded-top");
   public static final ICSSClassProvider ROW = DefaultCSSClassProvider.create ("row");
+  public static final ICSSClassProvider ROW_COLS_1 = DefaultCSSClassProvider.create ("row-cols-1");
+  public static final ICSSClassProvider ROW_COLS_2 = DefaultCSSClassProvider.create ("row-cols-2");
+  public static final ICSSClassProvider ROW_COLS_3 = DefaultCSSClassProvider.create ("row-cols-3");
+  public static final ICSSClassProvider ROW_COLS_4 = DefaultCSSClassProvider.create ("row-cols-4");
+  public static final ICSSClassProvider ROW_COLS_5 = DefaultCSSClassProvider.create ("row-cols-5");
+  public static final ICSSClassProvider ROW_COLS_6 = DefaultCSSClassProvider.create ("row-cols-6");
+  public static final ICSSClassProvider ROW_COLS_LG_1 = DefaultCSSClassProvider.create ("row-cols-lg-1");
+  public static final ICSSClassProvider ROW_COLS_LG_2 = DefaultCSSClassProvider.create ("row-cols-lg-2");
+  public static final ICSSClassProvider ROW_COLS_LG_3 = DefaultCSSClassProvider.create ("row-cols-lg-3");
+  public static final ICSSClassProvider ROW_COLS_LG_4 = DefaultCSSClassProvider.create ("row-cols-lg-4");
+  public static final ICSSClassProvider ROW_COLS_LG_5 = DefaultCSSClassProvider.create ("row-cols-lg-5");
+  public static final ICSSClassProvider ROW_COLS_LG_6 = DefaultCSSClassProvider.create ("row-cols-lg-6");
+  public static final ICSSClassProvider ROW_COLS_MD_1 = DefaultCSSClassProvider.create ("row-cols-md-1");
+  public static final ICSSClassProvider ROW_COLS_MD_2 = DefaultCSSClassProvider.create ("row-cols-md-2");
+  public static final ICSSClassProvider ROW_COLS_MD_3 = DefaultCSSClassProvider.create ("row-cols-md-3");
+  public static final ICSSClassProvider ROW_COLS_MD_4 = DefaultCSSClassProvider.create ("row-cols-md-4");
+  public static final ICSSClassProvider ROW_COLS_MD_5 = DefaultCSSClassProvider.create ("row-cols-md-5");
+  public static final ICSSClassProvider ROW_COLS_MD_6 = DefaultCSSClassProvider.create ("row-cols-md-6");
+  public static final ICSSClassProvider ROW_COLS_SM_1 = DefaultCSSClassProvider.create ("row-cols-sm-1");
+  public static final ICSSClassProvider ROW_COLS_SM_2 = DefaultCSSClassProvider.create ("row-cols-sm-2");
+  public static final ICSSClassProvider ROW_COLS_SM_3 = DefaultCSSClassProvider.create ("row-cols-sm-3");
+  public static final ICSSClassProvider ROW_COLS_SM_4 = DefaultCSSClassProvider.create ("row-cols-sm-4");
+  public static final ICSSClassProvider ROW_COLS_SM_5 = DefaultCSSClassProvider.create ("row-cols-sm-5");
+  public static final ICSSClassProvider ROW_COLS_SM_6 = DefaultCSSClassProvider.create ("row-cols-sm-6");
+  public static final ICSSClassProvider ROW_COLS_XL_1 = DefaultCSSClassProvider.create ("row-cols-xl-1");
+  public static final ICSSClassProvider ROW_COLS_XL_2 = DefaultCSSClassProvider.create ("row-cols-xl-2");
+  public static final ICSSClassProvider ROW_COLS_XL_3 = DefaultCSSClassProvider.create ("row-cols-xl-3");
+  public static final ICSSClassProvider ROW_COLS_XL_4 = DefaultCSSClassProvider.create ("row-cols-xl-4");
+  public static final ICSSClassProvider ROW_COLS_XL_5 = DefaultCSSClassProvider.create ("row-cols-xl-5");
+  public static final ICSSClassProvider ROW_COLS_XL_6 = DefaultCSSClassProvider.create ("row-cols-xl-6");
   public static final ICSSClassProvider SHADOW = DefaultCSSClassProvider.create ("shadow");
   public static final ICSSClassProvider SHADOW_LG = DefaultCSSClassProvider.create ("shadow-lg");
   public static final ICSSClassProvider SHADOW_NONE = DefaultCSSClassProvider.create ("shadow-none");
