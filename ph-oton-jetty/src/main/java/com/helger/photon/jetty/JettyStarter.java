@@ -582,7 +582,7 @@ public class JettyStarter
     aHandlerList.addHandler (aWebAppCtx);
     // Allow for additional web app contexts ;-)
     customizeHandlerList (aHandlerList);
-    aServer.setHandler (aWebAppCtx);
+    aServer.setHandler (aHandlerList);
 
     final ServletContextHandler aCtx = aWebAppCtx;
 
