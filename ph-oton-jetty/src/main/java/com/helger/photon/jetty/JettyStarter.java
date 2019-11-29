@@ -449,7 +449,10 @@ public class JettyStarter
   @Nonnull
   public WebAppContext createWebAppContext (@Nonnull @Nonempty final String sContextPath) throws Exception
   {
-    final String sTempDir = SystemProperties.getTmpDir ();
+    final String sTempDir = SystemProperties.getTmpDir () +
+                            (DEFAULT_CONTEXT_PATH.equals (sContextPath) ? ""
+                                                                        : "." +
+                                                                          FilenameHelper.getAsSecureValidASCIIFilename (sContextPath));
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
@@ -457,12 +460,7 @@ public class JettyStarter
       aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource
                                                           : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
       aWebAppCtx.setContextPath (sContextPath);
-      aWebAppCtx.setTempDirectory (new File (sTempDir,
-                                             m_sDirBaseName +
-                                                       (DEFAULT_CONTEXT_PATH.equals (sContextPath) ? ""
-                                                                                                   : "." +
-                                                                                                     FilenameHelper.getAsSecureValidASCIIFilename (sContextPath)) +
-                                                       ".webapp"));
+      aWebAppCtx.setTempDirectory (new File (sTempDir, m_sDirBaseName + ".webapp"));
       aWebAppCtx.setParentLoaderPriority (true);
       aWebAppCtx.setThrowUnavailableOnStartupException (true);
       if (m_sContainerIncludeJarPattern != null)
@@ -494,7 +492,7 @@ public class JettyStarter
     {
       final SessionHandler aHdl = new SessionHandler ();
       final FileSessionDataStore aDataStore = new FileSessionDataStore ();
-      aDataStore.setStoreDir (new File (sTempDir + '/' + m_sDirBaseName + ".sessions"));
+      aDataStore.setStoreDir (new File (sTempDir, m_sDirBaseName + ".sessions"));
       aDataStore.setDeleteUnrestorableFiles (true);
       final DefaultSessionCache aCache = new DefaultSessionCache (aHdl);
       aCache.setSessionDataStore (aDataStore);
@@ -582,7 +580,7 @@ public class JettyStarter
 
     final HandlerList aHandlerList = new HandlerList ();
     aHandlerList.addHandler (aWebAppCtx);
-    // Allow for additional wen app contexts ;-)
+    // Allow for additional web app contexts ;-)
     customizeHandlerList (aHandlerList);
     aServer.setHandler (aWebAppCtx);
 
