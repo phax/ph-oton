@@ -27,6 +27,7 @@ import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.session.DefaultSessionCache;
 import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionHandler;
@@ -445,71 +446,23 @@ public class JettyStarter
   protected void customizeWebAppCtx (@Nonnull final WebAppContext aWebAppCtx) throws Exception
   {}
 
-  /**
-   * Callback to be invoked when server successfully finished startup.
-   *
-   * @param aServer
-   *        The server that was started. Never <code>null</code>.
-   * @throws Exception
-   *         in case of error
-   * @since 7.0.2
-   */
-  @OverrideOnDemand
-  protected void onServerStarted (@Nonnull final Server aServer) throws Exception
-  {}
-
-  /**
-   * Callback to be invoked when server failed startup.
-   *
-   * @param aServer
-   *        The server that was started. Never <code>null</code>.
-   * @param t
-   *        The exception that occurred
-   * @throws Exception
-   *         in case of error
-   * @since 7.0.2
-   */
-  @OverrideOnDemand
-  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t) throws Exception
-  {}
-
-  /**
-   * Run Jetty with the provided settings.
-   *
-   * @throws Exception
-   *         In case something goes wrong
-   */
-  public void run () throws Exception
+  @Nonnull
+  public WebAppContext createWebAppContext (@Nonnull @Nonempty final String sContextPath) throws Exception
   {
-    if (System.getSecurityManager () != null)
-      throw new IllegalStateException ("Security Manager is set but not supported - aborting!");
-
     final String sTempDir = SystemProperties.getTmpDir ();
-
-    // Create main server
-    final Server aServer = new Server (m_aThreadPool);
-    {
-      // Create connector on Port
-      final ServerConnector aConnector = new ServerConnector (aServer);
-      aConnector.setPort (m_nPort);
-      aConnector.setIdleTimeout (30_000);
-      customizeServerConnector (aConnector);
-      aServer.setConnectors (new Connector [] { aConnector });
-      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
-                            Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
-      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));
-    }
-
-    // Customize call
-    customizeServer (aServer);
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
       aWebAppCtx.setBaseResource (m_aResourceBase);
       aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource
                                                           : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
-      aWebAppCtx.setContextPath (m_sContextPath);
-      aWebAppCtx.setTempDirectory (new File (sTempDir + '/' + m_sDirBaseName + ".webapp"));
+      aWebAppCtx.setContextPath (sContextPath);
+      aWebAppCtx.setTempDirectory (new File (sTempDir,
+                                             m_sDirBaseName +
+                                                       (DEFAULT_CONTEXT_PATH.equals (sContextPath) ? ""
+                                                                                                   : "." +
+                                                                                                     FilenameHelper.getAsSecureValidASCIIFilename (sContextPath)) +
+                                                       ".webapp"));
       aWebAppCtx.setParentLoaderPriority (true);
       aWebAppCtx.setThrowUnavailableOnStartupException (true);
       if (m_sContainerIncludeJarPattern != null)
@@ -555,8 +508,84 @@ public class JettyStarter
 
     // Customize call
     customizeWebAppCtx (aWebAppCtx);
+    return aWebAppCtx;
+  }
 
+  /**
+   * Customize the {@link HandlerList}
+   * 
+   * @param aHandlerList
+   *        The {@link HandlerList}. Never <code>null</code>.
+   */
+  protected void customizeHandlerList (@Nonnull final HandlerList aHandlerList)
+  {
+    // empty
+  }
+
+  /**
+   * Callback to be invoked when server successfully finished startup.
+   *
+   * @param aServer
+   *        The server that was started. Never <code>null</code>.
+   * @throws Exception
+   *         in case of error
+   * @since 7.0.2
+   */
+  @OverrideOnDemand
+  protected void onServerStarted (@Nonnull final Server aServer) throws Exception
+  {}
+
+  /**
+   * Callback to be invoked when server failed startup.
+   *
+   * @param aServer
+   *        The server that was started. Never <code>null</code>.
+   * @param t
+   *        The exception that occurred
+   * @throws Exception
+   *         in case of error
+   * @since 7.0.2
+   */
+  @OverrideOnDemand
+  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t) throws Exception
+  {}
+
+  /**
+   * Run Jetty with the provided settings.
+   *
+   * @throws Exception
+   *         In case something goes wrong
+   */
+  public void run () throws Exception
+  {
+    if (System.getSecurityManager () != null)
+      throw new IllegalStateException ("Security Manager is set but not supported - aborting!");
+
+    // Create main server
+    final Server aServer = new Server (m_aThreadPool);
+    {
+      // Create connector on Port
+      final ServerConnector aConnector = new ServerConnector (aServer);
+      aConnector.setPort (m_nPort);
+      aConnector.setIdleTimeout (30_000);
+      customizeServerConnector (aConnector);
+      aServer.setConnectors (new Connector [] { aConnector });
+      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
+                            Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
+      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));
+    }
+
+    // Customize call
+    customizeServer (aServer);
+
+    final WebAppContext aWebAppCtx = createWebAppContext (m_sContextPath);
+
+    final HandlerList aHandlerList = new HandlerList ();
+    aHandlerList.addHandler (aWebAppCtx);
+    // Allow for additional wen app contexts ;-)
+    customizeHandlerList (aHandlerList);
     aServer.setHandler (aWebAppCtx);
+
     final ServletContextHandler aCtx = aWebAppCtx;
 
     // Setting final properties
