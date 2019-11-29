@@ -513,14 +513,14 @@ public class JettyStarter
 
   /**
    * Customize the {@link HandlerList}
-   * 
+   *
    * @param aHandlerList
    *        The {@link HandlerList}. Never <code>null</code>.
+   * @throws Exception
+   *         in case of error
    */
-  protected void customizeHandlerList (@Nonnull final HandlerList aHandlerList)
-  {
-    // empty
-  }
+  protected void customizeHandlerList (@Nonnull final HandlerList aHandlerList) throws Exception
+  {}
 
   /**
    * Callback to be invoked when server successfully finished startup.
