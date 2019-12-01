@@ -446,9 +446,20 @@ public class JettyStarter
   protected void customizeWebAppCtx (@Nonnull final WebAppContext aWebAppCtx) throws Exception
   {}
 
+  /**
+   * Create a new {@link WebAppContext} based on the settings of this class.
+   * 
+   * @param sContextPath
+   *        The context path to be used. May neither be <code>null</code> nor
+   *        empty.
+   * @return The created object. Never <code>null</code>.
+   * @throws Exception
+   *         In case of error
+   */
   @Nonnull
   public WebAppContext createWebAppContext (@Nonnull @Nonempty final String sContextPath) throws Exception
   {
+    ValueEnforcer.notEmpty (sContextPath, "ContextPath");
     final String sTempDir = SystemProperties.getTmpDir () +
                             (DEFAULT_CONTEXT_PATH.equals (sContextPath) ? ""
                                                                         : "." +
@@ -461,6 +472,14 @@ public class JettyStarter
                                                           : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
       aWebAppCtx.setContextPath (sContextPath);
       aWebAppCtx.setTempDirectory (new File (sTempDir, m_sDirBaseName + ".webapp"));
+      /*
+       * This line can make a difference between Jetty and Tomcat: True if the
+       * classloader should delegate first to the parentclassloader (standard
+       * java behaviour) or false if the classloader should first try to load
+       * from WEB-INF/lib or WEB-INF/classes (servletspec recommendation).
+       * Default is false or can be set by the systemproperty
+       * org.eclipse.jetty.server.webapp.parentLoaderPriority
+       */
       aWebAppCtx.setParentLoaderPriority (true);
       aWebAppCtx.setThrowUnavailableOnStartupException (true);
       if (m_sContainerIncludeJarPattern != null)
