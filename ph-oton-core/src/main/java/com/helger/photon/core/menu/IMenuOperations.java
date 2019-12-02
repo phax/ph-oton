@@ -42,6 +42,16 @@ import com.helger.photon.core.page.IPage;
 public interface IMenuOperations extends Serializable
 {
   /**
+   * @return A new unique ID to be used in a menu tree.
+   */
+  @Nonnull
+  @Nonempty
+  static String getUniqueMenuObjectID ()
+  {
+    return GlobalIDFactory.getNewStringID ();
+  }
+
+  /**
    * Append a new menu item separator at root level
    *
    * @return The created menu item separator object. Never <code>null</code>.
@@ -49,7 +59,7 @@ public interface IMenuOperations extends Serializable
   @Nonnull
   default IMenuSeparator createRootSeparator ()
   {
-    return createRootSeparator (GlobalIDFactory.getNewStringID ());
+    return createRootSeparator (getUniqueMenuObjectID ());
   }
 
   /**
@@ -77,7 +87,7 @@ public interface IMenuOperations extends Serializable
   @Nonnull
   default IMenuSeparator createSeparator (@Nonnull final String sParentID)
   {
-    return createSeparator (sParentID, GlobalIDFactory.getNewStringID ());
+    return createSeparator (sParentID, getUniqueMenuObjectID ());
   }
 
   /**
@@ -351,6 +361,20 @@ public interface IMenuOperations extends Serializable
                                 @Nonnull String sItemID,
                                 @Nonnull IHasSimpleURL aURL,
                                 @Nonnull IHasDisplayText aName);
+
+  /**
+   * Create a new redirect from the passed ID to the specified menu item.
+   *
+   * @param sItemID
+   *        The ID to be used for this redirect. May not be <code>null</code>.
+   *        If this is a random ID, than you don't need a redirect ;-)
+   * @param aPage
+   *        The page to redirect to. May not be <code>null</code>. * @return The
+   *        created menu item. Never <code>null</code>.
+   * @return The created menu item. Never <code>null</code>.
+   */
+  @Nonnull
+  IMenuItemRedirectToPage createRedirect (@Nonnull String sItemID, @Nonnull IMenuItemPage aPage);
 
   /**
    * Set the default menu item. This is a shortcut for

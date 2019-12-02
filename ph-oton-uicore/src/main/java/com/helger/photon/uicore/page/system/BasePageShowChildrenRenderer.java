@@ -28,7 +28,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.textlevel.HCA;
-import com.helger.photon.core.menu.EMenuObjectType;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuObject;
@@ -60,7 +59,7 @@ public class BasePageShowChildrenRenderer implements Serializable
                                          @Nonnull final IMenuObject aMenuObj,
                                          @Nullable final IHCElement <?> aPreviousLI)
   {
-    if (aMenuObj.getMenuObjectType () == EMenuObjectType.SEPARATOR && aPreviousLI != null)
+    if (aMenuObj.getMenuObjectType ().isSeparator () && aPreviousLI != null)
       aPreviousLI.addStyle (CCSSProperties.MARGIN_BOTTOM.newValue ("1em"));
   }
 

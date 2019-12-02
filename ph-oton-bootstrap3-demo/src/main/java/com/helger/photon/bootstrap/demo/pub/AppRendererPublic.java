@@ -62,6 +62,7 @@ import com.helger.photon.core.execcontext.LayoutExecutionContext;
 import com.helger.photon.core.html.CLayout;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuItemPage;
+import com.helger.photon.core.menu.IMenuItemRedirectToPage;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuSeparator;
 import com.helger.photon.core.menu.IMenuTree;
@@ -268,7 +269,8 @@ public final class AppRendererPublic
             if (aMenuObj instanceof IMenuItemExternal)
               aUL.addItem (aRenderer.renderMenuItemExternal (aLEC, (IMenuItemExternal) aMenuObj, false, false, false));
             else
-              throw new IllegalStateException ("Unsupported menu object type!");
+              if (!(aMenuObj instanceof IMenuItemRedirectToPage))
+                throw new IllegalStateException ("Unsupported menu object type!");
       }
       aOuterContainer.addChild (aDiv);
     }

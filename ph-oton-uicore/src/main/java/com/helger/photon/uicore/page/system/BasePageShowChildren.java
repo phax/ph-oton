@@ -112,6 +112,10 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
           case EXTERNAL:
             aNode = m_aRenderer.renderMenuItemExternal (m_aWPEC, (IMenuItemExternal) aMenuObj);
             break;
+          case REDIRECT_TO_PAGE:
+            // Nothing to be done
+            aNode = null;
+            break;
           default:
             throw new IllegalStateException ("Unsupported menu object type: " + aMenuObj);
         }
@@ -177,7 +181,11 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   protected HCUL createChildItemTree (@Nonnull final WPECTYPE aWPEC)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
-    if (aMenuTreeItem == null || aMenuTreeItem.getData ().getMenuObjectType ().isSeparator ())
+    if (aMenuTreeItem == null)
+      return null;
+    if (aMenuTreeItem.getData ().getMenuObjectType ().isSeparator ())
+      return null;
+    if (aMenuTreeItem.getData ().getMenuObjectType ().isRedirect ())
       return null;
 
     final HCUL aUL = createRootUL ();

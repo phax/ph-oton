@@ -52,6 +52,9 @@ public final class MenuPublic
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome4 ("icon-fa4"));
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome5 ("icon-fa5"));
       aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));
+
+      // Link from "bla" to "icon"
+      aMenuTree.createRedirect ("bla", aIcons);
     }
 
     // Common stuff

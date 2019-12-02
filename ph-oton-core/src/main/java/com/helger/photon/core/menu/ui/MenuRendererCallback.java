@@ -33,6 +33,7 @@ import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuItemPage;
+import com.helger.photon.core.menu.IMenuItemRedirectToPage;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuSeparator;
 import com.helger.photon.core.menu.IMenuTree;
@@ -187,7 +188,14 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
             m_aMenuItemStack.push (aLI);
           }
           else
-            throw new IllegalStateException ("Unsupported menu object type: " + aMenuObj);
+            if (aMenuObj instanceof IMenuItemRedirectToPage)
+            {
+              // fake
+              m_aMenuItemStack.push (new HCLI ());
+              return EHierarchyVisitorReturn.USE_NEXT_SIBLING;
+            }
+            else
+              throw new IllegalStateException ("Unsupported menu object type: " + aMenuObj);
       }
       m_aChildCountStack.peek ().incrementAndGet ();
       return EHierarchyVisitorReturn.CONTINUE;

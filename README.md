@@ -39,6 +39,7 @@ Contained subprojects are:
     * Added a version number constant to access information at runtime
     * Updated to Bootstrap 4.4.1
     * Extended `JettyStarter` to create multiple contexts
+    * Added possibility to add "redirects" to the menu tree to allow to change the URLs of existing items without breaking existing bookmarks
 * v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21

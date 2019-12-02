@@ -32,6 +32,9 @@ import com.helger.commons.id.IHasID;
  */
 public interface IMenuObject extends IHasID <String>, Serializable
 {
+  /**
+   * @return The menu object type. May not be <code>null</code>.
+   */
   @Nonnull
   EMenuObjectType getMenuObjectType ();
 

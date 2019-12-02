@@ -23,11 +23,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.core.locale.ILocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
+import com.helger.photon.core.menu.IMenuItemRedirectToPage;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuTree;
 
@@ -40,6 +44,8 @@ import com.helger.photon.core.menu.IMenuTree;
 @NotThreadSafe
 public class PhotonRequestParameters implements Serializable
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhotonRequestParameters.class);
+
   private Locale m_aLocale;
   private IMenuItemPage m_aMenuItem;
 
@@ -130,9 +136,26 @@ public class PhotonRequestParameters implements Serializable
       if (aMenuObject != null)
       {
         // Only internal menu items pointing to a page are valid
-        // Only menu items that can be displayed are valid
-        if (aMenuObject instanceof IMenuItemPage && aMenuObject.matchesDisplayFilter ())
-          ret = (IMenuItemPage) aMenuObject;
+        if (aMenuObject instanceof IMenuItemPage)
+        {
+          // Only menu items that can be displayed are valid
+          if (aMenuObject.matchesDisplayFilter ())
+            ret = (IMenuItemPage) aMenuObject;
+        }
+        else
+          if (aMenuObject instanceof IMenuItemRedirectToPage)
+          {
+            // It's a redirect
+            if (aMenuObject.matchesDisplayFilter ())
+            {
+              final IMenuItemPage aTarget = ((IMenuItemRedirectToPage) aMenuObject).getTargetMenuItemPage ();
+              if (aTarget.matchesDisplayFilter ())
+              {
+                ret = aTarget;
+                LOGGER.info ("Following a redirect from '" + aMenuObject.getID () + "' to '" + aTarget.getID () + "'");
+              }
+            }
+          }
       }
     }
     m_aMenuItem = ret;

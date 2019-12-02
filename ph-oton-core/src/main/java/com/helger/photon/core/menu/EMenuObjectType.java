@@ -35,7 +35,9 @@ public enum EMenuObjectType implements IHasID <String>
   /** Menu item pointing to an internal page */
   PAGE ("page"),
   /** Menu item pointing to an external page */
-  EXTERNAL ("external");
+  EXTERNAL ("external"),
+  /** An internal redirect to an existing page */
+  REDIRECT_TO_PAGE ("redirect-to-page");
 
   private final String m_sID;
 
@@ -69,6 +71,11 @@ public enum EMenuObjectType implements IHasID <String>
   public boolean isExternal ()
   {
     return this == EXTERNAL;
+  }
+
+  public boolean isRedirect ()
+  {
+    return this == EMenuObjectType.REDIRECT_TO_PAGE;
   }
 
   @Nullable

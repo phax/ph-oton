@@ -119,6 +119,12 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return internalCreateChildItem (aParentItem, new MenuItemExternal (sItemID, aURL, aName));
   }
 
+  @Nonnull
+  public IMenuItemRedirectToPage createRedirect (@Nonnull final String sItemID, @Nonnull final IMenuItemPage aPage)
+  {
+    return internalCreateChildItem (getRootItem (), new MenuItemRedirectToPage (sItemID, aPage));
+  }
+
   public void setDefaultMenuItemID (@Nullable final String sDefaultMenuItemID)
   {
     if (sDefaultMenuItemID == null)
@@ -163,9 +169,9 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
         if (aMenuItem instanceof IMenuItemPage)
           return (IMenuItemPage) aMenuItem;
         LOGGER.warn ("The default menu object ID '" +
-                        sMenuItemID +
-                        "' does not resolve to an IMenuItemPage but to " +
-                        ClassHelper.getSafeClassName (aMenuItem));
+                     sMenuItemID +
+                     "' does not resolve to an IMenuItemPage but to " +
+                     ClassHelper.getSafeClassName (aMenuItem));
       }
       else
         LOGGER.warn ("Failed to resolve the default menu item ID '" + sMenuItemID + "'");
