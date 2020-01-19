@@ -35,7 +35,7 @@ Contained subprojects are:
 
 * v8.2.2 - work in progress
     * Made a `StubObject` constructor public
-    * Updated to Jetty 9.4.25
+    * Updated to Jetty 9.4.26
     * Added a version number constant to access information at runtime
     * Updated to Bootstrap 4.4.1
     * Extended `JettyStarter` to create multiple contexts
