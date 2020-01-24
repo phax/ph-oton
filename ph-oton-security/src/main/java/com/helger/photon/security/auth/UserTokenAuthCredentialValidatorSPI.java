@@ -23,13 +23,13 @@ import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.credentials.ITokenCredentials;
 import com.helger.photon.security.token.user.IUserToken;
-import com.helger.photon.security.token.user.UserTokenManager;
+import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.security.authentication.credentials.IAuthCredentialValidatorSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
  * An implementation of the {@link IAuthCredentialValidatorSPI} for
- * {@link ITokenCredentials} using the {@link UserTokenManager} to login
+ * {@link ITokenCredentials} using the {@link IUserTokenManager} to login
  * {@link IUserToken} objects.
  *
  * @author Philip Helger
@@ -46,7 +46,7 @@ public final class UserTokenAuthCredentialValidatorSPI implements IAuthCredentia
   public ELoginResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
-    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     if (aUserTokenMgr.getUserTokenOfTokenString (aATC.getTokenString ()) != null)
       return ELoginResult.SUCCESS;
 

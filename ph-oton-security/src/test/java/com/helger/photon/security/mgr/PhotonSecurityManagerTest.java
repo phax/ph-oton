@@ -27,7 +27,7 @@ import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.lock.DefaultLockManager;
 import com.helger.photon.security.role.Role;
 import com.helger.photon.security.role.RoleManager;
-import com.helger.photon.security.token.user.UserTokenManager;
+import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
 
@@ -52,7 +52,7 @@ public final class PhotonSecurityManagerTest
     assertNotNull (aUserMgr);
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     assertNotNull (aUserGroupMgr);
-    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     assertNotNull (aUserTokenMgr);
 
     aRoleMgr.createDefaults ();

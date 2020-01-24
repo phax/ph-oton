@@ -50,6 +50,7 @@ import com.helger.photon.security.login.IUserLoginCallback;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.token.user.UserTokenManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
@@ -200,7 +201,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public static UserTokenManager getUserTokenMgr ()
+  public static IUserTokenManager getUserTokenMgr ()
   {
     return getInstance ().m_aUserTokenMgr;
   }

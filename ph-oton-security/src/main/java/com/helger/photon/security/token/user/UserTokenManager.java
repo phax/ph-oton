@@ -41,7 +41,7 @@ import com.helger.photon.security.user.IUser;
  *
  * @author Philip Helger
  */
-public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, UserToken>
+public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, UserToken> implements IUserTokenManager
 {
   private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 

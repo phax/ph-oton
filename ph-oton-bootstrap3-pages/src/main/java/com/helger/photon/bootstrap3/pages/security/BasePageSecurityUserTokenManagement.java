@@ -67,7 +67,7 @@ import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.user.IUserToken;
-import com.helger.photon.security.token.user.UserTokenManager;
+import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.uicore.css.CPageParam;
@@ -163,7 +163,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+        final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
         if (aUserTokenMgr.deleteUserToken (aSelectedObject.getID ()).isChanged ())
           aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
@@ -193,7 +193,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           final FormErrorList aFormErrors = new FormErrorList ();
                           if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
                           {
-                            final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+                            final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
                             final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
                             final String sTokenString = aWPEC.params ().getAsString (FIELD_TOKEN_STRING);
 
@@ -301,7 +301,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
 
                             if (aFormErrors.isEmpty ())
                             {
-                              final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+                              final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
                               aUserTokenMgr.revokeAccessToken (aSelectedObject.getID (),
                                                                LoggedInUserManager.getInstance ().getCurrentUserID (),
                                                                PDTFactory.getCurrentLocalDateTime (),
@@ -372,7 +372,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   @Nullable
   protected IUserToken getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
   {
-    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     return aUserTokenMgr.getUserTokenOfID (sID);
   }
 
@@ -500,7 +500,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     final boolean bEdit = eFormAction.isEdit ();
 
     final String sUserID = aWPEC.params ().getAsString (FIELD_USER);
@@ -552,7 +552,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                @Nullable final Predicate <IUserToken> aFilter)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_USER.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),

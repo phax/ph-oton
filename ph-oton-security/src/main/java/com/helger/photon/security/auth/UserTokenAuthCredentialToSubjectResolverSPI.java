@@ -23,14 +23,14 @@ import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.credentials.ITokenCredentials;
 import com.helger.photon.security.token.user.IUserToken;
-import com.helger.photon.security.token.user.UserTokenManager;
+import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.security.authentication.credentials.IAuthCredentialToSubjectResolverSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
  * {@link ITokenCredentials} and the resolution via the global
- * {@link UserTokenManager}.
+ * {@link IUserTokenManager}.
  *
  * @author Philip Helger
  */
@@ -46,7 +46,7 @@ public class UserTokenAuthCredentialToSubjectResolverSPI implements IAuthCredent
   public IUserToken getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
-    final UserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     return aUserTokenMgr.getUserTokenOfTokenString (aATC.getTokenString ());
   }
 }
