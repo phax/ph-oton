@@ -72,7 +72,7 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
                                                    TOKEN_STRING_MIN_LENGTH +
                                                    " characters."),
     ERR_TOKEN_STRING_IN_USE ("Das Zugriffs-Token ist bereits vergeben und kann nicht nochmal vergeben werden.",
-                             "The access token is already in used and cannot be assigned again."),
+                             "The access token is already in use and cannot be assigned again."),
     LABEL_REASON ("Begründung", "Reason"),
     ERR_REASON_EMPTY ("Es muss eine Bgründung angegeben werden!", "A reason must be provided!"),
     REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS ("Das alte Zugriffs-Token von ''{0}'' wurde widerrufen und ein Neues wurde erfolgreich erstellt.",
