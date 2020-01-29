@@ -52,12 +52,28 @@ import com.helger.smtp.settings.ISMTPSettings;
 public final class InternalErrorSettings
 {
   public static final boolean DEFAULT_ENABLE_FULL_THREAD_DUMPS = false;
+  /**
+   * By default each internal error is also stored as XML.
+   *
+   * @since 8.2.2
+   */
+  public static final boolean DEFAULT_SEND_EMAIL = true;
+  /**
+   * By default each internal error is also stored as XML.
+   *
+   * @since 8.2.2
+   */
+  public static final boolean DEFAULT_SAVE_AS_XML = true;
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static final InternalErrorEmailSettings s_aEmailSettings = new InternalErrorEmailSettings ();
   @GuardedBy ("s_aRWLock")
   private static boolean s_bEnableDumpAllThreads = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bSendEmail = DEFAULT_SEND_EMAIL;
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bSaveAsXML = DEFAULT_SAVE_AS_XML;
   @GuardedBy ("s_aRWLock")
   private static Locale s_aFallbackLocale = CGlobal.DEFAULT_LOCALE;
   private static CallbackList <IInternalErrorCallback> s_aCallbacks = new CallbackList <> ();
@@ -145,6 +161,47 @@ public final class InternalErrorSettings
   }
 
   /**
+   * Send an email when an internal error occurs? Sending happens only if
+   * configuration is available.
+   *
+   * @param bSendEmail
+   *        <code>true</code> to send, <code>false</code> to not send
+   */
+  public static void setSendEmail (final boolean bSendEmail)
+  {
+    s_aRWLock.writeLocked ( () -> s_bSendEmail = bSendEmail);
+  }
+
+  /**
+   * @return <code>true</code> to send an email on an internal error,
+   *         <code>false</code> to not do it.
+   */
+  public static boolean isSendEmail ()
+  {
+    return s_aRWLock.readLocked ( () -> s_bSendEmail);
+  }
+
+  /**
+   * Save an internal error as XML?
+   *
+   * @param bSaveAsXML
+   *        <code>true</code> to save as XML, <code>false</code> to not save
+   */
+  public static void setSaveAsXML (final boolean bSaveAsXML)
+  {
+    s_aRWLock.writeLocked ( () -> s_bSaveAsXML = bSaveAsXML);
+  }
+
+  /**
+   * @return <code>true</code> to save internal error as XML, <code>false</code>
+   *         to not do it.
+   */
+  public static boolean isSaveAsXML ()
+  {
+    return s_aRWLock.readLocked ( () -> s_bSaveAsXML);
+  }
+
+  /**
    * Set the fallback locale in case none could be determined.
    *
    * @param aFallbackLocale
@@ -168,7 +225,8 @@ public final class InternalErrorSettings
   }
 
   /**
-   * @return The current custom internal error callbacks. Never <code>null</code>.
+   * @return The current custom internal error callbacks. Never
+   *         <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableObject
@@ -202,8 +260,8 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Set the default storage file provider. In case you played around and want to
-   * restore the default behavior.
+   * Set the default storage file provider. In case you played around and want
+   * to restore the default behavior.
    *
    * @see #setStorageFileProvider(IFunction)
    * @since 8.0.3
@@ -227,8 +285,8 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Set the storage file provider to the default before v8.0.3. The difference to
-   * {@link #setDefaultStorageFileProvider()} is, that this version does not
+   * Set the storage file provider to the default before v8.0.3. The difference
+   * to {@link #setDefaultStorageFileProvider()} is, that this version does not
    * contain a "month" subfolder.
    *
    * @see #setStorageFileProvider(IFunction)

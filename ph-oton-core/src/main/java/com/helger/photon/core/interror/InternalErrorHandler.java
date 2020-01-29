@@ -290,6 +290,11 @@ public final class InternalErrorHandler
 
     // Start saving
     final File aDestFile = InternalErrorSettings.getStorageFileProvider ().apply (aMetadata);
+    if (aDestFile == null)
+    {
+      LOGGER.warn ("The File provider returned null - not storing internal error as XML");
+      return ESuccess.FAILURE;
+    }
     return MicroWriter.writeToFile (aDoc, aDestFile);
   }
 

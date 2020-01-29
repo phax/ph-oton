@@ -54,18 +54,6 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class InternalErrorBuilder
 {
   /**
-   * By default each internal error is also stored as XML.
-   *
-   * @since 7.0.6
-   */
-  public static final boolean DEFAULT_SEND_EMAIL = true;
-  /**
-   * By default each internal error is also stored as XML.
-   *
-   * @since 7.0.6
-   */
-  public static final boolean DEFAULT_SAVE_AS_XML = true;
-  /**
    * By default the class path entries are not added, because the Tomcat
    * classpath is not very interesting.
    *
@@ -90,8 +78,8 @@ public class InternalErrorBuilder
    */
   public static final String KEY_ERROR_MSG = "Error Message";
 
-  protected boolean m_bSendEmail = DEFAULT_SEND_EMAIL;
-  protected boolean m_bSaveAsXML = DEFAULT_SAVE_AS_XML;
+  protected boolean m_bSendEmail = InternalErrorSettings.isSendEmail ();
+  protected boolean m_bSaveAsXML = InternalErrorSettings.isSaveAsXML ();
   protected IUIInternalErrorHandler m_aUIErrorHandler;
   protected Throwable m_aThrowable;
   protected IRequestWebScopeWithoutResponse m_aRequestScope;

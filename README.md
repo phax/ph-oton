@@ -42,6 +42,7 @@ Contained subprojects are:
     * Added possibility to add "redirects" to the menu tree to allow to change the URLs of existing items without breaking existing bookmarks
     * Updated to log4j 2.13.0
     * Extracted `IUserTokenManager` interface
+    * Added possibility to globally configure if internal errors should be send as email and/or saved as XML
 * v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21
