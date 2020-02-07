@@ -21,13 +21,13 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.ISupplier;
+import com.helger.commons.http.CHttp;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.mutable.MutableInt;
@@ -81,8 +81,18 @@ public class APIXServletHandler implements IXServletSimpleHandler
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
-    final APIPath aAPIPath = APIPath.createForServlet (aRequestScope);
     final EHttpMethod eHttpMethod = aRequestScope.getHttpMethod ();
+    if (eHttpMethod == null)
+    {
+      // Should have been caught in AbstractXServlet.service ...
+      LOGGER.error ("Missing HTTP method in request: " + aRequestScope.getRequest ());
+
+      // No such action
+      aUnifiedResponse.setStatus (CHttp.HTTP_NOT_IMPLEMENTED);
+      return;
+    }
+
+    final APIPath aAPIPath = APIPath.createForServlet (aRequestScope);
     final IAPIRegistry aRegistry = m_aRegistryFactory.get ();
     final IAPIInvoker aInvoker = m_aInvokerFactory.get ();
 
@@ -92,13 +102,13 @@ public class APIXServletHandler implements IXServletSimpleHandler
       LOGGER.warn ("Unknown API " + eHttpMethod + " '" + aAPIPath.getPath () + "' requested!");
 
       // No such action
-      aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
+      aUnifiedResponse.setStatus (CHttp.HTTP_NOT_FOUND);
     }
     else
     {
       // Is the declaration applicable for the current scope?
       // Check for required headers and parameters
-      final MutableInt aStatusCode = new MutableInt (HttpServletResponse.SC_BAD_REQUEST);
+      final MutableInt aStatusCode = new MutableInt (CHttp.HTTP_BAD_REQUEST);
       if (!aInvokableDescriptor.canExecute (aRequestScope, aStatusCode))
       {
         final int nStatusCode = aStatusCode.intValue ();
@@ -131,7 +141,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
                 !aUnifiedResponse.hasContent ())
             {
               // Set "No Content" response
-              aUnifiedResponse.setStatus (HttpServletResponse.SC_NO_CONTENT);
+              aUnifiedResponse.setStatus (CHttp.HTTP_NO_CONTENT);
             }
         }
         catch (final IOException | ServletException ex)
