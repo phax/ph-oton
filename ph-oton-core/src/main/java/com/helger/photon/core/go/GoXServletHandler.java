@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.go;
 
-import java.util.Enumeration;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -160,26 +160,24 @@ public class GoXServletHandler implements IXServletSimpleHandler
     }
 
     // Append all request parameters of this request
-    // Don't use the request attributes, as there might be more of them
     // FIXME crash with multipart request?
-    final Enumeration <String> aEnum = aRequestScope.getRequest ().getParameterNames ();
-    while (aEnum.hasMoreElements ())
+    for (final Map.Entry <String, Object> aEntry : aRequestScope.params ().entrySet ())
     {
-      final String sParamName = aEnum.nextElement ();
-      final String [] aParamValues = aRequestScope.getRequest ().getParameterValues (sParamName);
-      if (aParamValues != null)
-        for (final String sParamValue : aParamValues)
-          aTargetURL.add (sParamName, sParamValue);
+      final String sParamName = aEntry.getKey ();
+      final Object aParamValue = aEntry.getValue ();
+      if (aParamValue instanceof String)
+        aTargetURL.add (sParamName, (String) aParamValue);
+      else
+        if (aParamValue instanceof String [])
+          for (final String sParamValue : (String []) aParamValue)
+            aTargetURL.add (sParamName, sParamValue);
     }
 
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
     else
       if (GlobalDebug.isDebugMode ())
-        LOGGER.info ("Following go-mapping item '" +
-                        sKey +
-                        "' to " +
-                        aTargetURL.getAsStringWithEncodedParameters ());
+        LOGGER.info ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
 
     // Main redirect :)
     aUnifiedResponse.setRedirect (aTargetURL);
