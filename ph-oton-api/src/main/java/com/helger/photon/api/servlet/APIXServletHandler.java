@@ -82,14 +82,14 @@ public class APIXServletHandler implements IXServletSimpleHandler
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     final APIPath aAPIPath = APIPath.createForServlet (aRequestScope);
-    final EHttpMethod eHTTPMethod = aRequestScope.getHttpMethod ();
+    final EHttpMethod eHttpMethod = aRequestScope.getHttpMethod ();
     final IAPIRegistry aRegistry = m_aRegistryFactory.get ();
     final IAPIInvoker aInvoker = m_aInvokerFactory.get ();
 
     final InvokableAPIDescriptor aInvokableDescriptor = aRegistry.getAPIByPath (aAPIPath);
     if (aInvokableDescriptor == null)
     {
-      LOGGER.warn ("Unknown API " + eHTTPMethod + " '" + aAPIPath.getPath () + "' requested!");
+      LOGGER.warn ("Unknown API " + eHttpMethod + " '" + aAPIPath.getPath () + "' requested!");
 
       // No such action
       aUnifiedResponse.setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -103,7 +103,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
       {
         final int nStatusCode = aStatusCode.intValue ();
         LOGGER.warn ("API " +
-                     eHTTPMethod +
+                     eHttpMethod +
                      " '" +
                      aAPIPath.getPath () +
                      "' cannot be executed for the current request. Returning HTTP " +
@@ -141,7 +141,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
         }
         catch (final Throwable t)
         {
-          throw new ServletException ("Error invoking API " + eHTTPMethod + " '" + aAPIPath.getPath () + "'", t);
+          throw new ServletException ("Error invoking API " + eHttpMethod + " '" + aAPIPath.getPath () + "'", t);
         }
       }
     }
