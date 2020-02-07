@@ -134,7 +134,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
       for (final IAPIDescriptor aDescriptor : aRegistry.getAllAPIDescriptors ())
       {
         final HCRow aRow = aTable.addBodyRow ();
-        aRow.addCells (aDescriptor.getHTTPMethod ().getName (),
+        aRow.addCells (aDescriptor.getHttpMethod ().getName (),
                        aDescriptor.getPathDescriptor ().getAsURLString (),
                        aDescriptor.getExecutorFactory ().toString ());
         aRow.addCell (HCExtHelper.list2divList (aDescriptor.requiredHeaders ()));

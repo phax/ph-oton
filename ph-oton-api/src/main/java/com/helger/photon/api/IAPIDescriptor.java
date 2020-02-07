@@ -42,11 +42,22 @@ public interface IAPIDescriptor extends Serializable
 
   /**
    * @return The HTTP method required to call this API.
+   * @deprecated Use {@link #getHttpMethod()} instead
    */
+  @Deprecated
   @Nonnull
   default EHttpMethod getHTTPMethod ()
   {
-    return getAPIPath ().getHTTPMethod ();
+    return getHttpMethod ();
+  }
+
+  /**
+   * @return The HTTP method required to call this API.
+   */
+  @Nonnull
+  default EHttpMethod getHttpMethod ()
+  {
+    return getAPIPath ().getHttpMethod ();
   }
 
   /**

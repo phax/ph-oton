@@ -54,7 +54,7 @@ public class APIDescriptorList implements Serializable
     ValueEnforcer.notNull (aDescriptor, "Descriptor");
 
     // Save for correct HTTP method
-    m_aMap.get (aDescriptor.getHTTPMethod ()).add (aDescriptor);
+    m_aMap.get (aDescriptor.getHttpMethod ()).add (aDescriptor);
   }
 
   @Nonnull
@@ -87,7 +87,7 @@ public class APIDescriptorList implements Serializable
     final ICommonsList <InvokableAPIDescriptor> aMatching = new CommonsArrayList <> ();
 
     // HTTP Method must match
-    for (final APIDescriptor aDescriptor : m_aMap.get (aPath.getHTTPMethod ()))
+    for (final APIDescriptor aDescriptor : m_aMap.get (aPath.getHttpMethod ()))
     {
       final PathMatchingResult aMatchResult = aDescriptor.getPathDescriptor ().matchesParts (aPathParts);
       if (aMatchResult.isMatch ())

@@ -41,21 +41,33 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @MustImplementEqualsAndHashcode
 public class APIPath implements Serializable
 {
-  private final EHttpMethod m_eMethod;
+  private final EHttpMethod m_eHttpMethod;
   private final String m_sPath;
 
   /**
    * Constructor
    *
-   * @param eMethod
+   * @param eHttpMethod
    *        The HTTP method to be used. May not be <code>null</code>.
    * @param sPath
    *        The path relative to the owning servlet.
    */
-  public APIPath (@Nonnull final EHttpMethod eMethod, @Nonnull @Nonempty final String sPath)
+  public APIPath (@Nonnull final EHttpMethod eHttpMethod, @Nonnull @Nonempty final String sPath)
   {
-    m_eMethod = ValueEnforcer.notNull (eMethod, "Method");
+    m_eHttpMethod = ValueEnforcer.notNull (eHttpMethod, "HttpMethod");
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
+  }
+
+  /**
+   * @return The HTTP method as provided in the constructor. Never
+   *         <code>null</code>.
+   * @deprecated Use {@link #getHttpMethod()} instead
+   */
+  @Deprecated
+  @Nonnull
+  public EHttpMethod getHTTPMethod ()
+  {
+    return getHttpMethod ();
   }
 
   /**
@@ -63,9 +75,9 @@ public class APIPath implements Serializable
    *         <code>null</code>.
    */
   @Nonnull
-  public EHttpMethod getHTTPMethod ()
+  public EHttpMethod getHttpMethod ()
   {
-    return m_eMethod;
+    return m_eHttpMethod;
   }
 
   /**
@@ -104,19 +116,19 @@ public class APIPath implements Serializable
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final APIPath rhs = (APIPath) o;
-    return m_eMethod.equals (rhs.m_eMethod) && m_sPath.equals (rhs.m_sPath);
+    return m_eHttpMethod.equals (rhs.m_eHttpMethod) && m_sPath.equals (rhs.m_sPath);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eMethod).append (m_sPath).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eHttpMethod).append (m_sPath).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("HTTPMethod", m_eMethod).append ("Path", m_sPath).getToString ();
+    return new ToStringGenerator (null).append ("HTTPMethod", m_eHttpMethod).append ("Path", m_sPath).getToString ();
   }
 
   @Nonnull
