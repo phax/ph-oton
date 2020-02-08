@@ -62,11 +62,16 @@ import com.helger.commons.system.SystemProperties;
 @NotThreadSafe
 public class JettyStarter
 {
+  public static final String CONTAINER_INCLUDE_JAR_PATTERN_JAR = ".*\\.jar$*";
+  public static final String CONTAINER_INCLUDE_JAR_PATTERN_CLASSES = ".*/classes/.*";
+  public static final String CONTAINER_INCLUDE_JAR_PATTERN_ALL = CONTAINER_INCLUDE_JAR_PATTERN_JAR +
+                                                                 "|" +
+                                                                 CONTAINER_INCLUDE_JAR_PATTERN_CLASSES;
+
   public static final int DEFAULT_PORT = 8080;
   public static final String DEFAULT_STOP_KEY = InternalJettyStopMonitorThread.STOP_KEY;
   public static final int DEFAULT_STOP_PORT = InternalJettyStopMonitorThread.STOP_PORT;
   public static final String DEFAULT_CONTEXT_PATH = "/";
-  public static final String CONTAINER_INCLUDE_JAR_PATTERN_ALL = ".*\\.jar$|.*/classes/.*";
   public static final String DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN = null;
   public static final String DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN = null;
   public static final String DEFAULT_SESSION_COOKIE_NAME = "PHOTONSESSIONID";
@@ -448,7 +453,7 @@ public class JettyStarter
 
   /**
    * Create a new {@link WebAppContext} based on the settings of this class.
-   * 
+   *
    * @param sContextPath
    *        The context path to be used. May neither be <code>null</code> nor
    *        empty.
