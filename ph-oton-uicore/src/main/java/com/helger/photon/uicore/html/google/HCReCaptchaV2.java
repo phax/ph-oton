@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -45,6 +44,8 @@ import com.helger.photon.app.html.PhotonJS;
 public class HCReCaptchaV2 extends AbstractHCDiv <HCReCaptchaV2>
 {
   public static final ICSSClassProvider CSS_G_RECAPTCHA = DefaultCSSClassProvider.create ("g-recaptcha");
+  public static final String RESPONSE_PARAMETER_NAME = "g-recaptcha-response";
+
   private final String m_sDisplayLanguage;
 
   public HCReCaptchaV2 (@Nonnull @Nonempty final String sSiteKey, @Nullable final String sDisplayLanguage)
@@ -56,12 +57,14 @@ public class HCReCaptchaV2 extends AbstractHCDiv <HCReCaptchaV2>
     m_sDisplayLanguage = sDisplayLanguage;
   }
 
-  @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  /**
+   * @return The display language as passed in the constructor. May be
+   *         <code>null</code>.
+   */
+  @Nullable
+  public final String getDisplayLanguage ()
   {
-    // Render nodes only in production mode
-    // FIXME dev mode captcha!
-    return true || GlobalDebug.isProductionMode ();
+    return m_sDisplayLanguage;
   }
 
   @Override
