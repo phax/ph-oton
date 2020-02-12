@@ -33,6 +33,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.2.3 - work in progress
+    * Fixed an error with the temporary directory name creation in `JettyStarter`
 * v8.2.2 - 2020-02-12
     * Updated to Jetty 9.4.26
     * Updated to Bootstrap 4.4.1
