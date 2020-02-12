@@ -53,6 +53,7 @@ import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsGlobal;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsHTML;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsSMTP;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsSystemMessage;
+import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoCACerts;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoEnvironmentVariables;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoNetwork;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoRequest;
@@ -97,6 +98,7 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_MONITORING_SYSTEMMIGRATIONS = "admin_monitoring_systemmigrations";
 
   public static final String MENU_ADMIN_SYSINFO = "admin_sysinfo";
+  public static final String MENU_ADMIN_SYSINFO_CACERTS = "admin_sysinfo_cacerts";
   public static final String MENU_ADMIN_SYSINFO_ENVVARS = "admin_sysinfo_envvars";
   public static final String MENU_ADMIN_SYSINFO_NETWORK = "admin_sysinfo_network";
   public static final String MENU_ADMIN_SYSINFO_REQUEST = "admin_sysinfo_request";
@@ -236,6 +238,8 @@ public final class BootstrapPagesMenuConfigurator
                                                                                                    EWebPageText.PAGE_NAME_SYSINFO.getAsMLT (),
                                                                                                    aMenuTree))
                                                  .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoCACerts <WPECTYPE> (MENU_ADMIN_SYSINFO_CACERTS))
+             .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo,
                           new BasePageSysInfoEnvironmentVariables <WPECTYPE> (MENU_ADMIN_SYSINFO_ENVVARS))
              .setDisplayFilter (aDisplayFilter);

@@ -59,6 +59,7 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
   PAGE_NAME_MONITORING_STATISTICS ("Statistiken", "Statistics"),
   PAGE_NAME_MONITORING_SYSTEMMIGRATIONS ("System Migrationen", "System migrations"),
   PAGE_NAME_SYSINFO ("System Informationen", "System information"),
+  PAGE_NAME_SYSINFO_CACERTS ("System-Truststore", "System truststore"),
   PAGE_NAME_SYSINFO_ENV_VARS ("Umgebungsvariablen", "Environment variables"),
   PAGE_NAME_SYSINFO_NETWORK ("Netzwerk", "Network"),
   PAGE_NAME_SYSINFO_REQUEST ("Request", "Request"),

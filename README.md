@@ -45,6 +45,7 @@ Contained subprojects are:
     * Added possibility to globally configure if internal errors should be send as email and/or saved as XML
     * Unified the `WebPageActionHandler` API (backwards incompatible change)
     * Added traits interfaces `IHCTrait` and `IHCBootstrap4Trait` as syntactic sugar
+    * Added a new system page showing the content of the System truststore
 * v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21
