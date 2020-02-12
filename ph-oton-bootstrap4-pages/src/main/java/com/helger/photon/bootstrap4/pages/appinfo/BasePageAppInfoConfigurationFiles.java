@@ -29,8 +29,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
@@ -130,7 +128,7 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
       }
       else
       {
-        aContent.addChild (new BootstrapErrorBox ().addChild (EText.MSG_DOES_NOT_EXIST.getDisplayText (aDisplayLocale)));
+        aContent.addChild (error (EText.MSG_DOES_NOT_EXIST.getDisplayText (aDisplayLocale)));
         sTabLabelSuffix = " (!)";
       }
 
@@ -138,7 +136,7 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
     }
 
     if (aTabBox.hasNoTabs ())
-      aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NO_CONFIG_FILES.getDisplayText (aDisplayLocale)));
+      aNodeList.addChild (info (EText.MSG_NO_CONFIG_FILES.getDisplayText (aDisplayLocale)));
     else
       aNodeList.addChild (aTabBox);
   }

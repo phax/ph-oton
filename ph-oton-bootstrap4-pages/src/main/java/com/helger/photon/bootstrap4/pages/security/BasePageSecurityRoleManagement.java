@@ -38,17 +38,12 @@ import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapQuestionBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap4.form.BootstrapViewForm;
@@ -120,8 +115,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                 @Nonnull final IRole aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         aSelectedObject.getName ())));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                             aSelectedObject.getName ())));
       }
 
       @Override
@@ -132,13 +127,13 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
         if (aRoleMgr.deleteRole (aSelectedObject.getID ()).isChanged ())
         {
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                           aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (success (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                               aSelectedObject.getName ())));
         }
         else
         {
-          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                       aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                           aSelectedObject.getName ())));
         }
       }
     });
@@ -226,16 +221,16 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     if (aAssignedUserGroups.isEmpty ())
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                       .setCtrl (em (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
       aAssignedUserGroups.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
-                         .forEach (aUserGroup -> aUserGroupUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                                       BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
-                                                                                                                       aUserGroup.getID (),
-                                                                                                                       null)).addChild (aUserGroup.getName ()))));
+                         .forEach (aUserGroup -> aUserGroupUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                                     BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
+                                                                                                     aUserGroup.getID (),
+                                                                                                     null)).addChild (aUserGroup.getName ()))));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                    Integer.toString (aAssignedUserGroups.size ())))
                                                        .setCtrl (aUserGroupUI));
@@ -249,10 +244,10 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
           aAllUsersHavingThisRole.add (aUserMgr.getUserOfID (sUserID));
 
       aAllUsersHavingThisRole.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))
-                             .forEach (aUser -> aUserUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                                 BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
-                                                                                                                 aUser.getID (),
-                                                                                                                 null)).addChild (aUser.getDisplayName ()))));
+                             .forEach (aUser -> aUserUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                               BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                                                                               aUser.getID (),
+                                                                                               null)).addChild (aUser.getDisplayName ()))));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                               Integer.toString (aAllUsersHavingThisRole.size ())))
                                                        .setCtrl (aUserUI));

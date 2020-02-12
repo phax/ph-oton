@@ -23,11 +23,13 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.hc.IHCNode;
+import com.helger.photon.bootstrap4.traits.IHCBootstrap4Trait;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
-public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecutionContext>
-                                               extends AbstractWebPage <WPECTYPE>
+public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecutionContext> extends
+                                               AbstractWebPage <WPECTYPE> implements
+                                               IHCBootstrap4Trait
 {
   public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {

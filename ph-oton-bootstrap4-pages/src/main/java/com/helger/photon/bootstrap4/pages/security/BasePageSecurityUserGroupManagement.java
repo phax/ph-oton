@@ -43,17 +43,12 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.forms.HCEdit;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapQuestionBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -153,8 +148,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                 @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         aSelectedObject.getName ())));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                             aSelectedObject.getName ())));
       }
 
       @Override
@@ -164,11 +159,11 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
         if (aUserGroupMgr.deleteUserGroup (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                           aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (success (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                               aSelectedObject.getName ())));
         else
-          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                       aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                           aSelectedObject.getName ())));
       }
     });
     setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUserGroup, WPECTYPE> ()
@@ -179,8 +174,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                 @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                           aSelectedObject.getName ())));
+        aForm.addChild (question (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                               aSelectedObject.getName ())));
       }
 
       @Override
@@ -190,11 +185,11 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
         if (aUserGroupMgr.undeleteUserGroup (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.UNDELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                             aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (success (EText.UNDELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                 aSelectedObject.getName ())));
         else
-          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.UNDELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                         aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (error (EText.UNDELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                             aSelectedObject.getName ())));
       }
     });
   }
@@ -279,7 +274,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (aAssignedUserIDs.isEmpty ())
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_0.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                       .setCtrl (em (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -290,10 +285,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aUserUI = new HCNodeList ();
       aAssignedUsers.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))
-                    .forEach (aUser -> aUserUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                        BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
-                                                                                                        aUser.getID (),
-                                                                                                        null)).addChild (aUser.getDisplayName ()))));
+                    .forEach (aUser -> aUserUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                      BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                                                                      aUser.getID (),
+                                                                                      null)).addChild (aUser.getDisplayName ()))));
 
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                               Integer.toString (aAssignedUserIDs.size ())))
@@ -305,7 +300,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (aAssignedRoleIDs.isEmpty ())
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                       .setCtrl (em (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -316,10 +311,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aRoleUI = new HCNodeList ();
       aAssignedRoles.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
-                    .forEach (aRole -> aRoleUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                        BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
-                                                                                                        aRole.getID (),
-                                                                                                        null)).addChild (aRole.getName ()))));
+                    .forEach (aRole -> aRoleUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                      BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
+                                                                                      aRole.getID (),
+                                                                                      null)).addChild (aRole.getName ()))));
 
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                               Integer.toString (aAssignedRoleIDs.size ())))
@@ -417,7 +412,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         for (final String sRoleID : aRolesToBeUnassigned)
           aUserGroupMgr.unassignRoleFromUserGroup (sUserGroupID, sRoleID);
 
-        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGetInternal (success (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
@@ -428,7 +423,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         for (final String sRoleID : aRoleIDs)
           aUserGroupMgr.assignRoleToUserGroup (aNewUserGroup.getID (), sRoleID);
 
-        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGetInternal (success (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }

@@ -40,9 +40,6 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapQuestionBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -136,21 +133,20 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
           // Check if logout worked
           if (aSelectedObject.isLogout ())
           {
-            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.LOGOUT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                             sUserName)));
+            aWPEC.postRedirectGetInternal (success (EText.LOGOUT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                 sUserName)));
           }
           else
           {
-            aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                         sUserName)));
+            aWPEC.postRedirectGetInternal (error (EText.LOGOUT_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                             sUserName)));
           }
           return EShowList.SHOW_LIST;
         }
 
         // Show question
         final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            sUserName)));
+        aForm.addChild (question (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale, sUserName)));
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER);

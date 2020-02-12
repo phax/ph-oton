@@ -35,10 +35,8 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.nav.BootstrapTabBox;
@@ -59,8 +57,8 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext>
-                                           extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext> extends
+                                           AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -137,8 +135,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                 "servlets");
+                                          new DTCol (EText.MSG_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () + "servlets");
       for (final ServletRegistration aRegistration : aSC.getServletRegistrations ().values ())
       {
         final HCRow aRow = aTable.addBodyRow ();
@@ -153,9 +150,9 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
         final HCNodeList aURLPatterns = new HCNodeList ();
         for (final String sText : aRegistration.getMappings ())
           if (sText.length () == 0)
-            aURLPatterns.addChild (new HCDiv ().addChild (new HCEM ().addChild (EText.MSG_ROOT_MAPPING.getDisplayText (aDisplayLocale))));
+            aURLPatterns.addChild (div (em (EText.MSG_ROOT_MAPPING.getDisplayText (aDisplayLocale))));
           else
-            aURLPatterns.addChild (new HCDiv ().addChild (sText));
+            aURLPatterns.addChild (div (sText));
         aRow.addCell (aURLPatterns);
       }
 
@@ -172,8 +169,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
                                           new DTCol (EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_SERVLET_MAPPINGS.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_URL_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                     "filters");
+                                          new DTCol (EText.MSG_URL_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () + "filters");
       for (final FilterRegistration aRegistration : aSC.getFilterRegistrations ().values ())
       {
         final HCRow aRow = aTable.addBodyRow ();
@@ -190,9 +186,9 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
         final HCNodeList aURLPatterns = new HCNodeList ();
         for (final String sText : aRegistration.getUrlPatternMappings ())
           if (sText.length () == 0)
-            aURLPatterns.addChild (new HCDiv ().addChild (new HCEM ().addChild (EText.MSG_ROOT_MAPPING.getDisplayText (aDisplayLocale))));
+            aURLPatterns.addChild (div (em (EText.MSG_ROOT_MAPPING.getDisplayText (aDisplayLocale))));
           else
-            aURLPatterns.addChild (new HCDiv ().addChild (sText));
+            aURLPatterns.addChild (div (sText));
 
         aRow.addCell (aURLPatterns);
       }

@@ -41,15 +41,11 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCA_MailTo;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapQuestionBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.button.BootstrapButton;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
@@ -155,7 +151,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                 @Nonnull final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
       }
 
       @Override
@@ -167,7 +163,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
         if (m_aFailedMailQueue.remove (aSelectedObject.getID ()) != null)
         {
           LOGGER.info ("Deleted single failed mail with ID " + aSelectedObject.getID () + "!");
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (success (EText.DELETE_SUCCESS.getDisplayText (aDisplayLocale)));
         }
       }
     });
@@ -180,14 +176,14 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
                           // Delete all failed mails
-                          final List <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
-                          if (!aFailedMails.isEmpty ())
+                          final ICommonsList <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
+                          if (aFailedMails.isNotEmpty ())
                           {
                             LOGGER.info ("Deleted " + aFailedMails.size () + " failed mails!");
                             final String sSuccessMsg = aFailedMails.size () == 1 ? EText.DELETE_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
                                                                                  : EText.DELETE_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                       Integer.toString (aFailedMails.size ()));
-                            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
+                            aWPEC.postRedirectGetInternal (success (sSuccessMsg));
                           }
                           return EShowList.SHOW_LIST;
                         }
@@ -218,7 +214,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           ScopedMailAPI.getInstance ().queueMail (aSMTPSettings, aFailedMailData.getEmailData ());
 
           // Success message
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.RESENT_SUCCESS.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (success (EText.RESENT_SUCCESS.getDisplayText (aDisplayLocale)));
         }
         return EShowList.SHOW_LIST;
       }
@@ -259,7 +255,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final String sSuccessMsg = aFailedMails.size () == 1 ? EText.RESENT_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
                                                                : EText.RESENT_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                     Integer.toString (aFailedMails.size ()));
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (sSuccessMsg));
+          aWPEC.postRedirectGetInternal (success (sSuccessMsg));
         }
         return EShowList.SHOW_LIST;
       }
@@ -348,14 +344,14 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
   }
 
   @Nullable
-  private static IHCNode _getAsString (@Nonnull final List <? extends IEmailAddress> aList)
+  private IHCNode _getAsString (@Nonnull final List <? extends IEmailAddress> aList)
   {
     if (aList.isEmpty ())
       return null;
 
     final HCNodeList ret = new HCNodeList ();
     for (final IEmailAddress aEmailAddress : aList)
-      ret.addChild (new HCDiv ().addChild (aEmailAddress.getDisplayName ()));
+      ret.addChild (div (aEmailAddress.getDisplayName ()));
     return ret;
   }
 
@@ -435,7 +431,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           if (aAttachment.hasContentType ())
             sText += " [" + aAttachment.getContentType () + "]";
           sText += "; disposition=" + aAttachment.getDisposition ().getID ();
-          aAttachmentNodeList.addChild (new HCDiv ().addChild (sText));
+          aAttachmentNodeList.addChild (div (sText));
         }
         aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ATTACHMENTS.getDisplayText (aDisplayLocale))
                                                       .setCtrl (aAttachmentNodeList));
@@ -460,8 +456,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
         }
       }
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ERROR.getDisplayText (aDisplayLocale))
-                                                    .setCtrl (new BootstrapErrorBox ().addChild (aError.getThrowable ()
-                                                                                                       .getMessage ()),
+                                                    .setCtrl (error (aError.getThrowable ().getMessage ()),
                                                               aDetailsTable));
 
     }

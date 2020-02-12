@@ -31,8 +31,6 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.forms.HCEditPassword;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -123,7 +121,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
     final IUser aCurrentUser = aWPEC.getLoggedInUser ();
     if (aCurrentUser == null)
     {
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (EText.ERROR_NO_USER_PRESENT.getDisplayText (aDisplayLocale)));
+      aNodeList.addChild (error (EText.ERROR_NO_USER_PRESENT.getDisplayText (aDisplayLocale)));
     }
     else
     {
@@ -157,7 +155,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
           if (aFormErrors.isEmpty ())
           {
             aUserMgr.setUserPassword (aCurrentUser.getID (), sNewPlainTextPassword);
-            aNodeList.addChild (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CHANGE_PW.getDisplayText (aDisplayLocale)));
+            aNodeList.addChild (success (EText.SUCCESS_CHANGE_PW.getDisplayText (aDisplayLocale)));
             // Always show form
           }
           else

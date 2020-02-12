@@ -28,6 +28,7 @@ import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
+import com.helger.photon.bootstrap4.traits.IHCBootstrap4Trait;
 import com.helger.photon.uicore.page.AbstractWebPageForm;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -45,6 +46,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 public abstract class AbstractBootstrapWebPageForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
                                                    extends
                                                    AbstractWebPageForm <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
+                                                   implements
+                                                   IHCBootstrap4Trait
 {
   public AbstractBootstrapWebPageForm (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
   {

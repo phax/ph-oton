@@ -19,8 +19,6 @@ package com.helger.photon.bootstrap.demo.pub.page.icon;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.hc.html.textlevel.HCSmall;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.icon.materialdesign.EMaterialDesignIcon;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
@@ -44,8 +42,8 @@ public final class PagePublicIconMaterialDesign extends AbstractPagePublicIcon
 
     EMaterialDesignIcon.registerResourcesForThisRequest ();
     for (final EMaterialDesignIcon eIcon : EMaterialDesignIcon.values ())
-      aNodeList.addChild (new HCDiv ().addClass (CSS_CLASS_ICON_CONTAINER)
-                                      .addChild (new HCDiv ().addChild (eIcon.getAsNode48px ()))
-                                      .addChild (new HCDiv ().addChild (new HCSmall ().addChild (eIcon.name ()))));
+      aNodeList.addChild (div ().addClass (CSS_CLASS_ICON_CONTAINER)
+                                .addChild (div (eIcon.getAsNode48px ()))
+                                .addChild (div (small (eIcon.name ()))));
   }
 }

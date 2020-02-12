@@ -34,14 +34,10 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCHiddenField;
-import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.hc.html.textlevel.HCCode;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.network.port.ENetworkPortStatus;
 import com.helger.network.port.NetworkPortHelper;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap4.badge.BootstrapBadge;
 import com.helger.photon.bootstrap4.badge.EBootstrapBadgeType;
 import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
 import com.helger.photon.bootstrap4.card.BootstrapCard;
@@ -65,7 +61,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web Page Execution Context type
  */
 public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext> extends
-                                        AbstractBootstrapWebPage <WPECTYPE>
+                                      AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -112,15 +108,15 @@ public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext
   }
 
   public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID,
-                                     @Nonnull final String sName,
-                                     @Nullable final String sDescription)
+                                   @Nonnull final String sName,
+                                   @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID,
-                                     @Nonnull final IMultilingualText aName,
-                                     @Nullable final IMultilingualText aDescription)
+                                   @Nonnull final IMultilingualText aName,
+                                   @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
@@ -131,7 +127,7 @@ public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NOTE.getDisplayText (aDisplayLocale)));
+    aNodeList.addChild (info (EText.MSG_NOTE.getDisplayText (aDisplayLocale)));
 
     final FormErrorList aFormErrors = new FormErrorList ();
 
@@ -162,11 +158,11 @@ public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext
         for (final Integer aPort : aPorts)
         {
           final ENetworkPortStatus eStatus = NetworkPortHelper.checkPortOpen (sHost, aPort.intValue (), 3_000);
-          aBody.addChild (new HCDiv ().addChild (EText.MSG_RESULT_STATUS_PREFIX.getDisplayText (aDisplayLocale))
-                                      .addChild (new HCCode ().addChild (sHost + ":" + aPort))
-                                      .addChild (" = ")
-                                      .addChild (new BootstrapBadge (eStatus.isPortOpen () ? EBootstrapBadgeType.SUCCESS
-                                                                                           : EBootstrapBadgeType.DANGER).addChild (eStatus.toString ())));
+          aBody.addChild (div ().addChild (EText.MSG_RESULT_STATUS_PREFIX.getDisplayText (aDisplayLocale))
+                                .addChild (code (sHost + ":" + aPort))
+                                .addChild (" = ")
+                                .addChild (badge (eStatus.toString ()).setBadgeType (eStatus.isPortOpen () ? EBootstrapBadgeType.SUCCESS
+                                                                                                           : EBootstrapBadgeType.DANGER)));
         }
         aNodeList.addChild (aResult.addClass (CBootstrapCSS.MB_2));
       }

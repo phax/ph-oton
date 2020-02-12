@@ -31,7 +31,6 @@ import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.forms.HCCheckBox;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -175,7 +174,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       HCSettings.setScriptsInBody (bScriptsInBody);
       HCSettings.setUseRegularResources (bUseRegularResources);
 
-      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGetInternal (success (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
     else
     {

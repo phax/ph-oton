@@ -47,9 +47,6 @@ import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapQuestionBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -154,8 +151,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                 @Nonnull final IUserToken aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         aSelectedObject.getDisplayName ())));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                             aSelectedObject.getDisplayName ())));
       }
 
       @Override
@@ -166,11 +163,11 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
         final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
         if (aUserTokenMgr.deleteUserToken (aSelectedObject.getID ()).isChanged ())
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                           aSelectedObject.getDisplayName ())));
+          aWPEC.postRedirectGetInternal (success (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                               aSelectedObject.getDisplayName ())));
         else
-          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                       aSelectedObject.getDisplayName ())));
+          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                           aSelectedObject.getDisplayName ())));
       }
     });
     addCustomHandler (ACTION_CREATE_NEW_ACCESS_TOKEN,
@@ -225,10 +222,10 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                   PDTFactory.getCurrentLocalDateTime (),
                                                                   sRevocationReason,
                                                                   sTokenString);
-                              aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                                             aSelectedObject.getDisplayName ())
-                                                                                                              : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                                  aSelectedObject.getDisplayName ())));
+                              aWPEC.postRedirectGetInternal (success (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                 aSelectedObject.getDisplayName ())
+                                                                                  : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                      aSelectedObject.getDisplayName ())));
                               return EShowList.SHOW_LIST;
                             }
                             aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
@@ -306,8 +303,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                LoggedInUserManager.getInstance ().getCurrentUserID (),
                                                                PDTFactory.getCurrentLocalDateTime (),
                                                                sRevocationReason);
-                              aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                aSelectedObject.getDisplayName ())));
+                              aWPEC.postRedirectGetInternal (success (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                    aSelectedObject.getDisplayName ())));
                               return EShowList.DONT_SHOW_LIST;
                             }
                             aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
@@ -534,14 +531,14 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       if (bEdit)
       {
         aUserTokenMgr.updateUserToken (aSelectedObject.getID (), aCustomAttrMap);
-        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                       aUser.getDisplayName ())));
+        aWPEC.postRedirectGetInternal (success (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                           aUser.getDisplayName ())));
       }
       else
       {
         aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aUser);
-        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                         aUser.getDisplayName ())));
+        aWPEC.postRedirectGetInternal (success (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                             aUser.getDisplayName ())));
       }
     }
   }

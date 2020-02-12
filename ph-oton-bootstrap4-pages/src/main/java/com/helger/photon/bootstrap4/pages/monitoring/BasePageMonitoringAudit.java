@@ -31,7 +31,6 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
@@ -148,9 +147,8 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
     aNodeList.addChild (aToolbar);
 
     // Info
-    aNodeList.addChild (new HCDiv ().addChild (EText.MSG_EARLIEST_DATA.getDisplayText (aDisplayLocale) +
-                                               PDTToString.getAsString (m_aAuditMgr.getEarliestAuditDate (),
-                                                                        aDisplayLocale)));
+    aNodeList.addChild (div (EText.MSG_EARLIEST_DATA.getDisplayText (aDisplayLocale) +
+                             PDTToString.getAsString (m_aAuditMgr.getEarliestAuditDate (), aDisplayLocale)));
 
     // Check max items parameter
     int nMaxItems = aWPEC.params ().getAsInt (PARAM_MAX_ITEMS);

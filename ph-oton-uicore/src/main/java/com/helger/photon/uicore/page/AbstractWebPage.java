@@ -27,6 +27,7 @@ import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.html.hc.html.traits.IHCTrait;
 import com.helger.photon.ajax.GlobalAjaxInvoker;
 import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
@@ -41,7 +42,8 @@ import com.helger.photon.uicore.css.CUICoreCSS;
  *        Web page execution context type
  */
 public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractPage implements
-                                      IWebPage <WPECTYPE>
+                                      IWebPage <WPECTYPE>,
+                                      IHCTrait
 {
   // Commonly used CSS classes
   protected static final ICSSClassProvider CSS_CLASS_LEFT = CUICoreCSS.CSS_CLASS_LEFT;

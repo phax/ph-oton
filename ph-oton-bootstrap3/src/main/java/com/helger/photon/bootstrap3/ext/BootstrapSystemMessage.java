@@ -16,20 +16,20 @@
  */
 package com.helger.photon.bootstrap3.ext;
 
-import java.util.function.BiConsumer;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.photon.bootstrap3.alert.AbstractBootstrapAlert;
 import com.helger.photon.bootstrap3.alert.EBootstrapAlertType;
 import com.helger.photon.core.mgr.PhotonBasicManager;
 import com.helger.photon.core.systemmsg.ESystemMessageType;
+import com.helger.photon.core.systemmsg.ISystemMessageRenderer;
 import com.helger.photon.core.systemmsg.SystemMessageManager;
 import com.helger.photon.uicore.UITextFormatter;
 
@@ -40,19 +40,24 @@ import com.helger.photon.uicore.UITextFormatter;
  */
 public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSystemMessage>
 {
-  public static final BiConsumer <String, BootstrapSystemMessage> FORMATTER_DEFAULT = (sText,
-                                                                                       aCtrl) -> aCtrl.addChildren (HCExtHelper.nl2divList (sText));
-  public static final BiConsumer <String, BootstrapSystemMessage> FORMATTER_MARKDOWN = (sText,
-                                                                                        aCtrl) -> aCtrl.addChild (UITextFormatter.markdown (sText));
+  public static final ISystemMessageRenderer FORMATTER_DEFAULT = (sText,
+                                                                  aCtrl) -> aCtrl.addChildren (HCExtHelper.nl2divList (sText));
+  public static final ISystemMessageRenderer FORMATTER_MARKDOWN = (sText,
+                                                                   aCtrl) -> aCtrl.addChild (UITextFormatter.markdown (sText));
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
-  private static BiConsumer <String, BootstrapSystemMessage> s_aFormatter = FORMATTER_DEFAULT;
+  private static ISystemMessageRenderer s_aFormatter = FORMATTER_DEFAULT;
 
   @Nonnull
-  public static BiConsumer <String, BootstrapSystemMessage> getDefaultFormatter ()
+  public static ISystemMessageRenderer getDefaultFormatter ()
   {
     return s_aRWLock.readLocked ( () -> s_aFormatter);
+  }
+
+  public static boolean isDefaultMarkdown ()
+  {
+    return EqualsHelper.identityEqual (getDefaultFormatter (), FORMATTER_MARKDOWN);
   }
 
   /**
@@ -62,7 +67,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
    * @param aFormatter
    *        The formatter callback. May not be <code>null</code>.
    */
-  public static void setDefaultFormatter (@Nonnull final BiConsumer <String, BootstrapSystemMessage> aFormatter)
+  public static void setDefaultFormatter (@Nonnull final ISystemMessageRenderer aFormatter)
   {
     ValueEnforcer.notNull (aFormatter, "Formatter");
     s_aRWLock.writeLocked ( () -> s_aFormatter = aFormatter);
@@ -109,7 +114,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   {
     removeAllChildren ();
     if (StringHelper.hasText (sContent))
-      getDefaultFormatter ().accept (sContent, this);
+      getDefaultFormatter ().renderSystemMessage (sContent, this);
     return this;
   }
 

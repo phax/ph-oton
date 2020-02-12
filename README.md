@@ -34,16 +34,17 @@ Contained subprojects are:
 ## News and noteworthy
 
 * v8.2.2 - work in progress
-    * Made a `StubObject` constructor public
     * Updated to Jetty 9.4.26
-    * Added a version number constant to access information at runtime
     * Updated to Bootstrap 4.4.1
+    * Updated to log4j 2.13.0
+    * Made a `StubObject` constructor public
+    * Added a version number constant to access information at runtime
     * Extended `JettyStarter` to create multiple contexts
     * Added possibility to add "redirects" to the menu tree to allow to change the URLs of existing items without breaking existing bookmarks
-    * Updated to log4j 2.13.0
     * Extracted `IUserTokenManager` interface
     * Added possibility to globally configure if internal errors should be send as email and/or saved as XML
     * Unified the `WebPageActionHandler` API (backwards incompatible change)
+    * Added traits interfaces `IHCTrait` and `IHCBootstrap4Trait` as syntactic sugar
 * v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21

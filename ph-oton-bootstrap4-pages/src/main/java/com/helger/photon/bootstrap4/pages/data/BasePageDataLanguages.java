@@ -57,8 +57,8 @@ import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext>
-                                   extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> extends
+                                   AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -134,13 +134,10 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext>
       for (final Locale aLocale : CollectionHelper.getSorted (aEntry.getValue (),
                                                               Comparator.comparing (Locale::toString)))
       {
-        final HCDiv aDiv = new HCDiv ();
+        final HCDiv aDiv = div ();
         final EFamFamFlagIcon eIcon = EFamFamFlagIcon.getFromIDOrNull (aLocale.getCountry ());
         if (eIcon != null)
-        {
-          aDiv.addChild (eIcon.getAsNode ());
-          aDiv.addChild (" ");
-        }
+          aDiv.addChild (eIcon.getAsNode ()).addChild (" ");
         aDiv.addChild (aLocale.toString ());
         if (aLocale.getCountry ().length () > 0)
           aDiv.addChild (" (" + aLocale.getDisplayCountry (aDisplayLocale) + ")");

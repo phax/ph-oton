@@ -33,10 +33,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.HCHiddenField;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.ext.BootstrapSystemMessage;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
@@ -62,6 +59,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
   {
     LABEL_SEVERITY ("Typ", "Severity"),
     LABEL_MESSAGE ("Nachricht", "Message"),
+    MARKDOWN_IS_SUPPORTED ("Markdown wird unterstützt.", "Markdown syntax is supported"),
     SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert",
                   "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
@@ -142,7 +140,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
           final EChange eChange = aSystemMsgMgr.setSystemMessage (eNewMessageType, sNewMessage);
           if (eChange.isChanged ())
           {
-            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SAVE_SUCCESS.getDisplayText (aDisplayLocale)));
+            aWPEC.postRedirectGetInternal (success (EText.SAVE_SUCCESS.getDisplayText (aDisplayLocale)));
           }
         }
       }
@@ -164,6 +162,9 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE));
         aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
+
+        if (BootstrapSystemMessage.isDefaultMarkdown ())
+          aForm.addChild (div (EText.MARKDOWN_IS_SUPPORTED.getDisplayText (aDisplayLocale)));
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         // Submit before cancel
@@ -192,12 +193,12 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (getUIHandler ().createDataGroupHeader (EText.CURRENT_MESSAGE_TYPE.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                   aSystemMsgMgr.getMessageType ()
                                                                                                                                .getDisplayText (aDisplayLocale))));
-        aForm.addChild (new HCDiv ().addChild (renderCurrentSystemMessage (aWPEC)));
+        aForm.addChild (div (renderCurrentSystemMessage (aWPEC)));
       }
       else
       {
         // No message present
-        aForm.addChild (new BootstrapInfoBox ().addChild (EText.NO_SYSTEM_MESSAGE.getDisplayText (aDisplayLocale)));
+        aForm.addChild (info (EText.NO_SYSTEM_MESSAGE.getDisplayText (aDisplayLocale)));
       }
 
       aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));

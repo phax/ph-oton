@@ -53,8 +53,8 @@ import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageDataCountries <WPECTYPE extends IWebPageExecutionContext>
-                                   extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageDataCountries <WPECTYPE extends IWebPageExecutionContext> extends
+                                   AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -120,13 +120,10 @@ public class BasePageDataCountries <WPECTYPE extends IWebPageExecutionContext>
       aRow.addCell (aCountry.getCountry ());
 
       // Flag and name
-      final HCDiv aDiv = new HCDiv ();
+      final HCDiv aDiv = div ();
       final EFamFamFlagIcon eIcon = EFamFamFlagIcon.getFromIDOrNull (aCountry.getCountry ());
       if (eIcon != null)
-      {
-        aDiv.addChild (eIcon.getAsNode ());
-        aDiv.addChild (" ");
-      }
+        aDiv.addChild (eIcon.getAsNode ()).addChild (" ");
       aDiv.addChild (aCountry.getDisplayCountry (aDisplayLocale));
       aRow.addCell (aDiv);
 

@@ -46,12 +46,10 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.app.io.WebFileIO;
@@ -148,11 +146,11 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     super (sID, aName, aDescription);
   }
 
-  private static void _addDirectoryContent (@Nonnull final BootstrapTable aTable,
-                                            @Nonnull final String sSysPropName,
-                                            @Nonnull final IHCNode aLabel,
-                                            @Nonnull final SizeHelper aSH,
-                                            @Nonnull final Locale aDisplayLocale)
+  private void _addDirectoryContent (@Nonnull final BootstrapTable aTable,
+                                     @Nonnull final String sSysPropName,
+                                     @Nonnull final IHCNode aLabel,
+                                     @Nonnull final SizeHelper aSH,
+                                     @Nonnull final Locale aDisplayLocale)
   {
     final String sDir = SystemProperties.getPropertyValue (sSysPropName);
     if (sDir != null)
@@ -161,14 +159,14 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       // The property may contain several paths
       for (final String sPart : StringHelper.getExploded (SystemProperties.getPathSeparator (), sDir))
       {
-        aList.add (new HCDiv ().addChild (sPart));
+        aList.add (div (sPart));
         final HCUL aUL = new HCUL ();
         aList.add (aUL);
         final File aEndorsedDir = new File (sPart);
         if (!aEndorsedDir.exists ())
         {
           // Directory does not exist
-          aUL.addItem (new HCEM ().addChild (EText.MSG_DIR_NOT_EXISTING.getDisplayText (aDisplayLocale)));
+          aUL.addItem (em (EText.MSG_DIR_NOT_EXISTING.getDisplayText (aDisplayLocale)));
         }
         else
         {
@@ -177,7 +175,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
           if (aFiles.isEmpty ())
           {
             // Directory is empty
-            aUL.addItem (new HCEM ().addChild (EText.MSG_DIR_EMPTY.getDisplayText (aDisplayLocale)));
+            aUL.addItem (em (EText.MSG_DIR_EMPTY.getDisplayText (aDisplayLocale)));
           }
           else
           {

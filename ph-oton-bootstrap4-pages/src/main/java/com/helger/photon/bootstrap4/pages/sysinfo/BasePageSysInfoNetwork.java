@@ -40,7 +40,6 @@ import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
@@ -63,8 +62,8 @@ import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
-                                    extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -139,8 +138,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                           new DTCol (EText.MSG_IS_MULTICAST.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_MTU.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                     aDisplayLocale),
-                                          new DTCol (EText.MSG_IS_VIRTUAL.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                   "-ni");
+                                          new DTCol (EText.MSG_IS_VIRTUAL.getDisplayText (aDisplayLocale))).setID (getID () + "-ni");
       try
       {
         final DefaultTreeWithGlobalUniqueID <String, NetworkInterface> aNITree = NetworkInterfaceHelper.createNetworkInterfaceTree ();
@@ -172,7 +170,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    /* network interface is up and running. */
@@ -182,7 +180,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    /*
@@ -194,7 +192,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    /*
@@ -209,7 +207,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    /*
@@ -223,7 +221,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext>
                                    }
                                    catch (final SocketException ex)
                                    {
-                                     aRow.addCell (new HCEM ().addChild (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
                                    }
 
                                    /*

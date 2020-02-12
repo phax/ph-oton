@@ -45,7 +45,6 @@ import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.app.resource.WebSiteResourceBundleManager;
 import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.app.resource.WebSiteResourceCache;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.button.BootstrapButton;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
@@ -160,8 +159,8 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     {
       WebSiteResourceCache.setCacheEnabled (!WebSiteResourceCache.isCacheEnabled ());
       final boolean bCacheEnabled = WebSiteResourceCache.isCacheEnabled ();
-      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bCacheEnabled ? EText.MSG_CACHE_NOW_ENABLED.getDisplayText (aDisplayLocale)
-                                                                                        : EText.MSG_CACHE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGetInternal (success (bCacheEnabled ? EText.MSG_CACHE_NOW_ENABLED.getDisplayText (aDisplayLocale)
+                                                            : EText.MSG_CACHE_NOW_DISABLED.getDisplayText (aDisplayLocale)));
       return;
     }
 
@@ -169,8 +168,8 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     {
       PhotonAppSettings.setMergeCSSResources (!PhotonAppSettings.isMergeCSSResources ());
       final boolean bResBundleActive = PhotonAppSettings.isMergeCSSResources ();
-      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bResBundleActive ? EText.MSG_MERGE_CSS_NOW_ENABLED.getDisplayText (aDisplayLocale)
-                                                                                           : EText.MSG_MERGE_CSS_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGetInternal (success (bResBundleActive ? EText.MSG_MERGE_CSS_NOW_ENABLED.getDisplayText (aDisplayLocale)
+                                                               : EText.MSG_MERGE_CSS_NOW_DISABLED.getDisplayText (aDisplayLocale)));
       return;
     }
 
@@ -178,8 +177,8 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     {
       PhotonAppSettings.setMergeJSResources (!PhotonAppSettings.isMergeJSResources ());
       final boolean bResBundleActive = PhotonAppSettings.isMergeJSResources ();
-      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (bResBundleActive ? EText.MSG_MERGE_JS_NOW_ENABLED.getDisplayText (aDisplayLocale)
-                                                                                           : EText.MSG_MERGE_JS_NOW_DISABLED.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGetInternal (success (bResBundleActive ? EText.MSG_MERGE_JS_NOW_ENABLED.getDisplayText (aDisplayLocale)
+                                                               : EText.MSG_MERGE_JS_NOW_DISABLED.getDisplayText (aDisplayLocale)));
       return;
     }
 

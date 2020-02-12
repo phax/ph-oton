@@ -37,11 +37,8 @@ import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCTable;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap4.form.BootstrapViewForm;
 import com.helger.photon.bootstrap4.nav.BootstrapTabBox;
@@ -201,7 +198,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
 
             aUL2.addItem (new HCTextNode (EText.MSG_JOB_DATA.getDisplayText (aDisplayLocale)),
                           aJobDataTable.hasBodyRows () ? aJobDataTable
-                                                       : new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+                                                       : em (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
           }
         aTab.addChild (aDetailUL);
 
@@ -209,13 +206,13 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
       }
 
       if (aTabBox.hasNoTabs ())
-        aNodeList.addChild (new BootstrapInfoBox ().addChild (EText.MSG_NOTHING_SCHEDULED.getDisplayText (aDisplayLocale)));
+        aNodeList.addChild (info (EText.MSG_NOTHING_SCHEDULED.getDisplayText (aDisplayLocale)));
       else
         aNodeList.addChild (aTabBox);
     }
     catch (final SchedulerException ex)
     {
-      aNodeList.addChild (new BootstrapErrorBox ().addChild (ex.getMessage ()));
+      aNodeList.addChild (error (ex.getMessage ()));
     }
   }
 }

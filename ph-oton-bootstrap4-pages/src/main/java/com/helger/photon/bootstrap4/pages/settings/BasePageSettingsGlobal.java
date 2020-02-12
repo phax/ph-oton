@@ -30,10 +30,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.forms.HCCheckBox;
-import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -127,13 +124,14 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     {
       // Save changes
       final boolean bGlobalDebug = aWPEC.params ().isCheckBoxChecked (FIELD_GLOBAL_DEBUG, GlobalDebug.isDebugMode ());
-      final boolean bGlobalProduction = aWPEC.params ().isCheckBoxChecked (FIELD_GLOBAL_PRODUCTION,
-                                                                           GlobalDebug.isProductionMode ());
+      final boolean bGlobalProduction = aWPEC.params ()
+                                             .isCheckBoxChecked (FIELD_GLOBAL_PRODUCTION,
+                                                                 GlobalDebug.isProductionMode ());
 
       GlobalDebug.setDebugModeDirect (bGlobalDebug);
       GlobalDebug.setProductionModeDirect (bGlobalProduction);
 
-      aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
+      aWPEC.postRedirectGetInternal (success (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
 
     final BootstrapForm aForm0 = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
@@ -173,18 +171,18 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
       {
         final HCNodeList aCtrl = new HCNodeList ();
         for (final ConnectionListener aListener : EmailGlobalSettings.getAllConnectionListeners ())
-          aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
+          aCtrl.addChild (div (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
-          aCtrl.addChild (new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+          aCtrl.addChild (em (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_CONNECTION_LISTENER.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aCtrl));
       }
       {
         final HCNodeList aCtrl = new HCNodeList ();
         for (final IEmailDataTransportListener aListener : EmailGlobalSettings.getAllEmailDataTransportListeners ())
-          aCtrl.addChild (new HCDiv ().addChild (String.valueOf (aListener)));
+          aCtrl.addChild (div (String.valueOf (aListener)));
         if (!aCtrl.hasChildren ())
-          aCtrl.addChild (new HCEM ().addChild (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
+          aCtrl.addChild (em (EText.MSG_NONE.getDisplayText (aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_EMAILDATA_TRANSPORT_LISTENER.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aCtrl));
       }

@@ -48,9 +48,6 @@ import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.network.port.CNetworkPort;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
-import com.helger.photon.bootstrap4.alert.BootstrapQuestionBox;
-import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.button.BootstrapButton;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
@@ -199,8 +196,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                 @Nonnull final NamedSMTPSettings aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                         aSelectedObject.getName ())));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                             aSelectedObject.getName ())));
       }
 
       @Override
@@ -210,13 +207,13 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
         if (m_aMgr.removeSettings (aSelectedObject.getID ()).isChanged ())
         {
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                           aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (success (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                               aSelectedObject.getName ())));
         }
         else
         {
-          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                       aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                           aSelectedObject.getName ())));
         }
       }
     });
@@ -254,7 +251,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
             aMailData.setBody (sBody);
             ScopedMailAPI.getInstance ().queueMail (aSelectedObject.getSMTPSettings (), aMailData);
 
-            aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
+            aWPEC.postRedirectGetInternal (success (EText.SUCCESS_TEST_MAIL.getDisplayText (aDisplayLocale)));
             return EShowList.SHOW_LIST;
           }
         }
@@ -479,13 +476,13 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       {
         // We're editing an existing object
         if (m_aMgr.updateSettings (aSelectedObject.getID (), sName, aSMTPSettings).isChanged ())
-          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (success (EText.SUCCESS_EDIT.getDisplayText (aDisplayLocale)));
       }
       else
       {
         // We're creating a new object
         m_aMgr.addSettings (sName, aSMTPSettings);
-        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+        aWPEC.postRedirectGetInternal (success (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
       }
     }
   }

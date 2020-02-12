@@ -17,14 +17,13 @@
 package com.helger.photon.bootstrap4.pages.sysinfo;
 
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
@@ -35,7 +34,6 @@ import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCUL;
-import com.helger.html.hc.html.sections.HCH4;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
@@ -49,8 +47,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext>
-                                                extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext> extends
+                                                AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -134,16 +132,15 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aNodeList.addChild (new HCH4 ().addChild (EText.MSG_TPM_HEADER.getDisplayText (aDisplayLocale)));
+    aNodeList.addChild (h4 (EText.MSG_TPM_HEADER.getDisplayText (aDisplayLocale)));
 
     // Third party modules
-    final Set <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
-                                                                     .getAllRegisteredThirdPartyModules ();
+    final ICommonsOrderedSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
+                                                                                    .getAllRegisteredThirdPartyModules ();
     final HCUL aUL = aNodeList.addAndReturnChild (new HCUL ());
 
     // Show all required modules, sorted by name
-    for (final IThirdPartyModule aModule : CollectionHelper.getSorted (aModules,
-                                                                       IHasDisplayName.getComparatorCollating (aDisplayLocale)))
+    for (final IThirdPartyModule aModule : aModules.getSorted (IHasDisplayName.getComparatorCollating (aDisplayLocale)))
       if (!aModule.isOptional ())
         aUL.addItem (_getModuleHCNode (aModule, aDisplayLocale));
   }
