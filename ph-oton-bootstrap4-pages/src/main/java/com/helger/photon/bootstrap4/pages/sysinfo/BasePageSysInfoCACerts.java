@@ -150,9 +150,9 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final ICommonsList <String> aPossiblePaths = new CommonsArrayList <> ();
+    aPossiblePaths.add (SystemProperties.getPropertyValueOrNull ("javax.net.ssl.trustStore"));
     aPossiblePaths.add (SystemProperties.getJavaHome () + "/lib/security/cacerts");
     aPossiblePaths.add (SystemProperties.getJavaHome () + "/jre/lib/security/cacerts");
-    aPossiblePaths.add (SystemProperties.getPropertyValueOrNull ("javax.net.ssl.trustStore"));
 
     final HCOL aOL = new HCOL ();
     int nFileIndex = 0;
