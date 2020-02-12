@@ -38,7 +38,7 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
                                                            extends
                                                            AbstractWebPageActionHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
-  public static final String FORM_ID_UNDELETE = "undeleteform";
+  public static String FORM_ID_UNDELETE = "undeleteform";
 
   public AbstractWebPageActionHandlerUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
@@ -56,9 +56,9 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
    *        The object to be undeleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                             @Nonnull final FORM_TYPE aForm,
-                                             @Nonnull final DATATYPE aSelectedObject);
+  protected abstract void showUndeleteQuery (@Nonnull WPECTYPE aWPEC,
+                                             @Nonnull FORM_TYPE aForm,
+                                             @Nonnull DATATYPE aSelectedObject);
 
   /**
    * Perform object undelete
@@ -69,15 +69,15 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
    *        The object to be undeleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject);
+  protected abstract void performUndelete (@Nonnull WPECTYPE aWPEC, @Nonnull DATATYPE aSelectedObject);
 
   /**
    * @param aWPEC
    *        The web page execution context
    * @param aSelectedObject
    *        The selected object. Never <code>null</code>.
-   * @return <code>true</code> to show the undelete toolbar, <code>false</code> to
-   *         draw your own toolbar
+   * @return <code>true</code> to show the undelete toolbar, <code>false</code>
+   *         to draw your own toolbar
    */
   @OverrideOnDemand
   protected boolean showUndeleteToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
@@ -152,11 +152,11 @@ public abstract class AbstractWebPageActionHandlerUndelete <DATATYPE extends IHa
   }
 
   @Nonnull
-  public final EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
   {
     final boolean bIsFormSubmitted = isFormSubmitted (aWPEC);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
-    final EShowList eShowList;
+    EShowList eShowList;
 
     if (bIsFormSubmitted)
     {

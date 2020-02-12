@@ -41,7 +41,7 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
                                                                 extends
                                                                 AbstractWebPageActionHandlerMulti <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
-  public static final String FORM_ID_UNDELETE = "undeleteform";
+  public static String FORM_ID_UNDELETE = "undeleteform";
 
   public AbstractWebPageActionHandlerMultiUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
                                                     @Nonnull @Nonempty final String sFieldName,
@@ -157,12 +157,12 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
   }
 
   @Nonnull
-  public final EShowList handleMultiAction (@Nonnull final WPECTYPE aWPEC,
-                                            @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
+  public EShowList handleMultiAction (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final boolean bIsFormSubmitted = aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
-    final EShowList eShowList;
+    EShowList eShowList;
 
     if (bIsFormSubmitted)
     {

@@ -38,7 +38,7 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
                                                          extends
                                                          AbstractWebPageActionHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
-  public static final String FORM_ID_DELETE = "deleteform";
+  public static String FORM_ID_DELETE = "deleteform";
 
   public AbstractWebPageActionHandlerDelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
@@ -56,9 +56,9 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
    *        The object to be deleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                           @Nonnull final FORM_TYPE aForm,
-                                           @Nonnull final DATATYPE aSelectedObject);
+  protected abstract void showDeleteQuery (@Nonnull WPECTYPE aWPEC,
+                                           @Nonnull FORM_TYPE aForm,
+                                           @Nonnull DATATYPE aSelectedObject);
 
   /**
    * Perform object delete
@@ -69,7 +69,7 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
    *        The object to be deleted. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject);
+  protected abstract void performDelete (@Nonnull WPECTYPE aWPEC, @Nonnull DATATYPE aSelectedObject);
 
   /**
    * @param aWPEC
@@ -151,11 +151,11 @@ public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasI
   }
 
   @Nonnull
-  public final EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
   {
     final boolean bIsFormSubmitted = isFormSubmitted (aWPEC);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
-    final EShowList eShowList;
+    EShowList eShowList;
 
     if (bIsFormSubmitted)
     {

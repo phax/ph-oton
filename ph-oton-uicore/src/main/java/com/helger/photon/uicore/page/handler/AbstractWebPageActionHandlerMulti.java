@@ -51,7 +51,7 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
 
   @Nonnull
   @Nonempty
-  protected final String getFieldName ()
+  protected String getFieldName ()
   {
     return m_sFieldName;
   }
@@ -68,19 +68,19 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
     return ret;
   }
 
-  public final boolean isSelectedObjectRequired ()
+  public boolean isSelectedObjectRequired ()
   {
     return false;
   }
 
   @Nonnull
-  protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
+  protected IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
   {
     return m_aUIHandler;
   }
 
   @Nonnull
-  public final EShowList handleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
+  public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
   {
     final ICommonsList <DATATYPE> aSelectedObjects = getAllSelectedObjects (aWPEC);
     return handleMultiAction (aWPEC, aSelectedObjects);
