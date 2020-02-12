@@ -465,10 +465,9 @@ public class JettyStarter
   public WebAppContext createWebAppContext (@Nonnull @Nonempty final String sContextPath) throws Exception
   {
     ValueEnforcer.notEmpty (sContextPath, "ContextPath");
-    final String sTempDir = SystemProperties.getTmpDir () +
-                            (DEFAULT_CONTEXT_PATH.equals (sContextPath) ? ""
-                                                                        : "." +
-                                                                          FilenameHelper.getAsSecureValidASCIIFilename (sContextPath));
+    // getTmpDir is e.g. "/tmp"
+    // Context path (if present) starts with a slash
+    final String sTempDir = SystemProperties.getTmpDir () + FilenameHelper.getAsSecureValidASCIIFilename (sContextPath);
 
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
