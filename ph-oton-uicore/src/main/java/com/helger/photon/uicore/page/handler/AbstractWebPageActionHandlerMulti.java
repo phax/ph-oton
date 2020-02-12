@@ -50,10 +50,23 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
   }
 
   @Nonnull
+  protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
+  {
+    return m_aUIHandler;
+  }
+
+  @Nonnull
   @Nonempty
-  protected String getFieldName ()
+  protected final String getFieldName ()
   {
     return m_sFieldName;
+  }
+
+  @Nonnull
+  @Nonempty
+  protected final BiFunction <WPECTYPE, String, DATATYPE> getResolver ()
+  {
+    return m_aResolver;
   }
 
   @Nonnull
@@ -71,12 +84,6 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
   public boolean isSelectedObjectRequired ()
   {
     return false;
-  }
-
-  @Nonnull
-  protected IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
-  {
-    return m_aUIHandler;
   }
 
   @Nonnull

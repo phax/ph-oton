@@ -17,6 +17,7 @@
 package com.helger.photon.uicore.page.handler;
 
 import java.util.Locale;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.core.EPhotonCoreText;
@@ -36,45 +38,24 @@ import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
-public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                                            extends
-                                                            AbstractWebPageActionHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
+public abstract class AbstractWebPageActionHandlerMultiWithQuery <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
+                                                                 extends
+                                                                 AbstractWebPageActionHandlerMulti <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
   private final String m_sAction;
   private final String m_sFormID;
 
-  public AbstractWebPageActionHandlerWithQuery (final boolean bSelectedObjectRequired,
-                                                @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
-                                                @Nonnull @Nonempty final String sAction,
-                                                @Nonnull @Nonempty final String sFormID)
+  public AbstractWebPageActionHandlerMultiWithQuery (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
+                                                     @Nonnull @Nonempty final String sFieldName,
+                                                     @Nonnull final BiFunction <WPECTYPE, String, DATATYPE> aResolver,
+                                                     @Nonnull @Nonempty final String sAction,
+                                                     @Nonnull @Nonempty final String sFormID)
   {
-    super (bSelectedObjectRequired, aUIHandler);
+    super (aUIHandler, sFieldName, aResolver);
     ValueEnforcer.notEmpty (sAction, "Action");
     ValueEnforcer.notEmpty (sFormID, "FormID");
     m_sAction = sAction;
     m_sFormID = sFormID;
-  }
-
-  /**
-   * @return The action provided in the constructor. Neither <code>null</code>
-   *         nor empty.
-   */
-  @Nonnull
-  @Nonempty
-  public final String getAction ()
-  {
-    return m_sAction;
-  }
-
-  /**
-   * @return The form ID provided in the constructor. Neither <code>null</code>
-   *         nor empty.
-   */
-  @Nonnull
-  @Nonempty
-  public final String getFormID ()
-  {
-    return m_sFormID;
   }
 
   /**
@@ -84,35 +65,35 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        The web page execution context
    * @param aForm
    *        The handled form. Never <code>null</code>.
-   * @param aSelectedObject
-   *        The object to be handled. May be <code>null</code>.
+   * @param aSelectedObjects
+   *        The objects to be handled. Never <code>null</code>.
    */
   @OverrideOnDemand
   protected abstract void showQuery (@Nonnull WPECTYPE aWPEC,
                                      @Nonnull FORM_TYPE aForm,
-                                     @Nullable DATATYPE aSelectedObject);
+                                     @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
 
   /**
-   * Perform action
+   * Perform object action
    *
    * @param aWPEC
    *        The web page execution context
-   * @param aSelectedObject
-   *        The object to be handled. May be <code>null</code>.
+   * @param aSelectedObjects
+   *        The objects to be handled. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void performAction (@Nonnull WPECTYPE aWPEC, @Nullable DATATYPE aSelectedObject);
+  protected abstract void performAction (@Nonnull WPECTYPE aWPEC, @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
 
   /**
    * @param aWPEC
    *        The web page execution context
-   * @param aSelectedObject
-   *        The selected object. May be <code>null</code>.
+   * @param aSelectedObjects
+   *        The selected objects. Never <code>null</code>.
    * @return <code>true</code> to show the toolbar, <code>false</code> to draw
    *         your own toolbar
    */
   @OverrideOnDemand
-  protected boolean showToolbar (@Nonnull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
+  protected boolean showToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     return true;
   }
@@ -144,29 +125,29 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
   {}
 
   /**
-   * Create toolbar for deleting an existing object
+   * Create toolbar for handling an existing object
    *
    * @param aWPEC
    *        The web page execution context
    * @param aForm
    *        The handled form. Never <code>null</code>.
-   * @param aSelectedObject
-   *        Selected object. May be <code>null</code>.
+   * @param aSelectedObjects
+   *        Selected objects. Never <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull
   @OverrideOnDemand
   protected TOOLBAR_TYPE createToolbar (@Nonnull final WPECTYPE aWPEC,
                                         @Nonnull final FORM_TYPE aForm,
-                                        @Nullable final DATATYPE aSelectedObject)
+                                        @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final TOOLBAR_TYPE aToolbar = getUIHandler ().createToolbar (aWPEC);
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, m_sAction);
     aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
-    if (aSelectedObject != null)
-      aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+    for (final DATATYPE aItem : aSelectedObjects)
+      aToolbar.addHiddenField (getFieldName (), aItem.getID ());
     // Yes button
     aToolbar.addSubmitButton (getToolbarSubmitButtonText (aDisplayLocale), getToolbarSubmitButtonIcon ());
     // No button
@@ -184,7 +165,8 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
   }
 
   @Nonnull
-  public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
+  public EShowList handleMultiAction (@Nonnull final WPECTYPE aWPEC,
+                                      @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final boolean bIsFormSubmitted = isFormSubmitted (aWPEC);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();
@@ -195,8 +177,8 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
       // Check if the nonce matches
       if (aCSRFHandler.checkCSRFNonce (aWPEC).isContinue ())
       {
-        // Main action
-        performAction (aWPEC, aSelectedObject);
+        // Main delete
+        performAction (aWPEC, aSelectedObjects);
       }
 
       eShowList = EShowList.SHOW_LIST;
@@ -213,11 +195,11 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
       aForm.addChild (aCSRFHandler.createCSRFNonceField ());
 
       // Show the main query
-      showQuery (aWPEC, aForm, aSelectedObject);
+      showQuery (aWPEC, aForm, aSelectedObjects);
 
       // Show the toolbar?
-      if (showToolbar (aWPEC, aSelectedObject))
-        aForm.addChild (createToolbar (aWPEC, aForm, aSelectedObject));
+      if (showToolbar (aWPEC, aSelectedObjects))
+        aForm.addChild (createToolbar (aWPEC, aForm, aSelectedObjects));
       eShowList = EShowList.DONT_SHOW_LIST;
     }
 

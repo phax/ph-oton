@@ -182,7 +182,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
                           // Delete all failed mails
                           final ICommonsList <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
-                          if (!aFailedMails.isEmpty ())
+                          if (aFailedMails.isNotEmpty ())
                           {
                             LOGGER.info ("Deleted " + aFailedMails.size () + " failed mails!");
                             final String sSuccessMsg = aFailedMails.size () == 1 ? EText.DELETE_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
