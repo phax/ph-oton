@@ -33,7 +33,7 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.2.2 - work in progress
+* v8.2.2 - 2020-02-12
     * Updated to Jetty 9.4.26
     * Updated to Bootstrap 4.4.1
     * Updated to log4j 2.13.0
@@ -45,7 +45,7 @@ Contained subprojects are:
     * Added possibility to globally configure if internal errors should be send as email and/or saved as XML
     * Unified the `WebPageActionHandler` API (backwards incompatible change)
     * Added traits interfaces `IHCTrait` and `IHCBootstrap4Trait` as syntactic sugar
-    * Added a new system page showing the content of the System truststore
+    * Added a new system page showing the content of the System Truststore (cacerts)
 * v8.2.1 - 2019-10-08
     * Updated to log4j 2.12.1
     * Updated to Jetty 9.4.21
@@ -212,7 +212,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.1</version>
+        <version>8.2.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
