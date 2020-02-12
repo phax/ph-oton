@@ -207,9 +207,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     {
       @Override
       @OverrideOnDemand
-      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                      @Nonnull final BootstrapForm aForm,
-                                      @Nonnull final IUser aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
+                                @Nonnull final BootstrapForm aForm,
+                                @Nonnull final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -218,7 +218,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
       @Override
       @OverrideOnDemand
-      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
@@ -235,9 +235,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     {
       @Override
       @OverrideOnDemand
-      protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                        @Nonnull final BootstrapForm aForm,
-                                        @Nonnull final IUser aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
+                                @Nonnull final BootstrapForm aForm,
+                                @Nonnull final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -246,7 +246,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
       @Override
       @OverrideOnDemand
-      protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();

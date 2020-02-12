@@ -148,9 +148,9 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IUserGroup, WPECTYPE> ()
     {
       @Override
-      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                      @Nonnull final BootstrapForm aForm,
-                                      @Nonnull final IUserGroup aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
+                                @Nonnull final BootstrapForm aForm,
+                                @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -158,7 +158,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       }
 
       @Override
-      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
@@ -174,9 +174,9 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUserGroup, WPECTYPE> ()
     {
       @Override
-      protected void showUndeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                        @Nonnull final BootstrapForm aForm,
-                                        @Nonnull final IUserGroup aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
+                                @Nonnull final BootstrapForm aForm,
+                                @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -184,7 +184,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       }
 
       @Override
-      protected void performUndelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();

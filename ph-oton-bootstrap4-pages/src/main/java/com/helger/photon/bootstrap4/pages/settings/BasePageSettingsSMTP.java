@@ -194,9 +194,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <NamedSMTPSettings, WPECTYPE> ()
     {
       @Override
-      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                      @Nonnull final BootstrapForm aForm,
-                                      @Nonnull final NamedSMTPSettings aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
+                                @Nonnull final BootstrapForm aForm,
+                                @Nonnull final NamedSMTPSettings aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -204,7 +204,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       }
 
       @Override
-      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 

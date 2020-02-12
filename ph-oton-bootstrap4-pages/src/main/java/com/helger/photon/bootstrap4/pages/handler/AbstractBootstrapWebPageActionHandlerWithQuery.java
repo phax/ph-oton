@@ -31,8 +31,9 @@ public abstract class AbstractBootstrapWebPageActionHandlerWithQuery <DATATYPE e
                                                                      AbstractWebPageActionHandlerWithQuery <DATATYPE, WPECTYPE, BootstrapForm, BootstrapButtonToolbar>
 {
   public AbstractBootstrapWebPageActionHandlerWithQuery (final boolean bSelectedObjectRequired,
-                                                         @Nonnull @Nonempty final String sAction)
+                                                         @Nonnull @Nonempty final String sAction,
+                                                         @Nonnull @Nonempty final String sFormID)
   {
-    super (bSelectedObjectRequired, BootstrapWebPageUIHandler.INSTANCE, sAction);
+    super (bSelectedObjectRequired, BootstrapWebPageUIHandler.INSTANCE, sAction, sFormID);
   }
 }

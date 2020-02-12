@@ -150,16 +150,16 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <FailedMailData, WPECTYPE> ()
     {
       @Override
-      protected void showDeleteQuery (@Nonnull final WPECTYPE aWPEC,
-                                      @Nonnull final BootstrapForm aForm,
-                                      @Nonnull final FailedMailData aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
+                                @Nonnull final BootstrapForm aForm,
+                                @Nonnull final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
       }
 
       @Override
-      protected void performDelete (@Nonnull final WPECTYPE aWPEC, @Nonnull final FailedMailData aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 

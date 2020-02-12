@@ -40,17 +40,19 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
                                                             extends
                                                             AbstractWebPageActionHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
-  public static String FORM_ID_WITHQUERY = "queryform";
-
   private final String m_sAction;
+  private final String m_sFormID;
 
   public AbstractWebPageActionHandlerWithQuery (final boolean bSelectedObjectRequired,
                                                 @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
-                                                @Nonnull @Nonempty final String sAction)
+                                                @Nonnull @Nonempty final String sAction,
+                                                @Nonnull @Nonempty final String sFormID)
   {
     super (bSelectedObjectRequired, aUIHandler);
     ValueEnforcer.notEmpty (sAction, "Action");
+    ValueEnforcer.notEmpty (sFormID, "FormID");
     m_sAction = sAction;
+    m_sFormID = sFormID;
   }
 
   /**
@@ -62,6 +64,17 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
   public final String getAction ()
   {
     return m_sAction;
+  }
+
+  /**
+   * @return The form ID provided in the constructor. Neither <code>null</code>
+   *         nor empty.
+   */
+  @Nonnull
+  @Nonempty
+  public final String getFormID ()
+  {
+    return m_sFormID;
   }
 
   /**
@@ -194,7 +207,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
       aWPEC.getNodeList ().addChild (aForm);
 
       // Set unique ID
-      aForm.setID (FORM_ID_WITHQUERY);
+      aForm.setID (m_sFormID);
 
       // Add the nonce for CSRF check
       aForm.addChild (aCSRFHandler.createCSRFNonceField ());
