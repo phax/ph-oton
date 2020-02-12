@@ -28,6 +28,7 @@ import com.helger.photon.bootstrap4.alert.BootstrapQuestionBox;
 import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.alert.BootstrapWarnBox;
 import com.helger.photon.bootstrap4.badge.BootstrapBadge;
+import com.helger.photon.bootstrap4.badge.EBootstrapBadgeType;
 
 /**
  * Traits interface to add simpler UI codes.
@@ -71,6 +72,186 @@ public interface IHCBootstrap4Trait extends IHCTrait
   default BootstrapBadge badge (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new BootstrapBadge ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeDanger ()
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.DANGER);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeDanger (final int nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.DANGER).addChild (Integer.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeDanger (final long nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.DANGER).addChild (Long.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeDanger (@Nullable final IHCNode aNode)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.DANGER).addChild (aNode);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeDanger (@Nullable final String s)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.DANGER).addChild (s);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeDanger (@Nullable final Iterable <? extends IHCNode> aNodes)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.DANGER).addChildren (aNodes);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeInfo ()
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.INFO);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeInfo (final int nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.INFO).addChild (Integer.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeInfo (final long nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.INFO).addChild (Long.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeInfo (@Nullable final IHCNode aNode)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.INFO).addChild (aNode);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeInfo (@Nullable final String s)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.INFO).addChild (s);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeInfo (@Nullable final Iterable <? extends IHCNode> aNodes)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.INFO).addChildren (aNodes);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgePrimary ()
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.PRIMARY);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgePrimary (final int nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.PRIMARY).addChild (Integer.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgePrimary (final long nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.PRIMARY).addChild (Long.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgePrimary (@Nullable final IHCNode aNode)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.PRIMARY).addChild (aNode);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgePrimary (@Nullable final String s)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.PRIMARY).addChild (s);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgePrimary (@Nullable final Iterable <? extends IHCNode> aNodes)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.PRIMARY).addChildren (aNodes);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeSuccess ()
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.SUCCESS);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeSuccess (final int nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.SUCCESS).addChild (Integer.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeSuccess (final long nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.SUCCESS).addChild (Long.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeSuccess (@Nullable final IHCNode aNode)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.SUCCESS).addChild (aNode);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeSuccess (@Nullable final String s)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.SUCCESS).addChild (s);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeSuccess (@Nullable final Iterable <? extends IHCNode> aNodes)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.SUCCESS).addChildren (aNodes);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeWarn ()
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.WARNING);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeWarn (final int nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.WARNING).addChild (Integer.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeWarn (final long nValue)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.WARNING).addChild (Long.toString (nValue));
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeWarn (@Nullable final IHCNode aNode)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.WARNING).addChild (aNode);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeWarn (@Nullable final String s)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.WARNING).addChild (s);
+  }
+
+  @Nonnull
+  default BootstrapBadge badgeWarn (@Nullable final Iterable <? extends IHCNode> aNodes)
+  {
+    return new BootstrapBadge (EBootstrapBadgeType.WARNING).addChildren (aNodes);
   }
 
   @Nonnull

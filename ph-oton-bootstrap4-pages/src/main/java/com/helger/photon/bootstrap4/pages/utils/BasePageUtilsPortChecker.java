@@ -38,7 +38,6 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.network.port.ENetworkPortStatus;
 import com.helger.network.port.NetworkPortHelper;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.badge.EBootstrapBadgeType;
 import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
 import com.helger.photon.bootstrap4.card.BootstrapCard;
 import com.helger.photon.bootstrap4.card.BootstrapCardBody;
@@ -161,8 +160,8 @@ public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext
           aBody.addChild (div ().addChild (EText.MSG_RESULT_STATUS_PREFIX.getDisplayText (aDisplayLocale))
                                 .addChild (code (sHost + ":" + aPort))
                                 .addChild (" = ")
-                                .addChild (badge (eStatus.toString ()).setBadgeType (eStatus.isPortOpen () ? EBootstrapBadgeType.SUCCESS
-                                                                                                           : EBootstrapBadgeType.DANGER)));
+                                .addChild (eStatus.isPortOpen () ? badgeSuccess (eStatus.toString ())
+                                                                 : badgeDanger (eStatus.toString ())));
         }
         aNodeList.addChild (aResult.addClass (CBootstrapCSS.MB_2));
       }
