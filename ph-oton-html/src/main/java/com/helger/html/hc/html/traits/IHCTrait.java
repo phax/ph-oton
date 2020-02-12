@@ -39,11 +39,10 @@ import com.helger.html.hc.html.textlevel.HCSub;
 import com.helger.html.hc.html.textlevel.HCSup;
 
 /**
- * Trait interface to add simpler UI codes.<br>
+ * Trait interface to add simpler UI codes.
  *
- * @author Philip Helger
+ * @author Philip Helger via MainCreateHCTraitsCode
  * @since 8.2.2
- * @generator MainCreateHCTraitsCode
  */
 public interface IHCTrait
 {
