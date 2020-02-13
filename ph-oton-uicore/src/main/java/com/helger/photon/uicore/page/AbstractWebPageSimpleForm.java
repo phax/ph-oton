@@ -70,7 +70,8 @@ import com.helger.photon.uicore.icon.IIcon;
  */
 @NotThreadSafe
 public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                                extends AbstractWebPage <WPECTYPE>
+                                                extends
+                                                AbstractWebPage <WPECTYPE>
 {
   public static final String FORM_ID_INPUT = "inputform";
 
@@ -151,8 +152,9 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   @Nonnull
   public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sObjectID)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW).add (CPageParam.PARAM_OBJECT,
-                                                                                          sObjectID);
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
+               .add (CPageParam.PARAM_OBJECT, sObjectID);
   }
 
   @Nonnull
@@ -199,8 +201,9 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC,
                                          @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT).add (CPageParam.PARAM_OBJECT,
-                                                                                          aCurObject.getID ());
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -621,13 +624,14 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The web page execution context
    * @param aObject
    *        The object. Never <code>null</code>.
-   * @return <code>true</code> to show the object afterwards. <code>false</code>
-   *         if the object should not be shown.
+   * @return {@link EShowObject#SHOW_OBJECT} to show the object afterwards.
+   *         {@link EShowObject#DONT_SHOW_OBJECT} if the object should not be
+   *         shown.
    */
   @OverrideOnDemand
-  protected boolean handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aObject)
+  protected EShowObject handleCustomActions (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aObject)
   {
-    return true;
+    return EShowObject.SHOW_OBJECT;
   }
 
   @Override
@@ -640,7 +644,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     if (aObject == null)
       throw new IllegalStateException ("No object present!");
 
-    boolean bViewObject = true;
+    EShowObject eViewObject = EShowObject.SHOW_OBJECT;
     final String sAction = aWPEC.getAction ();
 
     // Default value is view
@@ -700,7 +704,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
           {
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
-            bViewObject = false;
+            eViewObject = EShowObject.DONT_SHOW_OBJECT;
             final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC)
                                                              : getUIHandler ().createFormSelf (aWPEC);
             aNodeList.addChild (aForm);
@@ -729,13 +733,13 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
         case CUSTOM:
         {
           // Other proprietary actions
-          bViewObject = handleCustomActions (aWPEC, aObject);
+          eViewObject = handleCustomActions (aWPEC, aObject);
           break;
         }
       }
     }
 
-    if (bViewObject)
+    if (eViewObject == EShowObject.SHOW_OBJECT)
     {
       // show details
       handleViewObject (aWPEC, aObject);
