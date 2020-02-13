@@ -373,8 +373,8 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
 
     final TOOLBAR_TYPE aToolbar = createNewEditToolbar (aWPEC);
     aToolbar.addHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT);
-    aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aObject.getID ());
     aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE);
+    aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aObject.getID ());
     // Save button
     aToolbar.addSubmitButton (getEditToolbarSubmitButtonText (aDisplayLocale), getEditToolbarSubmitButtonIcon ());
     // Cancel button
@@ -648,11 +648,17 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     final String sAction = aWPEC.getAction ();
 
     // Default value is view
-    EWebPageSimpleFormAction eSimpleFormAction = EWebPageSimpleFormAction.DEFAULT;
+    EWebPageSimpleFormAction eSimpleFormAction;
     if (CPageParam.ACTION_EDIT.equals (sAction))
-    {
       eSimpleFormAction = EWebPageSimpleFormAction.EDIT;
-    }
+    else
+      if (CPageParam.ACTION_VIEW.equals (sAction) || StringHelper.hasNoText (sAction))
+        eSimpleFormAction = EWebPageSimpleFormAction.VIEW;
+      else
+      {
+        // A non-empty, non-standard action was provided
+        eSimpleFormAction = EWebPageSimpleFormAction.CUSTOM;
+      }
 
     // An action was specified - check if it is allowed at all
     if (!isActionAllowed (aWPEC, eSimpleFormAction, aObject))
