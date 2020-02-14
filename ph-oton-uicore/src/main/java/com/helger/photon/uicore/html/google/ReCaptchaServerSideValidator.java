@@ -33,6 +33,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
 import com.helger.httpclient.HttpClientFactory;
 import com.helger.httpclient.HttpClientManager;
+import com.helger.httpclient.HttpClientSettings;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
 
@@ -62,9 +63,10 @@ public final class ReCaptchaServerSideValidator
     if (StringHelper.hasNoText (sReCaptchaResponse))
       return ESuccess.SUCCESS;
 
-    final HttpClientFactory aHCFactory = new HttpClientFactory ();
+    final HttpClientSettings aSettings = new HttpClientSettings ();
     // For proxy etc
-    aHCFactory.setUseSystemProperties (true);
+    aSettings.setUseSystemProperties (true);
+    final HttpClientFactory aHCFactory = new HttpClientFactory (aSettings);
 
     try (HttpClientManager aMgr = new HttpClientManager (aHCFactory))
     {
