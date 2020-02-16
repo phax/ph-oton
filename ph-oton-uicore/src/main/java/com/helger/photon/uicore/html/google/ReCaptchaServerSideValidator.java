@@ -31,7 +31,6 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
-import com.helger.httpclient.HttpClientFactory;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.HttpClientSettings;
 import com.helger.httpclient.response.ResponseHandlerJson;
@@ -45,7 +44,7 @@ public final class ReCaptchaServerSideValidator
   {}
 
   /**
-   * Check if the response of a RecCaptcha is valid or not.
+   * Check if the response of a ReCaptcha is valid or not.
    *
    * @param sServerSideKey
    *        Server side ReCaptcha key for verification
@@ -58,17 +57,36 @@ public final class ReCaptchaServerSideValidator
   public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey,
                                 @Nullable final String sReCaptchaResponse)
   {
+    final HttpClientSettings aSettings = new HttpClientSettings ();
+    // For proxy etc
+    aSettings.setUseSystemProperties (true);
+    return check (sServerSideKey, sReCaptchaResponse, aSettings);
+  }
+
+  /**
+   * Check if the response of a ReCaptcha is valid or not.
+   *
+   * @param sServerSideKey
+   *        Server side ReCaptcha key for verification
+   * @param sReCaptchaResponse
+   *        The value of the <code>g-recaptcha-response</code> request
+   *        parameter.
+   * @param aHCS
+   *        The HTTP client settings. May not be <code>null</code>.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey,
+                                @Nullable final String sReCaptchaResponse,
+                                @Nonnull final HttpClientSettings aHCS)
+  {
     ValueEnforcer.notEmpty (sServerSideKey, "ServerSideKey");
+    ValueEnforcer.notNull (aHCS, "HttpClientSettings");
 
     if (StringHelper.hasNoText (sReCaptchaResponse))
       return ESuccess.SUCCESS;
 
-    final HttpClientSettings aSettings = new HttpClientSettings ();
-    // For proxy etc
-    aSettings.setUseSystemProperties (true);
-    final HttpClientFactory aHCFactory = new HttpClientFactory (aSettings);
-
-    try (HttpClientManager aMgr = new HttpClientManager (aHCFactory))
+    try (HttpClientManager aMgr = HttpClientManager.create (aHCS))
     {
       final HttpPost aPost = new HttpPost (new SimpleURL ("https://www.google.com/recaptcha/api/siteverify").add ("secret",
                                                                                                                   sServerSideKey)
