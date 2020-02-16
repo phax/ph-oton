@@ -228,7 +228,7 @@ public final class InternalErrorHandler
 
       final EmailData aEmailData = new EmailData (EEmailType.TEXT);
       aEmailData.setFrom (aSender);
-      aEmailData.setTo (aReceiver);
+      aEmailData.to ().addAll (aReceiver);
       aEmailData.setSubject (sMailSubject);
       aEmailData.setBody (sMailBody);
       aEmailData.setAttachments (aEmailAttachments);

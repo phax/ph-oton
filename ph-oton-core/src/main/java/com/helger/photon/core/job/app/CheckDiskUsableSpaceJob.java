@@ -108,7 +108,7 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
 
       final EmailData aEmailData = new EmailData (EEmailType.TEXT);
       aEmailData.setFrom (InternalErrorSettings.getSMTPSenderAddress ());
-      aEmailData.setTo (InternalErrorSettings.getSMTPReceiverAddresses ());
+      aEmailData.to ().addAll (InternalErrorSettings.getSMTPReceiverAddresses ());
       aEmailData.setSubject ("[ph-oton] Usable Disk Space on '" + sBasePath + "' is low: " + sUsableFormatted);
       aEmailData.setBody (sMailBody);
       ScopedMailAPI.getInstance ().queueMail (InternalErrorSettings.getSMTPSettings (), aEmailData);

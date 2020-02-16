@@ -29,6 +29,7 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.charset.CharsetHelper;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.email.EmailAddress;
 import com.helger.commons.email.EmailAddressHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
@@ -249,8 +250,8 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
           if (aFormErrors.isEmpty ())
           {
             final EmailData aMailData = new EmailData (EEmailType.TEXT);
-            aMailData.setFrom (sSender);
-            aMailData.setTo (sReceiver);
+            aMailData.setFrom (new EmailAddress (sSender));
+            aMailData.to ().add (new EmailAddress (sReceiver));
             aMailData.setSubject (sSubject);
             aMailData.setBody (sBody);
             ScopedMailAPI.getInstance ().queueMail (aSelectedObject.getSMTPSettings (), aMailData);

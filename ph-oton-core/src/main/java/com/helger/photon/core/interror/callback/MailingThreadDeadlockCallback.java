@@ -75,7 +75,7 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
 
     final EmailData aEmailData = new EmailData (EEmailType.TEXT);
     aEmailData.setFrom (InternalErrorSettings.getSMTPSenderAddress ());
-    aEmailData.setTo (InternalErrorSettings.getSMTPReceiverAddresses ());
+    aEmailData.to ().addAll (InternalErrorSettings.getSMTPReceiverAddresses ());
     aEmailData.setSubject ("[ph-oton] Dead lock of " + aDeadlockedThreads.length + " threads detected");
     aEmailData.setBody (aSB.toString ());
 

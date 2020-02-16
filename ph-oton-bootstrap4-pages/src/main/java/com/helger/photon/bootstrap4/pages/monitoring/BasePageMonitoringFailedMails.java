@@ -383,20 +383,20 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FROM.getDisplayText (aDisplayLocale))
                                                     .setCtrl (aEmailData.getFrom ().getDisplayName ()));
 
-      final IHCNode aReplyTo = _getAsString (aEmailData.getAllReplyTo ());
+      final IHCNode aReplyTo = _getAsString (aEmailData.replyTo ());
       if (aReplyTo != null)
         aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_REPLY_TO.getDisplayText (aDisplayLocale))
                                                       .setCtrl (aReplyTo));
 
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_TO.getDisplayText (aDisplayLocale))
-                                                    .setCtrl (_getAsString (aEmailData.getAllTo ())));
+                                                    .setCtrl (_getAsString (aEmailData.to ())));
 
-      final IHCNode aCc = _getAsString (aEmailData.getAllCc ());
+      final IHCNode aCc = _getAsString (aEmailData.cc ());
       if (aCc != null)
         aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CC.getDisplayText (aDisplayLocale))
                                                       .setCtrl (aCc));
 
-      final IHCNode aBcc = _getAsString (aEmailData.getAllBcc ());
+      final IHCNode aBcc = _getAsString (aEmailData.bcc ());
       if (aBcc != null)
         aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BCC.getDisplayText (aDisplayLocale))
                                                       .setCtrl (aBcc));
