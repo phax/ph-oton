@@ -146,6 +146,8 @@
             <Import-Package>!javax.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
             <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI</Provide-Capability>
+            <!-- The latter one has precedence -->
+            <Include-Resource>{maven-resources},ph-oton-version.properties=target/classes/ph-oton-version.properties</Include-Resource>
           </instructions>
         </configuration>
       </plugin>
