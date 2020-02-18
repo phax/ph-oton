@@ -181,7 +181,7 @@ public final class InternalErrorHandler
     }
 
     final IEmailAddress aSender = aEmailSettings.getSenderAddress ();
-    final ICommonsList <IEmailAddress> aReceiver = aEmailSettings.getAllReceiverAddresses ();
+    final ICommonsList <IEmailAddress> aReceivers = aEmailSettings.getAllReceiverAddresses ();
     final ISMTPSettings aSMTPSettings = aEmailSettings.getSMTPSettings ();
 
     boolean bCanSend = true;
@@ -191,7 +191,7 @@ public final class InternalErrorHandler
       bCanSend = false;
     }
     else
-      if (aReceiver.isEmpty ())
+      if (aReceivers.isEmpty ())
       {
         LOGGER.warn ("Not sending internal error mail, because 'receiver' is not set!");
         bCanSend = false;
@@ -228,7 +228,7 @@ public final class InternalErrorHandler
 
       final EmailData aEmailData = new EmailData (EEmailType.TEXT);
       aEmailData.setFrom (aSender);
-      aEmailData.to ().addAll (aReceiver);
+      aEmailData.to ().addAll (aReceivers);
       aEmailData.setSubject (sMailSubject);
       aEmailData.setBody (sMailBody);
       aEmailData.setAttachments (aEmailAttachments);
