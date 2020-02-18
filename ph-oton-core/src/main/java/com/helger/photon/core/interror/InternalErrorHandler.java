@@ -41,6 +41,7 @@ import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.email.IEmailAddress;
@@ -308,9 +309,12 @@ public final class InternalErrorHandler
     // Date and time
     try
     {
-      aMetadata.addField ("Time", PDTWebDateHelper.getAsStringXSD (ZonedDateTime.now (Clock.systemUTC ())));
+      aMetadata.addField ("UTCTime", PDTWebDateHelper.getAsStringXSD (ZonedDateTime.now (Clock.systemUTC ())));
+      aMetadata.addField ("ZonedDateTime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentZonedDateTime ()));
+      aMetadata.addField ("LocalDateTime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
+      aMetadata.addField ("CurrentTimeMillis", Long.toString (System.currentTimeMillis ()));
     }
-    catch (final Throwable t2)
+    catch (final Exception ex)
     {
       aMetadata.addField ("Time", "System.currentTimeMillis=" + Long.toString (System.currentTimeMillis ()));
     }

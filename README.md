@@ -38,6 +38,7 @@ Contained subprojects are:
     * Updated to ph-web 9.1.10
     * Made `HttpClientSettings` configurable for `ReCaptchaServerSideValidator`
     * Improved API to be more sensitive on encoded and decoded URI paths
+    * Added different date time representations to the default `InternalErrorMetadata`
 * v8.2.2 - 2020-02-12
     * Updated to Jetty 9.4.26
     * Updated to Bootstrap 4.4.1
