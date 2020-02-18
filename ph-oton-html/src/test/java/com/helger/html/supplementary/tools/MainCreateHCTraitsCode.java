@@ -89,6 +89,13 @@ public class MainCreateHCTraitsCode
                   " (@Nullable final Iterable <? extends IHCNode> aNodes){return new " +
                   sType +
                   " ().addChildren (aNodes);}\n");
+      aSB.append ("@Nonnull default " +
+                  sType +
+                  " " +
+                  sMethod +
+                  " (@Nullable final String... aTexts){return new " +
+                  sType +
+                  " ().addChildren (aTexts);}\n");
     }
     LOGGER.info ("\n" + aSB.toString ());
   }

@@ -71,6 +71,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCBlockQuote blockquote (@Nullable final String... aTexts)
+  {
+    return new HCBlockQuote ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCCode code ()
   {
     return new HCCode ();
@@ -92,6 +98,12 @@ public interface IHCTrait
   default HCCode code (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCCode ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCCode code (@Nullable final String... aTexts)
+  {
+    return new HCCode ().addChildren (aTexts);
   }
 
   @Nonnull
@@ -119,6 +131,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCDiv div (@Nullable final String... aTexts)
+  {
+    return new HCDiv ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCEM em ()
   {
     return new HCEM ();
@@ -140,6 +158,12 @@ public interface IHCTrait
   default HCEM em (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCEM ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCEM em (@Nullable final String... aTexts)
+  {
+    return new HCEM ().addChildren (aTexts);
   }
 
   @Nonnull
@@ -167,6 +191,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCH1 h1 (@Nullable final String... aTexts)
+  {
+    return new HCH1 ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCH2 h2 ()
   {
     return new HCH2 ();
@@ -188,6 +218,12 @@ public interface IHCTrait
   default HCH2 h2 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH2 ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCH2 h2 (@Nullable final String... aTexts)
+  {
+    return new HCH2 ().addChildren (aTexts);
   }
 
   @Nonnull
@@ -215,6 +251,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCH3 h3 (@Nullable final String... aTexts)
+  {
+    return new HCH3 ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCH4 h4 ()
   {
     return new HCH4 ();
@@ -236,6 +278,12 @@ public interface IHCTrait
   default HCH4 h4 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH4 ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCH4 h4 (@Nullable final String... aTexts)
+  {
+    return new HCH4 ().addChildren (aTexts);
   }
 
   @Nonnull
@@ -263,6 +311,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCH5 h5 (@Nullable final String... aTexts)
+  {
+    return new HCH5 ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCH6 h6 ()
   {
     return new HCH6 ();
@@ -284,6 +338,12 @@ public interface IHCTrait
   default HCH6 h6 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH6 ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCH6 h6 (@Nullable final String... aTexts)
+  {
+    return new HCH6 ().addChildren (aTexts);
   }
 
   @Nonnull
@@ -311,6 +371,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCP p (@Nullable final String... aTexts)
+  {
+    return new HCP ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCPre pre ()
   {
     return new HCPre ();
@@ -332,6 +398,12 @@ public interface IHCTrait
   default HCPre pre (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCPre ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCPre pre (@Nullable final String... aTexts)
+  {
+    return new HCPre ().addChildren (aTexts);
   }
 
   @Nonnull
@@ -359,6 +431,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCSmall small (@Nullable final String... aTexts)
+  {
+    return new HCSmall ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCSpan span ()
   {
     return new HCSpan ();
@@ -380,6 +458,12 @@ public interface IHCTrait
   default HCSpan span (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCSpan ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCSpan span (@Nullable final String... aTexts)
+  {
+    return new HCSpan ().addChildren (aTexts);
   }
 
   @Nonnull
@@ -407,6 +491,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCStrong strong (@Nullable final String... aTexts)
+  {
+    return new HCStrong ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCSub sub ()
   {
     return new HCSub ();
@@ -431,6 +521,12 @@ public interface IHCTrait
   }
 
   @Nonnull
+  default HCSub sub (@Nullable final String... aTexts)
+  {
+    return new HCSub ().addChildren (aTexts);
+  }
+
+  @Nonnull
   default HCSup sup ()
   {
     return new HCSup ();
@@ -452,5 +548,11 @@ public interface IHCTrait
   default HCSup sup (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCSup ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCSup sup (@Nullable final String... aTexts)
+  {
+    return new HCSup ().addChildren (aTexts);
   }
 }
