@@ -33,13 +33,14 @@ Contained subprojects are:
 
 ## News and noteworthy
 
-* v8.2.3 - work in progress
+* v8.2.3 - 2020-02-19
     * Fixed an error with the temporary directory name creation in `JettyStarter`
     * Updated to ph-web 9.1.10
     * Made `HttpClientSettings` configurable for `ReCaptchaServerSideValidator`
     * Improved API to be more sensitive on encoded and decoded URI paths
     * Added different date time representations to the default `InternalErrorMetadata`
     * Added a new Admin page for performing a remote HTTP client call
+    * Extended traits interfaces `IHCTrait` and `IHCBootstrap4Trait`
 * v8.2.2 - 2020-02-12
     * Updated to Jetty 9.4.26
     * Updated to Bootstrap 4.4.1
@@ -219,7 +220,7 @@ Contained subprojects are:
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.2</version>
+        <version>8.2.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
