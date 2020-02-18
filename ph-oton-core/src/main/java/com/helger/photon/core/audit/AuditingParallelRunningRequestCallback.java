@@ -48,7 +48,7 @@ public class AuditingParallelRunningRequestCallback implements IParallelRunningR
   {
     final ICommonsList <String> aURLs = new CommonsArrayList <> ();
     for (final TrackedRequest aRequest : aRequests)
-      aURLs.add (aRequest.getRequestScope ().getURL ());
+      aURLs.add (aRequest.getRequestScope ().getURLDecoded ());
     AuditHelper.onAuditExecuteSuccess ("parallel-running-requests", Integer.valueOf (nParallelRequests), aURLs);
   }
 

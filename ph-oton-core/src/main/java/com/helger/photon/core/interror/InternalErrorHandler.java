@@ -339,7 +339,7 @@ public final class InternalErrorHandler
 
       try
       {
-        aMetadata.addField ("Request URL", aRequestScope.getURL ());
+        aMetadata.addField ("Request URL", aRequestScope.getURLEncoded ());
       }
       catch (final Throwable t2)
       {

@@ -159,7 +159,8 @@ public class APIPath implements Serializable
   public static APIPath createForFilter (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // ensure leading "/"
-    String sPath = RequestHelper.getPathWithinServletContext (aRequestScope.getRequest ());
+    // Ensure to use the encoded path
+    String sPath = RequestHelper.getPathWithinServletContext (aRequestScope.getRequest (), true);
     if (sPath != null && !FilenameHelper.startsWithPathSeparatorChar (sPath))
       sPath = '/' + sPath;
 
@@ -170,7 +171,8 @@ public class APIPath implements Serializable
   public static APIPath createForServlet (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // ensure leading "/"
-    String sPath = RequestHelper.getPathWithinServlet (aRequestScope.getRequest ());
+    // Ensure to use the encoded path
+    String sPath = RequestHelper.getPathWithinServlet (aRequestScope.getRequest (), true);
     if (sPath != null && !FilenameHelper.startsWithPathSeparatorChar (sPath))
       sPath = '/' + sPath;
 

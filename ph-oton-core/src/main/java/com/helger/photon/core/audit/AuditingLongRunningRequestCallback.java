@@ -46,7 +46,7 @@ public class AuditingLongRunningRequestCallback implements ILongRunningRequestCa
     AuditHelper.onAuditExecuteSuccess ("long-running-request",
                                        sUniqueRequestID,
                                        Long.valueOf (nRunningMilliseconds),
-                                       aRequestScope.getURL ());
+                                       aRequestScope.getURLEncoded ());
   }
 
   @Override

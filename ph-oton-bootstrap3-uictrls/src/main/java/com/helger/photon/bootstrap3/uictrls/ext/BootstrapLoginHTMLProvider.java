@@ -171,7 +171,7 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
 
     // Use the server-relative version without the hostname
-    final BootstrapForm aForm = new BootstrapForm (aSWEC).setAction (new SimpleURL (aRequestScope.getURI ()));
+    final BootstrapForm aForm = new BootstrapForm (aSWEC).setAction (new SimpleURL (aRequestScope.getURIDecoded ()));
 
     // Customize
     onBeforeForm (aSWEC, aForm);

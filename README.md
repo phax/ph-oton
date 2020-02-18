@@ -35,8 +35,9 @@ Contained subprojects are:
 
 * v8.2.3 - work in progress
     * Fixed an error with the temporary directory name creation in `JettyStarter`
-    * Updated to ph-web 9.1.9
+    * Updated to ph-web 9.1.10
     * Made `HttpClientSettings` configurable for `ReCaptchaServerSideValidator`
+    * Improved API to be more sensitive on encoded and decoded URI paths
 * v8.2.2 - 2020-02-12
     * Updated to Jetty 9.4.26
     * Updated to Bootstrap 4.4.1

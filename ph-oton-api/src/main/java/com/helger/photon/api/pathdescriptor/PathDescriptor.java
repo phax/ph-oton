@@ -31,6 +31,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.url.URLHelper;
 
 /**
  * This class keeps a list of {@link PathDescriptorPart} objects that are
@@ -59,9 +60,9 @@ public final class PathDescriptor implements Serializable
   }
 
   /**
-   * Check if this path descriptor matches the provided path parts. This requires
-   * that this path descriptor and the provided collection have the same number of
-   * elements and that all static and variable parts match.
+   * Check if this path descriptor matches the provided path parts. This
+   * requires that this path descriptor and the provided collection have the
+   * same number of elements and that all static and variable parts match.
    *
    * @param aPathParts
    *        The parts to
@@ -92,7 +93,10 @@ public final class PathDescriptor implements Serializable
 
       // Matching variable part?
       if (aPart.isVariable ())
-        aVariableValues.put (aPart.getName (), sPathPart);
+      {
+        // Explicitly decode here
+        aVariableValues.put (aPart.getName (), URLHelper.urlDecode (sPathPart));
+      }
     }
 
     // We've got it!

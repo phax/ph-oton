@@ -55,8 +55,8 @@ public abstract class AbstractLoginManager
   public static final String LOGIN_INFO_REMOTE_ADDRESS = "remote-address";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the remote host of the
-   * last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the remote host of
+   * the last request. Type: String.
    */
   public static final String LOGIN_INFO_REMOTE_HOST = "remote-host";
 
@@ -67,8 +67,8 @@ public abstract class AbstractLoginManager
   public static final String LOGIN_INFO_REQUEST_URI = "request-uri";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the query string of the
-   * last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the query string of
+   * the last request. Type: String.
    */
   public static final String LOGIN_INFO_QUERY_STRING = "query-string";
 
@@ -79,8 +79,8 @@ public abstract class AbstractLoginManager
   public static final String LOGIN_INFO_USER_AGENT = "user-agent";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the number of requests
-   * in this session. Type: int.
+   * Attribute name for the LoginInfo attribute that holds the number of
+   * requests in this session. Type: int.
    *
    * @since 2.1.12
    */
@@ -176,16 +176,16 @@ public abstract class AbstractLoginManager
   }
 
   /**
-   * Modify the passed {@link LoginInfo} object with details of the passed request
-   * scope. This method is called for every request!
+   * Modify the passed {@link LoginInfo} object with details of the passed
+   * request scope. This method is called for every request!
    *
    * @param aLoginInfo
    *        Login Info. Never <code>null</code>.
    * @param aRequestScope
    *        The current request scope.
    * @param bLoggedInInThisRequest
-   *        <code>true</code> if the user just logged in with this request. Added
-   *        in 3.4.0.
+   *        <code>true</code> if the user just logged in with this request.
+   *        Added in 3.4.0.
    */
   @OverrideOnDemand
   protected void modifyLoginInfo (@Nonnull final LoginInfo aLoginInfo,
@@ -195,7 +195,7 @@ public abstract class AbstractLoginManager
     // Set some debugging details
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REMOTE_ADDRESS, aRequestScope.getRemoteAddr ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REMOTE_HOST, aRequestScope.getRemoteHost ());
-    aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURI ());
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURIEncoded ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT, aRequestScope.getUserAgent ().getAsString ());
     aLoginInfo.attrs ()
@@ -289,7 +289,7 @@ public abstract class AbstractLoginManager
     {
       // Avoid double submit by simply redirecting to the desired destination
       // URL without the login parameters
-      aUnifiedResponse.setRedirect (aRequestScope.getURL ());
+      aUnifiedResponse.setRedirect (aRequestScope.getURLEncoded ());
       return EContinue.BREAK;
     }
 

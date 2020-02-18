@@ -194,18 +194,4 @@ public interface ISimpleWebExecutionContext
     return RequestParameterManager.getInstance ()
                                   .getLinkToMenuItem (sAppID, getRequestScope (), aDisplayLocale, sMenuItemID);
   }
-
-  /**
-   * Get the full URL (incl. protocol) and parameters of the current request.
-   * <br>
-   * <code>http://hostname.com:81/context/servlet/path/a/b?c=123&amp;d=789</code>
-   *
-   * @return The full URL of the current request.
-   */
-  @Nonnull
-  @Nonempty
-  default String getURL ()
-  {
-    return getRequestScope ().getURL ();
-  }
 }

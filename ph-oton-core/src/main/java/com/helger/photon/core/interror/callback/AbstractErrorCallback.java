@@ -122,8 +122,8 @@ public abstract class AbstractErrorCallback implements
     onError (t,
              null,
              sErrorCode,
-             new StringMap ().add ("action", bInit ? "init" : "read").add ("path",
-                                                                           aRes == null ? null : aRes.getPath ()));
+             new StringMap ().add ("action", bInit ? "init" : "read")
+                             .add ("path", aRes == null ? null : aRes.getPath ()));
   }
 
   public void onDAOWriteException (@Nonnull final Throwable t,
@@ -160,7 +160,7 @@ public abstract class AbstractErrorCallback implements
                "Long running request.",
                new StringMap ().add ("request-id", sUniqueRequestID)
                                .add ("millisecconds", nRunningMilliseconds)
-                               .add ("URL", aRequestScope.getURL ()));
+                               .add ("URL", aRequestScope.getURLEncoded ()));
     }
   }
 
@@ -169,7 +169,7 @@ public abstract class AbstractErrorCallback implements
   {
     final StringBuilder aURLs = new StringBuilder ();
     for (final TrackedRequest aRequest : aRequests)
-      aURLs.append ('\n').append (aRequest.getRequestScope ().getURL ());
+      aURLs.append ('\n').append (aRequest.getRequestScope ().getURLEncoded ());
     onError ((Throwable) null,
              (IRequestWebScopeWithoutResponse) null,
              "Currently " + nParallelRequests + " parallel requests are active: " + aURLs.toString (),

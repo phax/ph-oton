@@ -77,7 +77,7 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
-    LOGGER.info ("PAGE NOT FOUND " + aWPEC.getURL ());
+    LOGGER.info ("PAGE NOT FOUND " + aWPEC.getRequestScope ().getURLEncoded ());
     aNodeList.addChild (new HCH1 ().addChild (ETextBase.MESSAGE.getDisplayText (aDisplayLocale)));
   }
 }

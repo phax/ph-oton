@@ -102,7 +102,7 @@ public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
     final HCBody aBody = aHtml.body ();
     final HCSpan aSpan = aBody.addAndReturnChild (new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN));
     final HCCenter aCenter = aSpan.addAndReturnChild (new HCCenter ());
-    final HCForm aForm = aCenter.addAndReturnChild (new HCForm (new SimpleURL (aRequestScope.getURL ())));
+    final HCForm aForm = aCenter.addAndReturnChild (new HCForm (new SimpleURL (aRequestScope.getURLDecoded ())));
     aForm.setSubmitPressingEnter (true);
 
     // The hidden field that triggers the validation

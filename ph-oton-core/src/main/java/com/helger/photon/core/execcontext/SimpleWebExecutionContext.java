@@ -92,7 +92,7 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("RequestURL", m_aRequestScope.getURL ())
+    return new ToStringGenerator (this).append ("RequestURL", m_aRequestScope.getURLEncoded ())
                                        .append ("DisplayLocale", m_aDisplayLocale)
                                        .append ("MenuTree#", m_aMenuTree.getItemCount ())
                                        .append ("LoggedInUserID", getLoggedInUserID ())
