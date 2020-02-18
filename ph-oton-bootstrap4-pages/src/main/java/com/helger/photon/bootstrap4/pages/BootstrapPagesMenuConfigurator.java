@@ -62,6 +62,7 @@ import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoServletContext;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoSystemProperties;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoThirdPartyLibraries;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoThreads;
+import com.helger.photon.bootstrap4.pages.utils.BasePageUtilsHttpClient;
 import com.helger.photon.bootstrap4.pages.utils.BasePageUtilsPortChecker;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.menu.IMenuItem;
@@ -126,6 +127,7 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_DATA_TIMEZONES = "admin_data_timezones";
 
   public static final String MENU_ADMIN_UTILS = "admin_utils";
+  public static final String MENU_ADMIN_UTILS_HTTP_CLIENT = "admin_uitls_httpclient";
   public static final String MENU_ADMIN_UTILS_PORT_CHECKER = "admin_utils_portchecker";
 
   public static final String MENU_ADMIN_SETTINGS = "admin_settings";
@@ -348,6 +350,8 @@ public final class BootstrapPagesMenuConfigurator
                                                                                                  EWebPageText.PAGE_NAME_UTILS.getAsMLT (),
                                                                                                  aMenuTree))
                                                .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminUtils, new BasePageUtilsHttpClient <WPECTYPE> (MENU_ADMIN_UTILS_HTTP_CLIENT))
+             .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminUtils, new BasePageUtilsPortChecker <WPECTYPE> (MENU_ADMIN_UTILS_PORT_CHECKER))
              .setDisplayFilter (aDisplayFilter);
     return aAdminUtils;

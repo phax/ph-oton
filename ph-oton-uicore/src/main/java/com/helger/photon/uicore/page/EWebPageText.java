@@ -85,6 +85,7 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
   PAGE_NAME_DATA_LANGUAGES ("Sprachen", "Languages"),
   PAGE_NAME_DATA_TIMEZONES ("Zeitzonen", "Time zones"),
   PAGE_NAME_UTILS ("Werkzeuge", "Utilities"),
+  PAGE_NAME_UTILS_HTTP_CLIENT ("http(s) Client", "http(s) client"),
   PAGE_NAME_UTILS_PORT_CHECKER ("Port Checker", "Port checker"),
   PAGE_NAME_SETTINGS ("System Einstellungen", "System settings"),
   PAGE_NAME_SETTINGS_GLOBAL ("Globale Einstellungen", "Global settings"),

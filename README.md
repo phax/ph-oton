@@ -39,6 +39,7 @@ Contained subprojects are:
     * Made `HttpClientSettings` configurable for `ReCaptchaServerSideValidator`
     * Improved API to be more sensitive on encoded and decoded URI paths
     * Added different date time representations to the default `InternalErrorMetadata`
+    * Added a new Admin page for performing a remote HTTP client call
 * v8.2.2 - 2020-02-12
     * Updated to Jetty 9.4.26
     * Updated to Bootstrap 4.4.1
