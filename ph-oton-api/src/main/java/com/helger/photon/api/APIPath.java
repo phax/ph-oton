@@ -61,7 +61,7 @@ public class APIPath implements Serializable
   /**
    * @return The HTTP method as provided in the constructor. Never
    *         <code>null</code>.
-   * @deprecated Use {@link #getHttpMethod()} instead
+   * @deprecated in 8.2.2; Use {@link #getHttpMethod()} instead
    */
   @Deprecated
   @Nonnull
@@ -158,9 +158,10 @@ public class APIPath implements Serializable
   @Nonnull
   public static APIPath createForFilter (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    // ensure leading "/"
     // Ensure to use the encoded path
     String sPath = RequestHelper.getPathWithinServletContext (aRequestScope.getRequest (), true);
+
+    // ensure leading "/"
     if (sPath != null && !FilenameHelper.startsWithPathSeparatorChar (sPath))
       sPath = '/' + sPath;
 
@@ -170,9 +171,10 @@ public class APIPath implements Serializable
   @Nonnull
   public static APIPath createForServlet (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    // ensure leading "/"
     // Ensure to use the encoded path
     String sPath = RequestHelper.getPathWithinServlet (aRequestScope.getRequest (), true);
+
+    // ensure leading "/"
     if (sPath != null && !FilenameHelper.startsWithPathSeparatorChar (sPath))
       sPath = '/' + sPath;
 

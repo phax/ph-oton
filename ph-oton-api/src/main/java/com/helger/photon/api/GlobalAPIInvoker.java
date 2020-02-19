@@ -78,7 +78,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
     if (m_aRWLock.readLocked ( () -> m_aRegistry.getAllAPIDescriptors ().isNotEmpty ()))
-      throw new IllegalStateException ("Cannot change the registry after an API was already registered!");
+      throw new IllegalStateException ("Cannot change the registry after an API was registered!");
 
     m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
   }

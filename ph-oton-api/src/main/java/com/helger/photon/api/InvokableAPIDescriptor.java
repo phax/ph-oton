@@ -19,7 +19,6 @@ package com.helger.photon.api;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +28,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.commons.http.CHttp;
 import com.helger.commons.mime.MimeType;
 import com.helger.commons.mime.MimeTypeParser;
 import com.helger.commons.mutable.MutableInt;
@@ -167,7 +167,7 @@ public final class InvokableAPIDescriptor implements Serializable
                      "' which is not in the allowed list of " +
                      m_aDescriptor.allowedMimeTypes ());
         // Special error code HTTP 415
-        aStatusCode.set (HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+        aStatusCode.set (CHttp.HTTP_UNSUPPORTED_MEDIA_TYPE);
         return false;
       }
     }
