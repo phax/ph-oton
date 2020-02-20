@@ -497,7 +497,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                      .setCtrl (aSelectedObject.getPasswordHash ().getAlgorithmName ()));
 
     // user groups
-    final ICommonsCollection <? extends IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
+    final ICommonsList <IUserGroup> aUserGroups = aUserGroupMgr.getAllUserGroupsWithAssignedUser (aSelectedObject.getID ());
     if (aUserGroups.isEmpty ())
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -506,11 +506,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
-      CollectionHelper.getSorted (aUserGroups, IHasName.getComparatorCollating (aDisplayLocale))
-                      .forEach (aUG -> aUserGroupUI.addChild (div (new HCA (createViewURL (aWPEC,
-                                                                                           BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
-                                                                                           aUG.getID (),
-                                                                                           null)).addChild (aUG.getName ()))));
+      aUserGroups.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
+                 .forEach (aUG -> aUserGroupUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                      BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
+                                                                                      aUG.getID (),
+                                                                                      null)).addChild (aUG.getName ()))));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERGROUPS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                    Integer.toString (aUserGroups.size ())))
                                                        .setCtrl (aUserGroupUI));
@@ -526,11 +526,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     else
     {
       final HCNodeList aRoleUI = new HCNodeList ();
-      CollectionHelper.getSorted (aUserRoles, IHasName.getComparatorCollating (aDisplayLocale))
-                      .forEach (aRole -> aRoleUI.addChild (div (new HCA (createViewURL (aWPEC,
-                                                                                        BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
-                                                                                        aRole.getID (),
-                                                                                        null)).addChild (aRole.getName ()))));
+      aUserRoles.getSorted (IHasName.getComparatorCollating (aDisplayLocale))
+                .forEach (aRole -> aRoleUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                  BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
+                                                                                  aRole.getID (),
+                                                                                  null)).addChild (aRole.getName ()))));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                               Integer.toString (aUserRoles.size ())))
                                                        .setCtrl (aRoleUI));
@@ -818,7 +818,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
     else
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_ENABLED,
                                                                                                       aSelectedObject == null ? DEFAULT_USER_ENABLED
                                                                                                                               : aSelectedObject.isEnabled ())))
