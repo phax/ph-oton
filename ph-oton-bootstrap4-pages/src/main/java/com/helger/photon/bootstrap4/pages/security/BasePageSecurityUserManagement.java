@@ -836,9 +836,9 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
 
     {
-      final ICommonsCollection <String> aUserGroupIDs = aSelectedObject == null ? aWPEC.params ()
-                                                                                       .getAsStringList (FIELD_USERGROUPS)
-                                                                                : aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ());
+      final ICommonsList <String> aUserGroupIDs = aSelectedObject == null ? aWPEC.params ()
+                                                                                 .getAsStringList (FIELD_USERGROUPS)
+                                                                          : aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ());
       final HCUserGroupForUserSelect aSelect = new HCUserGroupForUserSelect (new RequestField (FIELD_USERGROUPS),
                                                                              aUserGroupIDs);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_USERGROUPS_0.getDisplayText (aDisplayLocale))
@@ -908,7 +908,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       {
         final IHCCell <?> aUserGroupCell = aRow.addCell ();
         aUserGroupMgr.getAllUserGroupsWithAssignedUser (aCurUser.getID ())
-                     .getSorted (IHasName.getComparatorCollating (aDisplayLocale))
+                     .getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
                      .forEach (aUG -> aUserGroupCell.addChild (div (new HCA (createViewURL (aWPEC,
                                                                                             BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
                                                                                             aUG.getID (),
