@@ -33,6 +33,8 @@ Contained subprojects are:
 
 ## News and noteworthy
 
+* v8.2.4 - work in progress
+    * Updated to Jetty 9.4.27
 * v8.2.3 - 2020-02-19
     * Fixed an error with the temporary directory name creation in `JettyStarter`
     * Updated to ph-web 9.1.10
