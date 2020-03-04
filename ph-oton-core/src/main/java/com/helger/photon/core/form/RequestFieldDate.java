@@ -129,7 +129,7 @@ public class RequestFieldDate extends RequestField
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("displayLocale", m_aDisplayLocale).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("DisplayLocale", m_aDisplayLocale).getToString ();
   }
 
   @Nonnull

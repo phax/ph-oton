@@ -23,6 +23,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.SessionBackedRequestFieldData;
 
+/**
+ * Default implementation of a request field with a name and an optional default
+ * value.
+ *
+ * @author Philip Helger
+ */
 public class SessionBackedRequestField extends SessionBackedRequestFieldData implements IHCRequestField
 {
   /**

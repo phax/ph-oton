@@ -25,47 +25,31 @@ import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.web.scope.IRequestParamContainer;
 
 /**
- * Special request field specially for check boxes with a fixed value.
+ * Special session backed request field specially for check boxes with a fixed
+ * value.
  *
  * @author Philip Helger
+ * @since 8.2.4
  */
-public class RequestFieldBoolean extends RequestField implements IHCRequestFieldBoolean
+public class SessionBackedRequestFieldBoolean extends SessionBackedRequestField implements IHCRequestFieldBoolean
 {
-  // predefined values
-  // Don't change them - it is expected that they are "true" and "false"!
-  public static final String VALUE_CHECKED = Boolean.TRUE.toString ();
-  public static final String VALUE_UNCHECKED = Boolean.FALSE.toString ();
-
   private final boolean m_bDefaultValue;
 
   /**
-   * Constructor using either {@link #VALUE_CHECKED} or
-   * {@link #VALUE_UNCHECKED}.
+   * Constructor using either {@link RequestFieldBoolean#VALUE_CHECKED} or
+   * {@link RequestFieldBoolean#VALUE_UNCHECKED}.
    *
    * @param sFieldName
    *        Name of the field.
    * @param bDefaultValue
    *        The status to be returned, if no request value is present.
    */
-  public RequestFieldBoolean (@Nonnull @Nonempty final String sFieldName, final boolean bDefaultValue)
+  public SessionBackedRequestFieldBoolean (@Nonnull @Nonempty final String sFieldName, final boolean bDefaultValue)
   {
-    super (sFieldName, getStringValue (bDefaultValue));
+    super (sFieldName, RequestFieldBoolean.getStringValue (bDefaultValue));
 
     // The default value is immutable
     m_bDefaultValue = bDefaultValue;
-  }
-
-  /**
-   * @param bValue
-   *        the boolean value
-   * @return The string parameter value to be used for the passed parameter.
-   *         Neither <code>null</code> nor empty.
-   */
-  @Nonnull
-  @Nonempty
-  public static String getStringValue (final boolean bValue)
-  {
-    return bValue ? VALUE_CHECKED : VALUE_UNCHECKED;
   }
 
   public boolean isChecked (@Nonnull final IRequestParamContainer aParams)
@@ -85,7 +69,7 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
       return true;
     if (!super.equals (o))
       return false;
-    final RequestFieldBoolean rhs = (RequestFieldBoolean) o;
+    final SessionBackedRequestFieldBoolean rhs = (SessionBackedRequestFieldBoolean) o;
     return m_bDefaultValue == rhs.m_bDefaultValue;
   }
 

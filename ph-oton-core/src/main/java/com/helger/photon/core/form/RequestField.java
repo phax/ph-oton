@@ -25,6 +25,12 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.RequestFieldData;
 
+/**
+ * Default implementation of a request field with a name and an optional default
+ * value.
+ * 
+ * @author Philip Helger
+ */
 public class RequestField extends RequestFieldData implements IHCRequestField
 {
   /**

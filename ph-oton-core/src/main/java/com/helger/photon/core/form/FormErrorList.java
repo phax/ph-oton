@@ -88,5 +88,4 @@ public class FormErrorList extends ErrorList
   {
     return new FormErrorList (this);
   }
-
 }
