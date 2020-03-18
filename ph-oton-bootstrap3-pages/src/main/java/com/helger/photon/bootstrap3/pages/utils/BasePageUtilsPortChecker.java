@@ -63,13 +63,13 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  *        Web Page Execution Context type
  */
 public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext> extends
-                                        AbstractBootstrapWebPage <WPECTYPE>
+                                      AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
     MSG_NOTE ("Hinweis: es können nur TCP-Ports geprüft werden.", "Note: only TCP ports can be checked."),
-    MSG_HOSTNAME ("Hostname", "Hostnmame"),
+    MSG_HOSTNAME ("Hostname", "Hostname"),
     MSG_HOSTNAME_HELPTEXT ("Es kann ein Hostname oder eine IP-Adresse angegeben werden.",
                            "A hostname or an IP address can be provided"),
     MSG_PORTS ("Port Nummer(n)", "Port(s)"),
@@ -110,15 +110,15 @@ public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext
   }
 
   public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID,
-                                     @Nonnull final String sName,
-                                     @Nullable final String sDescription)
+                                   @Nonnull final String sName,
+                                   @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
 
   public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID,
-                                     @Nonnull final IMultilingualText aName,
-                                     @Nullable final IMultilingualText aDescription)
+                                   @Nonnull final IMultilingualText aName,
+                                   @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
