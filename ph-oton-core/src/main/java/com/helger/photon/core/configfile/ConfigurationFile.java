@@ -34,9 +34,22 @@ import com.helger.commons.text.IHasDescription;
 public class ConfigurationFile implements IHasID <String>, IHasDescription
 {
   private final IReadableResource m_aRes;
+  private final String m_sID;
   private String m_sDescription;
   private Charset m_aDefaultCharset = StandardCharsets.UTF_8;
   private EConfigurationFileSyntax m_eSyntaxHighlightLanguage = EConfigurationFileSyntax.NONE;
+
+  @Nonnull
+  private static String _unify (@Nonnull final String s)
+  {
+    final StringBuilder aSB = new StringBuilder (s.length ());
+    for (final char c : s.toCharArray ())
+      if (Character.isLetterOrDigit (c))
+        aSB.append (c);
+      else
+        aSB.append ('_');
+    return aSB.toString ();
+  }
 
   /**
    * Constructor
@@ -47,12 +60,13 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   public ConfigurationFile (@Nonnull final IReadableResource aRes)
   {
     m_aRes = ValueEnforcer.notNull (aRes, "Resource");
+    m_sID = _unify (m_aRes.getPath ());
   }
 
   @Nonnull
   public String getID ()
   {
-    return m_aRes.getPath ();
+    return m_sID;
   }
 
   @Nonnull
@@ -133,6 +147,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   public String toString ()
   {
     return new ToStringGenerator (this).append ("Resource", m_aRes)
+                                       .append ("ID", m_sID)
                                        .append ("Description", m_sDescription)
                                        .append ("DefaultCharset", m_aDefaultCharset)
                                        .append ("Syntax", m_eSyntaxHighlightLanguage)
