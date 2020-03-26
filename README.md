@@ -37,6 +37,8 @@ Contained subprojects are:
     * Updated to Jetty 9.4.27
     * Updated to Log4j 2.13.1
     * Added new classes `SessionBackedRequestFieldBoolean` and `SessionBackedRequestFieldBooleanMultiValue`
+    * Added new configuration file syntax `JSON`
+    * Fixed an issue with the configuration file ID for the tab
 * v8.2.3 - 2020-02-19
     * Fixed an error with the temporary directory name creation in `JettyStarter`
     * Updated to ph-web 9.1.10
