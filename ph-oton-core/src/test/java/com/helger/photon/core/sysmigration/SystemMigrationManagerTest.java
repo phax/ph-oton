@@ -25,8 +25,6 @@ import org.junit.Test;
 
 import com.helger.dao.DAOException;
 import com.helger.photon.app.mock.PhotonAppTestRule;
-import com.helger.photon.core.sysmigration.SystemMigrationManager;
-import com.helger.photon.core.sysmigration.SystemMigrationResult;
 
 public final class SystemMigrationManagerTest
 {

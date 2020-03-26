@@ -35,8 +35,6 @@ import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.MenuTree;
 import com.helger.photon.core.page.AbstractPage;
-import com.helger.photon.core.requestparam.PhotonRequestParameters;
-import com.helger.photon.core.requestparam.RequestParameterHandlerURLPathNamed;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 

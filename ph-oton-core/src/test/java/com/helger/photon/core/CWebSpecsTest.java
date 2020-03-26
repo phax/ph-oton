@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.photon.core.CWebSpecs;
 import com.helger.xml.schema.XMLSchemaCache;
 
 /**

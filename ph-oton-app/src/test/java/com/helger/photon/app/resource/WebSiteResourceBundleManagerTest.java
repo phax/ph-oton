@@ -29,9 +29,6 @@ import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.PhotonAppManager;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
-import com.helger.photon.app.resource.WebSiteResourceBundleManager;
-import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
-import com.helger.photon.app.resource.WebSiteResourceWithCondition;
 
 /**
  * Test class for class {@link WebSiteResourceBundleManager}.

@@ -25,7 +25,6 @@ import org.junit.rules.TestRule;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.id.factory.IIntIDFactory;
-import com.helger.photon.app.io.WebIOIntIDFactory;
 import com.helger.photon.app.mock.PhotonAppTestRule;
 
 /**

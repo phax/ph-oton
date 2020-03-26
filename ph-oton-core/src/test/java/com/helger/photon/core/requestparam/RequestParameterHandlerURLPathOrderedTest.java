@@ -33,8 +33,6 @@ import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.MenuTree;
 import com.helger.photon.core.page.AbstractPage;
-import com.helger.photon.core.requestparam.PhotonRequestParameters;
-import com.helger.photon.core.requestparam.RequestParameterHandlerURLPathOrdered;
 import com.helger.servlet.mock.MockHttpServletRequest;
 import com.helger.servlet.mock.MockHttpServletResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
