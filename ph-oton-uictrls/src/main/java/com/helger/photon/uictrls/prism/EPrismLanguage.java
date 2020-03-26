@@ -69,6 +69,8 @@ public enum EPrismLanguage implements ICSSClassProvider
         return APACHECONF;
       case XML:
         return MARKUP;
+      case JSON:
+        return JAVASCRIPT;
     }
     // Default fallback
     return EPrismLanguage.NONE;

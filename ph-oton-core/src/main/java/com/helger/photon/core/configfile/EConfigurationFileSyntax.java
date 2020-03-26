@@ -32,7 +32,8 @@ public enum EConfigurationFileSyntax implements IHasID <String>
 {
   NONE ("none"),
   PROPERTIES ("properties"),
-  XML ("xml");
+  XML ("xml"),
+  JSON ("json");
 
   private final String m_sID;
 
