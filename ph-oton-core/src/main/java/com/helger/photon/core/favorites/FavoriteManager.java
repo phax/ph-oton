@@ -18,7 +18,6 @@ package com.helger.photon.core.favorites;
 
 import java.util.Comparator;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -128,19 +127,19 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nonnegative
   public long getSize ()
   {
-    return m_aRWLock.readLocked (m_aMap::getTotalValueCount);
+    return m_aRWLock.readLockedLong (m_aMap::getTotalValueCount);
   }
 
   public boolean isEmpty ()
   {
-    return m_aRWLock.readLocked (m_aMap::isEmpty);
+    return m_aRWLock.readLockedBoolean (m_aMap::isEmpty);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllUserIDsWithFavorites ()
   {
-    return m_aRWLock.readLocked ((Supplier <ICommonsSet <String>>) m_aMap::copyOfKeySet);
+    return m_aRWLock.readLockedGet (m_aMap::copyOfKeySet);
   }
 
   /**
@@ -153,7 +152,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @ReturnsMutableCopy
   public ICommonsList <IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
   {
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
+    return m_aRWLock.readLockedGet ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
   }
 
   @Nonnull
@@ -188,7 +187,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     if (StringHelper.hasNoText (sUserID))
       return false;
 
-    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
     return aFavorites != null && aFavorites.isNotEmpty ();
   }
 
@@ -234,9 +233,9 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   {
     if (StringHelper.hasText (sUserID) && StringHelper.hasText (sApplicationID) && StringHelper.hasText (sMenuItemID))
     {
-      final ICommonsList <Favorite> aFavs = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+      final ICommonsList <Favorite> aFavs = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
       if (aFavs != null)
-        return aFavs.findFirst (aFavorite -> aFavorite.hasSameContent (sApplicationID, sMenuItemID, aAdditionalParams));
+        return aFavs.findFirst (x -> x.hasSameContent (sApplicationID, sMenuItemID, aAdditionalParams));
     }
     return null;
   }
@@ -246,9 +245,9 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   {
     if (StringHelper.hasText (sUserID) && StringHelper.hasText (sFavoriteID))
     {
-      final ICommonsList <Favorite> aFavs = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+      final ICommonsList <Favorite> aFavs = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
       if (aFavs != null)
-        return aFavs.findFirst (aFavorite -> aFavorite.getID ().equals (sFavoriteID));
+        return aFavs.findFirst (x -> x.getID ().equals (sFavoriteID));
     }
     return null;
   }
@@ -317,7 +316,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
                                  @Nullable final Map <String, String> aAdditionalParams)
   {
 
-    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
     final Favorite aFavorite = aFavorites == null ? null : aFavorites.findFirst (x -> x.getID ().equals (sID));
     if (aFavorite == null)
     {
@@ -365,7 +364,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nullable
   public EChange removeFavorite (@Nullable final String sUserID, @Nullable final String sID)
   {
-    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLocked ( () -> m_aMap.get (sUserID));
+    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
     final Favorite aFavorite = aFavorites == null ? null : aFavorites.findFirst (x -> x.getID ().equals (sID));
     if (aFavorite == null)
     {

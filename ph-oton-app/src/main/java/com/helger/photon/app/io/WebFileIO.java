@@ -59,7 +59,7 @@ public final class WebFileIO
 
   public static boolean setSilentMode (final boolean bSilentMode)
   {
-    return s_aRWLock.writeLocked ( () -> {
+    return s_aRWLock.writeLockedBoolean ( () -> {
       final boolean bOld = s_bSilentMode;
       s_bSilentMode = bSilentMode;
       return bOld;
@@ -68,7 +68,7 @@ public final class WebFileIO
 
   public static boolean isSilentMode ()
   {
-    return s_aRWLock.readLocked ( () -> s_bSilentMode);
+    return s_aRWLock.readLockedBoolean ( () -> s_bSilentMode);
   }
 
   public static void initPaths (@Nonnull final File aDataPath,
@@ -123,7 +123,7 @@ public final class WebFileIO
    */
   public static boolean isInited ()
   {
-    return s_aRWLock.readLocked ( () -> s_aDataPath != null);
+    return s_aRWLock.readLockedBoolean ( () -> s_aDataPath != null);
   }
 
   /**
@@ -135,7 +135,7 @@ public final class WebFileIO
   @Nonnull
   public static IFileRelativeIO getDataIO ()
   {
-    final IFileRelativeIO ret = s_aRWLock.readLocked ( () -> s_aDataPath);
+    final IFileRelativeIO ret = s_aRWLock.readLockedGet ( () -> s_aDataPath);
     if (ret == null)
       throw new IllegalStateException ("Data path was not initialized!");
     return ret;
@@ -151,7 +151,7 @@ public final class WebFileIO
   @Nonnull
   public static IPathRelativeIO getServletContextIO ()
   {
-    final IPathRelativeIO ret = s_aRWLock.readLocked ( () -> s_aServletContextPath);
+    final IPathRelativeIO ret = s_aRWLock.readLockedGet ( () -> s_aServletContextPath);
     if (ret == null)
       throw new IllegalStateException ("Servlet context path was not initialized!");
     return ret;

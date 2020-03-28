@@ -116,13 +116,13 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
 
   public final boolean isReadEveryTime ()
   {
-    return m_aRWLock.readLocked ( () -> m_bReadEveryTime);
+    return m_aRWLock.readLockedBoolean ( () -> m_bReadEveryTime);
   }
 
   @Nonnull
   public final AbstractWebPageResourceContent <WPECTYPE> setReadEveryTime (final boolean bReadEveryTime)
   {
-    m_aRWLock.writeLocked ( () -> m_bReadEveryTime = bReadEveryTime);
+    m_aRWLock.writeLockedBoolean ( () -> m_bReadEveryTime = bReadEveryTime);
     return this;
   }
 

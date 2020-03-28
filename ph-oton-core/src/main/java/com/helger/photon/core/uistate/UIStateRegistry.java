@@ -51,14 +51,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class UIStateRegistry extends AbstractSessionWebSingleton
-                                   implements IScopeRenewalAware, ISessionWebScopeDontPassivate
+public final class UIStateRegistry extends AbstractSessionWebSingleton implements
+                                   IScopeRenewalAware,
+                                   ISessionWebScopeDontPassivate
 {
   /** ObjectType */
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");
   private static final Logger LOGGER = LoggerFactory.getLogger (UIStateRegistry.class);
 
-  private final ICommonsMap <ObjectType, ICommonsMap <String, IHasUIState>> m_aMap = new CommonsHashMap<> ();
+  private final ICommonsMap <ObjectType, ICommonsMap <String, IHasUIState>> m_aMap = new CommonsHashMap <> ();
 
   @UsedViaReflection
   @Deprecated
@@ -90,7 +91,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
     if (StringHelper.hasNoText (sStateID))
       return null;
 
-    return m_aRWLock.readLocked ( () -> {
+    return m_aRWLock.readLockedGet ( () -> {
       IHasUIState ret = null;
 
       // Get mapping for requested ObjectType
@@ -164,8 +165,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
     if (aOT == null)
       throw new IllegalStateException ("Object has no typeID: " + aNewState);
 
-    return m_aRWLock.writeLocked ( () -> {
-      final Map <String, IHasUIState> aMap = m_aMap.computeIfAbsent (aOT, k -> new CommonsHashMap<> ());
+    return m_aRWLock.writeLockedGet ( () -> {
+      final Map <String, IHasUIState> aMap = m_aMap.computeIfAbsent (aOT, k -> new CommonsHashMap <> ());
 
       if (LOGGER.isDebugEnabled () && aMap.containsKey (sStateID))
         LOGGER.debug ("Overwriting " + aOT.getName () + " with ID " + sStateID + " with new object");
@@ -207,7 +208,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton
   {
     ValueEnforcer.notEmpty (sStateID, "StateID");
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       final ICommonsMap <String, IHasUIState> aMap = m_aMap.get (aObjectType);
       if (aMap == null)
         return EChange.UNCHANGED;

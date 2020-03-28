@@ -69,7 +69,7 @@ public final class BootstrapCustomConfig
   @Nonempty
   public static ICommonsList <ICSSPathProvider> getAllBootstrapCSS ()
   {
-    return s_aRWLock.readLocked ( () -> s_aCSS.getClone ());
+    return s_aRWLock.readLockedGet (s_aCSS::getClone);
   }
 
   public static void setBootstrapJS (@Nonnull @Nonempty final IJSPathProvider... aJSPathProvider)
@@ -87,6 +87,6 @@ public final class BootstrapCustomConfig
   @Nonempty
   public static ICommonsList <IJSPathProvider> getAllBootstrapJS ()
   {
-    return s_aRWLock.readLocked ( () -> s_aJS.getClone ());
+    return s_aRWLock.readLockedGet (s_aJS::getClone);
   }
 }

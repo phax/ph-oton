@@ -99,7 +99,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       // Check uniqueness
       if (!m_aItems.add (aJSPathProvider))
         return EChange.UNCHANGED;
@@ -151,7 +151,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (!m_aItems.remove (aJSPathProvider))
         return EChange.UNCHANGED;
       m_aList.remove (aJSPathProvider);
@@ -165,7 +165,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @Nonnull
   public EChange removeAll ()
   {
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (m_aItems.isEmpty ())
         return EChange.UNCHANGED;
       m_aItems.clear ();
@@ -181,36 +181,36 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @ReturnsMutableCopy
   public ICommonsOrderedSet <IJSPathProvider> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet <> (m_aList));
+    return m_aRWLock.readLockedGet ( () -> new CommonsLinkedHashSet <> (m_aList));
   }
 
   public void getAllItems (@Nonnull final Collection <? super IJSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
-    m_aRWLock.readLocked ( () -> aTarget.addAll (m_aList));
+    m_aRWLock.readLockedBoolean ( () -> aTarget.addAll (m_aList));
   }
 
   public boolean isEmpty ()
   {
-    return m_aRWLock.readLocked (m_aList::isEmpty);
+    return m_aRWLock.readLockedBoolean (m_aList::isEmpty);
   }
 
   public boolean isNotEmpty ()
   {
-    return m_aRWLock.readLocked (m_aList::isNotEmpty);
+    return m_aRWLock.readLockedBoolean (m_aList::isNotEmpty);
   }
 
   @Nonnegative
   public int getCount ()
   {
-    return m_aRWLock.readLocked (m_aList::size);
+    return m_aRWLock.readLockedInt (m_aList::size);
   }
 
   @Nonnull
   public Iterator <IJSPathProvider> iterator ()
   {
-    return m_aRWLock.readLocked (m_aList::iterator);
+    return m_aRWLock.readLockedGet (m_aList::iterator);
   }
 
   public void markAsCollected ()

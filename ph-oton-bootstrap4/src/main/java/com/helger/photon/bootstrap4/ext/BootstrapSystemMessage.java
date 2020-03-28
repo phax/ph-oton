@@ -52,7 +52,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   @Nonnull
   public static ISystemMessageRenderer getDefaultFormatter ()
   {
-    return s_aRWLock.readLocked ( () -> s_aFormatter);
+    return s_aRWLock.readLockedGet ( () -> s_aFormatter);
   }
 
   /**
@@ -65,7 +65,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   public static void setDefaultFormatter (@Nonnull final ISystemMessageRenderer aFormatter)
   {
     ValueEnforcer.notNull (aFormatter, "Formatter");
-    s_aRWLock.writeLocked ( () -> s_aFormatter = aFormatter);
+    s_aRWLock.writeLockedGet ( () -> s_aFormatter = aFormatter);
   }
 
   public static boolean isDefaultMarkdown ()

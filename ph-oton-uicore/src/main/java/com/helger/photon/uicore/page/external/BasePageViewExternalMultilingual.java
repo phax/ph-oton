@@ -51,8 +51,8 @@ import com.helger.xml.microdom.IMicroNode;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext>
-                                              extends AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext> extends
+                                              AbstractWebPageResourceContent <WPECTYPE>
 {
   @NotThreadSafe
   private static final class ContentPerLocale implements Serializable
@@ -93,7 +93,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
 
   private final Locale m_aDefaultLocale;
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <Locale, ContentPerLocale> m_aContent = new CommonsHashMap<> ();
+  private final ICommonsMap <Locale, ContentPerLocale> m_aContent = new CommonsHashMap <> ();
 
   @Nonnull
   private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)
@@ -159,7 +159,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     if (aLocale == null)
       return null;
 
-    return m_aRWLock.readLocked ( () -> {
+    return m_aRWLock.readLockedGet ( () -> {
       // Determine locale to use
       final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrNull (aLocale, m_aContent.keySet ());
       if (aLocaleToUse == null)
@@ -196,7 +196,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode = m_aRWLock.readLocked ( () -> {
+    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> {
       // Use the default locale as fallback, since we ensured that the default
       // locale is contained!
       final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale,

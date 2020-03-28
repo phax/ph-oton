@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,6 +43,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -66,44 +68,39 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   @GuardedBy ("m_aRWLock")
   // Key: lockedObjectID, value: lock-info
   private final ICommonsMap <IDTYPE, ILockInfo> m_aLockedObjs = new CommonsHashMap <> ();
-  @GuardedBy ("m_aRWLock")
-  private boolean m_bSilentMode = false;
+  private final AtomicBoolean m_aSilentMode = new AtomicBoolean (GlobalDebug.DEFAULT_SILENT_MODE);
 
   public DefaultLockManager (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     setCurrentUserIDProvider (aCurrentUserIDProvider);
   }
 
-  public boolean setSilentMode (final boolean bSilentMode)
-  {
-    return m_aRWLock.writeLocked ( () -> {
-      final boolean bOld = m_bSilentMode;
-      m_bSilentMode = bSilentMode;
-      return bOld;
-    });
-  }
-
   public boolean isSilentMode ()
   {
-    return m_aRWLock.readLocked ( () -> m_bSilentMode);
+    return m_aSilentMode.get ();
+  }
+
+  public boolean setSilentMode (final boolean bSilentMode)
+  {
+    return m_aSilentMode.getAndSet (bSilentMode);
   }
 
   public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
-    m_aRWLock.writeLocked ( () -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
+    m_aRWLock.writeLockedGet ( () -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
   }
 
   @Nullable
   private String _getCurrentUserID ()
   {
-    return m_aRWLock.readLocked ( () -> m_aCurrentUserIDProvider.getCurrentUserID ());
+    return m_aRWLock.readLockedGet ( () -> m_aCurrentUserIDProvider.getCurrentUserID ());
   }
 
   @Nullable
   public final ILockInfo getLockInfo (@Nullable final IDTYPE aObjID)
   {
-    return m_aRWLock.readLocked ( () -> m_aLockedObjs.get (aObjID));
+    return m_aRWLock.readLockedGet ( () -> m_aLockedObjs.get (aObjID));
   }
 
   @Nullable
@@ -380,14 +377,14 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   @ReturnsMutableCopy
   public final ICommonsSet <IDTYPE> getAllLockedObjects ()
   {
-    return m_aRWLock.readLocked ( () -> m_aLockedObjs.copyOfKeySet ());
+    return m_aRWLock.readLockedGet (m_aLockedObjs::copyOfKeySet);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final ICommonsMap <IDTYPE, ILockInfo> getAllLockInfos ()
   {
-    return m_aRWLock.readLocked ( () -> m_aLockedObjs.getClone ());
+    return m_aRWLock.readLockedGet (m_aLockedObjs::getClone);
   }
 
   @Nonnull
@@ -419,7 +416,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   {
     return new ToStringGenerator (this).append ("CurrentUserIDProvider", m_aCurrentUserIDProvider)
                                        .append ("LockedObjects", m_aLockedObjs)
-                                       .append ("SilentMode", m_bSilentMode)
+                                       .append ("SilentMode", m_aSilentMode)
                                        .getToString ();
   }
 }

@@ -50,7 +50,7 @@ public final class AuditHelper
   @Nonnull
   public static IAuditor getAuditor ()
   {
-    return s_aRWLock.readLocked ( () -> s_aAuditor);
+    return s_aRWLock.readLockedGet ( () -> s_aAuditor);
   }
 
   /**
@@ -63,7 +63,7 @@ public final class AuditHelper
   {
     ValueEnforcer.notNull (aAuditor, "Auditor");
 
-    s_aRWLock.writeLocked ( () -> s_aAuditor = aAuditor);
+    s_aRWLock.writeLockedGet ( () -> s_aAuditor = aAuditor);
   }
 
   /**

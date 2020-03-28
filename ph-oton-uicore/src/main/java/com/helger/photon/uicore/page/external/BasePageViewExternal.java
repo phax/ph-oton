@@ -44,8 +44,8 @@ import com.helger.xml.microdom.IMicroNode;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
-                                  extends AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends
+                                  AbstractWebPageResourceContent <WPECTYPE>
 {
   protected final IReadableResource m_aResource;
   @GuardedBy ("m_aRWLock")
@@ -102,12 +102,12 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
   @ReturnsMutableCopy
   public IMicroContainer getParsedContent ()
   {
-    return m_aRWLock.readLocked ( () -> m_aParsedContent.getClone ());
+    return m_aRWLock.readLockedGet (m_aParsedContent::getClone);
   }
 
   public void updateFromResource ()
   {
-    m_aRWLock.writeLocked ( () -> m_aParsedContent = _readFromResource (m_aResource));
+    m_aRWLock.writeLockedGet ( () -> m_aParsedContent = _readFromResource (m_aResource));
   }
 
   @Override
@@ -117,8 +117,8 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode = m_aRWLock.readLocked ( () -> bReadFromResource ? _readFromResource (m_aResource)
-                                                                            : m_aParsedContent);
+    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> bReadFromResource ? _readFromResource (m_aResource)
+                                                                               : m_aParsedContent);
 
     aNodeList.addChild (new HCDOMWrapper (aNode));
   }
@@ -127,8 +127,8 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext>
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("resource", m_aResource)
-                            .append ("parsedContent", m_aParsedContent)
+                            .append ("Resource", m_aResource)
+                            .append ("ParsedContent", m_aParsedContent)
                             .getToString ();
   }
 }

@@ -121,7 +121,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
 
         final boolean bIsDuplicate = m_bFilterDuplicates &&
                                      StringHelper.hasText (sBlockedURI) &&
-                                     m_aRWLock.writeLocked ( () -> !m_aBlockedURIs.add (sBlockedURI));
+                                     m_aRWLock.writeLockedBoolean ( () -> !m_aBlockedURIs.add (sBlockedURI));
 
         if (bIsDuplicate)
         {
@@ -149,12 +149,12 @@ public class CSPReportingXServletHandler implements IXServletHandler
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllBlockedURIs ()
   {
-    return m_aRWLock.readLocked ( () -> m_aBlockedURIs.getClone ());
+    return m_aRWLock.readLockedGet (m_aBlockedURIs::getClone);
   }
 
   @Nonnull
   public EChange clearAllBlockedURIs ()
   {
-    return m_aRWLock.readLocked ( () -> m_aBlockedURIs.removeAll ());
+    return m_aRWLock.readLockedGet (m_aBlockedURIs::removeAll);
   }
 }

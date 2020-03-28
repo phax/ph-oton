@@ -62,7 +62,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   @Nullable
   public String getDefaultApplicationID ()
   {
-    return m_aRWLock.readLocked ( () -> m_sDefaultApplicationID);
+    return m_aRWLock.readLockedGet ( () -> m_sDefaultApplicationID);
   }
 
   /**

@@ -252,14 +252,14 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
   @ReturnsMutableCopy
   public ICommonsMap <String, WebSiteResourceBundleSerialized> getAllResourceBundles ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMapToBundle.getClone ());
+    return m_aRWLock.readLockedGet (m_aMapToBundle::getClone);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <WebSiteResourceBundleSerialized> getAllResourceBundlesSerialized ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMapToBundle.copyOfValues ());
+    return m_aRWLock.readLockedGet (m_aMapToBundle::copyOfValues);
   }
 
   /**
@@ -275,7 +275,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     if (StringHelper.hasNoText (sBundleID))
       return null;
 
-    return m_aRWLock.readLocked ( () -> m_aMapToBundle.get (sBundleID));
+    return m_aRWLock.readLockedGet ( () -> m_aMapToBundle.get (sBundleID));
   }
 
   /**
@@ -291,7 +291,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     if (StringHelper.hasNoText (sBundleID))
       return false;
 
-    return m_aRWLock.readLocked ( () -> m_aMapToBundle.containsKey (sBundleID));
+    return m_aRWLock.readLockedBoolean ( () -> m_aMapToBundle.containsKey (sBundleID));
   }
 
   @Nonnull

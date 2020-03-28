@@ -72,55 +72,55 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerAdded (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLocked ( () -> m_aAdded.put (aObj.getID (), aObj));
+    m_aRWLock.writeLockedGet ( () -> m_aAdded.put (aObj.getID (), aObj));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final ICommonsList <ITypedObject <String>> getAllAdded ()
   {
-    return m_aRWLock.readLocked ( () -> m_aAdded.copyOfValues ());
+    return m_aRWLock.readLockedGet (m_aAdded::copyOfValues);
   }
 
   @Nonnegative
   public final int getAddedCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aAdded.size ());
+    return m_aRWLock.readLockedInt (m_aAdded::size);
   }
 
   public final boolean containsAdded (@Nonnull final ITypedObject <String> aObj)
   {
     // linear scanning :(
-    return m_aRWLock.readLocked ( () -> m_aAdded.containsKey (aObj.getID ()));
+    return m_aRWLock.readLockedBoolean ( () -> m_aAdded.containsKey (aObj.getID ()));
   }
 
   public final void registerChanged (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLocked ( () -> m_aChanged.put (aObj.getID (), aObj));
+    m_aRWLock.writeLockedGet ( () -> m_aChanged.put (aObj.getID (), aObj));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public final ICommonsList <ITypedObject <String>> getAllChanged ()
   {
-    return m_aRWLock.readLocked ( () -> m_aChanged.copyOfValues ());
+    return m_aRWLock.readLockedGet (m_aChanged::copyOfValues);
   }
 
   @Nonnegative
   public final int getChangedCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aChanged.size ());
+    return m_aRWLock.readLockedInt (m_aChanged::size);
   }
 
   public final boolean containsChanged (@Nonnull final ITypedObject <String> aObj)
   {
     // linear scanning :(
-    return m_aRWLock.readLocked ( () -> m_aChanged.containsKey (aObj.getID ()));
+    return m_aRWLock.readLockedBoolean ( () -> m_aChanged.containsKey (aObj.getID ()));
   }
 
   public final void registerFailed (final String sID)
   {
-    m_aRWLock.writeLocked ( () -> m_aFailed.add (sID));
+    m_aRWLock.writeLockedBoolean ( () -> m_aFailed.add (sID));
   }
 
   /**
@@ -130,19 +130,19 @@ public class BulkImportResult implements ISuccessIndicator
   @ReturnsMutableCopy
   public final ICommonsList <String> getAllFailed ()
   {
-    return m_aRWLock.readLocked ( () -> m_aFailed.getClone ());
+    return m_aRWLock.readLockedGet (m_aFailed::getClone);
   }
 
   @Nonnegative
   public final int getFailedCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aFailed.size ());
+    return m_aRWLock.readLockedInt (m_aFailed::size);
   }
 
   public final boolean containsFailed (@Nullable final String sID)
   {
     // linear scanning :(
-    return m_aRWLock.readLocked ( () -> m_aFailed.contains (sID));
+    return m_aRWLock.readLockedBoolean ( () -> m_aFailed.contains (sID));
   }
 
   public final void addWarning (final String sWarningMsg)
@@ -163,7 +163,7 @@ public class BulkImportResult implements ISuccessIndicator
   @ReturnsMutableCopy
   public final ICommonsList <String> getAllWarnings ()
   {
-    return m_aRWLock.readLocked ( () -> m_aWarnings.getClone ());
+    return m_aRWLock.readLockedGet (m_aWarnings::getClone);
   }
 
   /**
@@ -172,12 +172,12 @@ public class BulkImportResult implements ISuccessIndicator
   @Nonnegative
   public final int getWarningsCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aWarnings.size () + m_nAdditionalWarnings);
+    return m_aRWLock.readLockedInt ( () -> m_aWarnings.size () + m_nAdditionalWarnings);
   }
 
   public final void setSuccess (final boolean bSuccess)
   {
-    m_aRWLock.writeLocked ( () -> m_bSuccess = bSuccess);
+    m_aRWLock.writeLockedBoolean ( () -> m_bSuccess = bSuccess);
   }
 
   /**
@@ -189,6 +189,6 @@ public class BulkImportResult implements ISuccessIndicator
   @Override
   public final boolean isSuccess ()
   {
-    return m_aRWLock.readLocked ( () -> m_bSuccess);
+    return m_aRWLock.readLockedBoolean ( () -> m_bSuccess);
   }
 }

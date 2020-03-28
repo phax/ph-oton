@@ -100,7 +100,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       // Check uniqueness
       if (!m_aSet.add (aCSSPathProvider))
         return EChange.UNCHANGED;
@@ -152,7 +152,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (!m_aSet.remove (aCSSPathProvider))
         return EChange.UNCHANGED;
       m_aList.remove (aCSSPathProvider);
@@ -166,7 +166,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   @Nonnull
   public EChange removeAll ()
   {
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (m_aSet.isEmpty ())
         return EChange.UNCHANGED;
       m_aSet.clear ();
@@ -181,36 +181,36 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   @ReturnsMutableCopy
   public ICommonsOrderedSet <ICSSPathProvider> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> new CommonsLinkedHashSet <> (m_aList));
+    return m_aRWLock.readLockedGet ( () -> new CommonsLinkedHashSet <> (m_aList));
   }
 
   public void getAllItems (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
-    m_aRWLock.readLocked ( () -> aTarget.addAll (m_aList));
+    m_aRWLock.readLockedBoolean ( () -> aTarget.addAll (m_aList));
   }
 
   public boolean isEmpty ()
   {
-    return m_aRWLock.readLocked (m_aList::isEmpty);
+    return m_aRWLock.readLockedBoolean (m_aList::isEmpty);
   }
 
   public boolean isNotEmpty ()
   {
-    return m_aRWLock.readLocked (m_aList::isNotEmpty);
+    return m_aRWLock.readLockedBoolean (m_aList::isNotEmpty);
   }
 
   @Nonnegative
   public int getCount ()
   {
-    return m_aRWLock.readLocked (m_aList::size);
+    return m_aRWLock.readLockedInt (m_aList::size);
   }
 
   @Nonnull
   public Iterator <ICSSPathProvider> iterator ()
   {
-    return m_aRWLock.readLocked (m_aList::iterator);
+    return m_aRWLock.readLockedGet (m_aList::iterator);
   }
 
   public void markAsCollected ()

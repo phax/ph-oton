@@ -138,21 +138,21 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
   @Nonnegative
   public int getAuditItemCount ()
   {
-    return m_aRWLock.readLocked (m_aItems::getItemCount);
+    return m_aRWLock.readLockedInt (m_aItems::getItemCount);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IAuditItem> getAllAuditItems ()
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.getAllItems ());
+    return m_aRWLock.readLockedGet (m_aItems::getAllItems);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.getLastItems (nMaxItems));
+    return m_aRWLock.readLockedGet ( () -> m_aItems.getLastItems (nMaxItems));
   }
 
   @Override

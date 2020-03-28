@@ -139,7 +139,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
   {
-    return m_aRWLock.readLocked ( () -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
+    return m_aRWLock.readLockedGet ( () -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
   }
 
   @Nonnull
@@ -170,7 +170,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllMigrationIDs ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfKeySet ());
+    return m_aRWLock.readLockedGet (m_aMap::copyOfKeySet);
   }
 
   /**
@@ -237,9 +237,9 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
         final SuccessWithValue <String> ret = aMigrationAction.get ();
 
         LOGGER.info ("Finished performing migration '" +
-                        sMigrationID +
-                        "' with status " +
-                        (ret.isSuccess () ? "success" : "error"));
+                     sMigrationID +
+                     "' with status " +
+                     (ret.isSuccess () ? "success" : "error"));
 
         // Success or error
         if (ret.isSuccess ())

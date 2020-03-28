@@ -65,7 +65,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   @Nonnull
   public IAjaxRegistry getRegistry ()
   {
-    return m_aRWLock.readLocked ( () -> m_aRegistry);
+    return m_aRWLock.readLockedGet ( () -> m_aRegistry);
   }
 
   /**
@@ -80,16 +80,16 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   public void setRegistry (@Nonnull final IAjaxRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
-    if (m_aRWLock.readLocked ( () -> m_aRegistry.getAllRegisteredFunctions ().isNotEmpty ()))
+    if (m_aRWLock.readLockedBoolean ( () -> m_aRegistry.getAllRegisteredFunctions ().isNotEmpty ()))
       throw new IllegalStateException ("Cannot change the registry after a function was already registered!");
 
-    m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
+    m_aRWLock.writeLockedGet ( () -> m_aRegistry = aRegistry);
   }
 
   @Nonnull
   public IAjaxInvoker getInvoker ()
   {
-    return m_aRWLock.readLocked ( () -> m_aInvoker);
+    return m_aRWLock.readLockedGet ( () -> m_aInvoker);
   }
 
   /**
@@ -104,7 +104,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   public void setInvoker (@Nonnull final IAjaxInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
-    m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);
+    m_aRWLock.writeLockedGet ( () -> m_aInvoker = aInvoker);
   }
 
   @Override

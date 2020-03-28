@@ -120,10 +120,10 @@ public final class DataTablesServerData implements IHasUIState
 
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Having ServerSide DataTables with " +
-                       aTable.getBodyRowCount () +
-                       " rows and a total of " +
-                       nCells +
-                       " cells");
+                    aTable.getBodyRowCount () +
+                    " rows and a total of " +
+                    nCells +
+                    " cells");
     m_aDisplayLocale = aDisplayLocale;
     m_aServerSortState = new DataTablesServerSortState (this, aDisplayLocale);
     m_eFilterType = eFilterType;
@@ -161,7 +161,7 @@ public final class DataTablesServerData implements IHasUIState
 
   public boolean hasServerSortState (@Nonnull final DataTablesServerSortState aOtherserverSortState)
   {
-    return m_aRWLock.readLocked ( () -> m_aServerSortState.equals (aOtherserverSortState));
+    return m_aRWLock.readLockedBoolean ( () -> m_aServerSortState.equals (aOtherserverSortState));
   }
 
   public void setServerSortStateAndSort (@Nonnull final DataTablesServerSortState aNewServerSortState)
@@ -179,7 +179,7 @@ public final class DataTablesServerData implements IHasUIState
   @Nonnegative
   public int getRowCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aRows.size ());
+    return m_aRWLock.readLockedInt (m_aRows::size);
   }
 
   /**
@@ -197,7 +197,7 @@ public final class DataTablesServerData implements IHasUIState
   @ReturnsMutableCopy
   public ICommonsList <DataTablesServerDataRow> getAllRows ()
   {
-    return m_aRWLock.readLocked ( () -> m_aRows.getClone ());
+    return m_aRWLock.readLockedGet (m_aRows::getClone);
   }
 
   @Nullable
@@ -205,7 +205,7 @@ public final class DataTablesServerData implements IHasUIState
   {
     if (StringHelper.hasNoText (sID))
       return null;
-    return m_aRWLock.readLocked ( () -> m_aRows.findFirst (x -> sID.equals (x.getRowID ())));
+    return m_aRWLock.readLockedGet ( () -> m_aRows.findFirst (x -> sID.equals (x.getRowID ())));
   }
 
   @Nonnull

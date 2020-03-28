@@ -83,7 +83,7 @@ public final class GlobalPasswordSettings
   @ReturnsMutableCopy
   public static IPasswordConstraintList getPasswordConstraintList ()
   {
-    return s_aRWLock.readLocked (s_aPasswordConstraintList::getClone);
+    return s_aRWLock.readLockedGet (s_aPasswordConstraintList::getClone);
   }
 
   /**

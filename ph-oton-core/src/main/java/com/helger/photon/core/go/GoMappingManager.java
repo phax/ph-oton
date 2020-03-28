@@ -193,7 +193,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
 
     final String sRealKey = _unifyKey (aItem.getKey ());
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (m_aMap.containsKey (sRealKey))
         return EChange.UNCHANGED;
 
@@ -217,7 +217,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   {
     ValueEnforcer.notNull (aItem, "Item");
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       // Allow overwrite
       if (_addItem (aItem, true).isUnchanged ())
         return EChange.UNCHANGED;
@@ -234,7 +234,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
 
     final String sRealKey = _unifyKey (sKey);
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (m_aMap.remove (sRealKey) == null)
         return EChange.UNCHANGED;
       markAsChanged ();
@@ -245,7 +245,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   @Nonnull
   public EChange removeAllItems ()
   {
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (m_aMap.removeAll ().isUnchanged ())
         return EChange.UNCHANGED;
       markAsChanged ();
@@ -259,7 +259,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
       return false;
 
     final String sRealKey = _unifyKey (sKey);
-    return m_aRWLock.readLocked ( () -> m_aMap.containsKey (sRealKey));
+    return m_aRWLock.readLockedBoolean ( () -> m_aMap.containsKey (sRealKey));
   }
 
   @Nullable
@@ -269,20 +269,20 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
       return null;
 
     final String sRealKey = _unifyKey (sKey);
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sRealKey));
+    return m_aRWLock.readLockedGet ( () -> m_aMap.get (sRealKey));
   }
 
   @Nonnegative
   public int getItemCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.size ());
+    return m_aRWLock.readLockedInt (m_aMap::size);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsMap <String, GoMappingItem> getAllItems ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.getClone ());
+    return m_aRWLock.readLockedGet (m_aMap::getClone);
   }
 
   /**

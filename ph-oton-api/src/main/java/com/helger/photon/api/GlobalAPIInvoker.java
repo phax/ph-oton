@@ -62,7 +62,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   @Nonnull
   public IAPIRegistry getRegistry ()
   {
-    return m_aRWLock.readLocked ( () -> m_aRegistry);
+    return m_aRWLock.readLockedGet ( () -> m_aRegistry);
   }
 
   /**
@@ -77,16 +77,16 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   public void setRegistry (@Nonnull final IAPIRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
-    if (m_aRWLock.readLocked ( () -> m_aRegistry.getAllAPIDescriptors ().isNotEmpty ()))
+    if (m_aRWLock.readLockedBoolean ( () -> m_aRegistry.getAllAPIDescriptors ().isNotEmpty ()))
       throw new IllegalStateException ("Cannot change the registry after an API was registered!");
 
-    m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
+    m_aRWLock.writeLockedGet ( () -> m_aRegistry = aRegistry);
   }
 
   @Nonnull
   public IAPIInvoker getInvoker ()
   {
-    return m_aRWLock.readLocked ( () -> m_aInvoker);
+    return m_aRWLock.readLockedGet ( () -> m_aInvoker);
   }
 
   /**
@@ -101,7 +101,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   public void setInvoker (@Nonnull final IAPIInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
-    m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);
+    m_aRWLock.writeLockedGet ( () -> m_aInvoker = aInvoker);
   }
 
   @Override

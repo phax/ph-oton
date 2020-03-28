@@ -50,14 +50,14 @@ public class APIRegistry implements IAPIRegistry
   @ReturnsMutableCopy
   public ICommonsList <IAPIDescriptor> getAllAPIDescriptors ()
   {
-    return m_aRWLock.readLocked (m_aApiDecls::getAllDescriptors);
+    return m_aRWLock.readLockedGet (m_aApiDecls::getAllDescriptors);
   }
 
   @Nullable
   public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath,
                                               @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
-    return m_aRWLock.readLocked ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
+    return m_aRWLock.readLockedGet ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
   }
 
   @Override

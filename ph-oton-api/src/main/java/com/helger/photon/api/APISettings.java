@@ -83,7 +83,7 @@ public final class APISettings
   @CheckForSigned
   public static long getLongRunningExecutionLimitTime ()
   {
-    return s_aRWLock.readLocked ( () -> s_nLongRunningExecutionLimitTime);
+    return s_aRWLock.readLockedLong ( () -> s_nLongRunningExecutionLimitTime);
   }
 
   /**
@@ -94,7 +94,7 @@ public final class APISettings
    */
   public static void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    s_aRWLock.writeLocked ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
+    s_aRWLock.writeLockedLong ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @Nonnull

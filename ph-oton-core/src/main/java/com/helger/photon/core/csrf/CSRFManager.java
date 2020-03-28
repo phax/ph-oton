@@ -72,7 +72,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   @Nonempty
   public String createNewNonce ()
   {
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       String sNonce;
       int nCount = 0;
       final Random aRandom = new Random ();
@@ -106,19 +106,19 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     if (StringHelper.hasNoText (sNonce))
       return false;
 
-    return m_aRWLock.readLocked ( () -> m_aNonces.contains (sNonce));
+    return m_aRWLock.readLockedBoolean ( () -> m_aNonces.contains (sNonce));
   }
 
   @Nonnegative
   public int getNonceCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aNonces.size ());
+    return m_aRWLock.readLockedInt (m_aNonces::size);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllNonces ()
   {
-    return m_aRWLock.readLocked ( () -> m_aNonces.getClone ());
+    return m_aRWLock.readLockedGet (m_aNonces::getClone);
   }
 }

@@ -17,6 +17,7 @@
 package com.helger.photon.app.resource;
 
 import java.nio.charset.Charset;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
@@ -44,6 +45,8 @@ import com.helger.commons.state.EChange;
 public final class WebSiteResourceCache
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (WebSiteResourceCache.class);
+  private static final AtomicBoolean SILENT_MODE = new AtomicBoolean (GlobalDebug.DEFAULT_SILENT_MODE);
+
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static boolean s_bCacheEnabled = !GlobalDebug.isDebugMode ();
@@ -57,12 +60,34 @@ public final class WebSiteResourceCache
   {}
 
   /**
+   * @return <code>true</code> if logging is disabled, <code>false</code> if it
+   *         is enabled.
+   */
+  public static boolean isSilentMode ()
+  {
+    return SILENT_MODE.get ();
+  }
+
+  /**
+   * Enable or disable certain regular log messages.
+   *
+   * @param bSilentMode
+   *        <code>true</code> to disable logging, <code>false</code> to enable
+   *        logging
+   * @return The previous value of the silent mode.
+   */
+  public static boolean setSilentMode (final boolean bSilentMode)
+  {
+    return SILENT_MODE.getAndSet (bSilentMode);
+  }
+
+  /**
    * @return <code>true</code> if the cache is globally enabled,
    *         <code>false</code> if the cache is disabled.
    */
   public static boolean isCacheEnabled ()
   {
-    return s_aRWLock.readLocked ( () -> s_bCacheEnabled);
+    return s_aRWLock.readLockedBoolean ( () -> s_bCacheEnabled);
   }
 
   /**
@@ -73,8 +98,9 @@ public final class WebSiteResourceCache
    */
   public static void setCacheEnabled (final boolean bCacheEnabled)
   {
-    s_aRWLock.writeLocked ( () -> s_bCacheEnabled = bCacheEnabled);
-    LOGGER.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
+    s_aRWLock.writeLockedBoolean ( () -> s_bCacheEnabled = bCacheEnabled);
+    if (!isSilentMode ())
+      LOGGER.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
   }
 
   @Nonnull
@@ -102,15 +128,15 @@ public final class WebSiteResourceCache
     final String sCacheKey = eResourceType.getID () + "-" + sPath;
 
     // Entry already existing?
-    final WebSiteResource ret = s_aRWLock.readLocked ( () -> s_aMap.get (sCacheKey));
+    final WebSiteResource ret = s_aRWLock.readLockedGet ( () -> s_aMap.get (sCacheKey));
     if (ret != null)
       return ret;
 
     // Try again in write lock
-    return s_aRWLock.writeLocked ( () -> s_aMap.computeIfAbsent (sCacheKey,
-                                                                 k -> new WebSiteResource (eResourceType,
-                                                                                           sPath,
-                                                                                           aCharset)));
+    return s_aRWLock.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey,
+                                                                    k -> new WebSiteResource (eResourceType,
+                                                                                              sPath,
+                                                                                              aCharset)));
   }
 
   @Nonnull
@@ -122,7 +148,7 @@ public final class WebSiteResourceCache
 
     final String sCacheKey = eType.getID () + "-" + sPath;
 
-    return s_aRWLock.writeLocked ( () -> s_aMap.removeObject (sCacheKey));
+    return s_aRWLock.writeLockedGet ( () -> s_aMap.removeObject (sCacheKey));
   }
 
   /**
@@ -133,6 +159,6 @@ public final class WebSiteResourceCache
   @Nonnull
   public static EChange clearCache ()
   {
-    return s_aRWLock.writeLocked ( () -> s_aMap.removeAll ());
+    return s_aRWLock.writeLockedGet (s_aMap::removeAll);
   }
 }

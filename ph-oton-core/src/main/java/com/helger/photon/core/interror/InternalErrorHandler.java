@@ -168,8 +168,8 @@ public final class InternalErrorHandler
     {
       // Check if an internal error was already sent for this stack trace
       // Init with -1 so that it gets send the first time
-      final MutableInt aMI = s_aRWLock.writeLocked ( () -> s_aIntErrCache.computeIfAbsent (sThrowableStackTrace,
-                                                                                           k -> new MutableInt (-1)));
+      final MutableInt aMI = s_aRWLock.writeLockedGet ( () -> s_aIntErrCache.computeIfAbsent (sThrowableStackTrace,
+                                                                                              k -> new MutableInt (-1)));
       aMI.inc ();
 
       // Send only every Nth invocation!

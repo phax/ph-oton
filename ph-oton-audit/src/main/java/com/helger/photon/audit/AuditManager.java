@@ -130,8 +130,8 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
    * Constructor
    *
    * @param sBaseDir
-   *        The base directory, relative to the default IO base directory. May be
-   *        <code>null</code> to indicate an in-memory auditor only.
+   *        The base directory, relative to the default IO base directory. May
+   *        be <code>null</code> to indicate an in-memory auditor only.
    * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    * @throws DAOException
@@ -254,7 +254,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   @Nonnegative
   public int getAuditItemCount ()
   {
-    return m_aRWLock.readLocked (m_aItems::getItemCount);
+    return m_aRWLock.readLockedInt (m_aItems::getItemCount);
   }
 
   @Nonnull
@@ -262,7 +262,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   @CodingStyleguideUnaware
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.getLastItems (nMaxItems));
+    return m_aRWLock.readLockedGet ( () -> m_aItems.getLastItems (nMaxItems));
   }
 
   public void stop ()

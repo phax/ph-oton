@@ -18,6 +18,7 @@ package com.helger.photon.core.appid;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
@@ -37,6 +38,7 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 @ThreadSafe
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
+  @GuardedBy ("s_aRWLock")
   private String m_sLastApplicationID;
   private final ICommonsMap <String, PhotonSessionStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 
@@ -74,7 +76,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   @Nullable
   public String getLastApplicationID ()
   {
-    return m_aRWLock.readLocked ( () -> m_sLastApplicationID);
+    return m_aRWLock.readLockedGet ( () -> m_sLastApplicationID);
   }
 
   /**
@@ -85,7 +87,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
    */
   void setLastApplicationID (@Nullable final String sLastApplicationID)
   {
-    m_aRWLock.writeLocked ( () -> m_sLastApplicationID = sLastApplicationID);
+    m_aRWLock.writeLockedGet ( () -> m_sLastApplicationID = sLastApplicationID);
   }
 
   /**

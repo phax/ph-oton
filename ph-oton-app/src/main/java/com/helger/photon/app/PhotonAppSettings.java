@@ -75,14 +75,14 @@ public final class PhotonAppSettings
   @Nonnull
   public static IWebURIToURLConverter getURIToURLConverter ()
   {
-    return s_aRWLock.readLocked ( () -> s_aURIToURLConverter);
+    return s_aRWLock.readLockedGet ( () -> s_aURIToURLConverter);
   }
 
   public static void setURIToURLConverter (@Nonnull final IWebURIToURLConverter aURIToURLConverter)
   {
     ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
 
-    s_aRWLock.writeLocked ( () -> s_aURIToURLConverter = aURIToURLConverter);
+    s_aRWLock.writeLockedGet ( () -> s_aURIToURLConverter = aURIToURLConverter);
   }
 
   @Nonnull
@@ -109,12 +109,12 @@ public final class PhotonAppSettings
    */
   public static boolean isMergeCSSResources ()
   {
-    return s_aRWLock.readLocked ( () -> s_bMergeCSSResources);
+    return s_aRWLock.readLockedBoolean ( () -> s_bMergeCSSResources);
   }
 
   public static void setMergeCSSResources (final boolean bMergeCSSResources)
   {
-    s_aRWLock.writeLocked ( () -> s_bMergeCSSResources = bMergeCSSResources);
+    s_aRWLock.writeLockedBoolean ( () -> s_bMergeCSSResources = bMergeCSSResources);
     if (!HCSettings.isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info (bMergeCSSResources ? "Merging CSS resources" : "Using separate CSS resources");
@@ -126,12 +126,12 @@ public final class PhotonAppSettings
    */
   public static boolean isMergeJSResources ()
   {
-    return s_aRWLock.readLocked ( () -> s_bMergeJSResources);
+    return s_aRWLock.readLockedBoolean ( () -> s_bMergeJSResources);
   }
 
   public static void setMergeJSResources (final boolean bMergeJSResources)
   {
-    s_aRWLock.writeLocked ( () -> s_bMergeJSResources = bMergeJSResources);
+    s_aRWLock.writeLockedBoolean ( () -> s_bMergeJSResources = bMergeJSResources);
     if (!HCSettings.isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info (bMergeJSResources ? "Merging JS resources" : "Using separate JS resources");
@@ -145,13 +145,13 @@ public final class PhotonAppSettings
   @Nonempty
   public static String getResourceBundleServletName ()
   {
-    return s_aRWLock.readLocked ( () -> s_sResourceBundleServletName);
+    return s_aRWLock.readLockedGet ( () -> s_sResourceBundleServletName);
   }
 
   public static void setResourceBundleServletName (@Nonnull @Nonempty final String sResourceBundleServletName)
   {
     ValueEnforcer.notEmpty (sResourceBundleServletName, "ResourceBundleServletName");
-    s_aRWLock.writeLocked ( () -> s_sResourceBundleServletName = sResourceBundleServletName);
+    s_aRWLock.writeLockedGet ( () -> s_sResourceBundleServletName = sResourceBundleServletName);
     if (!HCSettings.isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Using ResourceBundleServlet name '" + sResourceBundleServletName + "'");

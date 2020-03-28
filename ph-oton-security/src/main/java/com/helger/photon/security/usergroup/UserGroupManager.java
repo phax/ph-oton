@@ -79,9 +79,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Administrators user group
     UserGroup aUG = getOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
-                                                                             CSecurity.USERGROUP_ADMINISTRATORS_NAME,
-                                                                             (String) null)));
+      aUG = m_aRWLock.writeLockedGet ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
+                                                                                CSecurity.USERGROUP_ADMINISTRATORS_NAME,
+                                                                                (String) null)));
     if (m_aUserMgr.containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
@@ -90,9 +90,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Users user group
     aUG = getOfID (CSecurity.USERGROUP_USERS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
-                                                                             CSecurity.USERGROUP_USERS_NAME,
-                                                                             (String) null)));
+      aUG = m_aRWLock.writeLockedGet ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
+                                                                                CSecurity.USERGROUP_USERS_NAME,
+                                                                                (String) null)));
     if (m_aUserMgr.containsWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsWithID (CSecurity.ROLE_USER_ID))
@@ -101,9 +101,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Guests user group
     aUG = getOfID (CSecurity.USERGROUP_GUESTS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLocked ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
-                                                                             CSecurity.USERGROUP_GUESTS_NAME,
-                                                                             (String) null)));
+      aUG = m_aRWLock.writeLockedGet ( () -> internalCreateItem (new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
+                                                                                CSecurity.USERGROUP_GUESTS_NAME,
+                                                                                (String) null)));
     if (m_aUserMgr.containsWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group

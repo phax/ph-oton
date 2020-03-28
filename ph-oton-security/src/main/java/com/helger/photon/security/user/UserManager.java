@@ -61,53 +61,53 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
   {
     // Create Administrator
     if (!containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
-      m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_ADMINISTRATOR_ID,
-                                                                  CSecurity.USER_ADMINISTRATOR_LOGIN,
-                                                                  CSecurity.USER_ADMINISTRATOR_EMAIL,
-                                                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                                                        CSecurity.USER_ADMINISTRATOR_PASSWORD),
-                                                                  CSecurity.USER_ADMINISTRATOR_NAME,
-                                                                  (String) null,
-                                                                  (String) null,
-                                                                  (Locale) null,
-                                                                  (Map <String, String>) null,
-                                                                  false)));
+      m_aRWLock.writeLockedGet ( () -> internalCreateItem (new User (CSecurity.USER_ADMINISTRATOR_ID,
+                                                                     CSecurity.USER_ADMINISTRATOR_LOGIN,
+                                                                     CSecurity.USER_ADMINISTRATOR_EMAIL,
+                                                                     GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                                                           CSecurity.USER_ADMINISTRATOR_PASSWORD),
+                                                                     CSecurity.USER_ADMINISTRATOR_NAME,
+                                                                     (String) null,
+                                                                     (String) null,
+                                                                     (Locale) null,
+                                                                     (Map <String, String>) null,
+                                                                     false)));
 
     // Create regular user
     if (!containsWithID (CSecurity.USER_USER_ID))
-      m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_USER_ID,
-                                                                  CSecurity.USER_USER_LOGIN,
-                                                                  CSecurity.USER_USER_EMAIL,
-                                                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                                                        CSecurity.USER_USER_PASSWORD),
-                                                                  CSecurity.USER_USER_NAME,
-                                                                  (String) null,
-                                                                  (String) null,
-                                                                  (Locale) null,
-                                                                  (Map <String, String>) null,
-                                                                  false)));
+      m_aRWLock.writeLockedGet ( () -> internalCreateItem (new User (CSecurity.USER_USER_ID,
+                                                                     CSecurity.USER_USER_LOGIN,
+                                                                     CSecurity.USER_USER_EMAIL,
+                                                                     GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                                                           CSecurity.USER_USER_PASSWORD),
+                                                                     CSecurity.USER_USER_NAME,
+                                                                     (String) null,
+                                                                     (String) null,
+                                                                     (Locale) null,
+                                                                     (Map <String, String>) null,
+                                                                     false)));
 
     // Create guest user
     if (!containsWithID (CSecurity.USER_GUEST_ID))
-      m_aRWLock.writeLocked ( () -> internalCreateItem (new User (CSecurity.USER_GUEST_ID,
-                                                                  CSecurity.USER_GUEST_LOGIN,
-                                                                  CSecurity.USER_GUEST_EMAIL,
-                                                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                                                        CSecurity.USER_GUEST_PASSWORD),
-                                                                  CSecurity.USER_GUEST_NAME,
-                                                                  (String) null,
-                                                                  (String) null,
-                                                                  (Locale) null,
-                                                                  (Map <String, String>) null,
-                                                                  false)));
+      m_aRWLock.writeLockedGet ( () -> internalCreateItem (new User (CSecurity.USER_GUEST_ID,
+                                                                     CSecurity.USER_GUEST_LOGIN,
+                                                                     CSecurity.USER_GUEST_EMAIL,
+                                                                     GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                                                           CSecurity.USER_GUEST_PASSWORD),
+                                                                     CSecurity.USER_GUEST_NAME,
+                                                                     (String) null,
+                                                                     (String) null,
+                                                                     (Locale) null,
+                                                                     (Map <String, String>) null,
+                                                                     false)));
   }
 
   /**
    * @return The user callback list. Never <code>null</code>.
    */
   @Nonnull
-  @ReturnsMutableObject ("design")
-  public CallbackList <IUserModificationCallback> userModificationCallbacks ()
+  @ReturnsMutableObject
+  public final CallbackList <IUserModificationCallback> userModificationCallbacks ()
   {
     return m_aCallbacks;
   }
@@ -378,7 +378,8 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User>
   }
 
   /**
-   * @return A non-<code>null</code> collection of all contained not deleted users
+   * @return A non-<code>null</code> collection of all contained not deleted
+   *         users
    */
   @Nonnull
   @ReturnsMutableCopy

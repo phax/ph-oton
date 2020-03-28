@@ -105,7 +105,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   @Nullable
   public LocalDateTime getLastUpdateDT ()
   {
-    return m_aRWLock.readLocked ( () -> m_aData.getLastUpdateDT ());
+    return m_aRWLock.readLockedGet (m_aData::getLastUpdateDT);
   }
 
   /**
@@ -114,7 +114,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   @Nonnull
   public ESystemMessageType getMessageType ()
   {
-    return m_aRWLock.readLocked ( () -> m_aData.getMessageType ());
+    return m_aRWLock.readLockedGet (m_aData::getMessageType);
   }
 
   /**
@@ -123,7 +123,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   @Nullable
   public String getSystemMessage ()
   {
-    return m_aRWLock.readLocked ( () -> m_aData.getMessage ());
+    return m_aRWLock.readLockedGet (m_aData::getMessage);
   }
 
   /**
@@ -132,7 +132,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
    */
   public boolean hasSystemMessage ()
   {
-    return m_aRWLock.readLocked ( () -> m_aData.hasMessage ());
+    return m_aRWLock.readLockedBoolean (m_aData::hasMessage);
   }
 
   @Nonnull

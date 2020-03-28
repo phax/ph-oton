@@ -47,7 +47,7 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
 {
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsOrderedMap <String, IMetaElement> m_aItems = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, IMetaElement> m_aItems = new CommonsLinkedHashMap <> ();
 
   public MetaElementList ()
   {}
@@ -70,7 +70,7 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   {
     ValueEnforcer.notNull (aMetaElement, "MetaElement");
 
-    m_aRWLock.writeLocked ( () -> m_aItems.put (aMetaElement.getName (), aMetaElement));
+    m_aRWLock.writeLockedGet ( () -> m_aItems.put (aMetaElement.getName (), aMetaElement));
     return this;
   }
 
@@ -95,69 +95,69 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   @Nonnull
   public EChange removeMetaElement (@Nullable final String sMetaElementName)
   {
-    return m_aRWLock.writeLocked ( () -> m_aItems.removeObject (sMetaElementName));
+    return m_aRWLock.writeLockedGet ( () -> m_aItems.removeObject (sMetaElementName));
   }
 
   @Nonnull
   public EChange removeAllMetaElements ()
   {
-    return m_aRWLock.writeLocked ( () -> m_aItems.removeAll ());
+    return m_aRWLock.writeLockedGet (m_aItems::removeAll);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <String> getAllMetaElementNames ()
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.copyOfKeySet ());
+    return m_aRWLock.readLockedGet (m_aItems::copyOfKeySet);
   }
 
   public void getAllMetaElements (@Nonnull final Collection <? super IMetaElement> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
-    m_aRWLock.readLocked ( () -> aTarget.addAll (m_aItems.values ()));
+    m_aRWLock.readLockedBoolean ( () -> aTarget.addAll (m_aItems.values ()));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IMetaElement> getAllMetaElements ()
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.copyOfValues ());
+    return m_aRWLock.readLockedGet (m_aItems::copyOfValues);
   }
 
   @Nullable
   public IMetaElement getMetaElementOfName (@Nullable final String sName)
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.get (sName));
+    return m_aRWLock.readLockedGet ( () -> m_aItems.get (sName));
   }
 
   public boolean containsMetaElementWithName (@Nullable final String sName)
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.containsKey (sName));
+    return m_aRWLock.readLockedBoolean ( () -> m_aItems.containsKey (sName));
   }
 
   @Nonnegative
   public int getMetaElementCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.size ());
+    return m_aRWLock.readLockedInt (m_aItems::size);
   }
 
   public boolean hasMetaElements ()
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.isNotEmpty ());
+    return m_aRWLock.readLockedBoolean (m_aItems::isNotEmpty);
   }
 
   @Nonnull
   public Iterator <IMetaElement> iterator ()
   {
-    return m_aRWLock.readLocked ( () -> m_aItems.values ().iterator ());
+    return m_aRWLock.readLockedGet ( () -> m_aItems.values ().iterator ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public MetaElementList getClone ()
   {
-    return m_aRWLock.readLocked ( () -> new MetaElementList (this));
+    return m_aRWLock.readLockedGet ( () -> new MetaElementList (this));
   }
 
   @Override

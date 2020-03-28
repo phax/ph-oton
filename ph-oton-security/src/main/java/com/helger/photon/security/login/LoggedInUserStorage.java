@@ -63,7 +63,7 @@ public final class LoggedInUserStorage
   @Nonnull
   public static String getBaseDirectory ()
   {
-    return s_aRWLock.readLocked ( () -> s_sBaseDirectory);
+    return s_aRWLock.readLockedGet ( () -> s_sBaseDirectory);
   }
 
   /**
@@ -77,9 +77,7 @@ public final class LoggedInUserStorage
   {
     ValueEnforcer.notNull (sBaseDirectory, "BaseDirectory");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_sBaseDirectory = sBaseDirectory;
-    });
+    s_aRWLock.writeLockedGet ( () -> s_sBaseDirectory = sBaseDirectory);
   }
 
   /**
@@ -108,11 +106,7 @@ public final class LoggedInUserStorage
     if (StringHelper.hasNoText (sRealUserID))
       throw new IllegalStateException ("Passed user ID '" + sUserID + "' is an empty filename!");
     if (!sRealUserID.equals (sUserID))
-      LOGGER.warn ("User ID '" +
-                      sUserID +
-                      "' was modified to '" +
-                      sRealUserID +
-                      "' to be used as a file system name!");
+      LOGGER.warn ("User ID '" + sUserID + "' was modified to '" + sRealUserID + "' to be used as a file system name!");
 
     final File aDir = WebFileIO.getDataIO ().getFile (getBaseDirectory () + sRealUserID);
     FileOperationManager.INSTANCE.createDirRecursiveIfNotExisting (aDir);

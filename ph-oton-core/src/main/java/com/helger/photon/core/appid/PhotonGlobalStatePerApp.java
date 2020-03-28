@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
@@ -39,7 +40,9 @@ import com.helger.photon.core.menu.IMenuTree;
 public final class PhotonGlobalStatePerApp implements Serializable
 {
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+  @GuardedBy ("m_aRWLock")
   private String m_sServletPath;
+  @GuardedBy ("m_aRWLock")
   private IMenuTree m_aMenuTree;
 
   public PhotonGlobalStatePerApp ()
@@ -48,7 +51,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
   @Nullable
   String internalGetServletPath ()
   {
-    return m_aRWLock.readLocked ( () -> m_sServletPath);
+    return m_aRWLock.readLockedGet ( () -> m_sServletPath);
   }
 
   @Nonnull
@@ -68,27 +71,27 @@ public final class PhotonGlobalStatePerApp implements Serializable
     ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'),
                           "ApplicationServletPath must start with a slash");
     ValueEnforcer.isFalse (StringHelper.endsWith (sServletPath, '/'), "ApplicationServletPath must end with a slash");
-    m_aRWLock.writeLocked ( () -> m_sServletPath = sServletPath);
+    m_aRWLock.writeLockedGet ( () -> m_sServletPath = sServletPath);
     return this;
   }
 
   @Nonnull
   public PhotonGlobalStatePerApp removeServletPath ()
   {
-    m_aRWLock.writeLocked ( () -> m_sServletPath = null);
+    m_aRWLock.writeLockedGet ( () -> m_sServletPath = null);
     return this;
   }
 
   @Nullable
   public IMenuTree getMenuTree ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMenuTree);
+    return m_aRWLock.readLockedGet ( () -> m_aMenuTree);
   }
 
   @Nonnull
   public PhotonGlobalStatePerApp setMenuTree (@Nullable final IMenuTree aMenuTree)
   {
-    m_aRWLock.writeLocked ( () -> m_aMenuTree = aMenuTree);
+    m_aRWLock.writeLockedGet ( () -> m_aMenuTree = aMenuTree);
     return this;
   }
 

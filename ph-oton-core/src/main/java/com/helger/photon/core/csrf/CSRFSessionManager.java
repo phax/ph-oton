@@ -73,7 +73,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   @Nonempty
   public String getNonce ()
   {
-    return m_aRWLock.readLocked ( () -> m_sNonce);
+    return m_aRWLock.readLockedGet ( () -> m_sNonce);
   }
 
   /**

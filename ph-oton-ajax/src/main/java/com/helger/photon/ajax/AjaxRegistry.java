@@ -63,7 +63,7 @@ public class AjaxRegistry implements IAjaxRegistry
   @ReturnsMutableCopy
   public ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
   {
-    return m_aRWLock.readLocked ( () -> m_aFuncDecls.getClone ());
+    return m_aRWLock.readLockedGet (m_aFuncDecls::getClone);
   }
 
   @Nullable
@@ -72,7 +72,7 @@ public class AjaxRegistry implements IAjaxRegistry
     if (StringHelper.hasNoText (sFunctionName))
       return null;
 
-    return m_aRWLock.readLocked ( () -> m_aFuncDecls.get (sFunctionName));
+    return m_aRWLock.readLockedGet ( () -> m_aFuncDecls.get (sFunctionName));
   }
 
   public boolean isRegisteredFunction (@Nullable final String sFunctionName)
@@ -80,7 +80,7 @@ public class AjaxRegistry implements IAjaxRegistry
     if (StringHelper.hasNoText (sFunctionName))
       return false;
 
-    return m_aRWLock.readLocked ( () -> m_aFuncDecls.containsKey (sFunctionName));
+    return m_aRWLock.readLockedBoolean ( () -> m_aFuncDecls.containsKey (sFunctionName));
   }
 
   public void registerFunction (@Nonnull final IAjaxFunctionDeclaration aFunctionDeclaration)

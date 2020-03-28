@@ -89,53 +89,53 @@ public final class InternalErrorSettings
 
   public static void setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
   {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setSMTPSettings (aSMTPSettings));
+    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setSMTPSettings (aSMTPSettings));
   }
 
   @Nullable
   public static ISMTPSettings getSMTPSettings ()
   {
-    return s_aRWLock.readLocked ( () -> s_aEmailSettings.getSMTPSettings ());
+    return s_aRWLock.readLockedGet ( () -> s_aEmailSettings.getSMTPSettings ());
   }
 
   public static void setSMTPSenderAddress (@Nullable final IEmailAddress aSenderAddress)
   {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setSenderAddress (aSenderAddress));
+    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setSenderAddress (aSenderAddress));
   }
 
   @Nullable
   public static IEmailAddress getSMTPSenderAddress ()
   {
-    return s_aRWLock.readLocked (s_aEmailSettings::getSenderAddress);
+    return s_aRWLock.readLockedGet (s_aEmailSettings::getSenderAddress);
   }
 
   public static void setSMTPReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
   {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddress (aReceiverAddress));
+    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setReceiverAddress (aReceiverAddress));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final Iterable <? extends IEmailAddress> aReceiverAddresses)
   {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
+    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
   {
-    s_aRWLock.writeLocked ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
+    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static ICommonsList <IEmailAddress> getSMTPReceiverAddresses ()
   {
-    return s_aRWLock.readLocked (s_aEmailSettings::getAllReceiverAddresses);
+    return s_aRWLock.readLockedGet (s_aEmailSettings::getAllReceiverAddresses);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static InternalErrorEmailSettings getCopyOfEmailSettings ()
   {
-    return s_aRWLock.readLocked ( () -> s_aEmailSettings.getClone ());
+    return s_aRWLock.readLockedGet (s_aEmailSettings::getClone);
   }
 
   /**
@@ -148,7 +148,7 @@ public final class InternalErrorSettings
    */
   public static void setDumpAllThreads (final boolean bEnableDumpAllThreads)
   {
-    s_aRWLock.writeLocked ( () -> s_bEnableDumpAllThreads = bEnableDumpAllThreads);
+    s_aRWLock.writeLockedBoolean ( () -> s_bEnableDumpAllThreads = bEnableDumpAllThreads);
   }
 
   /**
@@ -157,7 +157,7 @@ public final class InternalErrorSettings
    */
   public static boolean isDumpAllThreads ()
   {
-    return s_aRWLock.readLocked ( () -> s_bEnableDumpAllThreads);
+    return s_aRWLock.readLockedBoolean ( () -> s_bEnableDumpAllThreads);
   }
 
   /**
@@ -169,7 +169,7 @@ public final class InternalErrorSettings
    */
   public static void setSendEmail (final boolean bSendEmail)
   {
-    s_aRWLock.writeLocked ( () -> s_bSendEmail = bSendEmail);
+    s_aRWLock.writeLockedBoolean ( () -> s_bSendEmail = bSendEmail);
   }
 
   /**
@@ -178,7 +178,7 @@ public final class InternalErrorSettings
    */
   public static boolean isSendEmail ()
   {
-    return s_aRWLock.readLocked ( () -> s_bSendEmail);
+    return s_aRWLock.readLockedBoolean ( () -> s_bSendEmail);
   }
 
   /**
@@ -189,7 +189,7 @@ public final class InternalErrorSettings
    */
   public static void setSaveAsXML (final boolean bSaveAsXML)
   {
-    s_aRWLock.writeLocked ( () -> s_bSaveAsXML = bSaveAsXML);
+    s_aRWLock.writeLockedBoolean ( () -> s_bSaveAsXML = bSaveAsXML);
   }
 
   /**
@@ -198,7 +198,7 @@ public final class InternalErrorSettings
    */
   public static boolean isSaveAsXML ()
   {
-    return s_aRWLock.readLocked ( () -> s_bSaveAsXML);
+    return s_aRWLock.readLockedBoolean ( () -> s_bSaveAsXML);
   }
 
   /**
@@ -211,7 +211,7 @@ public final class InternalErrorSettings
   public static void setFallbackLocale (@Nonnull final Locale aFallbackLocale)
   {
     ValueEnforcer.notNull (aFallbackLocale, "FallbackLocale");
-    s_aRWLock.writeLocked ( () -> s_aFallbackLocale = aFallbackLocale);
+    s_aRWLock.writeLockedGet ( () -> s_aFallbackLocale = aFallbackLocale);
   }
 
   /**
@@ -221,7 +221,7 @@ public final class InternalErrorSettings
   @Nonnull
   public static Locale getFallbackLocale ()
   {
-    return s_aRWLock.readLocked ( () -> s_aFallbackLocale);
+    return s_aRWLock.readLockedGet ( () -> s_aFallbackLocale);
   }
 
   /**

@@ -45,7 +45,7 @@ public class HCCustomizerList extends AbstractHCCustomizer
 {
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsList <IHCCustomizer> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <IHCCustomizer> m_aList = new CommonsArrayList <> ();
 
   public HCCustomizerList (@Nullable final IHCCustomizer... aCustomizers)
   {
@@ -65,14 +65,14 @@ public class HCCustomizerList extends AbstractHCCustomizer
   public HCCustomizerList addCustomizer (@Nonnull final IHCCustomizer aCustomizer)
   {
     ValueEnforcer.notNull (aCustomizer, "Customizer");
-    m_aRWLock.writeLocked ( () -> m_aList.add (aCustomizer));
+    m_aRWLock.writeLockedBoolean ( () -> m_aList.add (aCustomizer));
     return this;
   }
 
   @Nonnull
   public EChange removeCustomizer (@Nullable final IHCCustomizer aCustomizer)
   {
-    return m_aRWLock.writeLocked ( () -> m_aList.removeObject (aCustomizer));
+    return m_aRWLock.writeLockedGet ( () -> m_aList.removeObject (aCustomizer));
   }
 
   @Nonnull
@@ -80,7 +80,7 @@ public class HCCustomizerList extends AbstractHCCustomizer
   {
     ValueEnforcer.notNull (aCustomizerClass, "CustomizerClass");
 
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       EChange eChange = EChange.UNCHANGED;
       for (final IHCCustomizer aCustomizer : m_aList.getClone ())
         if (aCustomizer.getClass ().equals (aCustomizerClass))
@@ -93,14 +93,14 @@ public class HCCustomizerList extends AbstractHCCustomizer
   @Nonnegative
   public int getCustomizerCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aList.size ());
+    return m_aRWLock.readLockedInt (m_aList::size);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IHCCustomizer> getAllCustomizers ()
   {
-    return m_aRWLock.readLocked ( () -> m_aList.getClone ());
+    return m_aRWLock.readLockedGet (m_aList::getClone);
   }
 
   public void customizeNode (@Nonnull final IHCNode aNode,

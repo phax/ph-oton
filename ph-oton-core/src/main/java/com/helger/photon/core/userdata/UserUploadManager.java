@@ -164,7 +164,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @Nullable
   public UserDataObject confirmUploadedFile (@Nullable final String sFieldName)
   {
-    return m_aRWLock.writeLocked ( () -> {
+    return m_aRWLock.writeLockedGet ( () -> {
       if (StringHelper.hasText (sFieldName))
       {
         // Remove an eventually existing old UDO
@@ -225,7 +225,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
     if (StringHelper.hasNoText (sFieldName))
       return null;
 
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sFieldName));
+    return m_aRWLock.readLockedGet ( () -> m_aMap.get (sFieldName));
   }
 
   /**
@@ -234,12 +234,12 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @Nonnegative
   public int getUploadedFileCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.size ());
+    return m_aRWLock.readLockedInt (m_aMap::size);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("map", m_aMap).getToString ();
+    return new ToStringGenerator (this).append ("Map", m_aMap).getToString ();
   }
 }

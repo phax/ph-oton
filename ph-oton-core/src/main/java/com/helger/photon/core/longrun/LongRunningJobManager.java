@@ -68,7 +68,7 @@ public final class LongRunningJobManager
     // Create a new unique in-memory ID
     final String sJobID = GlobalIDFactory.getNewStringID ();
     final LongRunningJobData aJobData = new LongRunningJobData (sJobID, aJob.getJobDescription (), sStartingUserID);
-    m_aRWLock.writeLocked ( () -> m_aRunningJobs.put (sJobID, aJobData));
+    m_aRWLock.writeLockedGet ( () -> m_aRunningJobs.put (sJobID, aJobData));
     return sJobID;
   }
 
@@ -93,7 +93,7 @@ public final class LongRunningJobManager
     ValueEnforcer.notNull (aResult, "Result");
 
     // Remove from running job list
-    final LongRunningJobData aJobData = m_aRWLock.writeLocked ( () -> {
+    final LongRunningJobData aJobData = m_aRWLock.writeLockedGet ( () -> {
       final LongRunningJobData ret = m_aRunningJobs.remove (sJobID);
       if (ret == null)
         throw new IllegalArgumentException ("Illegal job ID '" + sJobID + "' passed!");
@@ -110,14 +110,14 @@ public final class LongRunningJobManager
   @Nonnegative
   public int getRunningJobCount ()
   {
-    return m_aRWLock.readLocked ( () -> m_aRunningJobs.size ());
+    return m_aRWLock.readLockedInt (m_aRunningJobs::size);
   }
 
   @Nonnull
   @Nonempty
   public ICommonsCollection <LongRunningJobData> getAllRunningJobs ()
   {
-    return m_aRWLock.readLocked ( () -> m_aRunningJobs.copyOfValues ());
+    return m_aRWLock.readLockedGet (m_aRunningJobs::copyOfValues);
   }
 
   public void waitUntilAllJobsAreFinished () throws InterruptedException
@@ -131,8 +131,8 @@ public final class LongRunningJobManager
         break;
 
       LOGGER.error ("There are still " +
-                       nRunningJobCount +
-                       " long running jobs in the background! Waiting for them to finish...");
+                    nRunningJobCount +
+                    " long running jobs in the background! Waiting for them to finish...");
 
       // Wait some time
       Thread.sleep (nWaitSeconds * CGlobal.MILLISECONDS_PER_SECOND);

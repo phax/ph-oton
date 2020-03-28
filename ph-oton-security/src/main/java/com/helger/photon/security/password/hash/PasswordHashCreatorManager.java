@@ -110,21 +110,21 @@ public class PasswordHashCreatorManager
   @Nullable
   public IPasswordHashCreator getPasswordHashCreatorOfAlgorithm (@Nullable final String sAlgorithmName)
   {
-    return m_aRWLock.readLocked ( () -> m_aPasswordHashCreators.get (sAlgorithmName));
+    return m_aRWLock.readLockedGet ( () -> m_aPasswordHashCreators.get (sAlgorithmName));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllPasswordHashCreatorAlgorithms ()
   {
-    return m_aRWLock.readLocked ( () -> m_aPasswordHashCreators.copyOfKeySet ());
+    return m_aRWLock.readLockedGet (m_aPasswordHashCreators::copyOfKeySet);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsCollection <IPasswordHashCreator> getAllPasswordHashCreators ()
   {
-    return m_aRWLock.readLocked ( () -> m_aPasswordHashCreators.copyOfValues ());
+    return m_aRWLock.readLockedGet (m_aPasswordHashCreators::copyOfValues);
   }
 
   /**
@@ -156,12 +156,10 @@ public class PasswordHashCreatorManager
   @Nonnull
   public IPasswordHashCreator getDefaultPasswordHashCreator ()
   {
-    return m_aRWLock.readLocked ( () -> {
-      final IPasswordHashCreator ret = m_aDefaultPasswordHashCreator;
-      if (ret == null)
-        throw new IllegalStateException ("No default PasswordHashCreator present!");
-      return ret;
-    });
+    final IPasswordHashCreator ret = m_aRWLock.readLockedGet ( () -> m_aDefaultPasswordHashCreator);
+    if (ret == null)
+      throw new IllegalStateException ("No default PasswordHashCreator present!");
+    return ret;
   }
 
   /**
