@@ -36,7 +36,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
-import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.usergroup.IUserGroup;
 
@@ -121,7 +121,7 @@ public final class SecurityHelper
   @ReturnsMutableCopy
   public static ICommonsSet <IRole> getAllUserRoles (@Nullable final String sUserID)
   {
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final ICommonsSet <String> aRoleIDs = getAllUserRoleIDs (sUserID);
     final ICommonsSet <IRole> ret = new CommonsHashSet <> ();
     for (final String sRoleID : aRoleIDs)

@@ -58,7 +58,7 @@ import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
-import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
@@ -123,7 +123,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IRole aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+        final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
 
         if (aRoleMgr.deleteRole (aSelectedObject.getID ()).isChanged ())
         {
@@ -178,7 +178,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   @Nullable
   protected IRole getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
   {
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     return aRoleMgr.getRoleOfID (sID);
   }
 
@@ -366,7 +366,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 

@@ -40,7 +40,7 @@ import com.helger.photon.core.configfile.EConfigurationFileSyntax;
 import com.helger.photon.core.locale.ILocaleManager;
 import com.helger.photon.core.menu.MenuTree;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
@@ -110,7 +110,7 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
   {
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
 
     // Standard users
     if (!aUserMgr.containsWithID (CApp.USER_ADMINISTRATOR_ID))

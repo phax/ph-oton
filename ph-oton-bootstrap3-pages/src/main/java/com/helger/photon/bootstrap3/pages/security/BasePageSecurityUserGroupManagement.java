@@ -71,7 +71,7 @@ import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
-import com.helger.photon.security.role.RoleManager;
+import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
@@ -310,7 +310,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     else
     {
       // Convert IDs to objects
-      final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+      final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
       final ICommonsList <IRole> aAssignedRoles = new CommonsArrayList <> (aAssignedRoleIDs,
                                                                            sRoleID -> aRoleMgr.getRoleOfID (sRoleID));
 
@@ -373,7 +373,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final String sName = aWPEC.params ().getAsString (FIELD_NAME);
     final String sDescription = aWPEC.params ().getAsString (FIELD_DESCRIPTION);
     final ICommonsCollection <String> aRoleIDs = aWPEC.params ().getAsStringList (FIELD_ROLES);
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     if (StringHelper.hasNoText (sName))

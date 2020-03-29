@@ -25,8 +25,8 @@ import org.junit.rules.TestRule;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.lock.DefaultLockManager;
+import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.role.Role;
-import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
@@ -46,7 +46,7 @@ public final class PhotonSecurityManagerTest
   {
     final DefaultLockManager <String> aLockMgr = PhotonSecurityManager.getLockMgr ();
     assertNotNull (aLockMgr);
-    final RoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
+    final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     assertNotNull (aRoleMgr);
     final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     assertNotNull (aUserMgr);

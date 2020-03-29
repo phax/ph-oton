@@ -40,6 +40,7 @@ Contained subprojects are:
     * Added new configuration file syntax `JSON`
     * Fixed an issue with the configuration file ID for the tab
     * Updated to ph-commons 9.4.0
+    * Extracted `IRoleManager` from `RoleManager`
 * v8.2.3 - 2020-02-19
     * Fixed an error with the temporary directory name creation in `JettyStarter`
     * Updated to ph-web 9.1.10

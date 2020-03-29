@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package com.helger.photon.security.mgr;
+
 /**
  * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
@@ -49,6 +50,7 @@ import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.IUserLoginCallback;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
+import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.token.user.UserTokenManager;
@@ -83,9 +85,9 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
 
   private AuditManager m_aAuditMgr;
   private UserManager m_aUserMgr;
-  private RoleManager m_aRoleMgr;
+  private IRoleManager m_aRoleMgr;
   private UserGroupManager m_aUserGroupMgr;
-  private UserTokenManager m_aUserTokenMgr;
+  private IUserTokenManager m_aUserTokenMgr;
 
   @Deprecated
   @UsedViaReflection
@@ -183,7 +185,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public static RoleManager getRoleMgr ()
+  public static IRoleManager getRoleMgr ()
   {
     return getInstance ().m_aRoleMgr;
   }

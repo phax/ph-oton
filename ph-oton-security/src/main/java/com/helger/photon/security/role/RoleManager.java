@@ -39,7 +39,7 @@ import com.helger.photon.security.object.StubObject;
  * @author Philip Helger
  */
 @ThreadSafe
-public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
+public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> implements IRoleManager
 {
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
@@ -60,9 +60,6 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
                                     (String) null));
   }
 
-  /**
-   * @return The role callback list. Never <code>null</code>.
-   */
   @Nonnull
   @ReturnsMutableObject
   public CallbackList <IRoleModificationCallback> roleModificationCallbacks ()
@@ -70,18 +67,6 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
     return m_aCallbacks;
   }
 
-  /**
-   * Create a new role.
-   *
-   * @param sName
-   *        The name of the new role. May neither be <code>null</code> nor
-   *        empty.
-   * @param sDescription
-   *        Optional description text. May be <code>null</code>.
-   * @param aCustomAttrs
-   *        A set of custom attributes. May be <code>null</code>.
-   * @return The created role and never <code>null</code>.
-   */
   @Nonnull
   public IRole createNewRole (@Nonnull @Nonempty final String sName,
                               @Nullable final String sDescription,
@@ -102,19 +87,6 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
     return aRole;
   }
 
-  /**
-   * Create a predefined role.
-   *
-   * @param sID
-   *        The ID of the new role
-   * @param sName
-   *        The name of the new role
-   * @param sDescription
-   *        Optional description text. May be <code>null</code>.
-   * @param aCustomAttrs
-   *        A set of custom attributes. May be <code>null</code>.
-   * @return The created role and never <code>null</code>.
-   */
   @Nonnull
   public IRole createPredefinedRole (@Nonnull @Nonempty final String sID,
                                      @Nonnull @Nonempty final String sName,
@@ -136,13 +108,6 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
     return aRole;
   }
 
-  /**
-   * Delete the role with the passed ID
-   *
-   * @param sRoleID
-   *        The role ID to be deleted
-   * @return {@link EChange#CHANGED} if the passed role ID was found and deleted
-   */
   @Nonnull
   public EChange deleteRole (@Nullable final String sRoleID)
   {
@@ -170,30 +135,12 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
     return EChange.CHANGED;
   }
 
-  /**
-   * Get the role with the specified ID
-   *
-   * @param sRoleID
-   *        The role ID to be resolved
-   * @return <code>null</code> if no such role exists.
-   */
   @Nullable
   public IRole getRoleOfID (@Nullable final String sRoleID)
   {
     return getOfID (sRoleID);
   }
 
-  /**
-   * Rename the role with the passed ID
-   *
-   * @param sRoleID
-   *        The ID of the role to be renamed. May be <code>null</code>.
-   * @param sNewName
-   *        The new name of the role. May neither be <code>null</code> nor
-   *        empty.
-   * @return {@link EChange#CHANGED} if the passed role ID was found, and the
-   *         new name is different from the old name of he role
-   */
   @Nonnull
   public EChange renameRole (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName)
   {
@@ -226,20 +173,6 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role>
     return EChange.CHANGED;
   }
 
-  /**
-   * Change the modifiable data of a user group
-   *
-   * @param sRoleID
-   *        The ID of the role to be renamed. May be <code>null</code>.
-   * @param sNewName
-   *        The new name of the role. May neither be <code>null</code> nor
-   *        empty.
-   * @param sNewDescription
-   *        The new description text. May be <code>null</code>.
-   * @param aNewCustomAttrs
-   *        Custom attributes. May be <code>null</code>.
-   * @return {@link EChange}
-   */
   @Nonnull
   public EChange setRoleData (@Nullable final String sRoleID,
                               @Nonnull @Nonempty final String sNewName,
