@@ -343,7 +343,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
                                      @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
-    final String sFilename = URLHelper.urlDecode (aRequestScope.getPathWithinServlet ());
+    final String sFilename = URLHelper.urlDecodeOrNull (aRequestScope.getPathWithinServlet ());
 
     if (StringHelper.hasNoText (sFilename) ||
         !isValidFilenameAccordingToTheRules (sFilename) ||

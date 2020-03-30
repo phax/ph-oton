@@ -95,7 +95,7 @@ public final class PathDescriptor implements Serializable
       if (aPart.isVariable ())
       {
         // Explicitly decode here
-        aVariableValues.put (aPart.getName (), URLHelper.urlDecode (sPathPart));
+        aVariableValues.put (aPart.getName (), URLHelper.urlDecodeOrNull (sPathPart));
       }
     }
 

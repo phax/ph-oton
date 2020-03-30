@@ -41,7 +41,7 @@ public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHan
                                               @Nonnull final String sFilename)
   {
     // URL decode is required because requests contain e.g. "%20"
-    final String sFilename1 = URLHelper.urlDecode (sFilename);
+    final String sFilename1 = URLHelper.urlDecodeOrDefault (sFilename, sFilename);
 
     return new UserDataObject (sFilename1);
   }
