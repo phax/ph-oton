@@ -46,7 +46,7 @@ import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.scope.IScope;
 import com.helger.scope.ISessionScope;
@@ -386,7 +386,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     }
 
     // Check the password
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     if (!aUserMgr.areUserIDAndPasswordValid (sUserID, sPlainTextPassword))
     {
       AuditHelper.onAuditExecuteFailure ("login", sUserID, "invalid-password");

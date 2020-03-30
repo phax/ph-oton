@@ -40,7 +40,7 @@ import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
@@ -134,7 +134,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
         // Check if the CSRF nonce matches
         if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
-          final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+          final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
           final String sOldPlainTextPassword = aWPEC.params ().getAsString (FIELD_OLD_PASSWORD);
           final String sNewPlainTextPassword = aWPEC.params ().getAsString (FIELD_NEW_PASSWORD);
           final String sNewPlainTextPasswordConfirm = aWPEC.params ().getAsString (FIELD_NEW_PASSWORD_CONFIRM);

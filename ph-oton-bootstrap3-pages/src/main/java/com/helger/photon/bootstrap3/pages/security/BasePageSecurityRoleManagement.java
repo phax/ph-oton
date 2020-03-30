@@ -65,7 +65,7 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
 import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.uicore.page.EWebPageFormAction;
@@ -243,7 +243,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       // Show users of user groups
       final HCNodeList aUserUI = new HCNodeList ();
       final ICommonsList <IUser> aAllUsersHavingThisRole = new CommonsArrayList <> ();
-      final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+      final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
       for (final IUserGroup aUG : aAssignedUserGroups)
         for (final String sUserID : aUG.getAllContainedUserIDs ())
           aAllUsersHavingThisRole.add (aUserMgr.getUserOfID (sUserID));

@@ -54,6 +54,7 @@ import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.token.user.UserTokenManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.user.UserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.scope.IScope;
@@ -84,7 +85,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonSecurityManager.class);
 
   private AuditManager m_aAuditMgr;
-  private UserManager m_aUserMgr;
+  private IUserManager m_aUserMgr;
   private IRoleManager m_aRoleMgr;
   private UserGroupManager m_aUserGroupMgr;
   private IUserTokenManager m_aUserTokenMgr;
@@ -191,7 +192,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public static UserManager getUserMgr ()
+  public static IUserManager getUserMgr ()
   {
     return getInstance ().m_aUserMgr;
   }

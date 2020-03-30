@@ -73,7 +73,7 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
 import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.uicore.html.select.HCRoleForUserGroupSelect;
@@ -284,7 +284,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     else
     {
       // Convert IDs to objects
-      final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+      final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
       final ICommonsList <IUser> aAssignedUsers = new CommonsArrayList <> (aAssignedUserIDs,
                                                                            sUserID -> aUserMgr.getUserOfID (sUserID));
 

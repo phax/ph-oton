@@ -66,7 +66,7 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.user.IUserToken;
 import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.select.HCUserSelect;
 import com.helger.photon.uicore.icon.EDefaultIcon;
@@ -496,7 +496,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                  @Nonnull final EWebPageFormAction eFormAction)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     final boolean bEdit = eFormAction.isEdit ();
 

@@ -38,7 +38,7 @@ import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.role.IRoleManager;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 
 /**
  * This class manages the available user groups.
@@ -48,13 +48,13 @@ import com.helger.photon.security.user.UserManager;
 @ThreadSafe
 public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, UserGroup>
 {
-  private final UserManager m_aUserMgr;
+  private final IUserManager m_aUserMgr;
   private final IRoleManager m_aRoleMgr;
 
   private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserGroupManager (@Nonnull @Nonempty final String sFilename,
-                           @Nonnull final UserManager aUserMgr,
+                           @Nonnull final IUserManager aUserMgr,
                            @Nonnull final IRoleManager aRoleMgr) throws DAOException
   {
     super (UserGroup.class, sFilename);
@@ -63,7 +63,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   }
 
   @Nonnull
-  public final UserManager getUserManager ()
+  public final IUserManager getUserManager ()
   {
     return m_aUserMgr;
   }

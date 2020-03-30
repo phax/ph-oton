@@ -27,7 +27,7 @@ import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverte
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
@@ -60,7 +60,7 @@ public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMic
   @Nonnull
   public UserToken convertToNative (@Nonnull final IMicroElement aElement)
   {
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 
     final ICommonsList <AccessToken> aAccessTokens = new CommonsArrayList <> ();
     for (final IMicroElement e : aElement.getAllChildElements (ELEMENT_ACCESS_TOKEN))

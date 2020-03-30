@@ -32,7 +32,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.xml.mock.XMLTestHelper;
 
 /**
@@ -48,7 +48,7 @@ public final class UserTokenTest
   @Test
   public void testCreate ()
   {
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final IUser aUser = aUserMgr.createPredefinedUser ("id1",
                                                        "user1",
                                                        "test@example.org",
@@ -69,7 +69,7 @@ public final class UserTokenTest
   @Test
   public void testCreateWithCustomAttrs ()
   {
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final IUser aUser = aUserMgr.createPredefinedUser ("id2",
                                                        "user2",
                                                        "test@example.org",

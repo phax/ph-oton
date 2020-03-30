@@ -41,7 +41,7 @@ import com.helger.photon.core.locale.ILocaleManager;
 import com.helger.photon.core.menu.MenuTree;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRoleManager;
-import com.helger.photon.security.user.UserManager;
+import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
@@ -108,7 +108,7 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
   @Override
   protected void initSecurity ()
   {
-    final UserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
 
