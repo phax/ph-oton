@@ -22,11 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
+import com.helger.photon.app.dao.IPhotonDAO;
 
 /**
  * Base interface to manage the available roles.
@@ -34,7 +33,7 @@ import com.helger.commons.state.EChange;
  * @author Philip Helger
  * @since 8.2.4
  */
-public interface IRoleManager
+public interface IRoleManager extends IPhotonDAO <IRole>
 {
   void createDefaults ();
 
@@ -100,30 +99,6 @@ public interface IRoleManager
    */
   @Nullable
   IRole getRoleOfID (@Nullable String sRoleID);
-
-  /**
-   * @param sRoleID
-   *        The role ID to be checked
-   * @return <code>true</code> if a rule with this ID is contained,
-   *         <code>false</code> if not
-   */
-  boolean containsWithID (@Nullable String sRoleID);
-
-  /**
-   * Check if all IDs are contained
-   * 
-   * @param aIDs
-   *        IDs to check
-   * @return <code>true</code> if all IDs are contained
-   */
-  boolean containsAllIDs (@Nullable final Iterable <String> aIDs);
-
-  /**
-   * @return A non-<code>null</code> but maybe empty list of all contained roles
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  ICommonsList <IRole> getAll ();
 
   /**
    * Rename the role with the passed ID

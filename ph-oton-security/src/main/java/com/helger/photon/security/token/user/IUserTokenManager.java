@@ -26,6 +26,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
+import com.helger.photon.app.dao.IPhotonDAO;
 import com.helger.photon.security.user.IUser;
 
 /**
@@ -34,7 +36,7 @@ import com.helger.photon.security.user.IUser;
  * @author Philip Helger
  * @since 8.2.2
  */
-public interface IUserTokenManager
+public interface IUserTokenManager extends IPhotonDAO <IUserToken>
 {
   /**
    * Create a new user token.
@@ -119,23 +121,19 @@ public interface IUserTokenManager
                              @Nonnull @Nonempty String sRevocationReason);
 
   /**
-   * @return All contained user token. Never <code>null</code> but maybe empty.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  ICommonsList <IUserToken> getAllUserTokens ();
-
-  /**
    * @return All contained, non-deleted user token. Never <code>null</code> but
    *         maybe empty.
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsList <IUserToken> getAllActiveUserTokens ();
+  default ICommonsList <IUserToken> getAllActiveUserTokens ()
+  {
+    return getAll (x -> !x.isDeleted ());
+  }
 
   /**
    * Get the user token with the passed ID
-   * 
+   *
    * @param sID
    *        The ID to search. May be <code>null</code>.
    * @return <code>null</code> if no such user token exists.
@@ -145,13 +143,19 @@ public interface IUserTokenManager
 
   /**
    * Find the user token that has the provided access token string.
-   * 
+   *
    * @param sTokenString
    *        The token string to search.
    * @return <code>null</code> if no user token uses this access token string.
    */
   @Nullable
-  IUserToken getUserTokenOfTokenString (@Nullable String sTokenString);
+  default IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
+  {
+    if (StringHelper.hasNoText (sTokenString))
+      return null;
+
+    return findFirst (x -> sTokenString.equals (x.getActiveTokenString ()));
+  }
 
   /**
    * Check if the passed token string was already used in this application. This
@@ -161,5 +165,11 @@ public interface IUserTokenManager
    *        The token string to check. May be <code>null</code>.
    * @return <code>true</code> if the token string is already used.
    */
-  boolean isAccessTokenUsed (@Nullable String sTokenString);
+  default boolean isAccessTokenUsed (@Nullable final String sTokenString)
+  {
+    if (StringHelper.hasNoText (sTokenString))
+      return false;
+
+    return containsAny (x -> x.findFirstAccessToken (y -> y.getTokenString ().equals (sTokenString)) != null);
+  }
 }

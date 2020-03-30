@@ -549,7 +549,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   @Nonnull
   private IHCNode _createList (@Nonnull final WPECTYPE aWPEC,
                                @Nonnull final String sIDSuffix,
-                               @Nullable final Predicate <IUserToken> aFilter)
+                               @Nullable final Predicate <? super IUserToken> aFilter)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
@@ -557,60 +557,58 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_USER.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID () + sIDSuffix);
-    for (final IUserToken aCurObject : aUserTokenMgr.getAllUserTokens ())
-      if (aFilter == null || aFilter.test (aCurObject))
-      {
-        final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
-        final String sDisplayName = aCurObject.getDisplayName ();
-        final boolean bUsableNow = !aCurObject.isDeleted () &&
-                                   aCurObject.getActiveAccessToken () != null &&
-                                   aCurObject.getActiveAccessToken ().isValidNow ();
+    for (final IUserToken aCurObject : aUserTokenMgr.getAll (aFilter))
+    {
+      final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
+      final String sDisplayName = aCurObject.getDisplayName ();
+      final boolean bUsableNow = !aCurObject.isDeleted () &&
+                                 aCurObject.getActiveAccessToken () != null &&
+                                 aCurObject.getActiveAccessToken ().isValidNow ();
 
-        final HCRow aBodyRow = aTable.addBodyRow ();
-        aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
-        aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
+      final HCRow aBodyRow = aTable.addBodyRow ();
+      aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
+      aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
 
-        final IHCCell <?> aActionCell = aBodyRow.addCell ();
-        if (isActionAllowed (aWPEC, EWebPageFormAction.EDIT, aCurObject))
-          aActionCell.addChild (createEditLink (aWPEC,
-                                                aCurObject,
-                                                EText.ACTION_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                          sDisplayName)));
-        else
-          aActionCell.addChild (createEmptyAction ());
-        aActionCell.addChild (" ");
-        aActionCell.addChild (createCopyLink (aWPEC,
+      final IHCCell <?> aActionCell = aBodyRow.addCell ();
+      if (isActionAllowed (aWPEC, EWebPageFormAction.EDIT, aCurObject))
+        aActionCell.addChild (createEditLink (aWPEC,
                                               aCurObject,
-                                              EText.ACTION_COPY.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
-        aActionCell.addChild (" ");
-        if (isActionAllowed (aWPEC, EWebPageFormAction.DELETE, aCurObject))
-          aActionCell.addChild (createDeleteLink (aWPEC,
-                                                  aCurObject,
-                                                  EText.ACTION_DELETE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                              sDisplayName)));
-        else
-          aActionCell.addChild (createEmptyAction ());
-        aActionCell.addChild (" ");
-        if (canCreateNewAccessToken (aCurObject))
-          aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
-                                              .add (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN)
-                                              .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
-                                                                                                  .addChild (EDefaultIcon.REFRESH.getAsNode ())
-                                                                                                  .setTitle (EBaseText.TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                                    sDisplayName)));
-        else
-          aActionCell.addChild (createEmptyAction ());
-        aActionCell.addChild (" ");
-        if (canRevokeAccessToken (aCurObject))
-          aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
-                                              .add (CPageParam.PARAM_ACTION, ACTION_REVOKE_ACCESS_TOKEN)
-                                              .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
-                                                                                                  .addChild (EDefaultIcon.CANCEL.getAsNode ())
-                                                                                                  .setTitle (EBaseText.TITLE_ACTION_REVOKE_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                                sDisplayName)));
-        else
-          aActionCell.addChild (createEmptyAction ());
-      }
+                                              EText.ACTION_EDIT.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
+      else
+        aActionCell.addChild (createEmptyAction ());
+      aActionCell.addChild (" ");
+      aActionCell.addChild (createCopyLink (aWPEC,
+                                            aCurObject,
+                                            EText.ACTION_COPY.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
+      aActionCell.addChild (" ");
+      if (isActionAllowed (aWPEC, EWebPageFormAction.DELETE, aCurObject))
+        aActionCell.addChild (createDeleteLink (aWPEC,
+                                                aCurObject,
+                                                EText.ACTION_DELETE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                            sDisplayName)));
+      else
+        aActionCell.addChild (createEmptyAction ());
+      aActionCell.addChild (" ");
+      if (canCreateNewAccessToken (aCurObject))
+        aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
+                                            .add (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN)
+                                            .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
+                                                                                                .addChild (EDefaultIcon.REFRESH.getAsNode ())
+                                                                                                .setTitle (EBaseText.TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                                  sDisplayName)));
+      else
+        aActionCell.addChild (createEmptyAction ());
+      aActionCell.addChild (" ");
+      if (canRevokeAccessToken (aCurObject))
+        aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
+                                            .add (CPageParam.PARAM_ACTION, ACTION_REVOKE_ACCESS_TOKEN)
+                                            .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
+                                                                                                .addChild (EDefaultIcon.CANCEL.getAsNode ())
+                                                                                                .setTitle (EBaseText.TITLE_ACTION_REVOKE_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                              sDisplayName)));
+      else
+        aActionCell.addChild (createEmptyAction ());
+    }
     final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
     return new HCNodeList ().addChildren (aTable, aDT);
   }

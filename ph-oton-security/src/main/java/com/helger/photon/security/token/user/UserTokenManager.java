@@ -23,12 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
 import com.helger.dao.DAOException;
 import com.helger.photon.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.audit.AuditHelper;
@@ -227,48 +224,9 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUserToken> getAllUserTokens ()
-  {
-    return getAll ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUserToken> getAllActiveUserTokens ()
-  {
-    return getAll (x -> !x.isDeleted ());
-  }
-
   @Nullable
   public IUserToken getUserTokenOfID (@Nullable final String sID)
   {
     return getOfID (sID);
-  }
-
-  @Nullable
-  public IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
-  {
-    if (StringHelper.hasNoText (sTokenString))
-      return null;
-
-    return findFirst (x -> sTokenString.equals (x.getActiveTokenString ()));
-  }
-
-  /**
-   * Check if the passed token string was already used in this application. This
-   * method considers all access token - revoked, expired or active.
-   *
-   * @param sTokenString
-   *        The token string to check. May be <code>null</code>.
-   * @return <code>true</code> if the token string is already used.
-   */
-  public boolean isAccessTokenUsed (@Nullable final String sTokenString)
-  {
-    if (StringHelper.hasNoText (sTokenString))
-      return false;
-
-    return containsAny (x -> x.findFirstAccessToken (y -> y.getTokenString ().equals (sTokenString)) != null);
   }
 }
