@@ -24,7 +24,6 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -46,7 +45,7 @@ import com.helger.photon.security.user.IUserManager;
  * @author Philip Helger
  */
 @ThreadSafe
-public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, UserGroup>
+public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, UserGroup> implements IUserGroupManager
 {
   private final IUserManager m_aUserMgr;
   private final IRoleManager m_aRoleMgr;
@@ -109,9 +108,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // no role for this user group
   }
 
-  /**
-   * @return The user group callback list. Never <code>null</code>.
-   */
   @Nonnull
   @ReturnsMutableObject
   public CallbackList <IUserGroupModificationCallback> userGroupModificationCallbacks ()
@@ -119,19 +115,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return m_aCallbacks;
   }
 
-  /**
-   * Create a new user group.
-   *
-   * @param sName
-   *        The name of the user group to create. May neither be
-   *        <code>null</code> nor empty.
-   * @param sDescription
-   *        The optional description of the user group. May be <code>null</code>
-   *        .
-   * @param aCustomAttrs
-   *        A set of custom attributes. May be <code>null</code>.
-   * @return The created user group.
-   */
   @Nonnull
   public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName,
                                         @Nullable final String sDescription,
@@ -153,21 +136,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
 
   }
 
-  /**
-   * Create a predefined user group.
-   *
-   * @param sID
-   *        The ID to use
-   * @param sName
-   *        The name of the user group to create. May neither be
-   *        <code>null</code> nor empty.
-   * @param sDescription
-   *        The optional description of the user group. May be <code>null</code>
-   *        .
-   * @param aCustomAttrs
-   *        A set of custom attributes. May be <code>null</code>.
-   * @return The created user group.
-   */
   @Nonnull
   public IUserGroup createPredefinedUserGroup (@Nonnull @Nonempty final String sID,
                                                @Nonnull @Nonempty final String sName,
@@ -196,14 +164,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return aUserGroup;
   }
 
-  /**
-   * Delete the user group with the specified ID
-   *
-   * @param sUserGroupID
-   *        The ID of the user group to be deleted. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if the user group was deleted,
-   *         {@link EChange#UNCHANGED} otherwise
-   */
   @Nonnull
   public EChange deleteUserGroup (@Nullable final String sUserGroupID)
   {
@@ -244,14 +204,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Undelete the user group with the specified ID.
-   *
-   * @param sUserGroupID
-   *        The ID of the user group to undelete
-   * @return {@link EChange#CHANGED} if the user group was undeleted,
-   *         {@link EChange#UNCHANGED} otherwise.
-   */
   @Nonnull
   public EChange undeleteUserGroup (@Nullable final String sUserGroupID)
   {
@@ -281,51 +233,12 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Get the user group with the specified ID
-   *
-   * @param sUserGroupID
-   *        The ID of the user group to search
-   * @return <code>null</code> if no such user group exists
-   */
   @Nullable
   public IUserGroup getUserGroupOfID (@Nullable final String sUserGroupID)
   {
     return getOfID (sUserGroupID);
   }
 
-  /**
-   * @return A non-<code>null</code> list of all available active (=not deleted)
-   *         user groups
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUserGroup> getAllActiveUserGroups ()
-  {
-    return getAll (x -> !x.isDeleted ());
-  }
-
-  /**
-   * @return A non-<code>null</code> list of all deleted user groups
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUserGroup> getAllDeletedUserGroups ()
-  {
-    return getAll (IUserGroup::isDeleted);
-  }
-
-  /**
-   * Rename the user group with the specified ID
-   *
-   * @param sUserGroupID
-   *        The ID of the user group. May be <code>null</code>.
-   * @param sNewName
-   *        The new name of the user group. May neither be <code>null</code> nor
-   *        empty.
-   * @return {@link EChange#CHANGED} if the user group ID was valid, and the new
-   *         name was different from the old name
-   */
   @Nonnull
   public EChange renameUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sNewName)
   {
@@ -358,21 +271,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Change the modifiable data of a user group
-   *
-   * @param sUserGroupID
-   *        The ID of the user group. May be <code>null</code>.
-   * @param sNewName
-   *        The new name of the user group. May neither be <code>null</code> nor
-   *        empty.
-   * @param sNewDescription
-   *        The optional new description of the user group. May be
-   *        <code>null</code> .
-   * @param aNewCustomAttrs
-   *        Custom attributes. May be <code>null</code>.
-   * @return {@link EChange}
-   */
   @Nonnull
   public EChange setUserGroupData (@Nullable final String sUserGroupID,
                                    @Nonnull @Nonempty final String sNewName,
@@ -416,17 +314,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Assign the passed user ID to the passed user group.<br>
-   * Note: no validity check must be performed for the user ID
-   *
-   * @param sUserGroupID
-   *        ID of the user group to assign to
-   * @param sUserID
-   *        ID of the user to be assigned.
-   * @return {@link EChange#CHANGED} if the user group ID was valid, and the
-   *         specified user ID was not already contained.
-   */
   @Nonnull
   public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
   {
@@ -459,16 +346,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Unassign the specified user ID from the passed user group ID.
-   *
-   * @param sUserGroupID
-   *        The ID of the user group to unassign the user ID from
-   * @param sUserID
-   *        The user ID to be unassigned
-   * @return {@link EChange#CHANGED} if the user group ID was resolved, and the
-   *         passed user ID was assigned to the user group
-   */
   @Nonnull
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
@@ -501,14 +378,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Unassign the passed user ID from all user groups.
-   *
-   * @param sUserID
-   *        ID of the user to be unassigned.
-   * @return {@link EChange#CHANGED} if the passed user ID was at least assigned
-   *         to one user group.
-   */
   @Nonnull
   public EChange unassignUserFromAllUserGroups (@Nullable final String sUserID)
   {
@@ -545,84 +414,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Check if the passed user is assigned to the specified user group
-   *
-   * @param sUserGroupID
-   *        ID of the user group to check
-   * @param sUserID
-   *        ID of the user to be checked.
-   * @return <code>true</code> if the specified user is assigned to the
-   *         specified user group.
-   */
-  public boolean isUserAssignedToUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return false;
-
-    final IUserGroup aUserGroup = getOfID (sUserGroupID);
-    return aUserGroup == null ? false : aUserGroup.containsUserID (sUserID);
-  }
-
-  /**
-   * Get a collection of all user groups to which a certain user is assigned to.
-   *
-   * @param sUserID
-   *        The user ID to search
-   * @return A non-<code>null</code>but may be empty collection with all
-   *         matching user groups.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList <> ();
-
-    return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
-  }
-
-  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,
-                                                              @Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return false;
-    if (StringHelper.hasNoText (sRoleID))
-      return false;
-
-    return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));
-  }
-
-  /**
-   * Get a collection of all user group IDs to which a certain user is assigned
-   * to.
-   *
-   * @param sUserID
-   *        The user ID to search
-   * @return A non-<code>null</code>but may be empty collection with all
-   *         matching user group IDs.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList <> ();
-
-    return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), aUserGroup -> aUserGroup.getID ());
-  }
-
-  /**
-   * Assign the passed role ID to the user group with the passed ID.<br>
-   * Note: the role ID must not be checked for consistency
-   *
-   * @param sUserGroupID
-   *        The ID of the user group to assign the role to.
-   * @param sRoleID
-   *        The ID of the role to be assigned
-   * @return {@link EChange#CHANGED} if the passed user group ID was resolved,
-   *         and the role ID was not already previously contained
-   */
   @Nonnull
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
   {
@@ -655,16 +446,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Unassign the passed role ID from the passed user group ID
-   *
-   * @param sUserGroupID
-   *        The ID of the user group to unassign the role ID from
-   * @param sRoleID
-   *        The role ID to be unassigned.
-   * @return {@link EChange#CHANGED} if the user group ID was resolved and the
-   *         passed role ID was contained
-   */
   @Nonnull
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
@@ -697,14 +478,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  /**
-   * Unassign the passed role ID from existing user groups.
-   *
-   * @param sRoleID
-   *        The role ID to be unassigned
-   * @return {@link EChange#CHANGED} if the passed role ID was contained in at
-   *         least one user group
-   */
   @Nonnull
   public EChange unassignRoleFromAllUserGroups (@Nullable final String sRoleID)
   {
@@ -738,47 +511,5 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
       m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, false));
 
     return EChange.CHANGED;
-  }
-
-  /**
-   * Get a collection of all user groups to which a certain role is assigned to.
-   *
-   * @param sRoleID
-   *        The role ID to search
-   * @return A non-<code>null</code>but may be empty collection with all
-   *         matching user groups.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sRoleID))
-      return getNone ();
-
-    return getAll (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
-  }
-
-  /**
-   * Get a collection of all user group IDs to which a certain role is assigned
-   * to.
-   *
-   * @param sRoleID
-   *        The role ID to search
-   * @return A non-<code>null</code>but may be empty collection with all
-   *         matching user group IDs.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sRoleID))
-      return getNone ();
-
-    return getAllMapped (aUserGroup -> aUserGroup.containsRoleID (sRoleID), IUserGroup::getID);
-  }
-
-  public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
-  {
-    return containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 }
