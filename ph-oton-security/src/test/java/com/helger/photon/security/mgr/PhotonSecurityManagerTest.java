@@ -29,7 +29,7 @@ import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.role.Role;
 import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.user.IUserManager;
-import com.helger.photon.security.usergroup.UserGroupManager;
+import com.helger.photon.security.usergroup.IUserGroupManager;
 
 /**
  * Test class for class {@link Role}.
@@ -50,7 +50,7 @@ public final class PhotonSecurityManagerTest
     assertNotNull (aRoleMgr);
     final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     assertNotNull (aUserMgr);
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     assertNotNull (aUserGroupMgr);
     final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
     assertNotNull (aUserTokenMgr);

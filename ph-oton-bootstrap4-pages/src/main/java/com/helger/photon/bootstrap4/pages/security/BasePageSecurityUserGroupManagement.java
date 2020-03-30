@@ -70,7 +70,7 @@ import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
-import com.helger.photon.security.usergroup.UserGroupManager;
+import com.helger.photon.security.usergroup.IUserGroupManager;
 import com.helger.photon.uicore.html.select.HCRoleForUserGroupSelect;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
@@ -156,7 +156,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+        final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
         if (aUserGroupMgr.deleteUserGroup (aSelectedObject.getID ()).isChanged ())
           aWPEC.postRedirectGetInternal (success (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
@@ -182,7 +182,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+        final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
         if (aUserGroupMgr.undeleteUserGroup (aSelectedObject.getID ()).isChanged ())
           aWPEC.postRedirectGetInternal (success (EText.UNDELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
@@ -246,7 +246,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   @Nullable
   protected IUserGroup getSelectedObject (@Nonnull final WPECTYPE aWPEC, @Nullable final String sID)
   {
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     return aUserGroupMgr.getUserGroupOfID (sID);
   }
 
@@ -369,7 +369,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final String sDescription = aWPEC.params ().getAsString (FIELD_DESCRIPTION);
     final ICommonsCollection <String> aRoleIDs = aWPEC.params ().getAsStringList (FIELD_ROLES);
     final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     if (StringHelper.hasNoText (sName))
       aFormErrors.addFieldError (FIELD_NAME, EText.ERROR_NAME_REQUIRED.getDisplayText (aDisplayLocale));
@@ -551,7 +551,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     // Toolbar on top
     final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));

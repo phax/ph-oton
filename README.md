@@ -42,6 +42,7 @@ Contained subprojects are:
     * Updated to ph-commons 9.4.1
     * Extracted `IRoleManager` from `RoleManager`
     * Extracted `IUserManager` from `UserManager`
+    * Extracted `IUserGroupManager` from `UserGroupManager`
 * v8.2.3 - 2020-02-19
     * Fixed an error with the temporary directory name creation in `JettyStarter`
     * Updated to ph-web 9.1.10

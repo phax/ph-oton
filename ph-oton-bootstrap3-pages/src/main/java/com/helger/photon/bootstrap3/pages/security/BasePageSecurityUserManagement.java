@@ -83,7 +83,7 @@ import com.helger.photon.security.role.IRole;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
-import com.helger.photon.security.usergroup.UserGroupManager;
+import com.helger.photon.security.usergroup.IUserGroupManager;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
@@ -457,7 +457,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     aNodeList.addChild (getUIHandler ().createActionHeader (EText.HEADER_DETAILS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
@@ -586,7 +586,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bIsAdministrator = bEdit && aSelectedObject != null && aSelectedObject.isAdministrator ();
     final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     String sLoginName = aWPEC.params ().getAsString (FIELD_LOGINNAME);
     final String sFirstName = aWPEC.params ().getAsString (FIELD_FIRSTNAME);
@@ -743,7 +743,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final boolean bEdit = eFormAction.isEdit ();
     final boolean bIsAdministrator = bEdit && aSelectedObject != null && aSelectedObject.isAdministrator ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     aForm.addChild (getUIHandler ().createActionHeader (bEdit ? EText.TITLE_EDIT.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                          SecurityHelper.getUserDisplayName (aSelectedObject,
@@ -876,7 +876,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     final boolean bSeparateLoginName = !useEmailAddressAsLoginName ();
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
     // List existing
     final HCTable aTable = new HCTable (new DTCol ().setVisible (false),

@@ -62,7 +62,7 @@ import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroup;
-import com.helger.photon.security.usergroup.UserGroupManager;
+import com.helger.photon.security.usergroup.IUserGroupManager;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -312,7 +312,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
   protected static boolean canDeleteRole (@Nullable final IRole aRole)
   {
-    final UserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
     return aRole != null &&
            !aRole.isDeleted () &&
            !aRole.getID ().equals (CSecurity.ROLE_ADMINISTRATOR_ID) &&
@@ -326,7 +326,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final UserGroupManager aUserGroupManager = PhotonSecurityManager.getUserGroupMgr ();
+    final IUserGroupManager aUserGroupManager = PhotonSecurityManager.getUserGroupMgr ();
 
     final HCTable aTable = new HCTable (new DTCol ().setVisible (false),
                                         new DTCol (EText.HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
