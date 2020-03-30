@@ -34,14 +34,17 @@ package com.helger.photon.security.mgr;
  */
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.lang.ClassHelper;
+import com.helger.dao.DAOException;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.audit.AuditManager;
 import com.helger.photon.security.lock.DefaultLockManager;
@@ -76,14 +79,87 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
  */
 public final class PhotonSecurityManager extends AbstractGlobalSingleton
 {
+  /**
+   * Manager factory interface.
+   *
+   * @author Philip Helger
+   * @since 8.2.4
+   */
+  public interface IFactory
+  {
+    @Nonnull
+    IUserManager createUserMgr () throws Exception;
+
+    @Nonnull
+    IRoleManager createRoleMgr () throws Exception;
+
+    @Nonnull
+    IUserGroupManager createUserGroupMgr (@Nonnull IUserManager aUserMgr,
+                                          @Nonnull IRoleManager aRoleMgr) throws Exception;
+
+    @Nonnull
+    IUserTokenManager createUserTokenMgr () throws Exception;
+  }
+
+  /**
+   * Default Factory implementation using XML backend.
+   *
+   * @author Philip Helger
+   * @since 8.2.4
+   */
+  @Immutable
+  public static class FactoryXML implements IFactory
+  {
+    public static final String DIRECTORY_SECURITY = "security/";
+    public static final String FILENAME_USERS_XML = "users.xml";
+    public static final String FILENAME_ROLES_XML = "roles.xml";
+    public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
+    public static final String FILENAME_USERTOKENS_XML = "usertokens.xml";
+
+    @Nonnull
+    public IUserManager createUserMgr () throws DAOException
+    {
+      return new UserManager (DIRECTORY_SECURITY + FILENAME_USERS_XML);
+    }
+
+    @Nonnull
+    public IRoleManager createRoleMgr () throws DAOException
+    {
+      return new RoleManager (DIRECTORY_SECURITY + FILENAME_ROLES_XML);
+    }
+
+    @Nonnull
+    public IUserGroupManager createUserGroupMgr (@Nonnull final IUserManager aUserMgr,
+                                                 @Nonnull final IRoleManager aRoleMgr) throws DAOException
+    {
+      return new UserGroupManager (DIRECTORY_SECURITY + FILENAME_USERGROUPS_XML, aUserMgr, aRoleMgr);
+    }
+
+    @Nonnull
+    public IUserTokenManager createUserTokenMgr () throws DAOException
+    {
+      return new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
+    }
+  }
+
   public static final String DIRECTORY_AUDITS = "audits/";
-  public static final String DIRECTORY_SECURITY = "security/";
-  public static final String FILENAME_USERS_XML = "users.xml";
-  public static final String FILENAME_ROLES_XML = "roles.xml";
-  public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
-  public static final String FILENAME_USERTOKENS_XML = "usertokens.xml";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonSecurityManager.class);
+
+  /** The global factory to be used. */
+  private static IFactory s_aFactory = new FactoryXML ();
+
+  @Nonnull
+  public static IFactory getFactory ()
+  {
+    return s_aFactory;
+  }
+
+  public static void setFactory (@Nonnull final IFactory aFactory)
+  {
+    ValueEnforcer.notNull (aFactory, "Factory");
+    s_aFactory = aFactory;
+  }
 
   private AuditManager m_aAuditMgr;
   private IUserManager m_aUserMgr;
@@ -128,11 +204,11 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       AuditHelper.setAuditor (m_aAuditMgr.getAuditor ());
       AuditHelper.onAuditExecuteSuccess ("audit-initialized");
 
-      m_aUserMgr = new UserManager (DIRECTORY_SECURITY + FILENAME_USERS_XML);
-      m_aRoleMgr = new RoleManager (DIRECTORY_SECURITY + FILENAME_ROLES_XML);
-      m_aUserGroupMgr = new UserGroupManager (DIRECTORY_SECURITY + FILENAME_USERGROUPS_XML, m_aUserMgr, m_aRoleMgr);
+      m_aUserMgr = s_aFactory.createUserMgr ();
+      m_aRoleMgr = s_aFactory.createRoleMgr ();
+      m_aUserGroupMgr = s_aFactory.createUserGroupMgr (m_aUserMgr, m_aRoleMgr);
       // Must be after user manager
-      m_aUserTokenMgr = new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
+      m_aUserTokenMgr = s_aFactory.createUserTokenMgr ();
 
       // Init callbacks after all managers
       _initCallbacks ();

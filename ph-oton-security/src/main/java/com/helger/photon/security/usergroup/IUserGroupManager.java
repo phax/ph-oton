@@ -38,6 +38,7 @@ import com.helger.photon.security.user.IUserManager;
  * Base interface to manages the available user groups.
  *
  * @author Philip Helger
+ * @since 8.2.4
  */
 @ThreadSafe
 public interface IUserGroupManager extends IPhotonDAO <IUserGroup>

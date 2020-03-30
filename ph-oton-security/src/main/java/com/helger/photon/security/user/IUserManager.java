@@ -39,6 +39,7 @@ import com.helger.security.password.salt.IPasswordSalt;
  * Base interface for managing all available users.
  *
  * @author Philip Helger
+ * @since 8.2.4
  */
 public interface IUserManager extends IPhotonDAO <IUser>
 {
