@@ -79,7 +79,7 @@ public class JettyRunner extends JettyStarter
       {
         ex.printStackTrace ();
       }
-    });
+    }, "JettyRunner");
     m_aThread.setDaemon (true);
     m_aThread.start ();
 
