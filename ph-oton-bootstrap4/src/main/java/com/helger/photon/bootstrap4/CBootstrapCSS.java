@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.4.1
+  // 4.5.0
   public static final ICSSClassProvider ACCORDION = DefaultCSSClassProvider.create ("accordion");
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
@@ -1562,6 +1562,9 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider TOAST_HEADER = DefaultCSSClassProvider.create ("toast-header");
   public static final ICSSClassProvider TOOLTIP = DefaultCSSClassProvider.create ("tooltip");
   public static final ICSSClassProvider TOOLTIP_INNER = DefaultCSSClassProvider.create ("tooltip-inner");
+  public static final ICSSClassProvider USER_SELECT_ALL = DefaultCSSClassProvider.create ("user-select-all");
+  public static final ICSSClassProvider USER_SELECT_AUTO = DefaultCSSClassProvider.create ("user-select-auto");
+  public static final ICSSClassProvider USER_SELECT_NONE = DefaultCSSClassProvider.create ("user-select-none");
   public static final ICSSClassProvider VALID_FEEDBACK = DefaultCSSClassProvider.create ("valid-feedback");
   public static final ICSSClassProvider VALID_TOOLTIP = DefaultCSSClassProvider.create ("valid-tooltip");
   public static final ICSSClassProvider VH_100 = DefaultCSSClassProvider.create ("vh-100");
