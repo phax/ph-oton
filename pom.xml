@@ -114,7 +114,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-css-parent-pom</artifactId>
-        <version>6.2.2</version>
+        <version>6.2.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -322,7 +322,7 @@
         <plugin>
           <groupId>com.helger.maven</groupId>
           <artifactId>ph-csscompress-maven-plugin</artifactId>
-          <version>6.2.2</version>
+          <version>6.2.3</version>
         </plugin>
       </plugins>
     </pluginManagement>
