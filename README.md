@@ -37,7 +37,7 @@ Contained subprojects are:
     * Updated to Jetty 9.4.28
     * Updated to Log4j 2.13.2
     * Updated to ph-commons 9.4.1
-    * Updated to jQuery 3.5.0
+    * Updated to jQuery 3.5.1
     * Updated to Bootstrap 4.5.0
     * Added new classes `SessionBackedRequestFieldBoolean` and `SessionBackedRequestFieldBooleanMultiValue`
     * Added new configuration file syntax `JSON`
