@@ -121,52 +121,61 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     m_aJWS = aJWS;
   }
 
-  public void jsonEmpty ()
+  @Nonnull
+  public PhotonUnifiedResponse jsonEmpty ()
   {
-    json (null);
+    return json (null);
   }
 
-  public void json (@Nullable final IJson aValue)
+  @Nonnull
+  public PhotonUnifiedResponse json (@Nullable final IJson aValue)
   {
     // Ensure it is valid JSON
     final String sResponse = aValue != null ? aValue.getAsJsonString (m_aJWS) : "{}";
     final Charset aCharset = StandardCharsets.UTF_8;
     setContentAndCharset (sResponse, aCharset);
-    setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
-                                                                         aCharset.name ()));
+    setMimeType (new MimeType (CMimeType.APPLICATION_JSON).addParameter (CMimeType.PARAMETER_NAME_CHARSET, aCharset.name ()));
+    return this;
   }
 
-  public void xml (@Nullable final String sXML, @Nonnull final Charset aCharset)
+  @Nonnull
+  public PhotonUnifiedResponse xml (@Nullable final String sXML, @Nonnull final Charset aCharset)
   {
     setContentAndCharset (StringHelper.getNotNull (sXML), aCharset);
-    setMimeType (new MimeType (CMimeType.APPLICATION_XML).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
-                                                                        aCharset.name ()));
+    setMimeType (new MimeType (CMimeType.APPLICATION_XML).addParameter (CMimeType.PARAMETER_NAME_CHARSET, aCharset.name ()));
+    return this;
   }
 
-  public void xml (@Nullable final IMicroNode aNode)
+  @Nonnull
+  public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode)
   {
-    xml (aNode, m_aXWS);
+    return xml (aNode, m_aXWS);
   }
 
-  public void xml (@Nullable final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
+  @Nonnull
+  public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
-    xml (aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings), aSettings.getCharset ());
+    return xml (aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings), aSettings.getCharset ());
   }
 
-  public void xml (@Nullable final Node aNode)
+  @Nonnull
+  public PhotonUnifiedResponse xml (@Nullable final Node aNode)
   {
-    xml (aNode, m_aXWS);
+    return xml (aNode, m_aXWS);
   }
 
-  public void xml (@Nullable final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
+  @Nonnull
+  public PhotonUnifiedResponse xml (@Nullable final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
-    xml (aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings), aSettings.getCharset ());
+    return xml (aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings), aSettings.getCharset ());
   }
 
-  public void text (@Nullable final String sValue)
+  @Nonnull
+  public PhotonUnifiedResponse text (@Nullable final String sValue)
   {
     setContentAndCharset (StringHelper.getNotNull (sValue), StandardCharsets.UTF_8);
     setMimeType (CMimeType.TEXT_PLAIN);
+    return this;
   }
 
   public static final class HtmlHelper
@@ -266,9 +275,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       // Serialize remaining node to HTML
       final IMicroNode aMicroNode = aTargetNode.convertToMicroNode (aConversionSettings);
-      final String sHTML = aMicroNode == null ? ""
-                                              : MicroWriter.getNodeAsString (aMicroNode,
-                                                                             aConversionSettings.getXMLWriterSettings ());
+      final String sHTML = aMicroNode == null ? "" : MicroWriter.getNodeAsString (aMicroNode, aConversionSettings.getXMLWriterSettings ());
 
       return sHTML;
     }
@@ -284,17 +291,14 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
         aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
-                                      PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular)
-                                                       .getAsStringWithEncodedParameters ());
+                                      PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsStringWithEncodedParameters ());
 
       for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
-        aSpecialNodes.addExternalJS (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular)
-                                                      .getAsStringWithEncodedParameters ());
+        aSpecialNodes.addExternalJS (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular).getAsStringWithEncodedParameters ());
     }
 
     @Nonnull
-    public static JsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue,
-                                                @Nonnull final IHCSpecialNodes aSpecialNodes)
+    public static JsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue, @Nonnull final IHCSpecialNodes aSpecialNodes)
     {
       final JsonObject aAssocArray = new JsonObject ();
       if (aSuccessValue != null)
@@ -304,8 +308,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
       if (aSpecialNodes.hasExternalCSSs ())
       {
         final JsonArray aList = new JsonArray ();
-        for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ()
-                                                                                          .entrySet ())
+        for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ().entrySet ())
           for (final String sCSSFile : aEntry.getValue ())
             aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
                                         .add (SUBPROPERTY_CSS_HREF, sCSSFile));
@@ -338,26 +341,26 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   }
 
   @SuppressWarnings ("unchecked")
-  public void html (@Nullable final IHCNode aNode)
+  @Nonnull
+  public PhotonUnifiedResponse html (@Nullable final IHCNode aNode)
   {
-    html (aNode == null ? null
-                        : aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
-                                                                        : new HCNodeList ().addChild (aNode),
-          null,
-          null);
+    return html (aNode == null ? null : aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
+                                                                                      : new HCNodeList ().addChild (aNode),
+                 null,
+                 null);
   }
 
-  public void html (@Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
-                    @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider,
-                    @Nullable final IJsonObject aCustomJson)
+  @Nonnull
+  public PhotonUnifiedResponse html (@Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
+                                     @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider,
+                                     @Nullable final IJsonObject aCustomJson)
   {
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();
 
     // Now decompose the HCNode itself and set it in "html" property
     final JsonObject aObj = new JsonObject ();
     // First extract the HTML
-    aObj.add (HtmlHelper.PROPERTY_HTML,
-              HtmlHelper.getHTMLString (m_aRequestScope, aNode, aSpecialNodes, aOnDocumentReadyProvider));
+    aObj.add (HtmlHelper.PROPERTY_HTML, HtmlHelper.getHTMLString (m_aRequestScope, aNode, aSpecialNodes, aOnDocumentReadyProvider));
     // Do it after all nodes were finalized etc
     HtmlHelper.addCSSAndJS (m_aRequestScope, aSpecialNodes);
 
@@ -365,7 +368,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     aObj.addAll (aCustomJson);
 
     final IJsonObject ret = HtmlHelper.getResponseAsJSON (aObj, aSpecialNodes);
-    json (ret);
+    return json (ret);
   }
 
   /**
@@ -373,40 +376,54 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @param aNode
    *        The node to be rendered. May be <code>null</code>.
+   * @return this for chaining
    */
-  public void htmlSimple (@Nullable final IHCNode aNode)
+  @Nonnull
+  public PhotonUnifiedResponse htmlSimple (@Nullable final IHCNode aNode)
   {
     if (aNode == null)
       setContentAndCharset ("", HCSettings.getHTMLCharset ());
     else
       setContentAndCharset (HCRenderer.getAsHTMLStringWithoutNamespaces (aNode), HCSettings.getHTMLCharset ());
     setMimeType (PhotonHTMLHelper.getMimeType (m_aRequestScope));
+    return this;
   }
 
   /**
    * HTTP 200 OK
+   *
+   * @return this for chaining
    */
-  public void createOk ()
+  @Nonnull
+  public PhotonUnifiedResponse createOk ()
   {
     setStatus (HttpServletResponse.SC_OK);
+    return this;
   }
 
   /**
    * HTTP 202 Accepted
    *
+   * @return this for chaining
    * @since 8.1.3
    */
-  public void createAccepted ()
+  @Nonnull
+  public PhotonUnifiedResponse createAccepted ()
   {
     setStatus (HttpServletResponse.SC_ACCEPTED);
+    return this;
   }
 
   /**
    * HTTP 204 No Content
+   *
+   * @return this for chaining
    */
-  public void createNoContent ()
+  @Nonnull
+  public PhotonUnifiedResponse createNoContent ()
   {
     setStatus (HttpServletResponse.SC_NO_CONTENT);
+    return this;
   }
 
   /**
@@ -414,100 +431,135 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @param aRedirectTargetURL
    *        The redirect URL. May not be <code>null</code>.
+   * @return this for chaining
    */
   @Nonnull
-  public void createSeeOther (@Nonnull final ISimpleURL aRedirectTargetURL)
+  public PhotonUnifiedResponse createSeeOther (@Nonnull final ISimpleURL aRedirectTargetURL)
   {
     ValueEnforcer.notNull (aRedirectTargetURL, "Location");
 
     setRedirect (aRedirectTargetURL, ERedirectMode.POST_REDIRECT_GET);
+    return this;
   }
 
   /**
    * HTTP 400 Bad Request
+   *
+   * @return this for chaining
    */
-  public void createBadRequest ()
+  @Nonnull
+  public PhotonUnifiedResponse createBadRequest ()
   {
     setStatus (HttpServletResponse.SC_BAD_REQUEST);
+    return this;
   }
 
   /**
    * HTTP 404 Not Found
+   *
+   * @return this for chaining
    */
-  public void createNotFound ()
+  @Nonnull
+  public PhotonUnifiedResponse createNotFound ()
   {
     setStatus (HttpServletResponse.SC_NOT_FOUND);
+    return this;
   }
 
   /**
    * HTTP 409 Conflict
+   *
+   * @return this for chaining
    */
-  public void createConflict ()
+  @Nonnull
+  public PhotonUnifiedResponse createConflict ()
   {
     setStatus (HttpServletResponse.SC_CONFLICT);
+    return this;
   }
 
   /**
    * HTTP 412 Precondition Failed
+   *
+   * @return this for chaining
    */
-  public void createPreconditionFailed ()
+  @Nonnull
+  public PhotonUnifiedResponse createPreconditionFailed ()
   {
     setStatus (HttpServletResponse.SC_PRECONDITION_FAILED);
+    return this;
   }
 
   /**
    * HTTP 500 Internal Server Error
+   *
+   * @return this for chaining
    */
-  public void createInternalServerError ()
+  @Nonnull
+  public PhotonUnifiedResponse createInternalServerError ()
   {
     setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    return this;
   }
 
-  public void setContent (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
+  @Nonnull
+  public PhotonUnifiedResponse setContent (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
   {
     setContent (aBAOS.directGetBuffer (), 0, aBAOS.size ());
+    return this;
   }
 
-  public void serialized (@Nonnull final Serializable aObj)
+  @Nonnull
+  public PhotonUnifiedResponse serialized (@Nonnull final Serializable aObj)
   {
     setContent (SerializationHelper.getSerializedByteArray (aObj));
     setMimeType (CMimeType.APPLICATION_OCTET_STREAM);
+    return this;
   }
 
-  public void pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
+  @Nonnull
+  public PhotonUnifiedResponse pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
   {
     setContent (aBAOS);
     setMimeType (CMimeType.APPLICATION_PDF);
+    return this;
   }
 
-  public void pdf (@Nonnull final byte [] aData, @Nonnull @Nonempty final String sFilename)
+  @Nonnull
+  public PhotonUnifiedResponse pdf (@Nonnull final byte [] aData, @Nonnull @Nonempty final String sFilename)
   {
     setContent (aData);
     setMimeType (CMimeType.APPLICATION_PDF);
     setContentDispositionFilename (sFilename);
     setContentDispositionType (EContentDispositionType.INLINE);
+    return this;
   }
 
-  public void pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS, @Nonnull @Nonempty final String sFilename)
+  @Nonnull
+  public PhotonUnifiedResponse pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS, @Nonnull @Nonempty final String sFilename)
   {
     pdf (aBAOS);
     setContentDispositionFilename (sFilename);
     setContentDispositionType (EContentDispositionType.INLINE);
+    return this;
   }
 
-  public void attachment (@Nonnull @Nonempty final String sFilename)
+  @Nonnull
+  public PhotonUnifiedResponse attachment (@Nonnull @Nonempty final String sFilename)
   {
     setContentDispositionFilename (sFilename);
     setContentDispositionType (EContentDispositionType.ATTACHMENT);
+    return this;
   }
 
-  public void binary (@Nonnull final NonBlockingByteArrayOutputStream aBAOS,
-                      @Nonnull final IMimeType aMimeType,
-                      @Nonnull @Nonempty final String sFilename)
+  @Nonnull
+  public PhotonUnifiedResponse binary (@Nonnull final NonBlockingByteArrayOutputStream aBAOS,
+                                       @Nonnull final IMimeType aMimeType,
+                                       @Nonnull @Nonempty final String sFilename)
   {
     setContent (aBAOS);
     setMimeType (aMimeType);
-    attachment (sFilename);
+    return attachment (sFilename);
   }
 
   /**
