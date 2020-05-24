@@ -57,6 +57,7 @@ import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.http.EHttpVersion;
 import com.helger.json.IJson;
+import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
@@ -298,37 +299,37 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     }
 
     @Nonnull
-    public static JsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue, @Nonnull final IHCSpecialNodes aSpecialNodes)
+    public static IJsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue, @Nonnull final IHCSpecialNodes aSpecialNodes)
     {
-      final JsonObject aAssocArray = new JsonObject ();
+      final IJsonObject aAssocArray = new JsonObject ();
       if (aSuccessValue != null)
-        aAssocArray.add (PROPERTY_VALUE, aSuccessValue);
+        aAssocArray.addJson (PROPERTY_VALUE, aSuccessValue);
 
       // Apply special nodes
       if (aSpecialNodes.hasExternalCSSs ())
       {
-        final JsonArray aList = new JsonArray ();
+        final IJsonArray aList = new JsonArray ();
         for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ().entrySet ())
           for (final String sCSSFile : aEntry.getValue ())
             aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
                                         .add (SUBPROPERTY_CSS_HREF, sCSSFile));
-        aAssocArray.add (PROPERTY_EXTERNAL_CSS, aList);
+        aAssocArray.addJson (PROPERTY_EXTERNAL_CSS, aList);
       }
       if (aSpecialNodes.hasInlineCSSBeforeExternal ())
       {
-        final JsonArray aList = new JsonArray ();
+        final IJsonArray aList = new JsonArray ();
         for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())
           aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
                                       .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-        aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
+        aAssocArray.addJson (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
       }
       if (aSpecialNodes.hasInlineCSSAfterExternal ())
       {
-        final JsonArray aList = new JsonArray ();
+        final IJsonArray aList = new JsonArray ();
         for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSAfterExternal ())
           aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
                                       .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-        aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
+        aAssocArray.addJson (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
       }
       if (aSpecialNodes.hasExternalJSs ())
         aAssocArray.add (PROPERTY_EXTERNAL_JS, aSpecialNodes.getAllExternalJSs ());
@@ -358,7 +359,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();
 
     // Now decompose the HCNode itself and set it in "html" property
-    final JsonObject aObj = new JsonObject ();
+    final IJsonObject aObj = new JsonObject ();
     // First extract the HTML
     aObj.add (HtmlHelper.PROPERTY_HTML, HtmlHelper.getHTMLString (m_aRequestScope, aNode, aSpecialNodes, aOnDocumentReadyProvider));
     // Do it after all nodes were finalized etc

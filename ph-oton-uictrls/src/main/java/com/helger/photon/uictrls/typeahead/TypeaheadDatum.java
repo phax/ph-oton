@@ -56,7 +56,8 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   private String m_sID;
 
   /**
-   * Constructor using {@link #getTokensFromValue(String)} to tokenize the string.
+   * Constructor using {@link #getTokensFromValue(String)} to tokenize the
+   * string.
    *
    * @param sValue
    *        Value to display. Must not be <code>null</code>.
@@ -89,9 +90,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    * @param sID
    *        Optional ID of the element. May be <code>null</code>.
    */
-  public TypeaheadDatum (@Nonnull final String sValue,
-                         @Nonnull final Collection <String> aTokens,
-                         @Nullable final String sID)
+  public TypeaheadDatum (@Nonnull final String sValue, @Nonnull final Collection <String> aTokens, @Nullable final String sID)
   {
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
@@ -160,7 +159,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   public IJsonObject getAsJson ()
   {
     return new JsonObject ().add (JSON_VALUE, m_sValue)
-                            .add (JSON_TOKENS, new JsonArray ().addAll (m_aTokens))
+                            .addJson (JSON_TOKENS, new JsonArray ().addAll (m_aTokens))
                             .addIfNotNull (JSON_ID, m_sID);
   }
 

@@ -125,7 +125,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   @OverridingMethodsMustInvokeSuper
   public IJsonObject getAsJson ()
   {
-    return new JsonObject ().add (JSON_VALUE, m_sValue).add (JSON_TOKENS, new JsonArray ().addAll (m_aTokens));
+    return new JsonObject ().add (JSON_VALUE, m_sValue).addJson (JSON_TOKENS, new JsonArray ().addAll (m_aTokens));
   }
 
   public int compareTo (@Nonnull final BloodhoundDatum aOther)

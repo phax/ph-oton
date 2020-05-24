@@ -142,22 +142,22 @@ public class ExporterJSON implements IExporterFile
     final IJsonObject aDoc = new JsonObject ();
 
     // Header
-    final JsonArray aHeader = new JsonArray ();
+    final IJsonArray aHeader = new JsonArray ();
     aProvider.forEachHeaderRecord (x -> aHeader.add (_emitRecord (x)));
     if (aHeader.isNotEmpty ())
-      aDoc.add (ELEMENT_HEADER, aHeader);
+      aDoc.addJson (ELEMENT_HEADER, aHeader);
 
     // Body
-    final JsonArray aBody = new JsonArray ();
+    final IJsonArray aBody = new JsonArray ();
     aProvider.forEachBodyRecord (x -> aBody.add (_emitRecord (x)));
     if (aBody.isNotEmpty ())
-      aDoc.add (ELEMENT_BODY, aBody);
+      aDoc.addJson (ELEMENT_BODY, aBody);
 
     // Footer
-    final JsonArray aFooter = new JsonArray ();
+    final IJsonArray aFooter = new JsonArray ();
     aProvider.forEachFooterRecord (x -> aFooter.add (_emitRecord (x)));
     if (aFooter.isNotEmpty ())
-      aDoc.add (ELEMENT_FOOTER, aFooter);
+      aDoc.addJson (ELEMENT_FOOTER, aFooter);
 
     if (aDoc.isEmpty ())
       return null;
@@ -167,8 +167,7 @@ public class ExporterJSON implements IExporterFile
 
   @Override
   @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
-                                 @Nonnull @WillClose final OutputStream aOS)
+  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider, @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {

@@ -26,7 +26,6 @@ import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
-import com.helger.json.JsonObject;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.uictrls.datatables.DataTables;
@@ -59,7 +58,7 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
   }
 
   @OverrideOnDemand
-  protected JsonObject getText (@Nonnull final Locale aLanguage)
+  protected IJsonObject getText (@Nonnull final Locale aLanguage)
   {
     return DataTables.createLanguageJson (aLanguage);
   }

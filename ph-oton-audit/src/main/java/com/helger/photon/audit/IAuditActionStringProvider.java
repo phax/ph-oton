@@ -42,7 +42,7 @@ public interface IAuditActionStringProvider extends IBiFunction <String, Object 
 
   IAuditActionStringProvider JSON = (sAction, aArgs) -> {
     final IJsonArray aData = new JsonArray ().addAll (aArgs);
-    return new JsonObject ().add (sAction, aData).getAsJsonString ();
+    return new JsonObject ().addJson (sAction, aData).getAsJsonString ();
   };
 
   IAuditActionStringProvider JSON_WITH_CONVERSION = (sAction, aArgs) -> {
@@ -64,6 +64,6 @@ public interface IAuditActionStringProvider extends IBiFunction <String, Object 
         aData.add (aArg);
     }
 
-    return new JsonObject ().add (sAction, aData).getAsJsonString ();
+    return new JsonObject ().addJson (sAction, aData).getAsJsonString ();
   };
 }

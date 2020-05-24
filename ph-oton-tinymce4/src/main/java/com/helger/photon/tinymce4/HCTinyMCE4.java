@@ -47,6 +47,7 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
+import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.core.form.RequestField;
@@ -1238,10 +1239,9 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     }
     if (m_aExternalPlugins.isNotEmpty ())
     {
-      final JsonObject aJsonObject = new JsonObject ();
+      final IJsonObject aJsonObject = new JsonObject ();
       for (final TinyMCE4ExternalPlugin aExternalPlugin : m_aExternalPlugins)
-        aJsonObject.add (aExternalPlugin.getPluginName (),
-                         aExternalPlugin.getPluginURL ().getAsStringWithEncodedParameters ());
+        aJsonObject.add (aExternalPlugin.getPluginName (), aExternalPlugin.getPluginURL ().getAsStringWithEncodedParameters ());
       aOptions.add ("external_plugins", aJsonObject);
     }
     aOptions.add ("selector", m_sSelector);

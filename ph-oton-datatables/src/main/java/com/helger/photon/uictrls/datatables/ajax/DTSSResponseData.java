@@ -42,7 +42,7 @@ public final class DTSSResponseData implements IHasJson, Serializable
   private final int m_nDraw;
   private final int m_nTotalRecords;
   private final int m_nTotalDisplayRecords;
-  private final ICommonsList <JsonObject> m_aData;
+  private final ICommonsList <IJsonObject> m_aData;
   private final IHCSpecialNodes m_aSpecialNodes;
   private final String m_sErrorMsg;
 
@@ -64,7 +64,7 @@ public final class DTSSResponseData implements IHasJson, Serializable
   public DTSSResponseData (final int nDraw,
                            final int nTotalRecords,
                            final int nTotalDisplayRecords,
-                           @Nullable final ICommonsList <JsonObject> aData,
+                           @Nullable final ICommonsList <IJsonObject> aData,
                            @Nullable final String sErrorMsg,
                            @Nonnull final IHCSpecialNodes aSpecialNodes)
   {
@@ -115,7 +115,7 @@ public final class DTSSResponseData implements IHasJson, Serializable
    */
   @Nullable
   @ReturnsMutableCopy
-  public ICommonsList <JsonObject> getData ()
+  public ICommonsList <IJsonObject> getData ()
   {
     return m_aData == null ? null : m_aData.getClone ();
   }
