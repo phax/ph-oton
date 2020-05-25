@@ -14,13 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.dao;
+package com.helger.photon.app.mgr;
 
-import java.io.Serializable;
-import java.util.function.Function;
-import java.util.function.Predicate;
-
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,8 +23,32 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
 
-public interface IPhotonDAO <INTERFACETYPE extends IHasID <String> & Serializable>
+/**
+ * Base interface for a manager with common data types.
+ *
+ * @author Philip Helger
+ * @param <INTERFACETYPE>
+ *        The data type to be handled.
+ */
+public interface IPhotonManager <INTERFACETYPE extends IHasID <String>>
 {
+  /**
+   * @param <T>
+   *        Response type.
+   * @return An empty collection of the suitable implementation type.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  <T> ICommonsList <T> getNone ();
+
+  /**
+   * @return A non-<code>null</code> but maybe empty list of all contained
+   *         objects.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  ICommonsList <INTERFACETYPE> getAll ();
+
   /**
    * @param sID
    *        The object ID to be checked
@@ -46,37 +65,4 @@ public interface IPhotonDAO <INTERFACETYPE extends IHasID <String> & Serializabl
    * @return <code>true</code> if all IDs are contained
    */
   boolean containsAllIDs (@Nullable Iterable <String> aIDs);
-
-  /**
-   * @return A non-<code>null</code> but maybe empty list of all contained
-   *         objects.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  ICommonsList <INTERFACETYPE> getAll ();
-
-  @Nonnull
-  @ReturnsMutableCopy
-  <T> ICommonsList <T> getNone ();
-
-  /**
-   * @param aFilter
-   *        The filter to be applied. May not be <code>null</code>.
-   * @return A non-<code>null</code> but maybe empty list of all contained
-   *         objects.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  ICommonsList <INTERFACETYPE> getAll (@Nullable Predicate <? super INTERFACETYPE> aFilter);
-
-  <RETTYPE> ICommonsList <RETTYPE> getAllMapped (@Nullable Predicate <? super INTERFACETYPE> aFilter,
-                                                 @Nonnull Function <? super INTERFACETYPE, ? extends RETTYPE> aMapper);
-
-  @Nonnegative
-  int getCount (@Nullable Predicate <? super INTERFACETYPE> aFilter);
-
-  @Nullable
-  INTERFACETYPE findFirst (@Nullable Predicate <? super INTERFACETYPE> aFilter);
-
-  boolean containsAny (@Nullable Predicate <? super INTERFACETYPE> aFilter);
 }

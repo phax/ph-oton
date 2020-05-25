@@ -37,8 +37,9 @@ public class HCUserTokenSelect extends HCExtSelect
 
     // for all items
     for (final IUserToken aUserToken : PhotonSecurityManager.getUserTokenMgr ()
-                                                            .getAll (aFilter)
+                                                            .getAll ()
                                                             .getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale)))
-      addOption (aUserToken.getID (), aUserToken.getDisplayName ());
+      if (aFilter == null || aFilter.test (aUserToken))
+        addOption (aUserToken.getID (), aUserToken.getDisplayName ());
   }
 }

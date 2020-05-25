@@ -26,8 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.photon.app.dao.IPhotonDAO;
+import com.helger.photon.app.mgr.IPhotonManager;
 import com.helger.photon.security.user.IUser;
 
 /**
@@ -36,7 +35,7 @@ import com.helger.photon.security.user.IUser;
  * @author Philip Helger
  * @since 8.2.2
  */
-public interface IUserTokenManager extends IPhotonDAO <IUserToken>
+public interface IUserTokenManager extends IPhotonManager <IUserToken>
 {
   /**
    * Create a new user token.
@@ -51,9 +50,7 @@ public interface IUserTokenManager extends IPhotonDAO <IUserToken>
    * @return The created user token. Never <code>null</code>.
    */
   @Nonnull
-  UserToken createUserToken (@Nullable String sTokenString,
-                             @Nullable Map <String, String> aCustomAttrs,
-                             @Nonnull IUser aUser);
+  UserToken createUserToken (@Nullable String sTokenString, @Nullable Map <String, String> aCustomAttrs, @Nonnull IUser aUser);
 
   /**
    * Update an existing token.
@@ -126,10 +123,7 @@ public interface IUserTokenManager extends IPhotonDAO <IUserToken>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUserToken> getAllActiveUserTokens ()
-  {
-    return getAll (x -> !x.isDeleted ());
-  }
+  ICommonsList <IUserToken> getAllActiveUserTokens ();
 
   /**
    * Get the user token with the passed ID
@@ -149,13 +143,7 @@ public interface IUserTokenManager extends IPhotonDAO <IUserToken>
    * @return <code>null</code> if no user token uses this access token string.
    */
   @Nullable
-  default IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
-  {
-    if (StringHelper.hasNoText (sTokenString))
-      return null;
-
-    return findFirst (x -> sTokenString.equals (x.getActiveTokenString ()));
-  }
+  IUserToken getUserTokenOfTokenString (@Nullable String sTokenString);
 
   /**
    * Check if the passed token string was already used in this application. This
@@ -165,11 +153,5 @@ public interface IUserTokenManager extends IPhotonDAO <IUserToken>
    *        The token string to check. May be <code>null</code>.
    * @return <code>true</code> if the token string is already used.
    */
-  default boolean isAccessTokenUsed (@Nullable final String sTokenString)
-  {
-    if (StringHelper.hasNoText (sTokenString))
-      return false;
-
-    return containsAny (x -> x.findFirstAccessToken (y -> y.getTokenString ().equals (sTokenString)) != null);
-  }
+  boolean isAccessTokenUsed (@Nullable final String sTokenString);
 }

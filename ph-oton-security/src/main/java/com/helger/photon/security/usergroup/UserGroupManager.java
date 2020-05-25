@@ -24,6 +24,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -143,20 +144,13 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
-    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
-                                                sName,
-                                                sDescription);
+    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
 
     m_aRWLock.writeLocked ( () -> {
       // Store
       internalCreateItem (aUserGroup);
     });
-    AuditHelper.onAuditCreateSuccess (UserGroup.OT,
-                                      aUserGroup.getID (),
-                                      "predefined-usergroup",
-                                      sName,
-                                      sDescription,
-                                      aCustomAttrs);
+    AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), "predefined-usergroup", sName, sDescription, aCustomAttrs);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserGroupCreated (aUserGroup, true));
@@ -240,6 +234,20 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUserGroup> getAllActiveUserGroups ()
+  {
+    return getAll (x -> !x.isDeleted ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUserGroup> getAllDeletedUserGroups ()
+  {
+    return getAll (IUserGroup::isDeleted);
+  }
+
+  @Nonnull
   public EChange renameUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sNewName)
   {
     // Resolve user group
@@ -301,12 +309,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserGroup.OT,
-                                      "all",
-                                      aUserGroup.getID (),
-                                      sNewName,
-                                      sNewDescription,
-                                      aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "all", aUserGroup.getID (), sNewName, sNewDescription, aNewCustomAttrs);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserGroupUpdated (aUserGroup));
@@ -415,6 +418,36 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
+  {
+    if (StringHelper.hasNoText (sUserID))
+      return new CommonsArrayList <> ();
+
+    return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
+  {
+    if (StringHelper.hasNoText (sUserID))
+      return new CommonsArrayList <> ();
+
+    return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), IUserGroup::getID);
+  }
+
+  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID, @Nullable final String sRoleID)
+  {
+    if (StringHelper.hasNoText (sUserID))
+      return false;
+    if (StringHelper.hasNoText (sRoleID))
+      return false;
+
+    return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));
+  }
+
+  @Nonnull
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
   {
     // Resolve user group
@@ -511,5 +544,30 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
       m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, false));
 
     return EChange.CHANGED;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
+  {
+    if (StringHelper.hasNoText (sRoleID))
+      return getNone ();
+
+    return getAll (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
+  {
+    if (StringHelper.hasNoText (sRoleID))
+      return getNone ();
+
+    return getAllMapped (aUserGroup -> aUserGroup.containsRoleID (sRoleID), IUserGroup::getID);
+  }
+
+  public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
+  {
+    return containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 }

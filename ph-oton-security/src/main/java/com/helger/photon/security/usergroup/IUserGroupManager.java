@@ -26,11 +26,10 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
-import com.helger.photon.app.dao.IPhotonDAO;
+import com.helger.photon.app.mgr.IPhotonManager;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUserManager;
 
@@ -41,7 +40,7 @@ import com.helger.photon.security.user.IUserManager;
  * @since 8.2.4
  */
 @ThreadSafe
-public interface IUserGroupManager extends IPhotonDAO <IUserGroup>
+public interface IUserGroupManager extends IPhotonManager <IUserGroup>
 {
   @Nonnull
   IUserManager getUserManager ();
@@ -135,20 +134,14 @@ public interface IUserGroupManager extends IPhotonDAO <IUserGroup>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUserGroup> getAllActiveUserGroups ()
-  {
-    return getAll (x -> !x.isDeleted ());
-  }
+  ICommonsList <IUserGroup> getAllActiveUserGroups ();
 
   /**
    * @return A non-<code>null</code> list of all deleted user groups
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUserGroup> getAllDeletedUserGroups ()
-  {
-    return getAll (IUserGroup::isDeleted);
-  }
+  ICommonsList <IUserGroup> getAllDeletedUserGroups ();
 
   /**
    * Rename the user group with the specified ID
@@ -252,24 +245,9 @@ public interface IUserGroupManager extends IPhotonDAO <IUserGroup>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList <> ();
+  ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable String sUserID);
 
-    return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
-  }
-
-  default boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,
-                                                               @Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return false;
-    if (StringHelper.hasNoText (sRoleID))
-      return false;
-
-    return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));
-  }
+  boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable String sUserID, @Nullable String sRoleID);
 
   /**
    * Get a collection of all user group IDs to which a certain user is assigned
@@ -282,13 +260,7 @@ public interface IUserGroupManager extends IPhotonDAO <IUserGroup>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return new CommonsArrayList <> ();
-
-    return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), aUserGroup -> aUserGroup.getID ());
-  }
+  ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable String sUserID);
 
   /**
    * Assign the passed role ID to the user group with the passed ID.<br>
@@ -338,13 +310,7 @@ public interface IUserGroupManager extends IPhotonDAO <IUserGroup>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sRoleID))
-      return getNone ();
-
-    return getAll (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
-  }
+  ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable String sRoleID);
 
   /**
    * Get a collection of all user group IDs to which a certain role is assigned
@@ -357,16 +323,7 @@ public interface IUserGroupManager extends IPhotonDAO <IUserGroup>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sRoleID))
-      return getNone ();
+  ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable String sRoleID);
 
-    return getAllMapped (aUserGroup -> aUserGroup.containsRoleID (sRoleID), IUserGroup::getID);
-  }
-
-  default boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
-  {
-    return containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
-  }
+  boolean containsUserGroupWithAssignedRole (@Nullable String sRoleID);
 }

@@ -38,11 +38,9 @@ import com.helger.photon.app.io.WebFileIO;
  */
 public abstract class AbstractPhotonMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
                                                    extends
-                                                   AbstractMapBasedWALDAO <INTERFACETYPE, IMPLTYPE> implements
-                                                   IPhotonDAO <INTERFACETYPE>
+                                                   AbstractMapBasedWALDAO <INTERFACETYPE, IMPLTYPE>
 {
-  public AbstractPhotonMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
-                                       @Nullable final String sFilename) throws DAOException
+  public AbstractPhotonMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass, @Nullable final String sFilename) throws DAOException
   {
     this (aImplClass, sFilename, new InitSettings <> ());
   }

@@ -25,7 +25,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
 import com.helger.dao.DAOException;
 import com.helger.photon.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.audit.AuditHelper;
@@ -76,8 +78,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
   }
 
   @Nonnull
-  public EChange updateUserToken (@Nullable final String sUserTokenID,
-                                  @Nullable final Map <String, String> aCustomAttrs)
+  public EChange updateUserToken (@Nullable final String sUserTokenID, @Nullable final Map <String, String> aCustomAttrs)
   {
     final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
@@ -224,9 +225,31 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     return EChange.CHANGED;
   }
 
+  public ICommonsList <IUserToken> getAllActiveUserTokens ()
+  {
+    return getAll (x -> !x.isDeleted ());
+  }
+
   @Nullable
   public IUserToken getUserTokenOfID (@Nullable final String sID)
   {
     return getOfID (sID);
+  }
+
+  @Nullable
+  public IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
+  {
+    if (StringHelper.hasNoText (sTokenString))
+      return null;
+
+    return findFirst (x -> sTokenString.equals (x.getActiveTokenString ()));
+  }
+
+  public boolean isAccessTokenUsed (@Nullable final String sTokenString)
+  {
+    if (StringHelper.hasNoText (sTokenString))
+      return false;
+
+    return containsAny (x -> x.findFirstAccessToken (y -> y.getTokenString ().equals (sTokenString)) != null);
   }
 }

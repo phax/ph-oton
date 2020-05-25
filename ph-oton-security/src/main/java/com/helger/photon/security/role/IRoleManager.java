@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
-import com.helger.photon.app.dao.IPhotonDAO;
+import com.helger.photon.app.mgr.IPhotonManager;
 
 /**
  * Base interface to manage the available roles.
@@ -33,7 +33,7 @@ import com.helger.photon.app.dao.IPhotonDAO;
  * @author Philip Helger
  * @since 8.2.4
  */
-public interface IRoleManager extends IPhotonDAO <IRole>
+public interface IRoleManager extends IPhotonManager <IRole>
 {
   void createDefaults ();
 

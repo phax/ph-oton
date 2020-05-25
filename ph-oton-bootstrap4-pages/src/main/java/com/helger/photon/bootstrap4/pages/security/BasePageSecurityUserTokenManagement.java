@@ -91,14 +91,11 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     LABEL_ATTRIBUTES ("Attribute", "Attributes"),
     LABEL_USER ("Benutzer", "User"),
     ERR_USER_EMPTY ("Es muss ein Benutzer ausgewählt werden!", "A user must be selected!"),
-    CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.",
-                    "The user token for ''{0}'' was successfully created."),
-    EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.",
-                  "The user token for ''{0}'' was successfully edited."),
+    CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.", "The user token for ''{0}'' was successfully created."),
+    EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.", "The user token for ''{0}'' was successfully edited."),
     DELETE_QUERY ("Sind Sie sicher, dass Sie das Benutzer-Token für ''{0}'' löschen wollen?",
                   "Are you sure you want to delete the user token of ''{0}''?"),
-    DELETE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich gelöscht!",
-                    "User token of ''{0}'' was successfully deleted!"),
+    DELETE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich gelöscht!", "User token of ''{0}'' was successfully deleted!"),
     DELETE_ERROR ("Beim Löschen des Benutzer-Token für ''{0}'' ist ein Fehler aufgetreten!",
                   "An error occurred while deleting user token of ''{0}''!"),
     TAB_LABEL_ACTIVE ("Aktiv", "Active"),
@@ -151,8 +148,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                 @Nonnull final IUserToken aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                             aSelectedObject.getDisplayName ())));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getDisplayName ())));
       }
 
       @Override
@@ -170,164 +166,150 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                            aSelectedObject.getDisplayName ())));
       }
     });
-    addCustomHandler (ACTION_CREATE_NEW_ACCESS_TOKEN,
-                      new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
-                      {
-                        public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC,
-                                                        @Nonnull final IUserToken aSelectedObject)
-                        {
-                          return canCreateNewAccessToken (aSelectedObject);
-                        }
+    addCustomHandler (ACTION_CREATE_NEW_ACCESS_TOKEN, new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
+    {
+      public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      {
+        return canCreateNewAccessToken (aSelectedObject);
+      }
 
-                        @Nonnull
-                        public EShowList handleAction (@Nonnull final WPECTYPE aWPEC,
-                                                       @Nonnull final IUserToken aSelectedObject)
-                        {
-                          final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-                          final HCNodeList aNodeList = aWPEC.getNodeList ();
-                          final boolean bRevokedOld = aSelectedObject.getActiveAccessToken () != null;
+      @Nonnull
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final HCNodeList aNodeList = aWPEC.getNodeList ();
+        final boolean bRevokedOld = aSelectedObject.getActiveAccessToken () != null;
 
-                          final FormErrorList aFormErrors = new FormErrorList ();
-                          if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
-                          {
-                            final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
-                            final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
-                            final String sTokenString = aWPEC.params ().getAsString (FIELD_TOKEN_STRING);
+        final FormErrorList aFormErrors = new FormErrorList ();
+        if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
+        {
+          final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+          final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
+          final String sTokenString = aWPEC.params ().getAsString (FIELD_TOKEN_STRING);
 
-                            if (bRevokedOld)
-                            {
-                              // Check only if something can be revoked...
-                              if (StringHelper.hasNoText (sRevocationReason))
-                                aFormErrors.addFieldError (FIELD_REVOCATION_REASON,
-                                                           EBaseText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
-                            }
+          if (bRevokedOld)
+          {
+            // Check only if something can be revoked...
+            if (StringHelper.hasNoText (sRevocationReason))
+              aFormErrors.addFieldError (FIELD_REVOCATION_REASON, EBaseText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
+          }
 
-                            if (StringHelper.hasText (sTokenString))
-                            {
-                              // Check uniqueness
-                              if (sTokenString.length () < TOKEN_STRING_MIN_LENGTH)
-                                aFormErrors.addFieldError (FIELD_TOKEN_STRING,
-                                                           EBaseText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
-                              else
-                                if (aUserTokenMgr.isAccessTokenUsed (sTokenString))
-                                  aFormErrors.addFieldError (FIELD_TOKEN_STRING,
-                                                             EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
-                            }
+          if (StringHelper.hasText (sTokenString))
+          {
+            // Check uniqueness
+            if (sTokenString.length () < TOKEN_STRING_MIN_LENGTH)
+              aFormErrors.addFieldError (FIELD_TOKEN_STRING, EBaseText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
+            else
+              if (aUserTokenMgr.isAccessTokenUsed (sTokenString))
+                aFormErrors.addFieldError (FIELD_TOKEN_STRING, EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
+          }
 
-                            if (aFormErrors.isEmpty ())
-                            {
-                              aUserTokenMgr.createNewAccessToken (aSelectedObject.getID (),
-                                                                  LoggedInUserManager.getInstance ()
-                                                                                     .getCurrentUserID (),
-                                                                  PDTFactory.getCurrentLocalDateTime (),
-                                                                  sRevocationReason,
-                                                                  sTokenString);
-                              aWPEC.postRedirectGetInternal (success (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                 aSelectedObject.getDisplayName ())
-                                                                                  : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                      aSelectedObject.getDisplayName ())));
-                              return EShowList.SHOW_LIST;
-                            }
-                            aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
-                          }
-
-                          final BootstrapForm aForm = getUIHandler ().createFormSelf (aWPEC);
-                          if (bRevokedOld)
-                          {
-                            // Show only if something can be revoked...
-                            aForm.addChild (getUIHandler ().createActionHeader (EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                            aSelectedObject.getDisplayName ())));
-                            aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EBaseText.LABEL_REASON.getDisplayText (aDisplayLocale))
-                                                                         .setCtrl (new HCTextArea (new RequestField (FIELD_REVOCATION_REASON)))
-                                                                         .setErrorList (aFormErrors.getListOfField (FIELD_REVOCATION_REASON)));
-                          }
-                          else
-                          {
-                            aForm.addChild (getUIHandler ().createActionHeader (EBaseText.CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                 aSelectedObject.getDisplayName ())));
-                          }
-
-                          aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
-                                                                       .setCtrl (new HCEdit (new RequestField (FIELD_TOKEN_STRING)))
-                                                                       .setHelpText (EBaseText.HELPTEXT_TOKEN_STRING.getDisplayText (aDisplayLocale))
-                                                                       .setErrorList (aFormErrors.getListOfField (FIELD_TOKEN_STRING)));
-
-                          final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-                          aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN);
-                          aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
-                          aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-                          if (bRevokedOld)
-                          {
-                            aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale),
-                                                      EDefaultIcon.SAVE);
-                            aToolbar.addButtonCancel (aDisplayLocale);
-                          }
-                          else
-                          {
-                            aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_YES.getDisplayText (aDisplayLocale),
-                                                      EDefaultIcon.YES);
-                            aToolbar.addButtonNo (aDisplayLocale);
-                          }
-                          aNodeList.addChild (aForm);
-                          return EShowList.DONT_SHOW_LIST;
-                        }
-                      });
-    addCustomHandler (ACTION_REVOKE_ACCESS_TOKEN,
-                      new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
-                      {
-                        public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC,
-                                                        @Nonnull final IUserToken aSelectedObject)
-                        {
-                          return canRevokeAccessToken (aSelectedObject);
-                        }
-
-                        @Nonnull
-                        public EShowList handleAction (@Nonnull final WPECTYPE aWPEC,
-                                                       @Nonnull final IUserToken aSelectedObject)
-                        {
-                          final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-                          final HCNodeList aNodeList = aWPEC.getNodeList ();
-
-                          final FormErrorList aFormErrors = new FormErrorList ();
-                          if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
-                          {
-                            final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
-                            if (StringHelper.hasNoText (sRevocationReason))
-                              aFormErrors.addFieldError (FIELD_REVOCATION_REASON,
-                                                         EBaseText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
-
-                            if (aFormErrors.isEmpty ())
-                            {
-                              final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
-                              aUserTokenMgr.revokeAccessToken (aSelectedObject.getID (),
-                                                               LoggedInUserManager.getInstance ().getCurrentUserID (),
-                                                               PDTFactory.getCurrentLocalDateTime (),
-                                                               sRevocationReason);
-                              aWPEC.postRedirectGetInternal (success (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+          if (aFormErrors.isEmpty ())
+          {
+            aUserTokenMgr.createNewAccessToken (aSelectedObject.getID (),
+                                                LoggedInUserManager.getInstance ().getCurrentUserID (),
+                                                PDTFactory.getCurrentLocalDateTime (),
+                                                sRevocationReason,
+                                                sTokenString);
+            aWPEC.postRedirectGetInternal (success (bRevokedOld ? EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                               aSelectedObject.getDisplayName ())
+                                                                : EBaseText.CREATE_NEW_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                                     aSelectedObject.getDisplayName ())));
-                              return EShowList.DONT_SHOW_LIST;
-                            }
-                            aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
-                          }
+            return EShowList.SHOW_LIST;
+          }
+          aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
+        }
 
-                          final BootstrapForm aForm = getUIHandler ().createFormSelf (aWPEC);
-                          aForm.addChild (getUIHandler ().createActionHeader (EBaseText.REVOKE_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                           aSelectedObject.getDisplayName ())));
-                          aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EBaseText.LABEL_REASON.getDisplayText (aDisplayLocale))
-                                                                       .setCtrl (new HCTextArea (new RequestField (FIELD_REVOCATION_REASON)))
-                                                                       .setErrorList (aFormErrors.getListOfField (FIELD_REVOCATION_REASON)));
+        final BootstrapForm aForm = getUIHandler ().createFormSelf (aWPEC);
+        if (bRevokedOld)
+        {
+          // Show only if something can be revoked...
+          aForm.addChild (getUIHandler ().createActionHeader (EBaseText.REVOKE_AND_CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                          aSelectedObject.getDisplayName ())));
+          aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EBaseText.LABEL_REASON.getDisplayText (aDisplayLocale))
+                                                       .setCtrl (new HCTextArea (new RequestField (FIELD_REVOCATION_REASON)))
+                                                       .setErrorList (aFormErrors.getListOfField (FIELD_REVOCATION_REASON)));
+        }
+        else
+        {
+          aForm.addChild (getUIHandler ().createActionHeader (EBaseText.CREATE_NEW_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                               aSelectedObject.getDisplayName ())));
+        }
 
-                          final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-                          aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_REVOKE_ACCESS_TOKEN);
-                          aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
-                          aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
-                          aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale),
-                                                    EDefaultIcon.SAVE);
-                          aToolbar.addButtonCancel (aDisplayLocale);
-                          aNodeList.addChild (aForm);
-                          return EShowList.DONT_SHOW_LIST;
-                        }
-                      });
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCEdit (new RequestField (FIELD_TOKEN_STRING)))
+                                                     .setHelpText (EBaseText.HELPTEXT_TOKEN_STRING.getDisplayText (aDisplayLocale))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_TOKEN_STRING)));
+
+        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+        aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN);
+        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
+        aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+        if (bRevokedOld)
+        {
+          aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), EDefaultIcon.SAVE);
+          aToolbar.addButtonCancel (aDisplayLocale);
+        }
+        else
+        {
+          aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_YES.getDisplayText (aDisplayLocale), EDefaultIcon.YES);
+          aToolbar.addButtonNo (aDisplayLocale);
+        }
+        aNodeList.addChild (aForm);
+        return EShowList.DONT_SHOW_LIST;
+      }
+    });
+    addCustomHandler (ACTION_REVOKE_ACCESS_TOKEN, new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
+    {
+      public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      {
+        return canRevokeAccessToken (aSelectedObject);
+      }
+
+      @Nonnull
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      {
+        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+        final HCNodeList aNodeList = aWPEC.getNodeList ();
+
+        final FormErrorList aFormErrors = new FormErrorList ();
+        if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
+        {
+          final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
+          if (StringHelper.hasNoText (sRevocationReason))
+            aFormErrors.addFieldError (FIELD_REVOCATION_REASON, EBaseText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
+
+          if (aFormErrors.isEmpty ())
+          {
+            final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+            aUserTokenMgr.revokeAccessToken (aSelectedObject.getID (),
+                                             LoggedInUserManager.getInstance ().getCurrentUserID (),
+                                             PDTFactory.getCurrentLocalDateTime (),
+                                             sRevocationReason);
+            aWPEC.postRedirectGetInternal (success (EBaseText.REVOKE_ACCESS_TOKEN_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                  aSelectedObject.getDisplayName ())));
+            return EShowList.DONT_SHOW_LIST;
+          }
+          aNodeList.addChild (getUIHandler ().createIncorrectInputBox (aWPEC));
+        }
+
+        final BootstrapForm aForm = getUIHandler ().createFormSelf (aWPEC);
+        aForm.addChild (getUIHandler ().createActionHeader (EBaseText.REVOKE_ACCESS_TOKEN_HEADER.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                         aSelectedObject.getDisplayName ())));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EBaseText.LABEL_REASON.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCTextArea (new RequestField (FIELD_REVOCATION_REASON)))
+                                                     .setErrorList (aFormErrors.getListOfField (FIELD_REVOCATION_REASON)));
+
+        final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
+        aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_REVOKE_ACCESS_TOKEN);
+        aToolbar.addHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_PERFORM);
+        aToolbar.addHiddenField (CPageParam.PARAM_OBJECT, aSelectedObject.getID ());
+        aToolbar.addSubmitButton (EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale), EDefaultIcon.SAVE);
+        aToolbar.addButtonCancel (aDisplayLocale);
+        aNodeList.addChild (aForm);
+        return EShowList.DONT_SHOW_LIST;
+      }
+    });
   }
 
   public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID)
@@ -336,8 +318,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     _init ();
   }
 
-  public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID,
-                                              @Nonnull @Nonempty final String sName)
+  public BasePageSecurityUserTokenManagement (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
     _init ();
@@ -421,18 +402,14 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.attrs ();
 
     // Callback for custom attributes
-    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
-                                                                                aSelectedObject,
-                                                                                aCustomAttrs,
-                                                                                aViewForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aViewForm);
 
     if (aCustomAttrs.isNotEmpty ())
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ()
-                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
-                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale), EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
@@ -474,8 +451,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                aSelectedObject == null ? null
                                                                                                                        : aSelectedObject.getUserID ()),
                                                                              aDisplayLocale,
-                                                                             x -> x.isNotDeleted () && x.isEnabled ())
-                                                                                                                      .setReadOnly (bEdit))
+                                                                             x -> x.isNotDeleted () && x.isEnabled ()).setReadOnly (bEdit))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_USER)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
@@ -512,33 +488,26 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     {
       // Check uniqueness
       if (sTokenString.length () < TOKEN_STRING_MIN_LENGTH)
-        aFormErrors.addFieldError (FIELD_TOKEN_STRING,
-                                   EBaseText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
+        aFormErrors.addFieldError (FIELD_TOKEN_STRING, EBaseText.ERR_TOKEN_STRING_TOO_SHORT.getDisplayText (aDisplayLocale));
       else
         if (aUserTokenMgr.isAccessTokenUsed (sTokenString))
-          aFormErrors.addFieldError (FIELD_TOKEN_STRING,
-                                     EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
+          aFormErrors.addFieldError (FIELD_TOKEN_STRING, EBaseText.ERR_TOKEN_STRING_IN_USE.getDisplayText (aDisplayLocale));
     }
 
     // Call custom method
-    final ICommonsMap <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
-                                                                                       aSelectedObject,
-                                                                                       aFormErrors,
-                                                                                       eFormAction);
+    final ICommonsMap <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC, aSelectedObject, aFormErrors, eFormAction);
 
     if (aFormErrors.isEmpty ())
     {
       if (bEdit)
       {
         aUserTokenMgr.updateUserToken (aSelectedObject.getID (), aCustomAttrMap);
-        aWPEC.postRedirectGetInternal (success (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                           aUser.getDisplayName ())));
+        aWPEC.postRedirectGetInternal (success (EText.EDIT_SUCCESS.getDisplayTextWithArgs (aDisplayLocale, aUser.getDisplayName ())));
       }
       else
       {
         aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aUser);
-        aWPEC.postRedirectGetInternal (success (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                             aUser.getDisplayName ())));
+        aWPEC.postRedirectGetInternal (success (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale, aUser.getDisplayName ())));
       }
     }
   }
@@ -554,58 +523,56 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_USER.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID () + sIDSuffix);
-    for (final IUserToken aCurObject : aUserTokenMgr.getAll (aFilter))
-    {
-      final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
-      final String sDisplayName = aCurObject.getDisplayName ();
-      final boolean bUsableNow = !aCurObject.isDeleted () &&
-                                 aCurObject.getActiveAccessToken () != null &&
-                                 aCurObject.getActiveAccessToken ().isValidNow ();
+    for (final IUserToken aCurObject : aUserTokenMgr.getAll ())
+      if (aFilter == null || aFilter.test (aCurObject))
+      {
+        final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
+        final String sDisplayName = aCurObject.getDisplayName ();
+        final boolean bUsableNow = !aCurObject.isDeleted () &&
+                                   aCurObject.getActiveAccessToken () != null &&
+                                   aCurObject.getActiveAccessToken ().isValidNow ();
 
-      final HCRow aBodyRow = aTable.addBodyRow ();
-      aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
-      aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
+        final HCRow aBodyRow = aTable.addBodyRow ();
+        aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));
+        aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
 
-      final IHCCell <?> aActionCell = aBodyRow.addCell ();
-      if (isActionAllowed (aWPEC, EWebPageFormAction.EDIT, aCurObject))
-        aActionCell.addChild (createEditLink (aWPEC,
-                                              aCurObject,
-                                              EText.ACTION_EDIT.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
-      else
-        aActionCell.addChild (createEmptyAction ());
-      aActionCell.addChild (" ");
-      aActionCell.addChild (createCopyLink (aWPEC,
-                                            aCurObject,
-                                            EText.ACTION_COPY.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
-      aActionCell.addChild (" ");
-      if (isActionAllowed (aWPEC, EWebPageFormAction.DELETE, aCurObject))
-        aActionCell.addChild (createDeleteLink (aWPEC,
+        final IHCCell <?> aActionCell = aBodyRow.addCell ();
+        if (isActionAllowed (aWPEC, EWebPageFormAction.EDIT, aCurObject))
+          aActionCell.addChild (createEditLink (aWPEC,
                                                 aCurObject,
-                                                EText.ACTION_DELETE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                            sDisplayName)));
-      else
-        aActionCell.addChild (createEmptyAction ());
-      aActionCell.addChild (" ");
-      if (canCreateNewAccessToken (aCurObject))
-        aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
-                                            .add (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN)
-                                            .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
-                                                                                                .addChild (EDefaultIcon.REFRESH.getAsNode ())
-                                                                                                .setTitle (EBaseText.TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                                  sDisplayName)));
-      else
-        aActionCell.addChild (createEmptyAction ());
-      aActionCell.addChild (" ");
-      if (canRevokeAccessToken (aCurObject))
-        aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
-                                            .add (CPageParam.PARAM_ACTION, ACTION_REVOKE_ACCESS_TOKEN)
-                                            .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
-                                                                                                .addChild (EDefaultIcon.CANCEL.getAsNode ())
-                                                                                                .setTitle (EBaseText.TITLE_ACTION_REVOKE_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                                                                              sDisplayName)));
-      else
-        aActionCell.addChild (createEmptyAction ());
-    }
+                                                EText.ACTION_EDIT.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
+        else
+          aActionCell.addChild (createEmptyAction ());
+        aActionCell.addChild (" ");
+        aActionCell.addChild (createCopyLink (aWPEC, aCurObject, EText.ACTION_COPY.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
+        aActionCell.addChild (" ");
+        if (isActionAllowed (aWPEC, EWebPageFormAction.DELETE, aCurObject))
+          aActionCell.addChild (createDeleteLink (aWPEC,
+                                                  aCurObject,
+                                                  EText.ACTION_DELETE.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
+        else
+          aActionCell.addChild (createEmptyAction ());
+        aActionCell.addChild (" ");
+        if (canCreateNewAccessToken (aCurObject))
+          aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
+                                              .add (CPageParam.PARAM_ACTION, ACTION_CREATE_NEW_ACCESS_TOKEN)
+                                              .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
+                                                                                                  .addChild (EDefaultIcon.REFRESH.getAsNode ())
+                                                                                                  .setTitle (EBaseText.TITLE_ACTION_CREATE_NEW_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                                    sDisplayName)));
+        else
+          aActionCell.addChild (createEmptyAction ());
+        aActionCell.addChild (" ");
+        if (canRevokeAccessToken (aCurObject))
+          aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
+                                              .add (CPageParam.PARAM_ACTION, ACTION_REVOKE_ACCESS_TOKEN)
+                                              .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
+                                                                                                  .addChild (EDefaultIcon.CANCEL.getAsNode ())
+                                                                                                  .setTitle (EBaseText.TITLE_ACTION_REVOKE_ACCESS_TOKEN.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                                                                sDisplayName)));
+        else
+          aActionCell.addChild (createEmptyAction ());
+      }
     final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
     return new HCNodeList ().addChildren (aTable, aDT);
   }

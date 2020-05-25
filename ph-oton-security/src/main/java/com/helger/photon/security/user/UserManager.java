@@ -19,15 +19,19 @@ package com.helger.photon.security.user;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
 import com.helger.dao.DAOException;
 import com.helger.photon.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.audit.AuditHelper;
@@ -128,8 +132,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     // Create user
     final User aUser = new User (sLoginName,
                                  sEmailAddress,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                       sPlainTextPassword),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sPlainTextPassword),
                                  sFirstName,
                                  sLastName,
                                  sDescription,
@@ -183,8 +186,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = new User (sID,
                                  sLoginName,
                                  sEmailAddress,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                       sPlainTextPassword),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sPlainTextPassword),
                                  sFirstName,
                                  sLastName,
                                  sDescription,
@@ -217,6 +219,72 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   public IUser getUserOfID (@Nullable final String sUserID)
   {
     return getOfID (sUserID);
+  }
+
+  @Nullable
+  public IUser getUserOfLoginName (@Nullable final String sLoginName)
+  {
+    if (StringHelper.hasNoText (sLoginName))
+      return null;
+
+    return findFirst (x -> x.getLoginName ().equals (sLoginName));
+  }
+
+  @Nullable
+  public IUser getUserOfEmailAddress (@Nullable final String sEmailAddress)
+  {
+    if (StringHelper.hasNoText (sEmailAddress))
+      return null;
+
+    return findFirst (x -> sEmailAddress.equals (x.getEmailAddress ()));
+  }
+
+  @Nullable
+  public IUser getUserOfEmailAddressIgnoreCase (@Nullable final String sEmailAddress)
+  {
+    if (StringHelper.hasNoText (sEmailAddress))
+      return null;
+
+    return findFirst (x -> sEmailAddress.equalsIgnoreCase (x.getEmailAddress ()));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUser> getAllActiveUsers ()
+  {
+    return getAll (x -> !x.isDeleted () && x.isEnabled ());
+  }
+
+  @Nonnegative
+  public int getActiveUserCount ()
+  {
+    return getCount (x -> !x.isDeleted () && x.isEnabled ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUser> getAllDisabledUsers ()
+  {
+    return getAll (x -> !x.isDeleted () && x.isDisabled ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUser> getAllNotDeletedUsers ()
+  {
+    return getAll (x -> !x.isDeleted ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IUser> getAllDeletedUsers ()
+  {
+    return getAll (x -> x.isDeleted ());
+  }
+
+  public boolean containsAnyActiveUser ()
+  {
+    return containsAny (x -> !x.isDeleted () && x.isEnabled ());
   }
 
   @Nonnull
@@ -289,8 +357,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     }
 
     // Create a new password salt upon password change
-    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
-                                                                                             sNewPlainTextPassword);
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sNewPlainTextPassword);
     m_aRWLock.writeLock ().lock ();
     try
     {

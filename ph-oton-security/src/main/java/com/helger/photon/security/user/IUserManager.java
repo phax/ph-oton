@@ -29,8 +29,7 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.photon.app.dao.IPhotonDAO;
+import com.helger.photon.app.mgr.IPhotonManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.IPasswordSalt;
@@ -41,7 +40,7 @@ import com.helger.security.password.salt.IPasswordSalt;
  * @author Philip Helger
  * @since 8.2.4
  */
-public interface IUserManager extends IPhotonDAO <IUser>
+public interface IUserManager extends IPhotonManager <IUser>
 {
   void createDefaults ();
 
@@ -154,13 +153,7 @@ public interface IUserManager extends IPhotonDAO <IUser>
    * @return <code>null</code> if no such user exists
    */
   @Nullable
-  default IUser getUserOfLoginName (@Nullable final String sLoginName)
-  {
-    if (StringHelper.hasNoText (sLoginName))
-      return null;
-
-    return findFirst (x -> x.getLoginName ().equals (sLoginName));
-  }
+  IUser getUserOfLoginName (@Nullable final String sLoginName);
 
   /**
    * Get the user with the specified email address
@@ -171,13 +164,7 @@ public interface IUserManager extends IPhotonDAO <IUser>
    * @see #getUserOfEmailAddressIgnoreCase(String)
    */
   @Nullable
-  default IUser getUserOfEmailAddress (@Nullable final String sEmailAddress)
-  {
-    if (StringHelper.hasNoText (sEmailAddress))
-      return null;
-
-    return findFirst (x -> sEmailAddress.equals (x.getEmailAddress ()));
-  }
+  IUser getUserOfEmailAddress (@Nullable final String sEmailAddress);
 
   /**
    * Get the user with the specified email address
@@ -189,13 +176,7 @@ public interface IUserManager extends IPhotonDAO <IUser>
    * @since 8.1.3
    */
   @Nullable
-  default IUser getUserOfEmailAddressIgnoreCase (@Nullable final String sEmailAddress)
-  {
-    if (StringHelper.hasNoText (sEmailAddress))
-      return null;
-
-    return findFirst (x -> sEmailAddress.equalsIgnoreCase (x.getEmailAddress ()));
-  }
+  IUser getUserOfEmailAddressIgnoreCase (@Nullable final String sEmailAddress);
 
   /**
    * @return A non-<code>null</code> collection of all contained enabled and
@@ -203,19 +184,13 @@ public interface IUserManager extends IPhotonDAO <IUser>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUser> getAllActiveUsers ()
-  {
-    return getAll (x -> !x.isDeleted () && x.isEnabled ());
-  }
+  ICommonsList <IUser> getAllActiveUsers ();
 
   /**
    * @return The number of all contained enabled and not-deleted users
    */
   @Nonnegative
-  default int getActiveUserCount ()
-  {
-    return getCount (x -> !x.isDeleted () && x.isEnabled ());
-  }
+  int getActiveUserCount ();
 
   /**
    * @return A non-<code>null</code> collection of all contained disabled and
@@ -223,10 +198,7 @@ public interface IUserManager extends IPhotonDAO <IUser>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUser> getAllDisabledUsers ()
-  {
-    return getAll (x -> !x.isDeleted () && x.isDisabled ());
-  }
+  ICommonsList <IUser> getAllDisabledUsers ();
 
   /**
    * @return A non-<code>null</code> collection of all contained not deleted
@@ -234,28 +206,19 @@ public interface IUserManager extends IPhotonDAO <IUser>
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUser> getAllNotDeletedUsers ()
-  {
-    return getAll (x -> !x.isDeleted ());
-  }
+  ICommonsList <IUser> getAllNotDeletedUsers ();
 
   /**
    * @return A non-<code>null</code> collection of all contained deleted users
    */
   @Nonnull
   @ReturnsMutableCopy
-  default ICommonsList <IUser> getAllDeletedUsers ()
-  {
-    return getAll (x -> x.isDeleted ());
-  }
+  ICommonsList <IUser> getAllDeletedUsers ();
 
   /**
    * @return <code>true</code> if any non-deleted, enabled user exists.
    */
-  default boolean containsAnyActiveUser ()
-  {
-    return containsAny (x -> !x.isDeleted () && x.isEnabled ());
-  }
+  boolean containsAnyActiveUser ();
 
   /**
    * Change the modifiable data of a user
@@ -377,9 +340,7 @@ public interface IUserManager extends IPhotonDAO <IUser>
     // Now compare the hashes
     final String sPasswordHashAlgorithm = aUser.getPasswordHash ().getAlgorithmName ();
     final IPasswordSalt aSalt = aUser.getPasswordHash ().getSalt ();
-    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserPasswordHash (sPasswordHashAlgorithm,
-                                                                                      aSalt,
-                                                                                      sPlainTextPassword);
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserPasswordHash (sPasswordHashAlgorithm, aSalt, sPlainTextPassword);
     return aUser.getPasswordHash ().equals (aPasswordHash);
   }
 }
