@@ -29,6 +29,7 @@ import com.helger.commons.id.IHasID;
  * @author Philip Helger
  * @param <INTERFACETYPE>
  *        The data type to be handled.
+ * @since 8.2.4
  */
 public interface IPhotonManager <INTERFACETYPE extends IHasID <String>>
 {
