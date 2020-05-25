@@ -65,6 +65,8 @@ public class DTOrderSpec implements Serializable
    *        <code>null</code> if no formatter is present. Must be
    *        non-<code>null</code> if a formatter is present!
    * @return this for chaining
+   * @param <T>
+   *        the data type to be used for comparison
    */
   @Nonnull
   public <T extends Comparable <? super T>> DTOrderSpec setComparableExtractor (@Nullable final Function <String, String> aFormatter,
@@ -78,8 +80,7 @@ public class DTOrderSpec implements Serializable
     else
     {
       // format, than extract
-      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null
-                                                                                          : aFormatter.apply (x));
+      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null : aFormatter.apply (x));
       m_aComparableExtractor = aRealCE;
     }
     // reset status vars
