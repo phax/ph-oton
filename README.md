@@ -9,7 +9,10 @@ Contained subprojects are:
   * ph-oton-jscode - a Java code model to build structured JS code
   * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
   * ph-oton-atom - ATOM newsfeed stuff
-  * ph-oton-basic - basic application stuff
+  * ph-oton-app - basic application stuff
+  * ph-oton-audit - basic auditing stuff
+  * ph-oton-ajax - basic AJAX stuff
+  * ph-oton-api - basic API stuff
   * ph-oton-security - security elements (user, user groups, roles etc.)
   * ph-oton-exchange - data exchange (import and export)
   * ph-oton-connect - connectivity modules
@@ -31,9 +34,65 @@ Contained subprojects are:
   * ph-oton-bootstrap4-stub - Servlet stub for Bootstrap 4 web applications
   * ph-oton-bootstrap4-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
 
+
+# Requirements
+
+* Java 1.8+ is required for building 
+* Application server requirements:
+    * At least Tomcat 8.x
+    * Jetty 9.4.x with AnnotationConfiguration enabled
+      
+## Maven usage
+
+Replace `x.y.z` with the effective version number.
+
+```xml
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-oton-parent-pom</artifactId>
+        <version>x.y.z</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+```
+
+### Bootstrap 4
+
+To use Bootstrap 4 front end use:
+
+```xml
+  <dependencies>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-bootstrap4-stub</artifactId>
+    </dependency>
+  </dependencies>
+```
+
+See the submodule `ph-oton-bootstrap4-demo` for a working example project with Bootstrap 4 UI.
+
+### Bootstrap 3
+
+To use Bootstrap 3 front end use:
+
+```xml
+  <dependencies>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-oton-bootstrap3-stub</artifactId>
+    </dependency>
+  </dependencies>
+```
+
+See the submodule `ph-oton-bootstrap3-demo` for a working example project with Bootstrap 3 UI.
+
 ## News and noteworthy
 
-* v8.2.4 - work in progress
+* v8.2.4 - 2020-05-25
     * Updated to Jetty 9.4.29
     * Updated to Log4j 2.13.3
     * Updated to ph-commons 9.4.4
@@ -217,59 +276,6 @@ Contained subprojects are:
 * v6.0.0 - 2015-09-14 
     * first ph-oton release based on old webbasics and webctrls etc.
     * requires ph-commons 6.x
-
-# Requirements
-
-* Java 1.8+ is required for building 
-* Application server requirements:
-    * At least Tomcat 8.x
-    * Jetty 9.4.x with AnnotationConfiguration enabled
-      
-## Maven usage
-
-```xml
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.3</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-```
-
-### Bootstrap 3
-
-To use Bootstrap 3 front end use:
-
-```xml
-  <dependencies>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-bootstrap3-stub</artifactId>
-    </dependency>
-  </dependencies>
-```
-
-See the submodule `ph-oton-bootstrap3-demo` for a working example project with Bootstrap 3 UI.
-
-### Bootstrap 4
-
-To use Bootstrap 4 front end use:
-
-```xml
-  <dependencies>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-oton-bootstrap4-stub</artifactId>
-    </dependency>
-  </dependencies>
-```
-
-See the submodule `ph-oton-bootstrap4-demo` for a working example project with Bootstrap 4 UI.
 
 ---
 
