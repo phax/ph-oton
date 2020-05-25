@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>ph-oton-parent-pom</artifactId>
-    <version>8.2.4-SNAPSHOT</version>
+    <version>8.2.4</version>
   </parent>
   <artifactId>ph-oton-bootstrap4-uictrls</artifactId>
   <packaging>bundle</packaging>
