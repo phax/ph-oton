@@ -68,6 +68,7 @@
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.13.3</log4j.version>
     <jetty.version>9.4.29.v20200521</jetty.version>
+    <ph-web.version>9.2.0</ph-web.version>
   </properties>
 
   <repositories>
@@ -121,9 +122,14 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>9.1.12</version>
+        <version>${ph-web.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-jsch</artifactId>
+        <version>${ph-web.version}</version>
       </dependency>
       
       <dependency>

@@ -24,7 +24,7 @@ import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.IThirdPartyModuleProviderSPI;
 import com.helger.commons.thirdparty.ThirdPartyModule;
 import com.helger.commons.version.Version;
-import com.helger.web.config.ThirdPartyModuleProvider_ph_web;
+import com.helger.jsch.config.ThirdPartyModuleProvider_ph_jsch;
 
 /**
  * Implement this SPI interface if your JAR file contains external third party
@@ -35,8 +35,6 @@ import com.helger.web.config.ThirdPartyModuleProvider_ph_web;
 @IsSPIImplementation
 public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPartyModuleProviderSPI
 {
-  public static final IThirdPartyModule JSCH = ThirdPartyModuleProvider_ph_web.JSCH.getAsNonOptionalCopy ();
-
   public static final IThirdPartyModule COMMONS_NET = new ThirdPartyModule ("Apache Commons Net",
                                                                             "Apache",
                                                                             ELicense.APACHE2,
@@ -46,6 +44,6 @@ public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPar
   @Nullable
   public IThirdPartyModule [] getAllThirdPartyModules ()
   {
-    return new IThirdPartyModule [] { JSCH, COMMONS_NET };
+    return new IThirdPartyModule [] { ThirdPartyModuleProvider_ph_jsch.JSCH, COMMONS_NET };
   }
 }
