@@ -50,7 +50,7 @@ Replace `x.y.z` with the effective version number.
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
         <version>x.y.z</version>
         <type>pom</type>
@@ -60,6 +60,8 @@ Replace `x.y.z` with the effective version number.
   </dependencyManagement>
 ```
 
+Note: prior to v8.2.5 the Maven groupId was `com.helger`.
+
 ### Bootstrap 4
 
 To use Bootstrap 4 front end use:
@@ -67,13 +69,15 @@ To use Bootstrap 4 front end use:
 ```xml
   <dependencies>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-bootstrap4-stub</artifactId>
     </dependency>
   </dependencies>
 ```
 
 See the submodule `ph-oton-bootstrap4-demo` for a working example project with Bootstrap 4 UI.
+
+Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ### Bootstrap 3
 
@@ -82,13 +86,15 @@ To use Bootstrap 3 front end use:
 ```xml
   <dependencies>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-bootstrap3-stub</artifactId>
     </dependency>
   </dependencies>
 ```
 
 See the submodule `ph-oton-bootstrap3-demo` for a working example project with Bootstrap 3 UI.
+
+Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
