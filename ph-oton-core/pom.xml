@@ -78,15 +78,15 @@
       <artifactId>ph-oton-security</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.web</groupId>
       <artifactId>ph-xservlet</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.web</groupId>
       <artifactId>ph-smtp</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.web</groupId>
       <artifactId>ph-http</artifactId>
     </dependency>
     <dependency>

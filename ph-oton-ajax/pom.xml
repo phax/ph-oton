@@ -59,7 +59,7 @@
       <artifactId>ph-oton-app</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.web</groupId>
       <artifactId>ph-xservlet</artifactId>
     </dependency>
     
