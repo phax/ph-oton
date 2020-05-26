@@ -25,6 +25,7 @@
     <version>1.11.1</version>
     <relativePath />
   </parent>
+  <groupId>com.helger.photon</groupId>
   <artifactId>ph-oton-parent-pom</artifactId>
   <version>8.2.5-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -127,132 +128,132 @@
       </dependency>
       
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-html</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-jscode</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-jquery</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-atom</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-app</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-audit</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-ajax</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-security</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-exchange</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-connect</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-core</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-uicore</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-icon</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-tinymce4</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-datatables</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-uictrls</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-jetty</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap3</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap3-uictrls</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap3-pages</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap3-stub</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap4</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap4-uictrls</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap4-pages</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap4-stub</artifactId>
         <version>${project.version}</version>
       </dependency>

@@ -92,6 +92,9 @@ See the submodule `ph-oton-bootstrap3-demo` for a working example project with B
 
 ## News and noteworthy
 
+* v8.2.5 - 2020-05-26
+    * Changed Maven groupId to `com.helger.photon`
+    * Updated to ph-web 9.3.0 (new Maven groupId)
 * v8.2.4 - 2020-05-25
     * Updated to Jetty 9.4.29
     * Updated to Log4j 2.13.3
