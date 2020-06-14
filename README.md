@@ -98,6 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v8.2.6 - work in progress
+    * Updated to Jetty 9.4.30
 * v8.2.5 - 2020-05-26
     * Changed Maven groupId to `com.helger.photon`
     * Updated to ph-web 9.3.0 (new Maven groupId)
