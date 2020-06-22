@@ -65,6 +65,7 @@ import com.helger.smtp.data.IEmailAttachmentList;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.transport.MailAPI;
+import com.helger.useragent.IUserAgent;
 import com.helger.useragent.uaprofile.UAProfile;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -351,7 +352,11 @@ public final class InternalErrorHandler
         aMetadata.addFieldRetrievalError ("Request URL", t2);
       }
 
-      aMetadata.addField ("User agent", RequestHelper.getUserAgent (aRequestScope.getRequest ()).getAsString ());
+      final IUserAgent aUserAgent = RequestHelper.getUserAgent (aRequestScope.getRequest ());
+      if (aUserAgent != null)
+        aMetadata.addField ("User agent", aUserAgent.getAsString ());
+      else
+        aMetadata.addField ("User agent", "unknown");
 
       try
       {
@@ -369,15 +374,11 @@ public final class InternalErrorHandler
         aMetadata.addField ("UAProfile", aProfile.toString ());
 
       // Add all request attributes
-      for (final Map.Entry <String, Object> aEntry : aRequestScope.attrs ()
-                                                                  .getSortedByKey (Comparator.naturalOrder ())
-                                                                  .entrySet ())
+      for (final Map.Entry <String, Object> aEntry : aRequestScope.attrs ().getSortedByKey (Comparator.naturalOrder ()).entrySet ())
         aMetadata.addField ("[Request Attr] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
 
       // Add all request params
-      for (final Map.Entry <String, Object> aEntry : aRequestScope.params ()
-                                                                  .getSortedByKey (Comparator.naturalOrder ())
-                                                                  .entrySet ())
+      for (final Map.Entry <String, Object> aEntry : aRequestScope.params ().getSortedByKey (Comparator.naturalOrder ()).entrySet ())
         aMetadata.addField ("[Request Param] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
     }
     else
@@ -392,8 +393,7 @@ public final class InternalErrorHandler
         try
         {
           // Try to get from request scope (if one is provided)
-          aSessionScope = (ISessionWebScope) ScopeSessionManager.getInstance ()
-                                                                .getSessionScopeOfID (aRequestScope.getSessionID ());
+          aSessionScope = (ISessionWebScope) ScopeSessionManager.getInstance ().getSessionScopeOfID (aRequestScope.getSessionID ());
         }
         catch (final Throwable t2)
         {
@@ -414,9 +414,7 @@ public final class InternalErrorHandler
         aMetadata.addField ("SessionID", aSessionScope.getID ());
 
         // Add all session attributes
-        for (final Map.Entry <String, Object> aEntry : aSessionScope.attrs ()
-                                                                    .getSortedByKey (Comparator.naturalOrder ())
-                                                                    .entrySet ())
+        for (final Map.Entry <String, Object> aEntry : aSessionScope.attrs ().getSortedByKey (Comparator.naturalOrder ()).entrySet ())
           aMetadata.addField ("[Session] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
       }
     }
@@ -447,8 +445,7 @@ public final class InternalErrorHandler
       }
       try
       {
-        RequestHelper.getRequestHeaderMap (aHttpRequest)
-                     .forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v), true);
+        RequestHelper.getRequestHeaderMap (aHttpRequest).forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v), true);
       }
       catch (final Throwable t2)
       {
@@ -625,8 +622,7 @@ public final class InternalErrorHandler
     if (bInvokeCustomExceptionHandler)
     {
       // Invoke custom exception handler (if present)
-      InternalErrorSettings.callbacks ()
-                           .forEach (x -> x.onInternalError (t, aRequestScope, sErrorID, aRealDisplayLocale));
+      InternalErrorSettings.callbacks ().forEach (x -> x.onInternalError (t, aRequestScope, sErrorID, aRealDisplayLocale));
     }
 
     return sErrorID;
