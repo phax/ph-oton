@@ -235,8 +235,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected final void logThirdpartyModules ()
   {
     // List all third party modules for later evaluation
-    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
-                                                                             .getAllRegisteredThirdPartyModules ();
+    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ().getAllRegisteredThirdPartyModules ();
     if (!aModules.isEmpty ())
     {
       LOGGER.info ("Using the following third party modules:");
@@ -372,8 +371,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /**
    * Get the value of the servlet context init-parameter that represents the
    * <b>{@value #INIT_PARAMETER_SERVER_URL_PRODUCTION}</b> or
-   * <b>{@value #INIT_PARAMETER_SERVER_URL}</b> flag. This value is than
-   * converted to a boolean internally.
+   * <b>{@value #INIT_PARAMETER_SERVER_URL}</b> flag.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
@@ -419,9 +417,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       sDataPath = aSC.getInitParameter ("storagePath");
       if (StringHelper.hasText (sDataPath))
       {
-        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" +
-                      INIT_PARAMETER_DATA_PATH +
-                      "' instead!");
+        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" + INIT_PARAMETER_DATA_PATH + "' instead!");
       }
     }
     if (StringHelper.hasNoText (sDataPath))
@@ -774,11 +770,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   @OverrideOnDemand
   protected String getStatisticsFilename ()
   {
-    return "statistics/" +
-           PDTFactory.getCurrentYear () +
-           "/statistics_" +
-           PDTIOHelper.getCurrentLocalDateTimeForFilename () +
-           ".xml";
+    return "statistics/" + PDTFactory.getCurrentYear () + "/statistics_" + PDTIOHelper.getCurrentLocalDateTimeForFilename () + ".xml";
   }
 
   /**
@@ -796,8 +788,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       {
         final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
         aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
-        aDoc.getDocumentElement ()
-            .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
+        aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
 
         final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         MicroWriter.writeToFile (aDoc, aDestPath);
@@ -842,11 +833,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     }
 
     if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Servlet context '" +
-                   aSC.getServletContextName () +
-                   "' was destroyed in " +
-                   aSW.stopAndGetMillis () +
-                   " milli seconds");
+      LOGGER.info ("Servlet context '" + aSC.getServletContextName () + "' was destroyed in " + aSW.stopAndGetMillis () + " milli seconds");
   }
 
   /**
