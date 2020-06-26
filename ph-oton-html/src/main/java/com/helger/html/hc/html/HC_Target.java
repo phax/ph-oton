@@ -33,6 +33,8 @@
  */
 package com.helger.html.hc.html;
 
+import java.util.function.Function;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -102,6 +104,26 @@ public class HC_Target implements IHCHasHTMLAttributeValue
   @Nullable
   public static HC_Target getFromName (@Nonnull final String sName, @Nullable final HC_Target aDefault)
   {
+    return getFromName (sName, x -> aDefault);
+  }
+
+  /**
+   * Try to find one of the default targets by name. The name comparison is
+   * performed case insensitive.
+   *
+   * @param sName
+   *        The name to check. May not be <code>null</code>.
+   * @param aDefaultSupplier
+   *        The supplier to be invoked in case the name was never found. May not
+   *        be <code>null</code> but may return a <code>null</code> value.
+   * @return The constant link target representing the name or the default
+   *         value. May be <code>null</code> if the passed supplier returns
+   *         null.
+   * @since 8.2.6
+   */
+  @Nullable
+  public static HC_Target getFromName (@Nonnull final String sName, @Nonnull final Function <String, ? extends HC_Target> aDefaultSupplier)
+  {
     if (BLANK.getAttrValue ().equalsIgnoreCase (sName))
       return BLANK;
     if (SELF.getAttrValue ().equalsIgnoreCase (sName))
@@ -110,6 +132,6 @@ public class HC_Target implements IHCHasHTMLAttributeValue
       return PARENT;
     if (TOP.getAttrValue ().equalsIgnoreCase (sName))
       return TOP;
-    return aDefault;
+    return aDefaultSupplier.apply (sName);
   }
 }
