@@ -31,6 +31,13 @@ import com.helger.xservlet.handler.specific.RedirectToServletXServletHandler;
  */
 public class RootXServletHandler extends RedirectToServletXServletHandler
 {
+  /**
+   * Constructor.
+   *
+   * @param sServletPath
+   *        The servlet path (relative to the current context) to redirect to.
+   *        Must start with a slash ("/").
+   */
   public RootXServletHandler (@Nonnull @Nonempty final String sServletPath)
   {
     super (sServletPath);
