@@ -140,6 +140,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   public static final int DEFAULT_PASSWORD_MIN_LENGTH = 6;
 
+  public static final boolean DEFAULT_HANDLE_STATISTICS_ON_END = true;
+
   /** The logger to use. */
   private static final Logger LOGGER = LoggerFactory.getLogger (WebAppListener.class);
 
@@ -147,7 +149,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
   private LocalDateTime m_aInitializationStartDT;
   private LocalDateTime m_aInitializationEndDT;
-  private boolean m_bHandleStatisticsOnEnd = true;
+  private boolean m_bHandleStatisticsOnEnd = DEFAULT_HANDLE_STATISTICS_ON_END;
 
   public WebAppListener ()
   {}
