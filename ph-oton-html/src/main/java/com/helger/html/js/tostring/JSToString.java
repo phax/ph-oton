@@ -243,9 +243,7 @@ public final class JSToString
   }
 
   @Nonnull
-  public static String objectToJSString (@Nullable final Object aObject,
-                                         @Nonnull final JSType aType,
-                                         final boolean bWithSurroundingVar)
+  public static String objectToJSString (@Nullable final Object aObject, @Nonnull final JSType aType, final boolean bWithSurroundingVar)
   {
     ValueEnforcer.notNull (aType, "Type");
 

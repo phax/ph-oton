@@ -32,8 +32,7 @@ public enum EFineUploaderBasicText implements IHasDisplayText
 {
   TYPE_ERROR ("{file} hat eine ungültige Erweiterung.\nErlaubt sind nur: {extensions}.",
               "{file} has an invalid extension.\nValid extension(s): {extensions}."),
-  SIZE_ERROR ("{file} ist zu groß. Die maximale Dateigröße ist {sizeLimit}.",
-              "{file} is too large, maximum file size is {sizeLimit}."),
+  SIZE_ERROR ("{file} ist zu groß. Die maximale Dateigröße ist {sizeLimit}.", "{file} is too large, maximum file size is {sizeLimit}."),
   MIN_SIZE_ERROR ("{file} ist zu klein. Die minimale Dateigröße ist {minSizeLimit}.",
                   "{file} is too small, minimum file size is {minSizeLimit}."),
   EMPTY_ERROR ("{file} ist leer.", "{file} is empty, please select files again without it."),

@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class JSEventMap implements Serializable
 {
-  private final ICommonsMap <EJSEvent, CollectingJSCodeProvider> m_aEvents = new CommonsEnumMap<> (EJSEvent.class);
+  private final ICommonsMap <EJSEvent, CollectingJSCodeProvider> m_aEvents = new CommonsEnumMap <> (EJSEvent.class);
 
   /**
    * Add an additional handler for the given JS event. If an existing handler is

@@ -81,9 +81,7 @@ public final class PathMatchingResult implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("Match", m_bMatch)
-                                       .appendIfNotNull ("VariableValues", m_aVariableValues)
-                                       .getToString ();
+    return new ToStringGenerator (null).append ("Match", m_bMatch).appendIfNotNull ("VariableValues", m_aVariableValues).getToString ();
   }
 
   @Nonnull

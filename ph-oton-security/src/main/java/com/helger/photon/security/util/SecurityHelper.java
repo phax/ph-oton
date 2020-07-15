@@ -87,8 +87,7 @@ public final class SecurityHelper
   {
     if (CollectionHelper.isNotEmpty (aRoleIDs))
     {
-      final ICommonsList <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                         .getAllUserGroupsWithAssignedUser (sUserID);
+      final ICommonsList <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ().getAllUserGroupsWithAssignedUser (sUserID);
       for (final String sRoleID : aRoleIDs)
       {
         boolean bFoundRole = false;
@@ -110,8 +109,7 @@ public final class SecurityHelper
   public static ICommonsSet <String> getAllUserRoleIDs (@Nullable final String sUserID)
   {
     final ICommonsSet <String> ret = new CommonsHashSet <> ();
-    final ICommonsList <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
-                                                                       .getAllUserGroupsWithAssignedUser (sUserID);
+    final ICommonsList <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ().getAllUserGroupsWithAssignedUser (sUserID);
     for (final IUserGroup aUserGroup : aUserGroups)
       ret.addAll (aUserGroup.getAllContainedRoleIDs ());
     return ret;

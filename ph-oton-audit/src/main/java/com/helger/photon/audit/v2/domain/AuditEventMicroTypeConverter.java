@@ -87,8 +87,7 @@ public class AuditEventMicroTypeConverter implements IMicroTypeConverter <AuditE
       throw new IllegalStateException ("Failed to parse action type '" + sActionID + "'");
 
     final String sSuccess = aElement.getAttributeValue (ATTR_SUCCESS);
-    final ESuccess eSuccess = StringHelper.hasNoText (sSuccess) ? null
-                                                                : ESuccess.valueOf (StringParser.parseBool (sSuccess));
+    final ESuccess eSuccess = StringHelper.hasNoText (sSuccess) ? null : ESuccess.valueOf (StringParser.parseBool (sSuccess));
 
     final ICommonsList <AuditField> aFields = new CommonsArrayList <> ();
     for (final IMicroElement eField : aElement.getAllChildElements (ELEMENT_FIELD))

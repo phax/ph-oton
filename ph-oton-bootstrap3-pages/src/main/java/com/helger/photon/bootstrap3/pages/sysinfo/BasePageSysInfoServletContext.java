@@ -59,8 +59,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext>
-                                           extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -123,9 +122,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final ServletContext aSC = WebScopeManager.getGlobalScope ().getServletContext ();
@@ -137,8 +134,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                 "servlets");
+                                          new DTCol (EText.MSG_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () + "servlets");
       for (final ServletRegistration aRegistration : aSC.getServletRegistrations ().values ())
       {
         final HCRow aRow = aTable.addBodyRow ();
@@ -172,8 +168,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
                                           new DTCol (EText.MSG_CLASS_NAME.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_INIT_PARAMS.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_SERVLET_MAPPINGS.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_URL_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                     "filters");
+                                          new DTCol (EText.MSG_URL_MAPPINGS.getDisplayText (aDisplayLocale))).setID (getID () + "filters");
       for (final FilterRegistration aRegistration : aSC.getFilterRegistrations ().values ())
       {
         final HCRow aRow = aTable.addBodyRow ();

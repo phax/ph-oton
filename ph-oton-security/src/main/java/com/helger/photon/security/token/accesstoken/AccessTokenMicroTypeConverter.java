@@ -49,9 +49,7 @@ public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter 
     aElement.setAttribute (ATTR_TOKEN_STRING, aValue.getTokenString ());
     aElement.setAttributeWithConversion (ATTR_NOT_BEFORE, aValue.getNotBefore ());
     aElement.setAttributeWithConversion (ATTR_NOT_AFTER, aValue.getNotAfter ());
-    aElement.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getRevocationStatus (),
-                                                                    sNamespaceURI,
-                                                                    ELEMENT_REVOCATION));
+    aElement.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getRevocationStatus (), sNamespaceURI, ELEMENT_REVOCATION));
     return aElement;
   }
 

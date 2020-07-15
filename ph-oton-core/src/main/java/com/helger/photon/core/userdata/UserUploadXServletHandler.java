@@ -66,8 +66,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
     return new JsonObject ().add ("success", false).add ("error", sErrorMsg).add ("preventRetry", true);
   }
 
-  private void _post (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                      @Nonnull final UnifiedResponse aUnifiedResponse)
+  private void _post (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     IJsonObject ret;
 
@@ -127,8 +126,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
         }
       }
     }
-    aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON).setContentAndCharset (ret.getAsJsonString (),
-                                                                                    StandardCharsets.UTF_8);
+    aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON).setContentAndCharset (ret.getAsJsonString (), StandardCharsets.UTF_8);
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,

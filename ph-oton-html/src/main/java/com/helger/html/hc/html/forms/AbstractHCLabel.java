@@ -35,8 +35,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYPE>> extends
-                                      AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
+                                      implements
                                       IHCLabel <IMPLTYPE>
 {
   private String m_sFor;

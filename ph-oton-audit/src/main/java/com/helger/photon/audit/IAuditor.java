@@ -91,9 +91,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onModifySuccess (@Nonnull final ObjectType aObjectType,
-                                @Nonnull final String sWhat,
-                                @Nullable final Object... aArgs)
+  default void onModifySuccess (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.MODIFY,
@@ -113,9 +111,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onModifyFailure (@Nonnull final ObjectType aObjectType,
-                                @Nonnull final String sWhat,
-                                @Nullable final Object... aArgs)
+  default void onModifyFailure (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.MODIFY,
@@ -217,9 +213,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteSuccess (@Nonnull final ObjectType aObjectType,
-                                 @Nonnull final String sWhat,
-                                 @Nullable final Object... aArgs)
+  default void onExecuteSuccess (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.EXECUTE,
@@ -239,9 +233,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteFailure (@Nonnull final ObjectType aObjectType,
-                                 @Nonnull final String sWhat,
-                                 @Nullable final Object... aArgs)
+  default void onExecuteFailure (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.EXECUTE,

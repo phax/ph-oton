@@ -78,11 +78,7 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
     final String sBasePath = aBasePath.getAbsolutePath ();
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Checking for usable space on '" +
-                    sBasePath +
-                    "' with a threshold of " +
-                    nThresholdBytes +
-                    " bytes");
+      LOGGER.debug ("Checking for usable space on '" + sBasePath + "' with a threshold of " + nThresholdBytes + " bytes");
 
     final long nUsableSpace = aBasePath.getUsableSpace ();
     if (nUsableSpace <= nThresholdBytes)
@@ -167,9 +163,7 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
     // directories
     return GlobalQuartzScheduler.getInstance ()
                                 .scheduleJob (CheckDiskUsableSpaceJob.class.getName () + JOB_COUNT.incrementAndGet (),
-                                              JDK8TriggerBuilder.newTrigger ()
-                                                                .startNow ()
-                                                                .withSchedule (aScheduleBuilder),
+                                              JDK8TriggerBuilder.newTrigger ().startNow ().withSchedule (aScheduleBuilder),
                                               CheckDiskUsableSpaceJob.class,
                                               aJobDataMap);
   }

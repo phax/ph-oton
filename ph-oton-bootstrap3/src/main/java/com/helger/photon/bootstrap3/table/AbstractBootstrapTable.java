@@ -31,8 +31,7 @@ import com.helger.photon.bootstrap3.CBootstrapCSS;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractBootstrapTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>> extends
-                                             AbstractHCTable <IMPLTYPE>
+public abstract class AbstractBootstrapTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>> extends AbstractHCTable <IMPLTYPE>
 {
   private void _init ()
   {

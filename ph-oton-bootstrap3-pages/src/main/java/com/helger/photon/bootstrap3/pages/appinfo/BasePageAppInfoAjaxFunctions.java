@@ -54,8 +54,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends
-                                          AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -120,8 +119,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_FACTORY.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_URL.getDisplayText (aDisplayLocale))).setID (getID () + "-ajax");
-      for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aRegistry.getAllRegisteredFunctions ()
-                                                                                .entrySet ())
+      for (final Map.Entry <String, IAjaxFunctionDeclaration> aEntry : aRegistry.getAllRegisteredFunctions ().entrySet ())
       {
         aTable.addBodyRow ()
               .addCells (aEntry.getKey (),
@@ -146,8 +144,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
         aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
       for (final IAjaxAfterExecutionCallback aCB : AjaxSettings.afterExecutionCallbacks ().getAllCallbacks ())
         aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-      for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ()
-                                                                     .getAllCallbacks ())
+      for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ().getAllCallbacks ())
         aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);

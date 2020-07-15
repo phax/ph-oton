@@ -263,9 +263,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         }
 
         // Add an offset to the controls
-        final HCDiv aDivRight = new HCDiv ().addChild (aDivFormCheck)
-                                            .addChild (aErrorListNode)
-                                            .addChild (aHelpTextNode);
+        final HCDiv aDivRight = new HCDiv ().addChild (aDivFormCheck).addChild (aErrorListNode).addChild (aHelpTextNode);
 
         if (!bIsInline)
         {

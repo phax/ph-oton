@@ -35,8 +35,7 @@ import com.helger.photon.security.usergroup.IUserGroup;
  */
 public class HCUserGroupForUserSelect extends HCExtSelect
 {
-  public HCUserGroupForUserSelect (@Nonnull final RequestField aRF,
-                                   @Nullable final Collection <String> aSelectedUserGroups)
+  public HCUserGroupForUserSelect (@Nonnull final RequestField aRF, @Nullable final Collection <String> aSelectedUserGroups)
   {
     super (aRF);
     setMultiple (true);

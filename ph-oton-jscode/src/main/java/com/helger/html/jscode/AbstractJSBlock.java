@@ -427,8 +427,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName,
-                    @Nullable final String sInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue) throws JSNameAlreadyExistsException
   {
     return var (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
   }
@@ -1014,9 +1013,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @return Newly generated conditional statement
    */
   @Nonnull
-  public JSConditional _if (@Nonnull final IJSExpression aTest,
-                            @Nullable final IHasJSCode aThen,
-                            @Nullable final IHasJSCode aElse)
+  public JSConditional _if (@Nonnull final IJSExpression aTest, @Nullable final IHasJSCode aThen, @Nullable final IHasJSCode aElse)
   {
     return addStatement (new JSConditional (aTest, aThen, aElse));
   }

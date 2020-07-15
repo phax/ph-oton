@@ -189,8 +189,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
   }
 
   @Nonnull
-  public ESuccess listFiles (@Nullable final Predicate <ChannelSftp.LsEntry> aFilter,
-                             @Nonnull final List <ChannelSftp.LsEntry> aTargetList)
+  public ESuccess listFiles (@Nullable final Predicate <ChannelSftp.LsEntry> aFilter, @Nonnull final List <ChannelSftp.LsEntry> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
 

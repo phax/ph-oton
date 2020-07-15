@@ -135,8 +135,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
         }
       }
       else
-        LOGGER.error ("Weird JSON received: " +
-                      aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
+        LOGGER.error ("Weird JSON received: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
     }
     else
       LOGGER.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));

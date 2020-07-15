@@ -51,8 +51,7 @@ import com.helger.xml.microdom.IMicroNode;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext> extends
-                                              AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
 {
   @NotThreadSafe
   private static final class ContentPerLocale implements Serializable
@@ -199,9 +198,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> {
       // Use the default locale as fallback, since we ensured that the default
       // locale is contained!
-      final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale,
-                                                                         m_aContent.keySet (),
-                                                                         m_aDefaultLocale);
+      final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale, m_aContent.keySet (), m_aDefaultLocale);
       final ContentPerLocale aContent = m_aContent.get (aLocaleToUse);
       if (aContent == null)
         throw new IllegalStateException ("Found no content for locale " +

@@ -113,8 +113,7 @@ public abstract class AbstractLoginManager
    * @return Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract IHTMLProvider createLoginScreen (final boolean bLoginError,
-                                                      @Nonnull final ICredentialValidationResult aLoginResult);
+  protected abstract IHTMLProvider createLoginScreen (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult);
 
   /**
    * Check if the login process is in progress
@@ -127,8 +126,7 @@ public abstract class AbstractLoginManager
   @OverrideOnDemand
   protected boolean isLoginInProgress (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS.equals (aRequestScope.params ()
-                                                                                 .getAsString (CLogin.REQUEST_PARAM_ACTION));
+    return CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS.equals (aRequestScope.params ().getAsString (CLogin.REQUEST_PARAM_ACTION));
   }
 
   /**
@@ -198,9 +196,7 @@ public abstract class AbstractLoginManager
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURIEncoded ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT, aRequestScope.getUserAgent ().getAsString ());
-    aLoginInfo.attrs ()
-              .putIn (LOGIN_INFO_REQUEST_COUNT,
-                      Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
+    aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_COUNT, Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
   }
 
   /**

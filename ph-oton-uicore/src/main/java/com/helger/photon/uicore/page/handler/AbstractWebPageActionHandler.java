@@ -26,7 +26,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
 public abstract class AbstractWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
-                                                   implements IWebPageActionHandler <DATATYPE, WPECTYPE>
+                                                   implements
+                                                   IWebPageActionHandler <DATATYPE, WPECTYPE>
 {
   private final boolean m_bSelectedObjectRequired;
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;

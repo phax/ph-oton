@@ -33,8 +33,8 @@ import com.helger.xml.microdom.MicroText;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <IMPLTYPE>> extends AbstractHCNode
-                                         implements IHCTextNode <IMPLTYPE>
+public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <IMPLTYPE>> extends AbstractHCNode implements
+                                         IHCTextNode <IMPLTYPE>
 {
   private String m_sText;
   private boolean m_bEscape = MicroText.DEFAULT_ESCAPE;
@@ -104,9 +104,6 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("text", m_sText)
-                            .append ("escape", m_bEscape)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("text", m_sText).append ("escape", m_bEscape).getToString ();
   }
 }

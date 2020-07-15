@@ -35,8 +35,10 @@ import com.helger.html.js.IHasJSCode;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>>
-                      extends IHCElementWithChildren <IMPLTYPE>, IHCHasMedia <IMPLTYPE>, IHCHasName <IMPLTYPE>
+public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
+                      IHCElementWithChildren <IMPLTYPE>,
+                      IHCHasMedia <IMPLTYPE>,
+                      IHCHasName <IMPLTYPE>
 {
   @Nullable
   ISimpleURL getHref ();

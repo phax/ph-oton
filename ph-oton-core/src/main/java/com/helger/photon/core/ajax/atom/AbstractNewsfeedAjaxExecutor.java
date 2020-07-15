@@ -56,8 +56,7 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
   private final IHasDisplayText m_aDisplayText;
   private final String m_sFeedID;
 
-  public AbstractNewsfeedAjaxExecutor (@Nonnull final IHasDisplayText aDisplayText,
-                                       @Nonnull @Nonempty final String sFeedID)
+  public AbstractNewsfeedAjaxExecutor (@Nonnull final IHasDisplayText aDisplayText, @Nonnull @Nonempty final String sFeedID)
   {
     ValueEnforcer.notNull (aDisplayText, "DisplayText");
     ValueEnforcer.notNull (sFeedID, "FeedID");

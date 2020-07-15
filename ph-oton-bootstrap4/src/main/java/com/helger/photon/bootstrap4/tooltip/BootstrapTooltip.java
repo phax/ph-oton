@@ -57,8 +57,8 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
    */
   public static final String JS_EVENT_SHOW = "show.bs.tooltip";
   /**
-   * This event is fired when the tooltip has been made visible to the user (will
-   * wait for CSS transitions to complete).
+   * This event is fired when the tooltip has been made visible to the user
+   * (will wait for CSS transitions to complete).
    */
   public static final String JS_EVENT_SHOWN = "shown.bs.tooltip";
   /**
@@ -67,13 +67,13 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
    */
   public static final String JS_EVENT_HIDE = "hide.bs.tooltip";
   /**
-   * This event is fired when the tooltip has finished being hidden from the user
-   * (will wait for CSS transitions to complete).
+   * This event is fired when the tooltip has finished being hidden from the
+   * user (will wait for CSS transitions to complete).
    */
   public static final String JS_EVENT_HIDDEN = "hidden.bs.tooltip";
   /**
-   * This event is fired after the show.bs.tooltip event when the tooltip template
-   * has been added to the DOM.
+   * This event is fired after the show.bs.tooltip event when the tooltip
+   * template has been added to the DOM.
    */
   public static final String JS_EVENT_INSERTED = "inserted.bs.tooltip";
 
@@ -162,8 +162,8 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   /**
    * @param aFunction
    *        Callback function that is called with the tooltip DOM node as its
-   *        first argument and the triggering element DOM node as its second. The
-   *        this context is set to the tooltip instance.
+   *        first argument and the triggering element DOM node as its second.
+   *        The this context is set to the tooltip instance.
    * @return this
    */
   @Nonnull

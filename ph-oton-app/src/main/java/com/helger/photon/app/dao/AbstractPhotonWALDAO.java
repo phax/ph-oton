@@ -40,8 +40,7 @@ public abstract class AbstractPhotonWALDAO <DATATYPE extends Serializable> exten
     this (aDataTypeClass, () -> sFilename);
   }
 
-  protected AbstractPhotonWALDAO (@Nonnull final Class <DATATYPE> aDataTypeClass,
-                                  @Nonnull final ISupplier <String> aFilenameProvider)
+  protected AbstractPhotonWALDAO (@Nonnull final Class <DATATYPE> aDataTypeClass, @Nonnull final ISupplier <String> aFilenameProvider)
   {
     super (aDataTypeClass, WebFileIO.getDataIO (), aFilenameProvider);
   }

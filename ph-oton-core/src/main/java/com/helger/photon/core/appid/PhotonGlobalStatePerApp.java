@@ -68,8 +68,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
   public PhotonGlobalStatePerApp setServletPath (@Nonnull @Nonempty final String sServletPath)
   {
     ValueEnforcer.notEmpty (sServletPath, "ApplicationServletPath");
-    ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'),
-                          "ApplicationServletPath must start with a slash");
+    ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'), "ApplicationServletPath must start with a slash");
     ValueEnforcer.isFalse (StringHelper.endsWith (sServletPath, '/'), "ApplicationServletPath must end with a slash");
     m_aRWLock.writeLockedGet ( () -> m_sServletPath = sServletPath);
     return this;
@@ -98,8 +97,6 @@ public final class PhotonGlobalStatePerApp implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("ServletPath", m_sServletPath)
-                                       .append ("MenuTree", m_aMenuTree)
-                                       .getToString ();
+    return new ToStringGenerator (null).append ("ServletPath", m_sServletPath).append ("MenuTree", m_aMenuTree).getToString ();
   }
 }

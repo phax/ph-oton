@@ -40,8 +40,7 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
  * @param <T>
  *        Data type to handle. Must extend {@link IBusinessObject}
  */
-public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusinessObject> implements
-                                                               IMicroTypeConverter <T>
+public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusinessObject> implements IMicroTypeConverter <T>
 {
   protected static final IMicroQName ATTR_ID = new MicroQName ("id");
   protected static final IMicroQName ATTR_CREATIONLDT = new MicroQName ("creationldt");
@@ -52,8 +51,7 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusin
   protected static final IMicroQName ATTR_DELETIONUSERID = new MicroQName ("deletionuserid");
   protected static final String ELEMENT_CUSTOM = "custom";
 
-  public static final void setObjectFields (@Nonnull final IBusinessObject aValue,
-                                            @Nonnull final IMicroElement aElement)
+  public static final void setObjectFields (@Nonnull final IBusinessObject aValue, @Nonnull final IMicroElement aElement)
   {
     aElement.setAttribute (ATTR_ID, aValue.getID ());
     aElement.setAttributeWithConversion (ATTR_CREATIONLDT, aValue.getCreationDateTime ());

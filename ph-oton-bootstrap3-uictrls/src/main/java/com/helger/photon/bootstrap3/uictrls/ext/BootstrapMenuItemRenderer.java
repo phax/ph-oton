@@ -58,8 +58,7 @@ public class BootstrapMenuItemRenderer extends AbstractMenuItemRenderer <HCUL>
   }
 
   @Nonnull
-  public IHCNode renderSeparator (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final IMenuSeparator aSeparator)
+  public IHCNode renderSeparator (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IMenuSeparator aSeparator)
   {
     return new HCLI ().addClass (CBootstrapCSS.DIVIDER);
   }

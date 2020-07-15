@@ -32,8 +32,7 @@ import com.helger.xservlet.AbstractXServlet;
  */
 public abstract class AbstractApplicationServlet extends AbstractXServlet
 {
-  protected AbstractApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler,
-                                        @Nonnull @Nonempty final String sAppID)
+  protected AbstractApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler, @Nonnull @Nonempty final String sAppID)
   {
     handlerRegistry ().registerHandler (EHttpMethod.GET, aHandler);
     // Must support POST for form submits :)

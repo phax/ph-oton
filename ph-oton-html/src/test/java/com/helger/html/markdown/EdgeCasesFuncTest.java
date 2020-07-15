@@ -78,14 +78,11 @@ public final class EdgeCasesFuncTest
     assertEquals ("<p>First line<table><tbody><tr><td><td>Block level</td></td></tr></tbody></table>.</p>",
                   p.process ("First line<table><tr><td>Block level</td></tr></table>.").getAsHTMLString ());
     assertEquals ("<p>First line<table><tbody><tr><td><td>Block level</td></td></tr></tbody></table>.</p>",
-                  p.process ("First line<table><tbody><tr><td>Block level</td></tr></tbody></table>.")
-                   .getAsHTMLString ());
+                  p.process ("First line<table><tbody><tr><td>Block level</td></tr></tbody></table>.").getAsHTMLString ());
     assertEquals ("<p>First line<table><thead><tr><td><td>Block level</td></td></tr></thead></table>.</p>",
-                  p.process ("First line<table><thead><tr><td>Block level</td></tr></thead></table>.")
-                   .getAsHTMLString ());
+                  p.process ("First line<table><thead><tr><td>Block level</td></tr></thead></table>.").getAsHTMLString ());
     assertEquals ("<p>First line<table><tfoot><tr><td><td>Block level</td></td></tr></tfoot></table>.</p>",
-                  p.process ("First line<table><tfoot><tr><td>Block level</td></tr></tfoot></table>.")
-                   .getAsHTMLString ());
+                  p.process ("First line<table><tfoot><tr><td>Block level</td></tr></tfoot></table>.").getAsHTMLString ());
     assertEquals ("<p>First line *unclosed</p>", p.process ("First line *unclosed").getAsHTMLString ());
     assertEquals ("<p>First line **unclosed</p>", p.process ("First line **unclosed").getAsHTMLString ());
     assertEquals ("<p>First line unclosed*</p>", p.process ("First line unclosed*").getAsHTMLString ());

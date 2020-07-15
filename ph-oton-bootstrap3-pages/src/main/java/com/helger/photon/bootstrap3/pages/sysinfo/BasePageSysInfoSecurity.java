@@ -69,8 +69,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
-                                     extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -118,9 +117,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     super (sID, sName);
   }
 
-  public BasePageSysInfoSecurity (@Nonnull @Nonempty final String sID,
-                                  @Nonnull final String sName,
-                                  @Nullable final String sDescription)
+  public BasePageSysInfoSecurity (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -173,8 +170,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       }
 
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                          new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                              "-secattrs");
+                                          new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (getID () + "-secattrs");
 
       if (aProps != null)
         for (final Map.Entry <String, String> aEntry : aProps.entrySet ())
@@ -197,8 +193,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_VERSION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DOUBLE,
                                                                                                                         aDisplayLocale),
-                                          new DTCol (EText.MSG_INFO.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                             "-providers");
+                                          new DTCol (EText.MSG_INFO.getDisplayText (aDisplayLocale))).setID (getID () + "-providers");
 
       for (final Provider aSecurityProvider : aSortedProviders)
       {
@@ -218,14 +213,11 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     // Show all algorithms of all providers
     {
-      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                      1,
-                                                                                                                      2),
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0, 1, 2),
                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (1, 2)
                                                                                                     .setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                  "-algorithm");
+                                          new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () + "-algorithm");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
@@ -252,12 +244,9 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
-        final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                    1),
+        final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
                                             new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                            new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                    "-" +
-                                                                                                                    RegExHelper.getAsIdentifier (sProviderName));
+                                            new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () + "-" + RegExHelper.getAsIdentifier (sProviderName));
 
         // Services of this providers
         for (final Service aService : aSecurityProvider.getServices ())
@@ -273,8 +262,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
         // Add properties of this provider
         final BootstrapTable aPropsTable = new BootstrapTable (HCCol.star (), HCCol.star ());
-        aPropsTable.addHeaderRow ().addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
-                                              EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+        aPropsTable.addHeaderRow ()
+                   .addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
         final ICommonsSet <String> aKeys = new CommonsHashSet <> ();
         for (final Object aName : aSecurityProvider.keySet ())
           aKeys.add ((String) aName);
@@ -296,16 +285,13 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     // List details of all SSLContexts
     {
-      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                      1,
-                                                                                                                      2),
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0, 1, 2),
                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (1, 2),
                                           new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_DEFAULT_PROTOCOLS.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_DEFAULT_CIPHER_SUITES.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_SUPPORTED_PROTOCOLS.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_SUPPORTED_CIPHER_SUITES.getDisplayText (aDisplayLocale))).setID (getID () +
-                                                                                                                                "-sslcontexts");
+                                          new DTCol (EText.MSG_SUPPORTED_CIPHER_SUITES.getDisplayText (aDisplayLocale))).setID (getID () + "-sslcontexts");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();

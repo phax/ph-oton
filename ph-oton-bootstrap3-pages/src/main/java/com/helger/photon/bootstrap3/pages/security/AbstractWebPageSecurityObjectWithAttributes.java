@@ -43,15 +43,13 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
     setObjectLockingEnabled (true);
   }
 
-  public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID,
-                                                      @Nonnull @Nonempty final String sName)
+  public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
     _init ();
   }
 
-  public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID,
-                                                      @Nonnull final IMultilingualText aName)
+  public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
     _init ();

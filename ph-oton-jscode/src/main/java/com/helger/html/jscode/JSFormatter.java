@@ -95,8 +95,7 @@ public class JSFormatter implements Closeable
    * @param aSettings
    *        The settings to be used.
    */
-  public JSFormatter (@Nonnull @WillCloseWhenClosed final PrintWriter aPrintWriter,
-                      @Nullable final IJSWriterSettings aSettings)
+  public JSFormatter (@Nonnull @WillCloseWhenClosed final PrintWriter aPrintWriter, @Nullable final IJSWriterSettings aSettings)
   {
     m_aPW = ValueEnforcer.notNull (aPrintWriter, "PrintWriter");
     m_aSettings = JSWriterSettings.createCloneOnDemand (aSettings);

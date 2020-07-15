@@ -62,8 +62,7 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
                                                                                                                    "$notfound");
   private final IMutableStatisticsHandlerKeyedCounter m_aStatsMIMEType = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
                                                                                                                    "$mimetype");
-  private static final String REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
-                                                                      "stream.resource";
+  private static final String REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "stream.resource";
 
   protected AbstractResourceDeliveryHttpHandler ()
   {}
@@ -78,8 +77,7 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
    * @return The non-<code>null</code> resource provider.
    */
   @Nonnull
-  protected abstract IReadableResource getResource (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                                    @Nonnull String sFilename);
+  protected abstract IReadableResource getResource (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull String sFilename);
 
   @Override
   @OverridingMethodsMustInvokeSuper

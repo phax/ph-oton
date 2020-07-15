@@ -69,9 +69,7 @@ public abstract class AbstractWebPageActionHandlerMultiWithQuery <DATATYPE exten
    *        The objects to be handled. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void showQuery (@Nonnull WPECTYPE aWPEC,
-                                     @Nonnull FORM_TYPE aForm,
-                                     @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
+  protected abstract void showQuery (@Nonnull WPECTYPE aWPEC, @Nonnull FORM_TYPE aForm, @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
 
   /**
    * Perform object action
@@ -165,8 +163,7 @@ public abstract class AbstractWebPageActionHandlerMultiWithQuery <DATATYPE exten
   }
 
   @Nonnull
-  public EShowList handleMultiAction (@Nonnull final WPECTYPE aWPEC,
-                                      @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
+  public EShowList handleMultiAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final boolean bIsFormSubmitted = isFormSubmitted (aWPEC);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();

@@ -93,11 +93,7 @@ public class JSOpUnary extends AbstractJSExpression
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ())
-                            .append (m_sOp)
-                            .append (m_aExpr)
-                            .append (m_bOpFirst)
-                            .getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_sOp).append (m_aExpr).append (m_bOpFirst).getHashCode ();
   }
 
   @Override

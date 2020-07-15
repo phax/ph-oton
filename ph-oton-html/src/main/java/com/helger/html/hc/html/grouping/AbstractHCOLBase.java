@@ -35,8 +35,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <ITEMTYPE>
  *        Item type
  */
-public abstract class AbstractHCOLBase <IMPLTYPE extends AbstractHCOLBase <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>>
-                                       extends
+public abstract class AbstractHCOLBase <IMPLTYPE extends AbstractHCOLBase <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>> extends
                                        AbstractHCList <IMPLTYPE, ITEMTYPE> implements
                                        IHCOLBase <IMPLTYPE, ITEMTYPE>
 {

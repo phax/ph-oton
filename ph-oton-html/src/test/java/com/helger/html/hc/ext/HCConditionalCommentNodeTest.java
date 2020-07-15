@@ -73,12 +73,7 @@ public final class HCConditionalCommentNodeTest
 
       assertEquals ("<!--[if IE]>" + sCRLF + "abc" + "<![endif]-->" + sCRLF,
                     HCRenderer.getAsHTMLString (HCConditionalCommentNode.createForIE (new HCTextNode ("abc"))));
-      assertEquals ("<!--[if IE]>" +
-                    sCRLF +
-                    "<b xmlns=\"http://www.w3.org/1999/xhtml\">bold</b>" +
-                    sCRLF +
-                    "<![endif]-->" +
-                    sCRLF,
+      assertEquals ("<!--[if IE]>" + sCRLF + "<b xmlns=\"http://www.w3.org/1999/xhtml\">bold</b>" + sCRLF + "<![endif]-->" + sCRLF,
                     HCRenderer.getAsHTMLString (HCConditionalCommentNode.createForIE (new HCB ().addChild ("bold"))));
       assertEquals ("<!--[if IE]>" + sCRLF + "<b>bold</b>" + sCRLF + "<![endif]-->" + sCRLF,
                     HCRenderer.getAsHTMLStringWithoutNamespaces (HCConditionalCommentNode.createForIE (new HCB ().addChild ("bold"))));

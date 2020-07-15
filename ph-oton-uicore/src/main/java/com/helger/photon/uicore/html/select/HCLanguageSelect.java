@@ -46,8 +46,7 @@ public class HCLanguageSelect extends HCExtSelect
 
     for (final Locale aLocale : CollectionHelper.getSorted (aLocales, aComp))
     {
-      final String sDisplayLanguage = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aLocale,
-                                                                                                          aDisplayLocale)
+      final String sDisplayLanguage = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aLocale, aDisplayLocale)
                                                                    : aLocale.getDisplayLanguage (aDisplayLocale);
       addOption (aLocale.getLanguage (), sDisplayLanguage);
     }

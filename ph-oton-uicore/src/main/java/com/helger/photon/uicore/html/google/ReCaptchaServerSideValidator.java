@@ -54,8 +54,7 @@ public final class ReCaptchaServerSideValidator
    * @return {@link ESuccess}
    */
   @Nonnull
-  public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey,
-                                @Nullable final String sReCaptchaResponse)
+  public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey, @Nullable final String sReCaptchaResponse)
   {
     final HttpClientSettings aSettings = new HttpClientSettings ();
     // For proxy etc
@@ -88,8 +87,7 @@ public final class ReCaptchaServerSideValidator
 
     try (HttpClientManager aMgr = HttpClientManager.create (aHCS))
     {
-      final HttpPost aPost = new HttpPost (new SimpleURL ("https://www.google.com/recaptcha/api/siteverify").add ("secret",
-                                                                                                                  sServerSideKey)
+      final HttpPost aPost = new HttpPost (new SimpleURL ("https://www.google.com/recaptcha/api/siteverify").add ("secret", sServerSideKey)
                                                                                                             .add ("response",
                                                                                                                   sReCaptchaResponse)
                                                                                                             .getAsURI ());

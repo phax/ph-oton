@@ -29,8 +29,7 @@ import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCRadioButton <IMPLTYPE extends AbstractHCRadioButton <IMPLTYPE>>
-                                            extends AbstractHCInput <IMPLTYPE>
+public abstract class AbstractHCRadioButton <IMPLTYPE extends AbstractHCRadioButton <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE>
 {
   public AbstractHCRadioButton ()
   {

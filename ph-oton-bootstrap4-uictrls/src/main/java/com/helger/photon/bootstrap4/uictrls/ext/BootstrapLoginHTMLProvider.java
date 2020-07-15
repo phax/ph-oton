@@ -106,8 +106,7 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
    */
   @Nullable
   @OverrideOnDemand
-  protected IHCNode createPageHeader (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nullable final IHCNode aPageTitle)
+  protected IHCNode createPageHeader (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nullable final IHCNode aPageTitle)
   {
     return BootstrapPageHeader.createOnDemand (aPageTitle);
   }

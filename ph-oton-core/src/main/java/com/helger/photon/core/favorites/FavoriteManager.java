@@ -343,12 +343,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Favorite.OT,
-                                      aFavorite.getID (),
-                                      sUserID,
-                                      sMenuItemID,
-                                      sDisplayName,
-                                      aAdditionalParams);
+    AuditHelper.onAuditModifySuccess (Favorite.OT, aFavorite.getID (), sUserID, sMenuItemID, sDisplayName, aAdditionalParams);
     return EChange.CHANGED;
   }
 

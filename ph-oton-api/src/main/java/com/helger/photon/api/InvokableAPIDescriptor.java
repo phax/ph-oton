@@ -117,8 +117,7 @@ public final class InvokableAPIDescriptor implements Serializable
    *        error. Default is HTTP 400, bad request.
    * @return <code>true</code> if all prerequisites are fulfilled.
    */
-  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final MutableInt aStatusCode)
+  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final MutableInt aStatusCode)
   {
     if (aRequestScope == null)
       return false;

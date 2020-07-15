@@ -47,15 +47,9 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
     final HttpServletRequest aRequest = aRequestScope.getRequest ();
     final SimpleURL aURL = new SimpleURL (aRequestScope.getContextPath () + m_sServletPath);
     aURL.add ("httpError", true);
-    aURL.addIf ("httpStatusCode",
-                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.status_code")),
-                Objects::nonNull);
-    aURL.addIf ("httpStatusMessage",
-                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.message")),
-                Objects::nonNull);
-    aURL.addIf ("httpRequestUri",
-                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.request_uri")),
-                Objects::nonNull);
+    aURL.addIf ("httpStatusCode", StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.status_code")), Objects::nonNull);
+    aURL.addIf ("httpStatusMessage", StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.message")), Objects::nonNull);
+    aURL.addIf ("httpRequestUri", StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.request_uri")), Objects::nonNull);
     aURL.addIf ("httpReferrer", aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER), Objects::nonNull);
     aUnifiedResponse.setRedirect (aURL);
   }

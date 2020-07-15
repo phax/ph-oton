@@ -36,9 +36,9 @@ import com.helger.html.js.IJSWriterSettings;
  */
 public class JSForLoop extends AbstractJSStatement
 {
-  private final ICommonsList <IJSExpression> m_aInits = new CommonsArrayList<> ();
+  private final ICommonsList <IJSExpression> m_aInits = new CommonsArrayList <> ();
   private IJSExpression m_aTest;
-  private final ICommonsList <IJSExpression> m_aUpdates = new CommonsArrayList<> ();
+  private final ICommonsList <IJSExpression> m_aUpdates = new CommonsArrayList <> ();
   private JSBlock m_aBody;
 
   public JSForLoop ()
@@ -160,11 +160,7 @@ public class JSForLoop extends AbstractJSStatement
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aInits)
-                                       .append (m_aTest)
-                                       .append (m_aUpdates)
-                                       .append (m_aBody)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_aInits).append (m_aTest).append (m_aUpdates).append (m_aBody).getHashCode ();
   }
 
   @Override

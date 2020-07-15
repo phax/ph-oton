@@ -76,10 +76,7 @@ public class WebSiteResourceWithCondition
                                        final boolean bIsBundlable,
                                        @Nullable final ICSSMediaList aMediaList)
   {
-    this (WebSiteResourceCache.getOrCreateResource (eType, sPath, aCharset),
-          sConditionalComment,
-          bIsBundlable,
-          aMediaList);
+    this (WebSiteResourceCache.getOrCreateResource (eType, sPath, aCharset), sConditionalComment, bIsBundlable, aMediaList);
   }
 
   protected WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
@@ -273,10 +270,7 @@ public class WebSiteResourceWithCondition
   @Nonnull
   public static WebSiteResourceWithCondition createForCSS (@Nonnull final ICSSPathProvider aPP, final boolean bRegular)
   {
-    return createForCSS (aPP.getCSSItemPath (bRegular),
-                         aPP.getConditionalComment (),
-                         aPP.isBundlable (),
-                         aPP.getMediaList ());
+    return createForCSS (aPP.getCSSItemPath (bRegular), aPP.getConditionalComment (), aPP.isBundlable (), aPP.getMediaList ());
   }
 
   @Nonnull

@@ -97,11 +97,7 @@ public class MetaElementValue implements IMetaElementValue
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eType)
-                                       .append (m_sName)
-                                       .append (m_aContentLocale)
-                                       .append (m_sContent)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_eType).append (m_sName).append (m_aContentLocale).append (m_sContent).getHashCode ();
   }
 
   @Override

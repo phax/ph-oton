@@ -164,21 +164,16 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
       final CSSSelector aSelector = new CSSSelector ();
       aSelector.addMember (new CSSSelectorSimpleMember (".custom-file-label::after"));
       aStyleRule.addSelector (aSelector);
-      aStyleRule.addDeclaration (new CSSDeclaration (ECSSProperty.CONTENT.getName (),
-                                                     CSSExpression.createString (sButtonText)));
+      aStyleRule.addDeclaration (new CSSDeclaration (ECSSProperty.CONTENT.getName (), CSSExpression.createString (sButtonText)));
       aCSS.addRule (aStyleRule);
       addChild (new HCStyle (aCSS, new CSSWriterSettings ().setOptimizedOutput (true)));
     }
     else
-      addChild (new HCStyle (".custom-file-label::after { content: \"" +
-                             StringHelper.replaceAll (sButtonText, "\"", "\\\"") +
-                             "\";  }"));
+      addChild (new HCStyle (".custom-file-label::after { content: \"" + StringHelper.replaceAll (sButtonText, "\"", "\\\"") + "\";  }"));
 
     // Update label with selected file
     m_aEditFile.addEventHandler (EJSEvent.CHANGE,
                                  false ? JSHtml.consoleLog (JSExpr.THIS.ref ("files").component0 ().ref ("name"))
-                                       : JQuery.idRef (aLabel)
-                                               .empty ()
-                                               .append (JSExpr.THIS.ref ("files").component0 ().ref ("name")));
+                                       : JQuery.idRef (aLabel).empty ().append (JSExpr.THIS.ref ("files").component0 ().ref ("name")));
   }
 }

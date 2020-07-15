@@ -61,19 +61,20 @@ public final class DateFormatBuilder implements IDateFormatBuilder
   {
     ValueEnforcer.notEmpty (sText, "Text");
 
-    StringHelper.iterateChars (sText, c -> {
-      // Handle JS Calendar stuff separately
-      if (c == '\n')
-        append (EDateTimeFormatToken.CHAR_NEWLINE);
-      else
-        if (c == '\t')
-          append (EDateTimeFormatToken.CHAR_TAB);
-        else
-          if (c == '%')
-            append (EDateTimeFormatToken.CHAR_PERC);
-          else
-            m_aList.add (Character.valueOf (c));
-    });
+    StringHelper.iterateChars (sText,
+                               c -> {
+                                 // Handle JS Calendar stuff separately
+                                 if (c == '\n')
+                                   append (EDateTimeFormatToken.CHAR_NEWLINE);
+                                 else
+                                   if (c == '\t')
+                                     append (EDateTimeFormatToken.CHAR_TAB);
+                                   else
+                                     if (c == '%')
+                                       append (EDateTimeFormatToken.CHAR_PERC);
+                                     else
+                                       m_aList.add (Character.valueOf (c));
+                               });
     return this;
   }
 

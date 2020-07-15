@@ -102,10 +102,7 @@ public final class JQuerySelector implements IJQuerySelector
   private JQuerySelector (@Nonnull @Nonempty final String sSelectorName, @Nonnull final IJSExpression aSelectorExpr)
   {
     // Is used as a literal!!
-    this (sSelectorName +
-          '(' +
-          aSelectorExpr.getJSCode (HCSettings.getConversionSettings ().getJSWriterSettings ()) +
-          ')');
+    this (sSelectorName + '(' + aSelectorExpr.getJSCode (HCSettings.getConversionSettings ().getJSWriterSettings ()) + ')');
     ValueEnforcer.notEmpty (sSelectorName, "SelectorName");
   }
 
@@ -428,8 +425,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName*='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeContains (@Nonnull final IMicroQName aAttrName,
-                                                   @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeContains (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeContains (aAttrName.getName (), sAttrValue);
@@ -443,8 +439,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName*='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeContains (@Nonnull @Nonempty final String sAttrName,
-                                                   @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeContains (@Nonnull @Nonempty final String sAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -459,8 +454,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName|='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeContainsPrefix (@Nonnull final IMicroQName aAttrName,
-                                                         @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeContainsPrefix (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeContainsPrefix (aAttrName.getName (), sAttrValue);
@@ -474,8 +468,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName|='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeContainsPrefix (@Nonnull @Nonempty final String sAttrName,
-                                                         @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeContainsPrefix (@Nonnull @Nonempty final String sAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -490,8 +483,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName~='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeContainsWord (@Nonnull final IMicroQName aAttrName,
-                                                       @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeContainsWord (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeContainsWord (aAttrName.getName (), sAttrValue);
@@ -505,8 +497,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName~='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeContainsWord (@Nonnull @Nonempty final String sAttrName,
-                                                       @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeContainsWord (@Nonnull @Nonempty final String sAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -521,8 +512,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName$='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeEndsWith (@Nonnull final IMicroQName aAttrName,
-                                                   @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeEndsWith (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeEndsWith (aAttrName.getName (), sAttrValue);
@@ -536,8 +526,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName$='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeEndsWith (@Nonnull @Nonempty final String sAttrName,
-                                                   @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeEndsWith (@Nonnull @Nonempty final String sAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -566,8 +555,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeEquals (@Nonnull @Nonempty final String sAttrName,
-                                                 @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeEquals (@Nonnull @Nonempty final String sAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -606,8 +594,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName!='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeNotEqual (@Nonnull final IMicroQName aAttrName,
-                                                   @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeNotEqual (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeNotEqual (aAttrName.getName (), sAttrValue);
@@ -621,8 +608,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName!='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeNotEqual (@Nonnull @Nonempty final String sAttrName,
-                                                   @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeNotEqual (@Nonnull @Nonempty final String sAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -637,8 +623,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName^='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeStartsWith (@Nonnull final IMicroQName aAttrName,
-                                                     @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeStartsWith (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeStartsWith (aAttrName.getName (), sAttrValue);
@@ -652,8 +637,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[attrName^='attrValue']</code>
    */
   @Nonnull
-  public static IJQuerySelector attributeStartsWith (@Nonnull @Nonempty final String sAttrName,
-                                                     @Nonnull final String sAttrValue)
+  public static IJQuerySelector attributeStartsWith (@Nonnull @Nonempty final String sAttrName, @Nonnull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -668,14 +652,11 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>parent &gt; child</code>
    */
   @Nonnull
-  public static IJQuerySelector child (@Nonnull final IJQuerySelector aParentSelector,
-                                       @Nonnull final IJQuerySelector aChildSelector)
+  public static IJQuerySelector child (@Nonnull final IJQuerySelector aParentSelector, @Nonnull final IJQuerySelector aChildSelector)
   {
     ValueEnforcer.notNull (aParentSelector, "ParentSelector");
     ValueEnforcer.notNull (aChildSelector, "ChildSelector");
-    return new JQuerySelector (aParentSelector.getExpression ()
-                                              .plus (JSExpr.lit (" > "))
-                                              .plus (aChildSelector.getExpression ()));
+    return new JQuerySelector (aParentSelector.getExpression ().plus (JSExpr.lit (" > ")).plus (aChildSelector.getExpression ()));
   }
 
   /**
@@ -729,9 +710,7 @@ public final class JQuerySelector implements IJQuerySelector
   {
     ValueEnforcer.notNull (aAncestorSelector, "AncestorSelector");
     ValueEnforcer.notNull (aDescendantSelector, "DescendantSelector");
-    return new JQuerySelector (aAncestorSelector.getExpression ()
-                                                .plus (" ")
-                                                .plus (aDescendantSelector.getExpression ()));
+    return new JQuerySelector (aAncestorSelector.getExpression ().plus (" ").plus (aDescendantSelector.getExpression ()));
   }
 
   /**
@@ -1069,14 +1048,11 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>prev + next</code>
    */
   @Nonnull
-  public static IJQuerySelector nextAdjacent (@Nonnull final IJQuerySelector aPrevSelector,
-                                              @Nonnull final IJQuerySelector aNextSelector)
+  public static IJQuerySelector nextAdjacent (@Nonnull final IJQuerySelector aPrevSelector, @Nonnull final IJQuerySelector aNextSelector)
   {
     ValueEnforcer.notNull (aPrevSelector, "PrevSelector");
     ValueEnforcer.notNull (aNextSelector, "NextSelector");
-    return new JQuerySelector (aPrevSelector.getExpression ()
-                                            .plus (JSExpr.lit (" + "))
-                                            .plus (aNextSelector.getExpression ()));
+    return new JQuerySelector (aPrevSelector.getExpression ().plus (JSExpr.lit (" + ")).plus (aNextSelector.getExpression ()));
   }
 
   /**
@@ -1092,9 +1068,7 @@ public final class JQuerySelector implements IJQuerySelector
   {
     ValueEnforcer.notNull (aPrevSelector, "PrevSelector");
     ValueEnforcer.notNull (aSiblingsSelector, "SiblingsSelector");
-    return new JQuerySelector (aPrevSelector.getExpression ()
-                                            .plus (JSExpr.lit (" ~ "))
-                                            .plus (aSiblingsSelector.getExpression ()));
+    return new JQuerySelector (aPrevSelector.getExpression ().plus (JSExpr.lit (" ~ ")).plus (aSiblingsSelector.getExpression ()));
   }
 
   @Nonnull
@@ -1474,8 +1448,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>first<i>second</i></code>
    */
   @Nonnull
-  public static IJQuerySelector chain (@Nonnull final IJQuerySelector aFirstSelector,
-                                       @Nonnull final IJQuerySelector aSecondSelector)
+  public static IJQuerySelector chain (@Nonnull final IJQuerySelector aFirstSelector, @Nonnull final IJQuerySelector aSecondSelector)
   {
     ValueEnforcer.notNull (aFirstSelector, "FirstSelector");
     ValueEnforcer.notNull (aSecondSelector, "SecondSelector");

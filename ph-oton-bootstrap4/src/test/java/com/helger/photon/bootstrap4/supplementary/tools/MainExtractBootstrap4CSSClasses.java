@@ -48,7 +48,7 @@ public final class MainExtractBootstrap4CSSClasses
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EBootstrapCSSPathProvider.BOOTSTRAP.getCSSItemPath (true)),
                                                                StandardCharsets.UTF_8,
                                                                ECSSVersion.CSS30);
-    final ICommonsSet <String> aClasses = new CommonsTreeSet<> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override

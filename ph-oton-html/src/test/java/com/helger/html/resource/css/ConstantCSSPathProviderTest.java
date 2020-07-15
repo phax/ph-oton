@@ -36,7 +36,6 @@ public final class ConstantCSSPathProviderTest
     assertEquals ("a.css", pp.getCSSItemPath (true));
     assertEquals ("a.min.css", pp.getCSSItemPath (false));
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantCSSPathProvider.create ("a.css"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (pp,
-                                                                           ConstantCSSPathProvider.create ("b.css"));
+    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantCSSPathProvider.create ("b.css"));
   }
 }

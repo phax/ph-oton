@@ -43,9 +43,7 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
     this (GlobalIDFactory.getNewPersistentStringID (), sName, aSMTPSettings);
   }
 
-  NamedSMTPSettings (@Nonnull @Nonempty final String sID,
-                     @Nonnull @Nonempty final String sName,
-                     @Nonnull final ISMTPSettings aSMTPSettings)
+  NamedSMTPSettings (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSMTPSettings)
   {
     ValueEnforcer.notEmpty (sID, "ID");
     m_sID = sID;

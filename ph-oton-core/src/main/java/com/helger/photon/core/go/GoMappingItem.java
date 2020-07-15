@@ -48,10 +48,7 @@ public class GoMappingItem implements Serializable
                         @Nonnull @Nonempty final String sTargetURL,
                         final boolean bIsEditable)
   {
-    this (sKey,
-          bIsInternal,
-          bIsInternal ? LinkHelper.getURLWithContext (sTargetURL) : new SimpleURL (sTargetURL),
-          bIsEditable);
+    this (sKey, bIsInternal, bIsInternal ? LinkHelper.getURLWithContext (sTargetURL) : new SimpleURL (sTargetURL), bIsEditable);
   }
 
   public GoMappingItem (@Nonnull @Nonempty final String sKey,
@@ -146,11 +143,7 @@ public class GoMappingItem implements Serializable
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sKey)
-                                       .append (m_bIsInternal)
-                                       .append (m_aTargetURL)
-                                       .append (m_bIsEditable)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_sKey).append (m_bIsInternal).append (m_aTargetURL).append (m_bIsEditable).getHashCode ();
   }
 
   @Override

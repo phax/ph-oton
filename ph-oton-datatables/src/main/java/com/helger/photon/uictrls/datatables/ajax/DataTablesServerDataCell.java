@@ -161,8 +161,7 @@ public final class DataTablesServerDataCell implements Serializable
         assert aMicroNode != null;
 
         // Create lazy
-        ret = MicroWriter.getNodeAsString (aMicroNode,
-                                           DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
+        ret = MicroWriter.getNodeAsString (aMicroNode, DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
 
         // Avoid multiple calls for non-cached version
         if (ret == null)

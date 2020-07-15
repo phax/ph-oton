@@ -111,8 +111,7 @@ public final class BootstrapFormHelper
       aParent.forAllChildren (aChild -> markAsFormControls (HCCtrlHelper.getAllHCControls (aChild)));
   }
 
-  public static void connectFormControlWithLabel (@Nullable final IHCElement <?> aCtrl,
-                                                  @Nullable final HCFormLabel aLabel)
+  public static void connectFormControlWithLabel (@Nullable final IHCElement <?> aCtrl, @Nullable final HCFormLabel aLabel)
   {
     // Set "aria-labelledby"
     if (aCtrl != null && aLabel != null)
@@ -141,8 +140,7 @@ public final class BootstrapFormHelper
     }
   }
 
-  public static void applyFormControlValidityState (@Nullable final IHCElement <?> aElement,
-                                                    @Nullable final IErrorList aErrorList)
+  public static void applyFormControlValidityState (@Nullable final IHCElement <?> aElement, @Nullable final IErrorList aErrorList)
   {
     ValueEnforcer.notNull (aElement, "Element");
 
@@ -170,8 +168,7 @@ public final class BootstrapFormHelper
   }
 
   @Nonnull
-  public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError,
-                                                                 @Nonnull final Locale aContentLocale)
+  public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
   {
     return createDefaultErrorNode (aError, aContentLocale, false);
   }
@@ -211,8 +208,7 @@ public final class BootstrapFormHelper
   }
 
   @Nonnull
-  public static HCNodeList createDefaultErrorNode (@Nullable final IErrorList aErrorList,
-                                                   @Nonnull final Locale aContentLocale)
+  public static HCNodeList createDefaultErrorNode (@Nullable final IErrorList aErrorList, @Nonnull final Locale aContentLocale)
   {
     return createDefaultErrorNode (aErrorList, aContentLocale, false);
   }

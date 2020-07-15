@@ -54,8 +54,7 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     this (aLEC, aLEC.getSelectedMenuItem ());
   }
 
-  public LayoutExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                 @Nonnull final IMenuItemPage aSelectedMenuItem)
+  public LayoutExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IMenuItemPage aSelectedMenuItem)
   {
     super (aSWEC);
     m_aSelectedMenuItem = ValueEnforcer.notNull (aSelectedMenuItem, "SelectedMenuItem");
@@ -79,8 +78,7 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     return ret.getClone ();
   }
 
-  public final void postRedirectGet (@Nonnull final ISimpleURL aTargetURL,
-                                     @Nullable final IHCNode aContent) throws ForcedRedirectException
+  public final void postRedirectGet (@Nonnull final ISimpleURL aTargetURL, @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
     throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, aContent);
@@ -89,9 +87,7 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("selectedMenuItem", m_aSelectedMenuItem)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("selectedMenuItem", m_aSelectedMenuItem).getToString ();
   }
 
   @Nonnull
@@ -105,10 +101,6 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     final IMenuItemPage aMenuItem = RequestSettings.getMenuItem (aRequestScope);
 
     // Since no menu item is selected, use the default menu item
-    return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope,
-                                                                      aDisplayLocale,
-                                                                      aMenuTree,
-                                                                      aLoggedInUser),
-                                       aMenuItem);
+    return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree, aLoggedInUser), aMenuItem);
   }
 }

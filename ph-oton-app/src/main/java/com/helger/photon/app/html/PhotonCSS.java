@@ -100,13 +100,7 @@ public final class PhotonCSS
             final ECSSMedium eMedium = ECSSMedium.getFromNameOrNull (sMedium);
             if (eMedium == null)
             {
-              LOGGER.warn ("CSS item '" +
-                           sPath +
-                           "' in " +
-                           aRes.getPath () +
-                           " has an invalid medium '" +
-                           sMedium +
-                           "' - ignoring");
+              LOGGER.warn ("CSS item '" + sPath + "' in " + aRes.getPath () + " has an invalid medium '" + sMedium + "' - ignoring");
               continue;
             }
             aMediaList.addMedium (eMedium);

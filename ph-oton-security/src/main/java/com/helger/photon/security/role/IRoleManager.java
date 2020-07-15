@@ -57,9 +57,7 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * @return The created role and never <code>null</code>.
    */
   @Nonnull
-  IRole createNewRole (@Nonnull @Nonempty String sName,
-                       @Nullable String sDescription,
-                       @Nullable Map <String, String> aCustomAttrs);
+  IRole createNewRole (@Nonnull @Nonempty String sName, @Nullable String sDescription, @Nullable Map <String, String> aCustomAttrs);
 
   /**
    * Create a predefined role.

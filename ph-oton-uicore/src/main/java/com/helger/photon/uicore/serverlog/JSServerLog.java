@@ -37,13 +37,9 @@ public final class JSServerLog
   }
 
   @Nonnull
-  public static JSInvocation serverLogInit (@Nonnull final ISimpleURL aURL,
-                                            @Nonnull final String sKey,
-                                            final boolean bDebugMode)
+  public static JSInvocation serverLogInit (@Nonnull final ISimpleURL aURL, @Nonnull final String sKey, final boolean bDebugMode)
   {
-    return new JSInvocation ("serverLogInit").arg (aURL.getAsStringWithEncodedParameters ())
-                                             .arg (sKey)
-                                             .arg (bDebugMode);
+    return new JSInvocation ("serverLogInit").arg (aURL.getAsStringWithEncodedParameters ()).arg (sKey).arg (bDebugMode);
   }
 
   @Nonnull

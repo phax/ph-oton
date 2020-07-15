@@ -38,8 +38,7 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.xml.microdom.IMicroElement;
 
 @NotThreadSafe
-public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMPLTYPE>> extends
-                                        AbstractHCElement <IMPLTYPE> implements
+public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE> implements
                                         IHCControl <IMPLTYPE>
 {
   public static final boolean DEFAULT_DISABLED = false;

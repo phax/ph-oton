@@ -281,8 +281,7 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
       @Override
       public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
       {
-        final DefaultTreeItem <BootstrapTreeViewItem> aChildItem = aParents.peek ()
-                                                                           .createChildItem (aConverter.apply (aItem.getData ()));
+        final DefaultTreeItem <BootstrapTreeViewItem> aChildItem = aParents.peek ().createChildItem (aConverter.apply (aItem.getData ()));
         aParents.push (aChildItem);
         return EHierarchyVisitorReturn.CONTINUE;
       }

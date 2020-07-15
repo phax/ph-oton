@@ -43,8 +43,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractScopeAwareLongRunningJob.class);
 
   /** Predefined key into the job data map */
-  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
-                                                        "scope.longrunning.job.id";
+  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "scope.longrunning.job.id";
 
   /**
    * Get the ID of the current user who executes the job.
@@ -69,8 +68,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void beforeExecuteInScope (@Nonnull final JobDataMap aJobDataMap,
-                                       @Nonnull final IJobExecutionContext aContext)
+  protected void beforeExecuteInScope (@Nonnull final JobDataMap aJobDataMap, @Nonnull final IJobExecutionContext aContext)
   {
     final String sUserID = getCurrentUserID (aJobDataMap);
 

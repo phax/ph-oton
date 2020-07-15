@@ -41,9 +41,7 @@ public class HCUserSelect extends HCExtSelect
                                                                                                 aUser.getLoginName () +
                                                                                                 ")";
 
-  public HCUserSelect (@Nonnull final IHCRequestField aRF,
-                       @Nonnull final Locale aDisplayLocale,
-                       @Nullable final Predicate <IUser> aFilter)
+  public HCUserSelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale, @Nullable final Predicate <IUser> aFilter)
   {
     this (aRF, aDisplayLocale, aFilter, DEFAULT_DISPLAY_TEXT_PROVIDER);
   }

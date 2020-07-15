@@ -42,8 +42,7 @@ import com.helger.tenancy.tenant.ITenant;
  *
  * @author Philip Helger
  */
-public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccountingArea, AccountingArea> implements
-                                   IAccountingAreaResolver
+public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccountingArea, AccountingArea> implements IAccountingAreaResolver
 {
   public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {

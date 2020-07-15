@@ -72,9 +72,7 @@ public class TypeaheadEditSelection
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("editValue", m_sEditValue)
-                                       .append ("hiddenFieldValue", m_sHiddenFieldValue)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("editValue", m_sEditValue).append ("hiddenFieldValue", m_sHiddenFieldValue).getToString ();
   }
 
   /**

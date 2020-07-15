@@ -84,8 +84,7 @@ public class HCGoogleAnalytics extends AbstractHCScriptInline <HCGoogleAnalytics
                                              JSExpr.lit ("https://ssl"),
                                              JSExpr.lit ("http://www"))
                                       .plus (".google-analytics.com/ga.js")));
-    final JSVar s = aAnonFunction.body ().var ("s",
-                                               JSHtml.documentGetElementsByTagName (EHTMLElement.SCRIPT).component0 ());
+    final JSVar s = aAnonFunction.body ().var ("s", JSHtml.documentGetElementsByTagName (EHTMLElement.SCRIPT).component0 ());
     aAnonFunction.body ().add (s.ref ("parentNode").invoke ("insertBefore").arg (ga).arg (s));
     aPkg.invoke (aAnonFunction);
     return aPkg;
@@ -96,9 +95,7 @@ public class HCGoogleAnalytics extends AbstractHCScriptInline <HCGoogleAnalytics
     this (sAccount, bAnonymizeIP, false);
   }
 
-  public HCGoogleAnalytics (@Nonnull @Nonempty final String sAccount,
-                            final boolean bAnonymizeIP,
-                            final boolean bEnhancedLinkAttribution)
+  public HCGoogleAnalytics (@Nonnull @Nonempty final String sAccount, final boolean bAnonymizeIP, final boolean bEnhancedLinkAttribution)
   {
     super (_createJSCode (sAccount, bAnonymizeIP, bEnhancedLinkAttribution));
     m_sAccount = sAccount;

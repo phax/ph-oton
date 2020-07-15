@@ -87,9 +87,7 @@ public abstract class AbstractPage implements IPage
    *        The constant (non-translatable) description of the page. May be
    *        <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID,
-                       @Nonnull final String sName,
-                       @Nullable final String sDescription)
+  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     this (sID, getAsMLT (sName), getAsMLT (sDescription));
   }

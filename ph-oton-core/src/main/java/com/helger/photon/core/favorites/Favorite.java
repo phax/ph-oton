@@ -53,12 +53,7 @@ public class Favorite implements IFavorite
                    @Nonnull @Nonempty final String sDisplayName,
                    @Nullable final Map <String, String> aAdditionalParams)
   {
-    this (GlobalIDFactory.getNewPersistentStringID (),
-          sUserID,
-          sApplicationID,
-          sMenuItemID,
-          sDisplayName,
-          aAdditionalParams);
+    this (GlobalIDFactory.getNewPersistentStringID (), sUserID, sApplicationID, sMenuItemID, sDisplayName, aAdditionalParams);
   }
 
   Favorite (@Nonnull @Nonempty final String sID,
@@ -160,9 +155,7 @@ public class Favorite implements IFavorite
   {
     // Ensure same type
     final ICommonsMap <String, String> aRealAdditionalParams = new CommonsHashMap <> (aAdditionalParams);
-    return m_sApplicationID.equals (sAppID) &&
-           m_sMenuItemID.equals (sMenuItemID) &&
-           m_aAdditionalParams.equals (aRealAdditionalParams);
+    return m_sApplicationID.equals (sAppID) && m_sMenuItemID.equals (sMenuItemID) && m_aAdditionalParams.equals (aRealAdditionalParams);
   }
 
   @Override

@@ -274,8 +274,7 @@ public class FineUploader5Chunking implements IFineUploader5Part
       aSub.add ("paramNames", aParamNames);
 
     if (m_aChunkingSuccessEndpoint != null)
-      aSub.add ("success",
-                new JSAssocArray ().add ("endpoint", m_aChunkingSuccessEndpoint.getAsStringWithEncodedParameters ()));
+      aSub.add ("success", new JSAssocArray ().add ("endpoint", m_aChunkingSuccessEndpoint.getAsStringWithEncodedParameters ()));
     return aSub;
   }
 }

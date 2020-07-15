@@ -40,8 +40,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        The implementing type
  */
-public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <IMPLTYPE>>
-                                         extends AbstractHCControl <IMPLTYPE> implements IHCTextArea <IMPLTYPE>
+public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE> implements
+                                         IHCTextArea <IMPLTYPE>
 {
   /** By default no auto complete setting is active */
   public static final ETriState DEFAULT_AUTO_COMPLETE = ETriState.UNDEFINED;
@@ -232,8 +232,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_eAutoComplete.isDefined ())
-      aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE,
-                             m_eAutoComplete.isTrue () ? CHTMLAttributeValues.ON : CHTMLAttributeValues.OFF);
+      aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE, m_eAutoComplete.isTrue () ? CHTMLAttributeValues.ON : CHTMLAttributeValues.OFF);
     if (m_nCols > 0)
       aElement.setAttribute (CHTMLAttributes.COLS, m_nCols);
     if (StringHelper.hasText (m_sDirName))

@@ -66,9 +66,7 @@ public final class JSchSessionFactory
   private static Session _createSession (@Nonnull final JSch aJSch,
                                          @Nonnull final IBaseServerConnectionSettings aSettings) throws JSchException
   {
-    final Session aSession = aJSch.getSession (aSettings.getUserName (),
-                                               aSettings.getServerAddress (),
-                                               aSettings.getServerPort ());
+    final Session aSession = aJSch.getSession (aSettings.getUserName (), aSettings.getServerAddress (), aSettings.getServerPort ());
     // Set timeout in session
     if (aSettings.getConnectionTimeoutMillis () >= 0)
       aSession.setTimeout (aSettings.getConnectionTimeoutMillis ());
@@ -111,10 +109,7 @@ public final class JSchSessionFactory
     final JSch aJSch = new JSch ();
 
     // key pair
-    aJSch.addIdentity (aSettings.getUserName (),
-                       aSettings.getPrivateKey (),
-                       aSettings.getPublicKey (),
-                       aSettings.getKeyPairPassphrase ());
+    aJSch.addIdentity (aSettings.getUserName (), aSettings.getPrivateKey (), aSettings.getPublicKey (), aSettings.getKeyPairPassphrase ());
 
     // Create session
     final Session aSession = _createSession (aJSch, aSettings);

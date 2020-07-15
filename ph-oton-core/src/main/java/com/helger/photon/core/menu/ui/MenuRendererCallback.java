@@ -157,11 +157,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
         if (aMenuObj instanceof IMenuItemPage)
         {
           // page item
-          final IHCNode aHCNode = m_aRenderer.renderMenuItemPage (m_aSWEC,
-                                                                  (IMenuItemPage) aMenuObj,
-                                                                  bHasChildren,
-                                                                  bSelected,
-                                                                  bExpanded);
+          final IHCNode aHCNode = m_aRenderer.renderMenuItemPage (m_aSWEC, (IMenuItemPage) aMenuObj, bHasChildren, bSelected, bExpanded);
           HCLI aLI;
           if (aHCNode instanceof HCLI)
             aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
@@ -241,8 +237,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
                                aFactory,
                                aMenuTree.getRootItem (),
                                aRenderer,
-                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree,
-                                                                                      aLEC.getSelectedMenuItemID ()));
+                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree, aLEC.getSelectedMenuItemID ()));
   }
 
   /**
@@ -273,8 +268,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
                                aFactory,
                                aStartTreeItem,
                                aRenderer,
-                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree,
-                                                                                      aLEC.getSelectedMenuItemID ()));
+                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree, aLEC.getSelectedMenuItemID ()));
   }
 
   /**
@@ -335,12 +329,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
 
     final NonBlockingStack <T> aNodeStack = new NonBlockingStack <> ();
     aNodeStack.push (aFactory.get ());
-    TreeVisitor.visitTreeItem (aStartTreeItem,
-                               new MenuRendererCallback <> (aLEC,
-                                                            aFactory,
-                                                            aNodeStack,
-                                                            aRenderer,
-                                                            aDisplayMenuItemIDs));
+    TreeVisitor.visitTreeItem (aStartTreeItem, new MenuRendererCallback <> (aLEC, aFactory, aNodeStack, aRenderer, aDisplayMenuItemIDs));
     if (aNodeStack.size () != 1)
       throw new IllegalStateException ("Stack is inconsistent: " + aNodeStack);
 

@@ -38,8 +38,7 @@ import com.helger.html.hc.html.IHCElement;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstrapObject <IMPLTYPE>> implements
-                                              IHCHasID <IMPLTYPE>
+public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstrapObject <IMPLTYPE>> implements IHCHasID <IMPLTYPE>
 {
   private String m_sID;
   private HCHasCSSClasses m_aCSSClasses;
@@ -76,9 +75,7 @@ public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstra
       }
       else
       {
-        HCConsistencyChecker.consistencyError ("The HC object ID '" +
-                                               m_sID +
-                                               "' will be removed - this may have side effects");
+        HCConsistencyChecker.consistencyError ("The HC object ID '" + m_sID + "' will be removed - this may have side effects");
       }
     m_sID = sID;
     return thisAsT ();

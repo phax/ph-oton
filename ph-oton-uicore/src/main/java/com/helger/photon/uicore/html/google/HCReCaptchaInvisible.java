@@ -76,8 +76,7 @@ public class HCReCaptchaInvisible extends AbstractHCButton <HCReCaptchaInvisible
   }
 
   @Nonnull
-  public static HCReCaptchaInvisible createForFormSubmit (@Nonnull @Nonempty final String sSiteKey,
-                                                          @Nonnull final IHCForm <?> aForm)
+  public static HCReCaptchaInvisible createForFormSubmit (@Nonnull @Nonempty final String sSiteKey, @Nonnull final IHCForm <?> aForm)
   {
     final String sFuncName = "jsrc" + GlobalIDFactory.getNewIntID ();
     final HCReCaptchaInvisible ret = new HCReCaptchaInvisible (sSiteKey, sFuncName);

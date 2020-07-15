@@ -102,8 +102,7 @@ public final class BootstrapGridSpec implements Serializable
   public void applyOffsetTo (@Nonnull final IHCElement <?> aElement)
   {
     ValueEnforcer.notNull (aElement, "Element");
-    aElement.addClasses (m_eXS == null ||
-                         m_eXS.isMax () ? null : m_eXS.getCSSClassOffset (),
+    aElement.addClasses (m_eXS == null || m_eXS.isMax () ? null : m_eXS.getCSSClassOffset (),
                          m_eSM == null || m_eSM.isMax () ? null : m_eSM.getCSSClassOffset (),
                          m_eMD == null || m_eMD.isMax () ? null : m_eMD.getCSSClassOffset (),
                          m_eLG == null || m_eLG.isMax () ? null : m_eLG.getCSSClassOffset ());
@@ -130,11 +129,7 @@ public final class BootstrapGridSpec implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("xs", m_eXS)
-                                       .append ("sm", m_eSM)
-                                       .append ("md", m_eMD)
-                                       .append ("lg", m_eLG)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("xs", m_eXS).append ("sm", m_eSM).append ("md", m_eMD).append ("lg", m_eLG).getToString ();
   }
 
   @Nonnull
@@ -145,10 +140,7 @@ public final class BootstrapGridSpec implements Serializable
   }
 
   @Nonnull
-  public static BootstrapGridSpec create (final int nPartsXS,
-                                          final int nPartsSM,
-                                          final int nPartsMD,
-                                          final int nPartsLG)
+  public static BootstrapGridSpec create (final int nPartsXS, final int nPartsSM, final int nPartsMD, final int nPartsLG)
   {
     return new BootstrapGridSpec (nPartsXS <= 0 ? null : EBootstrapGridXS.getFromParts (nPartsXS),
                                   nPartsSM <= 0 ? null : EBootstrapGridSM.getFromParts (nPartsSM),

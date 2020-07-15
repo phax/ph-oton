@@ -80,9 +80,6 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("cols", m_nCols)
-                            .append ("rows", m_nRows)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("cols", m_nCols).append ("rows", m_nRows).getToString ();
   }
 }

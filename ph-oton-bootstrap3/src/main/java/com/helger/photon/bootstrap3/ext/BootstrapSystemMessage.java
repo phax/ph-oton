@@ -40,10 +40,8 @@ import com.helger.photon.uicore.UITextFormatter;
  */
 public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSystemMessage>
 {
-  public static final ISystemMessageRenderer FORMATTER_DEFAULT = (sText,
-                                                                  aCtrl) -> aCtrl.addChildren (HCExtHelper.nl2divList (sText));
-  public static final ISystemMessageRenderer FORMATTER_MARKDOWN = (sText,
-                                                                   aCtrl) -> aCtrl.addChild (UITextFormatter.markdown (sText));
+  public static final ISystemMessageRenderer FORMATTER_DEFAULT = (sText, aCtrl) -> aCtrl.addChildren (HCExtHelper.nl2divList (sText));
+  public static final ISystemMessageRenderer FORMATTER_MARKDOWN = (sText, aCtrl) -> aCtrl.addChild (UITextFormatter.markdown (sText));
 
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("s_aRWLock")
@@ -126,8 +124,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   }
 
   @Nullable
-  public static BootstrapSystemMessage create (@Nonnull final ESystemMessageType eSystemMessageType,
-                                               @Nullable final String sSystemMessage)
+  public static BootstrapSystemMessage create (@Nonnull final ESystemMessageType eSystemMessageType, @Nullable final String sSystemMessage)
   {
     if (StringHelper.hasNoText (sSystemMessage))
       return null;

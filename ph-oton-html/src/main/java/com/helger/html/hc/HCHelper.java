@@ -44,8 +44,7 @@ public final class HCHelper
   {}
 
   @Nonnull
-  private static EContinue _recursiveIterateTreeBreakable (@Nonnull final IHCNode aNode,
-                                                           @Nonnull final IHCIteratorCallback aCallback)
+  private static EContinue _recursiveIterateTreeBreakable (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -66,8 +65,7 @@ public final class HCHelper
   }
 
   @Nonnull
-  private static EContinue _recursiveIterateTreeBreakableNoCopy (@Nonnull final IHCNode aNode,
-                                                                 @Nonnull final IHCIteratorCallback aCallback)
+  private static EContinue _recursiveIterateTreeBreakableNoCopy (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -89,8 +87,8 @@ public final class HCHelper
 
   /**
    * Recursively iterate the node and all child nodes of the passed node. The
-   * difference to {@link #iterateChildren(IHCNode, IHCIteratorCallback)} is, that
-   * the callback is also invoked on the passed node.
+   * difference to {@link #iterateChildren(IHCNode, IHCIteratorCallback)} is,
+   * that the callback is also invoked on the passed node.
    *
    * @param aNode
    *        The node to be iterated.
@@ -196,8 +194,7 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateTreeNonBreakable (@Nonnull final IHCNode aNode,
-                                              @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  public static void iterateTreeNonBreakable (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorNonBreakableCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -218,8 +215,7 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateChildrenNonBreakable (@Nonnull final IHCNode aNode,
-                                                  @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  public static void iterateChildrenNonBreakable (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorNonBreakableCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -268,8 +264,7 @@ public final class HCHelper
    * @return <code>null</code> if no such child element is present.
    */
   @Nullable
-  public static IMicroElement getFirstChildElement (@Nonnull final IMicroElement aElement,
-                                                    @Nonnull final EHTMLElement eHTMLElement)
+  public static IMicroElement getFirstChildElement (@Nonnull final IMicroElement aElement, @Nonnull final EHTMLElement eHTMLElement)
   {
     ValueEnforcer.notNull (aElement, "element");
     ValueEnforcer.notNull (eHTMLElement, "HTMLElement");
@@ -292,8 +287,8 @@ public final class HCHelper
    *        The element to search in
    * @param eHTMLElement
    *        The HTML element to search
-   * @return A non-<code>null</code> list where the lower-case elements are listed
-   *         before the upper-case elements.
+   * @return A non-<code>null</code> list where the lower-case elements are
+   *         listed before the upper-case elements.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -331,8 +326,8 @@ public final class HCHelper
    * Inline all contained node lists so that a "flat" list results. This only
    * flattens something if the passed node is an
    * {@link com.helger.html.hc.impl.HCNodeList} and all node-lists directly
-   * contained in the other node lists. Node-lists that are hidden deep inside the
-   * tree are not considered!
+   * contained in the other node lists. Node-lists that are hidden deep inside
+   * the tree are not considered!
    *
    * @param aNode
    *        The source node. May be <code>null</code>.
@@ -351,8 +346,8 @@ public final class HCHelper
    * Inline all contained node lists so that a "flat" list results. This only
    * flattens something if the passed node is an
    * {@link com.helger.html.hc.impl.HCNodeList} and all node-lists directly
-   * contained in the other node lists. Node-lists that are hidden deep inside the
-   * tree are not considered!
+   * contained in the other node lists. Node-lists that are hidden deep inside
+   * the tree are not considered!
    *
    * @param aNodes
    *        The source nodes. May be <code>null</code> or empty.
@@ -370,13 +365,13 @@ public final class HCHelper
   }
 
   /**
-   * Resolve all wrappings via {@link IHCWrappingNode} of the passed node. This is
-   * usually either an HCOutOfBandNode or a HCConditionalCommentNode.
+   * Resolve all wrappings via {@link IHCWrappingNode} of the passed node. This
+   * is usually either an HCOutOfBandNode or a HCConditionalCommentNode.
    *
    * @param aHCNode
    *        The node to be unwrapped. May be <code>null</code>.
-   * @return The unwrapped node. May be the same as the parameter, if the node is
-   *         not wrapped. May be <code>null</code> if the parameter node is
+   * @return The unwrapped node. May be the same as the parameter, if the node
+   *         is not wrapped. May be <code>null</code> if the parameter node is
    *         <code>null</code>.
    */
   @Nullable
@@ -410,8 +405,8 @@ public final class HCHelper
    *
    * @param sSrc
    *        The source string. May be <code>null</code>.
-   * @return An underscore instead of an empty string. The string cleaned from the
-   *         malicious characters.
+   * @return An underscore instead of an empty string. The string cleaned from
+   *         the malicious characters.
    */
   @Nonnull
   public static String getAsHTMLID (@Nullable final String sSrc)

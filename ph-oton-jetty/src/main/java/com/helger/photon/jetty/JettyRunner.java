@@ -87,11 +87,7 @@ public class JettyRunner extends JettyStarter
     m_aServerStartedSem.acquire ();
 
     if (!m_aServerStartupSuccess.get ())
-      throw new InitializationException ("Failed to start Jetty:" +
-                                         getPort () +
-                                         ":" +
-                                         getStopPort () +
-                                         " - see logs for details");
+      throw new InitializationException ("Failed to start Jetty:" + getPort () + ":" + getStopPort () + " - see logs for details");
   }
 
   public synchronized void shutDownServer () throws IOException, InterruptedException

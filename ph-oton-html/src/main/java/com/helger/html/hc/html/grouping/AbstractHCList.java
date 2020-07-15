@@ -37,8 +37,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @param <ITEMTYPE>
  *        The item type
  */
-public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>>
-                                     extends
+public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>> extends
                                      AbstractHCElementWithInternalChildren <IMPLTYPE, ITEMTYPE> implements
                                      IHCList <IMPLTYPE, ITEMTYPE>
 {

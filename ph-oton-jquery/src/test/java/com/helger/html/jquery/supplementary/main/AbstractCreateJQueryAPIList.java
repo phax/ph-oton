@@ -124,11 +124,7 @@ abstract class AbstractCreateJQueryAPIList
       if (sType.equals ("Number"))
         return new String [] { "IJSExpression", "int", "long", "BigInteger", "double", "BigDecimal" };
       if (sType.equals ("Selector"))
-        return new String [] { "IJSExpression",
-                               "IJQuerySelector",
-                               "JQuerySelectorList",
-                               "EHTMLElement",
-                               "ICSSClassProvider" };
+        return new String [] { "IJSExpression", "IJQuerySelector", "JQuerySelectorList", "EHTMLElement", "ICSSClassProvider" };
       if (sType.equals ("Function"))
         return new String [] { "IJSExpression", "JSAnonymousFunction" };
       if (sType.equals ("Object"))
@@ -498,10 +494,7 @@ abstract class AbstractCreateJQueryAPIList
   @Nonnull
   protected static String _getAnnotation (@Nonnull final String sJavaType)
   {
-    if (sJavaType.equals ("boolean") ||
-        sJavaType.equals ("double") ||
-        sJavaType.equals ("int") ||
-        sJavaType.equals ("long"))
+    if (sJavaType.equals ("boolean") || sJavaType.equals ("double") || sJavaType.equals ("int") || sJavaType.equals ("long"))
       return "";
     return "@Nonnull ";
   }
@@ -695,14 +688,14 @@ abstract class AbstractCreateJQueryAPIList
     }
 
     LOGGER.info ("Scanned " +
-                    nFiles +
-                    " files, " +
-                    aAllEntries.size () +
-                    " entries, " +
-                    nSignatures +
-                    " signatures and " +
-                    nArguments +
-                    " arguments");
+                 nFiles +
+                 " files, " +
+                 aAllEntries.size () +
+                 " entries, " +
+                 nSignatures +
+                 " signatures and " +
+                 nArguments +
+                 " arguments");
     if (false)
     {
       LOGGER.info ("Returns: " + aAllReturnTypes);

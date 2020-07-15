@@ -41,14 +41,11 @@ public final class TypeaheadRemoteTest
     p.setDataType ("js");
     assertEquals ("{url:'\\/a.json',dataType:'js',wildcard:'_query_'}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setCache (false);
-    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,wildcard:'_query_'}",
-                  p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,wildcard:'_query_'}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setTimeout (1000);
-    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'_query_'}",
-                  p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'_query_'}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setWildcard ("$Q");
-    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'$Q'}",
-                  p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'$Q'}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setReplace (new JSAnonymousFunction (JSHtml.windowAlert ("x")));
     assertEquals ("{url:'\\/a.json',dataType:'js',cache:false,timeout:1000,wildcard:'$Q',replace:function(){window.alert('x');}}",
                   p.getAsJSObject ().getJSCode (aJSWS));

@@ -108,8 +108,7 @@ public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTyp
     final Locale aDesiredLocale = sDesiredLocale == null ? null : LocaleCache.getInstance ().getLocale (sDesiredLocale);
     final LocalDateTime aLastLoginLDT = readAsLocalDateTime (aElement, ATTR_LASTLOGINLDT, "lastlogindt");
     final int nLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_LOGINCOUNT), 0);
-    final int nConsecutiveFailedLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT),
-                                                                    0);
+    final int nConsecutiveFailedLoginCount = StringParser.parseInt (aElement.getAttributeValue (ATTR_CONSECUTIVEFAILEDLOGINCOUNT), 0);
     final String sDisabled = aElement.getAttributeValue (ATTR_DISABLED);
     final boolean bDisabled = StringParser.parseBool (sDisabled);
 

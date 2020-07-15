@@ -62,23 +62,20 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext> extends
-                                      AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
   {
     MSG_NOTE ("Hinweis: es können nur TCP-Ports geprüft werden.", "Note: only TCP ports can be checked."),
     MSG_HOSTNAME ("Hostname", "Hostname"),
-    MSG_HOSTNAME_HELPTEXT ("Es kann ein Hostname oder eine IP-Adresse angegeben werden.",
-                           "A hostname or an IP address can be provided"),
+    MSG_HOSTNAME_HELPTEXT ("Es kann ein Hostname oder eine IP-Adresse angegeben werden.", "A hostname or an IP address can be provided"),
     MSG_PORTS ("Port Nummer(n)", "Port(s)"),
     MSG_PORTS_HELPTEXT ("Mehrere Port-Nummern können durch Leerzeichen getrennt angegeben werden.",
                         "Multiple port numbers can be provided, separated by space characters."),
     MSG_BUTTON_CHECK ("Prüfe Ports", "Check ports"),
     MSG_ERROR_HOSTNAME_MISSING ("Es muss ein Hostname angegeben werden.", "The hostname to check is mandatory."),
-    MSG_ERROR_PORT_MISSING ("Es muss mindestens eine Port-Nummer angegeben werden.",
-                            "At least one port number must be provided."),
+    MSG_ERROR_PORT_MISSING ("Es muss mindestens eine Port-Nummer angegeben werden.", "At least one port number must be provided."),
     MSG_RESULT_HEADER ("Überprüfungsergebnisse", "Port check results"),
     MSG_RESULT_STATUS_PREFIX ("Status von ", "Status for ");
 
@@ -109,9 +106,7 @@ public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext
     super (sID, sName);
   }
 
-  public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID,
-                                   @Nonnull final String sName,
-                                   @Nullable final String sDescription)
+  public BasePageUtilsPortChecker (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }

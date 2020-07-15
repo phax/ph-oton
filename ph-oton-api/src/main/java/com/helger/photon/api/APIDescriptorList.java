@@ -74,8 +74,7 @@ public class APIDescriptorList implements Serializable
   }
 
   @Nullable
-  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath,
-                                             @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
+  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath, @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
     ValueEnforcer.notNull (aPath, "Path");
     ValueEnforcer.notNull (aAmbiguityResolver, "AmbiguityResolver");

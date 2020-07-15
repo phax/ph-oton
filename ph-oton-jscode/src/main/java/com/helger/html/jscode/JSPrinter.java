@@ -99,8 +99,7 @@ public final class JSPrinter
   }
 
   @Nonnull
-  public static String getAsString (@Nullable final IJSWriterSettings aSettings,
-                                    @Nonnull final IJSGeneratable aGeneratable)
+  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @Nonnull final IJSGeneratable aGeneratable)
   {
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     writeGeneratable (aSW, aSettings, aGeneratable);

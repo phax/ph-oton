@@ -43,8 +43,7 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
   {}
 
   @OverrideOnDemand
-  protected void invokeInternalErrorHandler (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                             @Nonnull final Throwable t)
+  protected void invokeInternalErrorHandler (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final Throwable t)
   {
     // Send internal error mail if needed
     new InternalErrorBuilder ().setThrowable (t)

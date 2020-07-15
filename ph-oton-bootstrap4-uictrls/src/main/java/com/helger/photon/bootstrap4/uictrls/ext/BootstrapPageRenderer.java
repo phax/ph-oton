@@ -69,8 +69,7 @@ public final class BootstrapPageRenderer
   {
     // Main menu
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
-    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree,
-                                                                                     aLEC.getSelectedMenuItemID ());
+    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree, aLEC.getSelectedMenuItemID ());
     final IHCElement <?> aMenu = BootstrapMenuItemRenderer.createSideBarMenu (aLEC, aMenuTree, aCallback);
     return aMenu;
   }
@@ -113,8 +112,7 @@ public final class BootstrapPageRenderer
                                                        " (" +
                                                        sHttpStatusMessage +
                                                        ")" +
-                                                       (StringHelper.hasText (sHttpRequestURI) ? " for request URI " +
-                                                                                                 sHttpRequestURI
+                                                       (StringHelper.hasText (sHttpRequestURI) ? " for request URI " + sHttpRequestURI
                                                                                                : "")));
     }
     else
@@ -168,13 +166,11 @@ public final class BootstrapPageRenderer
   {
     final HCDiv aRow = new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX).addClass (CBootstrapCSS.MT_1);
     final HCDiv aCol1 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.D_MD_FLEX));
-    final HCDiv aCol2 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.ML_4)
-                                                            .addClass (CBootstrapCSS.FLEX_FILL));
+    final HCDiv aCol2 = aRow.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.ML_4).addClass (CBootstrapCSS.FLEX_FILL));
 
     // We need a wrapper span for easy AJAX content replacement
     aCol1.addClass (CBootstrapCSS.D_PRINT_NONE)
-         .addChild (new HCSpan ().setID (CLayout.LAYOUT_AREAID_MENU)
-                                 .addChild (BootstrapPageRenderer.getMenuContent (aLEC)))
+         .addChild (new HCSpan ().setID (CLayout.LAYOUT_AREAID_MENU).addChild (BootstrapPageRenderer.getMenuContent (aLEC)))
          .addChild (new HCDiv ().setID (CLayout.LAYOUT_AREAID_SPECIAL));
 
     // content - determine is exactly same as for view

@@ -34,8 +34,8 @@ import com.helger.xml.microdom.IMicroElement;
  *        Implementation type
  */
 @SinceHTML5
-public abstract class AbstractHCCanvas <IMPLTYPE extends AbstractHCCanvas <IMPLTYPE>> extends
-                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCCanvas <IMPLTYPE extends AbstractHCCanvas <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
+                                       implements
                                        IHCCanvas <IMPLTYPE>
 {
   private long m_nHeight = CGlobal.ILLEGAL_ULONG;

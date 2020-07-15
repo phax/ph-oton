@@ -203,8 +203,7 @@ public final class JSMarshallerTest
     for (int i = 0; i < aStrings.length; ++i)
       aUnescaped[i] = '\'' + JSMarshaller.javaScriptEscape (JSMarshaller.javaScriptUnescape (aStrings[i])) + '\'';
 
-    String sJSFile = SimpleFileIO.getFileAsString (new File ("src/test/resources/test.js"),
-                                                   StandardCharsets.ISO_8859_1);
+    String sJSFile = SimpleFileIO.getFileAsString (new File ("src/test/resources/test.js"), StandardCharsets.ISO_8859_1);
 
     // Inline all texts
     for (int i = 0; i < aStrings.length; ++i)

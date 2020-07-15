@@ -45,8 +45,7 @@ public class BootstrapButtonGroup extends AbstractHCDiv <BootstrapButtonGroup>
     this (EBootstrapButtonGroupType.DEFAULT, eSize);
   }
 
-  public BootstrapButtonGroup (@Nonnull final EBootstrapButtonGroupType eType,
-                               @Nonnull final EBootstrapButtonGroupSize eSize)
+  public BootstrapButtonGroup (@Nonnull final EBootstrapButtonGroupType eType, @Nonnull final EBootstrapButtonGroupSize eSize)
   {
     addClasses (eType.getAllCSSClasses ());
     addClass (eSize);

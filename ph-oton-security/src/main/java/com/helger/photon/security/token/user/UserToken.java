@@ -43,18 +43,14 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
 
   private final IUser m_aUser;
 
-  public UserToken (@Nullable final String sTokenString,
-                    @Nullable final Map <String, String> aCustomAttrs,
-                    @Nonnull final IUser aUser)
+  public UserToken (@Nullable final String sTokenString, @Nullable final Map <String, String> aCustomAttrs, @Nonnull final IUser aUser)
   {
     this (StubObject.createForCurrentUser (aCustomAttrs),
           new CommonsArrayList <> (AccessToken.createAccessTokenValidFromNow (sTokenString)),
           aUser);
   }
 
-  UserToken (@Nonnull final StubObject aStubObject,
-             @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
-             @Nonnull final IUser aUser)
+  UserToken (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final List <AccessToken> aAccessTokens, @Nonnull final IUser aUser)
   {
     super (aStubObject, aAccessTokens);
     m_aUser = ValueEnforcer.notNull (aUser, "User");

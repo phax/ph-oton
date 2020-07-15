@@ -46,8 +46,7 @@ public final class MicroTypeConverterRegistrar_ph_oton_core implements IMicroTyp
   {
     aRegistry.registerMicroElementTypeConverter (Favorite.class, new FavoriteMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (LongRunningJobData.class, new LongRunningJobDataMicroTypeConverter ());
-    aRegistry.registerMicroElementTypeConverter (SystemMigrationResult.class,
-                                                 new SystemMigrationResultMicroTypeConverter ());
+    aRegistry.registerMicroElementTypeConverter (SystemMigrationResult.class, new SystemMigrationResultMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (NamedSMTPSettings.class, new NamedSMTPSettingsMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (UserDataObject.class, new UserDataObjectMicroTypeConverter ());
   }

@@ -54,9 +54,7 @@ public class UIInternalErrorHandler implements IUIInternalErrorHandler
     return m_aParentNode;
   }
 
-  public void onInternalError (@Nullable final Throwable t,
-                               @Nonnull final String sErrorID,
-                               @Nonnull final Locale aDisplayLocale)
+  public void onInternalError (@Nullable final Throwable t, @Nonnull final String sErrorID, @Nonnull final Locale aDisplayLocale)
   {
     m_aParentNode.addChild (new HCH1 ().addChild (EPhotonCoreText.INTERNAL_ERROR_TITLE.getDisplayText (aDisplayLocale)));
     m_aParentNode.addChild (new HCDiv ().addChildren (HCExtHelper.nl2brList (EPhotonCoreText.INTERNAL_ERROR_DESCRIPTION.getDisplayTextWithArgs (aDisplayLocale,

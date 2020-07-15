@@ -55,8 +55,7 @@ public final class ExporterJSONTest
     final ExportRecord aEmptyRecord = new ExportRecord ();
     final ExporterJSON aExporter = new ExporterJSON ();
     // Fails because no record is present
-    assertTrue (aExporter.exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ())
-                         .isFailure ());
+    assertTrue (aExporter.exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ()).isFailure ());
     assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (CollectionHelper.newList (aRecordWithAllTypes)),
                                          new NonBlockingByteArrayOutputStream ())
                          .isSuccess ());

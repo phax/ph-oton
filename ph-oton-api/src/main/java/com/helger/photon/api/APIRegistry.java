@@ -54,8 +54,7 @@ public class APIRegistry implements IAPIRegistry
   }
 
   @Nullable
-  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath,
-                                              @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
+  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath, @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
     return m_aRWLock.readLockedGet ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
   }

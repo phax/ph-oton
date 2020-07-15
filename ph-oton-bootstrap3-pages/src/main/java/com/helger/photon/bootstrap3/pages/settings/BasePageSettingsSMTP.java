@@ -128,16 +128,12 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                       "The connection timeout must be greater or equal to 0!"),
     ERROR_SOCKET_TIMEOUT_INVALID ("Das Verbindungs-Timeout muss größer oder gleich 0 sein!",
                                   "The connection timeout must be greater or equal to 0!"),
-    SUCCESS_CREATE ("Die neue SMTP-Einstellungen wurden erfolgreich angelegt!",
-                    "Successfully created the new SMTP settings!"),
+    SUCCESS_CREATE ("Die neue SMTP-Einstellungen wurden erfolgreich angelegt!", "Successfully created the new SMTP settings!"),
     SUCCESS_EDIT ("Die SMTP-Einstellungen wurde erfolgreich bearbeitet!", "Sucessfully edited the SMTP settings!"),
-    DELETE_QUERY ("Sollen die SMTP-Einstellungen ''{0}'' wirklich gelöscht werden?",
-                  "Are you sure to delete the SMTP settings ''{0}''?"),
-    DELETE_SUCCESS ("Die SMTP-Einstellungen ''{0}'' wurden erfolgreich gelöscht!",
-                    "The SMTP settings ''{0}'' were successfully deleted!"),
+    DELETE_QUERY ("Sollen die SMTP-Einstellungen ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the SMTP settings ''{0}''?"),
+    DELETE_SUCCESS ("Die SMTP-Einstellungen ''{0}'' wurden erfolgreich gelöscht!", "The SMTP settings ''{0}'' were successfully deleted!"),
     DELETE_ERROR ("Fehler beim Löschen der SMTP-Einstellungen ''{0}''!", "Error deleting the SMTP settings ''{0}''!"),
-    TITLE_TEST_MAIL ("Test-E-Mail mit den SMTP-Einstellungen ''{0}'' versenden",
-                     "Send test email with SMTP settings ''{0}''"),
+    TITLE_TEST_MAIL ("Test-E-Mail mit den SMTP-Einstellungen ''{0}'' versenden", "Send test email with SMTP settings ''{0}''"),
     MSG_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
     BUTTON_SEND_TEST_MAIL ("Test-E-Mail senden", "Send test mail"),
     MSG_SENDER ("Absender", "Sender"),
@@ -146,14 +142,11 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     MSG_BODY ("Inhalt", "Body"),
     TEST_SUBJECT ("Test-E-Mail", "Test email"),
     TEST_BODY ("Das ist eine automatisch generierte Test-E-Mail", "This is an automatically generated test email"),
-    ERR_SENDER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.",
-                        "A valid email address must be provided"),
-    ERR_RECEIVER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.",
-                          "A valid email address must be provided"),
+    ERR_SENDER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
+    ERR_RECEIVER_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden.", "A valid email address must be provided"),
     ERR_SUBJECT_INVALID ("Es muss Betreff angegeben werden.", "An email subject must be provided"),
     ERR_BODY_INVALID ("Es muss eine gültige Nachricht angegeben werden.", "A valid email message must be provided"),
-    SUCCESS_TEST_MAIL ("Die Test-Nachricht wurde zum Versand übermittelt.",
-                       "The test email message was scheduled for sending.");
+    SUCCESS_TEST_MAIL ("Die Test-Nachricht wurde zum Versand übermittelt.", "The test email message was scheduled for sending.");
 
     private final IMultilingualText m_aTP;
 
@@ -337,8 +330,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
   @Override
   @Nullable
-  protected String getObjectDisplayName (@Nonnull final WPECTYPE aWPEC,
-                                         @Nonnull final NamedSMTPSettings aSelectedObject)
+  protected String getObjectDisplayName (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
   {
     return aSelectedObject.getName ();
   }
@@ -397,12 +389,10 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                                  .setCtrl (aSettings.getCharsetName ()));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_SSL.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSSLEnabled (),
-                                                                                       aDisplayLocale)));
+                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSSLEnabled (), aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_STARTTLS.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSTARTTLSEnabled (),
-                                                                                       aDisplayLocale)));
+                                                 .setCtrl (EPhotonCoreText.getYesOrNo (aSettings.isSTARTTLSEnabled (), aDisplayLocale)));
 
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
                                                  .setCtrl (Long.toString (aSettings.getConnectionTimeoutMilliSecs ())));
@@ -434,8 +424,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final Charset aCharset = CharsetHelper.getCharsetFromNameOrNull (sCharset);
 
     final boolean bSSLEnabled = aWPEC.params ().isCheckBoxChecked (FIELD_SSL, EmailGlobalSettings.isUseSSL ());
-    final boolean bSTARTTLSEnabled = aWPEC.params ()
-                                          .isCheckBoxChecked (FIELD_STARTTLS, EmailGlobalSettings.isUseSTARTTLS ());
+    final boolean bSTARTTLSEnabled = aWPEC.params ().isCheckBoxChecked (FIELD_STARTTLS, EmailGlobalSettings.isUseSTARTTLS ());
     final long nConnectionTimeoutMS = aWPEC.params ().getAsLong (FIELD_CONNECTION_TIMEOUT, CGlobal.ILLEGAL_ULONG);
     final long nSocketTimeoutMS = aWPEC.params ().getAsLong (FIELD_SOCKET_TIMEOUT, CGlobal.ILLEGAL_ULONG);
     final boolean bDebugSMTP = aWPEC.params ().isCheckBoxChecked (FIELD_DEBUG_SMTP, EmailGlobalSettings.isDebugSMTP ());
@@ -456,12 +445,10 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aFormErrors.addFieldError (FIELD_CHARSET, EText.ERROR_CHARSET_INVALID.getDisplayText (aDisplayLocale));
 
     if (nConnectionTimeoutMS < 0)
-      aFormErrors.addFieldError (FIELD_CONNECTION_TIMEOUT,
-                                 EText.ERROR_CONNECTION_TIMEOUT_INVALID.getDisplayText (aDisplayLocale));
+      aFormErrors.addFieldError (FIELD_CONNECTION_TIMEOUT, EText.ERROR_CONNECTION_TIMEOUT_INVALID.getDisplayText (aDisplayLocale));
 
     if (nSocketTimeoutMS < 0)
-      aFormErrors.addFieldError (FIELD_SOCKET_TIMEOUT,
-                                 EText.ERROR_CONNECTION_TIMEOUT_INVALID.getDisplayText (aDisplayLocale));
+      aFormErrors.addFieldError (FIELD_SOCKET_TIMEOUT, EText.ERROR_CONNECTION_TIMEOUT_INVALID.getDisplayText (aDisplayLocale));
 
     if (aFormErrors.isEmpty ())
     {
@@ -590,8 +577,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                                    .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_CONNECTION_TIMEOUT,
                                                                                                      aSettings == null ? EmailGlobalSettings.getConnectionTimeoutMilliSecs ()
                                                                                                                        : aSettings.getConnectionTimeoutMilliSecs ()),
-                                                                                   aDisplayLocale).setMin (0)
-                                                                                                  .setThousandSeparator (""))
+                                                                                   aDisplayLocale).setMin (0).setThousandSeparator (""))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_CONNECTION_TIMEOUT)));
     }
 
@@ -601,8 +587,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
                                                    .setCtrl (new HCAutoNumericInt (new RequestField (FIELD_SOCKET_TIMEOUT,
                                                                                                      aSettings == null ? EmailGlobalSettings.getTimeoutMilliSecs ()
                                                                                                                        : aSettings.getTimeoutMilliSecs ()),
-                                                                                   aDisplayLocale).setMin (0)
-                                                                                                  .setThousandSeparator (""))
+                                                                                   aDisplayLocale).setMin (0).setThousandSeparator (""))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_SOCKET_TIMEOUT)));
     }
 
@@ -656,13 +641,11 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       final IHCCell <?> aActionCell = aRow.addCell ();
       aActionCell.addChild (createEditLink (aWPEC,
                                             aCurObject,
-                                            EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                             aCurObject.getName ())));
+                                            EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getName ())));
       if (_canDelete (aCurObject))
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aCurObject,
-                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                   aCurObject.getName ())));
+                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getName ())));
       else
         aActionCell.addChild (createEmptyAction ());
 

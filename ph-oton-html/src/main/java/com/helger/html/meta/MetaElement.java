@@ -318,11 +318,7 @@ public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eType)
-                                       .append (m_sName)
-                                       .append (m_sScheme)
-                                       .append (m_aContents)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_eType).append (m_sName).append (m_sScheme).append (m_aContents).getHashCode ();
   }
 
   @Override

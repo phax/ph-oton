@@ -81,11 +81,10 @@ public final class FailedMailResendJob extends AbstractScopeAwareJob
 
     final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
 
-    return GlobalQuartzScheduler.getInstance ().scheduleJob (FailedMailResendJob.class.getName (),
-                                                             JDK8TriggerBuilder.newTrigger ()
-                                                                               .startNow ()
-                                                                               .withSchedule (aScheduleBuilder),
-                                                             FailedMailResendJob.class,
-                                                             aJobDataMap);
+    return GlobalQuartzScheduler.getInstance ()
+                                .scheduleJob (FailedMailResendJob.class.getName (),
+                                              JDK8TriggerBuilder.newTrigger ().startNow ().withSchedule (aScheduleBuilder),
+                                              FailedMailResendJob.class,
+                                              aJobDataMap);
   }
 }

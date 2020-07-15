@@ -51,8 +51,7 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
   @Nonnull
   public BootstrapForm createFormSelf (@Nonnull final ILayoutExecutionContext aLEC, final boolean bIsFormSubmitted)
   {
-    final BootstrapForm ret = new BootstrapForm (aLEC).setFormType (EBootstrapFormType.DEFAULT)
-                                                      .setAction (aLEC.getSelfHref ());
+    final BootstrapForm ret = new BootstrapForm (aLEC).setFormType (EBootstrapFormType.DEFAULT).setAction (aLEC.getSelfHref ());
     if (false)
       if (bIsFormSubmitted)
         ret.addClass (CBootstrapCSS.WAS_VALIDATED);
@@ -61,8 +60,7 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
 
   @Override
   @Nonnull
-  public BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC,
-                                                 final boolean bIsFormSubmitted)
+  public BootstrapForm createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC, final boolean bIsFormSubmitted)
   {
     return createFormSelf (aLEC, bIsFormSubmitted).setEncTypeFileUpload ();
   }
@@ -76,8 +74,7 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
 
   @Override
   @Nonnull
-  public final BootstrapErrorBox createErrorBox (@Nonnull final ILayoutExecutionContext aWPEC,
-                                                 @Nullable final String sErrorMsg)
+  public final BootstrapErrorBox createErrorBox (@Nonnull final ILayoutExecutionContext aWPEC, @Nullable final String sErrorMsg)
   {
     return new BootstrapErrorBox ().addChild (sErrorMsg);
   }

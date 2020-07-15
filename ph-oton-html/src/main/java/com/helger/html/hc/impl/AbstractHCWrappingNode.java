@@ -136,8 +136,7 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                    @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     getWrappedNode ().forAllChildren (aFilter, aConsumer);
   }

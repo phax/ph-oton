@@ -41,19 +41,15 @@ public final class BootstrapTooltipTest
     aBT.setHTML (true);
     assertEquals ("$('#foo').tooltip({animation:false,html:true});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setPlacement (EBootstrapTooltipPosition.BOTTOM, false);
-    assertEquals ("$('#foo').tooltip({animation:false,html:true,placement:'bottom'});",
-                  aBT.jsAttach ().getJSCode (aSettings));
+    assertEquals ("$('#foo').tooltip({animation:false,html:true,placement:'bottom'});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setPlacement (EBootstrapTooltipPosition.BOTTOM, true);
-    assertEquals ("$('#foo').tooltip({animation:false,html:true,placement:'bottom auto'});",
-                  aBT.jsAttach ().getJSCode (aSettings));
+    assertEquals ("$('#foo').tooltip({animation:false,html:true,placement:'bottom auto'});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setPlacement (EBootstrapTooltipPosition.TOP, true);
-    assertEquals ("$('#foo').tooltip({animation:false,html:true,placement:'top auto'});",
-                  aBT.jsAttach ().getJSCode (aSettings));
+    assertEquals ("$('#foo').tooltip({animation:false,html:true,placement:'top auto'});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setPlacement (EBootstrapTooltipPosition.TOP, false);
     assertEquals ("$('#foo').tooltip({animation:false,html:true});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setTrigger (EBootstrapTooltipTrigger.HOVER);
-    assertEquals ("$('#foo').tooltip({animation:false,html:true,trigger:'hover'});",
-                  aBT.jsAttach ().getJSCode (aSettings));
+    assertEquals ("$('#foo').tooltip({animation:false,html:true,trigger:'hover'});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setTrigger (EBootstrapTooltipTrigger.HOVER, EBootstrapTooltipTrigger.FOCUS);
     assertEquals ("$('#foo').tooltip({animation:false,html:true});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setTrigger ();
@@ -61,7 +57,6 @@ public final class BootstrapTooltipTest
     aBT.setDelay (10);
     assertEquals ("$('#foo').tooltip({animation:false,html:true,delay:10});", aBT.jsAttach ().getJSCode (aSettings));
     aBT.setDelay (10, 20);
-    assertEquals ("$('#foo').tooltip({animation:false,html:true,delay:{show:10,hide:20}});",
-                  aBT.jsAttach ().getJSCode (aSettings));
+    assertEquals ("$('#foo').tooltip({animation:false,html:true,delay:{show:10,hide:20}});", aBT.jsAttach ().getJSCode (aSettings));
   }
 }

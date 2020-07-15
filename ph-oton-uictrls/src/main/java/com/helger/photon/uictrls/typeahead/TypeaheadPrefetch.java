@@ -153,9 +153,6 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("URL", m_aURL)
-                                       .append ("ttl", m_nTTL)
-                                       .appendIfNotNull ("filter", m_aFilter)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("URL", m_aURL).append ("ttl", m_nTTL).appendIfNotNull ("filter", m_aFilter).getToString ();
   }
 }

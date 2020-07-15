@@ -50,9 +50,7 @@ public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMic
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
     for (final IAccessToken aAccessToken : aValue.getAllAccessTokens ())
-      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken,
-                                                                      sNamespaceURI,
-                                                                      ELEMENT_ACCESS_TOKEN));
+      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken, sNamespaceURI, ELEMENT_ACCESS_TOKEN));
     aElement.setAttribute (ATTR_USER_ID, aValue.getUser ().getID ());
     return aElement;
   }

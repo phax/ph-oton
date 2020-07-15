@@ -36,15 +36,11 @@ public final class TypeaheadDatumTest
   public void testBasic ()
   {
     final JSWriterSettings aJSWS = new JSWriterSettings ().setIndentAndAlign (false);
-    final TypeaheadDatum p = new TypeaheadDatum ("Value",
-                                                 new CommonsArrayList <> ("Token", "for", "this", "value"),
-                                                 null);
+    final TypeaheadDatum p = new TypeaheadDatum ("Value", new CommonsArrayList <> ("Token", "for", "this", "value"), null);
     assertEquals ("Value", p.getValue ());
     assertEquals (new CommonsArrayList <> ("Token", "for", "this", "value"), p.getAllTokens ());
-    assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"]}",
-                  p.getAsJson ().getAsJsonString ());
-    assertEquals ("{value:'Value',tokens:['Token','for','this','value']}",
-                  JSExpr.json (p.getAsJson ()).getJSCode (aJSWS));
+    assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"]}", p.getAsJson ().getAsJsonString ());
+    assertEquals ("{value:'Value',tokens:['Token','for','this','value']}", JSExpr.json (p.getAsJson ()).getJSCode (aJSWS));
     assertNull (p.getID ());
 
     p.setID ("abc");
@@ -52,8 +48,7 @@ public final class TypeaheadDatumTest
     assertEquals (new CommonsArrayList <> ("Token", "for", "this", "value"), p.getAllTokens ());
     assertEquals ("{\"value\":\"Value\",\"tokens\":[\"Token\",\"for\",\"this\",\"value\"],\"id\":\"abc\"}",
                   p.getAsJson ().getAsJsonString ());
-    assertEquals ("{value:'Value',tokens:['Token','for','this','value'],id:'abc'}",
-                  JSExpr.json (p.getAsJson ()).getJSCode (aJSWS));
+    assertEquals ("{value:'Value',tokens:['Token','for','this','value'],id:'abc'}", JSExpr.json (p.getAsJson ()).getJSCode (aJSWS));
     assertEquals ("abc", p.getID ());
   }
 }

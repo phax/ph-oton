@@ -211,8 +211,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   @Nonnull
-  public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                           @Nonnull final String sMenuItemID)
+  public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sMenuItemID)
   {
     return aLEC.getLinkToMenuItem (sMenuItemID).add (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
   }
@@ -261,8 +260,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final IHasID <String> aCurObject)
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
   {
     return createViewURL (aLEC, aCurObject, (Map <String, String>) null);
   }
@@ -307,8 +305,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createEditLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayName ()),
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayName ()),
                            aParams);
   }
 
@@ -327,18 +324,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createEditLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayText (aDisplayLocale)),
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayText (aDisplayLocale)),
                            aParams);
   }
 
   @Nonnull
-  public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final IHasID <String> aCurObject)
+  public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT)
-               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -374,8 +367,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createCopyLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayName ()),
+                           EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayName ()),
                            aParams);
   }
 
@@ -394,14 +386,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createCopyLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayText (aDisplayLocale)),
+                           EWebPageText.OBJECT_COPY.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayText (aDisplayLocale)),
                            aParams);
   }
 
   @Nonnull
-  public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final IHasID <String> aCurObject)
+  public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
   {
     return createCopyURL (aLEC, aCurObject, (Map <String, String>) null);
   }
@@ -450,8 +440,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createDeleteLink (aLEC,
                              aCurObject,
-                             EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                aCurObject.getDisplayName ()),
+                             EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayName ()),
                              aParams);
   }
 
@@ -470,14 +459,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createDeleteLink (aLEC,
                              aCurObject,
-                             EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                aCurObject.getDisplayText (aDisplayLocale)),
+                             EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayText (aDisplayLocale)),
                              aParams);
   }
 
   @Nonnull
-  public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                           @Nonnull final IHasID <String> aCurObject)
+  public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
   {
     return createDeleteURL (aLEC, aCurObject, (Map <String, String>) null);
   }
@@ -526,8 +513,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createUndeleteLink (aLEC,
                                aCurObject,
-                               EWebPageText.OBJECT_UNDELETE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                    aCurObject.getDisplayName ()),
+                               EWebPageText.OBJECT_UNDELETE.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayName ()),
                                aParams);
   }
 
@@ -552,8 +538,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   }
 
   @Nonnull
-  public static SimpleURL createUndeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                             @Nonnull final IHasID <String> aCurObject)
+  public static SimpleURL createUndeleteURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
   {
     return createUndeleteURL (aLEC, aCurObject, (Map <String, String>) null);
   }
@@ -1291,8 +1276,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
             eShowList = EShowList.DONT_SHOW_LIST;
-            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC,
-                                                                                                         bIsFormSubmitted)
+            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC, bIsFormSubmitted)
                                                              : getUIHandler ().createFormSelf (aWPEC, bIsFormSubmitted);
             aNodeList.addChild (aForm);
 

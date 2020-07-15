@@ -50,7 +50,7 @@ import com.helger.html.hc.impl.HCTextNode;
 @NotThreadSafe
 final class MarkdownHCStack
 {
-  private final NonBlockingStack <IHCNode> m_aStack = new NonBlockingStack<> ();
+  private final NonBlockingStack <IHCNode> m_aStack = new NonBlockingStack <> ();
 
   public MarkdownHCStack ()
   {

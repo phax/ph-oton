@@ -176,10 +176,7 @@ public class InlineCSSList
   @ReturnsMutableCopy
   public ICommonsList <ICSSCodeProvider> getAll ()
   {
-    return m_aItems.getAllMapped (aItem -> new ConstantCSSCodeProvider (aItem.getCSS (),
-                                                                        null,
-                                                                        aItem.getMediaList (),
-                                                                        true));
+    return m_aItems.getAllMapped (aItem -> new ConstantCSSCodeProvider (aItem.getCSS (), null, aItem.getMediaList (), true));
   }
 
   @Override

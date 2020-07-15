@@ -119,10 +119,7 @@ public class BootstrapSpacingBuilder implements ICSSClassProvider, Serializable
   @Nonnull
   public String getCSSClass ()
   {
-    String ret = m_eProperty.getCSSClassNamePart () +
-                 m_eSide.getCSSClassNamePart () +
-                 m_eGrid.getCSSClassNamePart () +
-                 '-';
+    String ret = m_eProperty.getCSSClassNamePart () + m_eSide.getCSSClassNamePart () + m_eGrid.getCSSClassNamePart () + '-';
     if (m_nSize == -1)
       ret += "auto";
     else

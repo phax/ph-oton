@@ -73,8 +73,7 @@ public final class PhotonHTMLHelper
   public static IMimeType getMimeType (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Add the charset to the MIME type
-    return new MimeType (CMimeType.TEXT_HTML).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
-                                                            HCSettings.getHTMLCharset ().name ());
+    return new MimeType (CMimeType.TEXT_HTML).addParameter (CMimeType.PARAMETER_NAME_CHARSET, HCSettings.getHTMLCharset ().name ());
   }
 
   @Nonnull
@@ -122,9 +121,7 @@ public final class PhotonHTMLHelper
                             .setContent ("https://github.com/phax/ph-oton // phax // ASL 2.0"));
 
     // Convert HTML to String, including namespaces
-    try (
-        final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
-                                                                                             CGlobal.BYTES_PER_KILOBYTE))
+    try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 * CGlobal.BYTES_PER_KILOBYTE))
     {
       final IMimeType aMimeType = getMimeType (aRequestScope);
       final IHCConversionSettings aCS = HCSettings.getConversionSettings ();

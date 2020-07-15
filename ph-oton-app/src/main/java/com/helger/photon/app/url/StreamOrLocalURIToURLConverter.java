@@ -128,8 +128,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   }
 
   @Nonnull
-  public SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull @Nonempty final String sURI)
+  public SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty final String sURI)
   {
     return getAsURLStatic (aRequestScope, sURI);
   }

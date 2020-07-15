@@ -65,12 +65,7 @@ public final class MainCreateTinyMCEMenuControls
       for (int i = 1; i < aParts.length; ++i)
       {
         final String sControl = aParts[i];
-        aSB.append (sControl.toUpperCase (Locale.US))
-           .append (" (\"")
-           .append (sControl)
-           .append ("\", ")
-           .append (sPlugin)
-           .append ("),\n");
+        aSB.append (sControl.toUpperCase (Locale.US)).append (" (\"").append (sControl).append ("\", ").append (sPlugin).append ("),\n");
       }
     }
     LOGGER.info (aSB.toString ());

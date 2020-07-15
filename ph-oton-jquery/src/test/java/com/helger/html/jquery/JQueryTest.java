@@ -112,8 +112,7 @@ public final class JQueryTest
     assertEquals ("$('.any');", JQuery.classRef (aClass).getJSCode ());
     assertEquals ("$('.any');", JQuery.classRefMultiple (aClass).getJSCode ());
     assertEquals ("$('.any,.other');", JQuery.classRefMultiple (aClass, aClass2).getJSCode ());
-    assertEquals ("$('.any,.other');",
-                  JQuery.classRefMultiple (CollectionHelper.newList (aClass, aClass2)).getJSCode ());
+    assertEquals ("$('.any,.other');", JQuery.classRefMultiple (CollectionHelper.newList (aClass, aClass2)).getJSCode ());
     assertEquals ("$('div');", JQuery.elementNameRef (EHTMLElement.DIV).getJSCode ());
     assertEquals ("$('bla');", JQuery.elementNameRef ("bla").getJSCode ());
     assertEquals ("$('div#foo');", JQuery.elementNameWithIDRef (EHTMLElement.DIV, "foo").getJSCode ());

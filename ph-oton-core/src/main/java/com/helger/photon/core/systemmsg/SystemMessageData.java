@@ -133,10 +133,7 @@ public class SystemMessageData implements ISystemMessageData
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aLastUpdate)
-                                       .append (m_eMessageType)
-                                       .append (m_sMessage)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_aLastUpdate).append (m_eMessageType).append (m_sMessage).getHashCode ();
   }
 
   @Override

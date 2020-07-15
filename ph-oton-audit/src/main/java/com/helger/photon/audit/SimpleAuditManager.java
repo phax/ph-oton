@@ -120,13 +120,9 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType.getName ()
-                                                                                                : sAction,
+    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType.getName () : sAction,
                                                                       aArgs);
-    final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
-                                                eActionType,
-                                                eSuccess,
-                                                sFullAction);
+    final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (), eActionType, eSuccess, sFullAction);
 
     m_aRWLock.writeLocked ( () -> {
       m_aItems.internalAddItem (aAuditItem);

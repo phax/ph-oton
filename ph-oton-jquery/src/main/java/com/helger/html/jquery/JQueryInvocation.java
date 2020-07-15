@@ -30,8 +30,7 @@ import com.helger.html.jscode.JSFunction;
  *
  * @author Philip Helger
  */
-public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> implements
-                              IJQueryInvocationExtended <JQueryInvocation>
+public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> implements IJQueryInvocationExtended <JQueryInvocation>
 {
   public JQueryInvocation (@Nonnull final JSFunction aFunction)
   {

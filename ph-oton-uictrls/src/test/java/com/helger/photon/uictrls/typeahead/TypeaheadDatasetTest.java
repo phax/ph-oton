@@ -43,8 +43,7 @@ public final class TypeaheadDatasetTest
     final TypeaheadDataset d = new TypeaheadDataset ("test");
     assertEquals ("{name:'test'}", d.getAsJSObject ().getJSCode (new JSWriterSettings ().setIndentAndAlign (false)));
     d.setLocal (d1, d2);
-    assertEquals ("{name:'test',local:[{value:'v1',tokens:['a']},{value:'v2',tokens:['b']}]}",
-                  d.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{name:'test',local:[{value:'v1',tokens:['a']},{value:'v2',tokens:['b']}]}", d.getAsJSObject ().getJSCode (aJSWS));
     d.setLocal ((List <? extends TypeaheadDatum>) null);
     d.setPrefetch (new SimpleURL ("prefetch.x"));
     assertEquals ("{name:'test',prefetch:{url:'prefetch.x'}}", d.getAsJSObject ().getJSCode (aJSWS));
@@ -54,8 +53,7 @@ public final class TypeaheadDatasetTest
     d.setRemote (new TypeaheadRemote (new SimpleURL ("remote.x")));
     assertEquals ("{name:'test',remote:{url:'remote.x',wildcard:'_query_'}}", d.getAsJSObject ().getJSCode (aJSWS));
     d.remote ().setCache (false);
-    assertEquals ("{name:'test',remote:{url:'remote.x',cache:false,wildcard:'_query_'}}",
-                  d.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{name:'test',remote:{url:'remote.x',cache:false,wildcard:'_query_'}}", d.getAsJSObject ().getJSCode (aJSWS));
     d.remote ().setCache (ETriState.UNDEFINED);
     d.remote ().setWildcard ("%q");
     assertEquals ("{name:'test',remote:{url:'remote.x',wildcard:'%q'}}", d.getAsJSObject ().getJSCode (aJSWS));

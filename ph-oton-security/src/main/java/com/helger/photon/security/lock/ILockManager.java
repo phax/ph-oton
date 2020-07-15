@@ -208,8 +208,7 @@ public interface ILockManager <IDTYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable String sUserID,
-                                                      @Nullable Set <IDTYPE> aObjectsToKeepLocked);
+  ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable String sUserID, @Nullable Set <IDTYPE> aObjectsToKeepLocked);
 
   /**
    * Check if the object with the given ID is locked by the current user.

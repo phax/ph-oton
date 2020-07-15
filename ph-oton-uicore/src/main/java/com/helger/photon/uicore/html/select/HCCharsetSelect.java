@@ -26,9 +26,7 @@ import com.helger.html.request.IHCRequestField;
 
 public class HCCharsetSelect extends HCExtSelect
 {
-  public HCCharsetSelect (@Nonnull final IHCRequestField aRF,
-                          final boolean bOnlyRegistered,
-                          @Nonnull final Locale aDisplayLocale)
+  public HCCharsetSelect (@Nonnull final IHCRequestField aRF, final boolean bOnlyRegistered, @Nonnull final Locale aDisplayLocale)
   {
     super (aRF);
 

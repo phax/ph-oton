@@ -92,8 +92,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   }
 
   @Nonnull
-  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath,
-                                                           @Nonnull final IMenuTree aMenuTree)
+  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath, @Nonnull final IMenuTree aMenuTree)
   {
     // Use paths for standard menu items
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
@@ -127,8 +126,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
-                                                       @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL, @Nonnull final IMenuTree aMenuTree)
   {
     return getParametersFromPath (aURL.getPath (), aMenuTree);
   }
@@ -143,10 +141,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
 
     // Encode into path
     if (aDisplayLocale != null)
-      aFullPath.append ('/')
-               .append (getRequestParamNameLocale ())
-               .append (m_sSeparator)
-               .append (aDisplayLocale.toString ());
+      aFullPath.append ('/').append (getRequestParamNameLocale ()).append (m_sSeparator).append (aDisplayLocale.toString ());
     if (StringHelper.hasText (sMenuItemID))
       aFullPath.append ('/').append (getRequestParamNameMenuItem ()).append (m_sSeparator).append (sMenuItemID);
 

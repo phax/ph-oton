@@ -117,9 +117,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     this (aRF.getFieldName (), aRF.getRequestValue (), aDisplayLocale);
   }
 
-  public BootstrapDateTimePicker (@Nonnull final String sName,
-                                  @Nullable final String sValue,
-                                  @Nonnull final Locale aDisplayLocale)
+  public BootstrapDateTimePicker (@Nonnull final String sName, @Nullable final String sValue, @Nonnull final Locale aDisplayLocale)
   {
     super (new HCEdit (new RequestField (sName, sValue)).setPlaceholder (""));
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
@@ -130,8 +128,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     m_eLanguage = EDateTimePickerLanguage.getFromLocaleOrNull (aDisplayLocale);
     if (m_eLanguage == null && !EDateTimePickerLanguage.PREDEFINED_LANGUAGE.equals (aDisplayLocale.getLanguage ()))
       LOGGER.warn ("Unsupported EDateTimePickerLanguage provided: " + aDisplayLocale);
-    m_eWeekStart = EDateTimePickerDayOfWeek.getFromJavaValueOrNull (Calendar.getInstance (aDisplayLocale)
-                                                                            .getFirstDayOfWeek ());
+    m_eWeekStart = EDateTimePickerDayOfWeek.getFromJavaValueOrNull (Calendar.getInstance (aDisplayLocale).getFirstDayOfWeek ());
     // Use the calendar icon as default prefix
     prefixes ().addChild (EBootstrapIcon.CALENDAR.getAsNode ());
 
@@ -433,8 +430,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public static JSInvocation invoke (@Nonnull final JQueryInvocation aJQueryInvocation,
-                                     @Nonnull final JSAssocArray aOptions)
+  public static JSInvocation invoke (@Nonnull final JQueryInvocation aJQueryInvocation, @Nonnull final JSAssocArray aOptions)
   {
     return invoke (aJQueryInvocation).arg (aOptions);
   }

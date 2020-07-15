@@ -89,12 +89,9 @@ public abstract class AbstractLoginHTMLProvider extends AbstractSWECHTMLProvider
 
   @Nullable
   @OverrideOnDemand
-  protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale,
-                                        @Nonnull final ICredentialValidationResult aLoginResult)
+  protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale, @Nonnull final ICredentialValidationResult aLoginResult)
   {
-    return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
-           " " +
-           aLoginResult.getDisplayText (aDisplayLocale);
+    return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) + " " + aLoginResult.getDisplayText (aDisplayLocale);
   }
 
   @Nullable

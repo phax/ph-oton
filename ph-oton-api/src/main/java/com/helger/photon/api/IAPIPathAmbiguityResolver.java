@@ -30,8 +30,7 @@ import com.helger.commons.functional.IBiFunction;
  * @since 8.1.4
  */
 @FunctionalInterface
-public interface IAPIPathAmbiguityResolver extends
-                                           IBiFunction <APIPath, ICommonsList <InvokableAPIDescriptor>, InvokableAPIDescriptor>
+public interface IAPIPathAmbiguityResolver extends IBiFunction <APIPath, ICommonsList <InvokableAPIDescriptor>, InvokableAPIDescriptor>
 {
   /**
    * @param aPath

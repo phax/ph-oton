@@ -86,7 +86,8 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
 
         // Create a new nonce after one failure
         // Important: this needs to be done BEFORE the nonce is emitted.
-        // Make sure to check first (using this method) before emitting anything.
+        // Make sure to check first (using this method) before emitting
+        // anything.
         aCSRFSessionMgr.generateNewNonce ();
 
         return EContinue.BREAK;

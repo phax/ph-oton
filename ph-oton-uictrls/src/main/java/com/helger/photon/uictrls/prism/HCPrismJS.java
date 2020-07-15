@@ -71,8 +71,7 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Plugins must go on pre
     final HCHasCSSClasses p = new HCHasCSSClasses ();
@@ -82,8 +81,7 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
     aElement.setAttribute (CHTMLAttributes.CLASS, p.getAllClassesAsString ());
 
     // Create nested code tag
-    final IMicroElement eCode = aElement.appendElement (aElement.getNamespaceURI (),
-                                                        EHTMLElement.CODE.getElementName ());
+    final IMicroElement eCode = aElement.appendElement (aElement.getNamespaceURI (), EHTMLElement.CODE.getElementName ());
     super.fillMicroElement (eCode, aConversionSettings);
   }
 

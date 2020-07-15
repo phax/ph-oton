@@ -81,8 +81,6 @@ public class HCScriptInlineOnDocumentReady extends AbstractHCScriptInline <HCScr
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("OnDocumentReadyCode", m_aOnDocumentReadyCode)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("OnDocumentReadyCode", m_aOnDocumentReadyCode).getToString ();
   }
 }

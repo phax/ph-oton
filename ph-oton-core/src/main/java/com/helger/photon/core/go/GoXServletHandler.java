@@ -86,8 +86,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
    */
   @Nonnull
   @OverrideOnDemand
-  protected SimpleURL getURLForNonExistingItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                @Nonnull final String sKey)
+  protected SimpleURL getURLForNonExistingItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sKey)
   {
     return new SimpleURL (aRequestScope.getFullContextPath ());
   }
@@ -136,9 +135,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
           // If it is an internal menu item, check if this internal item is an
           // "external menu item" and if so, directly use the URL of the
           // external menu item
-          final String sTargetMenuItemID = RequestParameterManager.getInstance ()
-                                                                  .getMenuItemFromURL (aGoItem.getTargetURL (),
-                                                                                       aMenuTree);
+          final String sTargetMenuItemID = RequestParameterManager.getInstance ().getMenuItemFromURL (aGoItem.getTargetURL (), aMenuTree);
 
           final IMenuObject aMenuObj = aMenuTree.getItemDataWithID (sTargetMenuItemID);
           if (aMenuObj instanceof IMenuItemExternal)

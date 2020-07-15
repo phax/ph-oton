@@ -35,8 +35,7 @@ public class LoggingAPIPathAmbiguityResolver implements IAPIPathAmbiguityResolve
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAPIPathAmbiguityResolver.class);
 
   @Nullable
-  public InvokableAPIDescriptor apply (@Nonnull final APIPath aPath,
-                                       @Nonnull final ICommonsList <InvokableAPIDescriptor> aDescriptors)
+  public InvokableAPIDescriptor apply (@Nonnull final APIPath aPath, @Nonnull final ICommonsList <InvokableAPIDescriptor> aDescriptors)
   {
     if (aDescriptors.isNotEmpty ())
       LOGGER.warn ("Found more than one API descriptor matching path '" + aPath.getPath () + "': " + aDescriptors);

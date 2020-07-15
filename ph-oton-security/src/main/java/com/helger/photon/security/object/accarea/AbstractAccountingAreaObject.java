@@ -49,8 +49,7 @@ public abstract class AbstractAccountingAreaObject extends AbstractBusinessObjec
     m_aAccountingArea = aOther.getAccountingArea ();
   }
 
-  public AbstractAccountingAreaObject (@Nonnull final IAccountingArea aAccountingArea,
-                                       @Nonnull final IBusinessObject aObject)
+  public AbstractAccountingAreaObject (@Nonnull final IAccountingArea aAccountingArea, @Nonnull final IBusinessObject aObject)
   {
     this (aAccountingArea.getTenant (), aAccountingArea, aObject);
   }
@@ -132,9 +131,7 @@ public abstract class AbstractAccountingAreaObject extends AbstractBusinessObjec
 
   public final boolean hasSameTenantAndAccountingAreaID (@Nullable final IAccountingArea aAccountingArea)
   {
-    return aAccountingArea != null &&
-           hasSameTenantID (aAccountingArea) &&
-           m_aAccountingArea.getID ().equals (aAccountingArea.getID ());
+    return aAccountingArea != null && hasSameTenantID (aAccountingArea) && m_aAccountingArea.getID ().equals (aAccountingArea.getID ());
   }
 
   public final boolean hasSameTenantAndAccountingAreaID (@Nullable final IAccountingAreaObject aAccountingAreaObject)
@@ -152,9 +149,7 @@ public abstract class AbstractAccountingAreaObject extends AbstractBusinessObjec
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AbstractAccountingAreaObject rhs = (AbstractAccountingAreaObject) o;
-    return m_aTenant.equals (rhs.m_aTenant) &&
-           m_aAccountingArea.equals (rhs.m_aAccountingArea) &&
-           getID ().equals (rhs.getID ());
+    return m_aTenant.equals (rhs.m_aTenant) && m_aAccountingArea.equals (rhs.m_aAccountingArea) && getID ().equals (rhs.getID ());
   }
 
   @Override
@@ -162,10 +157,7 @@ public abstract class AbstractAccountingAreaObject extends AbstractBusinessObjec
   {
     int ret = m_nHashCode;
     if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
-      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aTenant)
-                                                      .append (m_aAccountingArea)
-                                                      .append (getID ())
-                                                      .getHashCode ();
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aTenant).append (m_aAccountingArea).append (getID ()).getHashCode ();
     return ret;
   }
 

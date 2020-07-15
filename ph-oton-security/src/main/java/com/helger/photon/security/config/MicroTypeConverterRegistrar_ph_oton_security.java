@@ -61,7 +61,6 @@ public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicr
   public static void registerSpecialMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry,
                                                         @Nonnull final ITenantResolver aTenantResolver)
   {
-    aRegistry.registerMicroElementTypeConverter (AccountingArea.class,
-                                                 new AccountingAreaMicroTypeConverter (aTenantResolver));
+    aRegistry.registerMicroElementTypeConverter (AccountingArea.class, new AccountingAreaMicroTypeConverter (aTenantResolver));
   }
 }

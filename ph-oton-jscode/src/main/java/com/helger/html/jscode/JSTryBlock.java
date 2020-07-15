@@ -129,9 +129,6 @@ public class JSTryBlock extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("body", m_aBody)
-                                       .append ("catch", m_aCatch)
-                                       .append ("finally", m_aFinally)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("body", m_aBody).append ("catch", m_aCatch).append ("finally", m_aFinally).getToString ();
   }
 }

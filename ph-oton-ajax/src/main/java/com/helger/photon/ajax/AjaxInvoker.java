@@ -73,8 +73,7 @@ public class AjaxInvoker implements IAjaxInvoker
       s_aStatsGlobalInvoke.increment ();
 
       // Invoke before handler
-      AjaxSettings.beforeExecutionCallbacks ()
-                  .forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
+      AjaxSettings.beforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
 
       // Register all external resources, prior to handling the main request, as
       // the JS/CSS elements will be contained in the AjaxDefaultResponse in
@@ -86,11 +85,7 @@ public class AjaxInvoker implements IAjaxInvoker
 
       // Invoke after handler
       AjaxSettings.afterExecutionCallbacks ()
-                  .forEach (aCB -> aCB.onAfterExecution (this,
-                                                         sFunctionName,
-                                                         aRequestScope,
-                                                         aAjaxExecutor,
-                                                         aAjaxResponse));
+                  .forEach (aCB -> aCB.onAfterExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, aAjaxResponse));
 
       // Increment statistics after successful call
       s_aStatsFunctionInvoke.increment (sFunctionName);
@@ -103,21 +98,13 @@ public class AjaxInvoker implements IAjaxInvoker
       {
         // Long running execution
         AjaxSettings.longRunningExecutionCallbacks ()
-                    .forEach (aCB -> aCB.onLongRunningExecution (this,
-                                                                 sFunctionName,
-                                                                 aRequestScope,
-                                                                 aAjaxExecutor,
-                                                                 nExecutionMillis));
+                    .forEach (aCB -> aCB.onLongRunningExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, nExecutionMillis));
       }
     }
     catch (final Exception ex)
     {
       AjaxSettings.exceptionCallbacks ()
-                  .forEach (aCB -> aCB.onAjaxExecutionException (this,
-                                                                 sFunctionName,
-                                                                 aAjaxExecutor,
-                                                                 aRequestScope,
-                                                                 ex));
+                  .forEach (aCB -> aCB.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, ex));
 
       // Re-throw
       throw ex;

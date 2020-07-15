@@ -184,16 +184,15 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
 
     final ICommonsMap <String, Boolean> ret = new CommonsHashMap <> ();
-    TreeVisitor.visitTree (aMenuTree,
-                           new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
-                           {
-                             @Override
-                             public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
-                             {
-                               ret.put (aItem.getID (), Boolean.valueOf (aItem.hasChildren ()));
-                               return EHierarchyVisitorReturn.CONTINUE;
-                             }
-                           });
+    TreeVisitor.visitTree (aMenuTree, new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
+    {
+      @Override
+      public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+      {
+        ret.put (aItem.getID (), Boolean.valueOf (aItem.hasChildren ()));
+        return EHierarchyVisitorReturn.CONTINUE;
+      }
+    });
     return ret;
   }
 }

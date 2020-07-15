@@ -65,8 +65,7 @@ public class PasswordConstraintMinLength implements IPasswordConstraint
   @Nullable
   public String getDescription (@Nonnull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MIN_LENGTH.getDisplayTextWithArgs (aContentLocale,
-                                                                           Integer.valueOf (m_nMinLength));
+    return EPasswordConstraintText.DESC_MIN_LENGTH.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinLength));
   }
 
   public void fillMicroElement (@Nonnull final IMicroElement aElement)

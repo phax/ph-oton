@@ -82,8 +82,7 @@ public final class RequestParameterHandlerURLPathNamedTest
 
     // Locale and menu item
     aURL = h.buildURL (aRequestScope, sBasePath, LOCALE, aMenuItem.getID ());
-    assertEquals (sBasePath + "/" + sParamLocale + "-de_AT/" + sParamMenuItem + "-test",
-                  aURL.getAsStringWithEncodedParameters ());
+    assertEquals (sBasePath + "/" + sParamLocale + "-de_AT/" + sParamMenuItem + "-test", aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromURL (aURL, aMenuTree);
     assertTrue (aParams.hasLocale ());
     assertEquals (LOCALE, aParams.getLocale ());

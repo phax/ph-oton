@@ -114,9 +114,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   @Nonempty
   public static String getRelativeAuditDirectory (@Nonnull final LocalDate aDate)
   {
-    return getRelativeAuditDirectoryYear (aDate.getYear ()) +
-           StringHelper.getLeadingZero (aDate.getMonthValue (), 2) +
-           "/";
+    return getRelativeAuditDirectoryYear (aDate.getYear ()) + StringHelper.getLeadingZero (aDate.getMonthValue (), 2) + "/";
   }
 
   @Nonnull
@@ -138,8 +136,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
    *         In case reading failed
    */
   @ContainsSoftMigration
-  public AuditManager (@Nullable final String sBaseDir,
-                       @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
+  public AuditManager (@Nullable final String sBaseDir, @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
   {
     super (new AuditHasFilename (sBaseDir));
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
@@ -206,8 +203,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     return m_aAuditor;
   }
 
-  public static void readFromXML (@Nonnull final IMicroDocument aDoc,
-                                  @Nonnull final Consumer <? super IAuditItem> aHandler)
+  public static void readFromXML (@Nonnull final IMicroDocument aDoc, @Nonnull final Consumer <? super IAuditItem> aHandler)
   {
     ValueEnforcer.notNull (aDoc, "Doc");
     ValueEnforcer.notNull (aHandler, "Handler");

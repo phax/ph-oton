@@ -229,8 +229,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    */
   @Nonnull
   @CheckReturnValue
-  public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex,
-                                               @Nullable final Iterable <? extends IHCNode> aCellChildren)
+  public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     return addCellAt (nIndex).addChildren (aCellChildren);
   }
@@ -379,8 +378,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return this (the table row)
    */
   @Nonnull
-  public final HCRow addCellAt (@Nonnegative final int nIndex,
-                                @Nullable final Iterable <? extends IHCNode> aCellChildren)
+  public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     addCellAt (nIndex).addChildren (aCellChildren);
     return this;

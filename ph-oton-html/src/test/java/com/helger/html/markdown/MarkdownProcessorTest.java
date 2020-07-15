@@ -79,7 +79,7 @@ public final class MarkdownProcessorTest
   @Parameters
   public static Iterable <Object []> markdownTests ()
   {
-    final ICommonsList <Object []> ret = new CommonsArrayList<> ();
+    final ICommonsList <Object []> ret = new CommonsArrayList <> ();
     for (final File aFile : new FileSystemRecursiveIterator (new File ("src/test/resources/MarkdownTest")))
     {
       final String sFilename = aFile.getName ();

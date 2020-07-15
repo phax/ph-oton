@@ -36,9 +36,7 @@ public class JSAssignment extends AbstractJSExpression implements IJSStatement
   private final String m_sOp;
   private final IJSExpression m_aRhs;
 
-  public JSAssignment (@Nonnull final IJSAssignmentTarget aLhs,
-                       @Nonnull @Nonempty final String sOp,
-                       @Nonnull final IJSExpression aRhs)
+  public JSAssignment (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull @Nonempty final String sOp, @Nonnull final IJSExpression aRhs)
   {
     m_aLhs = ValueEnforcer.notNull (aLhs, "Lhs");
     m_sOp = ValueEnforcer.notEmpty (sOp, "Operator");
@@ -95,11 +93,7 @@ public class JSAssignment extends AbstractJSExpression implements IJSStatement
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ())
-                            .append (m_aLhs)
-                            .append (m_sOp)
-                            .append (m_aRhs)
-                            .getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aLhs).append (m_sOp).append (m_aRhs).getHashCode ();
   }
 
   @Override

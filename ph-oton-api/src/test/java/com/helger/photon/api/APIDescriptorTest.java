@@ -36,12 +36,9 @@ public final class APIDescriptorTest
     final APIDescriptorList aList = new APIDescriptorList ();
     // Dummy executor
     final IAPIExecutor aExec = (a, b, c, d, e) -> {};
-    aList.addDescriptor (new APIDescriptor (APIPath.get ("/r2o/v1/accessToken"), aExec).addRequiredParams ("token",
-                                                                                                           "systemid",
-                                                                                                           "client"));
+    aList.addDescriptor (new APIDescriptor (APIPath.get ("/r2o/v1/accessToken"), aExec).addRequiredParams ("token", "systemid", "client"));
     aList.addDescriptor (new APIDescriptor (APIPath.delete ("/service/{participantID}/get"), aExec));
-    aList.addDescriptor (new APIDescriptor (APIPath.put ("/r2o/v1/invoice"),
-                                            aExec).addRequiredHeaders (CHttpHeader.AUTHORIZATION));
+    aList.addDescriptor (new APIDescriptor (APIPath.put ("/r2o/v1/invoice"), aExec).addRequiredHeaders (CHttpHeader.AUTHORIZATION));
     aList.addDescriptor (new APIDescriptor (APIPath.put ("/r2o/{version:regex=v[0-9]+}/invoice"), aExec));
 
     assertNotNull (aList.getMatching (APIPath.get ("/r2o/v1/accessToken")));

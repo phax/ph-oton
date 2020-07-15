@@ -71,8 +71,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements
-                                                      ISessionWebScopeActivationHandler
+  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements ISessionWebScopeActivationHandler
   {
     private static final long serialVersionUID = 2322897734799334L;
 

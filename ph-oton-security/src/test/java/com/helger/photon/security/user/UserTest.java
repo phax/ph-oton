@@ -123,8 +123,7 @@ public final class UserTest
   @Test
   public void testMicroConversion ()
   {
-    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1",
-                                                                       CollectionHelper.newMap ("locale", "de_DE")),
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1", CollectionHelper.newMap ("locale", "de_DE")),
                                  "MyName",
                                  "me@example.org",
                                  GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), "ABCDEF"),

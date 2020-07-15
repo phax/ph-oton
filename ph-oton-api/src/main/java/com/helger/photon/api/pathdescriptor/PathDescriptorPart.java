@@ -155,10 +155,7 @@ public final class PathDescriptorPart implements Serializable
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_bIsVariable)
-                                       .append (m_sName)
-                                       .append (m_aVariableConstraints)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_bIsVariable).append (m_sName).append (m_aVariableConstraints).getHashCode ();
   }
 
   @Override
@@ -166,9 +163,7 @@ public final class PathDescriptorPart implements Serializable
   {
     return new ToStringGenerator (null).append ("IsVariable", m_bIsVariable)
                                        .append ("Name", m_sName)
-                                       .appendIf ("VariableConstraints",
-                                                  m_aVariableConstraints,
-                                                  CollectionHelper::isNotEmpty)
+                                       .appendIf ("VariableConstraints", m_aVariableConstraints, CollectionHelper::isNotEmpty)
                                        .getToString ();
   }
 
@@ -177,8 +172,7 @@ public final class PathDescriptorPart implements Serializable
   public static String getVariableName (@Nonnull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
-    ValueEnforcer.isFalse ( () -> sName.startsWith (VARIABLE_START),
-                            () -> "Name is already a variable: '" + sName + "'");
+    ValueEnforcer.isFalse ( () -> sName.startsWith (VARIABLE_START), () -> "Name is already a variable: '" + sName + "'");
     return VARIABLE_START + sName + VARIABLE_END;
   }
 
@@ -186,15 +180,12 @@ public final class PathDescriptorPart implements Serializable
   public static PathDescriptorPart create (@Nonnull @Nonempty final String sPathPart)
   {
     ValueEnforcer.notEmpty (sPathPart, "PathPart");
-    if (sPathPart.length () > MIN_VARIABLE_LENGTH &&
-        sPathPart.startsWith (VARIABLE_START) &&
-        sPathPart.endsWith (VARIABLE_END))
+    if (sPathPart.length () > MIN_VARIABLE_LENGTH && sPathPart.startsWith (VARIABLE_START) && sPathPart.endsWith (VARIABLE_END))
     {
       // It's a variable
 
       // Remove "{" and "}"
-      final String sVariablePart = sPathPart.substring (VARIABLE_START.length (),
-                                                        sPathPart.length () - VARIABLE_END.length ());
+      final String sVariablePart = sPathPart.substring (VARIABLE_START.length (), sPathPart.length () - VARIABLE_END.length ());
 
       // Check for additional variable constraints
       // Example: {path:regex=^[0-9]+$}

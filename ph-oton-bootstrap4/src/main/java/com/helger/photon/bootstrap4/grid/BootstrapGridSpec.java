@@ -30,11 +30,7 @@ import com.helger.html.hc.html.IHCElement;
 public final class BootstrapGridSpec implements Serializable
 {
   public static final BootstrapGridSpec NONE = new BootstrapGridSpec (null, null, null, null, null);
-  public static final BootstrapGridSpec EVENLY = new BootstrapGridSpec (EBootstrapGridXS.EVENLY,
-                                                                        null,
-                                                                        null,
-                                                                        null,
-                                                                        null);
+  public static final BootstrapGridSpec EVENLY = new BootstrapGridSpec (EBootstrapGridXS.EVENLY, null, null, null, null);
 
   private final EBootstrapGridXS m_eXS;
   private final EBootstrapGridSM m_eSM;

@@ -40,12 +40,7 @@ public class HCNamedSMTPSettingsSelect extends HCExtSelect
       if (aSMTP.hasUserName ())
         sUserName = aSMTP.getUserName () + "@";
       addOption (aCurObject.getID (),
-                 aCurObject.getName () +
-                                      " (" +
-                                      sUserName +
-                                      aSMTP.getHostName () +
-                                      (aSMTP.hasPort () ? ":" + aSMTP.getPort () : "") +
-                                      ")");
+                 aCurObject.getName () + " (" + sUserName + aSMTP.getHostName () + (aSMTP.hasPort () ? ":" + aSMTP.getPort () : "") + ")");
     }
 
     addOptionPleaseSelect (aDisplayLocale);

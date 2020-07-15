@@ -149,13 +149,11 @@ public final class BootstrapPagesMenuConfigurator
     aMenuTree.createItem (aAdminSecurity,
                           new BasePageSecurityUserManagement <WPECTYPE> (MENU_ADMIN_SECURITY_USER).setDefaultUserLocale (aDefaultLocale))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminSecurity,
-                          new BasePageSecurityUserGroupManagement <WPECTYPE> (MENU_ADMIN_SECURITY_USER_GROUP))
+    aMenuTree.createItem (aAdminSecurity, new BasePageSecurityUserGroupManagement <WPECTYPE> (MENU_ADMIN_SECURITY_USER_GROUP))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSecurity, new BasePageSecurityRoleManagement <WPECTYPE> (MENU_ADMIN_SECURITY_ROLE))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminSecurity,
-                          new BasePageSecurityUserTokenManagement <WPECTYPE> (MENU_ADMIN_SECURITY_USER_TOKEN))
+    aMenuTree.createItem (aAdminSecurity, new BasePageSecurityUserTokenManagement <WPECTYPE> (MENU_ADMIN_SECURITY_USER_TOKEN))
              .setDisplayFilter (aDisplayFilter);
     return aAdminSecurity;
   }
@@ -190,37 +188,31 @@ public final class BootstrapPagesMenuConfigurator
                                                     .setDisplayFilter (aDisplayFilter);
     if (aAuditMgr != null)
     {
-      aMenuTree.createItem (aAdminMonitoring,
-                            new BasePageMonitoringAudit <WPECTYPE> (MENU_ADMIN_MONITORING_AUDIT, aAuditMgr))
+      aMenuTree.createItem (aAdminMonitoring, new BasePageMonitoringAudit <WPECTYPE> (MENU_ADMIN_MONITORING_AUDIT, aAuditMgr))
                .setDisplayFilter (aDisplayFilter);
     }
     if (aFailedMailQueue != null)
     {
       aMenuTree.createItem (aAdminMonitoring,
-                            new BasePageMonitoringFailedMails <WPECTYPE> (MENU_ADMIN_MONITORING_FAILEDMAILS,
-                                                                          aFailedMailQueue))
+                            new BasePageMonitoringFailedMails <WPECTYPE> (MENU_ADMIN_MONITORING_FAILEDMAILS, aFailedMailQueue))
                .setDisplayFilter (aDisplayFilter);
     }
     if (aLockManager != null)
     {
       aMenuTree.createItem (aAdminMonitoring,
-                            new BasePageMonitoringLockedObjects <WPECTYPE> (MENU_ADMIN_MONITORING_LOCKEDOBJECTS,
-                                                                            aLockManager))
+                            new BasePageMonitoringLockedObjects <WPECTYPE> (MENU_ADMIN_MONITORING_LOCKEDOBJECTS, aLockManager))
                .setDisplayFilter (aDisplayFilter);
     }
-    aMenuTree.createItem (aAdminMonitoring,
-                          new BasePageMonitoringLoginInfo <WPECTYPE> (MENU_ADMIN_MONITORING_LOGININFO))
+    aMenuTree.createItem (aAdminMonitoring, new BasePageMonitoringLoginInfo <WPECTYPE> (MENU_ADMIN_MONITORING_LOGININFO))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminMonitoring, new BasePageMonitoringSessions <WPECTYPE> (MENU_ADMIN_MONITORING_SESSIONS))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminMonitoring,
-                          new BasePageMonitoringStatistics <WPECTYPE> (MENU_ADMIN_MONITORING_STATISTICS))
+    aMenuTree.createItem (aAdminMonitoring, new BasePageMonitoringStatistics <WPECTYPE> (MENU_ADMIN_MONITORING_STATISTICS))
              .setDisplayFilter (aDisplayFilter);
     if (aSystemMigrationMgr != null)
     {
       aMenuTree.createItem (aAdminMonitoring,
-                            new BasePageMonitoringSystemMigrations <WPECTYPE> (MENU_ADMIN_MONITORING_SYSTEMMIGRATIONS,
-                                                                               aSystemMigrationMgr))
+                            new BasePageMonitoringSystemMigrations <WPECTYPE> (MENU_ADMIN_MONITORING_SYSTEMMIGRATIONS, aSystemMigrationMgr))
                .setDisplayFilter (aDisplayFilter);
     }
     return aAdminMonitoring;
@@ -236,8 +228,7 @@ public final class BootstrapPagesMenuConfigurator
                                                                                                    EWebPageText.PAGE_NAME_SYSINFO.getAsMLT (),
                                                                                                    aMenuTree))
                                                  .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminSysInfo,
-                          new BasePageSysInfoEnvironmentVariables <WPECTYPE> (MENU_ADMIN_SYSINFO_ENVVARS))
+    aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoEnvironmentVariables <WPECTYPE> (MENU_ADMIN_SYSINFO_ENVVARS))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoNetwork <WPECTYPE> (MENU_ADMIN_SYSINFO_NETWORK))
              .setDisplayFilter (aDisplayFilter);
@@ -245,13 +236,11 @@ public final class BootstrapPagesMenuConfigurator
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoSecurity <WPECTYPE> (MENU_ADMIN_SYSINFO_SECURITY))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminSysInfo,
-                          new BasePageSysInfoServletContext <WPECTYPE> (MENU_ADMIN_SYSINFO_SERVLETCONTEXT))
+    aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoServletContext <WPECTYPE> (MENU_ADMIN_SYSINFO_SERVLETCONTEXT))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoSystemProperties <WPECTYPE> (MENU_ADMIN_SYSINFO_SYSPROPS))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminSysInfo,
-                          new BasePageSysInfoThirdPartyLibraries <WPECTYPE> (MENU_ADMIN_SYSINFO_THIRDPARTYLIBS))
+    aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoThirdPartyLibraries <WPECTYPE> (MENU_ADMIN_SYSINFO_THIRDPARTYLIBS))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSysInfo, new BasePageSysInfoThreads <WPECTYPE> (MENU_ADMIN_SYSINFO_THREADS))
              .setDisplayFilter (aDisplayFilter);
@@ -282,13 +271,10 @@ public final class BootstrapPagesMenuConfigurator
                                                                                                    EWebPageText.PAGE_NAME_APPINFO.getAsMLT (),
                                                                                                    aMenuTree))
                                                  .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminAppInfo,
-                          new BasePageAppInfoAjaxFunctions <WPECTYPE> (MENU_ADMIN_APPINFO_AJAX_FUNCTIONS))
+    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoAjaxFunctions <WPECTYPE> (MENU_ADMIN_APPINFO_AJAX_FUNCTIONS))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoAPI <WPECTYPE> (MENU_ADMIN_APPINFO_API))
-             .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminAppInfo,
-                          new BasePageAppInfoConfigurationFiles <WPECTYPE> (MENU_ADMIN_APPINFO_CONFIGFILES))
+    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoAPI <WPECTYPE> (MENU_ADMIN_APPINFO_API)).setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminAppInfo, new BasePageAppInfoConfigurationFiles <WPECTYPE> (MENU_ADMIN_APPINFO_CONFIGFILES))
              .setDisplayFilter (aDisplayFilter);
     if (aGoMappingMgr != null)
     {
@@ -306,8 +292,7 @@ public final class BootstrapPagesMenuConfigurator
     if (aResBundleMgr != null)
     {
       aMenuTree.createItem (aAdminAppInfo,
-                            new BasePageAppInfoWebSiteResourceBundles <WPECTYPE> (MENU_ADMIN_APPINFO_WEBRESBUNDLE,
-                                                                                  aResBundleMgr))
+                            new BasePageAppInfoWebSiteResourceBundles <WPECTYPE> (MENU_ADMIN_APPINFO_WEBRESBUNDLE, aResBundleMgr))
                .setDisplayFilter (aDisplayFilter);
     }
     return aAdminAppInfo;
@@ -323,14 +308,10 @@ public final class BootstrapPagesMenuConfigurator
                                                                                                 EWebPageText.PAGE_NAME_DATA.getAsMLT (),
                                                                                                 aMenuTree))
                                               .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminData, new BasePageDataCountries <WPECTYPE> (MENU_ADMIN_DATA_COUNTRIES))
-             .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminData, new BasePageDataCurrencies <WPECTYPE> (MENU_ADMIN_DATA_CURRENCIES))
-             .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminData, new BasePageDataLanguages <WPECTYPE> (MENU_ADMIN_DATA_LANGUAGES))
-             .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminData, new BasePageDataTimeZones <WPECTYPE> (MENU_ADMIN_DATA_TIMEZONES))
-             .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminData, new BasePageDataCountries <WPECTYPE> (MENU_ADMIN_DATA_COUNTRIES)).setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminData, new BasePageDataCurrencies <WPECTYPE> (MENU_ADMIN_DATA_CURRENCIES)).setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminData, new BasePageDataLanguages <WPECTYPE> (MENU_ADMIN_DATA_LANGUAGES)).setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminData, new BasePageDataTimeZones <WPECTYPE> (MENU_ADMIN_DATA_TIMEZONES)).setDisplayFilter (aDisplayFilter);
     return aAdminData;
   }
 
@@ -373,18 +354,15 @@ public final class BootstrapPagesMenuConfigurator
                                                   .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSettings, new BasePageSettingsGlobal <WPECTYPE> (MENU_ADMIN_SETTINGS_GLOBAL))
              .setDisplayFilter (aDisplayFilter);
-    aMenuTree.createItem (aAdminSettings, new BasePageSettingsHTML <WPECTYPE> (MENU_ADMIN_SETTINGS_HTML))
-             .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminSettings, new BasePageSettingsHTML <WPECTYPE> (MENU_ADMIN_SETTINGS_HTML)).setDisplayFilter (aDisplayFilter);
 
     if (aNamedSMTPSettingsMgr != null)
     {
-      aMenuTree.createItem (aAdminSettings,
-                            new BasePageSettingsSMTP <WPECTYPE> (aNamedSMTPSettingsMgr, MENU_ADMIN_SETTINGS_SMTP))
+      aMenuTree.createItem (aAdminSettings, new BasePageSettingsSMTP <WPECTYPE> (aNamedSMTPSettingsMgr, MENU_ADMIN_SETTINGS_SMTP))
                .setDisplayFilter (aDisplayFilter);
     }
 
-    aMenuTree.createItem (aAdminSettings,
-                          new BasePageSettingsSystemMessage <WPECTYPE> (MENU_ADMIN_SETTINGS_SYSTEMMESSAGE))
+    aMenuTree.createItem (aAdminSettings, new BasePageSettingsSystemMessage <WPECTYPE> (MENU_ADMIN_SETTINGS_SYSTEMMESSAGE))
              .setDisplayFilter (aDisplayFilter);
 
     return aAdminSettings;

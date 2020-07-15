@@ -57,9 +57,7 @@ public final class UserGroup extends AbstractBusinessObject implements IUserGrou
     this (StubObject.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  protected UserGroup (@Nonnull final StubObject aStubObject,
-                       @Nonnull @Nonempty final String sName,
-                       @Nullable final String sDescription)
+  protected UserGroup (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);

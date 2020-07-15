@@ -67,8 +67,7 @@ import com.helger.schedule.quartz.QuartzSchedulerHelper;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext> extends
-                                      AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -112,9 +111,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
     super (sID, sName);
   }
 
-  public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID,
-                                   @Nonnull final String sName,
-                                   @Nullable final String sDescription)
+  public BasePageAppInfoScheduler (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -154,11 +151,9 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
 
         final BootstrapViewForm aDetailsForm = new BootstrapViewForm ();
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUMMARY.getDisplayText (aDisplayLocale))
-                                                            .setCtrl (HCExtHelper.nl2divList (aScheduler.getMetaData ()
-                                                                                                        .getSummary ())));
+                                                            .setCtrl (HCExtHelper.nl2divList (aScheduler.getMetaData ().getSummary ())));
         aDetailsForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXECUTING_JOBS.getDisplayText (aDisplayLocale))
-                                                            .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ()
-                                                                                                  .size ())));
+                                                            .setCtrl (Integer.toString (aScheduler.getCurrentlyExecutingJobs ().size ())));
 
         // All job listener
         final ICommonsList <String> aListeners = new CommonsArrayList <> ();
@@ -181,18 +176,14 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
             aUL2.addItem (EText.MSG_JOB_CLASS.getDisplayText (aDisplayLocale) + aDetail.getJobClass ().getName ());
             aUL2.addItem (EText.MSG_TRIGGER_KEY.getDisplayText (aDisplayLocale) + aTrigger.getKey ().toString ());
             aUL2.addItem (EText.MSG_START_TIME.getDisplayText (aDisplayLocale) +
-                          PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getStartTime ()),
-                                                   aDisplayLocale));
+                          PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getStartTime ()), aDisplayLocale));
             if (aTrigger.getEndTime () != null)
               aUL2.addItem (EText.MSG_END_TIME.getDisplayText (aDisplayLocale) +
-                            PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getEndTime ()),
-                                                     aDisplayLocale));
+                            PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getEndTime ()), aDisplayLocale));
             aUL2.addItem (EText.MSG_PREVIOUS_FIRE_TIME.getDisplayText (aDisplayLocale) +
-                          PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getPreviousFireTime ()),
-                                                   aDisplayLocale));
+                          PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getPreviousFireTime ()), aDisplayLocale));
             aUL2.addItem (EText.MSG_NEXT_FIRE_TIME.getDisplayText (aDisplayLocale) +
-                          PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getNextFireTime ()),
-                                                   aDisplayLocale));
+                          PDTToString.getAsString (PDTFactory.createLocalDateTime (aTrigger.getNextFireTime ()), aDisplayLocale));
 
             final BootstrapTable aJobDataTable = new BootstrapTable (HCCol.star (), HCCol.star ());
             aJobDataTable.setCondensed (true);

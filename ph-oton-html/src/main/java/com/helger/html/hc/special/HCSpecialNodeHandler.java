@@ -70,7 +70,7 @@ public final class HCSpecialNodeHandler
   private static final Logger LOGGER = LoggerFactory.getLogger (HCSpecialNodeHandler.class);
   private static final AnnotationUsageCache s_aOOBNAnnotationCache = new AnnotationUsageCache (OutOfBandNode.class);
   private static final AnnotationUsageCache s_aSNLMAnnotationCache = new AnnotationUsageCache (SpecialNodeListModifier.class);
-  private static final ICommonsMap <String, IHCSpecialNodeListModifier> s_aModifiers = new CommonsHashMap<> ();
+  private static final ICommonsMap <String, IHCSpecialNodeListModifier> s_aModifiers = new CommonsHashMap <> ();
 
   @PresentForCodeCoverage
   private static final HCSpecialNodeHandler s_aInstance = new HCSpecialNodeHandler ();
@@ -127,10 +127,7 @@ public final class HCSpecialNodeHandler
           if (aParentElement instanceof IHCHasChildrenMutable <?, ?>)
             ((IHCHasChildrenMutable <?, ?>) aParentElement).removeChildAt (nNodeIndex);
           else
-            throw new IllegalStateException ("Cannot remove out-of-band node from " +
-                                             aParentElement +
-                                             " at index " +
-                                             nNodeIndex);
+            throw new IllegalStateException ("Cannot remove out-of-band node from " + aParentElement + " at index " + nNodeIndex);
         }
         else
         {
@@ -170,7 +167,7 @@ public final class HCSpecialNodeHandler
   {
     ValueEnforcer.notNull (aNodes, "Nodes");
 
-    final ICommonsOrderedSet <Class <? extends IHCSpecialNodeListModifier>> aModifiersToApply = new CommonsLinkedHashSet<> ();
+    final ICommonsOrderedSet <Class <? extends IHCSpecialNodeListModifier>> aModifiersToApply = new CommonsLinkedHashSet <> ();
     for (final IHCNode aNode : aNodes)
       if (s_aSNLMAnnotationCache.hasAnnotation (aNode))
         aModifiersToApply.add (aNode.getClass ().getAnnotation (SpecialNodeListModifier.class).value ());
@@ -195,7 +192,7 @@ public final class HCSpecialNodeHandler
     }
 
     // Apply all modifiers
-    ICommonsList <? extends IHCNode> ret = new CommonsArrayList<> (aNodes);
+    ICommonsList <? extends IHCNode> ret = new CommonsArrayList <> (aNodes);
     for (final Class <? extends IHCSpecialNodeListModifier> aModifierClass : aModifiersToApply)
     {
       final IHCSpecialNodeListModifier aModifier = s_aModifiers.get (aModifierClass.getName ());
@@ -233,8 +230,7 @@ public final class HCSpecialNodeHandler
                                                                      final boolean bKeepOnDocumentReady)
   {
     // Default to the global "on document ready" provider
-    return getMergedInlineCSSAndJSNodes (aNodes,
-                                         bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
+    return getMergedInlineCSSAndJSNodes (aNodes, bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
   }
 
   /**
@@ -269,7 +265,7 @@ public final class HCSpecialNodeHandler
     final Iterable <? extends IHCNode> aRealSpecialNodes = applyModifiers (aNodes);
 
     // Do standard aggregations of CSS and JS
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     final CollectingJSCodeProvider aJSOnDocumentReadyBefore = new CollectingJSCodeProvider ();
     final CollectingJSCodeProvider aJSOnDocumentReadyAfter = new CollectingJSCodeProvider ();
     final CollectingJSCodeProvider aJSInlineBefore = new CollectingJSCodeProvider ();
@@ -296,8 +292,7 @@ public final class HCSpecialNodeHandler
         {
           // Inline JS
           final IHCScriptInline <?> aScript = (IHCScriptInline <?>) aNode;
-          (aScript.isEmitAfterFiles () ? aJSInlineAfter
-                                       : aJSInlineBefore).appendFlattened (aScript.getJSCodeProvider ());
+          (aScript.isEmitAfterFiles () ? aJSInlineAfter : aJSInlineBefore).appendFlattened (aScript.getJSCodeProvider ());
         }
       }
       else
@@ -305,17 +300,14 @@ public final class HCSpecialNodeHandler
         {
           // Inline CSS
           final HCStyle aStyle = (HCStyle) aNode;
-          (aStyle.isEmitAfterFiles () ? aCSSInlineAfter : aCSSInlineBefore).addInlineCSS (aStyle.getMedia (),
-                                                                                          aStyle.getStyleContent ());
+          (aStyle.isEmitAfterFiles () ? aCSSInlineAfter : aCSSInlineBefore).addInlineCSS (aStyle.getMedia (), aStyle.getStyleContent ());
         }
         else
         {
           // HCLink
           // HCScriptFile
           // HCConditionalCommentNode
-          if (!(aNode instanceof HCLink) &&
-              !(aNode instanceof HCScriptFile) &&
-              !(aNode instanceof IHCConditionalCommentNode))
+          if (!(aNode instanceof HCLink) && !(aNode instanceof HCScriptFile) && !(aNode instanceof IHCConditionalCommentNode))
             LOGGER.warn ("Found unexpected node to merge inline CSS/JS: " + aNode);
 
           // Add always!
@@ -362,8 +354,7 @@ public final class HCSpecialNodeHandler
       int nIndex = 0;
       for (final ICSSCodeProvider aEntry : aCSSInlineBefore.getAll ())
       {
-        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ())
-                                                                 .setEmitAfterFiles (false);
+        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ()).setEmitAfterFiles (false);
         aStyle.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
         ret.add (nIndex, aStyle);
         ++nIndex;
@@ -375,8 +366,7 @@ public final class HCSpecialNodeHandler
       // Add at the end
       for (final ICSSCodeProvider aEntry : aCSSInlineAfter.getAll ())
       {
-        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ())
-                                                                 .setEmitAfterFiles (true);
+        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ()).setEmitAfterFiles (true);
         aStyle.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
         ret.add (aStyle);
       }
@@ -393,7 +383,7 @@ public final class HCSpecialNodeHandler
     ValueEnforcer.notNull (aNodes, "Nodes");
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
 
-    final ICommonsList <IHCNode> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
 
     for (final IHCNode aNode : aNodes)
     {
@@ -464,9 +454,7 @@ public final class HCSpecialNodeHandler
                                             @Nonnull final AbstractHCSpecialNodes <?> aSpecialNodes,
                                             final boolean bKeepOnDocumentReady)
   {
-    extractSpecialContent (aNode,
-                           aSpecialNodes,
-                           bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
+    extractSpecialContent (aNode, aSpecialNodes, bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
   }
 
   /**
@@ -495,7 +483,7 @@ public final class HCSpecialNodeHandler
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
 
     // Extract all out of band nodes from the passed node
-    ICommonsList <IHCNode> aExtractedOutOfBandNodes = new CommonsArrayList<> ();
+    ICommonsList <IHCNode> aExtractedOutOfBandNodes = new CommonsArrayList <> ();
     recursiveExtractAndRemoveOutOfBandNodes (aNode, aExtractedOutOfBandNodes);
 
     // Merge JS/CSS nodes - replace list content
@@ -507,7 +495,6 @@ public final class HCSpecialNodeHandler
     // Now the aExtractedOutOfBandNodes list must be empty - otherwise we have
     // an internal inconsistency
     if (aExtractedOutOfBandNodes.isNotEmpty ())
-      throw new IllegalStateException ("Out-of-band nodes are left after merging and extraction: " +
-                                       aExtractedOutOfBandNodes);
+      throw new IllegalStateException ("Out-of-band nodes are left after merging and extraction: " + aExtractedOutOfBandNodes);
   }
 }

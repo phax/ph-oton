@@ -33,8 +33,7 @@ import com.helger.xml.microdom.IMicroElement;
  *
  * @author Philip Helger
  */
-public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGroup, HCOption> implements
-                        IHCHasState <HCOptGroup>
+public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGroup, HCOption> implements IHCHasState <HCOptGroup>
 {
   /** By default the opt group is not disabled */
   public static final boolean DEFAULT_DISABLED = false;

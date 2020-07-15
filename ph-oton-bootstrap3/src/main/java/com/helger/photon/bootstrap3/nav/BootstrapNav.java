@@ -77,9 +77,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
   }
 
   @Nonnull
-  public BootstrapNav addItem (@Nullable final String sText,
-                               @Nonnull final ISimpleURL aTarget,
-                               @Nullable final IIcon aIcon)
+  public BootstrapNav addItem (@Nullable final String sText, @Nonnull final ISimpleURL aTarget, @Nullable final IIcon aIcon)
   {
     return addItem (sText, aTarget, DEFAULT_DISABLED, aIcon);
   }
@@ -113,9 +111,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
   }
 
   @Nonnull
-  public BootstrapNav addItem (@Nullable final IHCElementWithChildren <?> aContent,
-                               final boolean bDisabled,
-                               @Nullable final IIcon aIcon)
+  public BootstrapNav addItem (@Nullable final IHCElementWithChildren <?> aContent, final boolean bDisabled, @Nullable final IIcon aIcon)
   {
     final IHCLI <?> aItem = addAndReturnItem (aContent);
     if (bDisabled)
@@ -180,8 +176,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
   }
 
   @Nonnull
-  public BootstrapDropdownMenu addDropdownMenu (@Nullable final EBootstrapDropdownMenuAlignment eAlignment,
-                                                @Nullable final String sText)
+  public BootstrapDropdownMenu addDropdownMenu (@Nullable final EBootstrapDropdownMenuAlignment eAlignment, @Nullable final String sText)
   {
     return addDropdownMenu (eAlignment, new HCTextNode (sText));
   }
@@ -193,8 +188,7 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
   }
 
   @Nonnull
-  public BootstrapDropdownMenu addDropdownMenu (@Nullable final EBootstrapDropdownMenuAlignment eAlignment,
-                                                @Nullable final IHCNode aText)
+  public BootstrapDropdownMenu addDropdownMenu (@Nullable final EBootstrapDropdownMenuAlignment eAlignment, @Nullable final IHCNode aText)
   {
     final IHCLI <?> aLI = addItem ().addClass (CBootstrapCSS.DROPDOWN);
     aLI.addChild (BootstrapDropdown.makeDropdownToggle (new HCA (new SimpleURL ()).addChild (aText)));

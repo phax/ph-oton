@@ -171,9 +171,7 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
     }
 
     @Nonnull
-    public static Response createError (@Nullable final String sErrorMsg,
-                                        final boolean bPreventRetry,
-                                        final boolean bReset)
+    public static Response createError (@Nullable final String sErrorMsg, final boolean bPreventRetry, final boolean bReset)
     {
       return createError (sErrorMsg, ETriState.valueOf (bPreventRetry), ETriState.valueOf (bReset));
     }

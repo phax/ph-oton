@@ -55,8 +55,7 @@ public class AjaxRegistry implements IAjaxRegistry
   public static boolean isValidFunctionName (@Nullable final String sFunctionName)
   {
     // All characters allowed should be valid in URLs without masking
-    return StringHelper.hasText (sFunctionName) &&
-           RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
+    return StringHelper.hasText (sFunctionName) && RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
   }
 
   @Nonnull
@@ -98,10 +97,7 @@ public class AjaxRegistry implements IAjaxRegistry
     });
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Registered AJAX function '" +
-                    sFunctionName +
-                    "' with executor factory " +
-                    aFunctionDeclaration.getExecutorFactory ());
+      LOGGER.debug ("Registered AJAX function '" + sFunctionName + "' with executor factory " + aFunctionDeclaration.getExecutorFactory ());
   }
 
   @Override

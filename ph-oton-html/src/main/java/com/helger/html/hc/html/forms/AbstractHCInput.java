@@ -39,8 +39,7 @@ import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.xml.microdom.IMicroElement;
 
 @NotThreadSafe
-public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE>
-                                      implements
+public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE> implements
                                       IHCInput <IMPLTYPE>
 {
   /** By default no auto complete setting is active */
@@ -486,8 +485,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     if (StringHelper.hasText (m_sAlt))
       aElement.setAttribute (CHTMLAttributes.ALT, m_sAlt);
     if (m_eAutoComplete.isDefined ())
-      aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE,
-                             m_eAutoComplete.isTrue () ? CHTMLAttributeValues.ON : CHTMLAttributeValues.OFF);
+      aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE, m_eAutoComplete.isTrue () ? CHTMLAttributeValues.ON : CHTMLAttributeValues.OFF);
     if (m_bChecked)
       aElement.setAttribute (CHTMLAttributes.CHECKED, CHTMLAttributeValues.CHECKED);
     if (StringHelper.hasText (m_sDirName))
@@ -527,8 +525,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     if (m_nSize > 0)
       aElement.setAttribute (CHTMLAttributes.SIZE, m_nSize);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC,
-                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sStep))
       aElement.setAttribute (CHTMLAttributes.STEP, m_sStep);
     if (m_sValue != null)

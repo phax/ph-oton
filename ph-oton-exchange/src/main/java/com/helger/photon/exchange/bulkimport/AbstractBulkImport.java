@@ -52,8 +52,8 @@ public abstract class AbstractBulkImport implements IBulkImport
     ValueEnforcer.notEmptyNoNullValue (aColumnNames, "ColumnNames");
     ValueEnforcer.notEmptyNoNullValue (aFileTypes, "FileTypes");
     m_nHeaderRowsToSkip = nHeaderRowsToSkip;
-    m_aColumnNames = new CommonsArrayList<> (aColumnNames);
-    m_aFileTypes = new CommonsLinkedHashSet<> (aFileTypes);
+    m_aColumnNames = new CommonsArrayList <> (aColumnNames);
+    m_aFileTypes = new CommonsLinkedHashSet <> (aFileTypes);
   }
 
   @Override
@@ -75,7 +75,7 @@ public abstract class AbstractBulkImport implements IBulkImport
   @Nonempty
   public final ICommonsList <String> getColumnDescriptions (@Nonnull final Locale aContentLocale)
   {
-    final ICommonsList <String> ret = new CommonsArrayList<> (getColumnCount ());
+    final ICommonsList <String> ret = new CommonsArrayList <> (getColumnCount ());
     for (final IHasDisplayText aColumn : m_aColumnNames)
       ret.add (aColumn.getDisplayText (aContentLocale));
     return ret;

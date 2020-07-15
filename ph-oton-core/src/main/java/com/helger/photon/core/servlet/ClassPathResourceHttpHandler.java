@@ -27,8 +27,7 @@ public class ClassPathResourceHttpHandler extends AbstractResourceDeliveryHttpHa
 {
   @Override
   @Nonnull
-  protected IReadableResource getResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                           @Nonnull final String sFilename)
+  protected IReadableResource getResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sFilename)
   {
     // URL decode is required because requests contain e.g. "%20"
     final String sFilename1 = URLHelper.urlDecodeOrDefault (sFilename, sFilename);

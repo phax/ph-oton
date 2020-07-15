@@ -33,23 +33,22 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public interface IWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
-                                            extends
+public interface IWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends
                                             IWebPageActionHandler <DATATYPE, WPECTYPE>
 {
   /**
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
-   * @return A list of all selected objects. May neither be <code>null</code> nor
-   *         empty.
+   * @return A list of all selected objects. May neither be <code>null</code>
+   *         nor empty.
    */
   @Nonnull
   @ReturnsMutableCopy
   ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull WPECTYPE aWPEC);
 
   /**
-   * This is the main entry to action handling. This method is only called if the
-   * passed action is provided and if the preconditions are met.
+   * This is the main entry to action handling. This method is only called if
+   * the passed action is provided and if the preconditions are met.
    *
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.

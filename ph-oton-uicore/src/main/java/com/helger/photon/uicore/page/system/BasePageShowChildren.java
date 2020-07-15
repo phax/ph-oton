@@ -144,9 +144,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     // ready!
   }
 
-  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
-                               @Nonnull final String sName,
-                               @Nonnull final IMenuTree aMenuTree)
+  public BasePageShowChildren (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nonnull final IMenuTree aMenuTree)
   {
     this (sID, getAsMLT (sName), aMenuTree);
   }

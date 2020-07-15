@@ -45,8 +45,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLTYPE>> extends
-                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
+                                       implements
                                        IHCButton <IMPLTYPE>
 {
   /** By default auto focus is disabled */

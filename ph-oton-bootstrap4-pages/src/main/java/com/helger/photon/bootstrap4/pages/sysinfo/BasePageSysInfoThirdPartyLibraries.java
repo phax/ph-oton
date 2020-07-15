@@ -47,8 +47,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext> extends
-                                                AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -95,8 +94,7 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
   }
 
   @Nonnull
-  private static IHCNode _getModuleHCNode (@Nonnull final IThirdPartyModule aModule,
-                                           @Nonnull final Locale aDisplayLocale)
+  private static IHCNode _getModuleHCNode (@Nonnull final IThirdPartyModule aModule, @Nonnull final Locale aDisplayLocale)
   {
     final HCNodeList aNL = new HCNodeList ();
 
@@ -121,8 +119,7 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
     if (aModule.getLicense ().getURL () == null)
       aNL.addChild (sLicenseText);
     else
-      aNL.addChild (new HCA (new SimpleURL (aModule.getLicense ().getURL ())).setTargetBlank ()
-                                                                             .addChild (sLicenseText));
+      aNL.addChild (new HCA (new SimpleURL (aModule.getLicense ().getURL ())).setTargetBlank ().addChild (sLicenseText));
     return aNL;
   }
 
@@ -135,8 +132,7 @@ public class BasePageSysInfoThirdPartyLibraries <WPECTYPE extends IWebPageExecut
     aNodeList.addChild (h4 (EText.MSG_TPM_HEADER.getDisplayText (aDisplayLocale)));
 
     // Third party modules
-    final ICommonsOrderedSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
-                                                                                    .getAllRegisteredThirdPartyModules ();
+    final ICommonsOrderedSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ().getAllRegisteredThirdPartyModules ();
     final HCUL aUL = aNodeList.addAndReturnChild (new HCUL ());
 
     // Show all required modules, sorted by name

@@ -43,8 +43,7 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractLongRunningJob.class);
 
   /** Predefined key into the job data map */
-  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
-                                                        "longrunning.job.id";
+  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "longrunning.job.id";
 
   /**
    * Get the ID of the current user who executes the job.

@@ -40,9 +40,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
 
   public boolean containsClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
-    return aCSSClassProvider != null &&
-           m_aCSSClassProviders != null &&
-           m_aCSSClassProviders.contains (aCSSClassProvider);
+    return aCSSClassProvider != null && m_aCSSClassProviders != null && m_aCSSClassProviders.contains (aCSSClassProvider);
   }
 
   @Nonnull
@@ -51,7 +49,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
     if (aCSSClassProvider != null)
     {
       if (m_aCSSClassProviders == null)
-        m_aCSSClassProviders = new CommonsLinkedHashSet<> ();
+        m_aCSSClassProviders = new CommonsLinkedHashSet <> ();
       m_aCSSClassProviders.add (aCSSClassProvider);
     }
     return this;
@@ -84,7 +82,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
   @ReturnsMutableCopy
   public ICommonsOrderedSet <String> getAllClassNames ()
   {
-    final ICommonsOrderedSet <String> ret = new CommonsLinkedHashSet<> ();
+    final ICommonsOrderedSet <String> ret = new CommonsLinkedHashSet <> ();
     if (m_aCSSClassProviders != null)
       for (final ICSSClassProvider aCSSClassProvider : m_aCSSClassProviders)
       {
@@ -123,9 +121,6 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIf ("CSSClassProviders",
-                                                  m_aCSSClassProviders,
-                                                  CollectionHelper::isNotEmpty)
-                                       .getToString ();
+    return new ToStringGenerator (this).appendIf ("CSSClassProviders", m_aCSSClassProviders, CollectionHelper::isNotEmpty).getToString ();
   }
 }

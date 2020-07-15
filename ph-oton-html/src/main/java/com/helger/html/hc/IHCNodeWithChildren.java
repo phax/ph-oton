@@ -30,8 +30,7 @@ import com.helger.html.hc.impl.HCTextNode;
  * @param <IMPLTYPE>
  *        The type of the contained child objects.
  */
-public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPLTYPE>> extends
-                                     IHCHasChildrenMutable <IMPLTYPE, IHCNode>
+public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPLTYPE>> extends IHCHasChildrenMutable <IMPLTYPE, IHCNode>
 {
   /**
    * Add a new text node, if the passed text is non-<code>null</code>.

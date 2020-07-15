@@ -56,8 +56,7 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
       return EContinue.BREAK;
 
     // Allow only valid bundle IDs
-    final String sBundleID = _getBundleIDFromFilename (aRequestScope.attrs ()
-                                                                    .getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
+    final String sBundleID = _getBundleIDFromFilename (aRequestScope.attrs ().getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME));
     if (!PhotonAppManager.getWebSiteResourceBundleMgr ().containsResourceBundleOfID (sBundleID))
     {
       if (LOGGER.isWarnEnabled ())
@@ -83,8 +82,7 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
                                     @Nonnull final String sFilename) throws IOException
   {
     final String sBundleID = _getBundleIDFromFilename (sFilename);
-    final WebSiteResourceBundleSerialized aBundle = PhotonAppManager.getWebSiteResourceBundleMgr ()
-                                                                    .getResourceBundleOfID (sBundleID);
+    final WebSiteResourceBundleSerialized aBundle = PhotonAppManager.getWebSiteResourceBundleMgr ().getResourceBundleOfID (sBundleID);
 
     final int nCachingDays = getCachingDays ();
     aUnifiedResponse.enableCaching (CGlobal.SECONDS_PER_DAY * nCachingDays)

@@ -91,8 +91,7 @@ public final class PhotonStubServletInitializer
       LOGGER.info ("Registering default ph-oton listeners and servlets");
 
       {
-        final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter",
-                                                                  CharacterEncodingFilter.class);
+        final FilterRegistration.Dynamic aFilter = aSC.addFilter ("CharacterEncodingFilter", CharacterEncodingFilter.class);
         if (aFilter != null)
         {
           // Filter is new
@@ -162,8 +161,7 @@ public final class PhotonStubServletInitializer
       }
 
       {
-        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("ResourceBundleServlet",
-                                                                     ResourceBundleServlet.class);
+        final ServletRegistration.Dynamic aServlet = aSC.addServlet ("ResourceBundleServlet", ResourceBundleServlet.class);
         if (aServlet != null)
         {
           aServlet.setAsyncSupported (true);

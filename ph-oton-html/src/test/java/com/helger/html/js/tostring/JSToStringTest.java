@@ -78,24 +78,24 @@ public final class JSToStringTest
   {
     // list integer
     {
-      final ICommonsList <Integer> aList = new CommonsArrayList<> ();
+      final ICommonsList <Integer> aList = new CommonsArrayList <> ();
       for (int i = 1; i < COUNT; ++i)
         aList.add (Integer.valueOf (i));
       _chk (aList, new JSListType (JSType.INT), null);
     }
     // list string
     {
-      final ICommonsList <String> aList = new CommonsArrayList<> ();
+      final ICommonsList <String> aList = new CommonsArrayList <> ();
       for (int i = 1; i < COUNT; ++i)
         aList.add ("String " + i);
       _chk (aList, new JSListType (JSType.STRING), null);
     }
     // list list string
     {
-      final ICommonsList <ICommonsList <String>> aList = new CommonsArrayList<> ();
+      final ICommonsList <ICommonsList <String>> aList = new CommonsArrayList <> ();
       for (int i = 1; i < COUNT; ++i)
       {
-        final ICommonsList <String> aSubList = new CommonsArrayList<> ();
+        final ICommonsList <String> aSubList = new CommonsArrayList <> ();
         aList.add (aSubList);
         for (int j = 1; j < COUNT; ++j)
           aSubList.add ("String " + i + " " + j);
@@ -109,23 +109,23 @@ public final class JSToStringTest
   {
     // map integer,double
     {
-      final ICommonsMap <Integer, Double> aMap = new CommonsHashMap<> ();
+      final ICommonsMap <Integer, Double> aMap = new CommonsHashMap <> ();
       for (int i = 1; i < COUNT; ++i)
         aMap.put (Integer.valueOf (i), Double.valueOf (i + 0.1));
       _chk (aMap, new JSMapType (JSType.INT, JSType.DOUBLE), null);
     }
     // map list integer,list double
     {
-      final ICommonsMap <List <Integer>, List <Double>> aMap = new CommonsHashMap<> ();
+      final ICommonsMap <List <Integer>, List <Double>> aMap = new CommonsHashMap <> ();
       for (int i = 1; i < COUNT; ++i)
       {
         // create key
-        final ICommonsList <Integer> aKey = new CommonsArrayList<> ();
+        final ICommonsList <Integer> aKey = new CommonsArrayList <> ();
         aKey.add (Integer.valueOf (i));
         aKey.add (Integer.valueOf (i + 1));
 
         // create value
-        final ICommonsList <Double> aValue = new CommonsArrayList<> ();
+        final ICommonsList <Double> aValue = new CommonsArrayList <> ();
         aValue.add (Double.valueOf (i + 0.3));
         aValue.add (Double.valueOf (i + 1.3));
 
@@ -139,20 +139,11 @@ public final class JSToStringTest
   @Test
   public void testFixedList ()
   {
-    assertEquals ("[]",
-                  JSToString.objectToJSString (new CommonsArrayList <String> (),
-                                               new JSListType (JSType.STRING),
-                                               false));
-    assertEquals ("['x']",
-                  JSToString.objectToJSString (CollectionHelper.newList ("x"), new JSListType (JSType.STRING), false));
-    assertEquals ("['x','y']",
-                  JSToString.objectToJSString (CollectionHelper.newList ("x", "y"),
-                                               new JSListType (JSType.STRING),
-                                               false));
+    assertEquals ("[]", JSToString.objectToJSString (new CommonsArrayList <String> (), new JSListType (JSType.STRING), false));
+    assertEquals ("['x']", JSToString.objectToJSString (CollectionHelper.newList ("x"), new JSListType (JSType.STRING), false));
+    assertEquals ("['x','y']", JSToString.objectToJSString (CollectionHelper.newList ("x", "y"), new JSListType (JSType.STRING), false));
     assertEquals ("[1,9]",
-                  JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1, 9),
-                                               new JSListType (JSType.INT),
-                                               false));
+                  JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1, 9), new JSListType (JSType.INT), false));
     assertEquals ("[1.1,9.8]",
                   JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1.1, 9.8),
                                                new JSListType (JSType.DOUBLE),
@@ -183,20 +174,17 @@ public final class JSToStringTest
     assertEquals ("'a\\'bc'", JSToString.objectToJSString (new StringBuilder ("a'bc")));
 
     // Arrays
-    assertEquals ("[1,'xx','y']",
-                  JSToString.objectToJSString (new Object [] { Integer.valueOf (1), "xx", Character.valueOf ('y') }));
+    assertEquals ("[1,'xx','y']", JSToString.objectToJSString (new Object [] { Integer.valueOf (1), "xx", Character.valueOf ('y') }));
 
     // Collections
     assertEquals ("[1,'xx','y']",
-                  JSToString.objectToJSString (CollectionHelper.<Object> newList (Integer.valueOf (1),
-                                                                                  "xx",
-                                                                                  Character.valueOf ('y'))));
-    ICommonsOrderedMap <Object, Object> aMap = new CommonsLinkedHashMap<> ();
+                  JSToString.objectToJSString (CollectionHelper.<Object> newList (Integer.valueOf (1), "xx", Character.valueOf ('y'))));
+    ICommonsOrderedMap <Object, Object> aMap = new CommonsLinkedHashMap <> ();
     aMap.put (Integer.valueOf (1), "xx");
     aMap.put (Integer.valueOf (2), Character.valueOf ('y'));
     assertEquals ("{1:'xx',2:'y'}", JSToString.objectToJSString (aMap));
 
-    aMap = new CommonsLinkedHashMap<> ();
+    aMap = new CommonsLinkedHashMap <> ();
     aMap.put (Integer.valueOf (1), CollectionHelper.newList (Integer.valueOf (1), "xx", Character.valueOf ('y')));
     aMap.put (Integer.valueOf (2), Character.valueOf ('y'));
     assertEquals ("{1:[1,'xx','y'],2:'y'}", JSToString.objectToJSString (aMap));

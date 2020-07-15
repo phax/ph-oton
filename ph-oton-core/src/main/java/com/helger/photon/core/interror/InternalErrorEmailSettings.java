@@ -42,7 +42,7 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
 {
   private ISMTPSettings m_aSMTPSettings;
   private IEmailAddress m_aSenderAddress;
-  private final ICommonsList <IEmailAddress> m_aReceiverAddresses = new CommonsArrayList<> ();
+  private final ICommonsList <IEmailAddress> m_aReceiverAddresses = new CommonsArrayList <> ();
 
   public InternalErrorEmailSettings ()
   {}
@@ -84,7 +84,7 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
   @Nonnull
   public InternalErrorEmailSettings setReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
   {
-    return setReceiverAddresses (aReceiverAddress == null ? null : new CommonsArrayList<> (aReceiverAddress));
+    return setReceiverAddresses (aReceiverAddress == null ? null : new CommonsArrayList <> (aReceiverAddress));
   }
 
   @Nonnull

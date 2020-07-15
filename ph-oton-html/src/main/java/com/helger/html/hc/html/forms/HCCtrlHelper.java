@@ -72,8 +72,7 @@ public final class HCCtrlHelper
    * @param aConsumer
    *        The consumer to be invoked. May not be <code>null</code>.
    */
-  public static void getAllHCControls (@Nullable final IHCNode aNode,
-                                       @Nonnull final Consumer <? super IHCControl <?>> aConsumer)
+  public static void getAllHCControls (@Nullable final IHCNode aNode, @Nonnull final Consumer <? super IHCControl <?>> aConsumer)
   {
     ValueEnforcer.notNull (aConsumer, "Consumer");
 
@@ -100,7 +99,7 @@ public final class HCCtrlHelper
   @ReturnsMutableCopy
   public static ICommonsList <IHCControl <?>> getAllHCControls (@Nullable final IHCNode aNode)
   {
-    final ICommonsList <IHCControl <?>> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCControl <?>> ret = new CommonsArrayList <> ();
     getAllHCControls (aNode, ret::add);
     return ret;
   }
@@ -137,7 +136,7 @@ public final class HCCtrlHelper
   @ReturnsMutableCopy
   public static ICommonsList <IHCControl <?>> getAllHCControls (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
-    final ICommonsList <IHCControl <?>> ret = new CommonsArrayList<> ();
+    final ICommonsList <IHCControl <?>> ret = new CommonsArrayList <> ();
     getAllHCControls (aNodes, ret::add);
     return ret;
   }

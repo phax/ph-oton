@@ -38,8 +38,7 @@ import com.helger.html.js.JSMarshaller;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocation <IMPLTYPE>> extends
-                                           AbstractJSExpression implements
+public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocation <IMPLTYPE>> extends AbstractJSExpression implements
                                            IJSInvocation <IMPLTYPE>
 {
   /**

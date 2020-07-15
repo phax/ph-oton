@@ -54,8 +54,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends
-                                          AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -145,8 +144,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
         aTable.addBodyRow ().addCells ("BeforeExecution", aCB.toString ());
       for (final IAjaxAfterExecutionCallback aCB : AjaxSettings.afterExecutionCallbacks ().getAllCallbacks ())
         aTable.addBodyRow ().addCells ("AfterExecution", aCB.toString ());
-      for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ()
-                                                                     .getAllCallbacks ())
+      for (final IAjaxLongRunningExecutionCallback aCB : AjaxSettings.longRunningExecutionCallbacks ().getAllCallbacks ())
         aTable.addBodyRow ().addCells ("LongRunningExecution", aCB.toString ());
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);

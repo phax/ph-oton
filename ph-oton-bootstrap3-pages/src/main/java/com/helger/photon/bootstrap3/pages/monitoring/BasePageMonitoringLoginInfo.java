@@ -92,8 +92,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     MSG_NAME ("Name", "Wert"),
     MSG_VALUE ("Wert", "Value"),
     MSG_LOGOUT_USER ("Benutzer {0} abmelden", "Log out user {0}"),
-    LOGOUT_QUESTION ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' abmelden wollen?",
-                     "Are you sure you want to log out user ''{0}''?"),
+    LOGOUT_QUESTION ("Sind Sie sicher, dass Sie den Benutzer ''{0}'' abmelden wollen?", "Are you sure you want to log out user ''{0}''?"),
     LOGOUT_SUCCESS ("Benutzer ''{0}'' wurde erfolgreich abgemeldet.", "User ''{0}'' was successfully logged out."),
     LOGOUT_ERROR ("Benutzer ''{0}'' konnte nicht abgemeldet werden, weil er nicht mehr angemeldet war.",
                   "User ''{0}'' could not be logged out because he was not logged in.");
@@ -149,8 +148,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
 
         // Show question
         final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
-        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                            sUserName)));
+        aForm.addChild (new BootstrapQuestionBox ().addChild (EText.LOGOUT_QUESTION.getDisplayTextWithArgs (aDisplayLocale, sUserName)));
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         aToolbar.addHiddenField (CPageParam.PARAM_ACTION, ACTION_LOGOUT_USER);
@@ -176,9 +174,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     _init ();
   }
 
-  public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID,
-                                      @Nonnull final String sName,
-                                      @Nullable final String sDescription)
+  public BasePageMonitoringLoginInfo (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
     _init ();
@@ -232,16 +228,14 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                                      .setCtrl (SecurityHelper.getUserDisplayName (aSelectedObject.getUser (),
                                                                                                   aDisplayLocale)));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (),
-                                                                                        aDisplayLocale)));
+                                                     .setCtrl (PDTToString.getAsString (aSelectedObject.getLoginDT (), aDisplayLocale)));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LASTACCESSDT.getDisplayText (aDisplayLocale))
                                                      .setCtrl (PDTToString.getAsString (aSelectedObject.getLastAccessDT (),
                                                                                         aDisplayLocale)));
     if (aSelectedObject.getLogoutDT () != null)
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_LOGOUTDT.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (PDTToString.getAsString (aSelectedObject.getLogoutDT (),
-                                                                                          aDisplayLocale)));
+                                                       .setCtrl (PDTToString.getAsString (aSelectedObject.getLogoutDT (), aDisplayLocale)));
     }
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SESSION_ID.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aSelectedObject.getSessionScope ().getID ()));
@@ -287,10 +281,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       return false;
 
     // Cannot logout the admin and myself
-    return aUser.isEnabled () &&
-           !aUser.isDeleted () &&
-           !aUser.isAdministrator () &&
-           !aUser.equals (aSWEC.getLoggedInUser ());
+    return aUser.isEnabled () && !aUser.isDeleted () && !aUser.isAdministrator () && !aUser.equals (aSWEC.getLoggedInUser ());
   }
 
   @Nullable
@@ -307,9 +298,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 
     final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_USERNAME.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_LOGINDT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
@@ -324,8 +313,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
       final ISimpleURL aViewLink = createViewURL (aWPEC, aLoginInfo);
 
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (new HCA (aViewLink).addChild (SecurityHelper.getUserDisplayName (aLoginInfo.getUser (),
-                                                                                     aDisplayLocale)));
+      aRow.addCell (new HCA (aViewLink).addChild (SecurityHelper.getUserDisplayName (aLoginInfo.getUser (), aDisplayLocale)));
       aRow.addCell (PDTToString.getAsString (aLoginInfo.getLoginDT (), aDisplayLocale));
       aRow.addCell (PDTToString.getAsString (aLoginInfo.getLastAccessDT (), aDisplayLocale));
 

@@ -260,9 +260,7 @@ public interface IMenuOperations extends Serializable
    * @return The created menu item object. Never <code>null</code>.
    */
   @Nonnull
-  IMenuItemExternal createRootItem (@Nonnull String sItemID,
-                                    @Nonnull IHasSimpleURL aURL,
-                                    @Nonnull IHasDisplayText aName);
+  IMenuItemExternal createRootItem (@Nonnull String sItemID, @Nonnull IHasSimpleURL aURL, @Nonnull IHasDisplayText aName);
 
   /**
    * Append a new menu item below the specified parent.

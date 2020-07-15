@@ -71,8 +71,7 @@ public class PasswordConstraintMustContainSpecialChar implements IPasswordConstr
   @Nullable
   public String getDescription (@Nonnull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MUST_CONTAIN_SPECIALS.getDisplayTextWithArgs (aContentLocale,
-                                                                                      Integer.valueOf (m_nMinSpecials));
+    return EPasswordConstraintText.DESC_MUST_CONTAIN_SPECIALS.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinSpecials));
   }
 
   public void fillMicroElement (@Nonnull final IMicroElement aElement)

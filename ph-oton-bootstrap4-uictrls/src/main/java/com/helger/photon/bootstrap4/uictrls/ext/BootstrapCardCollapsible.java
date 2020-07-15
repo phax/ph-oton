@@ -99,8 +99,7 @@ public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCar
   }
 
   @Override
-  protected void onRegisterExternalResources (final IHCConversionSettingsToNode aConversionSettings,
-                                              final boolean bForcedRegistration)
+  protected void onRegisterExternalResources (final IHCConversionSettingsToNode aConversionSettings, final boolean bForcedRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForcedRegistration);
     EFontAwesome4Icon.registerResourcesForThisRequest ();

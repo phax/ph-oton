@@ -85,9 +85,7 @@ public final class LongRunningJobManager
    * @param aResult
    *        The main job results.
    */
-  public void onEndJob (@Nullable final String sJobID,
-                        @Nonnull final ESuccess eExecSucess,
-                        @Nonnull final LongRunningJobResult aResult)
+  public void onEndJob (@Nullable final String sJobID, @Nonnull final ESuccess eExecSucess, @Nonnull final LongRunningJobResult aResult)
   {
     ValueEnforcer.notNull (eExecSucess, "ExecSuccess");
     ValueEnforcer.notNull (aResult, "Result");
@@ -130,9 +128,7 @@ public final class LongRunningJobManager
       if (nRunningJobCount == 0)
         break;
 
-      LOGGER.error ("There are still " +
-                    nRunningJobCount +
-                    " long running jobs in the background! Waiting for them to finish...");
+      LOGGER.error ("There are still " + nRunningJobCount + " long running jobs in the background! Waiting for them to finish...");
 
       // Wait some time
       Thread.sleep (nWaitSeconds * CGlobal.MILLISECONDS_PER_SECOND);

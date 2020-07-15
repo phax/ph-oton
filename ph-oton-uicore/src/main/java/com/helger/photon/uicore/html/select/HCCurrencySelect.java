@@ -44,10 +44,7 @@ public class HCCurrencySelect extends HCExtSelect
     // For all supported currencies
     for (final ECurrency eCurrency : aCurrencies)
     {
-      final String sDisplayText = CurrencyHelper.getCurrencySymbol (eCurrency) +
-                                  " (" +
-                                  eCurrency.getDisplayText (aDisplayLocale) +
-                                  ')';
+      final String sDisplayText = CurrencyHelper.getCurrencySymbol (eCurrency) + " (" + eCurrency.getDisplayText (aDisplayLocale) + ')';
       addOption (eCurrency.getID (), sDisplayText);
     }
   }

@@ -38,8 +38,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        The implementation type.
  */
-public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> extends
-                                    AbstractHCMediaElementChild <IMPLTYPE> implements
+public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> extends AbstractHCMediaElementChild <IMPLTYPE> implements
                                     IHCImg <IMPLTYPE>
 {
   // Inline images can be SimpleURLs as well!
@@ -209,8 +208,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC,
-                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sSrcSet))
       aElement.setAttribute (CHTMLAttributes.SRCSET, m_sSrcSet);
     if (StringHelper.hasText (m_sSizes))

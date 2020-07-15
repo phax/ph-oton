@@ -134,8 +134,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
   }
 
   @Nonnull
-  public IMPLTYPE addInlineCSSBeforeExternal (@Nullable final ICSSMediaList aMediaList,
-                                              @Nonnull final CharSequence aInlineCSS)
+  public IMPLTYPE addInlineCSSBeforeExternal (@Nullable final ICSSMediaList aMediaList, @Nonnull final CharSequence aInlineCSS)
   {
     ValueEnforcer.notNull (aInlineCSS, "InlineCSS");
 
@@ -156,8 +155,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
   }
 
   @Nonnull
-  public IMPLTYPE addInlineCSSAfterExternal (@Nullable final ICSSMediaList aMediaList,
-                                             @Nonnull final CharSequence aInlineCSS)
+  public IMPLTYPE addInlineCSSAfterExternal (@Nullable final ICSSMediaList aMediaList, @Nonnull final CharSequence aInlineCSS)
   {
     ValueEnforcer.notNull (aInlineCSS, "InlineCSS");
 
@@ -247,8 +245,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
 
     // CSS
-    for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ()
-                                                                                      .entrySet ())
+    for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ().entrySet ())
       for (final String sCSSFile : aEntry.getValue ())
         addExternalCSS (aEntry.getKey (), sCSSFile);
     for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())

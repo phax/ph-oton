@@ -125,8 +125,8 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * @return Triggered after initialization. If data needs to be prefetched, this
-   *         event will not be triggered until after the prefetched data is
+   * @return Triggered after initialization. If data needs to be prefetched,
+   *         this event will not be triggered until after the prefetched data is
    *         processed.
    */
   @Nullable
@@ -210,9 +210,9 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * Triggered when the query is autocompleted. The datum used for autocompletion
-   * is passed to the event handler as an argument in addition to the name of the
-   * dataset it originated from.
+   * Triggered when the query is autocompleted. The datum used for
+   * autocompletion is passed to the event handler as an argument in addition to
+   * the name of the dataset it originated from.
    *
    * @param aOnAutoCompleted
    *        Function to call. May be <code>null</code>.

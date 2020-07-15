@@ -79,8 +79,7 @@ import com.helger.xml.microdom.MicroQName;
  *        The implementation type.
  */
 @NotThreadSafe
-public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMPLTYPE>> extends AbstractHCNode
-                                        implements
+public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMPLTYPE>> extends AbstractHCNode implements
                                         IHCElement <IMPLTYPE>
 {
   /** Default translate mode */
@@ -201,9 +200,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
         }
         else
         {
-          HCConsistencyChecker.consistencyError ("The HC object ID '" +
-                                                 m_sID +
-                                                 "' will be removed - this may have side effects");
+          HCConsistencyChecker.consistencyError ("The HC object ID '" + m_sID + "' will be removed - this may have side effects");
         }
       m_sID = sID;
     }
@@ -225,9 +222,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
 
   public final boolean containsClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
-    return m_aCSSClassProviders != null &&
-           aCSSClassProvider != null &&
-           m_aCSSClassProviders.contains (aCSSClassProvider);
+    return m_aCSSClassProviders != null && aCSSClassProvider != null && m_aCSSClassProviders.contains (aCSSClassProvider);
   }
 
   @Nonnull
@@ -658,9 +653,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   private static final AnnotationUsageCache s_aAUC_D_HTML5 = new AnnotationUsageCache (DeprecatedInHTML5.class);
   private static final AnnotationUsageCache s_aAUC_S_HTML5 = new AnnotationUsageCache (SinceHTML5.class);
 
-  private static void _checkDeprecation (final Class <?> aElementClass,
-                                         final String sElementName,
-                                         final EHTMLVersion eHTMLVersion)
+  private static void _checkDeprecation (final Class <?> aElementClass, final String sElementName, final EHTMLVersion eHTMLVersion)
   {
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
@@ -730,8 +723,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     final boolean bHTML5 = aConversionSettings.getHTMLVersion ().isAtLeastHTML5 ();
 
@@ -784,8 +776,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     if (bHTML5)
     {
       if (m_eTranslate.isDefined ())
-        aElement.setAttribute (CHTMLAttributes.TRANSLATE,
-                               m_eTranslate.isTrue () ? CHTMLAttributeValues.YES : CHTMLAttributeValues.NO);
+        aElement.setAttribute (CHTMLAttributes.TRANSLATE, m_eTranslate.isTrue () ? CHTMLAttributeValues.YES : CHTMLAttributeValues.NO);
       if (m_eContentEditable != null)
         aElement.setAttribute (CHTMLAttributes.CONTENTEDITABLE, m_eContentEditable);
       if (StringHelper.hasText (m_sContextMenuID))
@@ -819,8 +810,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    *        The conversion settings to be used
    */
   @OverrideOnDemand
-  protected void finishMicroElement (@Nonnull final IMicroElement eElement,
-                                     @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void finishMicroElement (@Nonnull final IMicroElement eElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {}
 
   /*

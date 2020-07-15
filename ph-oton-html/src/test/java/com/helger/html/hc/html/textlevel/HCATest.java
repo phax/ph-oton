@@ -36,7 +36,6 @@ public final class HCATest
     HCA aLink = new HCA (new SimpleURL ("test").add ("a", ":x"));
     assertEquals ("<a href=\"test?a=%3Ax\"></a>", HCRenderer.getAsHTMLStringWithoutNamespaces (aLink).trim ());
     aLink = new HCA (new SimpleURL ("test").add ("a", ":x").add ("b", ":&"));
-    assertEquals ("<a href=\"test?a=%3Ax&amp;b=%3A%26\"></a>",
-                  HCRenderer.getAsHTMLStringWithoutNamespaces (aLink).trim ());
+    assertEquals ("<a href=\"test?a=%3Ax&amp;b=%3A%26\"></a>", HCRenderer.getAsHTMLStringWithoutNamespaces (aLink).trim ());
   }
 }

@@ -46,10 +46,7 @@ public interface IRequestParameterManager
                                        @Nonnull final Locale aDisplayLocale,
                                        @Nonnull final String sMenuItemID)
   {
-    return getLinkToMenuItem (RequestSettings.getApplicationID (aRequestScope),
-                              aRequestScope,
-                              aDisplayLocale,
-                              sMenuItemID);
+    return getLinkToMenuItem (RequestSettings.getApplicationID (aRequestScope), aRequestScope, aDisplayLocale, sMenuItemID);
   }
 
   @Nonnull

@@ -25,8 +25,7 @@ import javax.annotation.Nonnull;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCOL <IMPLTYPE extends AbstractHCOL <IMPLTYPE>> extends AbstractHCOLBase <IMPLTYPE, HCLI>
-                                   implements
+public abstract class AbstractHCOL <IMPLTYPE extends AbstractHCOL <IMPLTYPE>> extends AbstractHCOLBase <IMPLTYPE, HCLI> implements
                                    IHCOL <IMPLTYPE>
 {
   public AbstractHCOL ()

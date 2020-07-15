@@ -36,8 +36,7 @@ import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 
 @NotThreadSafe
-public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements
-                           IBootstrapFormGroupContainer <BootstrapForm>
+public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IBootstrapFormGroupContainer <BootstrapForm>
 {
   public static final int DEFAULT_LEFT_PART = 2;
   public static final int DEFAULT_RIGHT_PART = CBootstrap.GRID_SYSTEM_MAX - DEFAULT_LEFT_PART;
@@ -117,11 +116,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements
     ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 0, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsXL, "LeftPartsXL", 0, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
-                                                                 nLeftPartsSM,
-                                                                 nLeftPartsMD,
-                                                                 nLeftPartsLG,
-                                                                 nLeftPartsXL);
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG, nLeftPartsXL);
     final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
                                                                   _getRight (nLeftPartsSM),
                                                                   _getRight (nLeftPartsMD),

@@ -32,10 +32,7 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
 import com.helger.xml.microdom.IMicroQName;
 
-public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> extends
-                               IJSExpression,
-                               IJSStatement,
-                               IGenericImplTrait <IMPLTYPE>
+public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> extends IJSExpression, IJSStatement, IGenericImplTrait <IMPLTYPE>
 {
   /**
    * Add an expression to this invocation's argument list

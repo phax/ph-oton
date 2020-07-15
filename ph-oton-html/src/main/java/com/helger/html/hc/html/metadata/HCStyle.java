@@ -181,15 +181,13 @@ public class HCStyle extends AbstractHCElement <HCStyle>
   }
 
   @Nonnull
-  public final HCStyle setStyleContent (@Nonnull final CascadingStyleSheet aCSS,
-                                        @Nonnull final CSSWriterSettings aSettings)
+  public final HCStyle setStyleContent (@Nonnull final CascadingStyleSheet aCSS, @Nonnull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }
 
   @Nonnull
-  public final HCStyle setStyleContent (@Nonnull final CSSDeclarationList aCSS,
-                                        @Nonnull final CSSWriterSettings aSettings)
+  public final HCStyle setStyleContent (@Nonnull final CSSDeclarationList aCSS, @Nonnull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }

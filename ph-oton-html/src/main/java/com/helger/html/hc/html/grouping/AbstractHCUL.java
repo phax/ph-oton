@@ -25,8 +25,7 @@ import javax.annotation.Nonnull;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCUL <IMPLTYPE extends AbstractHCUL <IMPLTYPE>> extends AbstractHCULBase <IMPLTYPE, HCLI>
-                                   implements
+public abstract class AbstractHCUL <IMPLTYPE extends AbstractHCUL <IMPLTYPE>> extends AbstractHCULBase <IMPLTYPE, HCLI> implements
                                    IHCUL <IMPLTYPE>
 {
   public AbstractHCUL ()

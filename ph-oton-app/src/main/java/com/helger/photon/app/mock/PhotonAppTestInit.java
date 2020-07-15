@@ -42,8 +42,7 @@ public final class PhotonAppTestInit
 
   @Nonnull
   @ReturnsMutableCopy
-  public static NonBlockingStack <Runnable> init (@Nonnull final File aDataPath,
-                                                  @Nonnull @Nonempty final String sServletContextPath)
+  public static NonBlockingStack <Runnable> init (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
   {
     final NonBlockingStack <Runnable> aCleansing = new NonBlockingStack <> ();
 

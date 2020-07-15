@@ -56,8 +56,7 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
   @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    return EPhotonCoreText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale,
-                                                                                             m_sUserGroupID);
+    return EPhotonCoreText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale, m_sUserGroupID);
   }
 
   public boolean test (@Nullable final IMenuObject aValue)

@@ -53,8 +53,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecutionContext>
-                                                extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -81,8 +80,7 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
 
   private final SystemMigrationManager m_aSystemMigrationMgr;
 
-  public BasePageMonitoringSystemMigrations (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final SystemMigrationManager aSystemMigrationMgr)
+  public BasePageMonitoringSystemMigrations (@Nonnull @Nonempty final String sID, @Nonnull final SystemMigrationManager aSystemMigrationMgr)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_SYSTEMMIGRATIONS.getAsMLT ());
     m_aSystemMigrationMgr = ValueEnforcer.notNull (aSystemMigrationMgr, "SystemMigrationMgr");
@@ -128,20 +126,16 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
                                                                                                                    aDisplayLocale)
                                                                                                   .setInitialSorting (ESortOrder.DESCENDING),
-                                        new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)).setDataSort (2,
-                                                                                                                   1),
-                                        new DTCol (EText.MSG_ERRORMESSAGE.getDisplayText (aDisplayLocale)).setDataSort (3,
-                                                                                                                        2,
-                                                                                                                        1)).setID (getID ());
+                                        new DTCol (EText.MSG_SUCCESS.getDisplayText (aDisplayLocale)).setDataSort (2, 1),
+                                        new DTCol (EText.MSG_ERRORMESSAGE.getDisplayText (aDisplayLocale)).setDataSort (3, 2, 1))
+                                                                                                                                 .setID (getID ());
 
     for (final SystemMigrationResult aItem : m_aSystemMigrationMgr.getAllMigrationResultsFlattened ())
     {

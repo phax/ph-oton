@@ -51,8 +51,7 @@ public interface IAPIExecutionFilter extends Serializable
   }
 
   @Nullable
-  static IAPIExecutionFilter and (@Nullable final IAPIExecutionFilter aFirst,
-                                  @Nullable final IAPIExecutionFilter aSecond)
+  static IAPIExecutionFilter and (@Nullable final IAPIExecutionFilter aFirst, @Nullable final IAPIExecutionFilter aSecond)
   {
     return aFirst != null ? aSecond != null ? aFirst.and (aSecond) : aFirst : aSecond;
   }

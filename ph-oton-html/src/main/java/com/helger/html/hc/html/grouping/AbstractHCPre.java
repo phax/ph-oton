@@ -32,8 +32,8 @@ import com.helger.html.hc.html.IHCElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCPre <IMPLTYPE extends AbstractHCPre <IMPLTYPE>>
-                                    extends AbstractHCElementWithChildren <IMPLTYPE> implements IHCPre <IMPLTYPE>
+public abstract class AbstractHCPre <IMPLTYPE extends AbstractHCPre <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE> implements
+                                    IHCPre <IMPLTYPE>
 {
   public AbstractHCPre ()
   {

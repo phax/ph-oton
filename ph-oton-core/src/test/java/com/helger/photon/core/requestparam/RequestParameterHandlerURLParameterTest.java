@@ -50,9 +50,7 @@ public final class RequestParameterHandlerURLParameterTest
 
   private static final Locale LOCALE = LocaleCache.getInstance ().getLocale ("de_AT");
 
-  private void _test (@Nonnull final String sBasePath,
-                      @Nonnull final MenuTree aMenuTree,
-                      @Nonnull final IMenuItemPage aMenuItem)
+  private void _test (@Nonnull final String sBasePath, @Nonnull final MenuTree aMenuTree, @Nonnull final IMenuItemPage aMenuItem)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
     final RequestParameterHandlerURLParameter h = new RequestParameterHandlerURLParameter ();
@@ -84,8 +82,7 @@ public final class RequestParameterHandlerURLParameterTest
 
     // Locale and menu item
     aURL = h.buildURL (aRequestScope, sBasePath, LOCALE, aMenuItem.getID ());
-    assertEquals (sBasePath + "?" + sParamLocale + "=de_AT&" + sParamMenuItem + "=test",
-                  aURL.getAsStringWithEncodedParameters ());
+    assertEquals (sBasePath + "?" + sParamLocale + "=de_AT&" + sParamMenuItem + "=test", aURL.getAsStringWithEncodedParameters ());
     aParams = h.getParametersFromURL (aURL, aMenuTree);
     assertTrue (aParams.hasLocale ());
     assertEquals (LOCALE, aParams.getLocale ());

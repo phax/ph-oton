@@ -27,8 +27,7 @@ import com.helger.photon.bootstrap4.traits.IHCBootstrap4Trait;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
-public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecutionContext> extends
-                                               AbstractWebPage <WPECTYPE> implements
+public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE> implements
                                                IHCBootstrap4Trait
 {
   public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
@@ -41,9 +40,7 @@ public abstract class AbstractBootstrapWebPage <WPECTYPE extends IWebPageExecuti
     super (sID, aName, null);
   }
 
-  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID,
-                                   @Nonnull final String sName,
-                                   @Nullable final String sDescription)
+  public AbstractBootstrapWebPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, getAsMLT (sName), getAsMLT (sDescription));
   }

@@ -116,8 +116,7 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
     if (StringHelper.hasText (m_sKind))
       aElement.setAttribute (CHTMLAttributes.KIND, m_sKind);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC,
-                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sSrcLang))
       aElement.setAttribute (CHTMLAttributes.SRCLANG, m_sSrcLang);
     if (StringHelper.hasText (m_sLabel))

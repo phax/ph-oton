@@ -37,8 +37,9 @@ import com.helger.html.jscode.JSAssocArray;
  *        Real implementation type
  */
 @NotThreadSafe
-public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWithLabels <IMPLTYPE>>
-                                              implements IChart, IGenericImplTrait <IMPLTYPE>
+public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWithLabels <IMPLTYPE>> implements
+                                              IChart,
+                                              IGenericImplTrait <IMPLTYPE>
 {
   private ICommonsList <String> m_aLabels;
 

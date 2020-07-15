@@ -38,7 +38,6 @@ public final class DefaultCSSClassProviderTest
     assertNotNull (x);
     assertEquals ("any", x.getCSSClass ());
     assertSame (x, DefaultCSSClassProvider.create ("any"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (x,
-                                                                           DefaultCSSClassProvider.create ("anyOther"));
+    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (x, DefaultCSSClassProvider.create ("anyOther"));
   }
 }

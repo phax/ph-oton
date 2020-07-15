@@ -73,8 +73,7 @@ public final class UITextFormatter
         final ICommonsList <String> aParts = new CommonsArrayList <> ();
         String sValue = sOrigValue.substring (1, sOrigValue.length () - 1);
 
-        final String [] aObjStart = RegExHelper.getAllMatchingGroupValues ("([\\[]*)([A-Za-z0-9_$]+@0x[0-9a-fA-F]{8})(?:: (.+))?",
-                                                                           sValue);
+        final String [] aObjStart = RegExHelper.getAllMatchingGroupValues ("([\\[]*)([A-Za-z0-9_$]+@0x[0-9a-fA-F]{8})(?:: (.+))?", sValue);
         aParts.add (aObjStart[1]);
         if (aObjStart[2] != null)
         {
@@ -156,8 +155,7 @@ public final class UITextFormatter
   public static IHCNode unescapeHTML (@Nonnull final String sHTML)
   {
     // Do standard cleansing (setting the correct namespace URI etc.)
-    return unescapeHTML (sHTML,
-                         new PageViewExternalHTMLCleanser (HCSettings.getConversionSettings ().getHTMLVersion ()));
+    return unescapeHTML (sHTML, new PageViewExternalHTMLCleanser (HCSettings.getConversionSettings ().getHTMLVersion ()));
   }
 
   /**

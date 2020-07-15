@@ -177,9 +177,6 @@ public class JSVar extends AbstractJSAssignmentTarget implements IJSDeclaration
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("name", m_sName)
-                            .appendIfNotNull ("init", m_aInit)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("name", m_sName).appendIfNotNull ("init", m_aInit).getToString ();
   }
 }

@@ -77,8 +77,7 @@ public class JSAtomBigDecimal extends AbstractJSAtomNumeric
   @Nonnull
   private static BigDecimal _getParam (@Nonnull final AbstractJSAtomNumeric aRhs)
   {
-    return aRhs instanceof JSAtomBigDecimal ? ((JSAtomBigDecimal) aRhs).getContainedValue ()
-                                            : BigDecimal.valueOf (aRhs.doubleValue ());
+    return aRhs instanceof JSAtomBigDecimal ? ((JSAtomBigDecimal) aRhs).getContainedValue () : BigDecimal.valueOf (aRhs.doubleValue ());
   }
 
   @Override

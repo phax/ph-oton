@@ -55,8 +55,7 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
   {}
 
   @Nonnull
-  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath,
-                                                           @Nonnull final IMenuTree aMenuTree)
+  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath, @Nonnull final IMenuTree aMenuTree)
   {
     // Use paths for standard menu items
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
@@ -87,8 +86,7 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
-                                                       @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL, @Nonnull final IMenuTree aMenuTree)
   {
     return getParametersFromPath (aURL.getPath (), aMenuTree);
   }

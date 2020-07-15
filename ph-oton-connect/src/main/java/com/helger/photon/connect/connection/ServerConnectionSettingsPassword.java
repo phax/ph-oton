@@ -31,8 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public class ServerConnectionSettingsPassword extends AbstractServerConnectionSettings
-                                              implements IServerConnectionSettingsPassword
+public class ServerConnectionSettingsPassword extends AbstractServerConnectionSettings implements IServerConnectionSettingsPassword
 {
   private final String m_sPassword;
 

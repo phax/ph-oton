@@ -209,8 +209,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
     return true;
   }
 
-  private static final IMicroQName [] LINK_ATTR_NAMES = new IMicroQName [] { CHTMLAttributes.SRC,
-                                                                             CHTMLAttributes.HREF };
+  private static final IMicroQName [] LINK_ATTR_NAMES = new IMicroQName [] { CHTMLAttributes.SRC, CHTMLAttributes.HREF };
 
   @Override
   public EHierarchyVisitorReturn onItemBeforeChildren (final IMicroNode aItem)

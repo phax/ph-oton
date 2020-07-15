@@ -85,9 +85,7 @@ public class JSConditional extends AbstractJSStatement
    * @param aElse
    *        "else" block content. May be <code>null</code>.
    */
-  public JSConditional (@Nonnull final IJSExpression aTest,
-                        @Nullable final IHasJSCode aThen,
-                        @Nullable final IHasJSCode aElse)
+  public JSConditional (@Nonnull final IJSExpression aTest, @Nullable final IHasJSCode aThen, @Nullable final IHasJSCode aElse)
   {
     this (aTest, aThen);
     if (aElse != null)
@@ -188,9 +186,6 @@ public class JSConditional extends AbstractJSStatement
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("test", m_aTest)
-                                       .append ("then", m_aThen)
-                                       .appendIfNotNull ("else", m_aElse)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("test", m_aTest).append ("then", m_aThen).appendIfNotNull ("else", m_aElse).getToString ();
   }
 }

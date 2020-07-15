@@ -239,9 +239,7 @@ final class Line
     if (bExtendedMode)
     {
       if (m_sValue.length () - m_nLeading - m_nTrailing > 2 &&
-          (m_sValue.charAt (m_nLeading) == '`' ||
-           m_sValue.charAt (m_nLeading) == '~' ||
-           m_sValue.charAt (m_nLeading) == '%'))
+          (m_sValue.charAt (m_nLeading) == '`' || m_sValue.charAt (m_nLeading) == '~' || m_sValue.charAt (m_nLeading) == '%'))
       {
         if (_countCharsStart ('`') >= 3)
           return ELineType.FENCED_CODE;
@@ -255,9 +253,7 @@ final class Line
     }
 
     if (m_sValue.length () - m_nLeading - m_nTrailing > 2 &&
-        (m_sValue.charAt (m_nLeading) == '*' ||
-         m_sValue.charAt (m_nLeading) == '-' ||
-         m_sValue.charAt (m_nLeading) == '_'))
+        (m_sValue.charAt (m_nLeading) == '*' || m_sValue.charAt (m_nLeading) == '-' || m_sValue.charAt (m_nLeading) == '_'))
     {
       if (_countConsecutiveChars (m_sValue.charAt (m_nLeading)) >= 3)
         return ELineType.HR;
@@ -445,7 +441,7 @@ final class Line
   @Nonnull
   private EHTMLElementType _checkHTML ()
   {
-    final ICommonsList <String> aTags = new CommonsLinkedList<> ();
+    final ICommonsList <String> aTags = new CommonsLinkedList <> ();
     final StringBuilder aSB = new StringBuilder ();
     int nPos = m_nLeading;
     if (m_sValue.charAt (m_nLeading + 1) == '!')

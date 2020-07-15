@@ -135,9 +135,7 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
                                         @Nullable final Map <String, String> aAdditionalParameters) throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
-    postRedirectGet (getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE)
-                                   .addAll (aAdditionalParameters),
-                     aContent);
+    postRedirectGet (getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE).addAll (aAdditionalParameters), aContent);
   }
 
   /**

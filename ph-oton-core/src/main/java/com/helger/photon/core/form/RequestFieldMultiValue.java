@@ -59,8 +59,7 @@ public class RequestFieldMultiValue extends RequestFieldDataMultiValue implement
    *        The default values to use, if no value is present in the request
    *        scope.
    */
-  public RequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName,
-                                 @Nullable final Collection <String> aDefaultValues)
+  public RequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName, @Nullable final Collection <String> aDefaultValues)
   {
     super (sFieldName, aDefaultValues);
   }

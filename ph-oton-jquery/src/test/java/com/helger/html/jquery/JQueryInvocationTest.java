@@ -182,13 +182,11 @@ public final class JQueryInvocationTest
   public void testArgs ()
   {
     assertEquals ("$(document).on($('#abc'));", JQuery.jQueryDocument ().on ().arg (JQuery.idRef ("abc")).getJSCode ());
-    assertEquals ("$(document).on('#abc');",
-                  JQuery.jQueryDocument ().on ().arg (JQuerySelector.id ("abc")).getJSCode ());
+    assertEquals ("$(document).on('#abc');", JQuery.jQueryDocument ().on ().arg (JQuerySelector.id ("abc")).getJSCode ());
     assertEquals ("$(document).on('#abc td');",
                   JQuery.jQueryDocument ()
                         .on ()
-                        .arg (new JQuerySelectorList (JQuerySelector.id ("abc"),
-                                                      JQuerySelector.element (EHTMLElement.TD)))
+                        .arg (new JQuerySelectorList (JQuerySelector.id ("abc"), JQuerySelector.element (EHTMLElement.TD)))
                         .getJSCode ());
     assertEquals ("$(document).on('#abc td');",
                   JQuery.jQueryDocument ()

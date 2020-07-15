@@ -59,8 +59,9 @@ import com.helger.xml.microdom.MicroContainer;
  */
 @NotThreadSafe
 public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
-                                                   extends AbstractHCNode
-                                                   implements IHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>
+                                                   extends
+                                                   AbstractHCNode implements
+                                                   IHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>
 {
   private ICommonsList <CHILDTYPE> m_aChildren;
 
@@ -230,8 +231,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                    @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     if (m_aChildren != null)
       m_aChildren.findAll (aFilter, aConsumer);

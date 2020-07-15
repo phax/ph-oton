@@ -51,8 +51,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        the implementation type
  */
-public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends
-                                       AbstractHCControl <IMPLTYPE> implements
+public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE> implements
                                        IHCSelect <IMPLTYPE>
 {
   /** By default multi select is disabled */

@@ -46,9 +46,7 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
     this (sItemID, aPage, aPage);
   }
 
-  public MenuItemPage (@Nonnull @Nonempty final String sItemID,
-                       @Nonnull final IPage aPage,
-                       @Nonnull final IHasDisplayText aDisplayText)
+  public MenuItemPage (@Nonnull @Nonempty final String sItemID, @Nonnull final IPage aPage, @Nonnull final IHasDisplayText aDisplayText)
   {
     super (sItemID);
     m_aPage = ValueEnforcer.notNull (aPage, "Page");

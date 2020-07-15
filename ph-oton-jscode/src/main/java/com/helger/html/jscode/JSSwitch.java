@@ -141,9 +141,7 @@ public class JSSwitch extends AbstractJSStatement
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final JSSwitch rhs = (JSSwitch) o;
-    return m_aTest.equals (rhs.m_aTest) &&
-           m_aCases.equals (rhs.m_aCases) &&
-           EqualsHelper.equals (m_aDefaultCase, rhs.m_aDefaultCase);
+    return m_aTest.equals (rhs.m_aTest) && m_aCases.equals (rhs.m_aCases) && EqualsHelper.equals (m_aDefaultCase, rhs.m_aDefaultCase);
   }
 
   @Override

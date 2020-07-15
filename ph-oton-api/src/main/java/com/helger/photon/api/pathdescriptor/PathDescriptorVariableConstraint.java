@@ -96,8 +96,7 @@ public final class PathDescriptorVariableConstraint implements Serializable
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final PathDescriptorVariableConstraint rhs = (PathDescriptorVariableConstraint) o;
-    return m_eConstraintType.equals (rhs.m_eConstraintType) &&
-           EqualsHelper.equals (m_sConstraintValue, rhs.m_sConstraintValue);
+    return m_eConstraintType.equals (rhs.m_eConstraintType) && EqualsHelper.equals (m_sConstraintValue, rhs.m_sConstraintValue);
   }
 
   @Override

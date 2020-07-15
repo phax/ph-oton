@@ -35,9 +35,7 @@ public class JSOpBinary extends AbstractJSExpression
   private final IJSGeneratable m_aRight;
   private boolean m_bUseBraces;
 
-  private static boolean _useBraces (@Nonnull final IJSExpression aLeft,
-                                     @Nonnull final String sOp,
-                                     @Nonnull final IJSGeneratable aRight)
+  private static boolean _useBraces (@Nonnull final IJSExpression aLeft, @Nonnull final String sOp, @Nonnull final IJSGeneratable aRight)
   {
     if (aLeft instanceof JSOpBinary)
     {
@@ -65,9 +63,7 @@ public class JSOpBinary extends AbstractJSExpression
    * @param aRight
    *        Right side. May not be <code>null</code>.
    */
-  public JSOpBinary (@Nonnull final IJSExpression aLeft,
-                     @Nonnull final String sOp,
-                     @Nonnull final IJSGeneratable aRight)
+  public JSOpBinary (@Nonnull final IJSExpression aLeft, @Nonnull final String sOp, @Nonnull final IJSGeneratable aRight)
   {
     this (aLeft, sOp, aRight, _useBraces (aLeft, sOp, aRight));
   }
@@ -146,11 +142,7 @@ public class JSOpBinary extends AbstractJSExpression
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ())
-                            .append (m_aLeft)
-                            .append (m_sOp)
-                            .append (m_aRight)
-                            .getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aLeft).append (m_sOp).append (m_aRight).getHashCode ();
   }
 
   @Override

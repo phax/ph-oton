@@ -31,9 +31,7 @@ public class HCSalutationSelect extends HCExtSelect
     this (aRF, aDisplayLocale, true);
   }
 
-  public HCSalutationSelect (@Nonnull final IHCRequestField aRF,
-                             @Nonnull final Locale aDisplayLocale,
-                             final boolean bAddOptionPleaseSelect)
+  public HCSalutationSelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale, final boolean bAddOptionPleaseSelect)
   {
     this (aRF, aDisplayLocale, bAddOptionPleaseSelect, ESalutation.values ());
   }

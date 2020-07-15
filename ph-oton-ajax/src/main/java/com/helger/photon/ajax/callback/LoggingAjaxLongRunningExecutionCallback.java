@@ -37,9 +37,9 @@ public class LoggingAjaxLongRunningExecutionCallback implements IAjaxLongRunning
                                       @Nonnegative final long nExecutionMillis)
   {
     LOGGER.warn ("Finished invoking Ajax function '" +
-                    sFunctionName +
-                    "' which took " +
-                    nExecutionMillis +
-                    " milliseconds (which is too long)");
+                 sFunctionName +
+                 "' which took " +
+                 nExecutionMillis +
+                 " milliseconds (which is too long)");
   }
 }

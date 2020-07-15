@@ -69,7 +69,5 @@ public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializabl
    *         ID, menuitem ID and additional params, <code>false</code>
    *         otherwise.
    */
-  boolean hasSameContent (@Nullable String sAppID,
-                          @Nullable String sMenuItemID,
-                          @Nullable Map <String, String> aAdditionalParams);
+  boolean hasSameContent (@Nullable String sAppID, @Nullable String sMenuItemID, @Nullable Map <String, String> aAdditionalParams);
 }

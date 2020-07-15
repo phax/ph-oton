@@ -139,8 +139,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   public final EChange removeMetaElement (@Nullable final String sName)
   {
     if (StringHelper.hasText (sName))
-      return EChange.valueOf (m_aMetaElements.removeIf (x -> sName.equals (x.getName ()) ||
-                                                             sName.equals (x.getHttpEquiv ())));
+      return EChange.valueOf (m_aMetaElements.removeIf (x -> sName.equals (x.getName ()) || sName.equals (x.getHttpEquiv ())));
     return EChange.UNCHANGED;
   }
 
@@ -337,16 +336,14 @@ public class HCHead extends AbstractHCElement <HCHead>
   //
 
   @OverrideOnDemand
-  protected void emitLinks (@Nonnull final IMicroElement eHead,
-                            @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void emitLinks (@Nonnull final IMicroElement eHead, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     for (final HCLink aLink : m_aLinks)
       eHead.appendChild (aLink.convertToMicroNode (aConversionSettings));
   }
 
   @OverrideOnDemand
-  protected void emitCSS (@Nonnull final IMicroElement eHead,
-                          @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void emitCSS (@Nonnull final IMicroElement eHead, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     int nCSSExternals = 0;
     for (final IHCNode aCSS : m_aCSS)
@@ -365,16 +362,14 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @OverrideOnDemand
-  protected void emitJS (@Nonnull final IMicroElement eHead,
-                         @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void emitJS (@Nonnull final IMicroElement eHead, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     for (final IHCNode aJS : m_aJS)
       eHead.appendChild (aJS.convertToMicroNode (aConversionSettings));
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement eHead,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement eHead, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (eHead, aConversionSettings);
 

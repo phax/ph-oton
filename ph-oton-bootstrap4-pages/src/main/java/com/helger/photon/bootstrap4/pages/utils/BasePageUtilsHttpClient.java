@@ -86,8 +86,7 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  *        Web Page Execution Context type
  * @since 8.2.3
  */
-public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext> extends
-                                     AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   public static interface IHttpClientMetaProvider
   {
@@ -263,9 +262,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     super (sID, sName);
   }
 
-  public BasePageUtilsHttpClient (@Nonnull @Nonempty final String sID,
-                                  @Nonnull final String sName,
-                                  @Nullable final String sDescription)
+  public BasePageUtilsHttpClient (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -317,13 +314,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         String sResultContent;
         boolean bSuccess = false;
 
-        LOGGER.info ("http client " +
-                     eHttpMethod.getName () +
-                     " query '" +
-                     sURI +
-                     "' using configuration '" +
-                     aConfig.getID () +
-                     "'");
+        LOGGER.info ("http client " + eHttpMethod.getName () + " query '" + sURI + "' using configuration '" + aConfig.getID () + "'");
 
         final StopWatch aSW = StopWatch.createdStarted ();
         final HttpClientSettings aHCS = aConfig.getHttpClientSettings (sURI);
@@ -345,8 +336,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
                                                        .addChild (" using ")
                                                        .addChild (em (aConfig.getDisplayName ()))
                                                        .addChild (": ")
-                                                       .addChild (bSuccess ? badgeSuccess ("success")
-                                                                           : badgeDanger ("error")));
+                                                       .addChild (bSuccess ? badgeSuccess ("success") : badgeDanger ("error")));
         aNodeList.addChild (div ("Querying took " + aSW.getMillis () + " milliseconds"));
         if (aResponseHdl.m_aUsedStatusLine != null)
         {
@@ -369,10 +359,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
           aDT.setInfo (false);
           aNodeList.addChild (aTable).addChild (aDT);
         }
-        aNodeList.addChild (new HCTextArea ("responsepayload").setRows (Math.min (10,
-                                                                                  1 +
-                                                                                      StringHelper.getCharCount (sResultContent,
-                                                                                                                 '\n')))
+        aNodeList.addChild (new HCTextArea ("responsepayload").setRows (Math.min (10, 1 + StringHelper.getCharCount (sResultContent, '\n')))
                                                               .setValue (sResultContent)
                                                               .addClass (CBootstrapCSS.FORM_CONTROL)
                                                               .addClass (CBootstrapCSS.TEXT_MONOSPACE)
@@ -384,8 +371,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     aForm.setLeft (2);
 
     {
-      final HCExtSelect aSelect = new HCExtSelect (new RequestField (FIELD_CONFIG,
-                                                                     HttpClientConfigRegistry.DEFAULT_CONFIG_ID));
+      final HCExtSelect aSelect = new HCExtSelect (new RequestField (FIELD_CONFIG, HttpClientConfigRegistry.DEFAULT_CONFIG_ID));
       aSelect.addOptionPleaseSelect (aDisplayLocale);
       for (final IHttpClientConfig aHCC : HttpClientConfigRegistry.iterate ())
         aSelect.addOption (aHCC.getID (), aHCC.getDisplayName ());

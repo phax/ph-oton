@@ -62,8 +62,7 @@ import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> extends
-                                    AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -105,9 +104,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
     super (sID, sName);
   }
 
-  public BasePageSysInfoNetwork (@Nonnull @Nonempty final String sID,
-                                 @Nonnull final String sName,
-                                 @Nullable final String sDescription)
+  public BasePageSysInfoNetwork (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -144,119 +141,108 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
         final DefaultTreeWithGlobalUniqueID <String, NetworkInterface> aNITree = NetworkInterfaceHelper.createNetworkInterfaceTree ();
         // Sort on each level
         TreeWithIDSorter.sortByValue (aNITree, Comparator.comparing (NetworkInterface::getDisplayName));
-        TreeVisitor.visitTree (aNITree,
-                               new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, NetworkInterface>> ()
-                               {
-                                 @Override
-                                 public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, NetworkInterface> aItem)
-                                 {
-                                   final NetworkInterface aNI = aItem.getData ();
-                                   final int nDepth = getLevel ();
-                                   final HCRow aRow = aTable.addBodyRow ();
-                                   aRow.addCell (aNI.getName ());
-                                   final IHCCell <?> aCell = aRow.addAndReturnCell (aNI.getDisplayName ());
-                                   if (nDepth > 0)
-                                     aCell.addStyle (CCSSProperties.PADDING_LEFT.newValue (ECSSUnit.em (nDepth)));
+        TreeVisitor.visitTree (aNITree, new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, NetworkInterface>> ()
+        {
+          @Override
+          public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, NetworkInterface> aItem)
+          {
+            final NetworkInterface aNI = aItem.getData ();
+            final int nDepth = getLevel ();
+            final HCRow aRow = aTable.addBodyRow ();
+            aRow.addCell (aNI.getName ());
+            final IHCCell <?> aCell = aRow.addAndReturnCell (aNI.getDisplayName ());
+            if (nDepth > 0)
+              aCell.addStyle (CCSSProperties.PADDING_LEFT.newValue (ECSSUnit.em (nDepth)));
 
-                                   /*
-                                    * hardware address (usually MAC) of the
-                                    * interface if it has one and if it can be
-                                    * accessed given the current privileges.
-                                    */
-                                   try
-                                   {
-                                     final byte [] aMAC = aNI.getHardwareAddress ();
-                                     aRow.addCell (aMAC == null ? "" : StringHelper.getHexEncoded (aMAC));
-                                   }
-                                   catch (final SocketException ex)
-                                   {
-                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
-                                   }
+            /*
+             * hardware address (usually MAC) of the interface if it has one and
+             * if it can be accessed given the current privileges.
+             */
+            try
+            {
+              final byte [] aMAC = aNI.getHardwareAddress ();
+              aRow.addCell (aMAC == null ? "" : StringHelper.getHexEncoded (aMAC));
+            }
+            catch (final SocketException ex)
+            {
+              aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+            }
 
-                                   /* network interface is up and running. */
-                                   try
-                                   {
-                                     aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isUp (), aDisplayLocale));
-                                   }
-                                   catch (final SocketException ex)
-                                   {
-                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
-                                   }
+            /* network interface is up and running. */
+            try
+            {
+              aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isUp (), aDisplayLocale));
+            }
+            catch (final SocketException ex)
+            {
+              aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+            }
 
-                                   /*
-                                    * network interface is a loopback interface.
-                                    */
-                                   try
-                                   {
-                                     aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isLoopback (), aDisplayLocale));
-                                   }
-                                   catch (final SocketException ex)
-                                   {
-                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
-                                   }
+            /*
+             * network interface is a loopback interface.
+             */
+            try
+            {
+              aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isLoopback (), aDisplayLocale));
+            }
+            catch (final SocketException ex)
+            {
+              aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+            }
 
-                                   /*
-                                    * network interface is a point to point
-                                    * interface. A typical point to point
-                                    * interface would be a PPP connection
-                                    * through a modem.
-                                    */
-                                   try
-                                   {
-                                     aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isPointToPoint (), aDisplayLocale));
-                                   }
-                                   catch (final SocketException ex)
-                                   {
-                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
-                                   }
+            /*
+             * network interface is a point to point interface. A typical point
+             * to point interface would be a PPP connection through a modem.
+             */
+            try
+            {
+              aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isPointToPoint (), aDisplayLocale));
+            }
+            catch (final SocketException ex)
+            {
+              aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+            }
 
-                                   /*
-                                    * network interface supports multicasting or
-                                    * not.
-                                    */
-                                   try
-                                   {
-                                     aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.supportsMulticast (),
-                                                                               aDisplayLocale));
-                                   }
-                                   catch (final SocketException ex)
-                                   {
-                                     aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
-                                   }
+            /*
+             * network interface supports multicasting or not.
+             */
+            try
+            {
+              aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.supportsMulticast (), aDisplayLocale));
+            }
+            catch (final SocketException ex)
+            {
+              aRow.addCell (em (EText.MSG_ERROR.getDisplayText (aDisplayLocale)));
+            }
 
-                                   /*
-                                    * Maximum Transmission Unit (MTU) of this
-                                    * interface.
-                                    */
-                                   int nMTU = -1;
-                                   try
-                                   {
-                                     nMTU = aNI.getMTU ();
-                                   }
-                                   catch (final SocketException ex)
-                                   {}
-                                   if (nMTU > 0)
-                                     aRow.addCell (Integer.toString (nMTU));
-                                   else
-                                     aRow.addCell ();
+            /*
+             * Maximum Transmission Unit (MTU) of this interface.
+             */
+            int nMTU = -1;
+            try
+            {
+              nMTU = aNI.getMTU ();
+            }
+            catch (final SocketException ex)
+            {}
+            if (nMTU > 0)
+              aRow.addCell (Integer.toString (nMTU));
+            else
+              aRow.addCell ();
 
-                                   /*
-                                    * this interface is a virtual interface
-                                    * (also called subinterface). Virtual
-                                    * interfaces are, on some systems,
-                                    * interfaces created as a child of a
-                                    * physical interface and given different
-                                    * settings (like address or MTU). Usually
-                                    * the name of the interface will the name of
-                                    * the parent followed by a colon (:) and a
-                                    * number identifying the child since there
-                                    * can be several virtual interfaces attached
-                                    * to a single physical interface
-                                    */
-                                   aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isVirtual (), aDisplayLocale));
-                                   return EHierarchyVisitorReturn.CONTINUE;
-                                 }
-                               });
+            /*
+             * this interface is a virtual interface (also called subinterface).
+             * Virtual interfaces are, on some systems, interfaces created as a
+             * child of a physical interface and given different settings (like
+             * address or MTU). Usually the name of the interface will the name
+             * of the parent followed by a colon (:) and a number identifying
+             * the child since there can be several virtual interfaces attached
+             * to a single physical interface
+             */
+            aRow.addCell (EPhotonCoreText.getYesOrNo (aNI.isVirtual (), aDisplayLocale));
+            return EHierarchyVisitorReturn.CONTINUE;
+          }
+        });
       }
       catch (final Throwable t)
       {

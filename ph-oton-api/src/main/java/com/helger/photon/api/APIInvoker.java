@@ -67,15 +67,13 @@ public class APIInvoker implements IAPIInvoker
       s_aStatsGlobalInvoke.increment ();
 
       // Invoke before handler
-      APISettings.beforeExecutionCallbacks ()
-                 .forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
+      APISettings.beforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
 
       // Main invocation
       aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
 
       // Invoke after handler
-      APISettings.afterExecutionCallbacks ()
-                 .forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
+      APISettings.afterExecutionCallbacks ().forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
 
       // Increment statistics after successful call
       s_aStatsFunctionInvoke.increment (sPath);
@@ -87,14 +85,12 @@ public class APIInvoker implements IAPIInvoker
       if (aExMapper != null)
       {
         // Apply exception mapper
-        bHandled = aExMapper.applyExceptionOnResponse (aInvokableDescriptor, aRequestScope, aUnifiedResponse, t)
-                            .isHandled ();
+        bHandled = aExMapper.applyExceptionOnResponse (aInvokableDescriptor, aRequestScope, aUnifiedResponse, t).isHandled ();
       }
 
       if (!bHandled)
       {
-        APISettings.exceptionCallbacks ()
-                   .forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, t));
+        APISettings.exceptionCallbacks ().forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, t));
 
         // Re-throw
         if (t instanceof Exception)
@@ -112,10 +108,7 @@ public class APIInvoker implements IAPIInvoker
       {
         // Long running execution
         APISettings.longRunningExecutionCallbacks ()
-                   .forEach (aCB -> aCB.onLongRunningExecution (this,
-                                                                aInvokableDescriptor,
-                                                                aRequestScope,
-                                                                nExecutionMillis));
+                   .forEach (aCB -> aCB.onLongRunningExecution (this, aInvokableDescriptor, aRequestScope, nExecutionMillis));
       }
     }
   }

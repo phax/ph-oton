@@ -48,8 +48,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     m_sAppID = ValueEnforcer.notEmpty (sAppID, "AppID");
   }
 
-  public static void setStatePerApp (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull final String sAppID)
+  public static void setStatePerApp (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sAppID)
   {
     // It's important to create a session here!
     final PhotonSessionState aSessionState = PhotonSessionState.getInstance ();
@@ -99,8 +98,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
           if (aRootItem.hasChildren ())
           {
             final IMenuItemPage aFirstMenuItem = aRootItem.findFirstChildMapped (aItem -> aItem.getData () instanceof IMenuItemPage &&
-                                                                                          aItem.getData ()
-                                                                                               .matchesDisplayFilter (),
+                                                                                          aItem.getData ().matchesDisplayFilter (),
                                                                                  aItem -> (IMenuItemPage) aItem.getData ());
             if (aFirstMenuItem != null)
               aMenuItem = aFirstMenuItem;
@@ -139,9 +137,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
       aAppSessionState.setDisplayLocale (aDisplayLocale);
     }
 
-    RequestSettings.setRequestState (aRequestScope,
-                                     sAppID,
-                                     new PhotonRequestState (aMenuTree, aMenuItem, aDisplayLocale));
+    RequestSettings.setRequestState (aRequestScope, sAppID, new PhotonRequestState (aMenuTree, aMenuItem, aDisplayLocale));
   }
 
   public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)

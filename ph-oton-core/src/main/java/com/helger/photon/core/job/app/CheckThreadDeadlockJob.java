@@ -80,11 +80,10 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
 
     final ICommonsMap <String, Object> aJobDataMap = new CommonsHashMap <> ();
 
-    return GlobalQuartzScheduler.getInstance ().scheduleJob (CheckThreadDeadlockJob.class.getName (),
-                                                             JDK8TriggerBuilder.newTrigger ()
-                                                                               .startNow ()
-                                                                               .withSchedule (aScheduleBuilder),
-                                                             CheckThreadDeadlockJob.class,
-                                                             aJobDataMap);
+    return GlobalQuartzScheduler.getInstance ()
+                                .scheduleJob (CheckThreadDeadlockJob.class.getName (),
+                                              JDK8TriggerBuilder.newTrigger ().startNow ().withSchedule (aScheduleBuilder),
+                                              CheckThreadDeadlockJob.class,
+                                              aJobDataMap);
   }
 }

@@ -71,9 +71,7 @@ public final class JSPackageTest
 
       // Dynamic function
       {
-        final JSVar aAdd2 = aFuncMain.body ()
-                                     .var ("add2",
-                                           JSPrimitiveType.FUNCTION._new ().arg ("x").arg ("y").arg ("return x+y"));
+        final JSVar aAdd2 = aFuncMain.body ().var ("add2", JSPrimitiveType.FUNCTION._new ().arg ("x").arg ("y").arg ("return x+y"));
         aFuncMain.body ().invoke (aAdd2.name ()).arg (1).arg (2);
       }
 
@@ -158,10 +156,7 @@ public final class JSPackageTest
       anonFunction.body ().assignPlus (sComments, sComment.plus ('\n'));
       anonFunction.body ()._return (JSExpr.lit (""));
       aFuncMain.body ()
-               .assign (sHTML,
-                        sHTML.invoke ("replace")
-                             .arg (JSExpr.regex ("<!--([\\s\\S]*?)-->").global (true))
-                             .arg (anonFunction));
+               .assign (sHTML, sHTML.invoke ("replace").arg (JSExpr.regex ("<!--([\\s\\S]*?)-->").global (true)).arg (anonFunction));
       aFuncMain.body ().comment ("Remaining HTML + comments content");
       aFuncMain.body ()._return (new JSAssocArray ().add ("html", sHTML).add ("comments", sComments));
 
@@ -258,11 +253,7 @@ public final class JSPackageTest
                   "i--;" +
                   "}",
                   sCompressedCode);
-    LOGGER.info ("Saved " +
-                 (sCode.length () - sCompressedCode.length ()) +
-                 " chars. " +
-                 sCompressedCode.length () +
-                 " chars are left");
+    LOGGER.info ("Saved " + (sCode.length () - sCompressedCode.length ()) + " chars. " + sCompressedCode.length () + " chars are left");
     LOGGER.info ("--------");
   }
 
@@ -292,10 +283,7 @@ public final class JSPackageTest
       final JSVar aDisabled = fED.param ("bDisabled");
       {
         final JSAnonymousFunction fEDEach = new JSAnonymousFunction ();
-        fEDEach.body ()
-               ._if (JSExpr.refThis ("disabled").isNotUndefined ())
-               ._then ()
-               .assign (JSExpr.refThis ("disabled"), aDisabled);
+        fEDEach.body ()._if (JSExpr.refThis ("disabled").isNotUndefined ())._then ().assign (JSExpr.refThis ("disabled"), aDisabled);
         fED.body ()._return (JSExpr.invokeThis ("each").arg (fEDEach));
       }
       f.body ().assign (JSExpr.ref (aDollar, "fn", "setDisabled"), fED);

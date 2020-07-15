@@ -25,8 +25,7 @@ public class AppErrorServlet extends AbstractXServlet
 {
   public AppErrorServlet ()
   {
-    handlerRegistry ().registerHandler (EHttpMethod.GET,
-                                        new ErrorXServletHandler (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH));
+    handlerRegistry ().registerHandler (EHttpMethod.GET, new ErrorXServletHandler (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH));
     handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }
 }

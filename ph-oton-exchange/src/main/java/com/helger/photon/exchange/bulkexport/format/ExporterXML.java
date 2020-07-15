@@ -132,8 +132,7 @@ public class ExporterXML implements IExporterFile
 
   @Override
   @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
-                                 @Nonnull @WillClose final OutputStream aOS)
+  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider, @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {

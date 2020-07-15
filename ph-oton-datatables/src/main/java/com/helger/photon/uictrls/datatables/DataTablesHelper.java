@@ -161,8 +161,7 @@ public final class DataTablesHelper
       {
         final JSVar aParam1 = aFuncReduce.param ("a");
         final JSVar aParam2 = aFuncReduce.param ("b");
-        aFuncReduce.body ()
-                   ._return (JSExpr.invoke (aIntVal).arg (aParam1).plus (JSExpr.invoke (aIntVal).arg (aParam2)));
+        aFuncReduce.body ()._return (JSExpr.invoke (aIntVal).arg (aParam1).plus (JSExpr.invoke (aIntVal).arg (aParam2)));
       }
       final JSVar aReduce = ret.body ().var ("funcReduce" + sSuffix, aFuncReduce);
 
@@ -204,12 +203,6 @@ public final class DataTablesHelper
   @Nonnull
   public static JSInvocation createClearFilterCode (@Nonnull final IJSExpression aDTSelect)
   {
-    return aDTSelect.invoke ("DataTable")
-                    .invoke ("search")
-                    .arg ("")
-                    .invoke ("columns")
-                    .invoke ("search")
-                    .arg ("")
-                    .invoke ("draw");
+    return aDTSelect.invoke ("DataTable").invoke ("search").arg ("").invoke ("columns").invoke ("search").arg ("").invoke ("draw");
   }
 }

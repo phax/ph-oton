@@ -45,8 +45,7 @@ public final class MainExtractPrismLanguage
     // Languages
     {
       final String sLanguages = aURL.params ().getFirstParamValue ("languages");
-      final ICommonsList <String> aLanguages = CollectionHelper.getSortedInline (StringHelper.getExploded ('+',
-                                                                                                           sLanguages));
+      final ICommonsList <String> aLanguages = CollectionHelper.getSortedInline (StringHelper.getExploded ('+', sLanguages));
       // Special "none" language
       aLanguages.add (0, "none");
       for (final String sLanguage : aLanguages)
@@ -60,10 +59,7 @@ public final class MainExtractPrismLanguage
       final String sPlugins = aURL.params ().getFirstParamValue ("plugins");
       final ICommonsList <String> aPlugins = CollectionHelper.getSorted (StringHelper.getExploded ('+', sPlugins));
       for (final String sPlugin : aPlugins)
-        aSB.append (StringHelper.replaceAll (sPlugin, '-', '_').toUpperCase (Locale.US))
-           .append (" (\"")
-           .append (sPlugin)
-           .append ("\"),\n");
+        aSB.append (StringHelper.replaceAll (sPlugin, '-', '_').toUpperCase (Locale.US)).append (" (\"").append (sPlugin).append ("\"),\n");
     }
     LOGGER.info (aSB.toString ());
   }

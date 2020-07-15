@@ -134,8 +134,7 @@ public final class GlobalPasswordSettings
    * @return The password hash. Never <code>null</code>.
    */
   @Nonnull
-  public static PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt,
-                                                            @Nonnull final String sPlainTextPassword)
+  public static PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt, @Nonnull final String sPlainTextPassword)
   {
     return s_aPHCMgr.createUserDefaultPasswordHash (aSalt, sPlainTextPassword);
   }

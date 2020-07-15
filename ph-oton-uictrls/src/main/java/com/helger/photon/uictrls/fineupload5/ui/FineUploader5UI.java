@@ -190,12 +190,9 @@ public class FineUploader5UI extends FineUploader5Core
     {
       if (aDisplayLocale != null)
       {
-        aAssocArray.add ("confirmMessage",
-                         EFineUploader5UIText.DELETE_FILE_CONFIRM_MESSAGE.getDisplayText (aDisplayLocale));
-        aAssocArray.add ("deletingFailedText",
-                         EFineUploader5UIText.DELETE_FILE_DELETING_FAILED_TEXT.getDisplayText (aDisplayLocale));
-        aAssocArray.add ("deletingStatusText",
-                         EFineUploader5UIText.DELETE_FILE_DELETING_STATUS_TEXT.getDisplayText (aDisplayLocale));
+        aAssocArray.add ("confirmMessage", EFineUploader5UIText.DELETE_FILE_CONFIRM_MESSAGE.getDisplayText (aDisplayLocale));
+        aAssocArray.add ("deletingFailedText", EFineUploader5UIText.DELETE_FILE_DELETING_FAILED_TEXT.getDisplayText (aDisplayLocale));
+        aAssocArray.add ("deletingStatusText", EFineUploader5UIText.DELETE_FILE_DELETING_STATUS_TEXT.getDisplayText (aDisplayLocale));
       }
     }
   }

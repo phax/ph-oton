@@ -37,8 +37,7 @@ import com.helger.html.js.IHasJSCodeWithSettings;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>>
-                         extends IHCElementWithChildren <IMPLTYPE>, IHCHasName <IMPLTYPE>
+public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>, IHCHasName <IMPLTYPE>
 {
   @Nullable
   String getAcceptCharset ();

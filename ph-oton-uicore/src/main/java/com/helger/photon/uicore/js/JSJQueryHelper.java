@@ -45,8 +45,8 @@ public final class JSJQueryHelper
 
   /**
    * Create a JS anonymous function that can be used as a callback to the
-   * jQuery.ajax success callback. Note: this can only be used with extended HTML
-   * responses!
+   * jQuery.ajax success callback. Note: this can only be used with extended
+   * HTML responses!
    *
    * @param aHandlerBeforeInclude
    *        The JS expression that must resolve to a JS function that takes 3

@@ -28,8 +28,8 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  *        Implementation type
  */
 @SinceHTML5
-public abstract class AbstractHCFooter <IMPLTYPE extends AbstractHCFooter <IMPLTYPE>> extends
-                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCFooter <IMPLTYPE extends AbstractHCFooter <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
+                                       implements
                                        IHCFooter <IMPLTYPE>
 {
   public AbstractHCFooter ()

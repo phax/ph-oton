@@ -55,9 +55,7 @@ public final class JSFilenameHelper
       return false;
 
     // Second check for URLs with parameters
-    return sFilename.endsWith (CJS.FILE_EXTENSION_JS) ||
-           sFilename.contains (JS_IN_URL) ||
-           sFilename.contains (JS_IN_URL2);
+    return sFilename.endsWith (CJS.FILE_EXTENSION_JS) || sFilename.contains (JS_IN_URL) || sFilename.contains (JS_IN_URL2);
   }
 
   /**
@@ -76,9 +74,7 @@ public final class JSFilenameHelper
       return false;
 
     // Second check for URLs with parameters
-    return sFilename.endsWith (CJS.FILE_EXTENSION_MIN_JS) ||
-           sFilename.contains (MIN_JS_IN_URL) ||
-           sFilename.contains (MIN_JS_IN_URL2);
+    return sFilename.endsWith (CJS.FILE_EXTENSION_MIN_JS) || sFilename.contains (MIN_JS_IN_URL) || sFilename.contains (MIN_JS_IN_URL2);
   }
 
   /**

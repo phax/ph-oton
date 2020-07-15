@@ -44,9 +44,7 @@ import com.helger.html.jscode.JSExpr;
  *        Real implementation type
  */
 @NotThreadSafe
-public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple <IMPLTYPE>> implements
-                                          IChart,
-                                          IGenericImplTrait <IMPLTYPE>
+public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple <IMPLTYPE>> implements IChart, IGenericImplTrait <IMPLTYPE>
 {
   /**
    * Single data set for a simple chart.

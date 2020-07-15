@@ -86,8 +86,7 @@ public class APIDescriptor implements IAPIDescriptor
    *        The factory to be used to create executor instances for every API
    *        invocation. May not be <code>null</code>.
    */
-  public APIDescriptor (@Nonnull final APIPath aPath,
-                        @Nonnull final ISupplier <? extends IAPIExecutor> aExecutorFactory)
+  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final ISupplier <? extends IAPIExecutor> aExecutorFactory)
   {
     m_aAPIPath = ValueEnforcer.notNull (aPath, "Path");
     m_aPathDescriptor = PathDescriptor.create (aPath.getPath ());

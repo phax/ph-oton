@@ -115,9 +115,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IRole, WPECTYPE> ()
     {
       @Override
-      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
-                                @Nonnull final BootstrapForm aForm,
-                                @Nonnull final IRole aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nonnull final IRole aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -262,18 +260,14 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.attrs ();
 
     // Callback for custom attributes
-    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
-                                                                                aSelectedObject,
-                                                                                aCustomAttrs,
-                                                                                aViewForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aViewForm);
 
     if (aCustomAttrs.isNotEmpty ())
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ()
-                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
-                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale), EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
@@ -353,8 +347,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       {
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aRole,
-                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                   aRole.getName ())));
+                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale, aRole.getName ())));
       }
       else
       {

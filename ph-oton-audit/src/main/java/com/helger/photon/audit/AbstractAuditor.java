@@ -86,13 +86,8 @@ public abstract class AbstractAuditor implements IAuditor
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = m_aActionStringProvider.apply (aActionObjectType != null ? aActionObjectType.getName ()
-                                                                                        : sAction,
-                                                              aArgs);
-    final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
-                                                eActionType,
-                                                eSuccess,
-                                                sFullAction);
+    final String sFullAction = m_aActionStringProvider.apply (aActionObjectType != null ? aActionObjectType.getName () : sAction, aArgs);
+    final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (), eActionType, eSuccess, sFullAction);
     handleAuditItem (aAuditItem);
   }
 }

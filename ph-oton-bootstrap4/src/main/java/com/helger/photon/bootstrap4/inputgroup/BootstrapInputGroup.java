@@ -93,8 +93,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   public HCDiv getOrCreateGroupPrepend ()
   {
     // Existing "prepend" present?
-    final HCDiv aDiv = (HCDiv) findFirstChild (x -> x instanceof HCDiv &&
-                                                    ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_PREPEND));
+    final HCDiv aDiv = (HCDiv) findFirstChild (x -> x instanceof HCDiv && ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_PREPEND));
     return aDiv != null ? aDiv : addAndReturnChild (createGroupPrepend ());
   }
 
@@ -102,8 +101,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   public HCDiv getOrCreateGroupAppend ()
   {
     // Existing "append" present?
-    final HCDiv aDiv = (HCDiv) findFirstChild (x -> x instanceof HCDiv &&
-                                                    ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_APPEND));
+    final HCDiv aDiv = (HCDiv) findFirstChild (x -> x instanceof HCDiv && ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_APPEND));
     return aDiv != null ? aDiv : addAndReturnChild (createGroupAppend ());
   }
 

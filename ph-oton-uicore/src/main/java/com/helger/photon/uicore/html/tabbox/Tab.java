@@ -43,10 +43,7 @@ public class Tab implements IHasID <String>, Serializable
   private IHCNode m_aContent;
   private boolean m_bDisabled;
 
-  public Tab (@Nullable final String sID,
-              @Nullable final IHCNode aLabel,
-              @Nullable final IHCNode aContent,
-              final boolean bDisabled)
+  public Tab (@Nullable final String sID, @Nullable final IHCNode aLabel, @Nullable final IHCNode aContent, final boolean bDisabled)
   {
     if (StringHelper.hasText (sID))
     {

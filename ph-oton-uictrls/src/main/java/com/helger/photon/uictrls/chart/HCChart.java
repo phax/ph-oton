@@ -296,9 +296,7 @@ public class HCChart extends AbstractHCCanvas <HCChart>
       // insertion.
       aJSBody.add (JQuery.jQuery (new HCLegend ().setID (getLegendID ())).insertAfter (JQuery.idRef (this)));
       // Fill the stub legend with content
-      aJSBody.add (JSHtml.documentGetElementById (getLegendID ())
-                         .ref ("innerHTML")
-                         .assign (aJSChart.invoke ("generateLegend")));
+      aJSBody.add (JSHtml.documentGetElementById (getLegendID ()).ref ("innerHTML").assign (aJSChart.invoke ("generateLegend")));
     }
 
     // Callback
@@ -331,13 +329,12 @@ public class HCChart extends AbstractHCCanvas <HCChart>
     // Cleanup old chart
     ret.invoke (JSExpr.ref (getJSChartVar ()), "destroy");
     // Use new chart
-    ret.assign (JSExpr.ref (getJSChartVar ()), new JSDefinedClass ("Chart")._new ()
-                                                                           .arg (JSExpr.ref (getCanvasID ())
-                                                                                       .invoke ("getContext")
-                                                                                       .arg ("2d"))
-                                                                           .invoke (m_aChart.getJSMethodName ())
-                                                                           .arg (aJSDataVar)
-                                                                           .arg (getJSOptions ()));
+    ret.assign (JSExpr.ref (getJSChartVar ()),
+                new JSDefinedClass ("Chart")._new ()
+                                            .arg (JSExpr.ref (getCanvasID ()).invoke ("getContext").arg ("2d"))
+                                            .invoke (m_aChart.getJSMethodName ())
+                                            .arg (aJSDataVar)
+                                            .arg (getJSOptions ()));
     return ret;
   }
 }

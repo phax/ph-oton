@@ -31,8 +31,7 @@ import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
  * @author Philip Helger
  * @since 8.2.4
  */
-public class SessionBackedRequestFieldBooleanMultiValue extends SessionBackedRequestField implements
-                                                        IHCRequestFieldBooleanMultiValue
+public class SessionBackedRequestFieldBooleanMultiValue extends SessionBackedRequestField implements IHCRequestFieldBooleanMultiValue
 {
   private final String m_sValue;
   private final boolean m_bDefaultValue;

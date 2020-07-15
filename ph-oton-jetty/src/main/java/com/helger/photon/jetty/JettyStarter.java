@@ -472,8 +472,7 @@ public class JettyStarter
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
       aWebAppCtx.setBaseResource (m_aResourceBase);
-      aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource
-                                                          : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
+      aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
       aWebAppCtx.setContextPath (sContextPath);
       aWebAppCtx.setTempDirectory (new File (sTempDir, m_sDirBaseName + ".webapp"));
       /*
@@ -591,8 +590,7 @@ public class JettyStarter
       aConnector.setIdleTimeout (30_000);
       customizeServerConnector (aConnector);
       aServer.setConnectors (new Connector [] { aConnector });
-      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
-                            Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
+      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize", Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));
     }
 

@@ -80,8 +80,7 @@ public class HCBase extends AbstractHCElement <HCBase>
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aHref != null)
-      aElement.setAttribute (CHTMLAttributes.HREF,
-                             m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.HREF, m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (m_aTarget != null)
       aElement.setAttribute (CHTMLAttributes.TARGET, m_aTarget.getAttrValue ());
   }
@@ -89,9 +88,6 @@ public class HCBase extends AbstractHCElement <HCBase>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("href", m_aHref)
-                            .append ("target", m_aTarget)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("href", m_aHref).append ("target", m_aTarget).getToString ();
   }
 }

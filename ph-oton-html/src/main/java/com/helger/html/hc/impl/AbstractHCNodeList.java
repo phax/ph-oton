@@ -30,9 +30,9 @@ import com.helger.html.hc.IHCNodeList;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractHCNodeList <IMPLTYPE extends AbstractHCNodeList <IMPLTYPE>>
-                                         extends AbstractHCHasChildrenMutable <IMPLTYPE, IHCNode>
-                                         implements IHCNodeList <IMPLTYPE>
+public abstract class AbstractHCNodeList <IMPLTYPE extends AbstractHCNodeList <IMPLTYPE>> extends
+                                         AbstractHCHasChildrenMutable <IMPLTYPE, IHCNode> implements
+                                         IHCNodeList <IMPLTYPE>
 {
   public AbstractHCNodeList ()
   {}

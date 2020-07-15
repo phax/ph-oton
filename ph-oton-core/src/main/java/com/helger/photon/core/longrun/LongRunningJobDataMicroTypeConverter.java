@@ -58,9 +58,7 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
       eJobData.setAttribute (ATTR_STARTINGUSERID, aValue.getStartingUserID ());
 
     // Description
-    eJobData.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getJobDescription (),
-                                                                    sNamespaceURI,
-                                                                    ELEMENT_DESCRIPTION));
+    eJobData.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getJobDescription (), sNamespaceURI, ELEMENT_DESCRIPTION));
 
     // Result
     final IMicroElement eResult = eJobData.appendElement (sNamespaceURI, ELEMENT_RESULT);
@@ -101,12 +99,6 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
         throw new IllegalStateException ("Unknown type: " + eResultType);
     }
 
-    return new LongRunningJobData (sID,
-                                   aStartDateTime,
-                                   aEndDateTime,
-                                   eExecSuccess,
-                                   sStartingUserID,
-                                   aJobDescription,
-                                   aResult);
+    return new LongRunningJobData (sID, aStartDateTime, aEndDateTime, eExecSuccess, sStartingUserID, aJobDescription, aResult);
   }
 }

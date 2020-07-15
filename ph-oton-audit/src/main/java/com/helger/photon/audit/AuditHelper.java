@@ -37,8 +37,7 @@ public final class AuditHelper
 {
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
 
-  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null),
-                                                                      "!DEFAULT-AUDITOR! ");
+  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null), "!DEFAULT-AUDITOR! ");
 
   // This is the default dummy auditor that should be replaced with something
   // meaningful!

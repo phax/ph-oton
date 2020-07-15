@@ -26,9 +26,11 @@ import com.helger.html.jscode.JSFieldRef;
 
 /**
  * This file is generated - do NOT edit!
+ * 
  * @author com.helger.html.jquery.supplementary.main.Main_IJQueryInvocation
- * @param <IMPLTYPE> Implementation type
-*/
+ * @param <IMPLTYPE>
+ *        Implementation type
+ */
 public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE>> extends IJSInvocation <IMPLTYPE>
 {
   /**
@@ -100,6 +102,7 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
   {
     return ref ("length");
   }
+
   @Nonnull
   default IMPLTYPE add ()
   {

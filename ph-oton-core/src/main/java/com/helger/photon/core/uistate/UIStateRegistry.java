@@ -51,9 +51,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class UIStateRegistry extends AbstractSessionWebSingleton implements
-                                   IScopeRenewalAware,
-                                   ISessionWebScopeDontPassivate
+public final class UIStateRegistry extends AbstractSessionWebSingleton implements IScopeRenewalAware, ISessionWebScopeDontPassivate
 {
   /** ObjectType */
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");

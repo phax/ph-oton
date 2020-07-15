@@ -220,8 +220,7 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
       addClass (CBootstrapCSS.FADE);
 
     final HCDiv aDialog = addAndReturnChild (new HCDiv ().addClasses (CBootstrapCSS.MODAL_DIALOG, m_eSize));
-    final HCDiv aContent = aDialog.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_CONTENT)
-                                                                  .setID (_getContentID ()));
+    final HCDiv aContent = aDialog.addAndReturnChild (new HCDiv ().addClass (CBootstrapCSS.MODAL_CONTENT).setID (_getContentID ()));
     if (m_aHeader != null)
     {
       final String sTitleID = _getTitleID ();

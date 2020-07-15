@@ -117,10 +117,7 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
     ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
-                                                                 nLeftPartsSM,
-                                                                 nLeftPartsMD,
-                                                                 nLeftPartsLG);
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG);
     final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
                                                                   _getRight (nLeftPartsSM),
                                                                   _getRight (nLeftPartsMD),
@@ -130,8 +127,7 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft,
-                                         @Nonnull final BootstrapGridSpec aRight)
+  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
   {
     ValueEnforcer.notNull (aLeft, "Left");
     ValueEnforcer.notNull (aRight, "Right");

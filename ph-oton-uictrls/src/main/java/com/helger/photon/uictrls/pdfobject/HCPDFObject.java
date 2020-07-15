@@ -74,9 +74,7 @@ public class HCPDFObject extends AbstractHCDiv <HCPDFObject>
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
     // Add special JS code
-    aTargetNode.addChild (new HCScriptInline (PDFObjectJS.embed (m_aPathToPDF,
-                                                                 JQuerySelector.id (this).invoke (),
-                                                                 m_aOptions)));
+    aTargetNode.addChild (new HCScriptInline (PDFObjectJS.embed (m_aPathToPDF, JQuerySelector.id (this).invoke (), m_aOptions)));
   }
 
   @Override

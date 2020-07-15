@@ -39,8 +39,7 @@ public enum EBootstrapNavbarExpandType implements ICSSClassProvider
   private final ICSSClassProvider m_aCSSClass;
   private final EBootstrapGridType m_eGridType;
 
-  private EBootstrapNavbarExpandType (@Nonnull final ICSSClassProvider aCSSClass,
-                                      @Nonnull final EBootstrapGridType eGridType)
+  private EBootstrapNavbarExpandType (@Nonnull final ICSSClassProvider aCSSClass, @Nonnull final EBootstrapGridType eGridType)
   {
     m_aCSSClass = aCSSClass;
     m_eGridType = eGridType;

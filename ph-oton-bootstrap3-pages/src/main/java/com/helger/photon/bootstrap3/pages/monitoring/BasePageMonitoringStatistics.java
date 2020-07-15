@@ -58,8 +58,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionContext>
-                                          extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -129,14 +128,11 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     // Table for timer
-    final HCTable aTableTimer = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                     1),
+    final HCTable aTableTimer = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
                                              new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
                                              new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                               aDisplayLocale),
@@ -152,8 +148,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                                                                                                                                                "timer");
 
     // Table for size
-    final HCTable aTableSize = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                    1),
+    final HCTable aTableSize = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
                                             new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale)
@@ -169,8 +164,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                                                                                                                               "size");
 
     // Table for counter
-    final HCTable aTableCounter = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
-                                                                                                                       1),
+    final HCTable aTableCounter = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
                                                new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
                                                new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                                 aDisplayLocale)
@@ -196,43 +190,44 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       public void onTimer (@Nonnull final String sName, @Nonnull final IStatisticsHandlerTimer aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
-          aTableTimer.addBodyRow ().addCells (sName,
-                                              "",
-                                              Integer.toString (aHandler.getInvocationCount ()),
-                                              Long.toString (aHandler.getMin ()),
-                                              Long.toString (aHandler.getMax ()),
-                                              Long.toString (aHandler.getAverage ()),
-                                              aHandler.getSum ().toString ());
+          aTableTimer.addBodyRow ()
+                     .addCells (sName,
+                                "",
+                                Integer.toString (aHandler.getInvocationCount ()),
+                                Long.toString (aHandler.getMin ()),
+                                Long.toString (aHandler.getMax ()),
+                                Long.toString (aHandler.getAverage ()),
+                                aHandler.getSum ().toString ());
       }
 
       public void onSize (@Nonnull final String sName, @Nonnull final IStatisticsHandlerSize aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
-          aTableSize.addBodyRow ().addCells (sName,
-                                             "",
-                                             Integer.toString (aHandler.getInvocationCount ()),
-                                             Long.toString (aHandler.getMin ()),
-                                             Long.toString (aHandler.getMax ()),
-                                             Long.toString (aHandler.getAverage ()),
-                                             aHandler.getSum ().toString ());
+          aTableSize.addBodyRow ()
+                    .addCells (sName,
+                               "",
+                               Integer.toString (aHandler.getInvocationCount ()),
+                               Long.toString (aHandler.getMin ()),
+                               Long.toString (aHandler.getMax ()),
+                               Long.toString (aHandler.getAverage ()),
+                               aHandler.getSum ().toString ());
       }
 
       public void onCounter (@Nonnull final String sName, @Nonnull final IStatisticsHandlerCounter aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
-          aTableCounter.addBodyRow ().addCells (sName,
-                                                "",
-                                                Integer.toString (aHandler.getInvocationCount ()),
-                                                Long.toString (aHandler.getCount ()));
+          aTableCounter.addBodyRow ()
+                       .addCells (sName, "", Integer.toString (aHandler.getInvocationCount ()), Long.toString (aHandler.getCount ()));
       }
 
       public void onCache (@Nonnull final String sName, @Nonnull final IStatisticsHandlerCache aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
-          aTableCache.addBodyRow ().addCells (sName,
-                                              Integer.toString (aHandler.getInvocationCount ()),
-                                              Integer.toString (aHandler.getHits ()),
-                                              Integer.toString (aHandler.getMisses ()));
+          aTableCache.addBodyRow ()
+                     .addCells (sName,
+                                Integer.toString (aHandler.getInvocationCount ()),
+                                Integer.toString (aHandler.getHits ()),
+                                Integer.toString (aHandler.getMisses ()));
       }
 
       public void onKeyedTimer (@Nonnull final String sName, @Nonnull final IStatisticsHandlerKeyedTimer aHandler)
@@ -241,13 +236,14 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
         {
           final int nInvocationCount = aHandler.getInvocationCount (sKey);
           if (nInvocationCount > 0)
-            aTableTimer.addBodyRow ().addCells (sName,
-                                                sKey,
-                                                Integer.toString (nInvocationCount),
-                                                Long.toString (aHandler.getMin (sKey)),
-                                                Long.toString (aHandler.getMax (sKey)),
-                                                Long.toString (aHandler.getAverage (sKey)),
-                                                aHandler.getSum (sKey).toString ());
+            aTableTimer.addBodyRow ()
+                       .addCells (sName,
+                                  sKey,
+                                  Integer.toString (nInvocationCount),
+                                  Long.toString (aHandler.getMin (sKey)),
+                                  Long.toString (aHandler.getMax (sKey)),
+                                  Long.toString (aHandler.getAverage (sKey)),
+                                  aHandler.getSum (sKey).toString ());
         }
       }
 
@@ -257,13 +253,14 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
         {
           final int nInvocationCount = aHandler.getInvocationCount (sKey);
           if (nInvocationCount > 0)
-            aTableSize.addBodyRow ().addCells (sName,
-                                               sKey,
-                                               Integer.toString (nInvocationCount),
-                                               Long.toString (aHandler.getMin (sKey)),
-                                               Long.toString (aHandler.getMax (sKey)),
-                                               Long.toString (aHandler.getAverage (sKey)),
-                                               aHandler.getSum (sKey).toString ());
+            aTableSize.addBodyRow ()
+                      .addCells (sName,
+                                 sKey,
+                                 Integer.toString (nInvocationCount),
+                                 Long.toString (aHandler.getMin (sKey)),
+                                 Long.toString (aHandler.getMax (sKey)),
+                                 Long.toString (aHandler.getAverage (sKey)),
+                                 aHandler.getSum (sKey).toString ());
         }
       }
 
@@ -273,10 +270,8 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
         {
           final int nInvocationCount = aHandler.getInvocationCount (sKey);
           if (nInvocationCount > 0)
-            aTableCounter.addBodyRow ().addCells (sName,
-                                                  sKey,
-                                                  Integer.toString (nInvocationCount),
-                                                  Long.toString (aHandler.getCount (sKey)));
+            aTableCounter.addBodyRow ()
+                         .addCells (sName, sKey, Integer.toString (nInvocationCount), Long.toString (aHandler.getCount (sKey)));
         }
       }
     });

@@ -88,10 +88,7 @@ public class Main_JQueryInvocationExtendedFuncTest extends AbstractCreateJQueryA
                   aParams.append (", ");
 
                 final String sJavaType = aArg.getFirstJavaType ();
-                aParams.append (_getAnnotation (sJavaType))
-                       .append (sJavaType)
-                       .append (" ")
-                       .append (aArg.getIdentifier ());
+                aParams.append (_getAnnotation (sJavaType)).append (sJavaType).append (" ").append (aArg.getIdentifier ());
                 aJavaTypeKey.add (sJavaType);
               }
               if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringHelper.getImploded (',', aJavaTypeKey)))
@@ -144,8 +141,7 @@ public class Main_JQueryInvocationExtendedFuncTest extends AbstractCreateJQueryA
               }
 
               ICommonsList <String> aAllParams = new CommonsArrayList <> (aTemplate.toString ());
-              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
-                                                                                                      aJavaTypeKey));
+              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',', aJavaTypeKey));
 
               for (int i = 0; i < nArgCount; ++i)
                 if (aMultiJavaTypeArgs[i] != null)

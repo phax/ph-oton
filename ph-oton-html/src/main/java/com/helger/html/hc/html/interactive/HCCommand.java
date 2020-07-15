@@ -153,8 +153,7 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     if (m_bDisabled)
       aElement.setAttribute (CHTMLAttributes.DISABLED, CHTMLAttributeValues.DISABLED);
     if (m_aIcon != null)
-      aElement.setAttribute (CHTMLAttributes.ICON,
-                             m_aIcon.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.ICON, m_aIcon.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sLabel))
       aElement.setAttribute (CHTMLAttributes.LABEL, m_sLabel);
     if (StringHelper.hasText (m_sRadioGroup) && EHCCommandType.RADIO.equals (m_eType))

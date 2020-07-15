@@ -73,15 +73,13 @@ public final class AppRendererSecure
     aNavbar.getContainer ().setFluid (true);
     aNavbar.addBrand (new HCNodeList ().addChild (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1)
                                                                .addChild (CApp.getApplicationTitle ()))
-                                       .addChild (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO2)
-                                                               .addChild (" Administration")),
+                                       .addChild (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO2).addChild (" Administration")),
                       aLinkToStartPage);
 
     final BootstrapNav aNav = new BootstrapNav ();
     final IUser aUser = aSWEC.getLoggedInUser ();
     aNav.addText (new HCSpan ().addChild ("Logged in as ")
-                               .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
-                                                                                                       aDisplayLocale))));
+                               .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser, aDisplayLocale))));
 
     aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
                                                          LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));

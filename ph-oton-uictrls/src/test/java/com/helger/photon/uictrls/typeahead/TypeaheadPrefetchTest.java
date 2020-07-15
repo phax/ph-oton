@@ -41,8 +41,7 @@ public final class TypeaheadPrefetchTest
     p.setTTL (3600);
     assertEquals ("{url:'\\/a.json',ttl:3600}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setFilter (new JSAnonymousFunction (JSHtml.windowAlert ("x")));
-    assertEquals ("{url:'\\/a.json',ttl:3600,filter:function(){window.alert('x');}}",
-                  p.getAsJSObject ().getJSCode (aJSWS));
+    assertEquals ("{url:'\\/a.json',ttl:3600,filter:function(){window.alert('x');}}", p.getAsJSObject ().getJSCode (aJSWS));
     p.setTTL (TypeaheadPrefetch.DEFAULT_TTL);
     assertEquals ("{url:'\\/a.json',filter:function(){window.alert('x');}}", p.getAsJSObject ().getJSCode (aJSWS));
   }

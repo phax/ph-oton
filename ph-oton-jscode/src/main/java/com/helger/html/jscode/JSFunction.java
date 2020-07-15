@@ -221,11 +221,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aJSDoc)
-                                       .append (m_sName)
-                                       .append (m_aParams)
-                                       .append (m_aBody)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_aJSDoc).append (m_sName).append (m_aParams).append (m_aBody).getHashCode ();
   }
 
   @Override

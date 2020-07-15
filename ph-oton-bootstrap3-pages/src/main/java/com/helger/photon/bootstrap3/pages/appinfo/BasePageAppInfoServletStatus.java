@@ -54,8 +54,7 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext> extends
-                                          AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -112,9 +111,7 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_SERVLET.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
@@ -124,9 +121,7 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
                                         new DTCol (EText.MSG_INIT_DT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
                                                                                                                       aDisplayLocale)).setID (getID ());
 
-    for (final Map.Entry <String, ServletStatus> aItem : ServletStatusManager.getInstance ()
-                                                                             .getAllStatus ()
-                                                                             .entrySet ())
+    for (final Map.Entry <String, ServletStatus> aItem : ServletStatusManager.getInstance ().getAllStatus ().entrySet ())
     {
       final ServletStatus aServletStatus = aItem.getValue ();
 
@@ -134,8 +129,7 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
       aRow.addCell (aItem.getKey ());
       aRow.addCell (aServletStatus.getCurrentStatus ().getDisplayText (aDisplayLocale));
       aRow.addCell (Integer.toString (aServletStatus.getInvocationCount ()));
-      aRow.addCell (PDTToString.getAsString (aServletStatus.getDateTimeOfStatus (EServletStatus.INITED),
-                                             aDisplayLocale));
+      aRow.addCell (PDTToString.getAsString (aServletStatus.getDateTimeOfStatus (EServletStatus.INITED), aDisplayLocale));
     }
     aNodeList.addChild (aTable);
 

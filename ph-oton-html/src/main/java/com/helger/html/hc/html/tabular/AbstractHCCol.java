@@ -38,8 +38,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        The implementation type.
  */
-public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE>
-                                    implements
+public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE> implements
                                     IHCCol <IMPLTYPE>
 {
   private String m_sWidth;
@@ -96,9 +95,6 @@ public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("width", m_sWidth)
-                            .append ("span", m_nSpan)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("width", m_sWidth).append ("span", m_nSpan).getToString ();
   }
 }

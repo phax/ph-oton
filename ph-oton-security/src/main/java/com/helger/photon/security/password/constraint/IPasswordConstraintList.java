@@ -79,8 +79,7 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsList <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword,
-                                                        @Nonnull Locale aContentLocale);
+  ICommonsList <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword, @Nonnull Locale aContentLocale);
 
   /**
    * Get a list of all password constraint descriptions in the specified locale

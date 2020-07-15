@@ -120,10 +120,7 @@ public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IMu
     ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 0, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 0, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
-                                                                 nLeftPartsSM,
-                                                                 nLeftPartsMD,
-                                                                 nLeftPartsLG);
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG);
     final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
                                                                   _getRight (nLeftPartsSM),
                                                                   _getRight (nLeftPartsMD),

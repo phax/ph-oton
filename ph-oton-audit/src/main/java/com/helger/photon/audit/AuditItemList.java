@@ -40,7 +40,7 @@ import com.helger.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class AuditItemList
 {
-  private final ICommonsList <IAuditItem> m_aItems = new CommonsArrayList<> ();
+  private final ICommonsList <IAuditItem> m_aItems = new CommonsArrayList <> ();
 
   public AuditItemList ()
   {}

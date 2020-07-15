@@ -73,8 +73,7 @@ public final class AppCommonUI
     final String sIDErrorField = GlobalIDFactory.getNewStringID ();
 
     final BootstrapForm aForm = new BootstrapForm (aLEC).setAction (aLEC.getSelfHref ())
-                                                        .setFormType (bFullUI ? EBootstrapFormType.HORIZONTAL
-                                                                              : EBootstrapFormType.DEFAULT);
+                                                        .setFormType (bFullUI ? EBootstrapFormType.HORIZONTAL : EBootstrapFormType.DEFAULT);
     aForm.setLeft (3);
 
     // User name field
@@ -100,8 +99,7 @@ public final class AppCommonUI
                       JSHtml.windowLocationReload (),
                       JQuery.idRef (sIDErrorField).empty ().append (aJSData.ref (AjaxExecutorLogin.JSON_HTML)));
       aOnClick.add (new JQueryAjaxBuilder ().url (CAjax.LOGIN.getInvocationURI (aRequestScope))
-                                            .data (new JSAssocArray ().add (CLogin.REQUEST_ATTR_USERID,
-                                                                            JQuery.idRef (sIDUserName).val ())
+                                            .data (new JSAssocArray ().add (CLogin.REQUEST_ATTR_USERID, JQuery.idRef (sIDUserName).val ())
                                                                       .add (CLogin.REQUEST_ATTR_PASSWORD,
                                                                             JQuery.idRef (sIDPassword).val ()))
                                             .success (aJSSuccess)

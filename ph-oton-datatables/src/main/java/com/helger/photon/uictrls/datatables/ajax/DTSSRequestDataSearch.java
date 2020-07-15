@@ -81,8 +81,6 @@ public final class DTSSRequestDataSearch implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("searchTexts", m_aSearchTexts)
-                                       .append ("regEx", m_bRegEx)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("searchTexts", m_aSearchTexts).append ("regEx", m_bRegEx).getToString ();
   }
 }

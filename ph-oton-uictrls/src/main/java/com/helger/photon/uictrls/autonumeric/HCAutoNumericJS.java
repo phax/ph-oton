@@ -50,8 +50,7 @@ public class HCAutoNumericJS extends HCScriptInlineOnDocumentReady
   public static IHasJSCode createInitCode (@Nullable final JQueryInvocation aExplicitAutoNumeric,
                                            @Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
-    final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric
-                                                                      : JQuery.idRef (aAutoNumeric);
+    final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric : JQuery.idRef (aAutoNumeric);
 
     final JSInvocation ret = HCAutoNumeric.autoNumericInit (aInvocation, aAutoNumeric.getJSOptions ());
     return ret;

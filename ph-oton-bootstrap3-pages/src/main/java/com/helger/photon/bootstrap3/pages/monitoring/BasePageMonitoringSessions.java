@@ -126,9 +126,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     super (sID, sName);
   }
 
-  public BasePageMonitoringSessions (@Nonnull @Nonempty final String sID,
-                                     @Nonnull final String sName,
-                                     @Nullable final String sDescription)
+  public BasePageMonitoringSessions (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -170,17 +168,13 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ID.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aScope.getID ()));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_MY_SESSION.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (EPhotonCoreText.getYesOrNo (bIsMySession,
-                                                                                           aDisplayLocale)));
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (bIsMySession, aDisplayLocale)));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_VALID.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (),
-                                                                                           aDisplayLocale)));
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isValid (), aDisplayLocale)));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IN_DESTRUCTION.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (),
-                                                                                           aDisplayLocale)));
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isInDestruction (), aDisplayLocale)));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_DESTROYED.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (),
-                                                                                           aDisplayLocale)));
+                                                     .setCtrl (EPhotonCoreText.getYesOrNo (aScope.isDestroyed (), aDisplayLocale)));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_ATTRS.getDisplayText (aDisplayLocale))
                                                      .setCtrl (Integer.toString (aScope.attrs ().size ())));
 
@@ -188,18 +182,14 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
     {
       final ISessionWebScope aWebScope = (ISessionWebScope) aScope;
       final LocalDateTime aCreationDT = PDTFactory.createLocalDateTime (aWebScope.getSession ().getCreationTime ());
-      final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTime (aWebScope.getSession ()
-                                                                                   .getLastAccessedTime ());
+      final LocalDateTime aLastAccessDT = PDTFactory.createLocalDateTime (aWebScope.getSession ().getLastAccessedTime ());
 
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_CREATION_DT.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (PDTToString.getAsString (aCreationDT,
-                                                                                          aDisplayLocale)));
+                                                       .setCtrl (PDTToString.getAsString (aCreationDT, aDisplayLocale)));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_LASTACCESS_DT.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (PDTToString.getAsString (aLastAccessDT,
-                                                                                          aDisplayLocale)));
+                                                       .setCtrl (PDTToString.getAsString (aLastAccessDT, aDisplayLocale)));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_AGE.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (Duration.between (aCreationDT,
-                                                                                   PDTFactory.getCurrentLocalDateTime ())
+                                                       .setCtrl (Duration.between (aCreationDT, PDTFactory.getCurrentLocalDateTime ())
                                                                          .toString ()));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_SESSION_TIMEOUT.getDisplayText (aDisplayLocale))
                                                        .setCtrl (EText.MSG_SCOPE_SESSION_TIMEOUT_TEXT.getDisplayTextWithArgs (aDisplayLocale,
@@ -213,8 +203,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                                                                                                               .getMaxInactiveInterval ()),
                                                                                           aDisplayLocale)));
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCOPE_IS_NEW.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aWebScope.getSession ()
-                                                                                                      .isNew (),
+                                                       .setCtrl (EPhotonCoreText.getYesOrNo (aWebScope.getSession ().isNew (),
                                                                                              aDisplayLocale)));
     }
 
@@ -264,9 +253,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BACK_TO_OVERVIEW.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.BACK_TO_LIST);
+    aToolbar.addButton (EPhotonCoreText.BACK_TO_OVERVIEW.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.BACK_TO_LIST);
     aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
                         createViewURL (aWPEC, aScope),
                         EDefaultIcon.REFRESH);
@@ -289,7 +276,8 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                 @Nullable final ISessionScope aSelectedObject,
                                 @Nonnull final BootstrapForm aForm,
                                 boolean bIsFormSubmitted,
-                                @Nonnull final EWebPageFormAction eFormAction, @Nonnull final FormErrorList aFormErrors)
+                                @Nonnull final EWebPageFormAction eFormAction,
+                                @Nonnull final FormErrorList aFormErrors)
   {
     throw new UnsupportedOperationException ();
   }
@@ -302,9 +290,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)),
@@ -319,19 +305,16 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
 
     for (final ISessionScope aSessionScope : ScopeSessionManager.getInstance ().getAllSessionScopes ())
     {
-      final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope
-                                                                                   : null;
+      final ISessionWebScope aWebScope = aSessionScope instanceof ISessionWebScope ? (ISessionWebScope) aSessionScope : null;
       final ISimpleURL aViewLink = createViewURL (aWPEC, aSessionScope);
       final boolean bIsMySession = aSessionScope.getID ().equals (sMySessionID);
 
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (new HCA (aViewLink).addChild (aSessionScope.getID () +
-                                                  (bIsMySession ? EText.MSG_MY_SESSION.getDisplayText (aDisplayLocale)
-                                                                : "")));
+                                                  (bIsMySession ? EText.MSG_MY_SESSION.getDisplayText (aDisplayLocale) : "")));
       aRow.addCell (Integer.toString (aSessionScope.attrs ().size ()));
       if (aWebScope != null)
-        aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTime (aWebScope.getSession ()
-                                                                                        .getLastAccessedTime ()),
+        aRow.addCell (PDTToString.getAsString (PDTFactory.createLocalDateTime (aWebScope.getSession ().getLastAccessedTime ()),
                                                aDisplayLocale));
       else
         aRow.addCell ();

@@ -145,8 +145,7 @@ public final class JSOp
   {
     // Some optimizations
     if (aLeft instanceof JSStringLiteral && aRight instanceof JSStringLiteral)
-      return new JSStringLiteral (((JSStringLiteral) aLeft).getContainedString () +
-                                  ((JSStringLiteral) aRight).getContainedString ());
+      return new JSStringLiteral (((JSStringLiteral) aLeft).getContainedString () + ((JSStringLiteral) aRight).getContainedString ());
     if (aLeft instanceof AbstractJSAtomNumeric && aRight instanceof AbstractJSAtomNumeric)
       return ((AbstractJSAtomNumeric) aLeft).numericPlus ((AbstractJSAtomNumeric) aRight);
 

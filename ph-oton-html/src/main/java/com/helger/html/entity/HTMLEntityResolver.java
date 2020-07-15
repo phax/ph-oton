@@ -48,8 +48,7 @@ public final class HTMLEntityResolver implements EntityResolver
   /** Maps public ID to the DTD content for performance reasons */
   private final ICommonsMap <String, byte []> m_aResolveMap = new CommonsHashMap <> ();
 
-  private void _addResolvablePublicId (@Nonnull @Nonempty final String sPublicID,
-                                       @Nonnull @Nonempty final String sFilePath)
+  private void _addResolvablePublicId (@Nonnull @Nonempty final String sPublicID, @Nonnull @Nonempty final String sFilePath)
   {
     if (m_aResolveMap.containsKey (sPublicID))
       throw new IllegalArgumentException ("Passed public id '" + sPublicID + "' is already contained!");

@@ -49,8 +49,7 @@ public class BootstrapResetButton extends BootstrapButton
     _init ();
   }
 
-  public BootstrapResetButton (@Nonnull final EBootstrapButtonType eButtonType,
-                               @Nonnull final EBootstrapButtonSize eButtonSize)
+  public BootstrapResetButton (@Nonnull final EBootstrapButtonType eButtonType, @Nonnull final EBootstrapButtonSize eButtonSize)
   {
     super (eButtonType, eButtonSize);
     _init ();

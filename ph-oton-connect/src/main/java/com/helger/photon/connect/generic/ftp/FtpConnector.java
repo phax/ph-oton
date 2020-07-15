@@ -183,11 +183,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
       }
       catch (final IOException ex)
       {
-        LOGGER.error ("Error changing working directory to '" +
-                         sDirectory +
-                         "': " +
-                         m_aChannel.getReplyString (),
-                         ex);
+        LOGGER.error ("Error changing working directory to '" + sDirectory + "': " + m_aChannel.getReplyString (), ex);
       }
     return ESuccess.FAILURE;
   }

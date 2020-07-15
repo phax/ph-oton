@@ -35,7 +35,7 @@ import com.helger.html.js.IJSWriterSettings;
  */
 public final class JSStatementList extends AbstractJSStatement
 {
-  private final ICommonsList <IJSStatement> m_aStatements = new CommonsArrayList<> ();
+  private final ICommonsList <IJSStatement> m_aStatements = new CommonsArrayList <> ();
 
   public JSStatementList ()
   {}

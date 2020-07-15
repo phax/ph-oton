@@ -61,8 +61,7 @@ public class BootstrapButton extends AbstractHCButton <BootstrapButton>
     this (EBootstrapButtonType.DEFAULT, eButtonSize);
   }
 
-  public BootstrapButton (@Nonnull final EBootstrapButtonType eButtonType,
-                          @Nonnull final EBootstrapButtonSize eButtonSize)
+  public BootstrapButton (@Nonnull final EBootstrapButtonType eButtonType, @Nonnull final EBootstrapButtonSize eButtonSize)
   {
     addClass (CBootstrapCSS.BTN);
     setButtonType (eButtonType);

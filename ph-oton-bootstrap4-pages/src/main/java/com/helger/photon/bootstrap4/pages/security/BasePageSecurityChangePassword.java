@@ -54,8 +54,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionContext> extends
-                                            AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -140,8 +139,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
           final String sNewPlainTextPasswordConfirm = aWPEC.params ().getAsString (FIELD_NEW_PASSWORD_CONFIRM);
 
           if (!aUserMgr.areUserIDAndPasswordValid (aCurrentUser.getID (), sOldPlainTextPassword))
-            aFormErrors.addFieldError (FIELD_OLD_PASSWORD,
-                                       EText.ERROR_OLD_PASSWORD_INVALID.getDisplayText (aDisplayLocale));
+            aFormErrors.addFieldError (FIELD_OLD_PASSWORD, EText.ERROR_OLD_PASSWORD_INVALID.getDisplayText (aDisplayLocale));
 
           final ICommonsList <String> aPasswordErrors = GlobalPasswordSettings.getPasswordConstraintList ()
                                                                               .getInvalidPasswordDescriptions (sNewPlainTextPassword,
@@ -149,8 +147,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
           for (final String sPasswordError : aPasswordErrors)
             aFormErrors.addFieldError (FIELD_NEW_PASSWORD, sPasswordError);
           if (!EqualsHelper.equals (sNewPlainTextPassword, sNewPlainTextPasswordConfirm))
-            aFormErrors.addFieldError (FIELD_NEW_PASSWORD_CONFIRM,
-                                       EText.ERROR_PASSWORDS_DONT_MATCH.getDisplayText (aDisplayLocale));
+            aFormErrors.addFieldError (FIELD_NEW_PASSWORD_CONFIRM, EText.ERROR_PASSWORDS_DONT_MATCH.getDisplayText (aDisplayLocale));
 
           if (aFormErrors.isEmpty ())
           {
@@ -166,8 +163,7 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
       {
         // Show input form
         final boolean bHasAnyPasswordConstraint = GlobalPasswordSettings.getPasswordConstraintList ().hasConstraints ();
-        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC,
-                                                                                                 bFormWasSubmitted));
+        final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC, bFormWasSubmitted));
         aForm.addChild (getUIHandler ().createActionHeader (EText.TITLE.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                 SecurityHelper.getUserDisplayName (aCurrentUser,
                                                                                                                                    aDisplayLocale))));
@@ -179,16 +175,14 @@ public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionC
 
         final String sLabelNewPassword = EText.LABEL_PASSWORD.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelNewPassword,
-                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY
-                                                                                          : ELabelType.OPTIONAL)
+                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY : ELabelType.OPTIONAL)
                                                      .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD).setPlaceholder (sLabelNewPassword))
                                                      .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD)));
 
         final String sLabelNewPasswordConfirm = EText.LABEL_PASSWORD_CONFIRM.getDisplayText (aDisplayLocale);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sLabelNewPasswordConfirm,
-                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY
-                                                                                          : ELabelType.OPTIONAL)
+                                                                bHasAnyPasswordConstraint ? ELabelType.MANDATORY : ELabelType.OPTIONAL)
                                                      .setCtrl (new HCEditPassword (FIELD_NEW_PASSWORD_CONFIRM).setPlaceholder (sLabelNewPasswordConfirm))
                                                      .setHelpText (BootstrapSecurityUI.createPasswordConstraintTip (aDisplayLocale))
                                                      .setErrorList (aFormErrors.getListOfField (FIELD_NEW_PASSWORD_CONFIRM)));

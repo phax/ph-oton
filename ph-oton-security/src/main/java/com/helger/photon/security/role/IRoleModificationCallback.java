@@ -33,8 +33,8 @@ public interface IRoleModificationCallback extends ICallback
    * @param aRole
    *        The created role. Never <code>null</code>.
    * @param bPredefinedRole
-   *        <code>true</code> if it is a predefined role, <code>false</code> if it
-   *        is a regular role
+   *        <code>true</code> if it is a predefined role, <code>false</code> if
+   *        it is a regular role
    */
   default void onRoleCreated (@Nonnull final IRole aRole, final boolean bPredefinedRole)
   {}

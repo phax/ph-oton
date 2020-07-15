@@ -54,8 +54,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends
-                                    AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -105,9 +104,7 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     super (sID, sName);
   }
 
-  public BasePageSysInfoThreads (@Nonnull @Nonempty final String sID,
-                                 @Nonnull final String sName,
-                                 @Nullable final String sDescription)
+  public BasePageSysInfoThreads (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }

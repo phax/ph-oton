@@ -88,8 +88,7 @@ public enum ETinyMCE4ToolbarControl
   private final String m_sValue;
   private final ETinyMCE4Plugin m_eRequiredPlugin;
 
-  private ETinyMCE4ToolbarControl (@Nonnull @Nonempty final String sValue,
-                                   @Nullable final ETinyMCE4Plugin eRequiredPlugin)
+  private ETinyMCE4ToolbarControl (@Nonnull @Nonempty final String sValue, @Nullable final ETinyMCE4Plugin eRequiredPlugin)
   {
     m_sValue = sValue;
     m_eRequiredPlugin = eRequiredPlugin;

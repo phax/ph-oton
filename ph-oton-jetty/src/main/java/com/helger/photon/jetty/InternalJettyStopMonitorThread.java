@@ -63,8 +63,8 @@ final class InternalJettyStopMonitorThread extends Thread
     outer: while (true)
     {
       try (final Socket aSocket = m_aServerSocket.accept ();
-          final LineNumberReader aReader = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
-                                                                                    StandardCharsets.UTF_8)))
+           final LineNumberReader aReader = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
+                                                                                         StandardCharsets.UTF_8)))
       {
         // First line: key
         final String sKey = aReader.readLine ();

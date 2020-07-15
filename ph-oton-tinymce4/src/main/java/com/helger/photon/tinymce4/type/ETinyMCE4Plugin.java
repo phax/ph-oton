@@ -96,8 +96,7 @@ public enum ETinyMCE4Plugin
   }
 
   @Nullable
-  public static ETinyMCE4Plugin getFromValueOrDefault (@Nullable final String sValue,
-                                                       @Nullable final ETinyMCE4Plugin eDefault)
+  public static ETinyMCE4Plugin getFromValueOrDefault (@Nullable final String sValue, @Nullable final ETinyMCE4Plugin eDefault)
   {
     if (StringHelper.hasText (sValue))
       for (final ETinyMCE4Plugin e : values ())

@@ -1005,8 +1005,7 @@ public final class JSHtml
   }
 
   @Nonnull
-  public static JSInvocation windowSetInterval (@Nonnull final JSAnonymousFunction aCallback,
-                                                @Nonnegative final int nMillis)
+  public static JSInvocation windowSetInterval (@Nonnull final JSAnonymousFunction aCallback, @Nonnegative final int nMillis)
   {
     return windowSetInterval ().arg (aCallback).arg (nMillis);
   }
@@ -1021,8 +1020,7 @@ public final class JSHtml
   }
 
   @Nonnull
-  public static JSInvocation windowSetTimeout (@Nonnull final JSAnonymousFunction aCallback,
-                                               @Nonnegative final int nMillis)
+  public static JSInvocation windowSetTimeout (@Nonnull final JSAnonymousFunction aCallback, @Nonnegative final int nMillis)
   {
     return windowSetTimeout ().arg (aCallback).arg (nMillis);
   }

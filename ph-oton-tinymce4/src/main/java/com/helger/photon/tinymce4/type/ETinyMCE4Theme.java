@@ -81,8 +81,7 @@ public enum ETinyMCE4Theme
   private final String m_sValue;
   private final TinyMCE4ToolbarControlList m_aDefaultToolbar;
 
-  private ETinyMCE4Theme (@Nonnull @Nonempty final String sValue,
-                          @Nonnull final TinyMCE4ToolbarControlList aDefaultToolbar)
+  private ETinyMCE4Theme (@Nonnull @Nonempty final String sValue, @Nonnull final TinyMCE4ToolbarControlList aDefaultToolbar)
   {
     m_sValue = sValue;
     m_aDefaultToolbar = aDefaultToolbar;
@@ -112,8 +111,7 @@ public enum ETinyMCE4Theme
   }
 
   @Nullable
-  public static ETinyMCE4Theme getFromValueOrDefault (@Nullable final String sValue,
-                                                      @Nullable final ETinyMCE4Theme eDefault)
+  public static ETinyMCE4Theme getFromValueOrDefault (@Nullable final String sValue, @Nullable final ETinyMCE4Theme eDefault)
   {
     if (StringHelper.hasText (sValue))
       for (final ETinyMCE4Theme e : values ())

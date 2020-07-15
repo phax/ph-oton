@@ -60,11 +60,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
       return new ExporterExcel (EExcelVersion.XLS);
     }
   },
-  XLSX ("xlsx",
-        EExcelVersion.XLSX.getFileExtension (),
-        EExcelVersion.XLSX.getMimeType (),
-        true,
-        EExchangeFileTypeName.XLSX)
+  XLSX ("xlsx", EExcelVersion.XLSX.getFileExtension (), EExcelVersion.XLSX.getMimeType (), true, EExchangeFileTypeName.XLSX)
   {
     @Override
     @Nonnull
@@ -198,8 +194,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   }
 
   @Nullable
-  public static EExchangeFileType getFromIDOrDefault (@Nullable final String sID,
-                                                      @Nullable final EExchangeFileType eDefault)
+  public static EExchangeFileType getFromIDOrDefault (@Nullable final String sID, @Nullable final EExchangeFileType eDefault)
   {
     return EnumHelper.getFromIDOrDefault (EExchangeFileType.class, sID, eDefault);
   }

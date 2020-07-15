@@ -50,8 +50,7 @@ import com.helger.photon.uictrls.prism.EPrismPlugin;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext> extends
-                                               AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -106,9 +105,7 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();

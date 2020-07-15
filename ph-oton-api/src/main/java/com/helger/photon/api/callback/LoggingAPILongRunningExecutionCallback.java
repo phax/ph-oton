@@ -37,9 +37,9 @@ public class LoggingAPILongRunningExecutionCallback implements IAPILongRunningEx
                                       @Nonnegative final long nExecutionMillis)
   {
     LOGGER.warn ("Finished invoking API '" +
-                    aInvokableDescriptor.getPath () +
-                    "' which took " +
-                    nExecutionMillis +
-                    " milliseconds (which is too long)");
+                 aInvokableDescriptor.getPath () +
+                 "' which took " +
+                 nExecutionMillis +
+                 " milliseconds (which is too long)");
   }
 }

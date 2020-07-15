@@ -30,8 +30,7 @@ import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IBootstrapFormGroupContainer <IMPLTYPE extends IBootstrapFormGroupContainer <IMPLTYPE>> extends
-                                              IHCElement <IMPLTYPE>
+public interface IBootstrapFormGroupContainer <IMPLTYPE extends IBootstrapFormGroupContainer <IMPLTYPE>> extends IHCElement <IMPLTYPE>
 {
   /**
    * @return The form type for aligning the form groups. Never <code>null</code>

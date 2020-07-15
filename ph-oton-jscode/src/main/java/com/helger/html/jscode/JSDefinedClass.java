@@ -55,13 +55,13 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
   private AbstractJSClass m_aSuperClass;
 
   /** Fields keyed by their names. */
-  private final ICommonsOrderedMap <String, JSFieldVar> m_aFields = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, JSFieldVar> m_aFields = new CommonsLinkedHashMap <> ();
 
   /** Constructors for this class */
   private JSConstructor m_aConstructor;
 
   /** Set of methods that are members of this class */
-  private final ICommonsList <JSMethod> m_aMethods = new CommonsArrayList<> ();
+  private final ICommonsList <JSMethod> m_aMethods = new CommonsArrayList <> ();
 
   /**
    * constructor
@@ -197,10 +197,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
     ValueEnforcer.notNull (aField, "Field");
 
     if (m_aFields.remove (aField.name ()) != aField)
-      throw new IllegalArgumentException ("Failed to remove field '" +
-                                          aField.name () +
-                                          "' from " +
-                                          m_aFields.keySet ());
+      throw new IllegalArgumentException ("Failed to remove field '" + aField.name () + "' from " + m_aFields.keySet ());
     return this;
   }
 

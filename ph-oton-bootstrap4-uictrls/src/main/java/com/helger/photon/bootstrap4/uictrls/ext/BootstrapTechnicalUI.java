@@ -81,13 +81,9 @@ public final class BootstrapTechnicalUI
     while (aCur != null)
     {
       if (ret.hasNoChildren ())
-        ret.addChild (new HCDiv ().addChild (EText.TECHNICAL_DETAILS.getDisplayText (aDisplayLocale) +
-                                             ": " +
-                                             _getString (aCur)));
+        ret.addChild (new HCDiv ().addChild (EText.TECHNICAL_DETAILS.getDisplayText (aDisplayLocale) + ": " + _getString (aCur)));
       else
-        ret.addChild (new HCDiv ().addChild (EText.CAUSED_BY.getDisplayText (aDisplayLocale) +
-                                             ": " +
-                                             _getString (aCur)));
+        ret.addChild (new HCDiv ().addChild (EText.CAUSED_BY.getDisplayText (aDisplayLocale) + ": " + _getString (aCur)));
       aCur = aCur.getCause ();
     }
     return ret;

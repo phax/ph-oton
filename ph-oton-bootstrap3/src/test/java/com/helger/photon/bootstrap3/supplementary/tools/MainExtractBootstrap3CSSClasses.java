@@ -48,7 +48,7 @@ public final class MainExtractBootstrap3CSSClasses
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EBootstrapCSSPathProvider.BOOTSTRAP.getCSSItemPath (true)),
                                                                StandardCharsets.UTF_8,
                                                                ECSSVersion.CSS30);
-    final ICommonsSet <String> aClasses = new CommonsTreeSet<> ();
+    final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override
@@ -87,10 +87,7 @@ public final class MainExtractBootstrap3CSSClasses
         final String sClassName = sClass.substring (1);
         String sFieldName = sClassName.toUpperCase (Locale.US);
         sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
-        aSB.append (sFieldName.substring ("glyphicon-".length ()))
-           .append (" (CBootstrapCSS.")
-           .append (sFieldName)
-           .append ("),\n");
+        aSB.append (sFieldName.substring ("glyphicon-".length ())).append (" (CBootstrapCSS.").append (sFieldName).append ("),\n");
       }
     LOGGER.info (aSB.toString ());
   }

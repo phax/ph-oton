@@ -117,11 +117,7 @@ public final class WebSiteResourceCache
       // Always create a new resource to allow for modifications
       final WebSiteResource aResource = new WebSiteResource (eResourceType, sPath, aCharset);
       if (!aResource.isExisting ())
-        throw new IllegalArgumentException ("WebSiteResource '" +
-                                            sPath +
-                                            "' of type " +
-                                            eResourceType +
-                                            " does not exist");
+        throw new IllegalArgumentException ("WebSiteResource '" + sPath + "' of type " + eResourceType + " does not exist");
       return aResource;
     }
 
@@ -133,15 +129,11 @@ public final class WebSiteResourceCache
       return ret;
 
     // Try again in write lock
-    return s_aRWLock.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey,
-                                                                    k -> new WebSiteResource (eResourceType,
-                                                                                              sPath,
-                                                                                              aCharset)));
+    return s_aRWLock.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey, k -> new WebSiteResource (eResourceType, sPath, aCharset)));
   }
 
   @Nonnull
-  public static EChange removeFromCache (@Nonnull final EWebSiteResourceType eType,
-                                         @Nonnull @Nonempty final String sPath)
+  public static EChange removeFromCache (@Nonnull final EWebSiteResourceType eType, @Nonnull @Nonempty final String sPath)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notEmpty (sPath, "Path");

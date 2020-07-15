@@ -336,8 +336,7 @@ public final class XHTMLParserTest
   public void testReadFromFile ()
   {
     final IReadableResource aRes = new ClassPathResource ("html-test/test1.htm");
-    IMicroDocument aDoc = MicroReader.readMicroXML (aRes,
-                                                    new SAXReaderSettings ().setEntityResolver (HTMLEntityResolver.getInstance ()));
+    IMicroDocument aDoc = MicroReader.readMicroXML (aRes, new SAXReaderSettings ().setEntityResolver (HTMLEntityResolver.getInstance ()));
     assertNotNull (aDoc);
     if (false)
     {

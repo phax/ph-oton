@@ -29,8 +29,7 @@ public class MainCreateMaterialDesignFontMappingCSS
 {
   public static void main (final String [] args)
   {
-    final String sCodepointsPath = FilenameHelper.getPath (EIconCSSPathProvider.MATERIAL_ICONS.getCSSItemPath (true)) +
-                                   "codepoints";
+    final String sCodepointsPath = FilenameHelper.getPath (EIconCSSPathProvider.MATERIAL_ICONS.getCSSItemPath (true)) + "codepoints";
     final File aFile = new ClassPathResource (sCodepointsPath).getAsFile ();
     final StringBuilder aSBCSS = new StringBuilder ();
     final StringBuilder aSBEnum = new StringBuilder ();

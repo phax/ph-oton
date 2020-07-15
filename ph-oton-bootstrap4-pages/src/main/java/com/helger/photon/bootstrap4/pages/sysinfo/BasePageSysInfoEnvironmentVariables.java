@@ -46,8 +46,7 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecutionContext>
-                                                 extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText

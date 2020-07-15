@@ -37,8 +37,7 @@ public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHan
    */
   @Nonnull
   @OverrideOnDemand
-  protected UserDataObject getUserDataObject (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                              @Nonnull final String sFilename)
+  protected UserDataObject getUserDataObject (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sFilename)
   {
     // URL decode is required because requests contain e.g. "%20"
     final String sFilename1 = URLHelper.urlDecodeOrDefault (sFilename, sFilename);
@@ -48,8 +47,7 @@ public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHan
 
   @Override
   @Nonnull
-  protected IReadableResource getResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                           @Nonnull final String sFilename)
+  protected IReadableResource getResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sFilename)
   {
     return UserDataManager.getResource (getUserDataObject (aRequestScope, sFilename));
   }

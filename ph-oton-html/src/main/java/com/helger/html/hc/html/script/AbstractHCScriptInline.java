@@ -41,8 +41,8 @@ import com.helger.xml.microdom.MicroText;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptInline <IMPLTYPE>> extends
-                                             AbstractHCScript <IMPLTYPE> implements
+public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptInline <IMPLTYPE>> extends AbstractHCScript <IMPLTYPE>
+                                             implements
                                              IHCScriptInline <IMPLTYPE>
 {
   /** By default place inline JS after script files */
@@ -186,10 +186,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
     super.fillMicroElement (aElement, aConversionSettings);
 
     // m_sJSCode is set in canConvertToNode which is called before this method!
-    setInlineScript (aElement,
-                     m_sCachedJSCode,
-                     m_eScriptMode,
-                     aConversionSettings.getXMLWriterSettings ().getNewLineString ());
+    setInlineScript (aElement, m_sCachedJSCode, m_eScriptMode, aConversionSettings.getXMLWriterSettings ().getNewLineString ());
   }
 
   @Override

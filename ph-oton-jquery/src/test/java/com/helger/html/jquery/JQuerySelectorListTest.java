@@ -34,18 +34,14 @@ public final class JQuerySelectorListTest
   {
     assertEquals ("'#id5'", new JQuerySelectorList ().addSelector (JQuerySelector.id ("id5")).getJSCode ());
     // Check masking
-    assertEquals ("'#id\\\\.value'",
-                  new JQuerySelectorList ().addSelector (JQuerySelector.id ("id.value")).getJSCode ());
+    assertEquals ("'#id\\\\.value'", new JQuerySelectorList ().addSelector (JQuerySelector.id ("id.value")).getJSCode ());
     assertEquals ("'.basic'",
-                  new JQuerySelectorList ().addSelector (JQuerySelector.clazz (DefaultCSSClassProvider.create ("basic")))
-                                           .getJSCode ());
+                  new JQuerySelectorList ().addSelector (JQuerySelector.clazz (DefaultCSSClassProvider.create ("basic"))).getJSCode ());
     assertEquals ("'td'", new JQuerySelectorList ().addSelector (JQuerySelector.element ("td")).getJSCode ());
     assertEquals ("'td:gt(3)'",
-                  new JQuerySelectorList ().addSelector (JQuerySelector.element ("td").chain (JQuerySelector.gt (3)))
-                                           .getJSCode ());
+                  new JQuerySelectorList ().addSelector (JQuerySelector.element ("td").chain (JQuerySelector.gt (3))).getJSCode ());
     assertEquals ("'td:checked'",
-                  new JQuerySelectorList ().addSelector (JQuerySelector.element ("td").chain (JQuerySelector.checked))
-                                           .getJSCode ());
+                  new JQuerySelectorList ().addSelector (JQuerySelector.element ("td").chain (JQuerySelector.checked)).getJSCode ());
     assertEquals ("'td span'",
                   new JQuerySelectorList ().addSelector (JQuerySelector.element ("td"))
                                            .addSelector (JQuerySelector.element ("span"))

@@ -42,7 +42,7 @@ final class DataTablesServerSortState implements Serializable
 
   DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData, @Nonnull final Locale aDisplayLocale)
   {
-    this (aServerData, new CommonsArrayList<> (0), aDisplayLocale);
+    this (aServerData, new CommonsArrayList <> (0), aDisplayLocale);
   }
 
   public DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,

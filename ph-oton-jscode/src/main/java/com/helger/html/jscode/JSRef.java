@@ -109,9 +109,6 @@ public class JSRef extends AbstractJSAssignmentTarget
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("name", m_sName)
-                            .appendIfNotNull ("var", m_aVar)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("name", m_sName).appendIfNotNull ("var", m_aVar).getToString ();
   }
 }

@@ -51,8 +51,7 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 
-public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends
-                                           AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
@@ -60,8 +59,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
     LABEL_SEVERITY ("Typ", "Severity"),
     LABEL_MESSAGE ("Nachricht", "Message"),
     MARKDOWN_IS_SUPPORTED ("Markdown wird unterstützt.", "Markdown syntax is supported"),
-    SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert",
-                  "The new system message was saved successfully."),
+    SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
     CURRENT_MESSAGE_TYPE ("Aktuelle Systemnachricht vom Typ ''{0}''", "Current system message of type ''{0}''"),
     NO_SYSTEM_MESSAGE ("Keine Systemnachricht gesetzt.", "No system message present.");
@@ -134,8 +132,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         if (getCSRFHandler ().checkCSRFNonce (aWPEC).isContinue ())
         {
           // Save message
-          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.params ()
-                                                                                                 .getAsString (FIELD_SEVERITY));
+          final ESystemMessageType eNewMessageType = ESystemMessageType.getFromIDOrDefault (aWPEC.params ().getAsString (FIELD_SEVERITY));
           final String sNewMessage = aWPEC.params ().getAsString (FIELD_MESSAGE);
           final EChange eChange = aSystemMsgMgr.setSystemMessage (eNewMessageType, sNewMessage);
           if (eChange.isChanged ())
@@ -157,8 +154,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
                                                                                                                              .getID ()),
                                                                                               aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_MESSAGE.getDisplayText (aDisplayLocale))
-                                                     .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE,
-                                                                                                         sSystemMessage))));
+                                                     .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE, sSystemMessage))));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE));
         aForm.addChild (getCSRFHandler ().createCSRFNonceField ());

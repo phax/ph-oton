@@ -41,8 +41,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLTYPE>> extends
-                                       AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
+                                       implements
                                        IHCIFrame <IMPLTYPE>
 {
   /** Default scrolling is auto */
@@ -262,8 +262,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC,
-                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
     if (StringHelper.hasText (m_sLongDesc))

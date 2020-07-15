@@ -32,8 +32,7 @@ import com.helger.photon.bootstrap4.stub.init.PhotonStubServletInitializer;
  */
 public final class PhotonStubServletContainerInitializer implements ServletContainerInitializer
 {
-  public void onStartup (@Nonnull final Set <Class <?>> aClasses,
-                         @Nonnull final ServletContext aSC) throws ServletException
+  public void onStartup (@Nonnull final Set <Class <?>> aClasses, @Nonnull final ServletContext aSC) throws ServletException
   {
     PhotonStubServletInitializer.registerServlets (aSC);
   }

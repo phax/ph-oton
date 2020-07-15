@@ -158,9 +158,7 @@ public class WebSiteResource
    * @return The modified String.
    */
   @Nonnull
-  private String _readAndParseCSS (@Nonnull final IHasInputStream aISP,
-                                   @Nonnull @Nonempty final String sBasePath,
-                                   final boolean bRegular)
+  private String _readAndParseCSS (@Nonnull final IHasInputStream aISP, @Nonnull @Nonempty final String sBasePath, final boolean bRegular)
   {
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP, m_aCharset, ECSSVersion.CSS30);
     if (aCSS == null)
@@ -184,9 +182,7 @@ public class WebSiteResource
     });
 
     // Write again after modification
-    return new CSSWriter (ECSSVersion.CSS30, !bRegular).setWriteHeaderText (false)
-                                                       .setWriteFooterText (false)
-                                                       .getCSSAsString (aCSS);
+    return new CSSWriter (ECSSVersion.CSS30, !bRegular).setWriteHeaderText (false).setWriteFooterText (false).getCSSAsString (aCSS);
   }
 
   @Nullable
@@ -251,9 +247,7 @@ public class WebSiteResource
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes
     // long
     final String sVersion = m_sContentHash.length () >= 16 ? m_sContentHash.substring (0, 16) : "";
-    return PhotonAppSettings.getURIToURLConverter ()
-                            .getAsURL (aRequestScope, m_sPath)
-                            .addIf ("version", sVersion, StringHelper::hasText);
+    return PhotonAppSettings.getURIToURLConverter ().getAsURL (aRequestScope, m_sPath).addIf ("version", sVersion, StringHelper::hasText);
   }
 
   @Override
@@ -264,9 +258,7 @@ public class WebSiteResource
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final WebSiteResource rhs = (WebSiteResource) o;
-    return m_eResourceType.equals (rhs.m_eResourceType) &&
-           m_sPath.equals (rhs.m_sPath) &&
-           m_aCharset.equals (rhs.m_aCharset);
+    return m_eResourceType.equals (rhs.m_eResourceType) && m_sPath.equals (rhs.m_sPath) && m_aCharset.equals (rhs.m_aCharset);
   }
 
   @Override
@@ -275,10 +267,7 @@ public class WebSiteResource
     // Cache hashCode :)
     int ret = m_nHashCode;
     if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
-      ret = m_nHashCode = new HashCodeGenerator (this).append (m_eResourceType)
-                                                      .append (m_sPath)
-                                                      .append (m_aCharset)
-                                                      .getHashCode ();
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_eResourceType).append (m_sPath).append (m_aCharset).getHashCode ();
     return ret;
   }
 

@@ -56,9 +56,7 @@ public interface IMenuObjectFilter extends IPredicate <IMenuObject>, IHasDisplay
       @Nullable
       public String getDisplayText (@Nonnull final Locale aContentLocale)
       {
-        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale),
-                                                     " + ",
-                                                     aOther.getDisplayText (aContentLocale));
+        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale), " + ", aOther.getDisplayText (aContentLocale));
       }
     };
   }

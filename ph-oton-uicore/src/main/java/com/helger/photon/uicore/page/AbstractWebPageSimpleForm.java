@@ -143,8 +143,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   }
 
   @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final IHasID <String> aCurObject)
+  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
   {
     return createViewURL (aLEC, aCurObject.getID ());
   }
@@ -152,9 +151,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   @Nonnull
   public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sObjectID)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
-               .add (CPageParam.PARAM_OBJECT, sObjectID);
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW).add (CPageParam.PARAM_OBJECT, sObjectID);
   }
 
   @Nonnull
@@ -172,8 +169,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createEditLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayName ()),
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayName ()),
                            aParams);
   }
 
@@ -192,18 +188,14 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createEditLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
-                                                                            aCurObject.getDisplayText (aDisplayLocale)),
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayText (aDisplayLocale)),
                            aParams);
   }
 
   @Nonnull
-  public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final IHasID <String> aCurObject)
+  public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ()
-               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT)
-               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @Nonnull
@@ -262,9 +254,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyViewToolbar (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final DATATYPE aObject,
-                                    @Nonnull final TOOLBAR_TYPE aToolbar)
+  protected void modifyViewToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aObject, @Nonnull final TOOLBAR_TYPE aToolbar)
   {}
 
   /**
@@ -333,9 +323,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyEditToolbar (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final DATATYPE aObject,
-                                    @Nonnull final TOOLBAR_TYPE aToolbar)
+  protected void modifyEditToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aObject, @Nonnull final TOOLBAR_TYPE aToolbar)
   {}
 
   @Nullable
@@ -365,9 +353,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    */
   @Nonnull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createEditToolbar (@Nonnull final WPECTYPE aWPEC,
-                                            @Nonnull final FORM_TYPE aForm,
-                                            @Nonnull final DATATYPE aObject)
+  protected TOOLBAR_TYPE createEditToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final FORM_TYPE aForm, @Nonnull final DATATYPE aObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 

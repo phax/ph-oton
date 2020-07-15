@@ -29,9 +29,9 @@ import com.helger.html.annotation.SinceHTML5;
  *        Implementation type
  */
 @SinceHTML5
-public abstract class AbstractHCMediaElementChild <IMPLTYPE extends AbstractHCMediaElementChild <IMPLTYPE>>
-                                                  extends AbstractHCElement <IMPLTYPE>
-                                                  implements IHCMediaElementChild <IMPLTYPE>
+public abstract class AbstractHCMediaElementChild <IMPLTYPE extends AbstractHCMediaElementChild <IMPLTYPE>> extends
+                                                  AbstractHCElement <IMPLTYPE> implements
+                                                  IHCMediaElementChild <IMPLTYPE>
 {
   public AbstractHCMediaElementChild (@Nonnull final EHTMLElement eElement)
   {

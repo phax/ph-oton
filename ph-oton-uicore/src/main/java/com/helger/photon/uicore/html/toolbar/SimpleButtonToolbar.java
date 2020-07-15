@@ -34,8 +34,7 @@ import com.helger.photon.uicore.icon.IIcon;
  *
  * @author Philip Helger
  */
-public class SimpleButtonToolbar extends AbstractHCDiv <SimpleButtonToolbar> implements
-                                 IButtonToolbar <SimpleButtonToolbar>
+public class SimpleButtonToolbar extends AbstractHCDiv <SimpleButtonToolbar> implements IButtonToolbar <SimpleButtonToolbar>
 {
   private final SimpleURL m_aSelfHref;
 

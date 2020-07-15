@@ -45,9 +45,6 @@ public class PhotonCoreWebAppTestRule extends PhotonCoreTestRule
   {
     // Use the special resource base path
     // Use default resource provider
-    return MockServletContext.create (sContextPath,
-                                      RESOURCE_BASE_FILE.getAbsolutePath (),
-                                      (IReadableResourceProvider) null,
-                                      aInitParams);
+    return MockServletContext.create (sContextPath, RESOURCE_BASE_FILE.getAbsolutePath (), (IReadableResourceProvider) null, aInitParams);
   }
 }

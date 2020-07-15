@@ -47,8 +47,7 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContext> extends
-                                       AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -81,9 +80,7 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
     super (sID, sName);
   }
 
-  public BasePageAppInfoPathMapper (@Nonnull @Nonempty final String sID,
-                                    @Nonnull final String sName,
-                                    @Nullable final String sDescription)
+  public BasePageAppInfoPathMapper (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }

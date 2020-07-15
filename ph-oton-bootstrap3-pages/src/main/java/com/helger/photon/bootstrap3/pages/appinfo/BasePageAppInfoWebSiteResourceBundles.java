@@ -68,8 +68,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext> extends
-                                                   AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -185,9 +184,7 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     {
@@ -217,18 +214,15 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
         aCacheRow.addCell (new BootstrapButton ().addChild (bCacheEnabled ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
                                                                           : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
                                                  .setOnClick (aWPEC.getSelfHref ()
-                                                                   .add (CPageParam.PARAM_ACTION,
-                                                                         ACTION_CHANGE_CACHE_STATE)));
+                                                                   .add (CPageParam.PARAM_ACTION, ACTION_CHANGE_CACHE_STATE)));
         aMergeCSSRow.addCell (new BootstrapButton ().addChild (bMergeCSSActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
                                                                                : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
                                                     .setOnClick (aWPEC.getSelfHref ()
-                                                                      .add (CPageParam.PARAM_ACTION,
-                                                                            ACTION_CHANGE_MERGE_CSS_STATE)));
+                                                                      .add (CPageParam.PARAM_ACTION, ACTION_CHANGE_MERGE_CSS_STATE)));
         aMergeJSRow.addCell (new BootstrapButton ().addChild (bMergeJSActive ? EPhotonCoreText.BUTTON_DISABLE.getDisplayText (aDisplayLocale)
                                                                              : EPhotonCoreText.BUTTON_ENABLE.getDisplayText (aDisplayLocale))
                                                    .setOnClick (aWPEC.getSelfHref ()
-                                                                     .add (CPageParam.PARAM_ACTION,
-                                                                           ACTION_CHANGE_MERGE_JS_STATE)));
+                                                                     .add (CPageParam.PARAM_ACTION, ACTION_CHANGE_MERGE_JS_STATE)));
       }
       aNodeList.addChild (aTable);
 
@@ -239,10 +233,9 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
                                         new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,
                                                                                                                    aDisplayLocale),
                                         new DTCol (EText.MSG_RESOURCES.getDisplayText (aDisplayLocale)),
-                                        new DTCol (EText.MSG_COND_COMMENT.getDisplayText (aDisplayLocale)).setDataSort (3,
-                                                                                                                        1),
-                                        new DTCol (EText.MSG_CSS_MEDIA.getDisplayText (aDisplayLocale)).setDataSort (4,
-                                                                                                                     1)).setID (getID ());
+                                        new DTCol (EText.MSG_COND_COMMENT.getDisplayText (aDisplayLocale)).setDataSort (3, 1),
+                                        new DTCol (EText.MSG_CSS_MEDIA.getDisplayText (aDisplayLocale)).setDataSort (4, 1))
+                                                                                                                           .setID (getID ());
 
     final ICommonsList <WebSiteResourceBundleSerialized> aBundles = m_aResBundleMgr.getAllResourceBundlesSerialized ();
     for (final WebSiteResourceBundleSerialized aBundle : aBundles)
@@ -252,8 +245,7 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
       aRow.addCell (PDTToString.getAsString (aBundle.getCreationDT (), aDisplayLocale));
       aRow.addCell (HCExtHelper.list2divList (aBundle.getBundle ().getAllResourcePaths ()));
       aRow.addCell (aBundle.getBundle ().getConditionalComment ());
-      aRow.addCell (aBundle.getBundle ().hasMediaList () ? aBundle.getBundle ().getMediaList ().getMediaString ()
-                                                         : null);
+      aRow.addCell (aBundle.getBundle ().hasMediaList () ? aBundle.getBundle ().getMediaList ().getMediaString () : null);
     }
     aNodeList.addChild (aTable);
 

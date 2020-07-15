@@ -38,8 +38,7 @@ import com.helger.photon.uicore.icon.IIcon;
  *
  * @author Philip Helger
  */
-public class BootstrapButtonToolbar extends AbstractBootstrapDiv <BootstrapButtonToolbar> implements
-                                    IButtonToolbar <BootstrapButtonToolbar>
+public class BootstrapButtonToolbar extends AbstractBootstrapDiv <BootstrapButtonToolbar> implements IButtonToolbar <BootstrapButtonToolbar>
 {
   private final SimpleURL m_aSelfHref;
 

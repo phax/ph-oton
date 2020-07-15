@@ -54,8 +54,7 @@ public class HCAutoNumeric extends AbstractHCAutoNumeric <HCAutoNumeric>
   }
 
   @Nonnull
-  public static JSInvocation autoNumericInit (@Nonnull final IJSExpression aAutoNumeric,
-                                              @Nonnull final JSAssocArray aOptions)
+  public static JSInvocation autoNumericInit (@Nonnull final IJSExpression aAutoNumeric, @Nonnull final JSAssocArray aOptions)
   {
     return autoNumericInit (aAutoNumeric).arg (aOptions);
   }
@@ -74,8 +73,7 @@ public class HCAutoNumeric extends AbstractHCAutoNumeric <HCAutoNumeric>
   }
 
   @Nonnull
-  public static JSInvocation autoNumericSet (@Nonnull final IJSExpression aAutoNumeric,
-                                             @Nonnull final IJSExpression aValueToSet)
+  public static JSInvocation autoNumericSet (@Nonnull final IJSExpression aAutoNumeric, @Nonnull final IJSExpression aValueToSet)
   {
     return invoke (aAutoNumeric).arg ("set").arg (aValueToSet);
   }
@@ -87,8 +85,7 @@ public class HCAutoNumeric extends AbstractHCAutoNumeric <HCAutoNumeric>
   }
 
   @Nonnull
-  public static JSInvocation autoNumericSet (@Nonnull final IJSExpression aAutoNumeric,
-                                             @Nonnull final BigDecimal aValueToSet)
+  public static JSInvocation autoNumericSet (@Nonnull final IJSExpression aAutoNumeric, @Nonnull final BigDecimal aValueToSet)
   {
     return autoNumericSet (aAutoNumeric, JSExpr.lit (aValueToSet));
   }

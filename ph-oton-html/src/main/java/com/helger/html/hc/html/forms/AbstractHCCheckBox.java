@@ -34,8 +34,7 @@ import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <IMPLTYPE>> extends
-                                         AbstractHCInput <IMPLTYPE>
+public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE>
 {
   /** The default value of the "value" attribute in HTML */
   public static final String DEFAULT_VALUE = Boolean.TRUE.toString ();
@@ -155,8 +154,6 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("emitHiddenField", m_bEmitHiddenField)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("emitHiddenField", m_bEmitHiddenField).getToString ();
   }
 }

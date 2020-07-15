@@ -63,14 +63,7 @@ public final class StubObject extends AbstractBusinessObject
                      @Nullable final String sDeletionUserID,
                      @Nullable final Map <String, String> aCustomAttrs)
   {
-    super (sID,
-           aCreationDT,
-           sCreationUserID,
-           aLastModificationDT,
-           sLastModificationUserID,
-           aDeletionDT,
-           sDeletionUserID,
-           aCustomAttrs);
+    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, aCustomAttrs);
   }
 
   @Nonnull
@@ -126,8 +119,7 @@ public final class StubObject extends AbstractBusinessObject
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static StubObject createForUser (@Nullable final String sUserID,
-                                          @Nullable final Map <String, String> aCustomAttrs)
+  public static StubObject createForUser (@Nullable final String sUserID, @Nullable final Map <String, String> aCustomAttrs)
   {
     return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID, aCustomAttrs);
   }

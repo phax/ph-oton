@@ -119,11 +119,7 @@ public final class DataTablesServerData implements IHasUIState
     }
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Having ServerSide DataTables with " +
-                    aTable.getBodyRowCount () +
-                    " rows and a total of " +
-                    nCells +
-                    " cells");
+      LOGGER.debug ("Having ServerSide DataTables with " + aTable.getBodyRowCount () + " rows and a total of " + nCells + " cells");
     m_aDisplayLocale = aDisplayLocale;
     m_aServerSortState = new DataTablesServerSortState (this, aDisplayLocale);
     m_eFilterType = eFilterType;

@@ -98,9 +98,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
     super (sID, sName);
   }
 
-  public BasePageAppInfoAPI (@Nonnull @Nonempty final String sID,
-                             @Nonnull final String sName,
-                             @Nullable final String sDescription)
+  public BasePageAppInfoAPI (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }

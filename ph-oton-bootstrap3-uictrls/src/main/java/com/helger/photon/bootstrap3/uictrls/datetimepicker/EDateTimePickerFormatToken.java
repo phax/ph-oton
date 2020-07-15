@@ -49,8 +49,7 @@ public enum EDateTimePickerFormatToken
   private final String m_sJSToken;
   private final String m_sJavaToken;
 
-  private EDateTimePickerFormatToken (@Nonnull @Nonempty final String sJSToken,
-                                      @Nonnull @Nonempty final String sJavaToken)
+  private EDateTimePickerFormatToken (@Nonnull @Nonempty final String sJSToken, @Nonnull @Nonempty final String sJavaToken)
   {
     m_sJSToken = sJSToken;
     m_sJavaToken = sJavaToken;

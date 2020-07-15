@@ -127,8 +127,7 @@ public enum ETinyMCE4Language
   }
 
   @Nullable
-  public static ETinyMCE4Language getFromValueOrDefault (@Nullable final String sValue,
-                                                         @Nullable final ETinyMCE4Language eDefault)
+  public static ETinyMCE4Language getFromValueOrDefault (@Nullable final String sValue, @Nullable final ETinyMCE4Language eDefault)
   {
     if (StringHelper.hasText (sValue))
       for (final ETinyMCE4Language e : values ())
@@ -165,8 +164,7 @@ public enum ETinyMCE4Language
    * @return <code>eDefault</code> if no special translation locale was found.
    */
   @Nullable
-  public static ETinyMCE4Language getFromLocaleOrDefault (@Nullable final Locale aLocale,
-                                                          @Nullable final ETinyMCE4Language eDefault)
+  public static ETinyMCE4Language getFromLocaleOrDefault (@Nullable final Locale aLocale, @Nullable final ETinyMCE4Language eDefault)
   {
     // Check for special case English - no translation required in this case
     if (aLocale != null && !aLocale.getLanguage ().equals ("en"))

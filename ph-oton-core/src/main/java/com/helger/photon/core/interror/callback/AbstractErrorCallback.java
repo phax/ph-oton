@@ -111,19 +111,13 @@ public abstract class AbstractErrorCallback implements
     onError (t, aRequestScope, sErrorCode, new StringMap ().add ("api-path", aDescriptor.getPath ()));
   }
 
-  public void onDAOReadException (@Nonnull final Throwable t,
-                                  final boolean bInit,
-                                  @Nullable final IReadableResource aRes)
+  public void onDAOReadException (@Nonnull final Throwable t, final boolean bInit, @Nullable final IReadableResource aRes)
   {
-    final String sErrorCode = "DAO " +
-                              (bInit ? "init" : "read") +
-                              " error" +
-                              (aRes == null ? "" : " for " + aRes.getPath ());
+    final String sErrorCode = "DAO " + (bInit ? "init" : "read") + " error" + (aRes == null ? "" : " for " + aRes.getPath ());
     onError (t,
              null,
              sErrorCode,
-             new StringMap ().add ("action", bInit ? "init" : "read")
-                             .add ("path", aRes == null ? null : aRes.getPath ()));
+             new StringMap ().add ("action", bInit ? "init" : "read").add ("path", aRes == null ? null : aRes.getPath ()));
   }
 
   public void onDAOWriteException (@Nonnull final Throwable t,
@@ -131,15 +125,10 @@ public abstract class AbstractErrorCallback implements
                                    @Nonnull final CharSequence aFileContent)
   {
     final String sErrorCode = "DAO write error for " + aRes.getPath () + " with " + aFileContent.length () + " chars";
-    onError (t,
-             null,
-             sErrorCode,
-             new StringMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
+    onError (t, null, sErrorCode, new StringMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
   }
 
-  public void onScheduledJobException (@Nonnull final Throwable t,
-                                       @Nullable final String sJobClassName,
-                                       @Nonnull final IJob aJob)
+  public void onScheduledJobException (@Nonnull final Throwable t, @Nullable final String sJobClassName, @Nonnull final IJob aJob)
   {
     onError (t,
              (IRequestWebScopeWithoutResponse) null,
@@ -164,8 +153,7 @@ public abstract class AbstractErrorCallback implements
     }
   }
 
-  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests,
-                                         @Nonnull @Nonempty final List <TrackedRequest> aRequests)
+  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests, @Nonnull @Nonempty final List <TrackedRequest> aRequests)
   {
     final StringBuilder aURLs = new StringBuilder ();
     for (final TrackedRequest aRequest : aRequests)

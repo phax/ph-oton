@@ -35,8 +35,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        The implementing type
  */
-public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>>
-                                      extends AbstractHCBaseTable <IMPLTYPE>
+public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>> extends AbstractHCBaseTable <IMPLTYPE>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractHCTable.class);
 
@@ -77,8 +76,7 @@ public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYP
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
 

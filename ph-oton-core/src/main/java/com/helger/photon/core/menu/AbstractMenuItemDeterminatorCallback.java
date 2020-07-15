@@ -29,7 +29,8 @@ import com.helger.tree.withid.DefaultTreeItemWithID;
  */
 public abstract class AbstractMenuItemDeterminatorCallback extends
                                                            DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
-                                                           implements IMenuItemDeterminatorCallback
+                                                           implements
+                                                           IMenuItemDeterminatorCallback
 {
   private final IMenuTree m_aMenuTree;
 

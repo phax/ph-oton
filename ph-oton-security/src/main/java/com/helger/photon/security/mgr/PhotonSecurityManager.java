@@ -94,8 +94,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     IRoleManager createRoleMgr () throws Exception;
 
     @Nonnull
-    IUserGroupManager createUserGroupMgr (@Nonnull IUserManager aUserMgr,
-                                          @Nonnull IRoleManager aRoleMgr) throws Exception;
+    IUserGroupManager createUserGroupMgr (@Nonnull IUserManager aUserMgr, @Nonnull IRoleManager aRoleMgr) throws Exception;
 
     @Nonnull
     IUserTokenManager createUserTokenMgr () throws Exception;

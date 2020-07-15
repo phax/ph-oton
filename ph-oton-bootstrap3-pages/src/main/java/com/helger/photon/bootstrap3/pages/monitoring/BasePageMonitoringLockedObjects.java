@@ -55,8 +55,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecutionContext>
-                                             extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayText
@@ -82,8 +81,7 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
 
   private final ILockManager <String> m_aLockMgr;
 
-  public BasePageMonitoringLockedObjects (@Nonnull @Nonempty final String sID,
-                                          @Nonnull final ILockManager <String> aLockMgr)
+  public BasePageMonitoringLockedObjects (@Nonnull @Nonempty final String sID, @Nonnull final ILockManager <String> aLockMgr)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_LOCKED_OBJECTS.getAsMLT ());
     m_aLockMgr = ValueEnforcer.notNull (aLockMgr, "LockManager");
@@ -129,9 +127,7 @@ public class BasePageMonitoringLockedObjects <WPECTYPE extends IWebPageExecution
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
-                        aWPEC.getSelfHref (),
-                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
     aNodeList.addChild (aToolbar);
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_DATE.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DATETIME,

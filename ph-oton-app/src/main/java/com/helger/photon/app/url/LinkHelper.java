@@ -166,8 +166,7 @@ public final class LinkHelper
    *         <code>null</code>.
    */
   @Nonnull
-  public static String getURIWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                          @Nonnull final String sHRef)
+  public static String getURIWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sHRef)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notNull (sHRef, "HRef");
@@ -212,8 +211,7 @@ public final class LinkHelper
    *         <code>null</code>.
    */
   @Nonnull
-  public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                             @Nonnull final String sHRef)
+  public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sHRef)
   {
     return new SimpleURL (getURIWithContext (aRequestScope, sHRef));
   }
@@ -337,8 +335,7 @@ public final class LinkHelper
    *         <code>/<i>webapp-context</i>/stream/<i>URL</i></code>.
    */
   @Nonnull
-  public static SimpleURL getStreamURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull @Nonempty final String sURL)
+  public static SimpleURL getStreamURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty final String sURL)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURL, "URL");

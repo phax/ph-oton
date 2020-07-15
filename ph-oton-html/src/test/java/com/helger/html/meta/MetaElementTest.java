@@ -63,9 +63,7 @@ public final class MetaElementTest
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (e1, MetaElement.createMeta ("nam", "con"));
     CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam2", "con"));
     CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam", "con2"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1,
-                                                                           MetaElement.createMetaHttpEquiv ("nam",
-                                                                                                            "con"));
+    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMetaHttpEquiv ("nam", "con"));
   }
 
   @Nullable

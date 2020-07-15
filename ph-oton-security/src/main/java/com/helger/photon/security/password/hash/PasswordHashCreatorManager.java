@@ -75,9 +75,7 @@ public class PasswordHashCreatorManager
 
     m_aRWLock.writeLocked ( () -> {
       if (m_aPasswordHashCreators.containsKey (sAlgorithmName))
-        throw new IllegalArgumentException ("Another PasswordHashCreator for algorithm '" +
-                                            sAlgorithmName +
-                                            "' is already registered!");
+        throw new IllegalArgumentException ("Another PasswordHashCreator for algorithm '" + sAlgorithmName + "' is already registered!");
       m_aPasswordHashCreators.put (sAlgorithmName, aPasswordHashCreator);
     });
 
@@ -184,8 +182,7 @@ public class PasswordHashCreatorManager
    * @see #getDefaultPasswordHashCreator()
    */
   @Nonnull
-  public PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt,
-                                                     @Nonnull final String sPlainTextPassword)
+  public PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt, @Nonnull final String sPlainTextPassword)
   {
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
 
@@ -218,9 +215,7 @@ public class PasswordHashCreatorManager
 
     final IPasswordHashCreator aPHC = getPasswordHashCreatorOfAlgorithm (sAlgorithmName);
     if (aPHC == null)
-      throw new IllegalArgumentException ("No password hash creator for algorithm '" +
-                                          sAlgorithmName +
-                                          "' registered!");
+      throw new IllegalArgumentException ("No password hash creator for algorithm '" + sAlgorithmName + "' registered!");
     final String sPasswordHash = aPHC.createPasswordHash (aSalt, sPlainTextPassword);
     return new PasswordHash (sAlgorithmName, aSalt, sPasswordHash);
   }

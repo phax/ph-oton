@@ -33,7 +33,7 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
 @ThreadSafe
 public final class ObjectLockManager extends AbstractGlobalSingleton
 {
-  private final DefaultLockManager <String> m_aMgr = new DefaultLockManager<> (LoggedInUserManager.getInstance ());
+  private final DefaultLockManager <String> m_aMgr = new DefaultLockManager <> (LoggedInUserManager.getInstance ());
 
   @Deprecated
   @UsedViaReflection

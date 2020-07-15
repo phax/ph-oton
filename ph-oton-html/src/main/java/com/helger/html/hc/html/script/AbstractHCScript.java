@@ -40,8 +40,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLTYPE>> extends
-                                       AbstractHCElement <IMPLTYPE> implements
+public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE> implements
                                        IHCScript <IMPLTYPE>
 {
   /** Default MIME type: text/javascript */

@@ -58,9 +58,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     this (sHostname, nPort, DEFAULT_ENTER_LOCAL_PASSIVE_MODE);
   }
 
-  public FftpConnectionDestination (@Nonnull final String sHostname,
-                                    @Nonnegative final int nPort,
-                                    final boolean bEnterLocalPassiveMode)
+  public FftpConnectionDestination (@Nonnull final String sHostname, @Nonnegative final int nPort, final boolean bEnterLocalPassiveMode)
   {
     this (sHostname, nPort, 2000, bEnterLocalPassiveMode);
   }
@@ -109,12 +107,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
       if (m_bEnterLocalPassiveMode)
         aFtpClient.enterLocalPassiveMode ();
       if (!aFtpClient.login (aUPC.getUserName (), aUPC.getPassword ()))
-        throw new IOException ("Failed to log into FTP server " +
-                               m_sHostname +
-                               ":" +
-                               m_nPort +
-                               ": " +
-                               aFtpClient.getReplyString ());
+        throw new IOException ("Failed to log into FTP server " + m_sHostname + ":" + m_nPort + ": " + aFtpClient.getReplyString ());
       aFtpClient.setFileType (FTP.BINARY_FILE_TYPE);
       return aFtpClient;
     }
@@ -124,13 +117,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     }
     catch (final IOException ex)
     {
-      LOGGER.error ("Connection exception to " +
-                       m_sHostname +
-                       ":" +
-                       m_nPort +
-                       ": " +
-                       aFtpClient.getReplyString (),
-                       ex);
+      LOGGER.error ("Connection exception to " + m_sHostname + ":" + m_nPort + ": " + aFtpClient.getReplyString (), ex);
     }
 
     // In case of an error, disconnect (if connected)
@@ -141,9 +128,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
       }
       catch (final IOException ex2)
       {
-        LOGGER.error ("Error disconnecting from FTP while in connection phase: " +
-                         aFtpClient.getReplyString (),
-                         ex2);
+        LOGGER.error ("Error disconnecting from FTP while in connection phase: " + aFtpClient.getReplyString (), ex2);
       }
     return null;
   }

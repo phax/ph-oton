@@ -41,8 +41,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> extends
-                                  AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE> implements
                                   IHCA <IMPLTYPE>
 {
   private ISimpleURL m_aHref;

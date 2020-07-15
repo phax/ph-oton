@@ -105,8 +105,7 @@ public enum EWebPageSimpleFormAction implements IHasID <String>
   }
 
   @Nullable
-  public static EWebPageSimpleFormAction getFromIDOrDefault (@Nullable final String sID,
-                                                             @Nullable final EWebPageSimpleFormAction eDefault)
+  public static EWebPageSimpleFormAction getFromIDOrDefault (@Nullable final String sID, @Nullable final EWebPageSimpleFormAction eDefault)
   {
     return EnumHelper.getFromIDOrDefault (EWebPageSimpleFormAction.class, sID, eDefault);
   }

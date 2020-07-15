@@ -66,10 +66,7 @@ public final class HCAutoNumericTest
 
     a.setThousandSeparator ("");
     // Script is not emitted afterwards, because it was already emitted
-    assertEquals ("<input id=\"" +
-                  sID +
-                  "\" class=\"auto-numeric-edit\" name=\"dummy\" type=\"text\" value=\"\" />" +
-                  CRLF,
+    assertEquals ("<input id=\"" + sID + "\" class=\"auto-numeric-edit\" name=\"dummy\" type=\"text\" value=\"\" />" + CRLF,
                   HCRenderer.getAsHTMLString (a));
   }
 

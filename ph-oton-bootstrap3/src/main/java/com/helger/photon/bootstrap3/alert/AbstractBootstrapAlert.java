@@ -33,8 +33,7 @@ import com.helger.photon.bootstrap3.base.BootstrapCloseIcon;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrapAlert <IMPLTYPE>> extends
-                                             AbstractHCDiv <IMPLTYPE>
+public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrapAlert <IMPLTYPE>> extends AbstractHCDiv <IMPLTYPE>
 {
   /**
    * This event fires immediately when the close instance method is called.

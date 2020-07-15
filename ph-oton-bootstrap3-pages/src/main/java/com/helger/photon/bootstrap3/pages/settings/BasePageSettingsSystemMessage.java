@@ -53,14 +53,12 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 
-public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends
-                                           AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected static enum EText implements IHasDisplayTextWithArgs
   {
-    SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert",
-                  "The new system message was saved successfully."),
+    SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
     CURRENT_MESSAGE_TYPE ("Aktuelle Systemnachricht vom Typ ''{0}''", "Current system message of type ''{0}''"),
     NO_SYSTEM_MESSAGE ("Keine Systemnachricht gesetzt.", "No system message present.");
@@ -149,8 +147,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
 
         final String sSystemMessage = aSystemMsgMgr.getSystemMessage ();
-        aForm.addChild (new HCSystemMessageTypeSelect (new RequestField (FIELD_MESSAGE_TYPE,
-                                                                         aSystemMsgMgr.getMessageType ().getID ()),
+        aForm.addChild (new HCSystemMessageTypeSelect (new RequestField (FIELD_MESSAGE_TYPE, aSystemMsgMgr.getMessageType ().getID ()),
                                                        aDisplayLocale));
         aForm.addChild (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE, sSystemMessage)));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));

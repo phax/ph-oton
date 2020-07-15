@@ -480,9 +480,7 @@ public class MainHtml2Code
                   sParams = "new SimpleURL (" + _quote (sValue) + ")";
                 }
                 else
-                  if (sName.equalsIgnoreCase ("selected") ||
-                      sName.equalsIgnoreCase ("disabled") ||
-                      sName.equalsIgnoreCase ("hidden"))
+                  if (sName.equalsIgnoreCase ("selected") || sName.equalsIgnoreCase ("disabled") || sName.equalsIgnoreCase ("hidden"))
                   {
                     final boolean bTrue = sName.equalsIgnoreCase (sValue) || sName.equalsIgnoreCase ("true");
                     sParams = Boolean.toString (bTrue);

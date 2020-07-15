@@ -53,8 +53,7 @@ public final class HTMLEntityResolverTest
                                                                                                   aDocType) +
                                                          sHTML,
                                                          new SAXReaderSettings ().setEntityResolver (HTMLEntityResolver.getInstance ())
-                                                                                 .setFeatureValue (EXMLParserFeature.VALIDATION,
-                                                                                                   true));
+                                                                                 .setFeatureValue (EXMLParserFeature.VALIDATION, true));
     return doc != null;
   }
 
@@ -72,9 +71,7 @@ public final class HTMLEntityResolverTest
   public void testHTMLEntityResolveError ()
   {
     // because of standalone="yes"!!!
-    assertFalse (_testResolve ("<?xml version=\"1.0\" encoding=\"" +
-                               XMLWriterSettings.DEFAULT_XML_CHARSET +
-                               "\" standalone=\"yes\"?>",
+    assertFalse (_testResolve ("<?xml version=\"1.0\" encoding=\"" + XMLWriterSettings.DEFAULT_XML_CHARSET + "\" standalone=\"yes\"?>",
                                CHTMLDocTypes.DOCTYPE_XHTML11));
   }
 

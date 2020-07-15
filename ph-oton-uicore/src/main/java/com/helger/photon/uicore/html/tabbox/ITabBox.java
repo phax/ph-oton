@@ -61,29 +61,19 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeLi
   }
 
   @Nonnull
-  default Tab addTab (@Nullable final String sID,
-                      @Nullable final String sLabel,
-                      @Nullable final IHCNode aContent,
-                      final boolean bActive)
+  default Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent, final boolean bActive)
   {
     return addTab (sID, new HCTextNode (sLabel), aContent, bActive);
   }
 
   @Nonnull
-  default Tab addTab (@Nullable final String sID,
-                      @Nullable final IHCNode aLabel,
-                      @Nullable final IHCNode aContent,
-                      final boolean bActive)
+  default Tab addTab (@Nullable final String sID, @Nullable final IHCNode aLabel, @Nullable final IHCNode aContent, final boolean bActive)
   {
     return addTab (sID, aLabel, aContent, bActive, DEFAULT_DISABLED);
   }
 
   @Nonnull
-  Tab addTab (@Nullable String sID,
-              @Nullable IHCNode aLabel,
-              @Nullable IHCNode aContent,
-              boolean bActive,
-              boolean bDisabled);
+  Tab addTab (@Nullable String sID, @Nullable IHCNode aLabel, @Nullable IHCNode aContent, boolean bActive, boolean bDisabled);
 
   @Nonnull
   IMPLTYPE addTab (Tab aTab, boolean bActive);

@@ -71,8 +71,7 @@ public class PasswordConstraintMustContainDigit implements IPasswordConstraint
   @Nullable
   public String getDescription (@Nonnull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MUST_CONTAIN_DIGITS.getDisplayTextWithArgs (aContentLocale,
-                                                                                    Integer.valueOf (m_nMinDigits));
+    return EPasswordConstraintText.DESC_MUST_CONTAIN_DIGITS.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinDigits));
   }
 
   public void fillMicroElement (@Nonnull final IMicroElement aElement)

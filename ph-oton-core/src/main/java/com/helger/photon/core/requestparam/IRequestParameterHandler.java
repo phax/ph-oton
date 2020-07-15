@@ -48,8 +48,7 @@ public interface IRequestParameterHandler extends Serializable
    */
   @Nonnull
   @ReturnsMutableCopy
-  PhotonRequestParameters getParametersFromRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                                    @Nonnull IMenuTree aMenuTree);
+  PhotonRequestParameters getParametersFromRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull IMenuTree aMenuTree);
 
   /**
    * Get all request parameters from the provided URL.

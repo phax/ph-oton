@@ -91,8 +91,7 @@ public abstract class AbstractHCNode implements IHCNode
     return EContinue.CONTINUE;
   }
 
-  public void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
-                              @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     // empty
   }
@@ -171,10 +170,7 @@ public abstract class AbstractHCNode implements IHCNode
     {
       ValueEnforcer.notNull (eNodeState, "NodeState");
       if (m_eNodeState.isAfter (eNodeState))
-        HCConsistencyChecker.consistencyError ("The new node state is invalid. Got " +
-                                               eNodeState +
-                                               " but having " +
-                                               m_eNodeState);
+        HCConsistencyChecker.consistencyError ("The new node state is invalid. Got " + eNodeState + " but having " + m_eNodeState);
     }
     m_eNodeState = eNodeState;
   }

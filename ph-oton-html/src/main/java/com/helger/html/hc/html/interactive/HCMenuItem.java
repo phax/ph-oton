@@ -212,8 +212,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     if (m_eDisabled.isDefined ())
       aElement.setAttribute (CHTMLAttributes.DISABLED, m_eDisabled.isTrue () ? CHTMLAttributeValues.DISABLED : null);
     if (m_aIcon != null)
-      aElement.setAttribute (CHTMLAttributes.ICON,
-                             m_aIcon.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.ICON, m_aIcon.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sLabel))
       aElement.setAttribute (CHTMLAttributes.LABEL, m_sLabel);
     if (StringHelper.hasText (m_sRadioGroup))

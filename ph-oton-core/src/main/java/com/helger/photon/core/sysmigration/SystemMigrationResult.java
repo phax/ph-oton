@@ -131,8 +131,7 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   }
 
   @Nonnull
-  public static SystemMigrationResult createFailure (@Nonnull @Nonempty final String sMigrationID,
-                                                     @Nonnull final String sErrorMsg)
+  public static SystemMigrationResult createFailure (@Nonnull @Nonempty final String sMigrationID, @Nonnull final String sErrorMsg)
   {
     return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), false, sErrorMsg);
   }

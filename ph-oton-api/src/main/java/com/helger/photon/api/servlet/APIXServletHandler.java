@@ -136,9 +136,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
             aUnifiedResponse.removeCaching ();
           }
           else
-            if (!aUnifiedResponse.isStatusCodeDefined () &&
-                !aUnifiedResponse.isRedirectDefined () &&
-                !aUnifiedResponse.hasContent ())
+            if (!aUnifiedResponse.isStatusCodeDefined () && !aUnifiedResponse.isRedirectDefined () && !aUnifiedResponse.hasContent ())
             {
               // Set "No Content" response
               aUnifiedResponse.setStatus (CHttp.HTTP_NO_CONTENT);

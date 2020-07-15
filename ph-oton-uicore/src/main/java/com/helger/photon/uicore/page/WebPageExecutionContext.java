@@ -59,9 +59,6 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("webPage", m_aWebPage)
-                            .append ("nodeList", m_aNodeList)
-                            .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("webPage", m_aWebPage).append ("nodeList", m_aNodeList).getToString ();
   }
 }

@@ -185,8 +185,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
   }
 
   @Nonnull
-  public static BootstrapHelpBlock createDefaultErrorNode (@Nonnull final IError aError,
-                                                           @Nonnull final Locale aContentLocale)
+  public static BootstrapHelpBlock createDefaultErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
   {
     String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
     if (StringHelper.hasNoText (sErrorText))
@@ -327,8 +326,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       bUseIcons = isUseIcons () && eState.isNotNone () && aFirstControl instanceof IHCInput <?>;
 
       // Set static class for all direct children which are not controls
-      final boolean bContainsFormControlStatic = aAllCtrls.isEmpty () &&
-                                                 BootstrapHelper.containsFormControlStatic (aCtrls);
+      final boolean bContainsFormControlStatic = aAllCtrls.isEmpty () && BootstrapHelper.containsFormControlStatic (aCtrls);
 
       // Other control - add in form group
       aFinalNode = new HCDiv ().addClass (CBootstrapCSS.FORM_GROUP);

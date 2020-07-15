@@ -82,8 +82,7 @@ public final class HCRenderer
     return aNode;
   }
 
-  public static void prepareHtmlForConversion (@Nonnull final HCHtml aHtml,
-                                               @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public static void prepareHtmlForConversion (@Nonnull final HCHtml aHtml, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // customize, finalize and extract resources
     prepareForConversion (aHtml, aHtml.body (), aConversionSettings);
@@ -194,8 +193,7 @@ public final class HCRenderer
    */
   @SuppressWarnings ("unchecked")
   @Nullable
-  public static IMicroNode getAsNode (@Nonnull final IHCNode aSrcNode,
-                                      @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public static IMicroNode getAsNode (@Nonnull final IHCNode aSrcNode, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     IHCNode aConvertNode = aSrcNode;
 
@@ -259,8 +257,7 @@ public final class HCRenderer
    * @return The node as HTML string. Never <code>null</code>.
    */
   @Nonnull
-  public static String getAsHTMLString (@Nonnull final IHCNode aHCNode,
-                                        @Nonnull final IHCConversionSettings aConversionSettings)
+  public static String getAsHTMLString (@Nonnull final IHCNode aHCNode, @Nonnull final IHCConversionSettings aConversionSettings)
   {
     final IMicroNode aMicroNode = getAsNode (aHCNode, aConversionSettings);
     if (aMicroNode == null)

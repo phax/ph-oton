@@ -513,8 +513,7 @@ public final class JQuery
    *         <code>$('element#id')</code> or <code>$('element.class')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull final EHTMLElement eElement,
-                                                 @Nonnull final IJQuerySelector aSelector)
+  public static JQueryInvocation elementNameRef (@Nonnull final EHTMLElement eElement, @Nonnull final IJQuerySelector aSelector)
   {
     return JQuerySelector.element (eElement).chain (aSelector).invoke ();
   }
@@ -531,8 +530,7 @@ public final class JQuery
    *         <code>$('element#id')</code> or <code>$('element.class')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull @Nonempty final String sElementName,
-                                                 @Nonnull final IJQuerySelector aSelector)
+  public static JQueryInvocation elementNameRef (@Nonnull @Nonempty final String sElementName, @Nonnull final IJQuerySelector aSelector)
   {
     return JQuerySelector.element (sElementName).chain (aSelector).invoke ();
   }
@@ -548,8 +546,7 @@ public final class JQuery
    *         <code>$('element#id')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameWithIDRef (@Nonnull final EHTMLElement eElement,
-                                                       @Nonnull @Nonempty final String sID)
+  public static JQueryInvocation elementNameWithIDRef (@Nonnull final EHTMLElement eElement, @Nonnull @Nonempty final String sID)
   {
     return elementNameRef (eElement, JQuerySelector.id (sID));
   }
@@ -565,8 +562,7 @@ public final class JQuery
    *         <code>$('element#id')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameWithIDRef (@Nonnull @Nonempty final String sElementName,
-                                                       @Nonnull @Nonempty final String sID)
+  public static JQueryInvocation elementNameWithIDRef (@Nonnull @Nonempty final String sElementName, @Nonnull @Nonempty final String sID)
   {
     return elementNameRef (sElementName, JQuerySelector.id (sID));
   }
@@ -583,8 +579,7 @@ public final class JQuery
    *         <code>$('element.class')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameWithClassRef (@Nonnull final EHTMLElement eElement,
-                                                          @Nonnull final ICSSClassProvider aCSSClass)
+  public static JQueryInvocation elementNameWithClassRef (@Nonnull final EHTMLElement eElement, @Nonnull final ICSSClassProvider aCSSClass)
   {
     return elementNameRef (eElement, JQuerySelector.clazz (aCSSClass));
   }

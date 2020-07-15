@@ -31,8 +31,7 @@ import com.helger.html.hc.html.HCHTMLHelper;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCH1 <IMPLTYPE extends AbstractHCH1 <IMPLTYPE>> extends
-                                   AbstractHCElementWithChildren <IMPLTYPE>
+public abstract class AbstractHCH1 <IMPLTYPE extends AbstractHCH1 <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
 {
   /**
    * Create a new H1 element

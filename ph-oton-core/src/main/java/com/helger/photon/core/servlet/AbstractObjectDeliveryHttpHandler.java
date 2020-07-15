@@ -74,8 +74,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
    * classpath resources.
    */
   protected static final String ETAG_VALUE_OBJECT_DELIVERY_SERVLET = '"' +
-                                                                     Long.toString (MathHelper.abs (new Random ().nextLong ()),
-                                                                                    16) +
+                                                                     Long.toString (MathHelper.abs (new Random ().nextLong ()), 16) +
                                                                      '"';
 
   private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet <> ();
@@ -297,18 +296,14 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     if (m_aAllowedFilenames.contains (sFilename))
     {
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Allowed object with name '" +
-                      sRelativeFilename +
-                      "' because it is in the allowed filenames list");
+        LOGGER.debug ("Allowed object with name '" + sRelativeFilename + "' because it is in the allowed filenames list");
       return true;
     }
 
     if (m_bAllowedAllExtensions || m_aAllowedExtensions.contains (sUnifiedExt))
     {
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Allowed object with name '" +
-                      sRelativeFilename +
-                      "' because it is in the allowed extension list");
+        LOGGER.debug ("Allowed object with name '" + sRelativeFilename + "' because it is in the allowed extension list");
       return true;
     }
 
@@ -317,9 +312,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
         if (RegExHelper.stringMatchesPattern (sAllowedRegEx, sFilename))
         {
           if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Allowed object with name '" +
-                          sRelativeFilename +
-                          "' because it is in the allowed regex list");
+            LOGGER.debug ("Allowed object with name '" + sRelativeFilename + "' because it is in the allowed regex list");
           return true;
         }
 

@@ -52,46 +52,33 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorBigDecimal (@Nonnull final Locale aDisplayLocale)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
-                                                           : LocaleParser.parseBigDecimal (sCellText,
-                                                                                           aDisplayLocale,
-                                                                                           null);
+    return sCellText -> StringHelper.hasNoText (sCellText) ? null : LocaleParser.parseBigDecimal (sCellText, aDisplayLocale, null);
   }
 
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyFormat (@Nonnull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
-                                                           : CurrencyHelper.parseCurrencyFormat (eCurrency,
-                                                                                                 sCellText,
-                                                                                                 null);
+    return sCellText -> StringHelper.hasNoText (sCellText) ? null : CurrencyHelper.parseCurrencyFormat (eCurrency, sCellText, null);
   }
 
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyValueFormat (@Nonnull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
-                                                           : CurrencyHelper.parseValueFormat (eCurrency,
-                                                                                              sCellText,
-                                                                                              null);
+    return sCellText -> StringHelper.hasNoText (sCellText) ? null : CurrencyHelper.parseValueFormat (eCurrency, sCellText, null);
   }
 
   @Nonnull
   public static IComparableExtractor <BigInteger> getExtractorBigInteger (@Nonnull final Locale aDisplayLocale)
   {
     return sCellText -> StringHelper.hasNoText (sCellText) ? null
-                                                           : LocaleParser.parseBigDecimal (sCellText,
-                                                                                           aDisplayLocale,
-                                                                                           BigDecimal.ZERO)
+                                                           : LocaleParser.parseBigDecimal (sCellText, aDisplayLocale, BigDecimal.ZERO)
                                                                          .toBigIntegerExact ();
   }
 
   @Nonnull
   public static IComparableExtractor <LocalDate> getExtractorDate (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorDate (PDTFormatter.getFormatterDate (FormatStyle.MEDIUM,
-                                                            aDisplayLocale,
-                                                            EDTFormatterMode.PARSE));
+    return getExtractorDate (PDTFormatter.getFormatterDate (FormatStyle.MEDIUM, aDisplayLocale, EDTFormatterMode.PARSE));
   }
 
   @Nonnull
@@ -109,9 +96,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalTime> getExtractorTime (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorTime (PDTFormatter.getFormatterTime (FormatStyle.MEDIUM,
-                                                            aDisplayLocale,
-                                                            EDTFormatterMode.PARSE));
+    return getExtractorTime (PDTFormatter.getFormatterTime (FormatStyle.MEDIUM, aDisplayLocale, EDTFormatterMode.PARSE));
   }
 
   @Nonnull
@@ -129,9 +114,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalDateTime> getExtractorDateTime (@Nonnull final Locale aDisplayLocale)
   {
-    return getExtractorDateTime (PDTFormatter.getFormatterDateTime (FormatStyle.MEDIUM,
-                                                                    aDisplayLocale,
-                                                                    EDTFormatterMode.PARSE));
+    return getExtractorDateTime (PDTFormatter.getFormatterDateTime (FormatStyle.MEDIUM, aDisplayLocale, EDTFormatterMode.PARSE));
   }
 
   @Nonnull
@@ -151,8 +134,6 @@ public final class ComparatorDT
   {
     return sCellText -> StringHelper.hasNoText (sCellText) ? null
                                                            : ValueEnforcer.notNull (PDTFromString.getDurationFromString (sCellText),
-                                                                                    () -> "Failed to parse duration '" +
-                                                                                          sCellText +
-                                                                                          "'");
+                                                                                    () -> "Failed to parse duration '" + sCellText + "'");
   }
 }

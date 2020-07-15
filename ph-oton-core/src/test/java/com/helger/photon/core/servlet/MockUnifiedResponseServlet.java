@@ -30,8 +30,7 @@ public final class MockUnifiedResponseServlet extends AbstractXServlet
   {
     handlerRegistry ().registerHandler (EHttpMethod.GET,
                                         (aRequestScope,
-                                         aUnifiedResponse) -> aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT,
-                                                                                                     StandardCharsets.UTF_8)
+                                         aUnifiedResponse) -> aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, StandardCharsets.UTF_8)
                                                                               .setMimeType (CMimeType.TEXT_PLAIN)
                                                                               .disableCaching ());
     handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);

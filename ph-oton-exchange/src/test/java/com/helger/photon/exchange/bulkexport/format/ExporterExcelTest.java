@@ -59,8 +59,7 @@ public final class ExporterExcelTest
     {
       final IExporter aExporter = new ExporterExcel (eVersion);
       // Fails because no record is present
-      assertTrue (aExporter.exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ())
-                           .isFailure ());
+      assertTrue (aExporter.exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ()).isFailure ());
       assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (CollectionHelper.newList (aRecordWithAllTypes)),
                                            new NonBlockingByteArrayOutputStream ())
                            .isSuccess ());

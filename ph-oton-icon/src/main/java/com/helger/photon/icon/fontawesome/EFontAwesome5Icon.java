@@ -1348,8 +1348,7 @@ public enum EFontAwesome5Icon implements IIcon
   }
 
   @Nonnull
-  public static HCSpan createIconStack (@Nonnull final IHCElement <?> aLargeIcon,
-                                        @Nonnull final IHCElement <?> aSmallIcon)
+  public static HCSpan createIconStack (@Nonnull final IHCElement <?> aLargeIcon, @Nonnull final IHCElement <?> aSmallIcon)
   {
     final HCSpan ret = new HCSpan ().addClasses (CFontAwesome5CSS.FA_STACK, CFontAwesome5CSS.FA_LG);
     ret.addChild (aLargeIcon.addClass (CFontAwesome5CSS.FA_STACK_2X));

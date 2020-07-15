@@ -91,18 +91,13 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ConstantCSSPathProvider rhs = (ConstantCSSPathProvider) o;
-    return m_sPath.equals (rhs.m_sPath) &&
-           m_sMinifiedPath.equals (rhs.m_sMinifiedPath) &&
-           m_bIsBundlable == rhs.m_bIsBundlable;
+    return m_sPath.equals (rhs.m_sPath) && m_sMinifiedPath.equals (rhs.m_sMinifiedPath) && m_bIsBundlable == rhs.m_bIsBundlable;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sPath)
-                                       .append (m_sMinifiedPath)
-                                       .append (m_bIsBundlable)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_sPath).append (m_sMinifiedPath).append (m_bIsBundlable).getHashCode ();
   }
 
   @Override
@@ -146,8 +141,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath,
-                                                         final boolean bBundlable)
+  public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath, final boolean bBundlable)
   {
     return createBundlable (sPath, DEFAULT_CSS_MEDIA_LIST, bBundlable);
   }
@@ -171,15 +165,13 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
-                                                        @Nullable final String sConditionalComment)
+  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI, @Nullable final String sConditionalComment)
   {
     return createExternal (sURI, sConditionalComment, DEFAULT_CSS_MEDIA_LIST);
   }
 
   @Nonnull
-  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
-                                                        @Nullable final ICSSMediaList aMediaList)
+  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI, @Nullable final ICSSMediaList aMediaList)
   {
     return createExternal (sURI, DEFAULT_CONDITIONAL_COMMENT, aMediaList);
   }

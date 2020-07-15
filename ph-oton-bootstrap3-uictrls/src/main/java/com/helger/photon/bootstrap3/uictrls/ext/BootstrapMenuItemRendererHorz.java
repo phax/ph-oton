@@ -40,8 +40,7 @@ public class BootstrapMenuItemRendererHorz extends BootstrapMenuItemRenderer
 
   @Override
   @Nonnull
-  public IHCNode renderSeparator (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final IMenuSeparator aSeparator)
+  public IHCNode renderSeparator (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IMenuSeparator aSeparator)
   {
     return new HCLI ().addChild ("·");
   }

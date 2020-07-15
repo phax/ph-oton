@@ -56,9 +56,7 @@ public class PingPongXServletHandler implements IXServletSimpleHandler
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException
   {
-    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET)
-                    .setMimeType (RESPONSE_MIMETYPE)
-                    .disableCaching ();
+    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET).setMimeType (RESPONSE_MIMETYPE).disableCaching ();
     s_aStatsPingPong.increment ();
   }
 }

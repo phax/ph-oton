@@ -62,9 +62,7 @@ public class MarkdownConfiguration
    * <li><code>codeBlockEmitter = null</code></li>
    * </ul>
    */
-  public static final MarkdownConfiguration DEFAULT_EXTENSIONS = MarkdownConfiguration.builder ()
-                                                                                      .setExtendedProfile (true)
-                                                                                      .build ();
+  public static final MarkdownConfiguration DEFAULT_EXTENSIONS = MarkdownConfiguration.builder ().setExtendedProfile (true).build ();
 
   /**
    * <p>
@@ -218,7 +216,7 @@ public class MarkdownConfiguration
     private IMarkdownDecorator m_aDecorator = new MarkdownDefaultDecorator ();
     private IMarkdownBlockEmitter m_aCodeBlockEmitter = null;
     private IMarkdownSpanEmitter m_aSpecialLinkEmitter = null;
-    private final ICommonsList <AbstractMarkdownPlugin> m_aPlugins = new CommonsArrayList<> ();
+    private final ICommonsList <AbstractMarkdownPlugin> m_aPlugins = new CommonsArrayList <> ();
 
     /**
      * Constructor.

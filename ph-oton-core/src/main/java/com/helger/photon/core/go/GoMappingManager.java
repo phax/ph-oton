@@ -297,8 +297,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
    * @return The number of errors occurred. Always &ge; 0.
    */
   @Nonnegative
-  public int checkInternalMappings (@Nonnull final IMenuTree aMenuTree,
-                                    @Nonnull final Consumer <GoMappingItem> aErrorCallback)
+  public int checkInternalMappings (@Nonnull final IMenuTree aMenuTree, @Nonnull final Consumer <GoMappingItem> aErrorCallback)
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
     ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
@@ -350,8 +349,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
    * @return <code>/webapp-context/go/<i>key</i></code>. Never <code>null</code>
    */
   @Nonnull
-  public static SimpleURL getGoLink (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull @Nonempty final String sKey)
+  public static SimpleURL getGoLink (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty final String sKey)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
 

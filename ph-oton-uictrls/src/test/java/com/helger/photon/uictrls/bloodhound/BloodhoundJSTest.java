@@ -39,8 +39,7 @@ public final class BloodhoundJSTest
   {
     final JSWriterSettings aJSWS = new JSWriterSettings ().setIndentAndAlign (false);
     final JSPackage p = new JSPackage ();
-    p.add (BloodhoundJS.newBloodhound (new BloodhoundOptions ().setDatumTokenizerPreTokenized ()
-                                                               .setLocal (new BloodhoundDatum ("test"))));
+    p.add (BloodhoundJS.newBloodhound (new BloodhoundOptions ().setDatumTokenizerPreTokenized ().setLocal (new BloodhoundDatum ("test"))));
     assertEquals ("new Bloodhound({datumTokenizer:function(d){return d.tokens;},local:[{value:'test',tokens:['test']}]});",
                   p.getJSCode (aJSWS));
   }

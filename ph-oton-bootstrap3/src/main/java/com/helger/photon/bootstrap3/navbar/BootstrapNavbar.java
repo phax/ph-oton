@@ -51,9 +51,7 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
   private final BootstrapNavbarHeader m_aHeader;
   private final HCDiv m_aContent;
 
-  public BootstrapNavbar (@Nonnull final EBootstrapNavbarType eType,
-                          final boolean bCollapsible,
-                          @Nonnull final Locale aDisplayLocale)
+  public BootstrapNavbar (@Nonnull final EBootstrapNavbarType eType, final boolean bCollapsible, @Nonnull final Locale aDisplayLocale)
   {
     addClasses (CBootstrapCSS.NAVBAR, CBootstrapCSS.NAVBAR_DEFAULT, eType);
     setRole (EHTMLRole.NAVIGATION);
@@ -135,8 +133,7 @@ public class BootstrapNavbar extends AbstractHCNav <BootstrapNavbar>
   }
 
   @Nonnull
-  public BootstrapNavbar addText (@Nonnull final EBootstrapNavbarPosition ePos,
-                                  @Nonnull final IHCElementWithChildren <?> aText)
+  public BootstrapNavbar addText (@Nonnull final EBootstrapNavbarPosition ePos, @Nonnull final IHCElementWithChildren <?> aText)
   {
     aText.addClass (CBootstrapCSS.NAVBAR_TEXT);
     return _addNode (ePos, aText);

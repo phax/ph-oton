@@ -339,9 +339,7 @@ public class FeedEntry extends AbstractFeedElement
       for (final FeedLink aLink : m_aLinks)
         if (FeedLink.REL_ALTERNATE.equals (aLink.getRel ()))
         {
-          final String sKey = aLink.getType () +
-                              ":" +
-                              (aLink.getHrefLang () == null ? "" : aLink.getHrefLang ().toString ());
+          final String sKey = aLink.getType () + ":" + (aLink.getHrefLang () == null ? "" : aLink.getHrefLang ().toString ());
           if (!aUniques.add (sKey))
           {
             LOGGER.warn ("'" + FeedLink.REL_ALTERNATE + "' link is not unique: " + aLink);

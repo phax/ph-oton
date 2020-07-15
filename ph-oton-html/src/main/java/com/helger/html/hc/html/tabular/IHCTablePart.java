@@ -29,8 +29,7 @@ import com.helger.html.hc.html.IHCElementWithInternalChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCTablePart <IMPLTYPE extends IHCTablePart <IMPLTYPE>>
-                              extends IHCElementWithInternalChildren <IMPLTYPE, HCRow>
+public interface IHCTablePart <IMPLTYPE extends IHCTablePart <IMPLTYPE>> extends IHCElementWithInternalChildren <IMPLTYPE, HCRow>
 {
   /**
    * @return <code>true</code> if this is a header or footer part,

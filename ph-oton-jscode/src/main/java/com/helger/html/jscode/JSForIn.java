@@ -94,9 +94,7 @@ public class JSForIn extends AbstractJSStatement
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final JSForIn rhs = (JSForIn) o;
-    return m_aLoopVar.equals (rhs.m_aLoopVar) &&
-           m_aCollection.equals (rhs.m_aCollection) &&
-           EqualsHelper.equals (m_aBody, rhs.m_aBody);
+    return m_aLoopVar.equals (rhs.m_aLoopVar) && m_aCollection.equals (rhs.m_aCollection) && EqualsHelper.equals (m_aBody, rhs.m_aBody);
   }
 
   @Override

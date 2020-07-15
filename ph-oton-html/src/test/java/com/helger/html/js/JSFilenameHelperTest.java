@@ -63,18 +63,13 @@ public final class JSFilenameHelperTest
 
     assertEquals (s2, JSFilenameHelper.getMinifiedJSFilename (s1));
     assertEquals (s2, JSFilenameHelper.getMinifiedJSFilename (s2));
-    assertEquals ("http://any.url.com/path/to.min.js",
-                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
-    assertEquals ("http://any.url.com/path/to.min.js",
-                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
-    assertEquals ("http://any.url.com/path/to.min.js?",
-                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?"));
-    assertEquals ("http://any.url.com/path/to.min.js?x=y",
-                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y"));
+    assertEquals ("http://any.url.com/path/to.min.js", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
+    assertEquals ("http://any.url.com/path/to.min.js", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
+    assertEquals ("http://any.url.com/path/to.min.js?", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?"));
+    assertEquals ("http://any.url.com/path/to.min.js?x=y", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y"));
     assertEquals ("http://any.url.com/path/to.min.js?x=y&a=b",
                   JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y&a=b"));
-    assertEquals ("http://any.url.com/path/to.min.js#",
-                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#"));
+    assertEquals ("http://any.url.com/path/to.min.js#", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#"));
     assertEquals ("http://any.url.com/path/to.min.js#anchor",
                   JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#anchor"));
     try

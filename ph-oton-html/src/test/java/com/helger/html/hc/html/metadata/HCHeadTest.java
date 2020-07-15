@@ -61,8 +61,7 @@ public final class HCHeadTest
 
     assertSame (aHead, aHead.setProfile ("any"));
     assertEquals ("any", aHead.getProfile ());
-    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\" profile=\"any\"></head>",
-                  HCRenderer.getAsHTMLString (aHead));
+    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\" profile=\"any\"></head>", HCRenderer.getAsHTMLString (aHead));
 
     assertSame (aHead, aHead.setPageTitle ("Title"));
     assertEquals ("Title", aHead.getPageTitle ());
@@ -107,9 +106,7 @@ public final class HCHeadTest
     assertEquals (1, aHead.metaElements ().size ());
     assertEquals (EChange.UNCHANGED, aHead.removeMetaElement ("foo"));
     assertEquals (1, aHead.metaElements ().size ());
-    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\">" +
-                  "<meta http-equiv=\"goo\" content=\"car\" />" +
-                  "</head>",
+    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\">" + "<meta http-equiv=\"goo\" content=\"car\" />" + "</head>",
                   HCRenderer.getAsHTMLString (aHead));
     assertEquals (EChange.CHANGED, aHead.removeMetaElement ("goo"));
     assertEquals (0, aHead.metaElements ().size ());
@@ -123,8 +120,7 @@ public final class HCHeadTest
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"></head>", HCRenderer.getAsHTMLString (aHead));
 
     aHead.setPageTitle ("test");
-    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"><title>test</title></head>",
-                  HCRenderer.getAsHTMLString (aHead));
+    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"><title>test</title></head>", HCRenderer.getAsHTMLString (aHead));
 
     aHead.setBaseHref (new SimpleURL ("/root"));
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"><title>test</title><base href=\"/root\" /></head>",
@@ -134,8 +130,7 @@ public final class HCHeadTest
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"><title>test</title><base target=\"_blank\" /></head>",
                   HCRenderer.getAsHTMLString (aHead));
     aHead.setBaseTarget (null);
-    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"><title>test</title></head>",
-                  HCRenderer.getAsHTMLString (aHead));
+    assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"><title>test</title></head>", HCRenderer.getAsHTMLString (aHead));
 
     aHead.setShortcutIconHref (new SimpleURL ("/favicon.ico"));
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\"><title>test</title><link rel=\"shortcut icon\" href=\"/favicon.ico\"></link><link rel=\"icon\" type=\"image/icon\" href=\"/favicon.ico\"></link></head>",

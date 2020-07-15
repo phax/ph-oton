@@ -224,8 +224,7 @@ public final class HCSettings
     s_aRWLock.writeLockedBoolean ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Default @autocomplete for <input type=password> set to " +
-                     (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
+        LOGGER.info ("Default @autocomplete for <input type=password> set to " + (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
   }
 
   public static int getTextAreaDefaultRows ()

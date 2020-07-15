@@ -51,9 +51,7 @@ public class AjaxExecutorServerLog implements IAjaxExecutor
         return EErrorLevel.WARN;
       if ("info".equalsIgnoreCase (sSeverity))
         return EErrorLevel.INFO;
-      if ("success".equalsIgnoreCase (sSeverity) ||
-          "debug".equalsIgnoreCase (sSeverity) ||
-          "trace".equalsIgnoreCase (sSeverity))
+      if ("success".equalsIgnoreCase (sSeverity) || "debug".equalsIgnoreCase (sSeverity) || "trace".equalsIgnoreCase (sSeverity))
         return EErrorLevel.SUCCESS;
     }
     return DEFAULT_SEVERITY;

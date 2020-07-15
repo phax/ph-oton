@@ -113,12 +113,7 @@ public class MainExtractFontAwesome5CSSClasses
       {
         final String sClassFieldName = createFieldName (sClass.substring (1));
         final String sFieldName = createFieldName (sClassFieldName.substring ("fa-".length ()));
-        System.out.println (sFieldName +
-                            " (CFontAwesome5CSS." +
-                            sClassFieldName +
-                            ", " +
-                            aBrandFields.contains (sFieldName) +
-                            "),");
+        System.out.println (sFieldName + " (CFontAwesome5CSS." + sClassFieldName + ", " + aBrandFields.contains (sFieldName) + "),");
       }
   }
 }

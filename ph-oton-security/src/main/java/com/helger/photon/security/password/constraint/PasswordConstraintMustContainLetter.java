@@ -71,8 +71,7 @@ public class PasswordConstraintMustContainLetter implements IPasswordConstraint
   @Nullable
   public String getDescription (@Nonnull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MUST_CONTAIN_LETTERS.getDisplayTextWithArgs (aContentLocale,
-                                                                                     Integer.valueOf (m_nMinLetters));
+    return EPasswordConstraintText.DESC_MUST_CONTAIN_LETTERS.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinLetters));
   }
 
   public void fillMicroElement (@Nonnull final IMicroElement aElement)

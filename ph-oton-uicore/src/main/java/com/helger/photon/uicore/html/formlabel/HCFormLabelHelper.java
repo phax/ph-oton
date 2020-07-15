@@ -66,8 +66,7 @@ public final class HCFormLabelHelper
   }
 
   @Nonnull
-  public static <T extends IHCNodeWithChildren <?>> T getNodeWithState (@Nonnull final T aNode,
-                                                                        @Nonnull final ELabelType eType)
+  public static <T extends IHCNodeWithChildren <?>> T getNodeWithState (@Nonnull final T aNode, @Nonnull final ELabelType eType)
   {
     ValueEnforcer.notNull (aNode, "Node");
     ValueEnforcer.notNull (eType, "Type");

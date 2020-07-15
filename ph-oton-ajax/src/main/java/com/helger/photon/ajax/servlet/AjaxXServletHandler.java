@@ -67,8 +67,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
 
   private static final String SCOPE_ATTR_NAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.name";
   private static final String SCOPE_ATTR_INVOKER = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.invoker";
-  private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
-                                                    "ajaxservlet.executor";
+  private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "ajaxservlet.executor";
 
   private final ISupplier <? extends IAjaxRegistry> m_aRegistryFactory;
   private final ISupplier <? extends IAjaxInvoker> m_aInvokerFactory;
@@ -155,11 +154,8 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   {
     // Action is present
     final String sAjaxFunctionName = aRequestScope.attrs ().getAsString (SCOPE_ATTR_NAME);
-    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.attrs ()
-                                                                  .getCastedValue (SCOPE_ATTR_INVOKER, Wrapper.class)
-                                                                  .get ();
-    final IAjaxExecutor aAjaxExecutor = aRequestScope.attrs ()
-                                                     .getCastedValue (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
+    final IAjaxInvoker aAjaxInvoker = (IAjaxInvoker) aRequestScope.attrs ().getCastedValue (SCOPE_ATTR_INVOKER, Wrapper.class).get ();
+    final IAjaxExecutor aAjaxExecutor = aRequestScope.attrs ().getCastedValue (SCOPE_ATTR_EXECUTOR, IAjaxExecutor.class);
 
     // Never cache the result but the executor may overwrite it
     aUnifiedResponse.disableCaching ();
@@ -167,10 +163,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     try
     {
       // Invoke function
-      aAjaxInvoker.invokeFunction (sAjaxFunctionName,
-                                   aAjaxExecutor,
-                                   aRequestScope,
-                                   GenericReflection.uncheckedCast (aUnifiedResponse));
+      aAjaxInvoker.invokeFunction (sAjaxFunctionName, aAjaxExecutor, aRequestScope, GenericReflection.uncheckedCast (aUnifiedResponse));
 
       if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
       {

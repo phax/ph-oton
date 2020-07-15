@@ -21,9 +21,9 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 /**
- * Unit test class for interface @{link IJQueryInvocation}
+ * Unit test class for interface @{link IJQueryInvocation} This file is
+ * generated - do NOT edit!
  * 
- * This file is generated - do NOT edit!
  * @author com.helger.html.jquery.supplementary.main.Main_QueryInvocationFuncTest
  */
 public final class JQueryInvocationFuncTest

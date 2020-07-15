@@ -88,9 +88,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        The object to be handled. May be <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void showQuery (@Nonnull WPECTYPE aWPEC,
-                                     @Nonnull FORM_TYPE aForm,
-                                     @Nullable DATATYPE aSelectedObject);
+  protected abstract void showQuery (@Nonnull WPECTYPE aWPEC, @Nonnull FORM_TYPE aForm, @Nullable DATATYPE aSelectedObject);
 
   /**
    * Perform action

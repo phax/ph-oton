@@ -25,9 +25,7 @@ package com.helger.html;
 public enum EHTMLContentModelType
 {
   FLOW (EHTMLContentKind.FLOW.getValue () | EHTMLContentKind.PHRASING.getValue ()),
-  FLOW_METADATA (EHTMLContentKind.METADATA.getValue () |
-                 EHTMLContentKind.FLOW.getValue () |
-                 EHTMLContentKind.PHRASING.getValue ()),
+  FLOW_METADATA (EHTMLContentKind.METADATA.getValue () | EHTMLContentKind.FLOW.getValue () | EHTMLContentKind.PHRASING.getValue ()),
   PHRASING_METADATA (EHTMLContentKind.METADATA.getValue () | EHTMLContentKind.PHRASING.getValue ()),
   METADATA (EHTMLContentKind.METADATA.getValue ()),
   PHRASING (EHTMLContentKind.PHRASING.getValue ()),

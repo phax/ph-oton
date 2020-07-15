@@ -51,8 +51,7 @@ public abstract class AbstractBootstrapWebPageSimpleForm <DATATYPE extends IHasI
     super (sID, getAsMLT (sName), null, BootstrapWebPageUIHandler.INSTANCE);
   }
 
-  public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID,
-                                             @Nonnull final IMultilingualText aName)
+  public AbstractBootstrapWebPageSimpleForm (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName, null, BootstrapWebPageUIHandler.INSTANCE);
   }

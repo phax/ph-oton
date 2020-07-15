@@ -416,13 +416,11 @@ public class FineUploader5Core implements IFineUploader5Part
       aSub.add ("minSizeError", EFineUploader5CoreText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("noFilesError", EFineUploader5CoreText.NO_FILES_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("onLeave", EFineUploader5CoreText.ON_LEAVE.getDisplayText (m_aDisplayLocale));
-      aSub.add ("retryFailTooManyItemsError",
-                EFineUploader5CoreText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("retryFailTooManyItemsError", EFineUploader5CoreText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("sizeError", EFineUploader5CoreText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("tooManyItemsError", EFineUploader5CoreText.TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("typeError", EFineUploader5CoreText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
-      aSub.add ("unsupportedBrowserIos8Safari",
-                EFineUploader5CoreText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
+      aSub.add ("unsupportedBrowserIos8Safari", EFineUploader5CoreText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
 
       // extended
       _extendAndAdd (ret, KEY_MESSAGES, aSub);
@@ -433,8 +431,7 @@ public class FineUploader5Core implements IFineUploader5Part
       final JSAssocArray aSub = new JSAssocArray ();
       if (m_aDisplayLocale != null)
       {
-        aSub.add ("defaultResponseError",
-                  EFineUploader5CoreText.DEFAULT_RESPONSE_ERROR.getDisplayText (m_aDisplayLocale));
+        aSub.add ("defaultResponseError", EFineUploader5CoreText.DEFAULT_RESPONSE_ERROR.getDisplayText (m_aDisplayLocale));
         aSub.add ("fileInputTitle", EFineUploader5CoreText.FILE_INPUT_TITLE.getDisplayText (m_aDisplayLocale));
       }
       if (!m_aTextSizeSymbols.equals (DEFAULT_TEXT_SIZE_SYMBOLS))

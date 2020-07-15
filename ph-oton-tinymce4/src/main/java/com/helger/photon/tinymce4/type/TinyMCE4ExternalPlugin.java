@@ -85,8 +85,6 @@ public class TinyMCE4ExternalPlugin
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("pluginName", m_sPluginName)
-                                       .append ("pluginURL", m_aPluginURL)
-                                       .getToString ();
+    return new ToStringGenerator (this).append ("pluginName", m_sPluginName).append ("pluginURL", m_aPluginURL).getToString ();
   }
 }

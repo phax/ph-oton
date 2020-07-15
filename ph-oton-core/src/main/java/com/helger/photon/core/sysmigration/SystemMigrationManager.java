@@ -67,8 +67,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   @Override
   protected EChange onRead (final IMicroDocument aDoc)
   {
-    for (final IMicroElement eMigrationResult : aDoc.getDocumentElement ()
-                                                    .getAllChildElements (ELEMENT_SYSTEM_MIGRATION_RESULT))
+    for (final IMicroElement eMigrationResult : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_SYSTEM_MIGRATION_RESULT))
       internalAdd (MicroTypeConverter.convertToNative (eMigrationResult, SystemMigrationResult.class));
     return EChange.UNCHANGED;
   }
@@ -78,11 +77,9 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_SYSTEM_MIGRATION_RESULTS);
-    for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ())
-                                                                      .values ())
+    for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
       for (final SystemMigrationResult aMigrationResult : aMigrationResults)
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
-                                                                     ELEMENT_SYSTEM_MIGRATION_RESULT));
+        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult, ELEMENT_SYSTEM_MIGRATION_RESULT));
     return aDoc;
   }
 
@@ -184,8 +181,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * @param aMigrationAction
    *        The action to be performed. May not be <code>null</code>.
    */
-  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID,
-                                           @Nonnull final Runnable aMigrationAction)
+  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID, @Nonnull final Runnable aMigrationAction)
   {
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
@@ -236,10 +232,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
         // Invoke the callback
         final SuccessWithValue <String> ret = aMigrationAction.get ();
 
-        LOGGER.info ("Finished performing migration '" +
-                     sMigrationID +
-                     "' with status " +
-                     (ret.isSuccess () ? "success" : "error"));
+        LOGGER.info ("Finished performing migration '" + sMigrationID + "' with status " + (ret.isSuccess () ? "success" : "error"));
 
         // Success or error
         if (ret.isSuccess ())

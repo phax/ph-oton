@@ -69,9 +69,7 @@ public class HCCountrySelect extends HCExtSelect
     this (aRF, aDisplayLocale, getAllCountries (eWithDeprecated));
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aDisplayLocale,
-                          final boolean bAlwaysShowPleaseSelect)
+  public HCCountrySelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale, final boolean bAlwaysShowPleaseSelect)
   {
     this (aRF, aDisplayLocale, EWithDeprecated.DEFAULT, bAlwaysShowPleaseSelect);
   }
@@ -110,15 +108,13 @@ public class HCCountrySelect extends HCExtSelect
 
     Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
-      aComp = IComparator.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale),
-                                                  aDisplayLocale);
+      aComp = IComparator.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale), aDisplayLocale);
     else
       aComp = aDisplayTextProvider.getComparatorCollating (aDisplayLocale, aDisplayLocale);
 
     for (final Locale aCountry : CollectionHelper.getSorted (aLocales, aComp))
     {
-      final String sDisplayCountry = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aCountry,
-                                                                                                         aDisplayLocale)
+      final String sDisplayCountry = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aCountry, aDisplayLocale)
                                                                   : aCountry.getDisplayCountry (aDisplayLocale);
       addOption (aCountry.getCountry (), sDisplayCountry);
     }

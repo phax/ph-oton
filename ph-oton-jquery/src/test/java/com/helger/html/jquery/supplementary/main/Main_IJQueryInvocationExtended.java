@@ -95,10 +95,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                   aParams.append (", ");
 
                 final String sJavaType = aArg.getFirstJavaType ();
-                aParams.append (_getAnnotation (sJavaType))
-                       .append (sJavaType)
-                       .append (' ')
-                       .append (aArg.getIdentifier ());
+                aParams.append (_getAnnotation (sJavaType)).append (sJavaType).append (' ').append (aArg.getIdentifier ());
                 aJavaTypeKey.add (sJavaType);
               }
               if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringHelper.getImploded (',', aJavaTypeKey)))
@@ -139,18 +136,14 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                 else
                 {
                   final String sJavaType = aArg.getFirstJavaType ();
-                  aTemplate.append (_getAnnotation (sJavaType))
-                           .append (sJavaType)
-                           .append (' ')
-                           .append (aArg.getIdentifier ());
+                  aTemplate.append (_getAnnotation (sJavaType)).append (sJavaType).append (' ').append (aArg.getIdentifier ());
                   aJavaTypeKey.add (sJavaType);
                 }
                 ++nArgIndex;
               }
 
               ICommonsList <String> aAllParams = new CommonsArrayList <> (aTemplate.toString ());
-              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',',
-                                                                                                      aJavaTypeKey));
+              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',', aJavaTypeKey));
 
               for (int i = 0; i < nArgCount; ++i)
                 if (aMultiJavaTypeArgs[i] != null)
@@ -161,9 +154,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                   for (final String sJavaType : aMultiJavaTypeArgs[i].getAllJavaTypes ())
                   {
                     for (final String sParam : aAllParams)
-                      aNewParams.add (StringHelper.replaceAll (sParam,
-                                                               sSearch,
-                                                               _getAnnotation (sJavaType) + sJavaType));
+                      aNewParams.add (StringHelper.replaceAll (sParam, sSearch, _getAnnotation (sJavaType) + sJavaType));
                     for (final String sJavaKey : aAllJavaKeys)
                       aNewJavaKeys.add (StringHelper.replaceAll (sJavaKey, sSearch, sJavaType));
                   }

@@ -98,10 +98,7 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
     final IUser aLoggedInUser = LoggedInUserManager.getInstance ().getCurrentUser ();
 
     // Build the execution scope
-    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope,
-                                                                            aDisplayLocale,
-                                                                            aMenuTree,
-                                                                            aLoggedInUser);
+    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree, aLoggedInUser);
 
     // fill body
     fillBody (aSWEC, aHtml);

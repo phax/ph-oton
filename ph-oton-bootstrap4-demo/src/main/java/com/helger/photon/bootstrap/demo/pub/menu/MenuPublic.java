@@ -40,15 +40,12 @@ public final class MenuPublic
   public static void init (@Nonnull final IMenuTree aMenuTree)
   {
     // Not logged in
-    aMenuTree.createRootItem (new PagePublicLogin (CMenuPublic.MENU_LOGIN))
-             .setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
+    aMenuTree.createRootItem (new PagePublicLogin (CMenuPublic.MENU_LOGIN)).setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
     aMenuTree.createRootSeparator ().setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
 
     // Icons stuff
     {
-      final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren <> ("icon",
-                                                                                          "Icon sets",
-                                                                                          aMenuTree));
+      final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren <> ("icon", "Icon sets", aMenuTree));
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome4 ("icon-fa4"));
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome5 ("icon-fa5"));
       aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));

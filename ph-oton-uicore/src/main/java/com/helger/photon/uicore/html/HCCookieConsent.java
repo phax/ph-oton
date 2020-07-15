@@ -146,12 +146,10 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
       aInitOptions.add ("theme", eTheme.getValue ());
     final JSAssocArray aPalette = new JSAssocArray ();
     aPalette.addIf ("popup",
-                    new JSAssocArray ().addIfNotNull ("background", sPopupBackgroundColor)
-                                       .addIfNotNull ("text", sPopupTextColor),
+                    new JSAssocArray ().addIfNotNull ("background", sPopupBackgroundColor).addIfNotNull ("text", sPopupTextColor),
                     JSAssocArray::isNotEmpty);
     aPalette.addIf ("button",
-                    new JSAssocArray ().addIfNotNull ("background", sButtonBackgroundColor)
-                                       .addIfNotNull ("text", sButtonTextColor),
+                    new JSAssocArray ().addIfNotNull ("background", sButtonBackgroundColor).addIfNotNull ("text", sButtonTextColor),
                     JSAssocArray::isNotEmpty);
     aInitOptions.add ("palette", aPalette);
 

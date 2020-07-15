@@ -39,11 +39,8 @@ public final class ETinyMCE4LanguageTest
     assertNull (ETinyMCE4Language.getFromLocaleOrNull (Locale.US));
     assertSame (ETinyMCE4Language.DE, ETinyMCE4Language.getFromLocaleOrNull (Locale.GERMAN));
     assertSame (ETinyMCE4Language.DE, ETinyMCE4Language.getFromLocaleOrNull (Locale.GERMANY));
+    assertSame (ETinyMCE4Language.DE_AT, ETinyMCE4Language.getFromLocaleOrNull (LocaleCache.getInstance ().getLocale ("de", "AT")));
     assertSame (ETinyMCE4Language.DE_AT,
-                ETinyMCE4Language.getFromLocaleOrNull (LocaleCache.getInstance ().getLocale ("de", "AT")));
-    assertSame (ETinyMCE4Language.DE_AT,
-                ETinyMCE4Language.getFromLocaleOrNull (LocaleCache.getInstance ().getLocale ("DE",
-                                                                                             "at",
-                                                                                             "variant xyz")));
+                ETinyMCE4Language.getFromLocaleOrNull (LocaleCache.getInstance ().getLocale ("DE", "at", "variant xyz")));
   }
 }

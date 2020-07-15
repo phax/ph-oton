@@ -40,7 +40,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
    */
   public TinyMCE4ToolbarControlList ()
   {
-    m_aList = new CommonsArrayList<> ();
+    m_aList = new CommonsArrayList <> ();
   }
 
   /**
@@ -52,7 +52,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   public TinyMCE4ToolbarControlList (@Nonnull final ETinyMCE4ToolbarControl... aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = new CommonsArrayList<> (aList);
+    m_aList = new CommonsArrayList <> (aList);
   }
 
   /**
@@ -64,7 +64,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   public TinyMCE4ToolbarControlList (@Nonnull final List <ETinyMCE4ToolbarControl> aList)
   {
     ValueEnforcer.notNull (aList, "List");
-    m_aList = new CommonsArrayList<> (aList);
+    m_aList = new CommonsArrayList <> (aList);
   }
 
   /**
@@ -113,8 +113,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   }
 
   @Nonnull
-  public TinyMCE4ToolbarControlList addControl (@Nonnegative final int nIndex,
-                                                @Nonnull final ETinyMCE4ToolbarControl eControl)
+  public TinyMCE4ToolbarControlList addControl (@Nonnegative final int nIndex, @Nonnull final ETinyMCE4ToolbarControl eControl)
   {
     ValueEnforcer.notNull (eControl, "Control");
     m_aList.add (nIndex, eControl);

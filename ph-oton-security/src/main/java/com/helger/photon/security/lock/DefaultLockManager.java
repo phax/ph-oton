@@ -173,13 +173,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
       if (LOGGER.isInfoEnabled ())
       {
         if (CollectionHelper.isNotEmpty (aUnlockedObjects))
-          LOGGER.info ("Before locking, unlocked all objects of user '" +
-                       sUserID +
-                       "': " +
-                       aUnlockedObjects +
-                       " except '" +
-                       aObjID +
-                       "'");
+          LOGGER.info ("Before locking, unlocked all objects of user '" + sUserID + "': " + aUnlockedObjects + " except '" + aObjID + "'");
         if (bIsNewLock)
           LOGGER.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
       }
@@ -207,8 +201,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   }
 
   @Nonnull
-  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull final IDTYPE aObjID,
-                                                                 @Nullable final String sUserID)
+  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull final IDTYPE aObjID, @Nullable final String sUserID)
   {
     ValueEnforcer.notNull (aObjID, "ObjectID");
 

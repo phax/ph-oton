@@ -120,8 +120,7 @@ public interface ISimpleWebExecutionContext
   {
     final String sLoggedInUserID = getLoggedInUserID ();
     return sLoggedInUserID != null &&
-           PhotonSecurityManager.getUserGroupMgr ()
-                                .containsAnyUserGroupWithAssignedUserAndRole (sLoggedInUserID, sRoleID);
+           PhotonSecurityManager.getUserGroupMgr ().containsAnyUserGroupWithAssignedUserAndRole (sLoggedInUserID, sRoleID);
   }
 
   /**
@@ -191,7 +190,6 @@ public interface ISimpleWebExecutionContext
                                        @Nonnull final Locale aDisplayLocale,
                                        @Nonnull final String sMenuItemID)
   {
-    return RequestParameterManager.getInstance ()
-                                  .getLinkToMenuItem (sAppID, getRequestScope (), aDisplayLocale, sMenuItemID);
+    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID, getRequestScope (), aDisplayLocale, sMenuItemID);
   }
 }

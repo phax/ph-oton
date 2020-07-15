@@ -41,10 +41,10 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   private static final String INDENT = " *     ";
 
   /** list of @-param tags */
-  private final ICommonsOrderedMap <String, JSCommentPart> m_aParams = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, JSCommentPart> m_aParams = new CommonsLinkedHashMap <> ();
 
   /** list of xdoclets */
-  private final ICommonsOrderedMap <String, ICommonsMap <String, String>> m_aXDoclets = new CommonsLinkedHashMap<> ();
+  private final ICommonsOrderedMap <String, ICommonsMap <String, String>> m_aXDoclets = new CommonsLinkedHashMap <> ();
 
   /** The @-return tag part. */
   private JSCommentPart m_aReturn;
@@ -138,7 +138,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
     ICommonsMap <String, String> aMap = m_aXDoclets.get (sName);
     if (aMap == null)
     {
-      aMap = new CommonsHashMap<> ();
+      aMap = new CommonsHashMap <> ();
       m_aXDoclets.put (sName, aMap);
     }
     return aMap;
@@ -154,8 +154,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    * @return XDoclect to be filled
    */
   @Nonnull
-  public ICommonsMap <String, String> addXdoclet (@Nonnull final String sName,
-                                                  @Nonnull final Map <String, String> aAttributes)
+  public ICommonsMap <String, String> addXdoclet (@Nonnull final String sName, @Nonnull final Map <String, String> aAttributes)
   {
     final ICommonsMap <String, String> p = addXdoclet (sName);
     p.putAll (aAttributes);
@@ -248,11 +247,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aParams)
-                                       .append (m_aXDoclets)
-                                       .append (m_aReturn)
-                                       .append (m_aDeprecated)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_aParams).append (m_aXDoclets).append (m_aReturn).append (m_aDeprecated).getHashCode ();
   }
 
   @Override

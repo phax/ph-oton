@@ -294,8 +294,7 @@ public class ExporterExcel implements IExporterFile
   }
 
   @Nonnull
-  public final ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
-                                       @Nonnull @WillClose final OutputStream aOS)
+  public final ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider, @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {

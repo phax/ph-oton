@@ -58,9 +58,7 @@ public final class AjaxExecutorLogin implements IAjaxExecutor
     final String sPassword = aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_PASSWORD);
 
     // Main login
-    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (sLoginName,
-                                                                                    sPassword,
-                                                                                    CApp.REQUIRED_ROLE_IDS_VIEW);
+    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (sLoginName, sPassword, CApp.REQUIRED_ROLE_IDS_VIEW);
     if (eLoginResult.isSuccess ())
     {
       aAjaxResponse.json (new JsonObject ().add (JSON_LOGGEDIN, true));

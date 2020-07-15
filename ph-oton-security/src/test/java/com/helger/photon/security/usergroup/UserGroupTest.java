@@ -51,8 +51,7 @@ public final class UserGroupTest
   @Test
   public void testMicroConversion ()
   {
-    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID ("id1",
-                                                                                      new StringMap ("key", "value")),
+    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID ("id1", new StringMap ("key", "value")),
                                                 "User group 5",
                                                 "bla");
     aUserGroup.assignUser ("user1");

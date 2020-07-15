@@ -190,9 +190,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (this).append ("searchTerms", m_aSearchTerms)
-                                         .append ("sortLocale", m_aSortLocale)
-                                         .getToString ();
+      return new ToStringGenerator (this).append ("searchTerms", m_aSearchTerms).append ("sortLocale", m_aSortLocale).getToString ();
     }
   }
 
@@ -243,8 +241,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    * @return A non-<code>null</code> list with all datums to use.
    */
   @Nonnull
-  protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder,
-                                                                                   @Nonnull LECTYPE aLEC);
+  protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder, @Nonnull LECTYPE aLEC);
 
   /**
    * @return <code>true</code> if the default suffix "[x of y]" should not be
@@ -261,8 +258,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   }
 
   @Override
-  protected void mainHandleRequest (@Nonnull final LECTYPE aLEC,
-                                    @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  protected void mainHandleRequest (@Nonnull final LECTYPE aLEC, @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);
     if (StringHelper.hasNoTextAfterTrim (sOriginalQuery))
@@ -290,9 +286,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
         for (final TypeaheadDatum aDatum : aMatchingDatums)
         {
           nIndex++;
-          final String sText = ETypeaheadText.DATUM_INDEX.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                  Integer.toString (nIndex),
-                                                                                  sMax);
+          final String sText = ETypeaheadText.DATUM_INDEX.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (nIndex), sMax);
           aDatum.setValue (aDatum.getValue () + " " + sText);
           aDatum.tokens ().addAll (TypeaheadDatum.getTokensFromValue (sText));
         }

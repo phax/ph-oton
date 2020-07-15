@@ -51,9 +51,7 @@ public final class Role extends AbstractBusinessObject implements IRole
     this (StubObject.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  protected Role (@Nonnull final StubObject aStubObject,
-                  @Nonnull @Nonempty final String sName,
-                  @Nullable final String sDescription)
+  protected Role (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);
