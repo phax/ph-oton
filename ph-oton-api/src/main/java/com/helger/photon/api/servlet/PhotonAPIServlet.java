@@ -20,7 +20,19 @@ import com.helger.commons.http.EHttpMethod;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
- * This class handles the API functions for the public application
+ * This class handles the API functions for the public application.<br>
+ * The default registration for web.xml looks like this:
+ *
+ * <pre>
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;PhotonAPIServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.helger.photon.api.servlet.PhotonAPIServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;PhotonAPIServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/api/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+ * </pre>
  *
  * @author Philip Helger
  */
