@@ -18,6 +18,9 @@ package com.helger.photon.app.url;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -39,6 +42,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (StreamOrLocalURIToURLConverter.class);
+
   public StreamOrLocalURIToURLConverter ()
   {}
 
@@ -66,11 +71,12 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   {
     ValueEnforcer.notEmpty (sURI, "URI");
 
-    IReadableResource ret;
+    final IReadableResource ret;
 
     // If the URL is absolute, use it
     if (LinkHelper.hasKnownProtocol (sURI))
     {
+      LOGGER.info ("Opening '" + sURI + "' via a URLResource");
       ret = new URLResource (URLHelper.getAsURL (sURI));
     }
     else
@@ -102,7 +108,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   {
     ValueEnforcer.notEmpty (sURI, "URI");
 
-    SimpleURL ret;
+    final SimpleURL ret;
 
     // If the URL is absolute, use it
     if (LinkHelper.hasKnownProtocol (sURI))
@@ -140,7 +146,7 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURI, "URI");
 
-    SimpleURL ret;
+    final SimpleURL ret;
 
     // If the URL is absolute, use it
     if (LinkHelper.hasKnownProtocol (sURI))
