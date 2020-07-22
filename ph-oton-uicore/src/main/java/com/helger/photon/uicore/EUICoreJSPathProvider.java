@@ -30,7 +30,7 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EUICoreJSPathProvider implements IJSPathProvider
 {
-  COOKIE_CONSENT ("uicore/cookieconsent/3.0.4/cookieconsent.js"),
+  COOKIE_CONSENT ("uicore/cookieconsent/3.1.1/cookieconsent.js"),
   /** Insert in &lt;head&gt; element (after or before your CSS) for IE &lt; 9 */
   HTML5SHIV ("uicore/html5shiv/3.7.3/html5shiv.js", "if lt IE 9"),
   HTML5SHIV_PRINTSHIV ("uicore/html5shiv/3.7.3/html5shiv-printshiv.js", "if lt IE 9"),

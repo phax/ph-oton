@@ -100,6 +100,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v8.2.6 - work in progress
     * Updated to Jetty 9.4.30
+    * Updated to popper.js 1.16.1-lts
+    * Updated to CookieConsent 3.1.1
     * Improved customizability of `ExporterExcel`
 * v8.2.5 - 2020-05-26
     * Changed Maven groupId to `com.helger.photon`
