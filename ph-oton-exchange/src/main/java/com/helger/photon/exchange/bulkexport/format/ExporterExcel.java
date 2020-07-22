@@ -55,6 +55,7 @@ import com.helger.poi.excel.style.ExcelStyle;
 @NotThreadSafe
 public class ExporterExcel implements IExporterFile
 {
+  public static final boolean DEFAULT_AUTOSIZE_ALL_COLUMNS = true;
   private static final ExcelStyle DEFAULT_STYLE_DATE = new ExcelStyle ().setDataFormat ("dd.mm.yyyy");
   private static final ExcelStyle DEFAULT_STYLE_TIME = new ExcelStyle ().setDataFormat ("hh:mm:ss");
   private static final ExcelStyle DEFAULT_STYLE_DATETIME = new ExcelStyle ().setDataFormat ("dd.mm.yyyy hh:mm:ss");
@@ -67,6 +68,7 @@ public class ExporterExcel implements IExporterFile
   private ExcelStyle m_aStyleDate = DEFAULT_STYLE_DATE;
   private ExcelStyle m_aStyleTime = DEFAULT_STYLE_TIME;
   private ExcelStyle m_aStyleDateTime = DEFAULT_STYLE_DATETIME;
+  private boolean m_bAutoSizeAllColumns = DEFAULT_AUTOSIZE_ALL_COLUMNS;
 
   public ExporterExcel (@Nonnull final EExcelVersion eVersion)
   {
@@ -74,13 +76,26 @@ public class ExporterExcel implements IExporterFile
   }
 
   @Nonnull
-  public EExcelVersion getExcelVersion ()
+  public final EExchangeFileType getFileType ()
+  {
+    return m_eVersion.equals (EExcelVersion.XLS) ? EExchangeFileType.XLS : EExchangeFileType.XLSX;
+  }
+
+  @Nonnull
+  public final EExcelVersion getExcelVersion ()
   {
     return m_eVersion;
   }
 
+  @Nullable
+  @ReturnsMutableCopy
+  public final ExcelStyle getStyleBoolean ()
+  {
+    return m_aStyleBoolean == null ? null : m_aStyleBoolean.getClone ();
+  }
+
   @Nonnull
-  public ExporterExcel setStyleBoolean (@Nullable final ExcelStyle aStyle)
+  public final ExporterExcel setStyleBoolean (@Nullable final ExcelStyle aStyle)
   {
     m_aStyleBoolean = aStyle == null ? null : aStyle.getClone ();
     return this;
@@ -88,13 +103,13 @@ public class ExporterExcel implements IExporterFile
 
   @Nullable
   @ReturnsMutableCopy
-  public ExcelStyle getStyleBoolean ()
+  public final ExcelStyle getStyleInt ()
   {
-    return m_aStyleBoolean == null ? null : m_aStyleBoolean.getClone ();
+    return m_aStyleInt == null ? null : m_aStyleInt.getClone ();
   }
 
   @Nonnull
-  public ExporterExcel setStyleInt (@Nullable final ExcelStyle aStyle)
+  public final ExporterExcel setStyleInt (@Nullable final ExcelStyle aStyle)
   {
     m_aStyleInt = aStyle == null ? null : aStyle.getClone ();
     return this;
@@ -102,13 +117,13 @@ public class ExporterExcel implements IExporterFile
 
   @Nullable
   @ReturnsMutableCopy
-  public ExcelStyle getStyleInt ()
+  public final ExcelStyle getStyleDouble ()
   {
-    return m_aStyleInt == null ? null : m_aStyleInt.getClone ();
+    return m_aStyleDouble == null ? null : m_aStyleDouble.getClone ();
   }
 
   @Nonnull
-  public ExporterExcel setStyleDouble (@Nullable final ExcelStyle aStyle)
+  public final ExporterExcel setStyleDouble (@Nullable final ExcelStyle aStyle)
   {
     m_aStyleDouble = aStyle == null ? null : aStyle.getClone ();
     return this;
@@ -116,27 +131,27 @@ public class ExporterExcel implements IExporterFile
 
   @Nullable
   @ReturnsMutableCopy
-  public ExcelStyle getStyleDouble ()
-  {
-    return m_aStyleDouble == null ? null : m_aStyleDouble.getClone ();
-  }
-
-  @Nonnull
-  public ExporterExcel setStyleText (@Nullable final ExcelStyle aStyle)
-  {
-    m_aStyleText = aStyle == null ? null : aStyle.getClone ();
-    return this;
-  }
-
-  @Nullable
-  @ReturnsMutableCopy
-  public ExcelStyle getStyleText ()
+  public final ExcelStyle getStyleText ()
   {
     return m_aStyleText == null ? null : m_aStyleText.getClone ();
   }
 
   @Nonnull
-  public ExporterExcel setStyleDate (@Nonnull final ExcelStyle aStyle)
+  public final ExporterExcel setStyleText (@Nullable final ExcelStyle aStyle)
+  {
+    m_aStyleText = aStyle == null ? null : aStyle.getClone ();
+    return this;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final ExcelStyle getStyleDate ()
+  {
+    return m_aStyleDate.getClone ();
+  }
+
+  @Nonnull
+  public final ExporterExcel setStyleDate (@Nonnull final ExcelStyle aStyle)
   {
     m_aStyleDate = ValueEnforcer.notNull (aStyle, "Style").getClone ();
     return this;
@@ -144,13 +159,13 @@ public class ExporterExcel implements IExporterFile
 
   @Nonnull
   @ReturnsMutableCopy
-  public ExcelStyle getStyleDate ()
+  public final ExcelStyle getStyleTime ()
   {
-    return m_aStyleDate.getClone ();
+    return m_aStyleTime.getClone ();
   }
 
   @Nonnull
-  public ExporterExcel setStyleTime (@Nonnull final ExcelStyle aStyle)
+  public final ExporterExcel setStyleTime (@Nonnull final ExcelStyle aStyle)
   {
     m_aStyleTime = ValueEnforcer.notNull (aStyle, "Style").getClone ();
     return this;
@@ -158,23 +173,28 @@ public class ExporterExcel implements IExporterFile
 
   @Nonnull
   @ReturnsMutableCopy
-  public ExcelStyle getStyleTime ()
+  public final ExcelStyle getStyleDateTime ()
   {
-    return m_aStyleTime.getClone ();
+    return m_aStyleDateTime.getClone ();
   }
 
   @Nonnull
-  public ExporterExcel setStyleDateTime (@Nonnull final ExcelStyle aStyle)
+  public final ExporterExcel setStyleDateTime (@Nonnull final ExcelStyle aStyle)
   {
     m_aStyleDateTime = ValueEnforcer.notNull (aStyle, "Style").getClone ();
     return this;
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  public ExcelStyle getStyleDateTime ()
+  public final boolean isAutoSizeAllColumns ()
   {
-    return m_aStyleDateTime.getClone ();
+    return m_bAutoSizeAllColumns;
+  }
+
+  @Nonnull
+  public final ExporterExcel setAutoSizeAllColumns (final boolean bAutoSizeAllColumns)
+  {
+    m_bAutoSizeAllColumns = bAutoSizeAllColumns;
+    return this;
   }
 
   /**
@@ -316,18 +336,13 @@ public class ExporterExcel implements IExporterFile
       if (aWBCH.getRowCount () == 0)
         return ESuccess.FAILURE;
 
-      aWBCH.autoSizeAllColumns ();
+      if (m_bAutoSizeAllColumns)
+        aWBCH.autoSizeAllColumns ();
       return aWBCH.writeTo (aOS);
     }
     finally
     {
       StreamHelper.close (aOS);
     }
-  }
-
-  @Nonnull
-  public EExchangeFileType getFileType ()
-  {
-    return m_eVersion.equals (EExcelVersion.XLS) ? EExchangeFileType.XLS : EExchangeFileType.XLSX;
   }
 }
