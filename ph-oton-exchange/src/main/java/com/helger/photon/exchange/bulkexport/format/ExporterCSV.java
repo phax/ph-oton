@@ -77,17 +77,32 @@ public class ExporterCSV implements IExporterFile
     setCharset (aCharset);
   }
 
+  @Override
   @Nonnull
-  public ExporterCSV setCharset (@Nonnull final Charset aCharset)
+  public final EExchangeFileType getFileType ()
+  {
+    return EExchangeFileType.CSV;
+  }
+
+  @Nonnull
+  public final Charset getCharset ()
+  {
+    return m_aCharset;
+  }
+
+  @Nonnull
+  public final ExporterCSV setCharset (@Nonnull final Charset aCharset)
   {
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
     return this;
   }
 
-  @Nonnull
-  public Charset getCharset ()
+  /**
+   * @return Current separator char
+   */
+  public final char getSeparatorChar ()
   {
-    return m_aCharset;
+    return m_cSeparatorChar;
   }
 
   /**
@@ -96,70 +111,71 @@ public class ExporterCSV implements IExporterFile
    * @return this for chaining
    */
   @Nonnull
-  public ExporterCSV setSeparatorChar (final char cSeparator)
+  public final ExporterCSV setSeparatorChar (final char cSeparator)
   {
     m_cSeparatorChar = cSeparator;
     return this;
   }
 
-  /**
-   * @return Current separator char
-   */
-  public char getSeparatorChar ()
-  {
-    return m_cSeparatorChar;
-  }
-
-  @Nonnull
-  public ExporterCSV setQuoteChar (final char cQuote)
-  {
-    m_cQuoteChar = cQuote;
-    return this;
-  }
-
-  public char getQuoteChar ()
+  public final char getQuoteChar ()
   {
     return m_cQuoteChar;
   }
 
   @Nonnull
-  public ExporterCSV setEscapeChar (final char cEscape)
+  public final ExporterCSV setQuoteChar (final char cQuote)
   {
-    m_cEscapeChar = cEscape;
+    m_cQuoteChar = cQuote;
     return this;
   }
 
-  public char getEscapeChar ()
+  public final char getEscapeChar ()
   {
     return m_cEscapeChar;
   }
 
   @Nonnull
-  public ExporterCSV setLineEnd (@Nonnull @Nonempty final String sLineEnd)
+  public final ExporterCSV setEscapeChar (final char cEscape)
+  {
+    m_cEscapeChar = cEscape;
+    return this;
+  }
+
+  @Nonnull
+  @Nonempty
+  public final String getLineEnd ()
+  {
+    return m_sLineEnd;
+  }
+
+  @Nonnull
+  public final ExporterCSV setLineEnd (@Nonnull @Nonempty final String sLineEnd)
   {
     ValueEnforcer.notEmpty (sLineEnd, "LineEnd");
     m_sLineEnd = sLineEnd;
     return this;
   }
 
-  @Nonnull
-  @Nonempty
-  public String getLineEnd ()
+  @Nullable
+  public final EUnicodeBOM getUnicodeBOM ()
   {
-    return m_sLineEnd;
+    return m_eBOM;
   }
 
   @Nonnull
-  public ExporterCSV setUnicodeBOM (@Nullable final EUnicodeBOM eBOM)
+  public final ExporterCSV setUnicodeBOM (@Nullable final EUnicodeBOM eBOM)
   {
     m_eBOM = eBOM;
     return this;
   }
 
-  @Nullable
-  public EUnicodeBOM getUnicodeBOM ()
+  /**
+   * @return <code>true</code> if empty files are not written,
+   *         <code>false</code> otherwise (by default).
+   */
+  public final boolean isAvoidWriteEmpty ()
   {
-    return m_eBOM;
+    return m_bAvoidWriteEmpty;
   }
 
   /**
@@ -175,19 +191,20 @@ public class ExporterCSV implements IExporterFile
    * @since 7.0.4
    */
   @Nonnull
-  public ExporterCSV setAvoidWriteEmpty (final boolean bAvoidWriteEmpty)
+  public final ExporterCSV setAvoidWriteEmpty (final boolean bAvoidWriteEmpty)
   {
     m_bAvoidWriteEmpty = bAvoidWriteEmpty;
     return this;
   }
 
   /**
-   * @return <code>true</code> if empty files are not written,
+   * @return <code>true</code> if the written data should end with a line end,
    *         <code>false</code> otherwise (by default).
+   * @since 7.1.1
    */
-  public boolean isAvoidWriteEmpty ()
+  public final boolean isAvoidFinalLineEnd ()
   {
-    return m_bAvoidWriteEmpty;
+    return m_bAvoidFinalLineEnd;
   }
 
   /**
@@ -199,20 +216,10 @@ public class ExporterCSV implements IExporterFile
    * @since 7.1.1
    */
   @Nonnull
-  public ExporterCSV setAvoidFinalLineEnd (final boolean bAvoidFinalLineEnd)
+  public final ExporterCSV setAvoidFinalLineEnd (final boolean bAvoidFinalLineEnd)
   {
     m_bAvoidFinalLineEnd = bAvoidFinalLineEnd;
     return this;
-  }
-
-  /**
-   * @return <code>true</code> if the written data should end with a line end,
-   *         <code>false</code> otherwise (by default).
-   * @since 7.1.1
-   */
-  public boolean isAvoidFinalLineEnd ()
-  {
-    return m_bAvoidFinalLineEnd;
   }
 
   @Nonnull
@@ -307,12 +314,5 @@ public class ExporterCSV implements IExporterFile
     {
       StreamHelper.close (aOS);
     }
-  }
-
-  @Override
-  @Nonnull
-  public EExchangeFileType getFileType ()
-  {
-    return EExchangeFileType.CSV;
   }
 }

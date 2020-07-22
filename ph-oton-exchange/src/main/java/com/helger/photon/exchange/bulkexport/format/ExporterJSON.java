@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsImmutableObject;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.json.IJsonArray;
@@ -56,54 +58,69 @@ import com.helger.photon.exchange.bulkexport.IExporterFile;
 public class ExporterJSON implements IExporterFile
 {
   public static final boolean DEFAULT_EMIT_TYPE = true;
-  private static final String ELEMENT_HEADER = "header";
-  private static final String ELEMENT_BODY = "body";
-  private static final String ELEMENT_FOOTER = "footer";
-  private static final String ATTR_TYPE = "type";
-  private static final String ATTR_VALUE = "value";
+  public static final String ELEMENT_HEADER = "header";
+  public static final String ELEMENT_BODY = "body";
+  public static final String ELEMENT_FOOTER = "footer";
+  public static final String ATTR_TYPE = "type";
+  public static final String ATTR_VALUE = "value";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (ExporterJSON.class);
 
-  private IJsonWriterSettings m_aJWS = new JsonWriterSettings ();
+  private JsonWriterSettings m_aJWS = new JsonWriterSettings ();
   private Charset m_aCharset = StandardCharsets.UTF_8;
   private boolean m_bEmitType = DEFAULT_EMIT_TYPE;
 
   public ExporterJSON ()
   {}
 
+  @Override
   @Nonnull
-  public Charset getCharset ()
+  public final EExchangeFileType getFileType ()
+  {
+    return EExchangeFileType.XML;
+  }
+
+  @Nonnull
+  public final Charset getCharset ()
   {
     return m_aCharset;
   }
 
   @Nonnull
-  public ExporterJSON setCharset (@Nonnull final Charset aCharset)
+  public final ExporterJSON setCharset (@Nonnull final Charset aCharset)
   {
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
     return this;
   }
 
   @Nonnull
-  public IJsonWriterSettings getJsonWriterSettings ()
+  @ReturnsMutableObject
+  public final JsonWriterSettings jsonWriterSettings ()
   {
     return m_aJWS;
   }
 
   @Nonnull
-  public ExporterJSON setJsonWriterSettings (@Nonnull final IJsonWriterSettings aJWS)
+  @ReturnsImmutableObject
+  public final IJsonWriterSettings getJsonWriterSettings ()
+  {
+    return m_aJWS;
+  }
+
+  @Nonnull
+  public final ExporterJSON setJsonWriterSettings (@Nonnull final JsonWriterSettings aJWS)
   {
     m_aJWS = ValueEnforcer.notNull (aJWS, "JsonWriterSettings");
     return this;
   }
 
-  public boolean isEmitType ()
+  public final boolean isEmitType ()
   {
     return m_bEmitType;
   }
 
   @Nonnull
-  public ExporterJSON setEmitType (final boolean bEmitType)
+  public final ExporterJSON setEmitType (final boolean bEmitType)
   {
     m_bEmitType = bEmitType;
     return this;
@@ -194,12 +211,5 @@ public class ExporterJSON implements IExporterFile
     {
       StreamHelper.close (aOS);
     }
-  }
-
-  @Override
-  @Nonnull
-  public EExchangeFileType getFileType ()
-  {
-    return EExchangeFileType.XML;
   }
 }

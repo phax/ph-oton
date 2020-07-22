@@ -25,6 +25,7 @@ import javax.annotation.WillClose;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
@@ -37,6 +38,7 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
@@ -48,13 +50,13 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
 public class ExporterXML implements IExporterFile
 {
   public static final boolean DEFAULT_EMIT_TYPE_ATTRIBUTE = true;
-  private static final String ELEMENT_ROOT = "root";
-  private static final String ELEMENT_HEADER = "header";
-  private static final String ELEMENT_BODY = "body";
-  private static final String ELEMENT_FOOTER = "footer";
-  private static final String ELEMENT_RECORD = "record";
-  private static final String ELEMENT_FIELD = "field";
-  private static final String ATTR_TYPE = "type";
+  public static final String ELEMENT_ROOT = "root";
+  public static final String ELEMENT_HEADER = "header";
+  public static final String ELEMENT_BODY = "body";
+  public static final String ELEMENT_FOOTER = "footer";
+  public static final String ELEMENT_RECORD = "record";
+  public static final String ELEMENT_FIELD = "field";
+  public static final String ATTR_TYPE = "type";
 
   private final XMLWriterSettings m_aXWS = new XMLWriterSettings ();
   private boolean m_bEmitTypeAttr = DEFAULT_EMIT_TYPE_ATTRIBUTE;
@@ -62,28 +64,47 @@ public class ExporterXML implements IExporterFile
   public ExporterXML ()
   {}
 
+  @Override
   @Nonnull
-  public ExporterXML setCharset (@Nonnull final Charset aCharset)
+  public final EExchangeFileType getFileType ()
+  {
+    return EExchangeFileType.XML;
+  }
+
+  @Nonnull
+  public final Charset getCharset ()
+  {
+    return m_aXWS.getCharset ();
+  }
+
+  @Nonnull
+  public final ExporterXML setCharset (@Nonnull final Charset aCharset)
   {
     m_aXWS.setCharset (aCharset);
     return this;
   }
 
   @Nonnull
-  public Charset getCharset ()
-  {
-    return m_aXWS.getCharset ();
-  }
-
-  @Nonnull
-  @ReturnsMutableObject ("Design")
-  public XMLWriterSettings getXMLWriterSettings ()
+  @ReturnsMutableObject
+  public final XMLWriterSettings xmlWriterSettings ()
   {
     return m_aXWS;
   }
 
   @Nonnull
-  public ExporterXML setEmitTypeAttr (final boolean bEmitTypeAttr)
+  @ReturnsImmutableObject
+  public final IXMLWriterSettings getXMLWriterSettings ()
+  {
+    return m_aXWS;
+  }
+
+  public final boolean isEmitTypeAttr ()
+  {
+    return m_bEmitTypeAttr;
+  }
+
+  @Nonnull
+  public final ExporterXML setEmitTypeAttr (final boolean bEmitTypeAttr)
   {
     m_bEmitTypeAttr = bEmitTypeAttr;
     return this;
@@ -150,12 +171,5 @@ public class ExporterXML implements IExporterFile
     {
       StreamHelper.close (aOS);
     }
-  }
-
-  @Override
-  @Nonnull
-  public EExchangeFileType getFileType ()
-  {
-    return EExchangeFileType.XML;
   }
 }
