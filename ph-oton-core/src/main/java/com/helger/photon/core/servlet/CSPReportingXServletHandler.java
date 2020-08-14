@@ -43,6 +43,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.http.EHttpVersion;
 import com.helger.json.IJson;
 import com.helger.json.IJsonObject;
+import com.helger.json.serialize.IJsonWriterSettings;
 import com.helger.json.serialize.JsonReader;
 import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.web.scope.IRequestWebScope;
@@ -58,6 +59,7 @@ import com.helger.xservlet.handler.IXServletHandler;
 public class CSPReportingXServletHandler implements IXServletHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
+  private static final IJsonWriterSettings JWS = new JsonWriterSettings ().setIndentEnabled (true);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final Consumer <? super IJsonObject> m_aJsonHandler;
@@ -98,7 +100,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
 
   public static void logCSPReport (@Nonnull final IJsonObject aJson)
   {
-    LOGGER.warn ("CSP report: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
+    LOGGER.warn ("CSP report: " + aJson.getAsJsonString (JWS));
   }
 
   public void onRequest (@Nonnull final HttpServletRequest aHttpRequest,
@@ -135,7 +137,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
         }
       }
       else
-        LOGGER.error ("Weird JSON received: " + aJson.getAsJsonString (new JsonWriterSettings ().setIndentEnabled (true)));
+        LOGGER.error ("Weird JSON received: " + aJson.getAsJsonString (JWS));
     }
     else
       LOGGER.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));

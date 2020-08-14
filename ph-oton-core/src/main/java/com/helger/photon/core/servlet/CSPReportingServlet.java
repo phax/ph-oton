@@ -25,7 +25,7 @@ import com.helger.xservlet.AbstractXServlet;
  *
  * @author Philip Helger
  */
-public final class CSPReportingServlet extends AbstractXServlet
+public class CSPReportingServlet extends AbstractXServlet
 {
   public static final String SERVLET_DEFAULT_NAME = "cspreporting";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
