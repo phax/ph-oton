@@ -25,6 +25,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.json.IJson;
+import com.helger.json.serialize.JsonWriter;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 
@@ -47,13 +49,13 @@ public class LongRunningJobResult implements Serializable
   }
 
   @Nonnull
-  public ELongRunningJobResultType getType ()
+  public final ELongRunningJobResultType getType ()
   {
     return m_eType;
   }
 
   @Nonnull
-  public Serializable getResultObject ()
+  public final Serializable getResultObject ()
   {
     return m_aResult;
   }
@@ -82,6 +84,12 @@ public class LongRunningJobResult implements Serializable
     return getType ().equals (ELongRunningJobResultType.LINK) ? (ISimpleURL) m_aResult : null;
   }
 
+  @Nullable
+  public IJson getResultJson ()
+  {
+    return getType ().equals (ELongRunningJobResultType.JSON) ? (IJson) m_aResult : null;
+  }
+
   @Nonnull
   public String getAsString ()
   {
@@ -95,6 +103,8 @@ public class LongRunningJobResult implements Serializable
         return getResultText ();
       case LINK:
         return getResultLink ().getAsStringWithEncodedParameters ();
+      case JSON:
+        return new JsonWriter ().writeAsString (getResultJson ());
       default:
         throw new IllegalStateException ("Unhandled type: " + m_eType);
     }
@@ -103,7 +113,7 @@ public class LongRunningJobResult implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("type", m_eType).append ("result", m_aResult).getToString ();
+    return new ToStringGenerator (this).append ("Type", m_eType).append ("Result", m_aResult).getToString ();
   }
 
   @Nonnull
@@ -128,5 +138,11 @@ public class LongRunningJobResult implements Serializable
   public static LongRunningJobResult createLink (@Nonnull final ISimpleURL aResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.LINK, aResult);
+  }
+
+  @Nonnull
+  public static LongRunningJobResult createJson (@Nonnull final IJson aResult)
+  {
+    return new LongRunningJobResult (ELongRunningJobResultType.JSON, aResult);
   }
 }

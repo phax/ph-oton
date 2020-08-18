@@ -23,16 +23,22 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 
+/**
+ * Defines the result type of a long running job.
+ *
+ * @author Philip Helger
+ */
 public enum ELongRunningJobResultType implements IHasID <String>
 {
   FILE ("file"),
-  XML ("html"),
+  XML ("xml"),
   TEXT ("text"),
-  LINK ("link");
+  LINK ("link"),
+  JSON ("json");
 
   private final String m_sID;
 
-  private ELongRunningJobResultType (@Nonnull @Nonempty final String sID)
+  ELongRunningJobResultType (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }
@@ -47,6 +53,9 @@ public enum ELongRunningJobResultType implements IHasID <String>
   @Nullable
   public static ELongRunningJobResultType getFromIDOrNull (@Nullable final String sID)
   {
+    // Old ID
+    if ("html".equals (sID))
+      return ELongRunningJobResultType.XML;
     return EnumHelper.getFromIDOrNull (ELongRunningJobResultType.class, sID);
   }
 }
