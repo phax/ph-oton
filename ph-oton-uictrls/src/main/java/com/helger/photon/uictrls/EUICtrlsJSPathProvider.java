@@ -31,7 +31,7 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EUICtrlsJSPathProvider implements IJSPathProvider
 {
-  AUTONUMERIC ("uictrls/autonumeric/1.9.37/autoNumeric.js"),
+  AUTONUMERIC ("uictrls/autonumeric/1.9.46/autoNumeric.js"),
   AUTOSIZE ("uictrls/autosize/1.18.18/jquery.autosize.js"),
   AUTOSIZE_ALL ("uictrls/autosize/autosize-all.js"),
   AUTOSIZE3 ("uictrls/autosize/3.0.20/autosize.js"),
