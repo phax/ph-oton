@@ -203,7 +203,7 @@ public final class HCRenderer
     {
       // Determine the target node to use
       final boolean bSrcNodeCanHaveChildren = aSrcNode instanceof IHCHasChildrenMutable <?, ?>;
-      IHCHasChildrenMutable <?, IHCNode> aTempNode;
+      final IHCHasChildrenMutable <?, IHCNode> aTempNode;
       if (bSrcNodeCanHaveChildren)
       {
         // Passed node can handle it
