@@ -99,7 +99,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.2.6 - work in progress
-    * Updated to Jetty 9.4.30
+    * Updated to Jetty 9.4.31
     * Updated to popper.js 1.16.1-lts
     * Updated to CookieConsent 3.1.1
     * Updated to Bootstrap 4.5.2
