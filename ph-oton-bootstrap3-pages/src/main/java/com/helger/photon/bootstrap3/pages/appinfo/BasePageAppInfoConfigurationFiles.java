@@ -42,7 +42,8 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.prism.EPrismLanguage;
-import com.helger.photon.uictrls.prism.EPrismPlugin;
+import com.helger.photon.uictrls.prism.PrismPluginCopyToClipboard;
+import com.helger.photon.uictrls.prism.PrismPluginLineNumbers;
 
 /**
  * This page displays information about the certificate configured in the SMP
@@ -122,7 +123,8 @@ public class BasePageAppInfoConfigurationFiles <WPECTYPE extends IWebPageExecuti
       if (aCF.exists ())
       {
         final String sContent = aCF.getContentAsString ();
-        aContent.addChild (new BootstrapPrismJS (EPrismLanguage.find (aCF.getSyntaxHighlightLanguage ())).addPlugin (EPrismPlugin.LINE_NUMBERS)
+        aContent.addChild (new BootstrapPrismJS (EPrismLanguage.find (aCF.getSyntaxHighlightLanguage ())).addPlugin (new PrismPluginLineNumbers ())
+                                                                                                         .addPlugin (new PrismPluginCopyToClipboard ())
                                                                                                          .addChild (sContent));
       }
       else

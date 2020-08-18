@@ -43,7 +43,7 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
   FINEUPLOADER_330 ("uictrls/fineupload/330/fineuploader.css"),
   FINEUPLOADER_5 ("uictrls/fineupload/5.11.10/fine-uploader.css"),
   JSCOLOR ("uictrls/jscolor/1.4.4ph/jscolor.css"),
-  PRISMJS ("uictrls/prismjs/prism.css"),
+  PRISMJS ("uictrls/prismjs/1.2.1/prism.css"),
   PRISMJS_BOOTSTRAP3 ("uictrls/prismjs/prism-bootstrap3.css"),
   PRISMJS_BOOTSTRAP4 ("uictrls/prismjs/prism-bootstrap4.css"),
   SELECT2 ("uictrls/select2/4.0.3/css/select2.css"),

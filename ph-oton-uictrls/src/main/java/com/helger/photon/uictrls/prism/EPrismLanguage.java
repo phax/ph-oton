@@ -40,13 +40,15 @@ public enum EPrismLanguage implements ICSSClassProvider
   MARKDOWN ("language-markdown"),
   MARKUP ("language-markup"),
   PHP ("language-php"),
+  REGEX ("language-regex"),
   SCSS ("language-scss"),
   SQL ("language-sql"),
-  WIKI ("language-wiki");
+  WIKI ("language-wiki"),
+  YAML ("language-yaml");
 
   private final String m_sCSSClass;
 
-  private EPrismLanguage (@Nonnull @Nonempty final String sCSSClass)
+  EPrismLanguage (@Nonnull @Nonempty final String sCSSClass)
   {
     m_sCSSClass = sCSSClass;
   }

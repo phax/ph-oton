@@ -38,6 +38,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   BIG_DECIMAL ("uictrls/js/big.js"),
   CHART_1 ("uictrls/chart/1.0.2/Chart.js"),
   CHART_2 ("uictrls/chart/2.2.1/Chart.js"),
+  CLIPBOARD ("uictrls/clipboardjs/2.0.6/clipboard.js"),
   COLORBOX ("uictrls/colorbox/1.6.0/jquery.colorbox.js"),
   EXCANVAS ("uictrls/chart/excanvas.js", "if lt IE 9"),
   FINEUPLOADER_320 ("uictrls/fineupload/320/fineuploader.js"),
@@ -47,7 +48,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   JSCOLOR ("uictrls/jscolor/1.4.4ph/jscolor.js"),
   PDFOBJECT1 ("uictrls/pdfobject/1.2/pdfobject.js"),
   PDFOBJECT2 ("uictrls/pdfobject/2.0/pdfobject.js"),
-  PRISMJS ("uictrls/prismjs/prism.js"),
+  PRISMJS ("uictrls/prismjs/1.2.1/prism.js"),
   SELECT2 ("uictrls/select2/4.0.3/js/select2.js"),
   SELECT2_LOCALE ("uictrls/select2/4.0.3/js/i18n/{0}.js", false),
   /** https://github.com/twitter/typeahead.js/ */
