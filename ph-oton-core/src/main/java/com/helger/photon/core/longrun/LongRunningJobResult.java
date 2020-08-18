@@ -21,10 +21,13 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.xml.microdom.IMicroNode;
@@ -35,6 +38,7 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  *
  * @author Philip Helger
  */
+@Immutable
 public class LongRunningJobResult implements Serializable
 {
   private final ELongRunningJobResultType m_eType;
@@ -48,6 +52,9 @@ public class LongRunningJobResult implements Serializable
     m_aResult = aResult;
   }
 
+  /**
+   * @return The type as specified in the constructor. Never <code>null</code>.
+   */
   @Nonnull
   public final ELongRunningJobResultType getType ()
   {
@@ -126,6 +133,12 @@ public class LongRunningJobResult implements Serializable
   public static LongRunningJobResult createXML (@Nonnull final IMicroNode aResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.XML, aResult);
+  }
+
+  @Nonnull
+  public static LongRunningJobResult createXML (@Nonnull final IHCNode aResult)
+  {
+    return createXML (HCRenderer.getAsNode (aResult));
   }
 
   @Nonnull

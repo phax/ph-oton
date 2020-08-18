@@ -29,6 +29,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.state.ETriState;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
 
@@ -49,7 +50,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
 
   // Data set on job end:
   private LocalDateTime m_aEndDateTime;
-  private ESuccess m_eExecSuccess;
+  private ETriState m_eExecSuccess;
   private LongRunningJobResult m_aResult;
 
   public LongRunningJobData (@Nonnull @Nonempty final String sJobID,
@@ -60,12 +61,13 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
     m_aJobDescription = ValueEnforcer.notNull (aJobDescription, "JobDescription");
     m_aStartDateTime = PDTFactory.getCurrentLocalDateTime ();
     m_sStartingUserID = sStartingUserID;
+    m_eExecSuccess = ETriState.UNDEFINED;
   }
 
   LongRunningJobData (@Nonnull @Nonempty final String sID,
                       @Nonnull final LocalDateTime aStartDateTime,
                       @Nonnull final LocalDateTime aEndDateTime,
-                      @Nonnull final ESuccess eExecSuccess,
+                      @Nonnull final ETriState eExecSuccess,
                       @Nullable final String sStartingUserID,
                       @Nonnull final IMultilingualText aJobDescription,
                       @Nonnull final LongRunningJobResult aResult)
@@ -122,7 +124,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
 
     // Save the date
     m_aEndDateTime = PDTFactory.getCurrentLocalDateTime ();
-    m_eExecSuccess = eExecSucess;
+    m_eExecSuccess = ETriState.valueOf (eExecSucess.isSuccess ());
     // Build the main results
     m_aResult = aResult;
     if (m_aResult == null)
@@ -159,10 +161,11 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
 
   /**
    * @return The technical success indicator, whether the scheduled job ran
-   *         without an exception.
+   *         without an exception. Is {@link ETriState#UNDEFINED} if the result
+   *         is not yet known. Never <code>null</code>.
    */
-  @Nullable
-  public ESuccess getExecutionSuccess ()
+  @Nonnull
+  public ETriState getExecutionSuccess ()
   {
     return m_eExecSuccess;
   }

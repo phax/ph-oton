@@ -22,17 +22,22 @@ import java.time.LocalDateTime;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.StringParser;
+import com.helger.commons.state.ETriState;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.ReadOnlyMultilingualText;
 import com.helger.commons.url.SimpleURL;
+import com.helger.json.serialize.JsonReader;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.serialize.MicroReader;
 
+/**
+ * Micro type converter for class {@link LongRunningJobData}.
+ *
+ * @author Philip Helger
+ */
 public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeConverter <LongRunningJobData>
 {
   private static final String ATTR_ID = "id";
@@ -51,32 +56,35 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
   {
     final IMicroElement eJobData = new MicroElement (sNamespaceURI, sTagName);
     eJobData.setAttribute (ATTR_ID, aValue.getID ());
-    eJobData.setAttributeWithConversion (ATTR_STARTDT, aValue.getStartDateTime ());
-    eJobData.setAttributeWithConversion (ATTR_ENDDT, aValue.getEndDateTime ());
-    eJobData.setAttribute (ATTR_EXECSUCCESS, Boolean.toString (aValue.getExecutionSuccess ().isSuccess ()));
-    if (aValue.getStartingUserID () != null)
-      eJobData.setAttribute (ATTR_STARTINGUSERID, aValue.getStartingUserID ());
 
     // Description
     eJobData.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getJobDescription (), sNamespaceURI, ELEMENT_DESCRIPTION));
+
+    eJobData.setAttributeWithConversion (ATTR_STARTDT, aValue.getStartDateTime ());
+    eJobData.setAttribute (ATTR_STARTINGUSERID, aValue.getStartingUserID ());
+
+    eJobData.setAttributeWithConversion (ATTR_ENDDT, aValue.getEndDateTime ());
+    eJobData.setAttribute (ATTR_EXECSUCCESS, aValue.getExecutionSuccess ().getID ());
 
     // Result
     final IMicroElement eResult = eJobData.appendElement (sNamespaceURI, ELEMENT_RESULT);
     eResult.setAttribute (ATTR_TYPE, aValue.getResult ().getType ().getID ());
     eResult.appendText (aValue.getResult ().getAsString ());
-    return null;
+    return eJobData;
   }
 
   @Nullable
   public LongRunningJobData convertToNative (@Nonnull final IMicroElement aElement)
   {
     final String sID = aElement.getAttributeValue (ATTR_ID);
-    final LocalDateTime aStartDateTime = aElement.getAttributeValueWithConversion (ATTR_STARTDT, LocalDateTime.class);
-    final LocalDateTime aEndDateTime = aElement.getAttributeValueWithConversion (ATTR_ENDDT, LocalDateTime.class);
-    final ESuccess eExecSuccess = ESuccess.valueOf (StringParser.parseBool (aElement.getAttributeValue (ATTR_EXECSUCCESS)));
-    final String sStartingUserID = aElement.getAttributeValue (ATTR_STARTINGUSERID);
     final IMultilingualText aJobDescription = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_DESCRIPTION),
                                                                                   ReadOnlyMultilingualText.class);
+    final LocalDateTime aStartDateTime = aElement.getAttributeValueWithConversion (ATTR_STARTDT, LocalDateTime.class);
+    final String sStartingUserID = aElement.getAttributeValue (ATTR_STARTINGUSERID);
+
+    final LocalDateTime aEndDateTime = aElement.getAttributeValueWithConversion (ATTR_ENDDT, LocalDateTime.class);
+    final ETriState eExecSuccess = ETriState.getFromIDOrUndefined (aElement.getAttributeValue (ATTR_EXECSUCCESS));
+
     final IMicroElement eResult = aElement.getFirstChildElement (ELEMENT_RESULT);
     final ELongRunningJobResultType eResultType = ELongRunningJobResultType.getFromIDOrNull (eResult.getAttributeValue (ATTR_TYPE));
     final String sResultText = eResult.getTextContent ();
@@ -94,6 +102,9 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
         break;
       case LINK:
         aResult = LongRunningJobResult.createLink (new SimpleURL (sResultText));
+        break;
+      case JSON:
+        aResult = LongRunningJobResult.createJson (JsonReader.readFromString (sResultText));
         break;
       default:
         throw new IllegalStateException ("Unknown type: " + eResultType);
