@@ -36,8 +36,6 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  */
 public class HCTextAreaAutosize extends AbstractHCTextArea <HCTextAreaAutosize>
 {
-  private boolean m_bUseV3 = true;
-
   public HCTextAreaAutosize (@Nullable final String sName)
   {
     super (sName);
@@ -53,31 +51,11 @@ public class HCTextAreaAutosize extends AbstractHCTextArea <HCTextAreaAutosize>
     super (aRF);
   }
 
-  public boolean isUseV3 ()
-  {
-    return m_bUseV3;
-  }
-
-  @Nonnull
-  public HCTextAreaAutosize setUseV3 (final boolean bUseV3)
-  {
-    m_bUseV3 = bUseV3;
-    return this;
-  }
-
   @Override
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
-    if (m_bUseV3)
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE3);
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE3_ALL);
-    }
-    else
-    {
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE);
-      PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE_ALL);
-    }
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE3);
+    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE3_ALL);
   }
 }
