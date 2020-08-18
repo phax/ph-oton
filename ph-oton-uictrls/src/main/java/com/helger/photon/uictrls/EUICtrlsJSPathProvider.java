@@ -49,8 +49,8 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   PDFOBJECT1 ("uictrls/pdfobject/1.2/pdfobject.js"),
   PDFOBJECT2 ("uictrls/pdfobject/2.0/pdfobject.js"),
   PRISMJS ("uictrls/prismjs/1.2.1/prism.js"),
-  SELECT2 ("uictrls/select2/4.0.3/js/select2.js"),
-  SELECT2_LOCALE ("uictrls/select2/4.0.3/js/i18n/{0}.js", false),
+  SELECT2 ("uictrls/select2/4.0.13/js/select2.js"),
+  SELECT2_LOCALE ("uictrls/select2/4.0.13/js/i18n/{0}.js", false),
   /** https://github.com/twitter/typeahead.js/ */
   TYPEAHEAD_0_9 ("uictrls/typeahead/0.9.3/typeahead.js"),
   TYPEAHEAD_PH ("ph-oton/ph-typeahead.js"),
