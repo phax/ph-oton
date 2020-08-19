@@ -33,7 +33,7 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSVar;
 import com.helger.html.jscode.html.JSHtml;
-import com.helger.html.jscode.type.JSPrimitiveType;
+import com.helger.html.jscode.type.JSPrimitiveTypes;
 
 /**
  * Control for emitting Google Universal Analytics code.<br>
@@ -79,7 +79,7 @@ public class HCUniversalAnalytics extends AbstractHCScriptInline <HCUniversalAna
       }
       // Sets the time (as an integer) this tag was executed. Used for timing
       // hits.
-      f.body ().add (jsI.component (jsR).ref ("l").assign (JSExpr.lit (1).mul (JSPrimitiveType.DATE._new ())));
+      f.body ().add (jsI.component (jsR).ref ("l").assign (JSExpr.lit (1).mul (JSPrimitiveTypes.DATE._new ())));
       // Insert the script tag asynchronously. Inserts above current tag to
       // prevent blocking in addition to using the async attribute.
       f.body ().add (jsA.assign (jsS.invoke ("createElement").arg (jsO)));

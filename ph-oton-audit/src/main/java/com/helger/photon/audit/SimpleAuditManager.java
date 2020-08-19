@@ -98,7 +98,7 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    AuditManager.readFromXML (aDoc, aItem -> m_aItems.internalAddItem (aItem));
+    AuditManager.readFromXML (aDoc, m_aItems::internalAddItem);
     // read-only :)
     return EChange.UNCHANGED;
   }

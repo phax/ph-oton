@@ -98,7 +98,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
     private final IMultilingualText m_aTP;
 
-    private EText (final String sDE, final String sEN)
+    EText (final String sDE, final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

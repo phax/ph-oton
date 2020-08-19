@@ -152,14 +152,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
       }
     }
 
-    final DTSSRequestData aRequestData = new DTSSRequestData (nDraw,
-                                                              nDisplayStart,
-                                                              nDisplayLength,
-                                                              sSearchValue,
-                                                              bSearchRegEx,
-                                                              aColumnData,
-                                                              aOrderColumns);
-    return aRequestData;
+    return new DTSSRequestData (nDraw, nDisplayStart, nDisplayLength, sSearchValue, bSearchRegEx, aColumnData, aOrderColumns);
   }
 
   private static void _sort (@Nonnull final DTSSRequestData aRequestData, @Nonnull final DataTablesServerData aServerData)

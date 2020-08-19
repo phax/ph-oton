@@ -82,7 +82,7 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
 
     private final IMultilingualText m_aTP;
 
-    private EText (final String sDE, final String sEN)
+    EText (final String sDE, final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
@@ -244,10 +244,10 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
           }
         });
       }
-      catch (final Throwable t)
+      catch (final Exception ex)
       {
         aTable.addSpanningBodyContent (EText.MSG_ERROR_FINDING.getDisplayText (aDisplayLocale) +
-                                       (GlobalDebug.isDebugMode () ? ": " + t.getMessage () : ""));
+                                       (GlobalDebug.isDebugMode () ? ": " + ex.getMessage () : ""));
       }
 
       final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);

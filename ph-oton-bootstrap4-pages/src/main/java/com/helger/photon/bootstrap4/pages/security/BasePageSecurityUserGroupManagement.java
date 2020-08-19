@@ -271,7 +271,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     {
       // Convert IDs to objects
       final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-      final ICommonsList <IUser> aAssignedUsers = new CommonsArrayList <> (aAssignedUserIDs, sUserID -> aUserMgr.getUserOfID (sUserID));
+      final ICommonsList <IUser> aAssignedUsers = new CommonsArrayList <> (aAssignedUserIDs, aUserMgr::getUserOfID);
 
       final HCNodeList aUserUI = new HCNodeList ();
       aAssignedUsers.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))

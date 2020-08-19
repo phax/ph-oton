@@ -107,7 +107,7 @@ public class InternalErrorBuilder
     {
       addCustomData ("User", LoggedInUserManager.getInstance ().getCurrentUserID ());
     }
-    catch (final Throwable t2)
+    catch (final Exception ex2)
     {
       // Happens if no scope is available (or what so ever)
       addCustomData ("User", "Unknown");

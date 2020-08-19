@@ -644,14 +644,14 @@ public class JettyStarter
         }
       }));
     }
-    catch (final Throwable t)
+    catch (final Exception ex)
     {
       // Do not throw something here, in case some exception occurs in finally
       // code
-      LOGGER.error ("Failed to start Jetty " + m_sAppName + "!", t);
+      LOGGER.error ("Failed to start Jetty " + m_sAppName + "!", ex);
 
       // Callback
-      onServerStartFailure (aServer, t);
+      onServerStartFailure (aServer, ex);
     }
     finally
     {
@@ -664,9 +664,9 @@ public class JettyStarter
           aServer.stop ();
           LOGGER.error ("Failed to start Jetty " + m_sAppName + " - stopped server!");
         }
-        catch (final Throwable t)
+        catch (final Exception ex)
         {
-          LOGGER.error ("Error stopping Jetty " + m_sAppName + " after startup errors!", t);
+          LOGGER.error ("Error stopping Jetty " + m_sAppName + " after startup errors!", ex);
         }
       }
       else

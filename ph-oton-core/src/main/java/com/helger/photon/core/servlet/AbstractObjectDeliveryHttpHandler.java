@@ -99,8 +99,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
   @Nonnull
   protected static final String getUnifiedItem (@Nonnull final String sItem)
   {
-    final String ret = sItem.toLowerCase (Locale.US);
-    return ret;
+    return sItem.toLowerCase (Locale.US);
   }
 
   /**

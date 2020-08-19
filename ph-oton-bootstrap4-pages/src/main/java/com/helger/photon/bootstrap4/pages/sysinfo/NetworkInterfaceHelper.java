@@ -65,9 +65,9 @@ public final class NetworkInterfaceHelper
         else
           aNonRootNIs.add (aNI);
     }
-    catch (final Throwable t)
+    catch (final Exception ex)
     {
-      throw new IllegalStateException ("Failed to get all network interfaces", t);
+      throw new IllegalStateException ("Failed to get all network interfaces", ex);
     }
 
     int nNotFound = 0;
@@ -103,6 +103,6 @@ public final class NetworkInterfaceHelper
   @Nonnull
   public static IParentProvider <NetworkInterface> parentProvider ()
   {
-    return aObj -> aObj.getParent ();
+    return NetworkInterface::getParent;
   }
 }

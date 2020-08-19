@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.helger.html.jscode.type.JSPrimitiveType;
+import com.helger.html.jscode.type.JSPrimitiveTypes;
 
 /**
  * Test class for class {@link JSOp}.
@@ -101,7 +101,7 @@ public final class JSOpTest
     _test ("(a===b)", JSOp.eeq (a, b));
     _test ("(a!=b)", JSOp.ne (a, b));
     _test ("(a!==b)", JSOp.ene (a, b));
-    _test ("(a instanceof Number)", JSOp._instanceof (a, JSPrimitiveType.NUMBER));
+    _test ("(a instanceof Number)", JSOp._instanceof (a, JSPrimitiveTypes.NUMBER));
     _test ("(a?b:5)", JSOp.cond (a, b, n5));
     _test ("(a?b:5)", JSOp.cond (a, b, d5));
 

@@ -213,10 +213,10 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
                       .setContentAndCharset (aResponse.getAsJsonString (), StandardCharsets.UTF_8)
                       .setMimeType (CMimeType.TEXT_PLAIN);
     }
-    catch (final Throwable t)
+    catch (final Exception ex)
     {
       new InternalErrorBuilder ().addCustomData ("Error reason", "Internal error in fine uploader 5 servlet")
-                                 .setThrowable (t)
+                                 .setThrowable (ex)
                                  .setRequestScope (aRequestScope)
                                  .handle ();
       aUnifiedResponse.setStatus (HttpServletResponse.SC_BAD_REQUEST);

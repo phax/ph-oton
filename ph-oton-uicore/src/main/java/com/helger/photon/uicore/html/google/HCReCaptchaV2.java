@@ -82,7 +82,6 @@ public class HCReCaptchaV2 extends AbstractHCDiv <HCReCaptchaV2>
   @Nonnull
   public static HCReCaptchaV2 create (@Nonnull @Nonempty final String sSiteKey, @Nullable final Locale aDisplayLocale)
   {
-    final HCReCaptchaV2 ret = new HCReCaptchaV2 (sSiteKey, aDisplayLocale == null ? null : aDisplayLocale.getLanguage ());
-    return ret;
+    return new HCReCaptchaV2 (sSiteKey, aDisplayLocale == null ? null : aDisplayLocale.getLanguage ());
   }
 }

@@ -29,7 +29,7 @@ import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.html.jscode.type.JSPrimitiveType;
+import com.helger.html.jscode.type.JSPrimitiveTypes;
 import com.helger.json.IJson;
 
 /**
@@ -284,7 +284,7 @@ public final class JSExpr
   public static AbstractJSExpression lit (final float fValue)
   {
     if (Float.isNaN (fValue))
-      return JSPrimitiveType.NUMBER.nan ();
+      return JSPrimitiveTypes.NUMBER.nan ();
     return new JSAtomDecimal (fValue);
   }
 
@@ -292,7 +292,7 @@ public final class JSExpr
   public static AbstractJSExpression lit (final double dValue)
   {
     if (Double.isNaN (dValue))
-      return JSPrimitiveType.NUMBER.nan ();
+      return JSPrimitiveTypes.NUMBER.nan ();
     return new JSAtomDecimal (dValue);
   }
 

@@ -93,7 +93,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     private final IMultilingualText m_aTP;
 
-    private EText (final String sDE, final String sEN)
+    EText (final String sDE, final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
@@ -316,7 +316,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
               aRow.addCell (StringHelper.getImploded (", ", aParams.getProtocols ()));
               aRow.addCell (StringHelper.getImploded (", ", aParams.getCipherSuites ()));
             }
-            catch (final Throwable ex)
+            catch (final Exception ex)
             {
               aRow.addCell (error (ex.getMessage ()));
               aRow.addCell ();

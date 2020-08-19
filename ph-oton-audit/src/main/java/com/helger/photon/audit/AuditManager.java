@@ -219,7 +219,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   @Nonnull
   protected EChange onRead (@Nonnull final IMicroDocument aDoc)
   {
-    readFromXML (aDoc, aItem -> m_aItems.internalAddItem (aItem));
+    readFromXML (aDoc, m_aItems::internalAddItem);
     // read-only :)
     return EChange.UNCHANGED;
   }

@@ -192,7 +192,6 @@ public class BootstrapNav extends AbstractHCUL <BootstrapNav>
   {
     final IHCLI <?> aLI = addItem ().addClass (CBootstrapCSS.DROPDOWN);
     aLI.addChild (BootstrapDropdown.makeDropdownToggle (new HCA (new SimpleURL ()).addChild (aText)));
-    final BootstrapDropdownMenu aMenu = aLI.addAndReturnChild (new BootstrapDropdownMenu (eAlignment));
-    return aMenu;
+    return aLI.addAndReturnChild (new BootstrapDropdownMenu (eAlignment));
   }
 }

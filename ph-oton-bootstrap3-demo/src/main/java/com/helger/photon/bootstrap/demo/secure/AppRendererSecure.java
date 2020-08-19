@@ -90,8 +90,7 @@ public final class AppRendererSecure
   @Nonnull
   public static IHCElement <?> getMenuContent (@Nonnull final LayoutExecutionContext aLEC)
   {
-    final IHCElement <?> ret = BootstrapMenuItemRenderer.createSideBarMenu (aLEC);
-    return ret;
+    return BootstrapMenuItemRenderer.createSideBarMenu (aLEC);
   }
 
   @Nonnull

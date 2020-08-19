@@ -120,7 +120,6 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
   @Nonnull
   public static HCA createAlertLink ()
   {
-    final HCA ret = new HCA ().addClass (CBootstrapCSS.ALERT_LINK);
-    return ret;
+    return new HCA ().addClass (CBootstrapCSS.ALERT_LINK);
   }
 }

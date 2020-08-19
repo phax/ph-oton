@@ -189,7 +189,6 @@ public abstract class AbstractChartSimple <IMPLTYPE extends AbstractChartSimple 
   @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSOptions ()
   {
-    final JSAssocArray aOptions = new JSAssocArray ();
-    return aOptions;
+    return new JSAssocArray ();
   }
 }

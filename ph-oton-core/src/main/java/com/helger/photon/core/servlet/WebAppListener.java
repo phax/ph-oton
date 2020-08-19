@@ -795,9 +795,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         MicroWriter.writeToFile (aDoc, aDestPath);
       }
-      catch (final Throwable t)
+      catch (final Exception ex)
       {
-        LOGGER.error ("Failed to write statistics on context shutdown.", t);
+        LOGGER.error ("Failed to write statistics on context shutdown", ex);
       }
     }
     else

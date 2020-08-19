@@ -295,9 +295,7 @@ public abstract class AbstractHCNode implements IHCNode
       return null;
 
     // Main conversion
-    final IMicroNode ret = internalConvertToMicroNode (aConversionSettings);
-
-    return ret;
+    return internalConvertToMicroNode (aConversionSettings);
   }
 
   @OverrideOnDemand

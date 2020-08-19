@@ -101,12 +101,12 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
       else
         LOGGER.error ("Failed to retrieve long running job ID from JobDataMap " + aJobDataMap);
     }
-    catch (final Throwable t)
+    catch (final Exception ex)
     {
-      LOGGER.error ("Failed to end long running job", t);
+      LOGGER.error ("Failed to end long running job", ex);
 
       // Notify custom exception handler
-      triggerCustomExceptionHandler (t, getClass ().getName (), this);
+      triggerCustomExceptionHandler (ex, getClass ().getName (), this);
     }
   }
 }

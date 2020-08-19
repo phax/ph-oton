@@ -39,22 +39,6 @@ import com.helger.html.jscode.JSRef;
 @CodingStyleguideUnaware
 public abstract class JSPrimitiveType extends AbstractJSType
 {
-  public static final JSTypeArray ARRAY = new JSTypeArray ();
-  public static final JSTypeBoolean BOOLEAN = new JSTypeBoolean ();
-  public static final JSTypeDate DATE = new JSTypeDate ();
-  public static final JSTypeError ERROR = new JSTypeError ();
-  public static final JSTypeEvalError EVAL_ERROR = new JSTypeEvalError ();
-  public static final JSTypeFunction FUNCTION = new JSTypeFunction ();
-  public static final JSTypeJSON JSON = new JSTypeJSON ();
-  public static final JSTypeMath MATH = new JSTypeMath ();
-  public static final JSTypeNumber NUMBER = new JSTypeNumber ();
-  public static final JSTypeObject OBJECT = new JSTypeObject ();
-  public static final JSTypeRangeError RANGE_ERROR = new JSTypeRangeError ();
-  public static final JSTypeRegExp REGEXP = new JSTypeRegExp ();
-  public static final JSTypeString STRING = new JSTypeString ();
-  public static final JSTypeTypeError TYPE_ERROR = new JSTypeTypeError ();
-  public static final JSTypeURIError URI_ERROR = new JSTypeURIError ();
-
   private final String m_sName;
   private final JSRef m_aGlobal;
 

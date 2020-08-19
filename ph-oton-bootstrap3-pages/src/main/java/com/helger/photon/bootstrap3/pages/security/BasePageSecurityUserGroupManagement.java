@@ -43,13 +43,11 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.forms.HCEdit;
-import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
-import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap3.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap3.alert.BootstrapQuestionBox;
@@ -274,20 +272,20 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (aAssignedUserIDs.isEmpty ())
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_0.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                       .setCtrl (em (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
       // Convert IDs to objects
       final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
-      final ICommonsList <IUser> aAssignedUsers = new CommonsArrayList <> (aAssignedUserIDs, sUserID -> aUserMgr.getUserOfID (sUserID));
+      final ICommonsList <IUser> aAssignedUsers = new CommonsArrayList <> (aAssignedUserIDs, aUserMgr::getUserOfID);
 
       final HCNodeList aUserUI = new HCNodeList ();
       aAssignedUsers.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))
-                    .forEach (aUser -> aUserUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                        BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
-                                                                                                        aUser.getID (),
-                                                                                                        null)).addChild (aUser.getDisplayName ()))));
+                    .forEach (aUser -> aUserUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                      BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
+                                                                                      aUser.getID (),
+                                                                                      null)).addChild (aUser.getDisplayName ()))));
 
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_USERS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                               Integer.toString (aAssignedUserIDs.size ())))
@@ -299,7 +297,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     if (aAssignedRoleIDs.isEmpty ())
     {
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
-                                                       .setCtrl (new HCEM ().addChild (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
+                                                       .setCtrl (em (EText.NONE_ASSIGNED.getDisplayText (aDisplayLocale))));
     }
     else
     {
@@ -309,10 +307,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
       final HCNodeList aRoleUI = new HCNodeList ();
       aAssignedRoles.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
-                    .forEach (aRole -> aRoleUI.addChild (new HCDiv ().addChild (new HCA (createViewURL (aWPEC,
-                                                                                                        BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
-                                                                                                        aRole.getID (),
-                                                                                                        null)).addChild (aRole.getName ()))));
+                    .forEach (aRole -> aRoleUI.addChild (div (new HCA (createViewURL (aWPEC,
+                                                                                      BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
+                                                                                      aRole.getID (),
+                                                                                      null)).addChild (aRole.getName ()))));
 
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ROLES_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                               Integer.toString (aAssignedRoleIDs.size ())))

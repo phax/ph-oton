@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.html.js.UnparsedJSCodeProvider;
-import com.helger.html.jscode.type.JSPrimitiveType;
+import com.helger.html.jscode.type.JSPrimitiveTypes;
 
 /**
  * Test class for class {@link JSPackage}
@@ -71,19 +71,19 @@ public final class JSPackageTest
 
       // Dynamic function
       {
-        final JSVar aAdd2 = aFuncMain.body ().var ("add2", JSPrimitiveType.FUNCTION._new ().arg ("x").arg ("y").arg ("return x+y"));
+        final JSVar aAdd2 = aFuncMain.body ().var ("add2", JSPrimitiveTypes.FUNCTION._new ().arg ("x").arg ("y").arg ("return x+y"));
         aFuncMain.body ().invoke (aAdd2.name ()).arg (1).arg (2);
       }
 
       // if
-      final JSConditional aCond = aFuncMain.body ()._if (m1.isTypeof (JSPrimitiveType.STRING));
+      final JSConditional aCond = aFuncMain.body ()._if (m1.isTypeof (JSPrimitiveTypes.STRING));
 
       // try catch finally
       aCond._then ().comment ("Test try/catch/finally");
       final JSTryBlock aTB = aCond._then ()._try ();
       aTB.body ()._return (5);
       final JSCatchBlock aCB = aTB._catch ("ex");
-      aCB.body ()._throw (JSPrimitiveType.ERROR._new ().arg (aCB.param ()));
+      aCB.body ()._throw (JSPrimitiveTypes.ERROR._new ().arg (aCB.param ()));
       aTB._finally ().invoke (aRoot, "substring").arg (0).arg (1);
 
       // RegExp
@@ -105,7 +105,7 @@ public final class JSPackageTest
       final JSVar aArray1 = aFuncMain.body ().var ("array1", new JSArray ().add (5));
       aFuncMain.body ().assign (aArray1.component (0), 6);
 
-      final JSVar aArray1a = aFuncMain.body ().var ("array1a", JSPrimitiveType.ARRAY._new ().arg (5));
+      final JSVar aArray1a = aFuncMain.body ().var ("array1a", JSPrimitiveTypes.ARRAY._new ().arg (5));
       aFuncMain.body ().assign (aArray1a.component (0), 7);
       aFuncMain.body ().invoke (aArray1a, "push").arg ("pushed");
 

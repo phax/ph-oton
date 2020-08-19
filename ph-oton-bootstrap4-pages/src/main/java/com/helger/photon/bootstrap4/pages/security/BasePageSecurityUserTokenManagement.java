@@ -108,7 +108,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
 
     private final IMultilingualText m_aTP;
 
-    private EText (final String sDE, final String sEN)
+    EText (final String sDE, final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
@@ -590,10 +590,10 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     aTabBox.addTab ("active",
                     EText.TAB_LABEL_ACTIVE.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "active", aValue -> !aValue.isDeleted ()));
+                    _createList (aWPEC, "active", IUserToken::isNotDeleted));
     aTabBox.addTab ("deleted",
                     EText.TAB_LABEL_DELETED.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "deleted", aValue -> aValue.isDeleted ()));
+                    _createList (aWPEC, "deleted", IUserToken::isDeleted));
     aNodeList.addChild (aTabBox);
   }
 }

@@ -70,8 +70,7 @@ public final class BootstrapPageRenderer
     // Main menu
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
     final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree, aLEC.getSelectedMenuItemID ());
-    final IHCElement <?> aMenu = BootstrapMenuItemRenderer.createSideBarMenu (aLEC, aMenuTree, aCallback);
-    return aMenu;
+    return BootstrapMenuItemRenderer.createSideBarMenu (aLEC, aMenuTree, aCallback);
   }
 
   @Nonnull

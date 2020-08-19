@@ -227,8 +227,7 @@ public final class HCRenderer
         aConvertNode = aTempNode;
     }
 
-    final IMicroNode aMicroNode = aConvertNode.convertToMicroNode (aConversionSettings);
-    return aMicroNode;
+    return aConvertNode.convertToMicroNode (aConversionSettings);
   }
 
   /**

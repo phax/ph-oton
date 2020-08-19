@@ -28,7 +28,6 @@ import com.helger.html.hc.special.SpecialNodeListModifier;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.js.IHasJSCode;
-import com.helger.html.jscode.JSInvocation;
 
 /**
  * A special script that initializes the auto numeric. It is a separate class,
@@ -52,8 +51,7 @@ public class HCAutoNumericJS extends HCScriptInlineOnDocumentReady
   {
     final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric : JQuery.idRef (aAutoNumeric);
 
-    final JSInvocation ret = HCAutoNumeric.autoNumericInit (aInvocation, aAutoNumeric.getJSOptions ());
-    return ret;
+    return HCAutoNumeric.autoNumericInit (aInvocation, aAutoNumeric.getJSOptions ());
   }
 
   public HCAutoNumericJS (@Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)

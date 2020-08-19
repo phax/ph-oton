@@ -31,8 +31,8 @@ import com.helger.commons.functional.ISupplier;
  */
 public final class AuditDefaultSettings
 {
-  private static final ILongSupplier s_aAuditEventIDProvider = () -> UUID.randomUUID ().getMostSignificantBits ();
-  private static final ISupplier <LocalDateTime> s_aAuditEventDateTimeProvider = () -> PDTFactory.getCurrentLocalDateTime ();
+  private static final ILongSupplier s_aAuditEventIDProvider = UUID.randomUUID ()::getMostSignificantBits;
+  private static final ISupplier <LocalDateTime> s_aAuditEventDateTimeProvider = PDTFactory::getCurrentLocalDateTime;
 
   private AuditDefaultSettings ()
   {}

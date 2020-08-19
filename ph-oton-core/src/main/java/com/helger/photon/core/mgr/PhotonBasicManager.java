@@ -82,9 +82,9 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
 
       LOGGER.info (ClassHelper.getClassLocalName (this) + " was initialized");
     }
-    catch (final Throwable t)
+    catch (final Exception ex)
     {
-      throw new InitializationException ("Failed to init " + ClassHelper.getClassLocalName (this), t);
+      throw new InitializationException ("Failed to init " + ClassHelper.getClassLocalName (this), ex);
     }
   }
 

@@ -54,8 +54,7 @@ public class BootstrapCardBody extends AbstractBootstrapDiv <BootstrapCardBody>
   @Nonnull
   public static HCImg createImgBottom ()
   {
-    final HCImg ret = new HCImg ().addClass (CBootstrapCSS.CARD_IMG_BOTTOM);
-    return ret;
+    return new HCImg ().addClass (CBootstrapCSS.CARD_IMG_BOTTOM);
   }
 
   @Nonnull
@@ -67,8 +66,7 @@ public class BootstrapCardBody extends AbstractBootstrapDiv <BootstrapCardBody>
   @Nonnull
   public static HCH5 createTitle ()
   {
-    final HCH5 ret = new HCH5 ().addClass (CBootstrapCSS.CARD_TITLE);
-    return ret;
+    return new HCH5 ().addClass (CBootstrapCSS.CARD_TITLE);
   }
 
   @Nonnull
@@ -80,8 +78,7 @@ public class BootstrapCardBody extends AbstractBootstrapDiv <BootstrapCardBody>
   @Nonnull
   public static HCH6 createSubtitle ()
   {
-    final HCH6 ret = new HCH6 ().addClass (CBootstrapCSS.CARD_SUBTITLE);
-    return ret;
+    return new HCH6 ().addClass (CBootstrapCSS.CARD_SUBTITLE);
   }
 
   @Nonnull
@@ -93,8 +90,7 @@ public class BootstrapCardBody extends AbstractBootstrapDiv <BootstrapCardBody>
   @Nonnull
   public static HCP createText ()
   {
-    final HCP ret = new HCP ().addClass (CBootstrapCSS.CARD_TEXT);
-    return ret;
+    return new HCP ().addClass (CBootstrapCSS.CARD_TEXT);
   }
 
   @Nonnull
@@ -106,8 +102,7 @@ public class BootstrapCardBody extends AbstractBootstrapDiv <BootstrapCardBody>
   @Nonnull
   public static HCA createLink ()
   {
-    final HCA ret = new HCA ().addClass (CBootstrapCSS.CARD_LINK);
-    return ret;
+    return new HCA ().addClass (CBootstrapCSS.CARD_LINK);
   }
 
   @Nonnull

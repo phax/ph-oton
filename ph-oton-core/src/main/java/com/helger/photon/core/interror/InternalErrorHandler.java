@@ -151,8 +151,7 @@ public final class InternalErrorHandler
     if (StringHelper.hasText (sErrorMsg))
       aSubject.append (": ").append (sErrorMsg);
     aSubject.append (" [").append (aMetadata.getErrorID ()).append (']');
-    final String sMailSubject = aSubject.toString ();
-    return sMailSubject;
+    return aSubject.toString ();
   }
 
   private static void _sendInternalErrorMailToVendor (@Nonnull final InternalErrorMetadata aMetadata,
@@ -241,10 +240,10 @@ public final class InternalErrorHandler
         if (ScopedMailAPI.getInstance ().queueMail (aSMTPSettings, aEmailData).isFailure ())
           LOGGER.warn ("Failed to send via ScopedMailAPI");
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
         // E.g. if no scopes are present
-        LOGGER.warn ("Failed to send via ScopedMailAPI: " + _getThrowableAsString (t2));
+        LOGGER.warn ("Failed to send via ScopedMailAPI: " + _getThrowableAsString (ex2));
 
         // Try to send directly
         if (MailAPI.queueMail (aSMTPSettings, aEmailData).isFailure ())
@@ -332,10 +331,10 @@ public final class InternalErrorHandler
       {
         aRequestScope = WebScopeManager.getRequestScope ();
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
         // Happens if no scope is available (or what so ever)
-        LOGGER.warn ("Failed to get request scope: " + _getThrowableAsString (t2));
+        LOGGER.warn ("Failed to get request scope: " + _getThrowableAsString (ex2));
       }
     if (aRequestScope != null)
     {
@@ -346,10 +345,10 @@ public final class InternalErrorHandler
       {
         aMetadata.addField ("Request URL", aRequestScope.getURLEncoded ());
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
         // fall-through - happens in a weird case
-        aMetadata.addFieldRetrievalError ("Request URL", t2);
+        aMetadata.addFieldRetrievalError ("Request URL", ex2);
       }
 
       final IUserAgent aUserAgent = RequestHelper.getUserAgent (aRequestScope.getRequest ());
@@ -362,10 +361,10 @@ public final class InternalErrorHandler
       {
         aMetadata.addField ("Remote IP address", aRequestScope.getRemoteAddr ());
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
         // fall-through - happens in a weird case
-        aMetadata.addFieldRetrievalError ("Remote IP address", t2);
+        aMetadata.addFieldRetrievalError ("Remote IP address", ex2);
       }
 
       // Mobile browser?
@@ -395,19 +394,19 @@ public final class InternalErrorHandler
           // Try to get from request scope (if one is provided)
           aSessionScope = (ISessionWebScope) ScopeSessionManager.getInstance ().getSessionScopeOfID (aRequestScope.getSessionID ());
         }
-        catch (final Throwable t2)
+        catch (final Exception ex2)
         {
-          LOGGER.warn ("Failed to get session scope from request scope: " + _getThrowableAsString (t2));
+          LOGGER.warn ("Failed to get session scope from request scope: " + _getThrowableAsString (ex2));
         }
       if (aSessionScope == null)
         try
         {
           aSessionScope = WebScopeManager.getSessionScope (false);
         }
-        catch (final Throwable t2)
+        catch (final Exception ex2)
         {
           // Happens if no scope is available (or what so ever)
-          LOGGER.warn ("Failed to get request scope: " + _getThrowableAsString (t2));
+          LOGGER.warn ("Failed to get request scope: " + _getThrowableAsString (ex2));
         }
       if (aSessionScope != null)
       {
@@ -439,26 +438,26 @@ public final class InternalErrorHandler
         for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
           aMetadata.addRequestField (aEntry.getKey (), aEntry.getValue ());
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
-        LOGGER.error ("Failed to get request fields from " + aHttpRequest, t2);
+        LOGGER.error ("Failed to get request fields from " + aHttpRequest, ex2);
       }
       try
       {
         RequestHelper.getRequestHeaderMap (aHttpRequest).forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v), true);
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
-        LOGGER.error ("Failed to get request headers from " + aHttpRequest, t2);
+        LOGGER.error ("Failed to get request headers from " + aHttpRequest, ex2);
       }
       try
       {
         for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest).entrySet ())
           aMetadata.addRequestParameter (aEntry.getKey (), aEntry.getValue ());
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
-        LOGGER.error ("Failed to get request parameters from " + aHttpRequest, t2);
+        LOGGER.error ("Failed to get request parameters from " + aHttpRequest, ex2);
       }
 
       try
@@ -468,9 +467,9 @@ public final class InternalErrorHandler
           for (final Cookie aCookie : aCookies)
             aMetadata.addRequestCookie (aCookie.getName (), aCookie.getValue ());
       }
-      catch (final Throwable t2)
+      catch (final Exception ex2)
       {
-        LOGGER.error ("Failed to get request cookies from " + aHttpRequest, t2);
+        LOGGER.error ("Failed to get request cookies from " + aHttpRequest, ex2);
       }
     }
     else

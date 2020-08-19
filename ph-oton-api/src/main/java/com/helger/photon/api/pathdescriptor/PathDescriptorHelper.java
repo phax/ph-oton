@@ -53,7 +53,6 @@ public final class PathDescriptorHelper
     sRealPath = FilenameHelper.getCleanPath (sRealPath);
 
     // Split into pieces
-    final ICommonsList <String> aPathParts = StringHelper.getExploded ('/', sRealPath);
-    return aPathParts;
+    return StringHelper.getExploded ('/', sRealPath);
   }
 }

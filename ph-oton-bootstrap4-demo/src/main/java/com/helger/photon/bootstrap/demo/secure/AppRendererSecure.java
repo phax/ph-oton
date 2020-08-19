@@ -89,8 +89,7 @@ public final class AppRendererSecure
   @Nonnull
   public static IHCElement <?> getMenuContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
-    final IHCElement <?> ret = BootstrapMenuItemRenderer.createSideBarMenu (aLEC);
-    return ret;
+    return BootstrapMenuItemRenderer.createSideBarMenu (aLEC);
   }
 
   @Nonnull
