@@ -23,6 +23,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nonnull;
 
 import org.eclipse.jetty.server.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.exception.InitializationException;
@@ -35,6 +37,8 @@ import com.helger.commons.exception.InitializationException;
  */
 public class JettyRunner extends JettyStarter
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (JettyRunner.class);
+
   private Thread m_aThread;
   private final Semaphore m_aServerStartedSem = new Semaphore (0);
   private final AtomicBoolean m_aServerStartupSuccess = new AtomicBoolean (true);
@@ -77,7 +81,7 @@ public class JettyRunner extends JettyStarter
       }
       catch (final Exception ex)
       {
-        ex.printStackTrace ();
+        LOGGER.error ("Error running Jetty", ex);
       }
     }, "JettyRunner");
     m_aThread.setDaemon (true);
@@ -87,7 +91,11 @@ public class JettyRunner extends JettyStarter
     m_aServerStartedSem.acquire ();
 
     if (!m_aServerStartupSuccess.get ())
-      throw new InitializationException ("Failed to start Jetty:" + getPort () + ":" + getStopPort () + " - see logs for details");
+      throw new InitializationException ("Failed to start Jetty:" +
+                                         getPort () +
+                                         ":" +
+                                         getStopPort () +
+                                         " - see logs for details");
   }
 
   public synchronized void shutDownServer () throws IOException, InterruptedException
