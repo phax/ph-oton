@@ -38,7 +38,7 @@ public enum EAuditActionType implements IHasID <String>
 
   private final String m_sID;
 
-  private EAuditActionType (@Nonnull @Nonempty final String sID)
+  EAuditActionType (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

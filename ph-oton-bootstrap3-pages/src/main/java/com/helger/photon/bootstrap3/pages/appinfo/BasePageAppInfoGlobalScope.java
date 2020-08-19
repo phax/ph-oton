@@ -59,7 +59,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
 public class BasePageAppInfoGlobalScope <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     MSG_SCOPE_ID ("Kontext ID", "Scope ID"),
     MSG_SCOPE_CREATION_DT ("Erstellungszeit", "Creation date time"),

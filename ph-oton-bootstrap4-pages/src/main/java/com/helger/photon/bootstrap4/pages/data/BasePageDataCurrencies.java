@@ -61,7 +61,7 @@ import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 public class BasePageDataCurrencies <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_CODE ("Code", "Code"),
     MSG_NAME ("Name", "Name"),

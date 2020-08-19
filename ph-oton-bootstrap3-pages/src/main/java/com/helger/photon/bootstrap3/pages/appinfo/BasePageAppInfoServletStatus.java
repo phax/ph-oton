@@ -57,7 +57,7 @@ import com.helger.xservlet.servletstatus.ServletStatusManager;
 public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_SERVLET ("Servlet Klasse", "Servlet class"),
     MSG_STATUS ("Status", "Status"),
@@ -67,7 +67,7 @@ public class BasePageAppInfoServletStatus <WPECTYPE extends IWebPageExecutionCon
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

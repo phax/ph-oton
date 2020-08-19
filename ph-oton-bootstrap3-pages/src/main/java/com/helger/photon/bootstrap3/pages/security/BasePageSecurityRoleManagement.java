@@ -78,7 +78,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
                                             AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     TAB_ACTIVE ("Aktive Rollen ({0})", "Active roles ({0})"),
     HEADER_NAME ("Name", "Name"),

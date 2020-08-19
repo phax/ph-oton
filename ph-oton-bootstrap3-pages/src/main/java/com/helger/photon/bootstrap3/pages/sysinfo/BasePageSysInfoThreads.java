@@ -57,7 +57,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     MSG_HEADER ("Anzahl={0}; Prios (min/norm/max): " +
                 Thread.MIN_PRIORITY +

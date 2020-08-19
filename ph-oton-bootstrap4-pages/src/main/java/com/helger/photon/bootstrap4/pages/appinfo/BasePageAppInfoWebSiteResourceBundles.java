@@ -70,7 +70,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_CACHE_NOW_ENABLED ("Der Cache ist jetzt aktiviert", "Cache is now enabled"),
     MSG_CACHE_NOW_DISABLED ("Der Cache ist jetzt deaktiviert", "Cache is now disabled"),
@@ -91,7 +91,7 @@ public class BasePageAppInfoWebSiteResourceBundles <WPECTYPE extends IWebPageExe
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

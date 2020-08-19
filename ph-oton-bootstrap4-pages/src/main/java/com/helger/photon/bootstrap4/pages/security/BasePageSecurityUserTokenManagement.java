@@ -80,7 +80,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                  AbstractWebPageSecurityToken <IUserToken, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW ("Neues Benutzer-Token anlegen", "Create new user token"),
     HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),

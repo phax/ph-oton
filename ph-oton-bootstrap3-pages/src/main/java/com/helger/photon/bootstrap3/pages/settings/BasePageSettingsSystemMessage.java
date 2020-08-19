@@ -56,7 +56,7 @@ import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),

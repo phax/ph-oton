@@ -90,7 +90,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                                            AbstractBootstrapWebPageForm <FailedMailData, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     MSG_ID ("ID", "ID"),
     MSG_ERROR_DT ("Fehler-Datum", "Error date"),
@@ -120,7 +120,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

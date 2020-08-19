@@ -57,7 +57,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_HTTP_HEADERS ("HTTP Header", "HTTP header"),
     MSG_COOKIES ("Cookies", "Cookies"),

@@ -54,7 +54,7 @@ import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     LABEL_SEVERITY ("Typ", "Severity"),
     LABEL_MESSAGE ("Nachricht", "Message"),

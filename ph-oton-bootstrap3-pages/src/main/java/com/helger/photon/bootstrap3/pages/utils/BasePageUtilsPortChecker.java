@@ -65,7 +65,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_NOTE ("Hinweis: es können nur TCP-Ports geprüft werden.", "Note: only TCP ports can be checked."),
     MSG_HOSTNAME ("Hostname", "Hostname"),

@@ -56,7 +56,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_ID ("ID", "ID"),
     MSG_DATE ("Datum", "Date"),
@@ -66,7 +66,7 @@ public class BasePageMonitoringSystemMigrations <WPECTYPE extends IWebPageExecut
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

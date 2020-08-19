@@ -76,7 +76,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
                                          AbstractBootstrapWebPageForm <LoginInfo, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     MSG_USERNAME ("Benutzername", "User name"),
     MSG_LOGINDT ("Anmeldezeit", "Login time"),

@@ -50,7 +50,7 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
 public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_APPID ("Application ID", "Application ID"),
     MSG_APP_SERVLET_PATH ("App-Servlet Pfad", "App servlet path");
@@ -58,7 +58,7 @@ public class BasePageAppInfoPathMapper <WPECTYPE extends IWebPageExecutionContex
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

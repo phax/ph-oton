@@ -57,7 +57,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 public class BasePageSecurityChangePassword <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     ERROR_NO_USER_PRESENT ("Es ist kein Benutzer angemeldet, daher kann auch das Passwort nicht geändert werden.",
                            "Since no user is logged in no password change is possible."),

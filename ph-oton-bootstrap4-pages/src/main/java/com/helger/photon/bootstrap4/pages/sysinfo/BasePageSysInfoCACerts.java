@@ -70,7 +70,7 @@ import com.helger.security.keystore.LoadedKeyStore;
 public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     MSG_HEADER_SPECIAL_SYSPROPS ("Spezielle System-Eigenschaften:", "Special system properties:"),
     MSG_HEADER_SYSPROPS ("Alle System-Eigenschaften:", "All system properties:"),

@@ -61,7 +61,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_TAB_TIMER ("Zeiten", "Timer"),
     MSG_TAB_SIZE ("Größe", "Size"),

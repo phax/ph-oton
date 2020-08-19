@@ -49,7 +49,7 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
 public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_NAME ("Name", "Name"),
     MSG_VALUE ("Wert", "Value");

@@ -60,7 +60,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
 public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_SERVLETS ("Servlets", "Servlets"),
     MSG_LISTENERS ("Listener", "Listeners"),
@@ -76,7 +76,7 @@ public class BasePageSysInfoServletContext <WPECTYPE extends IWebPageExecutionCo
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

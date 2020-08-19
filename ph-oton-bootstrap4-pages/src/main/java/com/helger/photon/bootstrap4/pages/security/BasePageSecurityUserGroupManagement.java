@@ -83,7 +83,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                                  AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_CREATE_NEW_USERGROUP ("Neue Benutzergruppe anlegen", "Create new user group"),
     TAB_ACTIVE ("Aktive Benutzergruppen ({0})", "Active user groups ({0})"),
@@ -118,7 +118,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

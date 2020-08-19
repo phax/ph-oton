@@ -70,7 +70,7 @@ import com.helger.schedule.quartz.QuartzSchedulerHelper;
 public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_CONTEXT ("Kontext", "Context"),
     MSG_SUMMARY ("Zusammenfassung", "Summary"),
@@ -89,7 +89,7 @@ public class BasePageAppInfoScheduler <WPECTYPE extends IWebPageExecutionContext
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

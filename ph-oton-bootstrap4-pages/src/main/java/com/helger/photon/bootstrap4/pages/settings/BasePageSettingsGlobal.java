@@ -55,7 +55,7 @@ import com.helger.smtp.listener.IEmailDataTransportListener;
 public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_HEADER_GLOBAL ("Globale Einstellungen", "Global settings"),
     MSG_GLOBAL_DEBUG ("Debug-Modus", "Debug mode"),

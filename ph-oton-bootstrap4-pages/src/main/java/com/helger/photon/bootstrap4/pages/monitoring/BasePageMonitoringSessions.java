@@ -78,7 +78,7 @@ public class BasePageMonitoringSessions <WPECTYPE extends IWebPageExecutionConte
                                         AbstractBootstrapWebPageForm <ISessionScope, WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayTextWithArgs
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     MSG_SESSION ("Session Kontext", "Session scope"),
     MSG_ID ("ID", "ID"),

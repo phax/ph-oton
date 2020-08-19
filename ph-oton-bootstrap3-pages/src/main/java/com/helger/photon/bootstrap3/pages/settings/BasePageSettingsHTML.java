@@ -52,7 +52,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_HTML_VERSION ("HTML-Version", "HTML version"),
     MSG_FORMAT_HTML ("HTML formatieren?", "Format HTML?"),

@@ -58,7 +58,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_CURRENT_TIMEZONE ("Eingestellte Zeitzone: ", "Time zone set: "),
     MSG_ID ("ID", "ID"),

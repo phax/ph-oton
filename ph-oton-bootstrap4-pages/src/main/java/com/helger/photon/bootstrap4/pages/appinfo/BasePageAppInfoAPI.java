@@ -58,7 +58,7 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
 public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_HTTP_METHOD ("Verb", "Verb"),
     MSG_URL ("Ziel-URL", "Target URL"),
@@ -76,7 +76,7 @@ public class BasePageAppInfoAPI <WPECTYPE extends IWebPageExecutionContext> exte
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

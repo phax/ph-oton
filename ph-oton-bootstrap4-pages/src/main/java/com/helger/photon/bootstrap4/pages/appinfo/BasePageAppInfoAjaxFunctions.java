@@ -57,7 +57,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_KEY ("ID", "ID"),
     MSG_FACTORY ("Factory", "Factory"),
@@ -69,7 +69,7 @@ public class BasePageAppInfoAjaxFunctions <WPECTYPE extends IWebPageExecutionCon
     @Nonnull
     private final IMultilingualText m_aTP;
 
-    private EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

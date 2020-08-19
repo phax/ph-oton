@@ -72,7 +72,7 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     TAB_SECATTRS ("Attribute", "Attributes"),
     TAB_PROVIDERS ("Provider", "Providers"),

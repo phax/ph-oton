@@ -65,7 +65,7 @@ import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected static enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayText
   {
     MSG_NETWORK_INTERFACES ("Netzwerkkarten", "Network interfaces"),
     MSG_ERROR_FINDING ("Fehler beim Ermitteln der Netzwerkkarten", "Error determining network interfaces"),
