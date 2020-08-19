@@ -108,7 +108,8 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public CompletableFuture <Void> run (@Nonnull final String sActionName, @Nonnull final IThrowingRunnable <? extends Exception> aRunnable)
+  public CompletableFuture <Void> runThrowing (@Nonnull final String sActionName,
+                                               @Nonnull final IThrowingRunnable <? extends Exception> aRunnable)
   {
     return CompletableFuture.runAsync ( () -> {
       if (LOGGER.isInfoEnabled ())
@@ -153,8 +154,8 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public <T> CompletableFuture <T> supply (@Nonnull final String sActionName,
-                                           @Nonnull final IThrowingSupplier <T, ? extends Exception> aSupplier)
+  public <T> CompletableFuture <T> supplyThrowing (@Nonnull final String sActionName,
+                                                   @Nonnull final IThrowingSupplier <T, ? extends Exception> aSupplier)
   {
     return CompletableFuture.supplyAsync ( () -> {
       if (LOGGER.isInfoEnabled ())
