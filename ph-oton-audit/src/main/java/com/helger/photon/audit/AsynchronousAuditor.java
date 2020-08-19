@@ -136,6 +136,7 @@ public class AsynchronousAuditor extends AbstractAuditor
     catch (final InterruptedException ex)
     {
       LOGGER.error ("Error stopping auditor queue", ex);
+      Thread.currentThread ().interrupt ();
     }
     return EChange.CHANGED;
   }

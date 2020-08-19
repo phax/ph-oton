@@ -38,7 +38,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
                                                                   extends
                                                                   AbstractBootstrapWebPageForm <DATATYPE, WPECTYPE>
 {
-  private void _init ()
+  private void _initSowa ()
   {
     setObjectLockingEnabled (true);
   }
@@ -46,13 +46,13 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
   public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
-    _init ();
+    _initSowa ();
   }
 
   public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
   {
     super (sID, aName);
-    _init ();
+    _initSowa ();
   }
 
   public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID,
@@ -60,7 +60,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
                                                       @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
-    _init ();
+    _initSowa ();
   }
 
   public AbstractWebPageSecurityObjectWithAttributes (@Nonnull @Nonempty final String sID,
@@ -68,7 +68,7 @@ public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE exte
                                                       @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
-    _init ();
+    _initSowa ();
   }
 
   /**

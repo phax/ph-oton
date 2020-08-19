@@ -314,14 +314,14 @@ public class ExporterExcel implements IExporterFile
   }
 
   @Nonnull
-  public final ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider, @Nonnull @WillClose final OutputStream aOS)
+  public final ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
+                                       @Nonnull @WillClose final OutputStream aOS)
   {
-    try
-    {
-      ValueEnforcer.notNull (aProvider, "Provider");
-      ValueEnforcer.notNull (aOS, "OutputStream");
+    ValueEnforcer.notNull (aProvider, "Provider");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
-      final WorkbookCreationHelper aWBCH = new WorkbookCreationHelper (m_eVersion);
+    try (final WorkbookCreationHelper aWBCH = new WorkbookCreationHelper (m_eVersion))
+    {
       aWBCH.createNewSheet ();
 
       // Header
