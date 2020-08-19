@@ -250,8 +250,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
-  private Consumer <JSPackage> m_aJSBeforeModifier;
-  private BiConsumer <JSPackage, JSVar> m_aJSAfterModifier;
+  private transient Consumer <JSPackage> m_aJSBeforeModifier;
+  private transient BiConsumer <JSPackage, JSVar> m_aJSAfterModifier;
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -337,7 +337,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public DataTables setJSVariableName (@Nonnull @Nonempty final String sJSVariableName)
   {
     ValueEnforcer.notEmpty (sJSVariableName, "JSVariableName");
-    ValueEnforcer.isTrue (JSMarshaller.isJSIdentifier (sJSVariableName), "JS Variable name is not an identifier: " + sJSVariableName);
+    ValueEnforcer.isTrue (JSMarshaller.isJSIdentifier (sJSVariableName),
+                          "JS Variable name is not an identifier: " + sJSVariableName);
     m_sJSVariableName = sJSVariableName;
     return this;
   }
@@ -1050,8 +1051,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {
     final IJsonObject aLanguage = new JsonObject ();
     aLanguage.addJson ("aria",
-                       new JsonObject ().add ("sortAscending", EDataTablesText.ARIA_SORT_ASCENDING.getDisplayText (aDisplayLocale))
-                                        .add ("sortDescending", EDataTablesText.ARIA_SORT_DESCENDING.getDisplayText (aDisplayLocale)));
+                       new JsonObject ().add ("sortAscending",
+                                              EDataTablesText.ARIA_SORT_ASCENDING.getDisplayText (aDisplayLocale))
+                                        .add ("sortDescending",
+                                              EDataTablesText.ARIA_SORT_DESCENDING.getDisplayText (aDisplayLocale)));
     // Translate??
     aLanguage.add ("decimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
     aLanguage.add ("emptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
@@ -1065,7 +1068,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
                        new JsonObject ().add ("first", EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
                                         .add ("last", EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
                                         .add ("next", EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
-                                        .add ("previous", EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale)));
+                                        .add ("previous",
+                                              EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale)));
     aLanguage.add ("processing", EDataTablesText.PROCESSING.getDisplayText (aDisplayLocale));
     aLanguage.add ("search", EDataTablesText.SEARCH.getDisplayText (aDisplayLocale));
     aLanguage.add ("searchPlaceholder", EDataTablesText.SEARCH_PLACEHOLDER.getDisplayText (aDisplayLocale));
@@ -1171,7 +1175,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     {
       aParams.add ("serverSide", true);
       // This copies the content of the table
-      final DataTablesServerData aServerData = new DataTablesServerData (m_aTable, m_aColumnDefs, m_aDisplayLocale, m_eServerFilterType);
+      final DataTablesServerData aServerData = new DataTablesServerData (m_aTable,
+                                                                         m_aColumnDefs,
+                                                                         m_aDisplayLocale,
+                                                                         m_eServerFilterType);
       UIStateRegistry.getCurrent ().registerState (m_aTable.getID (), aServerData);
       // Remove all body rows to avoid initial double painting, as the most
       // reasonable state is retrieved from the server!
@@ -1307,7 +1314,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       m_aJSAfterModifier.accept (aJSCode, aJSTable);
 
     // Main HTML code for this element :)
-    setJSCodeProvider (m_bGenerateOnDocumentReady ? HCSettings.getOnDocumentReadyProvider ().createOnDocumentReady (aJSCode) : aJSCode);
+    setJSCodeProvider (m_bGenerateOnDocumentReady ? HCSettings.getOnDocumentReadyProvider ()
+                                                              .createOnDocumentReady (aJSCode)
+                                                  : aJSCode);
 
     // Must be called AFTER we set the JS!
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
