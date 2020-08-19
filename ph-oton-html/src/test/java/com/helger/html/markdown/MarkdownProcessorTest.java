@@ -113,7 +113,7 @@ public final class MarkdownProcessorTest
   }
 
   @Test
-  public void runTest () throws IOException
+  public void testRun () throws IOException
   {
     final String testText = _slurp (m_sDir + File.separator + m_sTestName + ".text");
     final String htmlText = _slurp (m_sDir + File.separator + m_sTestName + ".html");

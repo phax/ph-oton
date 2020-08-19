@@ -18,6 +18,7 @@ package com.helger.html.jquery.supplementary.main;
 
 import java.io.File;
 import java.util.Comparator;
+import java.util.Locale;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -69,7 +70,7 @@ abstract class AbstractCreateJQueryAPIList
 
     private final String m_sName;
 
-    private EAPIType (@Nonnull @Nonempty final String sName)
+    EAPIType (@Nonnull @Nonempty final String sName)
     {
       m_sName = sName;
     }
@@ -90,7 +91,8 @@ abstract class AbstractCreateJQueryAPIList
 
   private static final ICommonsSet <String> FORBIDDEN_NAMES = new CommonsHashSet <> ("true", "false", "switch");
 
-  static String _makeIdentifier (final String sName)
+  @Nonnull
+  static String _makeIdentifier (@Nonnull final String sName)
   {
     if (FORBIDDEN_NAMES.contains (sName))
       return "_" + sName;
@@ -99,6 +101,14 @@ abstract class AbstractCreateJQueryAPIList
     sID = StringHelper.trimStart (sID, "_");
     sID = StringHelper.trimEnd (sID, "_");
     return sID;
+  }
+
+  @Nonnull
+  static String _ucFirst (@Nonnull final String s)
+  {
+    if (s.length () == 1)
+      return s.toUpperCase (Locale.US);
+    return s.substring (0, 1).toUpperCase (Locale.US) + s.substring (1);
   }
 
   protected static final class Argument

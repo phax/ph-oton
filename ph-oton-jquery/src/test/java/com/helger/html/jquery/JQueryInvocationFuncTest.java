@@ -21,9 +21,9 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 /**
- * Unit test class for interface @{link IJQueryInvocation} This file is
- * generated - do NOT edit!
+ * Unit test class for interface @{link IJQueryInvocation}
  * 
+ * This file is generated - do NOT edit!
  * @author com.helger.html.jquery.supplementary.main.Main_QueryInvocationFuncTest
  */
 public final class JQueryInvocationFuncTest
@@ -31,187 +31,187 @@ public final class JQueryInvocationFuncTest
   // Methods start here
 
   @Test
-  public void testadd ()
+  public void testAdd ()
   {
     assertNotNull (JQuery.idRef ("any").add ());
   }
 
   @Test
-  public void testaddBack ()
+  public void testAddBack ()
   {
     assertNotNull (JQuery.idRef ("any").addBack ());
   }
 
   @Test
-  public void testaddClass ()
+  public void testAddClass ()
   {
     assertNotNull (JQuery.idRef ("any").addClass ());
   }
 
   @Test
-  public void testafter ()
+  public void testAfter ()
   {
     assertNotNull (JQuery.idRef ("any").after ());
   }
 
   @Test
-  public void testajaxComplete ()
+  public void testAjaxComplete ()
   {
     assertNotNull (JQuery.idRef ("any").ajaxComplete ());
   }
 
   @Test
-  public void testajaxError ()
+  public void testAjaxError ()
   {
     assertNotNull (JQuery.idRef ("any").ajaxError ());
   }
 
   @Test
-  public void testajaxSend ()
+  public void testAjaxSend ()
   {
     assertNotNull (JQuery.idRef ("any").ajaxSend ());
   }
 
   @Test
-  public void testajaxStart ()
+  public void testAjaxStart ()
   {
     assertNotNull (JQuery.idRef ("any").ajaxStart ());
   }
 
   @Test
-  public void testajaxStop ()
+  public void testAjaxStop ()
   {
     assertNotNull (JQuery.idRef ("any").ajaxStop ());
   }
 
   @Test
-  public void testajaxSuccess ()
+  public void testAjaxSuccess ()
   {
     assertNotNull (JQuery.idRef ("any").ajaxSuccess ());
   }
 
   @Test
-  public void testanimate ()
+  public void testAnimate ()
   {
     assertNotNull (JQuery.idRef ("any").animate ());
   }
 
   @Test
-  public void testappend ()
+  public void testAppend ()
   {
     assertNotNull (JQuery.idRef ("any").append ());
   }
 
   @Test
-  public void testappendTo ()
+  public void testAppendTo ()
   {
     assertNotNull (JQuery.idRef ("any").appendTo ());
   }
 
   @Test
-  public void testattr ()
+  public void testAttr ()
   {
     assertNotNull (JQuery.idRef ("any").attr ());
   }
 
   @Test
-  public void testbefore ()
+  public void testBefore ()
   {
     assertNotNull (JQuery.idRef ("any").before ());
   }
 
   @Test
-  public void testblur ()
+  public void testBlur ()
   {
     assertNotNull (JQuery.idRef ("any").blur ());
   }
 
   @Test
-  public void testcallbacks_add ()
+  public void testCallbacks_add ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_add ());
   }
 
   @Test
-  public void testcallbacks_disable ()
+  public void testCallbacks_disable ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_disable ());
   }
 
   @Test
-  public void testcallbacks_disabled ()
+  public void testCallbacks_disabled ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_disabled ());
   }
 
   @Test
-  public void testcallbacks_empty ()
+  public void testCallbacks_empty ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_empty ());
   }
 
   @Test
-  public void testcallbacks_fire ()
+  public void testCallbacks_fire ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_fire ());
   }
 
   @Test
-  public void testcallbacks_fireWith ()
+  public void testCallbacks_fireWith ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_fireWith ());
   }
 
   @Test
-  public void testcallbacks_fired ()
+  public void testCallbacks_fired ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_fired ());
   }
 
   @Test
-  public void testcallbacks_has ()
+  public void testCallbacks_has ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_has ());
   }
 
   @Test
-  public void testcallbacks_lock ()
+  public void testCallbacks_lock ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_lock ());
   }
 
   @Test
-  public void testcallbacks_locked ()
+  public void testCallbacks_locked ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_locked ());
   }
 
   @Test
-  public void testcallbacks_remove ()
+  public void testCallbacks_remove ()
   {
     assertNotNull (JQuery.idRef ("any").callbacks_remove ());
   }
 
   @Test
-  public void testchange ()
+  public void testChange ()
   {
     assertNotNull (JQuery.idRef ("any").change ());
   }
 
   @Test
-  public void testchildren ()
+  public void testChildren ()
   {
     assertNotNull (JQuery.idRef ("any").children ());
   }
 
   @Test
-  public void testclearQueue ()
+  public void testClearQueue ()
   {
     assertNotNull (JQuery.idRef ("any").clearQueue ());
   }
 
   @Test
-  public void testclick ()
+  public void testClick ()
   {
     assertNotNull (JQuery.idRef ("any").click ());
   }
@@ -223,151 +223,151 @@ public final class JQueryInvocationFuncTest
   }
 
   @Test
-  public void testclosest ()
+  public void testClosest ()
   {
     assertNotNull (JQuery.idRef ("any").closest ());
   }
 
   @Test
-  public void testcontents ()
+  public void testContents ()
   {
     assertNotNull (JQuery.idRef ("any").contents ());
   }
 
   @Test
-  public void testcontextmenu ()
+  public void testContextmenu ()
   {
     assertNotNull (JQuery.idRef ("any").contextmenu ());
   }
 
   @Test
-  public void testcss ()
+  public void testCss ()
   {
     assertNotNull (JQuery.idRef ("any").css ());
   }
 
   @Test
-  public void testdata ()
+  public void testData ()
   {
     assertNotNull (JQuery.idRef ("any").data ());
   }
 
   @Test
-  public void testdblclick ()
+  public void testDblclick ()
   {
     assertNotNull (JQuery.idRef ("any").dblclick ());
   }
 
   @Test
-  public void testdeferred_always ()
+  public void testDeferred_always ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_always ());
   }
 
   @Test
-  public void testdeferred_done ()
+  public void testDeferred_done ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_done ());
   }
 
   @Test
-  public void testdeferred_fail ()
+  public void testDeferred_fail ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_fail ());
   }
 
   @Test
-  public void testdeferred_notify ()
+  public void testDeferred_notify ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_notify ());
   }
 
   @Test
-  public void testdeferred_notifyWith ()
+  public void testDeferred_notifyWith ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_notifyWith ());
   }
 
   @Test
-  public void testdeferred_progress ()
+  public void testDeferred_progress ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_progress ());
   }
 
   @Test
-  public void testdeferred_promise ()
+  public void testDeferred_promise ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_promise ());
   }
 
   @Test
-  public void testdeferred_reject ()
+  public void testDeferred_reject ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_reject ());
   }
 
   @Test
-  public void testdeferred_rejectWith ()
+  public void testDeferred_rejectWith ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_rejectWith ());
   }
 
   @Test
-  public void testdeferred_resolve ()
+  public void testDeferred_resolve ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_resolve ());
   }
 
   @Test
-  public void testdeferred_resolveWith ()
+  public void testDeferred_resolveWith ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_resolveWith ());
   }
 
   @Test
-  public void testdeferred_state ()
+  public void testDeferred_state ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_state ());
   }
 
   @Test
-  public void testdeferred_then ()
+  public void testDeferred_then ()
   {
     assertNotNull (JQuery.idRef ("any").deferred_then ());
   }
 
   @Test
-  public void testdelay ()
+  public void testDelay ()
   {
     assertNotNull (JQuery.idRef ("any").delay ());
   }
 
   @Test
-  public void testdequeue ()
+  public void testDequeue ()
   {
     assertNotNull (JQuery.idRef ("any").dequeue ());
   }
 
   @Test
-  public void testdetach ()
+  public void testDetach ()
   {
     assertNotNull (JQuery.idRef ("any").detach ());
   }
 
   @Test
-  public void testeach ()
+  public void testEach ()
   {
     assertNotNull (JQuery.idRef ("any").each ());
   }
 
   @Test
-  public void testempty ()
+  public void testEmpty ()
   {
     assertNotNull (JQuery.idRef ("any").empty ());
   }
 
   @Test
-  public void testend ()
+  public void testEnd ()
   {
     assertNotNull (JQuery.idRef ("any").end ());
   }
@@ -379,277 +379,277 @@ public final class JQueryInvocationFuncTest
   }
 
   @Test
-  public void testevent_isDefaultPrevented ()
+  public void testEvent_isDefaultPrevented ()
   {
     assertNotNull (JQuery.idRef ("any").event_isDefaultPrevented ());
   }
 
   @Test
-  public void testevent_isImmediatePropagationStopped ()
+  public void testEvent_isImmediatePropagationStopped ()
   {
     assertNotNull (JQuery.idRef ("any").event_isImmediatePropagationStopped ());
   }
 
   @Test
-  public void testevent_isPropagationStopped ()
+  public void testEvent_isPropagationStopped ()
   {
     assertNotNull (JQuery.idRef ("any").event_isPropagationStopped ());
   }
 
   @Test
-  public void testevent_preventDefault ()
+  public void testEvent_preventDefault ()
   {
     assertNotNull (JQuery.idRef ("any").event_preventDefault ());
   }
 
   @Test
-  public void testevent_stopImmediatePropagation ()
+  public void testEvent_stopImmediatePropagation ()
   {
     assertNotNull (JQuery.idRef ("any").event_stopImmediatePropagation ());
   }
 
   @Test
-  public void testevent_stopPropagation ()
+  public void testEvent_stopPropagation ()
   {
     assertNotNull (JQuery.idRef ("any").event_stopPropagation ());
   }
 
   @Test
-  public void testfadeIn ()
+  public void testFadeIn ()
   {
     assertNotNull (JQuery.idRef ("any").fadeIn ());
   }
 
   @Test
-  public void testfadeOut ()
+  public void testFadeOut ()
   {
     assertNotNull (JQuery.idRef ("any").fadeOut ());
   }
 
   @Test
-  public void testfadeTo ()
+  public void testFadeTo ()
   {
     assertNotNull (JQuery.idRef ("any").fadeTo ());
   }
 
   @Test
-  public void testfadeToggle ()
+  public void testFadeToggle ()
   {
     assertNotNull (JQuery.idRef ("any").fadeToggle ());
   }
 
   @Test
-  public void testfilter ()
+  public void testFilter ()
   {
     assertNotNull (JQuery.idRef ("any").filter ());
   }
 
   @Test
-  public void testfind ()
+  public void testFind ()
   {
     assertNotNull (JQuery.idRef ("any").find ());
   }
 
   @Test
-  public void testfinish ()
+  public void testFinish ()
   {
     assertNotNull (JQuery.idRef ("any").finish ());
   }
 
   @Test
-  public void testfirst ()
+  public void testFirst ()
   {
     assertNotNull (JQuery.idRef ("any").first ());
   }
 
   @Test
-  public void testfocus ()
+  public void testFocus ()
   {
     assertNotNull (JQuery.idRef ("any").focus ());
   }
 
   @Test
-  public void testfocusin ()
+  public void testFocusin ()
   {
     assertNotNull (JQuery.idRef ("any").focusin ());
   }
 
   @Test
-  public void testfocusout ()
+  public void testFocusout ()
   {
     assertNotNull (JQuery.idRef ("any").focusout ());
   }
 
   @Test
-  public void testget ()
+  public void testGet ()
   {
     assertNotNull (JQuery.idRef ("any").get ());
   }
 
   @Test
-  public void testhas ()
+  public void testHas ()
   {
     assertNotNull (JQuery.idRef ("any").has ());
   }
 
   @Test
-  public void testhasClass ()
+  public void testHasClass ()
   {
     assertNotNull (JQuery.idRef ("any").hasClass ());
   }
 
   @Test
-  public void testheight ()
+  public void testHeight ()
   {
     assertNotNull (JQuery.idRef ("any").height ());
   }
 
   @Test
-  public void testhide ()
+  public void testHide ()
   {
     assertNotNull (JQuery.idRef ("any").hide ());
   }
 
   @Test
-  public void testhover ()
+  public void testHover ()
   {
     assertNotNull (JQuery.idRef ("any").hover ());
   }
 
   @Test
-  public void testhtml ()
+  public void testHtml ()
   {
     assertNotNull (JQuery.idRef ("any").html ());
   }
 
   @Test
-  public void testindex ()
+  public void testIndex ()
   {
     assertNotNull (JQuery.idRef ("any").index ());
   }
 
   @Test
-  public void testinnerHeight ()
+  public void testInnerHeight ()
   {
     assertNotNull (JQuery.idRef ("any").innerHeight ());
   }
 
   @Test
-  public void testinnerWidth ()
+  public void testInnerWidth ()
   {
     assertNotNull (JQuery.idRef ("any").innerWidth ());
   }
 
   @Test
-  public void testinsertAfter ()
+  public void testInsertAfter ()
   {
     assertNotNull (JQuery.idRef ("any").insertAfter ());
   }
 
   @Test
-  public void testinsertBefore ()
+  public void testInsertBefore ()
   {
     assertNotNull (JQuery.idRef ("any").insertBefore ());
   }
 
   @Test
-  public void testis ()
+  public void testIs ()
   {
     assertNotNull (JQuery.idRef ("any").is ());
   }
 
   @Test
-  public void testkeydown ()
+  public void testKeydown ()
   {
     assertNotNull (JQuery.idRef ("any").keydown ());
   }
 
   @Test
-  public void testkeypress ()
+  public void testKeypress ()
   {
     assertNotNull (JQuery.idRef ("any").keypress ());
   }
 
   @Test
-  public void testkeyup ()
+  public void testKeyup ()
   {
     assertNotNull (JQuery.idRef ("any").keyup ());
   }
 
   @Test
-  public void testlast ()
+  public void testLast ()
   {
     assertNotNull (JQuery.idRef ("any").last ());
   }
 
   @Test
-  public void testload ()
+  public void testLoad ()
   {
     assertNotNull (JQuery.idRef ("any").load ());
   }
 
   @Test
-  public void testmap ()
+  public void testMap ()
   {
     assertNotNull (JQuery.idRef ("any").map ());
   }
 
   @Test
-  public void testmousedown ()
+  public void testMousedown ()
   {
     assertNotNull (JQuery.idRef ("any").mousedown ());
   }
 
   @Test
-  public void testmouseenter ()
+  public void testMouseenter ()
   {
     assertNotNull (JQuery.idRef ("any").mouseenter ());
   }
 
   @Test
-  public void testmouseleave ()
+  public void testMouseleave ()
   {
     assertNotNull (JQuery.idRef ("any").mouseleave ());
   }
 
   @Test
-  public void testmousemove ()
+  public void testMousemove ()
   {
     assertNotNull (JQuery.idRef ("any").mousemove ());
   }
 
   @Test
-  public void testmouseout ()
+  public void testMouseout ()
   {
     assertNotNull (JQuery.idRef ("any").mouseout ());
   }
 
   @Test
-  public void testmouseover ()
+  public void testMouseover ()
   {
     assertNotNull (JQuery.idRef ("any").mouseover ());
   }
 
   @Test
-  public void testmouseup ()
+  public void testMouseup ()
   {
     assertNotNull (JQuery.idRef ("any").mouseup ());
   }
 
   @Test
-  public void testnext ()
+  public void testNext ()
   {
     assertNotNull (JQuery.idRef ("any").next ());
   }
 
   @Test
-  public void testnextAll ()
+  public void testNextAll ()
   {
     assertNotNull (JQuery.idRef ("any").nextAll ());
   }
 
   @Test
-  public void testnextUntil ()
+  public void testNextUntil ()
   {
     assertNotNull (JQuery.idRef ("any").nextUntil ());
   }
@@ -661,331 +661,331 @@ public final class JQueryInvocationFuncTest
   }
 
   @Test
-  public void testoff ()
+  public void testOff ()
   {
     assertNotNull (JQuery.idRef ("any").off ());
   }
 
   @Test
-  public void testoffset ()
+  public void testOffset ()
   {
     assertNotNull (JQuery.idRef ("any").offset ());
   }
 
   @Test
-  public void testoffsetParent ()
+  public void testOffsetParent ()
   {
     assertNotNull (JQuery.idRef ("any").offsetParent ());
   }
 
   @Test
-  public void teston ()
+  public void testOn ()
   {
     assertNotNull (JQuery.idRef ("any").on ());
   }
 
   @Test
-  public void testone ()
+  public void testOne ()
   {
     assertNotNull (JQuery.idRef ("any").one ());
   }
 
   @Test
-  public void testouterHeight ()
+  public void testOuterHeight ()
   {
     assertNotNull (JQuery.idRef ("any").outerHeight ());
   }
 
   @Test
-  public void testouterWidth ()
+  public void testOuterWidth ()
   {
     assertNotNull (JQuery.idRef ("any").outerWidth ());
   }
 
   @Test
-  public void testparent ()
+  public void testParent ()
   {
     assertNotNull (JQuery.idRef ("any").parent ());
   }
 
   @Test
-  public void testparents ()
+  public void testParents ()
   {
     assertNotNull (JQuery.idRef ("any").parents ());
   }
 
   @Test
-  public void testparentsUntil ()
+  public void testParentsUntil ()
   {
     assertNotNull (JQuery.idRef ("any").parentsUntil ());
   }
 
   @Test
-  public void testposition ()
+  public void testPosition ()
   {
     assertNotNull (JQuery.idRef ("any").position ());
   }
 
   @Test
-  public void testprepend ()
+  public void testPrepend ()
   {
     assertNotNull (JQuery.idRef ("any").prepend ());
   }
 
   @Test
-  public void testprependTo ()
+  public void testPrependTo ()
   {
     assertNotNull (JQuery.idRef ("any").prependTo ());
   }
 
   @Test
-  public void testprev ()
+  public void testPrev ()
   {
     assertNotNull (JQuery.idRef ("any").prev ());
   }
 
   @Test
-  public void testprevAll ()
+  public void testPrevAll ()
   {
     assertNotNull (JQuery.idRef ("any").prevAll ());
   }
 
   @Test
-  public void testprevUntil ()
+  public void testPrevUntil ()
   {
     assertNotNull (JQuery.idRef ("any").prevUntil ());
   }
 
   @Test
-  public void testpromise ()
+  public void testPromise ()
   {
     assertNotNull (JQuery.idRef ("any").promise ());
   }
 
   @Test
-  public void testprop ()
+  public void testProp ()
   {
     assertNotNull (JQuery.idRef ("any").prop ());
   }
 
   @Test
-  public void testpushStack ()
+  public void testPushStack ()
   {
     assertNotNull (JQuery.idRef ("any").pushStack ());
   }
 
   @Test
-  public void testqueue ()
+  public void testQueue ()
   {
     assertNotNull (JQuery.idRef ("any").queue ());
   }
 
   @Test
-  public void testready ()
+  public void testReady ()
   {
     assertNotNull (JQuery.idRef ("any").ready ());
   }
 
   @Test
-  public void testremove ()
+  public void testRemove ()
   {
     assertNotNull (JQuery.idRef ("any").remove ());
   }
 
   @Test
-  public void testremoveAttr ()
+  public void testRemoveAttr ()
   {
     assertNotNull (JQuery.idRef ("any").removeAttr ());
   }
 
   @Test
-  public void testremoveClass ()
+  public void testRemoveClass ()
   {
     assertNotNull (JQuery.idRef ("any").removeClass ());
   }
 
   @Test
-  public void testremoveData ()
+  public void testRemoveData ()
   {
     assertNotNull (JQuery.idRef ("any").removeData ());
   }
 
   @Test
-  public void testremoveProp ()
+  public void testRemoveProp ()
   {
     assertNotNull (JQuery.idRef ("any").removeProp ());
   }
 
   @Test
-  public void testreplaceAll ()
+  public void testReplaceAll ()
   {
     assertNotNull (JQuery.idRef ("any").replaceAll ());
   }
 
   @Test
-  public void testreplaceWith ()
+  public void testReplaceWith ()
   {
     assertNotNull (JQuery.idRef ("any").replaceWith ());
   }
 
   @Test
-  public void testresize ()
+  public void testResize ()
   {
     assertNotNull (JQuery.idRef ("any").resize ());
   }
 
   @Test
-  public void testscroll ()
+  public void testScroll ()
   {
     assertNotNull (JQuery.idRef ("any").scroll ());
   }
 
   @Test
-  public void testscrollLeft ()
+  public void testScrollLeft ()
   {
     assertNotNull (JQuery.idRef ("any").scrollLeft ());
   }
 
   @Test
-  public void testscrollTop ()
+  public void testScrollTop ()
   {
     assertNotNull (JQuery.idRef ("any").scrollTop ());
   }
 
   @Test
-  public void testselect ()
+  public void testSelect ()
   {
     assertNotNull (JQuery.idRef ("any").select ());
   }
 
   @Test
-  public void testserialize ()
+  public void testSerialize ()
   {
     assertNotNull (JQuery.idRef ("any").serialize ());
   }
 
   @Test
-  public void testserializeArray ()
+  public void testSerializeArray ()
   {
     assertNotNull (JQuery.idRef ("any").serializeArray ());
   }
 
   @Test
-  public void testshow ()
+  public void testShow ()
   {
     assertNotNull (JQuery.idRef ("any").show ());
   }
 
   @Test
-  public void testsiblings ()
+  public void testSiblings ()
   {
     assertNotNull (JQuery.idRef ("any").siblings ());
   }
 
   @Test
-  public void testslice ()
+  public void testSlice ()
   {
     assertNotNull (JQuery.idRef ("any").slice ());
   }
 
   @Test
-  public void testslideDown ()
+  public void testSlideDown ()
   {
     assertNotNull (JQuery.idRef ("any").slideDown ());
   }
 
   @Test
-  public void testslideToggle ()
+  public void testSlideToggle ()
   {
     assertNotNull (JQuery.idRef ("any").slideToggle ());
   }
 
   @Test
-  public void testslideUp ()
+  public void testSlideUp ()
   {
     assertNotNull (JQuery.idRef ("any").slideUp ());
   }
 
   @Test
-  public void teststop ()
+  public void testStop ()
   {
     assertNotNull (JQuery.idRef ("any").stop ());
   }
 
   @Test
-  public void testsubmit ()
+  public void testSubmit ()
   {
     assertNotNull (JQuery.idRef ("any").submit ());
   }
 
   @Test
-  public void testtext ()
+  public void testText ()
   {
     assertNotNull (JQuery.idRef ("any").text ());
   }
 
   @Test
-  public void testtoArray ()
+  public void testToArray ()
   {
     assertNotNull (JQuery.idRef ("any").toArray ());
   }
 
   @Test
-  public void testtoggle ()
+  public void testToggle ()
   {
     assertNotNull (JQuery.idRef ("any").toggle ());
   }
 
   @Test
-  public void testtoggleClass ()
+  public void testToggleClass ()
   {
     assertNotNull (JQuery.idRef ("any").toggleClass ());
   }
 
   @Test
-  public void testtrigger ()
+  public void testTrigger ()
   {
     assertNotNull (JQuery.idRef ("any").trigger ());
   }
 
   @Test
-  public void testtriggerHandler ()
+  public void testTriggerHandler ()
   {
     assertNotNull (JQuery.idRef ("any").triggerHandler ());
   }
 
   @Test
-  public void testunwrap ()
+  public void testUnwrap ()
   {
     assertNotNull (JQuery.idRef ("any").unwrap ());
   }
 
   @Test
-  public void testval ()
+  public void testVal ()
   {
     assertNotNull (JQuery.idRef ("any").val ());
   }
 
   @Test
-  public void testwidth ()
+  public void testWidth ()
   {
     assertNotNull (JQuery.idRef ("any").width ());
   }
 
   @Test
-  public void testwrap ()
+  public void testWrap ()
   {
     assertNotNull (JQuery.idRef ("any").wrap ());
   }
 
   @Test
-  public void testwrapAll ()
+  public void testWrapAll ()
   {
     assertNotNull (JQuery.idRef ("any").wrapAll ());
   }
 
   @Test
-  public void testwrapInner ()
+  public void testWrapInner ()
   {
     assertNotNull (JQuery.idRef ("any").wrapInner ());
   }

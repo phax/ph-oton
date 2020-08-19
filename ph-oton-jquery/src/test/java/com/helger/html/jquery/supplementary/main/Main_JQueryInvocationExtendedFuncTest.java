@@ -56,7 +56,7 @@ public class Main_JQueryInvocationExtendedFuncTest extends AbstractCreateJQueryA
             continue;
           }
 
-          final String sRealPrefix = "@Test\npublic void test" + aEntry.getIdentifier ();
+          final String sRealPrefix = "@Test\npublic void test" + _ucFirst (aEntry.getIdentifier ());
 
           if (nArgCount == 1)
           {

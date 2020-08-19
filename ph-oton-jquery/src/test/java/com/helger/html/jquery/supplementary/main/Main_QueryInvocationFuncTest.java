@@ -64,7 +64,7 @@ public class Main_QueryInvocationFuncTest extends AbstractCreateJQueryAPIList
         if (!bIsDeprecated)
         {
           aLines.add ("@Test");
-          aLines.add ("public void test" + aEntry.getIdentifier () + " ()");
+          aLines.add ("public void test" + _ucFirst (aEntry.getIdentifier ()) + " ()");
           aLines.add ("{");
           aLines.add ("  assertNotNull (JQuery.idRef (\"any\")." + aEntry.getIdentifier () + " ());");
           aLines.add ("}");
