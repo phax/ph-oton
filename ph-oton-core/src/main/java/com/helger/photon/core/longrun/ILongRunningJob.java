@@ -18,6 +18,7 @@ package com.helger.photon.core.longrun;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.text.IMultilingualText;
 
 /**
@@ -27,6 +28,14 @@ import com.helger.commons.text.IMultilingualText;
  */
 public interface ILongRunningJob
 {
+  /**
+   * @return The internal ID of the long running job type. This should not be an
+   *         instance ID.
+   */
+  @Nonnull
+  @Nonempty
+  String getJobID ();
+
   /**
    * @return A description of this long running job. May not be
    *         <code>null</code>.
