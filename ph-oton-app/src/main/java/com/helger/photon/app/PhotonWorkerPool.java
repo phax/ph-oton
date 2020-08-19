@@ -33,6 +33,7 @@ import com.helger.commons.callback.IThrowingRunnable;
 import com.helger.commons.concurrent.BasicThreadFactory;
 import com.helger.commons.concurrent.ExecutorServiceHelper;
 import com.helger.commons.functional.IThrowingSupplier;
+import com.helger.commons.timing.StopWatch;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
@@ -89,8 +90,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   public CompletableFuture <Void> run (@Nonnull final String sActionName, @Nonnull final Runnable aRunnable)
   {
     return CompletableFuture.runAsync ( () -> {
+      final StopWatch aSW = StopWatch.createdStarted ();
       if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting " + sActionName);
+        LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         aRunnable.run ();
@@ -101,8 +103,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       }
       finally
       {
+        aSW.stop ();
         if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished " + sActionName);
+          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -112,8 +115,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
                                                @Nonnull final IThrowingRunnable <? extends Exception> aRunnable)
   {
     return CompletableFuture.runAsync ( () -> {
+      final StopWatch aSW = StopWatch.createdStarted ();
       if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting " + sActionName);
+        LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         aRunnable.run ();
@@ -124,8 +128,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       }
       finally
       {
+        aSW.stop ();
         if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished " + sActionName);
+          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -134,8 +139,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   public <T> CompletableFuture <T> supply (@Nonnull final String sActionName, @Nonnull final Supplier <T> aSupplier)
   {
     return CompletableFuture.supplyAsync ( () -> {
+      final StopWatch aSW = StopWatch.createdStarted ();
       if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting " + sActionName);
+        LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         return aSupplier.get ();
@@ -147,8 +153,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       }
       finally
       {
+        aSW.stop ();
         if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished " + sActionName);
+          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -158,8 +165,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
                                                    @Nonnull final IThrowingSupplier <T, ? extends Exception> aSupplier)
   {
     return CompletableFuture.supplyAsync ( () -> {
+      final StopWatch aSW = StopWatch.createdStarted ();
       if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting " + sActionName);
+        LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         return aSupplier.get ();
@@ -171,8 +179,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       }
       finally
       {
+        aSW.stop ();
         if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished " + sActionName);
+          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
