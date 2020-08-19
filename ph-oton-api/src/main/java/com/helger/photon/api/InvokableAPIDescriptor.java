@@ -43,7 +43,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public final class InvokableAPIDescriptor implements Serializable
+public class InvokableAPIDescriptor implements Serializable
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (InvokableAPIDescriptor.class);
 
@@ -117,7 +117,8 @@ public final class InvokableAPIDescriptor implements Serializable
    *        error. Default is HTTP 400, bad request.
    * @return <code>true</code> if all prerequisites are fulfilled.
    */
-  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final MutableInt aStatusCode)
+  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @Nonnull final MutableInt aStatusCode)
   {
     if (aRequestScope == null)
       return false;

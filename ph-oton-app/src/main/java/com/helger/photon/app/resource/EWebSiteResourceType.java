@@ -64,10 +64,10 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
   private final String m_sFileExtension;
   private final String m_sDisplayName;
 
-  private EWebSiteResourceType (@Nonnull @Nonempty final String sID,
-                                @Nonnull final IMimeType aMimeType,
-                                @Nonnull @Nonempty final String sFileExtension,
-                                @Nonnull @Nonempty final String sDisplayName)
+  EWebSiteResourceType (@Nonnull @Nonempty final String sID,
+                        @Nonnull final IMimeType aMimeType,
+                        @Nonnull @Nonempty final String sFileExtension,
+                        @Nonnull @Nonempty final String sDisplayName)
   {
     m_sID = sID;
     m_aMimeType = aMimeType;

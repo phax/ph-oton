@@ -69,6 +69,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
   }
 
   @Nonnull
+  @Override
   public PhotonUnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
                                                       @Nonnull final EHttpMethod eHttpMethod,
                                                       @Nonnull final HttpServletRequest aHttpRequest,
@@ -136,7 +137,9 @@ public class APIXServletHandler implements IXServletSimpleHandler
             aUnifiedResponse.removeCaching ();
           }
           else
-            if (!aUnifiedResponse.isStatusCodeDefined () && !aUnifiedResponse.isRedirectDefined () && !aUnifiedResponse.hasContent ())
+            if (!aUnifiedResponse.isStatusCodeDefined () &&
+                !aUnifiedResponse.isRedirectDefined () &&
+                !aUnifiedResponse.hasContent ())
             {
               // Set "No Content" response
               aUnifiedResponse.setStatus (CHttp.HTTP_NO_CONTENT);
@@ -147,9 +150,9 @@ public class APIXServletHandler implements IXServletSimpleHandler
           // Re-throw
           throw ex;
         }
-        catch (final Throwable t)
+        catch (final Exception ex)
         {
-          throw new ServletException ("Error invoking API " + eHttpMethod + " '" + aAPIPath.getPath () + "'", t);
+          throw new ServletException ("Error invoking API " + eHttpMethod + " '" + aAPIPath.getPath () + "'", ex);
         }
       }
     }

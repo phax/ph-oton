@@ -97,7 +97,8 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     if (!aTargetRes.exists ())
     {
       // persist file by merging all items
-      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (StandardCharsets.UTF_8, EAppend.TRUNCATE)))
+      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (StandardCharsets.UTF_8,
+                                                                                  EAppend.TRUNCATE)))
       {
         if (aWriter == null)
         {
@@ -109,7 +110,9 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
                           m_sBundleID +
                           "' with " +
                           m_aBundle.getAllResourcePaths () +
-                          (m_aBundle.hasConditionalComment () ? " and conditional comment '" + m_aBundle.getConditionalComment () + "'"
+                          (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                                m_aBundle.getConditionalComment () +
+                                                                "'"
                                                               : "") +
                           " to path " +
                           aTargetRes.getAsFile ().getAbsolutePath ());
@@ -175,16 +178,18 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
                          m_sBundleID +
                          "' with " +
                          m_aBundle.getAllResourcePaths () +
-                         (m_aBundle.hasConditionalComment () ? " and conditional comment '" + m_aBundle.getConditionalComment () + "'"
+                         (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                               m_aBundle.getConditionalComment () +
+                                                               "'"
                                                              : ""));
           }
         }
       }
-      catch (final Throwable t)
+      catch (final Exception ex)
       {
         if (LOGGER.isErrorEnabled ())
-          LOGGER.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), t);
-        throw new IllegalStateException (t);
+          LOGGER.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), ex);
+        throw new IllegalStateException (ex);
       }
     }
   }

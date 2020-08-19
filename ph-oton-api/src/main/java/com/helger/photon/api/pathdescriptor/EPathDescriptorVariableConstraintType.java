@@ -36,7 +36,7 @@ public enum EPathDescriptorVariableConstraintType implements IHasID <String>
   private final String m_sID;
   private final boolean m_bRequiresValue;
 
-  private EPathDescriptorVariableConstraintType (@Nonnull @Nonempty final String sID, final boolean bRequiresValue)
+  EPathDescriptorVariableConstraintType (@Nonnull @Nonempty final String sID, final boolean bRequiresValue)
   {
     m_sID = sID;
     m_bRequiresValue = bRequiresValue;

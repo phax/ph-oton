@@ -33,7 +33,7 @@ public enum EFeedTextType
 
   private final String m_sType;
 
-  private EFeedTextType (@Nonnull @Nonempty final String sType)
+  EFeedTextType (@Nonnull @Nonempty final String sType)
   {
     m_sType = sType;
   }

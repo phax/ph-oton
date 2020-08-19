@@ -202,6 +202,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   }
 
   @Nonnegative
+  @Override
   public int getCount ()
   {
     return m_aRWLock.readLockedInt (m_aList::size);

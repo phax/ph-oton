@@ -52,7 +52,8 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 
-public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO implements IWebSiteResourceBundleProvider
+public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO implements
+                                                IWebSiteResourceBundleProvider
 {
   private static final String ELEMENT_RESOURCE_BUNDLES = "resource-bundles";
   private static final String ELEMENT_RESOURCE_BUNDLE = "resource-bundle";
@@ -90,7 +91,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     {
       boolean bResourcesAreOutOfSync = false;
       final String sBundleID = eResourceBundle.getAttributeValue (ATTR_ID);
-      final LocalDateTime aCreationDT = eResourceBundle.getAttributeValueWithConversion (ATTR_CREATIONDT, LocalDateTime.class);
+      final LocalDateTime aCreationDT = eResourceBundle.getAttributeValueWithConversion (ATTR_CREATIONDT,
+                                                                                         LocalDateTime.class);
       final String sConditionalComment = eResourceBundle.getAttributeValue (ATTR_CONDITIONAL_COMMENT);
 
       // This attribute was added - default to true
@@ -131,12 +133,17 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
           final String sHash = eResource.getAttributeValue (ATTR_CONTENT_HASH);
           final String sCharset = eResource.getAttributeValue (ATTR_CHARSET);
           // Soft migration as charset was added later
-          final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET : CharsetHelper.getCharsetFromName (sCharset);
+          final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET
+                                                    : CharsetHelper.getCharsetFromName (sCharset);
 
           final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
           if (!aNewResource.isExisting ())
           {
-            LOGGER.info ("Skipping resource bundle '" + sBundleID + "' skipping because resource '" + sPath + "' does not exist");
+            LOGGER.info ("Skipping resource bundle '" +
+                         sBundleID +
+                         "' skipping because resource '" +
+                         sPath +
+                         "' does not exist");
             bResourcesAreOutOfSync = true;
             continue;
           }
@@ -161,11 +168,18 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
 
           if (!aNewResource.getContentHashAsString ().equals (sHash))
           {
-            LOGGER.info ("Skipping resource bundle '" + sBundleID + "' skipping because resource '" + sPath + "' changed (hash mismatch)");
+            LOGGER.info ("Skipping resource bundle '" +
+                         sBundleID +
+                         "' skipping because resource '" +
+                         sPath +
+                         "' changed (hash mismatch)");
             bResourcesAreOutOfSync = true;
             continue;
           }
-          aResources.add (new WebSiteResourceWithCondition (aNewResource, sConditionalComment, bCanBeBundled, aMediaList));
+          aResources.add (new WebSiteResourceWithCondition (aNewResource,
+                                                            sConditionalComment,
+                                                            bCanBeBundled,
+                                                            aMediaList));
         }
       }
 
@@ -177,8 +191,13 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
       else
       {
         // Restore bundle
-        final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aResources, sConditionalComment, bCanBeBundled, aMediaList);
-        final WebSiteResourceBundleSerialized aBundleSerialized = new WebSiteResourceBundleSerialized (sBundleID, aBundle, aCreationDT);
+        final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aResources,
+                                                                         sConditionalComment,
+                                                                         bCanBeBundled,
+                                                                         aMediaList);
+        final WebSiteResourceBundleSerialized aBundleSerialized = new WebSiteResourceBundleSerialized (sBundleID,
+                                                                                                       aBundle,
+                                                                                                       aCreationDT);
         m_aMapToData.put (aBundle, sBundleID);
         m_aMapToBundle.put (sBundleID, aBundleSerialized);
       }
@@ -203,7 +222,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_RESOURCE_BUNDLES);
-    for (final WebSiteResourceBundleSerialized aResourceBundle : m_aMapToBundle.getSortedByKey (Comparator.naturalOrder ()).values ())
+    for (final WebSiteResourceBundleSerialized aResourceBundle : m_aMapToBundle.getSortedByKey (Comparator.naturalOrder ())
+                                                                               .values ())
     {
       final IMicroElement eBundle = eRoot.appendElement (ELEMENT_RESOURCE_BUNDLE);
       eBundle.setAttribute (ATTR_ID, aResourceBundle.getBundleID ());
@@ -311,7 +331,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
       // Create the bundle
       final WebSiteResourceBundle aBundle = new WebSiteResourceBundle (aBundleResources,
                                                                        aFirst.getConditionalComment (),
-                                                                       aBundleResources.size () != 1 || aFirst.isBundlable (),
+                                                                       aBundleResources.size () != 1 ||
+                                                                                                        aFirst.isBundlable (),
                                                                        aFirst.getMediaList ());
 
       // Try to find existing bundle (ID and serialized one)

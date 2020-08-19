@@ -42,17 +42,18 @@ public final class PhotonAppTestInit
 
   @Nonnull
   @ReturnsMutableCopy
-  public static NonBlockingStack <Runnable> init (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
+  public static NonBlockingStack <Runnable> init (@Nonnull final File aDataPath,
+                                                  @Nonnull @Nonempty final String sServletContextPath)
   {
     final NonBlockingStack <Runnable> aCleansing = new NonBlockingStack <> ();
 
     PhotonAppInit.startUp ();
-    aCleansing.push ( () -> PhotonAppInit.shutdown ());
+    aCleansing.push (PhotonAppInit::shutdown);
 
     // Init the base path once
     // don't check access rights in test, for performance reasons
     WebFileIO.initPaths (aDataPath, sServletContextPath, false);
-    aCleansing.push ( () -> WebFileIO.resetPaths ());
+    aCleansing.push (WebFileIO::resetPaths);
 
     // Init the IDs
     if (!GlobalIDFactory.hasPersistentIntIDFactory ())

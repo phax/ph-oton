@@ -202,6 +202,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   }
 
   @Nonnegative
+  @Override
   public int getCount ()
   {
     return m_aRWLock.readLockedInt (m_aList::size);
