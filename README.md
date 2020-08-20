@@ -114,6 +114,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Reworked the PrismJS API and made the plugins more customizable
     * Extended the Long running job API
     * Added new class `PhotonWorkerPool` as a shared worker pool
+    * Improved coding style thanks to Sonar
 * v8.2.5 - 2020-05-26
     * Changed Maven groupId to `com.helger.photon`
     * Updated to ph-web 9.3.0 (new Maven groupId)

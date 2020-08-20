@@ -53,7 +53,7 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    */
   void customizeNode (@Nullable IHCCustomizer aCustomizer,
                       @Nonnull EHTMLVersion eHTMLVersion,
-                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
+                      @Nonnull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
 
   /**
    * Finalize the node by applying any internal state that was not yet converted
@@ -68,7 +68,7 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    *        <code>null</code>.
    */
   void finalizeNodeState (@Nonnull IHCConversionSettingsToNode aConversionSettings,
-                          @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
+                          @Nonnull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
 
   /**
    * Perform consistency checks on this node.<br>
