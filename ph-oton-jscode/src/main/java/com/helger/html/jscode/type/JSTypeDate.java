@@ -18,6 +18,7 @@ package com.helger.html.jscode.type;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.html.jscode.JSInvocation;
 
 /**
@@ -45,6 +46,7 @@ public class JSTypeDate extends JSPrimitiveType
   }
 
   @Nonnull
+  @CodingStyleguideUnaware
   public JSInvocation UTC ()
   {
     return global ().invoke ("UTC");

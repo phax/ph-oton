@@ -30,7 +30,6 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
@@ -168,6 +167,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     });
     addCustomHandler (ACTION_CREATE_NEW_ACCESS_TOKEN, new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
     {
+      @Override
       public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
       {
         return canCreateNewAccessToken (aSelectedObject);
@@ -338,12 +338,6 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   {
     super (sID, aName, aDescription);
     _init ();
-  }
-
-  @Override
-  protected IValidityIndicator isValidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
-  {
-    return super.isValidToDisplayPage (aWPEC);
   }
 
   @Override

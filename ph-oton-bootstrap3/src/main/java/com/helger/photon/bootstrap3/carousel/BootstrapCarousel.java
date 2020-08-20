@@ -16,11 +16,14 @@
  */
 package com.helger.photon.bootstrap3.carousel;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Bootstrap Carousel
  *
  * @author Philip Helger
  */
+@Immutable
 public class BootstrapCarousel
 {
   /**
@@ -31,4 +34,7 @@ public class BootstrapCarousel
    * This event is fired when the carousel has completed its slide transition.
    */
   public static final String JS_EVENT_SLID = "slid.bs.carousel";
+
+  private BootstrapCarousel ()
+  {}
 }

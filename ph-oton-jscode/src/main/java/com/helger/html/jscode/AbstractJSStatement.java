@@ -17,4 +17,6 @@
 package com.helger.html.jscode;
 
 public abstract class AbstractJSStatement implements IJSStatement
-{}
+{
+  /* empty */
+}

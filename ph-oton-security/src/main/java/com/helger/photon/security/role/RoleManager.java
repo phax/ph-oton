@@ -75,10 +75,8 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     // Create role
     final Role aRole = new Role (sName, sDescription, aCustomAttrs);
 
-    m_aRWLock.writeLocked ( () -> {
-      // Store
-      internalCreateItem (aRole);
-    });
+    // Store
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aRole));
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
 
     // Execute callback as the very last action
@@ -96,10 +94,8 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     // Create role
     final Role aRole = new Role (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
 
-    m_aRWLock.writeLocked ( () -> {
-      // Store
-      internalCreateItem (aRole);
-    });
+    // Store
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aRole));
     AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
 
     // Execute callback as the very last action

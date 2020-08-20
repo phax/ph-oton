@@ -98,7 +98,7 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   @Nonnull
   public String getPlainText ()
   {
-    return m_sText;
+    return getText ();
   }
 
   @Override

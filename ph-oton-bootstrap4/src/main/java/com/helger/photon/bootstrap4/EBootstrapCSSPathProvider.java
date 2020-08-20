@@ -46,11 +46,6 @@ public enum EBootstrapCSSPathProvider implements ICSSPathProvider
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }
 
-  EBootstrapCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
-  {
-    m_aPP = ConstantCSSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
-  }
-
   @Nonnull
   @Nonempty
   public String getCSSItemPath (final boolean bRegular)

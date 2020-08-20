@@ -42,7 +42,7 @@ import com.helger.html.hc.impl.HCNodeList;
 public final class BootstrapTechnicalUI
 {
   @Translatable
-  public static enum EText implements IHasDisplayTextWithArgs
+  public enum EText implements IHasDisplayTextWithArgs
   {
     TECHNICAL_DETAILS ("Technische Details", "Technical details"),
     CAUSED_BY ("Verursacht von", "Caused by");

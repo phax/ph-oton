@@ -124,10 +124,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Create user group
     final UserGroup aUserGroup = new UserGroup (sName, sDescription, aCustomAttrs);
 
-    m_aRWLock.writeLocked ( () -> {
-      // Store
-      internalCreateItem (aUserGroup);
-    });
+    // Store
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aUserGroup));
     AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), sName, sDescription, aCustomAttrs);
 
     // Execute callback as the very last action
@@ -146,10 +144,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Create user group
     final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
 
-    m_aRWLock.writeLocked ( () -> {
-      // Store
-      internalCreateItem (aUserGroup);
-    });
+    // Store
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aUserGroup));
     AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), "predefined-usergroup", sName, sDescription, aCustomAttrs);
 
     // Execute callback as the very last action

@@ -425,7 +425,7 @@ final class Line
     return null;
   }
 
-  private static enum EHTMLElementType
+  private enum EHTMLElementType
   {
     NONE,
     TAG,
@@ -443,13 +443,12 @@ final class Line
   {
     final ICommonsList <String> aTags = new CommonsLinkedList <> ();
     final StringBuilder aSB = new StringBuilder ();
-    int nPos = m_nLeading;
     if (m_sValue.charAt (m_nLeading + 1) == '!')
     {
       if (_readXMLComment (this, m_nLeading) > 0)
         return EHTMLElementType.COMMENT;
     }
-    nPos = MarkdownHelper.readXMLElement (aSB, m_sValue, m_nLeading, false);
+    int nPos = MarkdownHelper.readXMLElement (aSB, m_sValue, m_nLeading, false);
     if (nPos > -1)
     {
       String sElement = aSB.toString ();

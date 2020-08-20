@@ -67,6 +67,7 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   }
 
   @Nonnull
+  @Override
   public final SimpleURL getSelfHref ()
   {
     SimpleURL ret = m_aSelfHref;

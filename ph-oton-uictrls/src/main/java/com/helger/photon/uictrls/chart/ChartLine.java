@@ -46,7 +46,6 @@ public class ChartLine extends AbstractChartComplex <ChartLine>
   @ReturnsMutableCopy
   public final JSAssocArray getJSOptions ()
   {
-    final JSAssocArray aOptions = super.getJSOptions ();
-    return aOptions;
+    return super.getJSOptions ();
   }
 }

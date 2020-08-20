@@ -48,7 +48,7 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
   public static final int TOKEN_STRING_MIN_LENGTH = 16;
 
   @Translatable
-  protected static enum EBaseText implements IHasDisplayTextWithArgs
+  protected enum EBaseText implements IHasDisplayTextWithArgs
   {
     LABEL_TOKEN_STRING ("Zugriffs-Token", "Access token"),
     HELPTEXT_TOKEN_STRING ("Hier kann ein existierender Zugriffs-Token (Mindestlänge von " +

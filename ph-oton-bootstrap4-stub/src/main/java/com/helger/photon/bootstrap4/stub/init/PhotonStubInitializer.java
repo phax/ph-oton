@@ -16,6 +16,8 @@
  */
 package com.helger.photon.bootstrap4.stub.init;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.debug.GlobalDebug;
@@ -55,8 +57,12 @@ import com.helger.xservlet.requesttrack.RequestTracker;
  *
  * @author Philip Helger
  */
+@Immutable
 public final class PhotonStubInitializer
 {
+  private PhotonStubInitializer ()
+  {}
+
   public static void registerDefaultResources ()
   {
     // CSS

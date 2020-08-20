@@ -224,7 +224,9 @@ public class BasePageSysInfoNetwork <WPECTYPE extends IWebPageExecutionContext> 
               nMTU = aNI.getMTU ();
             }
             catch (final SocketException ex)
-            {}
+            {
+              // Ignore
+            }
             if (nMTU > 0)
               aRow.addCell (Integer.toString (nMTU));
             else

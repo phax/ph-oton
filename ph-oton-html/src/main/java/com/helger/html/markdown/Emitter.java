@@ -466,7 +466,7 @@ final class Emitter
     // Check for inline html
     if (nStart + 2 < in.length ())
     {
-      nPos = nStart;
+      // nPos = nStart;
       if (nStart + 3 < in.length () && in.charAt (nStart + 1) == '!' && in.charAt (nStart + 2) == '-' && in.charAt (nStart + 3) == '-')
       {
         nPos = nStart + 4;

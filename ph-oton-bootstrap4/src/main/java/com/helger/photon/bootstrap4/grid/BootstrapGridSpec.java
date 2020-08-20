@@ -111,7 +111,7 @@ public final class BootstrapGridSpec implements Serializable
     if (m_eXL != null && m_eXL.getParts () != nLastPartCount)
     {
       aElement.addClass (m_eXL);
-      nLastPartCount = m_eXL.getParts ();
+      // nLastPartCount = m_eXL.getParts ();
     }
     return aElement;
   }
@@ -146,7 +146,7 @@ public final class BootstrapGridSpec implements Serializable
     if (m_eXL != null && m_eXL.getParts () > 0 && m_eXL.getParts () != nLastPartCount)
     {
       aElement.addClass (m_eXL.getCSSClassOffset ());
-      nLastPartCount = m_eXL.getParts ();
+      // nLastPartCount = m_eXL.getParts ();
     }
     return aElement;
   }

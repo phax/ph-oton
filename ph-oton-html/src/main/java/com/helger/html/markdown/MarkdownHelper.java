@@ -52,6 +52,9 @@ final class MarkdownHelper
                                                             '`',
                                                             '^' };
 
+  private MarkdownHelper ()
+  {}
+
   /**
    * @return A pseudo random number between 0 and 1023
    */

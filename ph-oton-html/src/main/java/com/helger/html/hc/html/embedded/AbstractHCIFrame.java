@@ -16,6 +16,7 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import java.util.Collections;
 import java.util.EnumSet;
 
 import javax.annotation.Nonnull;
@@ -179,7 +180,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
   @Nullable
   public final String getHeight ()
   {
-    return m_sWidth;
+    return m_sHeight;
   }
 
   @Nonnull
@@ -239,8 +240,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     m_bSandbox = bSandbox;
     m_aSandboxAllows.clear ();
     if (aSandboxAllows != null)
-      for (final EHCSandboxAllow eAllow : aSandboxAllows)
-        m_aSandboxAllows.add (eAllow);
+      Collections.addAll (m_aSandboxAllows, aSandboxAllows);
     return thisAsT ();
   }
 

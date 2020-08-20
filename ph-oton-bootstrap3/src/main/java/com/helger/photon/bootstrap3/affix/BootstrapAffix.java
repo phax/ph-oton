@@ -16,11 +16,14 @@
  */
 package com.helger.photon.bootstrap3.affix;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Bootstrap Affix
  *
  * @author Philip Helger
  */
+@Immutable
 public class BootstrapAffix
 {
   /**
@@ -47,4 +50,7 @@ public class BootstrapAffix
    * This event is fired after the element has been affixed-bottom.
    */
   public static final String JS_EVENT_AFFIXED_BOTTOM = "affixed-bottom.bs.affix";
+
+  private BootstrapAffix ()
+  {}
 }

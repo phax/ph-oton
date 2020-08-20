@@ -169,7 +169,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setTemplate (@Nullable final String sTemplate)
   {
-    return setTemplate (StringHelper.hasText (sTemplate) ? JSExpr.lit (sTemplate) : (IJSExpression) null);
+    return setTemplate (StringHelper.hasText (sTemplate) ? JSExpr.lit (sTemplate) : null);
   }
 
   /**
@@ -243,7 +243,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setHeader (@Nullable final IHCNode aHeader)
   {
-    return setHeader (aHeader != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aHeader) : (String) null);
+    return setHeader (aHeader != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aHeader) : null);
   }
 
   /**
@@ -257,7 +257,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setHeader (@Nullable final String sHeaderHTML)
   {
-    return setHeader (StringHelper.hasText (sHeaderHTML) ? JSExpr.lit (sHeaderHTML) : (IJSExpression) null);
+    return setHeader (StringHelper.hasText (sHeaderHTML) ? JSExpr.lit (sHeaderHTML) : null);
   }
 
   /**
@@ -296,7 +296,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setFooter (@Nullable final IHCNode aFooter)
   {
-    return setFooter (aFooter != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aFooter) : (String) null);
+    return setFooter (aFooter != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aFooter) : null);
   }
 
   /**
@@ -310,7 +310,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setFooter (@Nullable final String sFooterHTML)
   {
-    return setFooter (StringHelper.hasText (sFooterHTML) ? JSExpr.lit (sFooterHTML) : (IJSExpression) null);
+    return setFooter (StringHelper.hasText (sFooterHTML) ? JSExpr.lit (sFooterHTML) : null);
   }
 
   /**

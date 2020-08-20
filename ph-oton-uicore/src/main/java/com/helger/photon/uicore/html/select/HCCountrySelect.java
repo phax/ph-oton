@@ -33,7 +33,7 @@ import com.helger.masterdata.locale.DeprecatedLocaleHandler;
 
 public class HCCountrySelect extends HCExtSelect
 {
-  public static enum EWithDeprecated
+  public enum EWithDeprecated
   {
     TRUE,
     FALSE;

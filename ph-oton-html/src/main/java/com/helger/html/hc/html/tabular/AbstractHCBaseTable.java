@@ -142,7 +142,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   @Nullable
   public final IHCNode getLastChild ()
   {
-    return m_aFoot;
+    return getFoot ();
   }
 
   @Override

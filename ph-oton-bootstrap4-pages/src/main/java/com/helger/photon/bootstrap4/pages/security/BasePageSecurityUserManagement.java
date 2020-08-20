@@ -245,6 +245,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     });
     addCustomHandler (ACTION_RESET_PASSWORD, new AbstractBootstrapWebPageActionHandler <IUser, WPECTYPE> (true)
     {
+      @Override
       public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
       {
         return SecurityUIHelper.canResetPassword (aSelectedObject);
@@ -569,7 +570,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     final String sEmailAddress = aWPEC.params ().getAsString (FIELD_EMAILADDRESS);
     final String sPassword = aWPEC.params ().getAsString (FIELD_PASSWORD);
     final String sPasswordConf = aWPEC.params ().getAsString (FIELD_PASSWORD_CONFIRM);
-    final boolean bEnabled = bIsAdministrator ? true : aWPEC.params ().isCheckBoxChecked (FIELD_ENABLED, DEFAULT_USER_ENABLED);
+    final boolean bEnabled = bIsAdministrator || aWPEC.params ().isCheckBoxChecked (FIELD_ENABLED, DEFAULT_USER_ENABLED);
     final String sDescription = aWPEC.params ().getAsString (FIELD_DESCRIPTION);
     final ICommonsCollection <String> aUserGroupIDs = bIsAdministrator ? aUserGroupMgr.getAllUserGroupIDsWithAssignedUser (aSelectedObject.getID ())
                                                                        : aWPEC.params ().getAsStringList (FIELD_USERGROUPS);

@@ -345,8 +345,7 @@ public class MarkdownConfiguration
     @Nonnull
     public Builder registerPlugins (@Nonnull final AbstractMarkdownPlugin... aPlugins)
     {
-      for (final AbstractMarkdownPlugin aPlugin : aPlugins)
-        m_aPlugins.add (aPlugin);
+      m_aPlugins.addAll (aPlugins);
       return this;
     }
 

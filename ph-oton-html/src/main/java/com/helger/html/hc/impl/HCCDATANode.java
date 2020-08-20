@@ -58,7 +58,7 @@ public class HCCDATANode extends AbstractHCNode
   @Nonnull
   public String getPlainText ()
   {
-    return m_sText;
+    return getText ();
   }
 
   @Override

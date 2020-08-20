@@ -41,8 +41,7 @@ public class BootstrapCardBody extends AbstractBootstrapDiv <BootstrapCardBody>
   @Nonnull
   public static HCImg createImgTop ()
   {
-    final HCImg ret = new HCImg ().addClass (CBootstrapCSS.CARD_IMG_TOP);
-    return ret;
+    return new HCImg ().addClass (CBootstrapCSS.CARD_IMG_TOP);
   }
 
   @Nonnull

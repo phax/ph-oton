@@ -16,11 +16,14 @@
  */
 package com.helger.photon.bootstrap3.collapse;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Bootstrap Collapse
  *
  * @author Philip Helger
  */
+@Immutable
 public class BootstrapCollapse
 {
   /**
@@ -42,4 +45,7 @@ public class BootstrapCollapse
    * (will wait for CSS transitions to complete).
    */
   public static final String JS_EVENT_HIDDEN = "hidden.bs.collapse";
+
+  private BootstrapCollapse ()
+  {}
 }

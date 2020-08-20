@@ -75,13 +75,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   {
     ValueEnforcer.notNull (sParam, "Param");
 
-    JSCommentPart aPart = m_aParams.get (sParam);
-    if (aPart == null)
-    {
-      aPart = new JSCommentPart ();
-      m_aParams.put (sParam, aPart);
-    }
-    return aPart;
+    return m_aParams.computeIfAbsent (sParam, k -> new JSCommentPart ());
   }
 
   /**
@@ -135,13 +129,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   {
     ValueEnforcer.notNull (sName, "Name");
 
-    ICommonsMap <String, String> aMap = m_aXDoclets.get (sName);
-    if (aMap == null)
-    {
-      aMap = new CommonsHashMap <> ();
-      m_aXDoclets.put (sName, aMap);
-    }
-    return aMap;
+    return m_aXDoclets.computeIfAbsent (sName, k -> new CommonsHashMap <> ());
   }
 
   /**

@@ -19,6 +19,7 @@ package com.helger.photon.connect.generic.ftp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -245,8 +246,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
       try
       {
         final FTPFile [] aFiles = m_aChannel.listFiles (null, FTPFileFilterFromIFilter.create (aFilter));
-        for (final FTPFile aFile : aFiles)
-          aTargetList.add (aFile);
+        Collections.addAll (aTargetList, aFiles);
         LOGGER.info ("Successfully listed " + aTargetList.size () + " files");
         return ESuccess.SUCCESS;
       }

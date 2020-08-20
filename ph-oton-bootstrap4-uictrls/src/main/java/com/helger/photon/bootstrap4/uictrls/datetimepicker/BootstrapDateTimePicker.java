@@ -33,7 +33,6 @@ import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTToString;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -559,7 +558,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   {
     final JSAssocArray aOptions = new JSAssocArray ();
 
-    if (false && GlobalDebug.isDebugMode ())
+    if (false)
       aOptions.add ("debug", true);
 
     if (StringHelper.hasText (m_aDisplayLocale.getLanguage ()))

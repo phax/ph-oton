@@ -58,7 +58,7 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
 {
   @Translatable
-  public static enum EText implements IHasDisplayTextWithArgs
+  public enum EText implements IHasDisplayTextWithArgs
   {
     BUTTON_BROWSE ("Durchsuchen", "Browse"),
     BROWSE_LABEL ("Wählen Sie eine Datei von Ihrem Rechner aus", "Select a file from your local machine");

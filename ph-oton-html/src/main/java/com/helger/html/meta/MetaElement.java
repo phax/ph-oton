@@ -248,9 +248,6 @@ public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement
       switch (m_eType)
       {
         case DOCUMENT_LEVEL:
-          aMeta.setAttribute (m_eType.getAttrName (), m_sName);
-          aMeta.setAttribute (CHTMLAttributes.CONTENT, sValue);
-          break;
         case PRAGMA_DIRECTIVE:
           aMeta.setAttribute (m_eType.getAttrName (), m_sName);
           aMeta.setAttribute (CHTMLAttributes.CONTENT, sValue);

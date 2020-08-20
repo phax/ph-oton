@@ -16,11 +16,14 @@
  */
 package com.helger.photon.bootstrap3.popover;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Bootstrap Popover
  *
  * @author Philip Helger
  */
+@Immutable
 public class BootstrapPopover
 {
   /**
@@ -47,4 +50,7 @@ public class BootstrapPopover
    * template has been added to the DOM.
    */
   public static final String JS_EVENT_INSERTED = "inserted.bs.popover";
+
+  private BootstrapPopover ()
+  {}
 }

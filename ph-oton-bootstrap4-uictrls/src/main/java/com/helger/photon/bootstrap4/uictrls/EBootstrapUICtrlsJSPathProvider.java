@@ -37,11 +37,6 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
     m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
-  EBootstrapUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
-  {
-    m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
-  }
-
   @Nonnull
   @Nonempty
   public String getJSItemPath (final boolean bRegular)

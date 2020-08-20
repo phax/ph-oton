@@ -47,7 +47,7 @@ import com.helger.poi.excel.ExcelReadHelper;
 public abstract class AbstractBulkImportExcel extends AbstractBulkImport
 {
   @Translatable
-  private static enum EText implements IHasDisplayTextWithArgs
+  private enum EText implements IHasDisplayTextWithArgs
   {
     MSG_ERR_NO_STRING ("Zeile {0}, Spalte {1}: Zeichenkette erwartet", "Row {0}, Column {1}: expected string"),
     MSG_ERR_NO_INT ("Zeile {0}, Spalte {1}: Ganzzahl erwartet", "Row {0}, Column {1}: expected integer"),

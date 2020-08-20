@@ -212,7 +212,6 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
   @ReturnsMutableCopy
   public final JSAssocArray getJSOptions ()
   {
-    final JSAssocArray aOptions = super.getJSOptions ();
-    return aOptions;
+    return super.getJSOptions ();
   }
 }

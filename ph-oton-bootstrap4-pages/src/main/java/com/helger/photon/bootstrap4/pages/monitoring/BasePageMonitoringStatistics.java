@@ -187,6 +187,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     // Third party modules
     StatisticsVisitor.visitStatistics (new IStatisticsVisitorCallback ()
     {
+      @Override
       public void onTimer (@Nonnull final String sName, @Nonnull final IStatisticsHandlerTimer aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
@@ -200,6 +201,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                 aHandler.getSum ().toString ());
       }
 
+      @Override
       public void onSize (@Nonnull final String sName, @Nonnull final IStatisticsHandlerSize aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
@@ -213,6 +215,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                aHandler.getSum ().toString ());
       }
 
+      @Override
       public void onCounter (@Nonnull final String sName, @Nonnull final IStatisticsHandlerCounter aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
@@ -220,6 +223,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                        .addCells (sName, "", Integer.toString (aHandler.getInvocationCount ()), Long.toString (aHandler.getCount ()));
       }
 
+      @Override
       public void onCache (@Nonnull final String sName, @Nonnull final IStatisticsHandlerCache aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
@@ -230,6 +234,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                 Integer.toString (aHandler.getMisses ()));
       }
 
+      @Override
       public void onKeyedTimer (@Nonnull final String sName, @Nonnull final IStatisticsHandlerKeyedTimer aHandler)
       {
         for (final String sKey : aHandler.getAllKeys ())
@@ -247,6 +252,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
         }
       }
 
+      @Override
       public void onKeyedSize (@Nonnull final String sName, @Nonnull final IStatisticsHandlerKeyedSize aHandler)
       {
         for (final String sKey : aHandler.getAllKeys ())
@@ -264,6 +270,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
         }
       }
 
+      @Override
       public void onKeyedCounter (@Nonnull final String sName, @Nonnull final IStatisticsHandlerKeyedCounter aHandler)
       {
         for (final String sKey : aHandler.getAllKeys ())

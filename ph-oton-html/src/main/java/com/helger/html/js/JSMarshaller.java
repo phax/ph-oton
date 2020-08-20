@@ -267,8 +267,10 @@ public final class JSMarshaller
               LOGGER.warn ("Failed to unescape '" + sInput + "' - EOF in hex values");
               return sInput;
             }
-            final char cHex1 = aInput[++i];
-            final char cHex2 = aInput[++i];
+            i++;
+            final char cHex1 = aInput[i];
+            i++;
+            final char cHex2 = aInput[i];
             final int nHexByte = StringHelper.getHexByte (cHex1, cHex2);
             if (nHexByte < 0)
             {

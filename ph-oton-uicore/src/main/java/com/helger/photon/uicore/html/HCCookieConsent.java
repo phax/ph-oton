@@ -36,7 +36,7 @@ import com.helger.photon.uicore.EUICoreJSPathProvider;
 @OutOfBandNode
 public class HCCookieConsent extends HCScriptInlineOnDocumentReady
 {
-  public static enum EPosition
+  public enum EPosition
   {
     BOTTOM ("bottom"),
     TOP ("top"),
@@ -58,7 +58,7 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
     }
   }
 
-  public static enum ETheme
+  public enum ETheme
   {
     CLASSIC ("classic", EUICoreCSSPathProvider.COOKIE_CONSENT_THEMES_CLASSIC),
     EDGELESS ("edgeless", EUICoreCSSPathProvider.COOKIE_CONSENT_THEMES_EDGELESS);

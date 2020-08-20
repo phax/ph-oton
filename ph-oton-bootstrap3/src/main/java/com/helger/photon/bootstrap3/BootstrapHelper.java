@@ -108,7 +108,7 @@ public final class BootstrapHelper
       else
       {
         // Descend only in non-elements - e.g. HCNodeList
-        aNode.forAllChildren (aChild -> makeFormControlStatic (aChild));
+        aNode.forAllChildren (BootstrapHelper::makeFormControlStatic);
       }
     }
   }

@@ -16,6 +16,8 @@
  */
 package com.helger.html.jscode;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 
 import javax.annotation.Nonnull;
@@ -25,7 +27,6 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.stream.NonBlockingStringWriter;
-import com.helger.commons.io.stream.StreamHelper;
 import com.helger.html.js.IJSWriterSettings;
 
 @Immutable
@@ -39,14 +40,13 @@ public final class JSPrinter
                                        @Nonnull final IJSGeneratable aGeneratable)
   {
     ValueEnforcer.notNull (aGeneratable, "Generatable");
-    final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings);
-    try
+    try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
     {
       aFormatter.generatable (aGeneratable);
     }
-    finally
+    catch (final IOException ex)
     {
-      StreamHelper.close (aFormatter);
+      throw new UncheckedIOException (ex);
     }
   }
 
@@ -55,14 +55,13 @@ public final class JSPrinter
                                        @Nonnull final IJSDeclaration aDeclaration)
   {
     ValueEnforcer.notNull (aDeclaration, "Declaration");
-    final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings);
-    try
+    try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
     {
       aFormatter.decl (aDeclaration);
     }
-    finally
+    catch (final IOException ex)
     {
-      StreamHelper.close (aFormatter);
+      throw new UncheckedIOException (ex);
     }
   }
 
@@ -71,14 +70,13 @@ public final class JSPrinter
                                      @Nonnull final IJSStatement aStatement)
   {
     ValueEnforcer.notNull (aStatement, "Statement");
-    final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings);
-    try
+    try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
     {
       aFormatter.stmt (aStatement);
     }
-    finally
+    catch (final IOException ex)
     {
-      StreamHelper.close (aFormatter);
+      throw new UncheckedIOException (ex);
     }
   }
 
@@ -87,14 +85,13 @@ public final class JSPrinter
                                    @Nonnull final JSPackage aPackage)
   {
     ValueEnforcer.notNull (aPackage, "Package");
-    final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings);
-    try
+    try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
     {
       aFormatter.pkg (aPackage);
     }
-    finally
+    catch (final IOException ex)
     {
-      StreamHelper.close (aFormatter);
+      throw new UncheckedIOException (ex);
     }
   }
 

@@ -51,6 +51,9 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusin
   protected static final IMicroQName ATTR_DELETIONUSERID = new MicroQName ("deletionuserid");
   protected static final String ELEMENT_CUSTOM = "custom";
 
+  protected AbstractBusinessObjectMicroTypeConverter ()
+  {}
+
   public static final void setObjectFields (@Nonnull final IBusinessObject aValue, @Nonnull final IMicroElement aElement)
   {
     aElement.setAttribute (ATTR_ID, aValue.getID ());

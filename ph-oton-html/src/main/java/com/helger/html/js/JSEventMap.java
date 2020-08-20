@@ -55,13 +55,7 @@ public class JSEventMap implements Serializable
     ValueEnforcer.notNull (eJSEvent, "JSEvent");
     ValueEnforcer.notNull (aNewHandler, "NewHandler");
 
-    CollectingJSCodeProvider aCode = m_aEvents.get (eJSEvent);
-    if (aCode == null)
-    {
-      aCode = new CollectingJSCodeProvider ();
-      m_aEvents.put (eJSEvent, aCode);
-    }
-    aCode.appendFlattened (aNewHandler);
+    m_aEvents.computeIfAbsent (eJSEvent, k -> new CollectingJSCodeProvider ()).appendFlattened (aNewHandler);
   }
 
   /**
@@ -78,13 +72,7 @@ public class JSEventMap implements Serializable
     ValueEnforcer.notNull (eJSEvent, "JSEvent");
     ValueEnforcer.notNull (aNewHandler, "NewHandler");
 
-    CollectingJSCodeProvider aCode = m_aEvents.get (eJSEvent);
-    if (aCode == null)
-    {
-      aCode = new CollectingJSCodeProvider ();
-      m_aEvents.put (eJSEvent, aCode);
-    }
-    aCode.prepend (aNewHandler);
+    m_aEvents.computeIfAbsent (eJSEvent, k -> new CollectingJSCodeProvider ()).prepend (aNewHandler);
   }
 
   /**
@@ -111,7 +99,7 @@ public class JSEventMap implements Serializable
     if (eJSEvent == null)
       return EChange.UNCHANGED;
 
-    return EChange.valueOf (m_aEvents.remove (eJSEvent) != null);
+    return m_aEvents.removeObject (eJSEvent);
   }
 
   @Nullable
@@ -135,6 +123,6 @@ public class JSEventMap implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("events", m_aEvents).getToString ();
+    return new ToStringGenerator (this).append ("Events", m_aEvents).getToString ();
   }
 }

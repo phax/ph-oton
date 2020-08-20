@@ -60,7 +60,7 @@ final class InternalJettyStopMonitorThread extends Thread
   @Override
   public void run ()
   {
-    outer: while (true)
+    while (true)
     {
       try (final Socket aSocket = m_aServerSocket.accept ();
            final LineNumberReader aReader = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
@@ -83,7 +83,7 @@ final class InternalJettyStopMonitorThread extends Thread
           StreamHelper.close (aSocket);
           StreamHelper.close (m_aServerSocket);
           m_aAction.run ();
-          break outer;
+          return;
         }
       }
       catch (final Exception e)
@@ -92,5 +92,6 @@ final class InternalJettyStopMonitorThread extends Thread
         break;
       }
     }
+    // Never reached
   }
 }

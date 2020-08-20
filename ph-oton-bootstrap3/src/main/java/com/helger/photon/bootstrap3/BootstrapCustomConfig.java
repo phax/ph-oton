@@ -58,11 +58,7 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aCSSPathProvider, "CSSPathProvider");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_aCSS.clear ();
-      for (final ICSSPathProvider aPP : aCSSPathProvider)
-        s_aCSS.add (aPP);
-    });
+    s_aRWLock.writeLockedGet ( () -> s_aCSS.setAll (aCSSPathProvider));
   }
 
   @Nonnull
@@ -76,11 +72,7 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aJSPathProvider, "JSPathProvider");
 
-    s_aRWLock.writeLocked ( () -> {
-      s_aJS.clear ();
-      for (final IJSPathProvider aPP : aJSPathProvider)
-        s_aJS.add (aPP);
-    });
+    s_aRWLock.writeLockedGet ( () -> s_aJS.setAll (aJSPathProvider));
   }
 
   @Nonnull

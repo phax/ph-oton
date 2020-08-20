@@ -79,7 +79,6 @@ public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWit
   @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSOptions ()
   {
-    final JSAssocArray aOptions = new JSAssocArray ();
-    return aOptions;
+    return new JSAssocArray ();
   }
 }

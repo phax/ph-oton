@@ -16,15 +16,21 @@
  */
 package com.helger.photon.bootstrap3.scrollspy;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Bootstrap Scrollspy
  *
  * @author Philip Helger
  */
+@Immutable
 public class BootstrapScrollspy
 {
   /**
    * This event fires whenever a new item becomes activated by the scrollspy.
    */
   public static final String JS_EVENT_ACTIVATE = "activate.bs.scrollspy";
+
+  private BootstrapScrollspy ()
+  {}
 }

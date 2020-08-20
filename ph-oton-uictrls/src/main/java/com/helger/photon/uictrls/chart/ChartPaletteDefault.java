@@ -60,9 +60,9 @@ public final class ChartPaletteDefault
                                                                new CSSRGB (51, 153, 102),
                                                                new CSSRGB (204, 204, 51) };
 
-  private static final CSSRGBA COLORS[] = new CSSRGBA [BASE_COLORS.length];
-  private static final CSSRGBA FILL_COLORS[] = new CSSRGBA [BASE_COLORS.length];
-  private static final CSSRGBA HIGHLIGHT_COLORS[] = new CSSRGBA [BASE_COLORS.length];
+  private static final CSSRGBA [] COLORS = new CSSRGBA [BASE_COLORS.length];
+  private static final CSSRGBA [] FILL_COLORS = new CSSRGBA [BASE_COLORS.length];
+  private static final CSSRGBA [] HIGHLIGHT_COLORS = new CSSRGBA [BASE_COLORS.length];
 
   static
   {

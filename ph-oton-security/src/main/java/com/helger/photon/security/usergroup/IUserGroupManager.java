@@ -232,7 +232,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
       return false;
 
     final IUserGroup aUserGroup = getUserGroupOfID (sUserGroupID);
-    return aUserGroup == null ? false : aUserGroup.containsUserID (sUserID);
+    return aUserGroup != null && aUserGroup.containsUserID (sUserID);
   }
 
   /**

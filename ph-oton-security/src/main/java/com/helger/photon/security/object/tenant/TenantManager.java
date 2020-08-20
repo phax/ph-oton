@@ -57,9 +57,7 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
 
     final Tenant aTenant = new Tenant (sTenantID, sDisplayName);
 
-    m_aRWLock.writeLocked ( () -> {
-      internalCreateItem (aTenant);
-    });
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aTenant));
     AuditHelper.onAuditCreateSuccess (Tenant.OT, aTenant.getID (), sDisplayName);
 
     return aTenant;
