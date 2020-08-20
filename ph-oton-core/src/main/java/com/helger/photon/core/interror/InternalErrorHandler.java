@@ -444,7 +444,7 @@ public final class InternalErrorHandler
       }
       try
       {
-        RequestHelper.getRequestHeaderMap (aHttpRequest).forEachSingleHeader ( (n, v) -> aMetadata.addRequestHeader (n, v), true);
+        RequestHelper.getRequestHeaderMap (aHttpRequest).forEachSingleHeader (aMetadata::addRequestHeader, true);
       }
       catch (final Exception ex2)
       {

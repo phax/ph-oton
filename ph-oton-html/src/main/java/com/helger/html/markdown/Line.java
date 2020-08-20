@@ -45,9 +45,9 @@ final class Line
   /** This line's value. */
   String m_sValue;
   /** Previous line. */
-  public Line m_aPrevious;
+  Line m_aPrevious;
   /** Next line. */
-  public Line m_aNext;
+  Line m_aNext;
   /** Is previous line empty? */
   boolean m_bPrevEmpty;
   /** Final line of a XML block. */

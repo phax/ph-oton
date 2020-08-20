@@ -190,7 +190,7 @@ public final class MarkupFileFuncTest
   public String m_sTestString;
 
   @Test
-  public void runTest () throws IOException
+  public void testRunEm () throws IOException
   {
     final Builder aBuilder = MarkdownConfiguration.builder ();
     if (m_sTestName.startsWith ("[MarkupFiles/dingus.txt]1("))

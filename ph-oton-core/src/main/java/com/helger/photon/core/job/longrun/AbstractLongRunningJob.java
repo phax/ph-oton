@@ -57,7 +57,7 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
   protected abstract String getCurrentUserID (@Nonnull JobDataMap aJobDataMap);
 
   @Nonnull
-  protected final LongRunningJobManager getLongRunningJobManager ()
+  protected static final LongRunningJobManager getLongRunningJobManager ()
   {
     return PhotonBasicManager.getLongRunningJobMgr ();
   }

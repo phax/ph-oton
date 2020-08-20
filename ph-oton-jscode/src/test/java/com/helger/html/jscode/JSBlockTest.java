@@ -33,7 +33,7 @@ import com.helger.html.js.JSWriterSettings;
 public final class JSBlockTest
 {
   @Test
-  public void test () throws Exception
+  public void testBasic () throws Exception
   {
     final JSWriterSettings aSettings = new JSWriterSettings ().setIndentAndAlign (false);
 

@@ -37,7 +37,7 @@ import com.helger.tenancy.AbstractBusinessObject;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class Role extends AbstractBusinessObject implements IRole
+public class Role extends AbstractBusinessObject implements IRole
 {
   public static final ObjectType OT = new ObjectType ("role");
 

@@ -38,7 +38,7 @@ import com.helger.xml.microdom.IMicroNode;
 public final class HCParserTest
 {
   @Test
-  public void testconvertToXHTMLOnDemand ()
+  public void testConvertToXHTMLOnDemand ()
   {
     final HCParser aParser = new HCParser (EHTMLVersion.XHTML11);
 

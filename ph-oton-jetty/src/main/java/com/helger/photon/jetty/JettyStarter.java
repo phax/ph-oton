@@ -623,7 +623,7 @@ public class JettyStarter
       // Starting shutdown listener thread
       // May fail if port is in use
       if (m_bRunStopMonitor)
-        new InternalJettyStopMonitorThread (m_nStopPort, m_sStopKey, () -> aServer.stop ()).start ();
+        new InternalJettyStopMonitorThread (m_nStopPort, m_sStopKey, aServer::stop).start ();
 
       // Starting the engines:
       aServer.start ();

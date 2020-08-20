@@ -61,7 +61,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
    *         <code>null</code>.
    */
   @Nonnull
-  protected LongRunningJobManager getLongRunningJobManager ()
+  protected static final LongRunningJobManager getLongRunningJobManager ()
   {
     return PhotonBasicManager.getLongRunningJobMgr ();
   }

@@ -30,9 +30,9 @@ import com.helger.commons.functional.IFunction;
  */
 public enum EBootstrap4DateTimePickerMode
 {
-  TIME (d -> PDTFormatPatterns.getDefaultPatternTime (d)),
-  DATE (d -> PDTFormatPatterns.getDefaultPatternDate (d)),
-  DATE_TIME (d -> PDTFormatPatterns.getDefaultPatternDateTime (d));
+  TIME (PDTFormatPatterns::getDefaultPatternTime),
+  DATE (PDTFormatPatterns::getDefaultPatternDate),
+  DATE_TIME (PDTFormatPatterns::getDefaultPatternDateTime);
 
   public static final EBootstrap4DateTimePickerMode DEFAULT = DATE;
 

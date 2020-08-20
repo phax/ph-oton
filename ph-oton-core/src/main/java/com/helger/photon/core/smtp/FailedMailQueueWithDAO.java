@@ -65,7 +65,7 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
      *         In case of error
      */
     @MustBeLocked (ELockType.WRITE)
-    protected void myInitialRead () throws DAOException
+    void myInitialRead () throws DAOException
     {
       initialRead ();
     }
@@ -74,7 +74,7 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
      * Mark as changed - just to make markAsChanged accessible
      */
     @MustBeLocked (ELockType.WRITE)
-    protected void myMarkChanged ()
+    void myMarkChanged ()
     {
       super.markAsChanged ();
     }

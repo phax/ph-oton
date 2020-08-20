@@ -296,7 +296,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     {
       // Convert IDs to objects
       final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
-      final ICommonsList <IRole> aAssignedRoles = new CommonsArrayList <> (aAssignedRoleIDs, sRoleID -> aRoleMgr.getRoleOfID (sRoleID));
+      final ICommonsList <IRole> aAssignedRoles = new CommonsArrayList <> (aAssignedRoleIDs, aRoleMgr::getRoleOfID);
 
       final HCNodeList aRoleUI = new HCNodeList ();
       aAssignedRoles.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))

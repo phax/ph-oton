@@ -141,7 +141,7 @@ public class DTCol extends AbstractHCCol <DTCol>
         m_aOrderSpec.setCollating (false);
         break;
       case VERSION:
-        m_aOrderSpec.setComparableExtractor (aFormatter, x -> Version.parse (x));
+        m_aOrderSpec.setComparableExtractor (aFormatter, Version::parse);
         m_aOrderSpec.setCollating (false);
         break;
       case XML:

@@ -32,7 +32,7 @@ public abstract class AbstractWebPageActionHandlerMultiDelete <DATATYPE extends 
                                                               extends
                                                               AbstractWebPageActionHandlerMultiWithQuery <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
-  public static String FORM_ID_DELETE = "deleteform";
+  public static final String FORM_ID_DELETE = "deleteform";
 
   public AbstractWebPageActionHandlerMultiDelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
                                                   @Nonnull @Nonempty final String sFieldName,

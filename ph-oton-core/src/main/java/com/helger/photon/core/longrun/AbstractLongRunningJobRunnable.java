@@ -79,8 +79,7 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
    *         <code>null</code>.
    */
   @Nonnull
-  @OverrideOnDemand
-  protected LongRunningJobManager getLongRunningJobManager ()
+  protected static final LongRunningJobManager getLongRunningJobManager ()
   {
     return PhotonBasicManager.getLongRunningJobMgr ();
   }

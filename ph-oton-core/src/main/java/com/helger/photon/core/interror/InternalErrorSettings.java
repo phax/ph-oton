@@ -95,7 +95,7 @@ public final class InternalErrorSettings
   @Nullable
   public static ISMTPSettings getSMTPSettings ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_aEmailSettings.getSMTPSettings ());
+    return s_aRWLock.readLockedGet (s_aEmailSettings::getSMTPSettings);
   }
 
   public static void setSMTPSenderAddress (@Nullable final IEmailAddress aSenderAddress)

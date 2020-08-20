@@ -73,7 +73,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private static final String EVENT_SUFFIX = ".datetimepicker";
   public static final String EVENT_NAME_CHANGE = "change" + EVENT_SUFFIX;
 
-  public static EBootstrap4DateTimePickerViewModeType DEFAULT_VIEW_MODE = EBootstrap4DateTimePickerViewModeType.DAYS;
+  public static final EBootstrap4DateTimePickerViewModeType DEFAULT_VIEW_MODE = EBootstrap4DateTimePickerViewModeType.DAYS;
 
   private static final LocalDate DUMMY_DATE = PDTFactory.createLocalDate (2018, Month.OCTOBER, 24);
   private static final LocalTime DUMMY_TIME = PDTFactory.createLocalTime (12, 10, 34);

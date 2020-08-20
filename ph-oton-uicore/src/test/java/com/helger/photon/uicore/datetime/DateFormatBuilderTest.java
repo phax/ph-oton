@@ -78,7 +78,7 @@ public final class DateFormatBuilderTest
   }
 
   @Test
-  public void getFromPattern ()
+  public void testGetFromPattern ()
   {
     String sPattern;
     IDateFormatBuilder aDFB;

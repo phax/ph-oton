@@ -90,7 +90,7 @@ public final class BootstrapHelper
     if (aNode != null)
     {
       // E.g. HCNodeList
-      return aNode.findFirstChild (aChild -> containsFormControlStatic (aChild)) != null;
+      return aNode.findFirstChild (BootstrapHelper::containsFormControlStatic) != null;
     }
 
     return false;

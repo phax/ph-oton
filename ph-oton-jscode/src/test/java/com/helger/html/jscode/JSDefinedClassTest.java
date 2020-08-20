@@ -28,7 +28,7 @@ import com.helger.html.jscode.html.JSHtml;
 public final class JSDefinedClassTest
 {
   @Test
-  public void test () throws Exception
+  public void testBasic () throws Exception
   {
     final JSPackage aPkg = new JSPackage ();
     final JSDefinedClass aClass = aPkg._class ("DummyClass");

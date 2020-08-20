@@ -32,7 +32,7 @@ public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extend
                                                                 extends
                                                                 AbstractWebPageActionHandlerMultiWithQuery <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
-  public static String FORM_ID_UNDELETE = "undeleteform";
+  public static final String FORM_ID_UNDELETE = "undeleteform";
 
   public AbstractWebPageActionHandlerMultiUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
                                                     @Nonnull @Nonempty final String sFieldName,

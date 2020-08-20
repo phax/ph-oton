@@ -29,23 +29,23 @@ import com.helger.commons.annotation.CodingStyleguideUnaware;
 final class Block
 {
   /** This block's type. */
-  public EBlockType m_eType = EBlockType.NONE;
+  EBlockType m_eType = EBlockType.NONE;
   /** Head of linked lines. */
-  public Line m_aLines;
+  Line m_aLines;
   /** Tail of linked lines. */
-  public Line m_aLineTail;
+  Line m_aLineTail;
   /** Head of child blocks. */
-  public Block m_aBlocks;
+  Block m_aBlocks;
   /** Tail of child blocks. */
-  public Block m_aBlockTail;
+  Block m_aBlockTail;
   /** Next block. */
-  public Block m_aNext;
+  Block m_aNext;
   /** Depth of headline BlockType. */
-  public int m_nHeadlineDepth = 0;
+  int m_nHeadlineDepth = 0;
   /** ID for headlines and list items */
-  public String m_sID;
+  String m_sID;
   /** Block meta information */
-  public String m_sMeta = "";
+  String m_sMeta = "";
 
   /** Constructor. */
   public Block ()

@@ -164,7 +164,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     return s_aOnlyOneInstanceAllowed.get ();
   }
 
-  protected final void logLogo ()
+  protected static final void logLogo ()
   {
     LOGGER.info ("       _                 _              ");
     LOGGER.info (" _ __ | |__         ___ | |_ ___  _ __  ");
@@ -199,7 +199,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       LOGGER.warn ("Java assertions are enabled - this should be disabled in production!");
   }
 
-  protected final void logClassPath ()
+  protected static final void logClassPath ()
   {
     // List class path elements in trace mode
     if (GlobalDebug.isDebugMode ())
@@ -211,7 +211,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     }
   }
 
-  protected final void logInitParameters (@Nonnull final ServletContext aSC)
+  protected static final void logInitParameters (@Nonnull final ServletContext aSC)
   {
     // Put them in a sorted map
     final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
@@ -234,7 +234,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     }
   }
 
-  protected final void logThirdpartyModules ()
+  protected static final void logThirdpartyModules ()
   {
     // List all third party modules for later evaluation
     final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ().getAllRegisteredThirdPartyModules ();
@@ -255,7 +255,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     }
   }
 
-  protected final void logJMX ()
+  protected static final void logJMX ()
   {
     if (SystemProperties.getPropertyValueOrNull ("com.sun.management.jmxremote") != null)
     {
@@ -496,7 +496,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * Init the default global settings. This is called after init of the global
    * ID factory.
    */
-  protected final void initDefaultGlobalSettings ()
+  protected static final void initDefaultGlobalSettings ()
   {
     // Enable when ready
     WebScopeManager.setSessionPassivationAllowed (false);

@@ -315,8 +315,7 @@ final class Emitter
           return -1;
         aTmp.setLength (0);
         final boolean bUseLt = sIn.charAt (nPos) == '<';
-        nPos = bUseLt ? MarkdownHelper.readUntil (aTmp, sIn, nPos + 1, '>')
-                      : MarkdownHelper.readMdLink (aTmp, sIn, nPos);
+        nPos = bUseLt ? MarkdownHelper.readUntil (aTmp, sIn, nPos + 1, '>') : MarkdownHelper.readMdLink (aTmp, sIn, nPos);
         if (nPos < nStart)
           return -1;
         if (bUseLt)
@@ -468,10 +467,7 @@ final class Emitter
     if (nStart + 2 < in.length ())
     {
       nPos = nStart;
-      if (nStart + 3 < in.length () &&
-          in.charAt (nStart + 1) == '!' &&
-          in.charAt (nStart + 2) == '-' &&
-          in.charAt (nStart + 3) == '-')
+      if (nStart + 3 < in.length () && in.charAt (nStart + 1) == '!' && in.charAt (nStart + 2) == '-' && in.charAt (nStart + 3) == '-')
       {
         nPos = nStart + 4;
         final int nCommentStartPos = nPos;
@@ -530,8 +526,7 @@ final class Emitter
               throw new MarkdownException ("Failed to get HC element: " + eRoot.getTagName ());
 
             // Clone all attributes
-            eRoot.forAllAttributes (aAttr -> aHC.customAttrs ()
-                                                .putIn (aAttr.getAttributeQName (), aAttr.getAttributeValue ()));
+            eRoot.forAllAttributes (aAttr -> aHC.customAttrs ().putIn (aAttr.getAttributeQName (), aAttr.getAttributeValue ()));
 
             if (aHC.getElement ().mayBeSelfClosed ())
             {
@@ -622,10 +617,7 @@ final class Emitter
    * @return The position of the matching Token or -1 if token was NONE or no
    *         Token could be found.
    */
-  private int _recursiveEmitLine (final MarkdownHCStack aOut,
-                                  final String sIn,
-                                  final int nStart,
-                                  final EMarkToken eToken)
+  private int _recursiveEmitLine (final MarkdownHCStack aOut, final String sIn, final int nStart, final EMarkToken eToken)
   {
     int nPos = nStart;
     int a;
@@ -870,9 +862,7 @@ final class Emitter
         }
         if (m_bUseExtensions)
         {
-          return Character.isLetterOrDigit (c0) &&
-                 c0 != '_' &&
-                 Character.isLetterOrDigit (c1) ? EMarkToken.NONE : EMarkToken.EM_UNDERSCORE;
+          return Character.isLetterOrDigit (c0) && c0 != '_' && Character.isLetterOrDigit (c1) ? EMarkToken.NONE : EMarkToken.EM_UNDERSCORE;
         }
         return c0 != ' ' || c1 != ' ' ? EMarkToken.EM_UNDERSCORE : EMarkToken.NONE;
       case '~':
@@ -1050,7 +1040,7 @@ final class Emitter
     }
   }
 
-  private void _emitXMLComment (final MarkdownHCStack aOut, final Line aLines)
+  private static void _emitXMLComment (final MarkdownHCStack aOut, final Line aLines)
   {
     Line aLine = aLines;
     final StringBuilder aXML = new StringBuilder ();
@@ -1067,9 +1057,7 @@ final class Emitter
 
     // Trim only once, so that newlines before or after a comment start/close is
     // removed
-    final String sContent = StringHelper.trimStartAndEnd (aXML.toString ().trim (),
-                                                          XMLEmitter.COMMENT_START,
-                                                          XMLEmitter.COMMENT_END);
+    final String sContent = StringHelper.trimStartAndEnd (aXML.toString ().trim (), XMLEmitter.COMMENT_START, XMLEmitter.COMMENT_END);
     aOut.append (new HCCommentNode (sContent));
   }
 
@@ -1083,10 +1071,7 @@ final class Emitter
    * @param sMeta
    *        Meta information.
    */
-  private void _emitCodeLines (final MarkdownHCStack aOut,
-                               final Line aLines,
-                               @Nonnull final String sMeta,
-                               final boolean bRemoveIndent)
+  private void _emitCodeLines (final MarkdownHCStack aOut, final Line aLines, @Nonnull final String sMeta, final boolean bRemoveIndent)
   {
     Line aLine = aLines;
     if (m_aConfig.getCodeBlockEmitter () != null)
@@ -1124,7 +1109,7 @@ final class Emitter
    * @param sMeta
    *        Meta information.
    */
-  protected void emitPluginLines (final MarkdownHCStack aOut, final Line aLines, @Nonnull final String sMeta)
+  void emitPluginLines (final MarkdownHCStack aOut, final Line aLines, @Nonnull final String sMeta)
   {
     Line aLine = aLines;
 
@@ -1165,7 +1150,7 @@ final class Emitter
 
   @Nonnull
   @ReturnsMutableCopy
-  protected ICommonsMap <String, String> parsePluginParams (@Nonnull final String s)
+  static ICommonsMap <String, String> parsePluginParams (@Nonnull final String s)
   {
     final ICommonsMap <String, String> ret = new CommonsHashMap <> ();
     final Pattern aPattern = RegExCache.getPattern ("(\\w+)=\"*((?<=\")[^\"]+(?=\")|([^\\s]+))\"*");

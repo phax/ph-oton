@@ -41,7 +41,7 @@ import com.helger.tenancy.AbstractBusinessObject;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class UserGroup extends AbstractBusinessObject implements IUserGroup
+public class UserGroup extends AbstractBusinessObject implements IUserGroup
 {
   public static final ObjectType OT = new ObjectType ("usergroup");
 

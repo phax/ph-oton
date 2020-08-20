@@ -269,7 +269,7 @@ public class BasePageMonitoringLoginInfo <WPECTYPE extends IWebPageExecutionCont
     throw new UnsupportedOperationException ();
   }
 
-  protected final boolean canLogoutUser (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nullable final IUser aUser)
+  protected static final boolean canLogoutUser (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nullable final IUser aUser)
   {
     if (aUser == null)
       return false;
