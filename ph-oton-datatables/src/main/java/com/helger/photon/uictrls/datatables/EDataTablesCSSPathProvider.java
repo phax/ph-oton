@@ -74,7 +74,7 @@ public enum EDataTablesCSSPathProvider implements ICSSPathProvider
 
   private final ConstantCSSPathProvider m_aPP;
 
-  private EDataTablesCSSPathProvider (@Nonnull @Nonempty final String sPath)
+  EDataTablesCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }

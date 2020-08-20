@@ -25,7 +25,7 @@ import com.helger.commons.functional.IFunction;
 
 /**
  * Action mode for the {@link BootstrapDateTimePicker}.
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrap4DateTimePickerMode
@@ -38,7 +38,7 @@ public enum EBootstrap4DateTimePickerMode
 
   private final IFunction <Locale, String> m_aJavaFormatSupplier;
 
-  private EBootstrap4DateTimePickerMode (@Nonnull final IFunction <Locale, String> aFormatSupplier)
+  EBootstrap4DateTimePickerMode (@Nonnull final IFunction <Locale, String> aFormatSupplier)
   {
     m_aJavaFormatSupplier = aFormatSupplier;
   }

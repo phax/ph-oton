@@ -39,7 +39,7 @@ public enum EDataTablesPagingType implements IHasName
 
   private final String m_sName;
 
-  private EDataTablesPagingType (@Nonnull @Nonempty final String sName)
+  EDataTablesPagingType (@Nonnull @Nonempty final String sName)
   {
     m_sName = sName;
   }

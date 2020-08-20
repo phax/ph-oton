@@ -44,7 +44,7 @@ public enum ESystemMessageType implements IHasID <String>, IHasDisplayText
   private final String m_sID;
   private final EPhotonCoreText m_eText;
 
-  private ESystemMessageType (@Nonnull @Nonempty final String sID, @Nonnull final EPhotonCoreText aText)
+  ESystemMessageType (@Nonnull @Nonempty final String sID, @Nonnull final EPhotonCoreText aText)
   {
     m_sID = sID;
     m_eText = aText;

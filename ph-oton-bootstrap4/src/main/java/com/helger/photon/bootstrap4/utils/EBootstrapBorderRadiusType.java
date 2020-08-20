@@ -38,7 +38,7 @@ public enum EBootstrapBorderRadiusType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapBorderRadiusType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapBorderRadiusType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

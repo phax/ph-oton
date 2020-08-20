@@ -35,7 +35,7 @@ public enum EBootstrapDropType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapDropType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapDropType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

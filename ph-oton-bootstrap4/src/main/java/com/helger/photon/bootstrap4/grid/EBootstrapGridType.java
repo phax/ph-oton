@@ -39,7 +39,7 @@ public enum EBootstrapGridType
   private final int m_nMinWidthIncl;
   private final int m_nMaxWidthExcl;
 
-  private EBootstrapGridType (@Nonnull final String sCSSClassNamePart, final int nMinWidthIncl, final int nMaxWidthExcl)
+  EBootstrapGridType (@Nonnull final String sCSSClassNamePart, final int nMinWidthIncl, final int nMaxWidthExcl)
   {
     m_sCSSClassNamePart = sCSSClassNamePart;
     m_nMinWidthIncl = nMinWidthIncl;

@@ -59,7 +59,7 @@ public enum EDataTablesColumnType implements IHasName
 
   private final String m_sName;
 
-  private EDataTablesColumnType (@Nonnull @Nonempty final String sName)
+  EDataTablesColumnType (@Nonnull @Nonempty final String sName)
   {
     m_sName = sName;
   }

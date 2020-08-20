@@ -49,7 +49,7 @@ public enum EBootstrapFloatType implements ICSSClassProvider
   private final ICSSClassProvider m_aCSSClass;
   private final EBootstrapGridType m_eGridType;
 
-  private EBootstrapFloatType (@Nonnull final ICSSClassProvider aCSSClass, @Nonnull final EBootstrapGridType eGridType)
+  EBootstrapFloatType (@Nonnull final ICSSClassProvider aCSSClass, @Nonnull final EBootstrapGridType eGridType)
   {
     m_aCSSClass = aCSSClass;
     m_eGridType = eGridType;

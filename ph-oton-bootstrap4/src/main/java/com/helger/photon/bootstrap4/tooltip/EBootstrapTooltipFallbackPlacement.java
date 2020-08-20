@@ -28,7 +28,7 @@ public enum EBootstrapTooltipFallbackPlacement
 
   private final String m_sValue;
 
-  private EBootstrapTooltipFallbackPlacement (@Nonnull @Nonempty final String sValue)
+  EBootstrapTooltipFallbackPlacement (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

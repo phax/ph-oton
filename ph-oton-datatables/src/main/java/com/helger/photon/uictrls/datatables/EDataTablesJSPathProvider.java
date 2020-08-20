@@ -76,17 +76,17 @@ public enum EDataTablesJSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  private EDataTablesJSPathProvider (@Nonnull @Nonempty final String sPath)
+  EDataTablesJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
-  private EDataTablesJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
+  EDataTablesJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
     m_aPP = ConstantJSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }
 
-  private EDataTablesJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
+  EDataTablesJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
   {
     m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
   }

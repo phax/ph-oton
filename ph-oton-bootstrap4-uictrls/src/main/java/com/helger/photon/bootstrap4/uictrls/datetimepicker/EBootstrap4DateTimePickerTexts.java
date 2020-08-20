@@ -62,7 +62,7 @@ public enum EBootstrap4DateTimePickerTexts implements IHasDisplayTextWithArgs
 
   private final IMultilingualText m_aTP;
 
-  private EBootstrap4DateTimePickerTexts (@Nonnull @Nonempty final String sDE, @Nonnull @Nonempty final String sEN)
+  EBootstrap4DateTimePickerTexts (@Nonnull @Nonempty final String sDE, @Nonnull @Nonempty final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

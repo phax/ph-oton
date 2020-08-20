@@ -38,7 +38,7 @@ public enum EBootstrapVerticalAlignType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapVerticalAlignType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapVerticalAlignType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

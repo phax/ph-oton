@@ -41,7 +41,7 @@ public enum EMenuObjectType implements IHasID <String>
 
   private final String m_sID;
 
-  private EMenuObjectType (@Nonnull @Nonempty final String sID)
+  EMenuObjectType (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

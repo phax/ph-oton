@@ -35,7 +35,7 @@ public enum EBootstrapEmbedAspectRatio implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapEmbedAspectRatio (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapEmbedAspectRatio (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -41,7 +41,7 @@ public enum EBootstrapDisplayPrintType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapDisplayPrintType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapDisplayPrintType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

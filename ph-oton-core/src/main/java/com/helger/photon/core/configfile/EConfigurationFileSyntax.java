@@ -37,7 +37,7 @@ public enum EConfigurationFileSyntax implements IHasID <String>
 
   private final String m_sID;
 
-  private EConfigurationFileSyntax (@Nonnull @Nonempty final String sID)
+  EConfigurationFileSyntax (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

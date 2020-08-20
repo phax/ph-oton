@@ -40,7 +40,7 @@ public enum EBootstrapDisplayType implements ICSSClassProvider
 
   private final String m_sCSSClassNamePart;
 
-  private EBootstrapDisplayType (@Nonnull @Nonempty final String sCSSClassNamePart)
+  EBootstrapDisplayType (@Nonnull @Nonempty final String sCSSClassNamePart)
   {
     m_sCSSClassNamePart = sCSSClassNamePart;
   }

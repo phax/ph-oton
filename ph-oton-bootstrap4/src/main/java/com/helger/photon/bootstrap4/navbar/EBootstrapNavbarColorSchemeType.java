@@ -34,7 +34,7 @@ public enum EBootstrapNavbarColorSchemeType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapNavbarColorSchemeType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapNavbarColorSchemeType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

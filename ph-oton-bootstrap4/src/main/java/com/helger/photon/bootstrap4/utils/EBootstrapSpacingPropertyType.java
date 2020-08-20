@@ -22,7 +22,7 @@ import com.helger.commons.annotation.Nonempty;
 
 /**
  * Spacing property. See https://getbootstrap.com/docs/4.1/utilities/spacing/
- * 
+ *
  * @author Philip Helger
  * @see BootstrapSpacingBuilder
  */
@@ -33,7 +33,7 @@ public enum EBootstrapSpacingPropertyType
 
   private final String m_sCSSClassNamePart;
 
-  private EBootstrapSpacingPropertyType (@Nonnull @Nonempty final String sCSSClassNamePart)
+  EBootstrapSpacingPropertyType (@Nonnull @Nonempty final String sCSSClassNamePart)
   {
     m_sCSSClassNamePart = sCSSClassNamePart;
   }

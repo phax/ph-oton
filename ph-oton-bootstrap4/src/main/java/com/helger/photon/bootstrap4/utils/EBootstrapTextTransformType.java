@@ -39,7 +39,7 @@ public enum EBootstrapTextTransformType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapTextTransformType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapTextTransformType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

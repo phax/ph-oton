@@ -44,7 +44,7 @@ public enum EBootstrapColOrder implements ICSSClassProvider
   private final int m_nParts;
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapColOrder (final int nParts, @Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapColOrder (final int nParts, @Nullable final ICSSClassProvider aCSSClass)
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;

@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
  * Border color. See https://getbootstrap.com/docs/4.1/utilities/borders/
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapBorderColorType implements ICSSClassProvider
@@ -40,7 +40,7 @@ public enum EBootstrapBorderColorType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapBorderColorType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapBorderColorType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

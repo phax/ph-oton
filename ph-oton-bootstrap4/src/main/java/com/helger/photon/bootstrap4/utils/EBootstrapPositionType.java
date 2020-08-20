@@ -42,7 +42,7 @@ public enum EBootstrapPositionType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapPositionType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapPositionType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

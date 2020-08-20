@@ -40,7 +40,7 @@ public enum EBootstrapBadgeType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapBadgeType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapBadgeType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

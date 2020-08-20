@@ -34,7 +34,7 @@ public enum EDTPFixedColumnsHeightMatch implements IHasName
 
   private final String m_sName;
 
-  private EDTPFixedColumnsHeightMatch (@Nonnull @Nonempty final String sName)
+  EDTPFixedColumnsHeightMatch (@Nonnull @Nonempty final String sName)
   {
     m_sName = sName;
   }

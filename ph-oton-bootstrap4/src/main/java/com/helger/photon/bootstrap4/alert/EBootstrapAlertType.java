@@ -40,7 +40,7 @@ public enum EBootstrapAlertType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapAlertType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapAlertType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -34,7 +34,7 @@ public enum EBootstrapNavType
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapNavType (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapNavType (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

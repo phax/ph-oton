@@ -28,7 +28,7 @@ public enum EBootstrapTooltipBoundary
 
   private final String m_sValue;
 
-  private EBootstrapTooltipBoundary (@Nonnull @Nonempty final String sValue)
+  EBootstrapTooltipBoundary (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

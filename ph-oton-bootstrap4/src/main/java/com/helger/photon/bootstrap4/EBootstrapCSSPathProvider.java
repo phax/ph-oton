@@ -41,12 +41,12 @@ public enum EBootstrapCSSPathProvider implements ICSSPathProvider
 
   private final ConstantCSSPathProvider m_aPP;
 
-  private EBootstrapCSSPathProvider (@Nonnull @Nonempty final String sPath)
+  EBootstrapCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }
 
-  private EBootstrapCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
+  EBootstrapCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
     m_aPP = ConstantCSSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }

@@ -34,7 +34,7 @@ public enum EBootstrapRowVerticalAlign implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapRowVerticalAlign (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapRowVerticalAlign (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

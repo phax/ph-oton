@@ -50,7 +50,7 @@ public enum EBootstrapGridSM implements IBootstrapGridElement
   private final ICSSClassProvider m_aCSSClass;
   private final ICSSClassProvider m_aCSSClassOffset;
 
-  private EBootstrapGridSM (final int nParts, @Nonnull final ICSSClassProvider aCSSClass, @Nullable final ICSSClassProvider aCSSClassOffset)
+  EBootstrapGridSM (final int nParts, @Nonnull final ICSSClassProvider aCSSClass, @Nullable final ICSSClassProvider aCSSClassOffset)
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;

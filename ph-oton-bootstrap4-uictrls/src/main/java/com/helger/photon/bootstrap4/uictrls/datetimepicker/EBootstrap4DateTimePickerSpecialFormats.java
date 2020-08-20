@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
  *
  * @author Philip Helger
  */
-public enum Eootstrap4DateTimePickerSpecialFormats
+public enum EBootstrap4DateTimePickerSpecialFormats
 {
   TIME ("LT"),
   TIME_WITH_SECONDS ("LTS"),
@@ -41,7 +41,7 @@ public enum Eootstrap4DateTimePickerSpecialFormats
 
   private final String m_sFormatString;
 
-  Eootstrap4DateTimePickerSpecialFormats (@Nonnull @Nonempty final String sFormatString)
+  EBootstrap4DateTimePickerSpecialFormats (@Nonnull @Nonempty final String sFormatString)
   {
     m_sFormatString = sFormatString;
   }

@@ -33,7 +33,7 @@ public enum EDTPResponsiveType implements IHasName
 
   private final String m_sName;
 
-  private EDTPResponsiveType (@Nonnull @Nonempty final String sName)
+  EDTPResponsiveType (@Nonnull @Nonempty final String sName)
   {
     m_sName = sName;
   }

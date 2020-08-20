@@ -34,7 +34,7 @@ public enum EBootstrapButtonGroupType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapButtonGroupType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapButtonGroupType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

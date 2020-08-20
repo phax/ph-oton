@@ -36,7 +36,7 @@ public enum EBootstrapHeightType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapHeightType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapHeightType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

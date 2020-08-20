@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
  * Background colors. See https://getbootstrap.com/docs/4.1/utilities/colors/
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapBackgroundType implements ICSSClassProvider
@@ -41,7 +41,7 @@ public enum EBootstrapBackgroundType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapBackgroundType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapBackgroundType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

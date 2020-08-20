@@ -37,7 +37,7 @@ public enum EBootstrapFontType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapFontType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapFontType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

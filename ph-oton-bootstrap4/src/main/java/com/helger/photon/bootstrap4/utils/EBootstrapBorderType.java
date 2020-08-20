@@ -23,7 +23,7 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 
 /**
  * Border type. See https://getbootstrap.com/docs/4.1/utilities/borders/
- * 
+ *
  * @author Philip Helger
  */
 public enum EBootstrapBorderType implements ICSSClassProvider
@@ -51,7 +51,7 @@ public enum EBootstrapBorderType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapBorderType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapBorderType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

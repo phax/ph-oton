@@ -37,7 +37,7 @@ public enum EBootstrap4DateTimePickerViewModeType
   private final int m_nOrder;
   private final String m_sJSValue;
 
-  private EBootstrap4DateTimePickerViewModeType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
+  EBootstrap4DateTimePickerViewModeType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
   {
     m_nOrder = nJSValue;
     m_sJSValue = sJSValue;

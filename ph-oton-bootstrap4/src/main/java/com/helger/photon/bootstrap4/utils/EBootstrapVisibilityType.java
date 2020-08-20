@@ -33,7 +33,7 @@ public enum EBootstrapVisibilityType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapVisibilityType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapVisibilityType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

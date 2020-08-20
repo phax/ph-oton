@@ -46,7 +46,7 @@ public enum EBootstrapTextColorType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapTextColorType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapTextColorType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -36,7 +36,7 @@ public enum EBootstrapWidthType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapWidthType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapWidthType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

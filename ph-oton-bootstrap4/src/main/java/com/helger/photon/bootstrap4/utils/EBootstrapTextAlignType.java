@@ -49,7 +49,7 @@ public enum EBootstrapTextAlignType implements ICSSClassProvider
   private final ICSSClassProvider m_aCSSClass;
   private final EBootstrapGridType m_eGridType;
 
-  private EBootstrapTextAlignType (@Nonnull final ICSSClassProvider aCSSClass, @Nonnull final EBootstrapGridType eGridType)
+  EBootstrapTextAlignType (@Nonnull final ICSSClassProvider aCSSClass, @Nonnull final EBootstrapGridType eGridType)
   {
     m_aCSSClass = aCSSClass;
     m_eGridType = eGridType;

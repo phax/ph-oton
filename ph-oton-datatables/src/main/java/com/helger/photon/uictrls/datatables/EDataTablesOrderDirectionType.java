@@ -37,7 +37,7 @@ public enum EDataTablesOrderDirectionType implements IHasName
   private final String m_sName;
   private final ESortOrder m_eSortOrder;
 
-  private EDataTablesOrderDirectionType (@Nonnull @Nonempty final String sName, @Nonnull final ESortOrder eSortOrder)
+  EDataTablesOrderDirectionType (@Nonnull @Nonempty final String sName, @Nonnull final ESortOrder eSortOrder)
   {
     m_sName = sName;
     m_eSortOrder = eSortOrder;

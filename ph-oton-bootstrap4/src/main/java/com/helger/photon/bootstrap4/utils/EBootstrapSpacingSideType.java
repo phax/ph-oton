@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Spacing side. See https://getbootstrap.com/docs/4.1/utilities/spacing/
- * 
+ *
  * @author Philip Helger
  * @see BootstrapSpacingBuilder
  */
@@ -43,7 +43,7 @@ public enum EBootstrapSpacingSideType
 
   private final String m_sCSSClassNamePart;
 
-  private EBootstrapSpacingSideType (@Nonnull final String sCSSClassNamePart)
+  EBootstrapSpacingSideType (@Nonnull final String sCSSClassNamePart)
   {
     m_sCSSClassNamePart = sCSSClassNamePart;
   }

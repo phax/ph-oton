@@ -33,7 +33,7 @@ public enum EBootstrapFormType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapFormType (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapFormType (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

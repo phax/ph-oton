@@ -61,7 +61,7 @@ public enum EDataTablesText implements IHasDisplayText
 
   private final IMultilingualText m_aTP;
 
-  private EDataTablesText (@Nonnull final String sDE, @Nonnull final String sEN)
+  EDataTablesText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

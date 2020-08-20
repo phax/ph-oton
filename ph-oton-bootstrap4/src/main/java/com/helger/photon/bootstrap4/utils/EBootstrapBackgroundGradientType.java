@@ -42,7 +42,7 @@ public enum EBootstrapBackgroundGradientType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapBackgroundGradientType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapBackgroundGradientType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }
