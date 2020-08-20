@@ -178,7 +178,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
   private static final String DEFAULT_CHARSET_NAME = CSMTP.CHARSET_SMTP_OBJ.name ();
   private static final String ACTION_TEST_MAIL = "testmail";
 
-  private final transient NamedSMTPSettingsManager m_aMgr;
+  private final NamedSMTPSettingsManager m_aMgr;
 
   private void _init ()
   {

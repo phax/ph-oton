@@ -84,9 +84,8 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
                                                                sCommercialCourt,
                                                                aDisplayLocale);
 
-    m_aRWLock.writeLocked ( () -> {
-      internalCreateItem (aAccountingArea);
-    });
+    // Store
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aAccountingArea));
     AuditHelper.onAuditCreateSuccess (AccountingArea.OT,
                                       aAccountingArea.getID (),
                                       sDisplayName,

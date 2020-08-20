@@ -54,7 +54,7 @@ public class WebSiteResourceBundle
   private final CSSMediaList m_aMediaList;
   // Status vars
   private final EWebSiteResourceType m_eResourceType;
-  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
+  private int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   public WebSiteResourceBundle (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aResources,
                                 @Nullable final String sConditionalComment,

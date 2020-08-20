@@ -32,7 +32,7 @@ import com.helger.security.authentication.credentials.usernamepw.UserNamePasswor
 public final class SftpConnectorTest
 {
   @Test
-  @Ignore
+  @Ignore ("An FTP server must be running")
   public void testValidConnectDisconnect ()
   {
     // Fake credentials

@@ -355,20 +355,34 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Override
+  public boolean equals (final Object o)
+  {
+    // New fields, no changes
+    return super.equals (o);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    // New fields, no changes
+    return super.hashCode ();
+  }
+
+  @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("loginName", m_sLoginName)
-                            .appendIfNotNull ("emailAddress", m_sEmailAddress)
-                            .append ("passwordHash", m_aPasswordHash)
-                            .appendIfNotNull ("firstName", m_sFirstName)
-                            .appendIfNotNull ("lastName", m_sLastName)
-                            .appendIfNotNull ("description", m_sDescription)
-                            .appendIfNotNull ("desiredLocale", m_aDesiredLocale)
-                            .appendIfNotNull ("lastLoginDT", m_aLastLoginDT)
-                            .append ("loginCount", m_nLoginCount)
-                            .append ("consecutiveFailedLoginCount", m_nConsecutiveFailedLoginCount)
-                            .append ("disabled", m_bDisabled)
+                            .append ("LoginName", m_sLoginName)
+                            .appendIfNotNull ("EmailAddress", m_sEmailAddress)
+                            .append ("PasswordHash", m_aPasswordHash)
+                            .appendIfNotNull ("FirstName", m_sFirstName)
+                            .appendIfNotNull ("LastName", m_sLastName)
+                            .appendIfNotNull ("Description", m_sDescription)
+                            .appendIfNotNull ("DesiredLocale", m_aDesiredLocale)
+                            .appendIfNotNull ("LastLoginDT", m_aLastLoginDT)
+                            .append ("LoginCount", m_nLoginCount)
+                            .append ("ConsecutiveFailedLoginCount", m_nConsecutiveFailedLoginCount)
+                            .append ("Disabled", m_bDisabled)
                             .getToString ();
   }
 }

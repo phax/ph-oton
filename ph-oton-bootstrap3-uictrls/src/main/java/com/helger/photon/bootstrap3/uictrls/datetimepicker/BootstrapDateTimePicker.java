@@ -221,7 +221,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
   @Nonnull
   @ReturnsMutableCopy
-  public EnumSet <EDateTimePickerDayOfWeek> getDaysOfWeekDisabled ()
+  public Set <EDateTimePickerDayOfWeek> getDaysOfWeekDisabled ()
   {
     return CollectionHelper.newEnumSet (EDateTimePickerDayOfWeek.class, m_aDaysOfWeekDisabled);
   }

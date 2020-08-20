@@ -178,13 +178,27 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
   }
 
   @Override
+  public boolean equals (final Object o)
+  {
+    // New fields, no changes
+    return super.equals (o);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    // New fields, no changes
+    return super.hashCode ();
+  }
+
+  @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("name", m_sName)
-                            .appendIfNotNull ("description", m_sDescription)
-                            .append ("assignedUsers", m_aUserIDs)
-                            .append ("assignedRoles", m_aRoleIDs)
+                            .append ("Name", m_sName)
+                            .appendIfNotNull ("Description", m_sDescription)
+                            .append ("AssignedUsers", m_aUserIDs)
+                            .append ("AssignedRoles", m_aRoleIDs)
                             .getToString ();
   }
 }

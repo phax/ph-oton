@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.icon;
 
+import java.util.EnumMap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
 
 /**
  * This class maintains the actual icon objects to the different default icons.
@@ -33,7 +33,7 @@ import com.helger.commons.collection.impl.ICommonsMap;
 @NotThreadSafe
 public final class DefaultIcons
 {
-  private static final ICommonsMap <EDefaultIcon, IIcon> s_aMap = new CommonsHashMap <> ();
+  private static final EnumMap <EDefaultIcon, IIcon> s_aMap = new EnumMap <> (EDefaultIcon.class);
 
   private DefaultIcons ()
   {}
@@ -44,7 +44,7 @@ public final class DefaultIcons
    */
   public static boolean areDefined ()
   {
-    return s_aMap.isNotEmpty ();
+    return !s_aMap.isEmpty ();
   }
 
   /**
@@ -68,9 +68,9 @@ public final class DefaultIcons
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsMap <EDefaultIcon, IIcon> getAll ()
+  public static EnumMap <EDefaultIcon, IIcon> getAll ()
   {
-    return s_aMap.getClone ();
+    return new EnumMap <> (s_aMap);
   }
 
   /**

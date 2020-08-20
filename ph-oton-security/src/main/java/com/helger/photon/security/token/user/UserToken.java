@@ -75,7 +75,19 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
     return m_aUser;
   }
 
-  // equals and hashCode are derived
+  @Override
+  public boolean equals (final Object o)
+  {
+    // New fields, no changes
+    return super.equals (o);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    // New fields, no changes
+    return super.hashCode ();
+  }
 
   @Override
   public String toString ()

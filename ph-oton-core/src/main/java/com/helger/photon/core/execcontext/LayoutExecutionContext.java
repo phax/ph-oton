@@ -47,7 +47,7 @@ import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 public class LayoutExecutionContext extends SimpleWebExecutionContext implements ILayoutExecutionContext
 {
   private final IMenuItemPage m_aSelectedMenuItem;
-  private transient SimpleURL m_aSelfHref;
+  private SimpleURL m_aSelfHref;
 
   public LayoutExecutionContext (@Nonnull final ILayoutExecutionContext aLEC)
   {

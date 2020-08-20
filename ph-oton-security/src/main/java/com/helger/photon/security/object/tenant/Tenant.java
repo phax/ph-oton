@@ -93,6 +93,20 @@ public class Tenant extends AbstractBusinessObject implements ITenant
   }
 
   @Override
+  public boolean equals (final Object o)
+  {
+    // New field, no changes
+    return super.equals (o);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    // New field, no changes
+    return super.hashCode ();
+  }
+
+  @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("DisplayName", m_sDisplayName).getToString ();

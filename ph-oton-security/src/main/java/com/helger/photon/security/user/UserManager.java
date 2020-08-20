@@ -140,9 +140,8 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                  aCustomAttrs,
                                  bDisabled);
 
-    m_aRWLock.writeLocked ( () -> {
-      internalCreateItem (aUser);
-    });
+    // Store
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aUser));
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       sLoginName,
@@ -194,9 +193,9 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                  aCustomAttrs,
                                  bDisabled);
 
-    m_aRWLock.writeLocked ( () -> {
-      internalCreateItem (aUser);
-    });
+    // Store
+    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aUser));
+
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       "predefined-user",
