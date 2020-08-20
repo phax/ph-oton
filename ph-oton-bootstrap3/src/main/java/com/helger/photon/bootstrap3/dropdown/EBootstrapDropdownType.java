@@ -33,7 +33,7 @@ public enum EBootstrapDropdownType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapDropdownType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapDropdownType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

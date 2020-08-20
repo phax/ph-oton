@@ -37,7 +37,7 @@ public enum EDateTimePickerViewType
   private final int m_nJSValue;
   private final String m_sJSValue;
 
-  private EDateTimePickerViewType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
+  EDateTimePickerViewType (@Nonnegative final int nJSValue, @Nonnull @Nonempty final String sJSValue)
   {
     m_nJSValue = nJSValue;
     m_sJSValue = sJSValue;

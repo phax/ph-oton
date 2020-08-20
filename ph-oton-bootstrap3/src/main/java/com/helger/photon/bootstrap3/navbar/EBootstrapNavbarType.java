@@ -35,7 +35,7 @@ public enum EBootstrapNavbarType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapNavbarType (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapNavbarType (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -37,7 +37,7 @@ public enum EBootstrapPanelType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapPanelType (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapPanelType (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

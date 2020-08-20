@@ -36,7 +36,7 @@ public enum EBootstrapModalSize implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapModalSize (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapModalSize (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

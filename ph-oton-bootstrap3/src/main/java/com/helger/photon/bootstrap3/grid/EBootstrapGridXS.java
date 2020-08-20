@@ -50,11 +50,11 @@ public enum EBootstrapGridXS implements IBootstrapGridElementExtended
   private final ICSSClassProvider m_aCSSClassPush;
   private final ICSSClassProvider m_aCSSClassPull;
 
-  private EBootstrapGridXS (@Nonnegative final int nParts,
-                            @Nonnull final ICSSClassProvider aCSSClass,
-                            @Nullable final ICSSClassProvider aCSSClassOffset,
-                            @Nullable final ICSSClassProvider aCSSClassPush,
-                            @Nullable final ICSSClassProvider aCSSClassPull)
+  EBootstrapGridXS (@Nonnegative final int nParts,
+                    @Nonnull final ICSSClassProvider aCSSClass,
+                    @Nullable final ICSSClassProvider aCSSClassOffset,
+                    @Nullable final ICSSClassProvider aCSSClassPush,
+                    @Nullable final ICSSClassProvider aCSSClassPull)
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;

@@ -299,7 +299,7 @@ public enum EBootstrapIcon implements IIcon
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapIcon (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapIcon (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -29,7 +29,7 @@ public enum EBootstrapTooltipTrigger
 
   private final String m_sValue;
 
-  private EBootstrapTooltipTrigger (@Nonnull @Nonempty final String sValue)
+  EBootstrapTooltipTrigger (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

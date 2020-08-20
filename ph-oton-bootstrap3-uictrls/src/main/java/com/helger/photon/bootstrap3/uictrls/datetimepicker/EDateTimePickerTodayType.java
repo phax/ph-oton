@@ -34,7 +34,7 @@ public enum EDateTimePickerTodayType
 
   private final IJSExpression m_aJSValue;
 
-  private EDateTimePickerTodayType (@Nonnull final IJSExpression aJSValue)
+  EDateTimePickerTodayType (@Nonnull final IJSExpression aJSValue)
   {
     m_aJSValue = aJSValue;
   }

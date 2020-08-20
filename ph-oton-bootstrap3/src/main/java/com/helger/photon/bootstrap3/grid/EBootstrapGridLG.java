@@ -48,11 +48,11 @@ public enum EBootstrapGridLG implements IBootstrapGridElementExtended
   private final ICSSClassProvider m_aCSSClassPush;
   private final ICSSClassProvider m_aCSSClassPull;
 
-  private EBootstrapGridLG (@Nonnegative final int nParts,
-                            @Nullable final ICSSClassProvider aCSSClass,
-                            @Nullable final ICSSClassProvider aCSSClassOffset,
-                            @Nullable final ICSSClassProvider aCSSClassPush,
-                            @Nullable final ICSSClassProvider aCSSClassPull)
+  EBootstrapGridLG (@Nonnegative final int nParts,
+                    @Nullable final ICSSClassProvider aCSSClass,
+                    @Nullable final ICSSClassProvider aCSSClassOffset,
+                    @Nullable final ICSSClassProvider aCSSClassPush,
+                    @Nullable final ICSSClassProvider aCSSClassPull)
   {
     m_nParts = nParts;
     m_aCSSClass = aCSSClass;

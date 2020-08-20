@@ -85,7 +85,7 @@ public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <Str
 
     private final IMultilingualText m_aTP;
 
-    private EBaseText (final String sDE, final String sEN)
+    EBaseText (final String sDE, final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

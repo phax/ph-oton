@@ -33,7 +33,7 @@ public enum EBootstrapEmbedType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapEmbedType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapEmbedType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

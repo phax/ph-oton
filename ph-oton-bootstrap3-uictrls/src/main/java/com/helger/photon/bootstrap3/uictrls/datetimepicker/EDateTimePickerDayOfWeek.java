@@ -39,7 +39,7 @@ public enum EDateTimePickerDayOfWeek
 
   private final int m_nJSValue;
 
-  private EDateTimePickerDayOfWeek (@Nonnegative final int nJSValue)
+  EDateTimePickerDayOfWeek (@Nonnegative final int nJSValue)
   {
     m_nJSValue = nJSValue;
   }

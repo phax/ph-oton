@@ -38,7 +38,7 @@ public enum EBootstrapLabelType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapLabelType (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapLabelType (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

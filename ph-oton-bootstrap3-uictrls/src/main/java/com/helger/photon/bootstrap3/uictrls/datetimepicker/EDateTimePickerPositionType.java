@@ -32,7 +32,7 @@ public enum EDateTimePickerPositionType
 
   private final String m_sJSValue;
 
-  private EDateTimePickerPositionType (@Nonnull @Nonempty final String sJSValue)
+  EDateTimePickerPositionType (@Nonnull @Nonempty final String sJSValue)
   {
     m_sJSValue = sJSValue;
   }

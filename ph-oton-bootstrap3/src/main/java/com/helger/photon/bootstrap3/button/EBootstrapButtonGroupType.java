@@ -39,7 +39,7 @@ public enum EBootstrapButtonGroupType
 
   private final ICommonsList <ICSSClassProvider> m_aCSSClasses;
 
-  private EBootstrapButtonGroupType (@Nullable final ICSSClassProvider... aCSSClasses)
+  EBootstrapButtonGroupType (@Nullable final ICSSClassProvider... aCSSClasses)
   {
     m_aCSSClasses = CollectionHelper.newList (aCSSClasses);
   }

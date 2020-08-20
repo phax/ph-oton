@@ -41,7 +41,7 @@ public enum Eootstrap4DateTimePickerSpecialFormats
 
   private final String m_sFormatString;
 
-  private Eootstrap4DateTimePickerSpecialFormats (@Nonnull @Nonempty final String sFormatString)
+  Eootstrap4DateTimePickerSpecialFormats (@Nonnull @Nonempty final String sFormatString)
   {
     m_sFormatString = sFormatString;
   }

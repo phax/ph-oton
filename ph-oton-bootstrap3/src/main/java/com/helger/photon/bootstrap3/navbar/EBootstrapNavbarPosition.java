@@ -35,7 +35,7 @@ public enum EBootstrapNavbarPosition implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapNavbarPosition (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapNavbarPosition (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -32,7 +32,7 @@ public enum EBootstrapJSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  private EBootstrapJSPathProvider (@Nonnull @Nonempty final String sPath)
+  EBootstrapJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantJSPathProvider.create (sPath);
   }

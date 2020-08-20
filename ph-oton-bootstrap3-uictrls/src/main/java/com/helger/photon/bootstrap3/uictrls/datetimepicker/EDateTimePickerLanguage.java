@@ -91,7 +91,7 @@ public enum EDateTimePickerLanguage
   private final Locale m_aLocale;
   private final String m_sLanguageID;
 
-  private EDateTimePickerLanguage (@Nonnull final String sLocale, @Nonnull @Nonempty final String sLanguageID)
+  EDateTimePickerLanguage (@Nonnull final String sLocale, @Nonnull @Nonempty final String sLanguageID)
   {
     m_aLocale = LocaleCache.getInstance ().getLocale (sLocale);
     if (m_aLocale == null)

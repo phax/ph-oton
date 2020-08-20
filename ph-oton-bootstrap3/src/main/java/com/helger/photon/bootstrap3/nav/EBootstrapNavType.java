@@ -41,7 +41,7 @@ public enum EBootstrapNavType
 
   private final ICommonsList <ICSSClassProvider> m_aCSSClasses;
 
-  private EBootstrapNavType (@Nullable final ICSSClassProvider... aCSSClasses)
+  EBootstrapNavType (@Nullable final ICSSClassProvider... aCSSClasses)
   {
     m_aCSSClasses = new CommonsArrayList <> (aCSSClasses);
   }

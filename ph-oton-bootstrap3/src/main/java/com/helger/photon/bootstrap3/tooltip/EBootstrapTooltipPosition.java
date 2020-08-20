@@ -29,7 +29,7 @@ public enum EBootstrapTooltipPosition
 
   private final String m_sValue;
 
-  private EBootstrapTooltipPosition (@Nonnull @Nonempty final String sValue)
+  EBootstrapTooltipPosition (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

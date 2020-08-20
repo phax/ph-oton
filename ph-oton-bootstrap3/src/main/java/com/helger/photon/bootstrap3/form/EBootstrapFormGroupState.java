@@ -38,7 +38,7 @@ public enum EBootstrapFormGroupState implements ICSSClassProvider
   private final ICSSClassProvider m_aCSSClass;
   private final EBootstrapIcon m_eIcon;
 
-  private EBootstrapFormGroupState (@Nullable final ICSSClassProvider aCSSClass, @Nullable final EBootstrapIcon eIcon)
+  EBootstrapFormGroupState (@Nullable final ICSSClassProvider aCSSClass, @Nullable final EBootstrapIcon eIcon)
   {
     m_aCSSClass = aCSSClass;
     m_eIcon = eIcon;

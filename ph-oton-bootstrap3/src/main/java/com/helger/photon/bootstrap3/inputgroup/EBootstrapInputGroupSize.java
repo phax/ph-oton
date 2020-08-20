@@ -34,7 +34,7 @@ public enum EBootstrapInputGroupSize implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapInputGroupSize (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapInputGroupSize (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

@@ -35,7 +35,7 @@ public enum EBootstrapModalOptionBackdrop
 
   private final IJSExpression m_aJSExpr;
 
-  private EBootstrapModalOptionBackdrop (@Nullable final IJSExpression aJSExpr)
+  EBootstrapModalOptionBackdrop (@Nullable final IJSExpression aJSExpr)
   {
     m_aJSExpr = aJSExpr;
   }

@@ -34,7 +34,7 @@ public enum EBootstrapPaginationType implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapPaginationType (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapPaginationType (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

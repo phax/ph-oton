@@ -36,7 +36,7 @@ public enum EBootstrapDropdownMenuAlignment implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapDropdownMenuAlignment (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapDropdownMenuAlignment (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

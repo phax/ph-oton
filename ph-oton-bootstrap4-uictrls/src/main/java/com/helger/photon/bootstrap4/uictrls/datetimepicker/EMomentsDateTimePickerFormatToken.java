@@ -50,7 +50,7 @@ public enum EMomentsDateTimePickerFormatToken
   private final String m_sJSToken;
   private final String m_sJavaToken;
 
-  private EMomentsDateTimePickerFormatToken (@Nonnull @Nonempty final String sJSToken, @Nonnull @Nonempty final String sJavaToken)
+  EMomentsDateTimePickerFormatToken (@Nonnull @Nonempty final String sJSToken, @Nonnull @Nonempty final String sJavaToken)
   {
     m_sJSToken = sJSToken;
     m_sJavaToken = sJavaToken;

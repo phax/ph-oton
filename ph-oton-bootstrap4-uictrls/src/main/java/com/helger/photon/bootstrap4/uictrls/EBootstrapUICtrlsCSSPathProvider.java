@@ -38,7 +38,7 @@ public enum EBootstrapUICtrlsCSSPathProvider implements ICSSPathProvider
 
   private final ConstantCSSPathProvider m_aPP;
 
-  private EBootstrapUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath)
+  EBootstrapUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }

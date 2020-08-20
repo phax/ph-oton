@@ -35,7 +35,7 @@ public enum EBootstrapButtonSize implements ICSSClassProvider
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EBootstrapButtonSize (@Nullable final ICSSClassProvider aCSSClass)
+  EBootstrapButtonSize (@Nullable final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }
