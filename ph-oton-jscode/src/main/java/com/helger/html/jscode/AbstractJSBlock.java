@@ -191,8 +191,19 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
   protected void onAddDeclaration (@Nonnull final IJSDeclaration aDeclaration)
   {}
 
+  /**
+   * Add a new declaration
+   *
+   * @param <T>
+   *        The type of the declaration
+   * @param aDeclaration
+   *        The declaration to add
+   * @return The parameter value
+   * @throws JSNameAlreadyExistsException
+   *         If another declaration with the same name is already present
+   */
   @Nonnull
-  public final <T extends IJSDeclaration> T addDeclaration (@Nonnull final T aDeclaration) throws JSNameAlreadyExistsException
+  public final <T extends IJSDeclaration> T addDeclaration (@Nonnull final T aDeclaration)
   {
     ValueEnforcer.notNull (aDeclaration, "Declaration");
 
@@ -272,7 +283,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *            When the specified class/interface was already created.
    */
   @Nonnull
-  public JSDefinedClass _class (@Nonnull @Nonempty final String sName) throws JSNameAlreadyExistsException
+  public JSDefinedClass _class (@Nonnull @Nonempty final String sName)
   {
     final JSDefinedClass aDefinedClass = new JSDefinedClass (sName);
     return addDeclaration (aDefinedClass);
@@ -291,8 +302,17 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return aType._new ();
   }
 
+  /**
+   * Add a function to this package.
+   *
+   * @param sName
+   *        Name of function to be added to this package
+   * @return Newly generated function
+   * @exception JSNameAlreadyExistsException
+   *            When the specified class/interface was already created.
+   */
   @Nonnull
-  public JSFunction function (@Nonnull final String sName) throws JSNameAlreadyExistsException
+  public JSFunction function (@Nonnull final String sName)
   {
     final JSFunction aFunction = new JSFunction (sName);
     return addDeclaration (aFunction);
@@ -308,7 +328,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName)
   {
     return var (sName, (IJSExpression) null);
   }
@@ -325,7 +345,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final boolean bInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, final boolean bInitValue)
   {
     return var (sName, JSExpr.lit (bInitValue));
   }
@@ -342,7 +362,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final char cInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, final char cInitValue)
   {
     return var (sName, JSExpr.lit (cInitValue));
   }
@@ -359,7 +379,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final double dInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, final double dInitValue)
   {
     return var (sName, JSExpr.lit (dInitValue));
   }
@@ -376,7 +396,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final float fInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, final float fInitValue)
   {
     return var (sName, JSExpr.lit (fInitValue));
   }
@@ -393,7 +413,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final int nInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, final int nInitValue)
   {
     return var (sName, JSExpr.lit (nInitValue));
   }
@@ -410,7 +430,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final long nInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, final long nInitValue)
   {
     return var (sName, JSExpr.lit (nInitValue));
   }
@@ -427,7 +447,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
   {
     return var (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
   }
@@ -444,8 +464,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName,
-                    @Nullable final IJSExpression aInitExpression) throws JSNameAlreadyExistsException
+  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
   {
     final JSVar aVar = new JSVar (sName, aInitExpression);
     return addDeclaration (aVar);

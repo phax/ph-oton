@@ -61,9 +61,18 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
     return m_aOwnerClass;
   }
 
+  /**
+   * Change the name of this field
+   *
+   * @param sNewName
+   *        The new name. May neither be <code>null</code> nor empty.
+   * @return this for chaining
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
   @Nonnull
   @Override
-  public JSFieldVar name (@Nonnull @Nonempty final String sNewName) throws JSNameAlreadyExistsException
+  public JSFieldVar name (@Nonnull @Nonempty final String sNewName)
   {
     final String sOldName = name ();
     if (!sOldName.equals (sNewName))

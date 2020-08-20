@@ -38,5 +38,5 @@ public interface IJSFunctionContainer extends IHasJSCodeWithSettings
    *            When the specified function was already created.
    */
   @Nonnull
-  JSFunction function (@Nonnull @Nonempty String sName) throws JSNameAlreadyExistsException;
+  JSFunction function (@Nonnull @Nonempty String sName);
 }

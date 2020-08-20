@@ -69,6 +69,7 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
     return m_aDisplayFilter;
   }
 
+  @Override
   public final boolean matchesDisplayFilter ()
   {
     return m_aDisplayFilter == null || m_aDisplayFilter.test (this);

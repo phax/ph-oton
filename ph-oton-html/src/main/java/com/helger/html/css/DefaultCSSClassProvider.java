@@ -51,7 +51,15 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
   // Status vars
   private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
-  public static void validateCSSClassName (@Nonnull @Nonempty final String sCSSClass) throws IllegalArgumentException
+  /**
+   * Check if the CSS class name is valid
+   *
+   * @param sCSSClass
+   *        The class name to check. May not be <code>null</code>.
+   * @throws RuntimeException
+   *         in case of error
+   */
+  public static void validateCSSClassName (@Nonnull @Nonempty final String sCSSClass)
   {
     ValueEnforcer.notEmpty (sCSSClass, "CSSClass");
     if (sCSSClass.indexOf (' ') >= 0)

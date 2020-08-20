@@ -153,8 +153,17 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
     return m_aFields.get (sName);
   }
 
+  /**
+   * Add a new field
+   *
+   * @param aField
+   *        The field to add. May not be <code>null</code>.
+   * @return The parameter value
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
   @Nonnull
-  public JSFieldVar addField (@Nonnull final JSFieldVar aField) throws JSNameAlreadyExistsException
+  public JSFieldVar addField (@Nonnull final JSFieldVar aField)
   {
     ValueEnforcer.notNull (aField, "Field");
 
