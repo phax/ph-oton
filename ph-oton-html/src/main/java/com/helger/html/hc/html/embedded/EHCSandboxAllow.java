@@ -40,7 +40,7 @@ public enum EHCSandboxAllow implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCSandboxAllow (@Nonnull @Nonempty final String sAttrValue)
+  EHCSandboxAllow (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

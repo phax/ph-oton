@@ -54,7 +54,7 @@ public enum EHCKeyGenType implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCKeyGenType (@Nonnull @Nonempty final String sAttrValue)
+  EHCKeyGenType (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

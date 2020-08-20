@@ -40,7 +40,7 @@ public enum EExportDataType implements IHasID <String>
 
   private final String m_sID;
 
-  private EExportDataType (@Nonnull @Nonempty final String sID)
+  EExportDataType (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

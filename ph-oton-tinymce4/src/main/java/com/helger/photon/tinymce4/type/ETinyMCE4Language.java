@@ -108,7 +108,7 @@ public enum ETinyMCE4Language
 
   private final String m_sValue;
 
-  private ETinyMCE4Language (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4Language (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

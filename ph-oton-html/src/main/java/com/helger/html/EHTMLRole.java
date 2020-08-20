@@ -188,7 +188,7 @@ public enum EHTMLRole implements IHasID <String>
   private final EHTMLRoleType m_eType;
   private final String m_sDescription;
 
-  private EHTMLRole (@Nonnull @Nonempty final String sID, @Nonnull final EHTMLRoleType eType, @Nonnull @Nonempty final String sDescription)
+  EHTMLRole (@Nonnull @Nonempty final String sID, @Nonnull final EHTMLRoleType eType, @Nonnull @Nonempty final String sDescription)
   {
     m_sID = sID;
     m_eType = eType;

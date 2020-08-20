@@ -37,7 +37,7 @@ public enum EAccess implements IHasID <String>
   private final String m_sID;
   private final boolean m_bHasAccess;
 
-  private EAccess (@Nonnull @Nonempty final String sID, final boolean bHasAccess)
+  EAccess (@Nonnull @Nonempty final String sID, final boolean bHasAccess)
   {
     m_sID = sID;
     m_bHasAccess = bHasAccess;

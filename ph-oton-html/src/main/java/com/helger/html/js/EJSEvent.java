@@ -197,7 +197,7 @@ public enum EJSEvent
   @CodingStyleguideUnaware
   private final Set <EJSEventType> m_aJSEventTypes;
 
-  private EJSEvent (@Nonnull @Nonempty final String sEvent, @Nonnull @Nonempty final EJSEventType... aTypes)
+  EJSEvent (@Nonnull @Nonempty final String sEvent, @Nonnull @Nonempty final EJSEventType... aTypes)
   {
     m_sEvent = sEvent;
     m_aJSEventTypes = new CommonsHashSet <> (aTypes).getAsUnmodifiable ();

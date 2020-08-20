@@ -39,7 +39,7 @@ public enum EHCIFrameAlign implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCIFrameAlign (@Nonnull @Nonempty final String sAttrValue)
+  EHCIFrameAlign (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

@@ -53,7 +53,7 @@ public enum EHCTextDirection implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCTextDirection (@Nonnull @Nonempty final String sAttrValue)
+  EHCTextDirection (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

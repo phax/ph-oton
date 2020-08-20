@@ -36,7 +36,7 @@ public enum EHCTextAreaWrap implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCTextAreaWrap (@Nonnull @Nonempty final String sAttrValue)
+  EHCTextAreaWrap (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

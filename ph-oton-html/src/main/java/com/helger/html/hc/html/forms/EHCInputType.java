@@ -64,7 +64,7 @@ public enum EHCInputType implements IHCHasHTMLAttributeValue
   private final String m_sAttrValue;
   private final boolean m_bHasPlaceholder;
 
-  private EHCInputType (@Nonnull @Nonempty final String sAttrValue, final boolean bHasPlaceholder)
+  EHCInputType (@Nonnull @Nonempty final String sAttrValue, final boolean bHasPlaceholder)
   {
     m_sAttrValue = sAttrValue;
     m_bHasPlaceholder = bHasPlaceholder;

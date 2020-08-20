@@ -41,7 +41,7 @@ public enum EHCOLType implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCOLType (@Nonnull @Nonempty final String sAttrValue)
+  EHCOLType (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

@@ -35,7 +35,7 @@ public enum EColorPickerPosition implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EColorPickerPosition (@Nonnull @Nonempty final String sAttrValue)
+  EColorPickerPosition (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

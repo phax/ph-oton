@@ -40,7 +40,7 @@ public enum ETypeaheadText implements IHasDisplayTextWithArgs
 
   private final IMultilingualText m_aTP;
 
-  private ETypeaheadText (@Nonnull final String sDE, @Nonnull final String sEN)
+  ETypeaheadText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

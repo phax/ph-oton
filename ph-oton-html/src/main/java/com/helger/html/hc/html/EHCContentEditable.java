@@ -36,7 +36,7 @@ public enum EHCContentEditable implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCContentEditable (@Nonnull @Nonempty final String sAttrValue)
+  EHCContentEditable (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

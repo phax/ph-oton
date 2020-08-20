@@ -35,7 +35,7 @@ public enum EBloodhoundRemoteRateLimitBy
 
   private final String m_sValue;
 
-  private EBloodhoundRemoteRateLimitBy (@Nonnull @Nonempty final String sValue)
+  EBloodhoundRemoteRateLimitBy (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

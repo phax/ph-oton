@@ -39,7 +39,7 @@ public enum ELabelType implements IHasID <String>
 
   private final String m_sID;
 
-  private ELabelType (@Nonnull @Nonempty final String sID)
+  ELabelType (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

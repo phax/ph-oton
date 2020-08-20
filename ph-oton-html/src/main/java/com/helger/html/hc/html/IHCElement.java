@@ -45,7 +45,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
                             IHCHasCSSClasses <IMPLTYPE>
 {
   /** The default value for an unset tab index, as -1 is used for "none" */
-  public static final long DEFAULT_TABINDEX = -5l;
+  long DEFAULT_TABINDEX = -5l;
 
   /**
    * @return The contained HTML element. Never <code>null</code>.

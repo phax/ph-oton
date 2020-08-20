@@ -34,7 +34,7 @@ public enum ETinyMCE4Resize
 
   private final IJSExpression m_aExpr;
 
-  private ETinyMCE4Resize (@Nonnull final IJSExpression aExpr)
+  ETinyMCE4Resize (@Nonnull final IJSExpression aExpr)
   {
     m_aExpr = aExpr;
   }

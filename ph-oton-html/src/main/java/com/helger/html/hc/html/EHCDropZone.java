@@ -48,7 +48,7 @@ public enum EHCDropZone implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCDropZone (@Nonnull @Nonempty final String sAttrValue)
+  EHCDropZone (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

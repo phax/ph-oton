@@ -35,7 +35,7 @@ public enum ETypeaheadRemoteRateLimitFunction
 
   private final String m_sValue;
 
-  private ETypeaheadRemoteRateLimitFunction (@Nonnull @Nonempty final String sValue)
+  ETypeaheadRemoteRateLimitFunction (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

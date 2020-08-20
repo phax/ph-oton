@@ -37,7 +37,7 @@ public enum EHTMLContentModelType
 
   private final int m_nValue;
 
-  private EHTMLContentModelType (final int nValue)
+  EHTMLContentModelType (final int nValue)
   {
     m_nValue = nValue;
   }

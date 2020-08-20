@@ -81,7 +81,7 @@ public enum ETinyMCE4Theme
   private final String m_sValue;
   private final TinyMCE4ToolbarControlList m_aDefaultToolbar;
 
-  private ETinyMCE4Theme (@Nonnull @Nonempty final String sValue, @Nonnull final TinyMCE4ToolbarControlList aDefaultToolbar)
+  ETinyMCE4Theme (@Nonnull @Nonempty final String sValue, @Nonnull final TinyMCE4ToolbarControlList aDefaultToolbar)
   {
     m_sValue = sValue;
     m_aDefaultToolbar = aDefaultToolbar;

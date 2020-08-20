@@ -29,9 +29,9 @@ public enum ETinyMCE4JSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  private ETinyMCE4JSPathProvider (@Nonnull @Nonempty final String sRegularPath,
-                                   @Nonnull @Nonempty final String sMinPath,
-                                   final boolean bCanBeBundled)
+  ETinyMCE4JSPathProvider (@Nonnull @Nonempty final String sRegularPath,
+                           @Nonnull @Nonempty final String sMinPath,
+                           final boolean bCanBeBundled)
   {
     m_aPP = new ConstantJSPathProvider (sRegularPath, sMinPath, (String) null, bCanBeBundled);
   }

@@ -45,7 +45,7 @@ public enum EWebPageFormAction implements IHasID <String>
 
   private final String m_sID;
 
-  private EWebPageFormAction (@Nonnull @Nonempty final String sID)
+  EWebPageFormAction (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

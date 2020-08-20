@@ -74,7 +74,7 @@ public enum ETinyMCE4MenuControl
   private final String m_sValue;
   private final ETinyMCE4Plugin m_eRequiredPlugin;
 
-  private ETinyMCE4MenuControl (@Nonnull @Nonempty final String sValue, @Nullable final ETinyMCE4Plugin eRequiredPlugin)
+  ETinyMCE4MenuControl (@Nonnull @Nonempty final String sValue, @Nullable final ETinyMCE4Plugin eRequiredPlugin)
   {
     m_sValue = sValue;
     m_eRequiredPlugin = eRequiredPlugin;

@@ -41,7 +41,7 @@ public enum EExportRecordType implements IHasID <String>
 
   private final String m_sID;
 
-  private EExportRecordType (@Nonnull @Nonempty final String sID)
+  EExportRecordType (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

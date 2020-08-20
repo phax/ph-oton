@@ -1188,7 +1188,7 @@ public enum EFontAwesome5Icon implements IIcon
   private final ICSSClassProvider m_aCSSClass;
   private final boolean m_bIsBrand;
 
-  private EFontAwesome5Icon (@Nonnull final ICSSClassProvider aCSSClass, final boolean bIsBrand)
+  EFontAwesome5Icon (@Nonnull final ICSSClassProvider aCSSClass, final boolean bIsBrand)
   {
     m_aCSSClass = aCSSClass;
     m_bIsBrand = bIsBrand;

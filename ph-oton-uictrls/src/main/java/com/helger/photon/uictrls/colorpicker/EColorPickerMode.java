@@ -33,7 +33,7 @@ public enum EColorPickerMode implements IHCHasHTMLAttributeValue
 
   private final String m_sID;
 
-  private EColorPickerMode (@Nonnull @Nonempty final String sID)
+  EColorPickerMode (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

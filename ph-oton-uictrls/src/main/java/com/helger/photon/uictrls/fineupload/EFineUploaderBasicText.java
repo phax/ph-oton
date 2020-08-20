@@ -42,7 +42,7 @@ public enum EFineUploaderBasicText implements IHasDisplayText
 
   private final IMultilingualText m_aTP;
 
-  private EFineUploaderBasicText (@Nonnull final String sDE, @Nonnull final String sEN)
+  EFineUploaderBasicText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

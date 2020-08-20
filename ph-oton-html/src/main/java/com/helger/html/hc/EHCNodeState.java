@@ -41,7 +41,7 @@ public enum EHCNodeState
 
   private final int m_nID;
 
-  private EHCNodeState (final int nID)
+  EHCNodeState (final int nID)
   {
     m_nID = nID;
   }

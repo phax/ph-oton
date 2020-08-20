@@ -77,7 +77,7 @@ public enum ETinyMCE4Plugin
 
   private final String m_sValue;
 
-  private ETinyMCE4Plugin (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4Plugin (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

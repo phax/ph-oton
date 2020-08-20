@@ -40,7 +40,7 @@ public enum EHCCORSSettings implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCCORSSettings (@Nonnull @Nonempty final String sAttrValue)
+  EHCCORSSettings (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

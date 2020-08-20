@@ -1045,7 +1045,7 @@ public enum EFamFamIcon implements IIcon
 
   private final String m_sCSSClass;
 
-  private EFamFamIcon (@Nonnull @Nonempty final String sCSSClass)
+  EFamFamIcon (@Nonnull @Nonempty final String sCSSClass)
   {
     m_sCSSClass = sCSSClass;
   }

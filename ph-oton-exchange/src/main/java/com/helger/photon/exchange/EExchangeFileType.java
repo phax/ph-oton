@@ -113,11 +113,11 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   private final boolean m_bLineBased;
   private final EExchangeFileTypeName m_aName;
 
-  private EExchangeFileType (@Nonnull @Nonempty final String sID,
-                             @Nonnull @Nonempty final String sExt,
-                             @Nonnull final IMimeType aMimeType,
-                             final boolean bLineBased,
-                             @Nonnull final EExchangeFileTypeName aName)
+  EExchangeFileType (@Nonnull @Nonempty final String sID,
+                     @Nonnull @Nonempty final String sExt,
+                     @Nonnull final IMimeType aMimeType,
+                     final boolean bLineBased,
+                     @Nonnull final EExchangeFileTypeName aName)
   {
     m_sID = sID;
     m_sExt = sExt;

@@ -62,12 +62,12 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  private EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath)
+  EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
-  private EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
+  EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
     m_aPP = ConstantJSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }

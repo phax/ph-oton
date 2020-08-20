@@ -55,12 +55,12 @@ public enum EDublinCoreMetaElement implements IMetaElementDeclaration
    */
   private final String m_sScheme;
 
-  private EDublinCoreMetaElement (@Nonnull @Nonempty final String sName)
+  EDublinCoreMetaElement (@Nonnull @Nonempty final String sName)
   {
     this (sName, null);
   }
 
-  private EDublinCoreMetaElement (@Nonnull @Nonempty final String sName, @Nullable final String sScheme)
+  EDublinCoreMetaElement (@Nonnull @Nonempty final String sName, @Nullable final String sScheme)
   {
     m_sName = sName;
     m_sScheme = sScheme;

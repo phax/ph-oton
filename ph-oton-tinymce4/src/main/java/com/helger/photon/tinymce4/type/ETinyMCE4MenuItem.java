@@ -40,7 +40,7 @@ public enum ETinyMCE4MenuItem
 
   private final String m_sValue;
 
-  private ETinyMCE4MenuItem (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4MenuItem (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

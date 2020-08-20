@@ -39,7 +39,7 @@ public enum EHCTrackType implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCTrackType (@Nonnull @Nonempty final String sAttrValue)
+  EHCTrackType (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

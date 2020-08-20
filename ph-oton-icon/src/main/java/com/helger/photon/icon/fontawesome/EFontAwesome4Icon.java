@@ -828,7 +828,7 @@ public enum EFontAwesome4Icon implements IIcon
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EFontAwesome4Icon (@Nonnull final ICSSClassProvider aCSSClass)
+  EFontAwesome4Icon (@Nonnull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }

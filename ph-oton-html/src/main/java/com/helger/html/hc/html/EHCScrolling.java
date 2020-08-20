@@ -31,7 +31,7 @@ public enum EHCScrolling implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCScrolling (@Nonnull @Nonempty final String sAttrValue)
+  EHCScrolling (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

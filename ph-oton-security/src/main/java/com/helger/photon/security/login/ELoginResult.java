@@ -54,7 +54,7 @@ public enum ELoginResult implements ICredentialValidationResult
 
   private final IHasDisplayText m_aErrorMsg;
 
-  private ELoginResult (@Nonnull final IHasDisplayText aErrorMsg)
+  ELoginResult (@Nonnull final IHasDisplayText aErrorMsg)
   {
     m_aErrorMsg = aErrorMsg;
   }

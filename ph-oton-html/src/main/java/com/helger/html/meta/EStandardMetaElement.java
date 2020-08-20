@@ -83,7 +83,7 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
   private final String m_sName;
   private final EMetaElementType m_eType;
 
-  private EStandardMetaElement (@Nonnull @Nonempty final String sName, final boolean bIsHttpEquiv)
+  EStandardMetaElement (@Nonnull @Nonempty final String sName, final boolean bIsHttpEquiv)
   {
     m_sName = sName;
     m_eType = bIsHttpEquiv ? EMetaElementType.PRAGMA_DIRECTIVE : EMetaElementType.DOCUMENT_LEVEL;

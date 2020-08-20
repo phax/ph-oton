@@ -45,7 +45,7 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
 
     private final String m_sValue;
 
-    private EPosition (@Nonnull @Nonempty final String sValue)
+    EPosition (@Nonnull @Nonempty final String sValue)
     {
       m_sValue = sValue;
     }
@@ -66,7 +66,7 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
     private final String m_sValue;
     private final ICSSPathProvider m_aCSS;
 
-    private ETheme (@Nonnull @Nonempty final String sValue, @Nonnull final ICSSPathProvider aCSS)
+    ETheme (@Nonnull @Nonempty final String sValue, @Nonnull final ICSSPathProvider aCSS)
     {
       m_sValue = sValue;
       m_aCSS = aCSS;

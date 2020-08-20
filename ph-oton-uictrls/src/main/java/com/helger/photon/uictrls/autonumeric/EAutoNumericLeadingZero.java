@@ -35,7 +35,7 @@ public enum EAutoNumericLeadingZero implements IHasID <String>
 
   private final String m_sID;
 
-  private EAutoNumericLeadingZero (@Nonnull @Nonempty final String sID)
+  EAutoNumericLeadingZero (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

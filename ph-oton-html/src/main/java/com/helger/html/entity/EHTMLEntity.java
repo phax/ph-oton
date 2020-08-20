@@ -356,7 +356,7 @@ public enum EHTMLEntity implements IHTMLEntity
   private char m_cChar;
   private final String m_sDescription;
 
-  private EHTMLEntity (@Nonnull @Nonempty final String sName, final char c, @Nonnull @Nonempty final String sDescription)
+  EHTMLEntity (@Nonnull @Nonempty final String sName, final char c, @Nonnull @Nonempty final String sDescription)
   {
     m_sEntityName = sName;
     m_sEntityReference = '&' + sName + ';';

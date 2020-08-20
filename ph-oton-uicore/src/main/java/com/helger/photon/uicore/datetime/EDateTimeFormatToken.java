@@ -72,9 +72,9 @@ public enum EDateTimeFormatToken
   private final String m_sJavaToken;
   private Consumer <DateTimeFormatterBuilder> m_aDTFBC;
 
-  private EDateTimeFormatToken (@Nonnull @Nonempty final String sJSCalendarToken,
-                                @Nonnull @Nonempty final String sJavaToken,
-                                @Nonnull final Consumer <DateTimeFormatterBuilder> aDTFBC)
+  EDateTimeFormatToken (@Nonnull @Nonempty final String sJSCalendarToken,
+                        @Nonnull @Nonempty final String sJavaToken,
+                        @Nonnull final Consumer <DateTimeFormatterBuilder> aDTFBC)
   {
     m_sJSCalendarToken = sJSCalendarToken;
     m_sJavaToken = sJavaToken;

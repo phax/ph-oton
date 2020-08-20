@@ -74,12 +74,12 @@ public enum EHCLinkType implements IHCLinkType
   private final String m_sAttrValue;
   private final boolean m_bAllowedMoreThanOnce;
 
-  private EHCLinkType (@Nonnull @Nonempty final String sAttrValue)
+  EHCLinkType (@Nonnull @Nonempty final String sAttrValue)
   {
     this (sAttrValue, false);
   }
 
-  private EHCLinkType (@Nonnull @Nonempty final String sAttrValue, final boolean bAllowedMoreThanOnce)
+  EHCLinkType (@Nonnull @Nonempty final String sAttrValue, final boolean bAllowedMoreThanOnce)
   {
     m_sAttrValue = sAttrValue;
     m_bAllowedMoreThanOnce = bAllowedMoreThanOnce;

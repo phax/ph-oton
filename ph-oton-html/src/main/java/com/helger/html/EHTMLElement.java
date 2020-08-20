@@ -161,9 +161,7 @@ public enum EHTMLElement
   private final boolean m_bMayBeSelfClosed;
   private final EHTMLContentModelType m_eType;
 
-  private EHTMLElement (@Nonnull @Nonempty final String sElementName,
-                        final boolean bMayBeSelfClosed,
-                        @Nonnull final EHTMLContentModelType eType)
+  EHTMLElement (@Nonnull @Nonempty final String sElementName, final boolean bMayBeSelfClosed, @Nonnull final EHTMLContentModelType eType)
   {
     m_sElementNameLC = sElementName.toLowerCase (CHTMLCharset.LOCALE);
     m_sElementNameUC = sElementName.toUpperCase (CHTMLCharset.LOCALE);

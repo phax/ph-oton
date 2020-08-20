@@ -34,7 +34,7 @@ public enum ESecurityUIText implements IHasDisplayText
 
   private final IMultilingualText m_aTP;
 
-  private ESecurityUIText (@Nonnull final String sDE, @Nonnull final String sEN)
+  ESecurityUIText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

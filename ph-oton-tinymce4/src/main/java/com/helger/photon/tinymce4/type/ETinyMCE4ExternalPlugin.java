@@ -28,7 +28,7 @@ public enum ETinyMCE4ExternalPlugin
 
   private final String m_sValue;
 
-  private ETinyMCE4ExternalPlugin (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4ExternalPlugin (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

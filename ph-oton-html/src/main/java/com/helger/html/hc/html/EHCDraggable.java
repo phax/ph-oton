@@ -36,7 +36,7 @@ public enum EHCDraggable implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCDraggable (@Nonnull @Nonempty final String sAttrValue)
+  EHCDraggable (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

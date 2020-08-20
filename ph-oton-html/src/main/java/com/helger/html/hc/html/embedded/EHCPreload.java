@@ -37,7 +37,7 @@ public enum EHCPreload implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCPreload (@Nonnull @Nonempty final String sAttrValue)
+  EHCPreload (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

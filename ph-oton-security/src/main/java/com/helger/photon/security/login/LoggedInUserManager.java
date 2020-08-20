@@ -259,22 +259,22 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *         present session, <code>false</code> if a login should fail, if that
    *         user is already logged in.
    */
-  public final boolean isLogoutAlreadyLoggedInUser ()
+  public boolean isLogoutAlreadyLoggedInUser ()
   {
     return m_aRWLock.readLockedBoolean ( () -> m_bLogoutAlreadyLoggedInUser);
   }
 
-  public final void setLogoutAlreadyLoggedInUser (final boolean bLogoutAlreadyLoggedInUser)
+  public void setLogoutAlreadyLoggedInUser (final boolean bLogoutAlreadyLoggedInUser)
   {
     m_aRWLock.writeLockedBoolean ( () -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
   }
 
-  public final boolean isAnonymousLogging ()
+  public boolean isAnonymousLogging ()
   {
     return m_aRWLock.readLockedBoolean ( () -> m_bAnonymousLogging);
   }
 
-  public final void setAnonymousLogging (final boolean bAnonymousLogging)
+  public void setAnonymousLogging (final boolean bAnonymousLogging)
   {
     m_aRWLock.writeLockedBoolean ( () -> m_bAnonymousLogging = bAnonymousLogging);
   }

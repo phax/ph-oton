@@ -37,7 +37,7 @@ public enum ETinyMCE4Skin
 
   private final String m_sValue;
 
-  private ETinyMCE4Skin (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4Skin (@Nonnull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }

@@ -975,7 +975,7 @@ public enum EMaterialDesignIcon implements IIcon
 
   private final ICSSClassProvider m_aCSSClass;
 
-  private EMaterialDesignIcon (@Nonnull @Nonempty final String sCSSClassName)
+  EMaterialDesignIcon (@Nonnull @Nonempty final String sCSSClassName)
   {
     m_aCSSClass = DefaultCSSClassProvider.create (sCSSClassName);
   }

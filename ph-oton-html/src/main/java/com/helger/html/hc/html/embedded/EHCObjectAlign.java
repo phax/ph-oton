@@ -40,7 +40,7 @@ public enum EHCObjectAlign implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCObjectAlign (@Nonnull @Nonempty final String sAttrValue)
+  EHCObjectAlign (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

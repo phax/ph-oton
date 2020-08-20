@@ -42,7 +42,7 @@ public enum EIconCSSPathProvider implements ICSSPathProvider
 
   private final ConstantCSSPathProvider m_aPP;
 
-  private EIconCSSPathProvider (@Nonnull @Nonempty final String sPath)
+  EIconCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }

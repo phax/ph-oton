@@ -52,7 +52,7 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
 
   private final ConstantCSSPathProvider m_aPP;
 
-  private EUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath)
+  EUICtrlsCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }

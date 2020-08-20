@@ -59,17 +59,17 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  private EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath)
+  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
-  private EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
+  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
     m_aPP = ConstantJSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }
 
-  private EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
+  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
   {
     m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
   }

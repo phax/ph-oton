@@ -56,7 +56,7 @@ public enum EFineUploader5CoreText implements IHasDisplayText
 
   private final IMultilingualText m_aTP;
 
-  private EFineUploader5CoreText (@Nonnull final String sDE, @Nonnull final String sEN)
+  EFineUploader5CoreText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

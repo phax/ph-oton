@@ -37,7 +37,7 @@ public enum EHCButtonType implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCButtonType (@Nonnull @Nonempty final String sAttrValue)
+  EHCButtonType (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

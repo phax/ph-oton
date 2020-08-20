@@ -53,7 +53,7 @@ public enum EAutoNumericRoundingMode implements IHasID <String>
 
   private final String m_sID;
 
-  private EAutoNumericRoundingMode (@Nonnull @Nonempty final String sID)
+  EAutoNumericRoundingMode (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

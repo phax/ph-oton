@@ -40,7 +40,7 @@ public enum EJSEventType implements IHasID <String>
 
   private final String m_sID;
 
-  private EJSEventType (@Nonnull @Nonempty final String sID)
+  EJSEventType (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }

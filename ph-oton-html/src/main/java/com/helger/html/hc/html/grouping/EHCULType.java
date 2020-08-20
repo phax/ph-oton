@@ -39,7 +39,7 @@ public enum EHCULType implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCULType (@Nonnull @Nonempty final String sAttrValue)
+  EHCULType (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

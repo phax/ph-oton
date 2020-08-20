@@ -40,7 +40,7 @@ public enum EHCCellAlign implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCCellAlign (@Nonnull @Nonempty final String sAttrValue)
+  EHCCellAlign (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

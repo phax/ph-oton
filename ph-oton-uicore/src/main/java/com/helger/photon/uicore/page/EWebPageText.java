@@ -95,7 +95,7 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
 
   private final IMultilingualText m_aTP;
 
-  private EWebPageText (@Nonnull final String sDE, @Nonnull final String sEN)
+  EWebPageText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

@@ -40,7 +40,7 @@ public enum EExchangeFileTypeText implements IHasDisplayTextWithArgs
 
   private final IMultilingualText m_aTP;
 
-  private EExchangeFileTypeText (@Nonnull final String sDE, @Nonnull final String sEN)
+  EExchangeFileTypeText (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }

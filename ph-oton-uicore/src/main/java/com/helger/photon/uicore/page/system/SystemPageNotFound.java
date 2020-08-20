@@ -51,7 +51,7 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
 
     private final IMultilingualText m_aTP;
 
-    private ETextBase (@Nonnull final String sDE, @Nonnull final String sEN)
+    ETextBase (@Nonnull final String sDE, @Nonnull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }

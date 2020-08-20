@@ -111,7 +111,7 @@ public enum EHTMLVersion
 
   private final boolean m_bIsAtLeastHTML5;
 
-  private EHTMLVersion (final boolean bIsAtLeastHTML5)
+  EHTMLVersion (final boolean bIsAtLeastHTML5)
   {
     m_bIsAtLeastHTML5 = bIsAtLeastHTML5;
   }

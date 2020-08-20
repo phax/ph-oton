@@ -42,7 +42,7 @@ public enum EHCParamValueType implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCParamValueType (@Nonnull @Nonempty final String sAttrValue)
+  EHCParamValueType (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

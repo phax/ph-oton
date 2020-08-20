@@ -293,7 +293,7 @@ public enum EFamFamFlagIcon implements IIcon, IHasID <String>
   private final String m_sID;
   private final String m_sCSSClass;
 
-  private EFamFamFlagIcon (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sCSSClass)
+  EFamFamFlagIcon (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sCSSClass)
   {
     m_sID = sID;
     m_sCSSClass = sCSSClass;

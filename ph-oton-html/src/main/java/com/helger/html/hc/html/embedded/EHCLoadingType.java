@@ -40,7 +40,7 @@ public enum EHCLoadingType implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  private EHCLoadingType (@Nonnull @Nonempty final String sAttrValue)
+  EHCLoadingType (@Nonnull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }

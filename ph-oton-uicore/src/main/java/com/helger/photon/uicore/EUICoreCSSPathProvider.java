@@ -44,12 +44,12 @@ public enum EUICoreCSSPathProvider implements ICSSPathProvider
 
   private final ConstantCSSPathProvider m_aPP;
 
-  private EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath)
+  EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
     m_aPP = ConstantCSSPathProvider.create (sPath);
   }
 
-  private EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
+  EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
     m_aPP = ConstantCSSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
   }

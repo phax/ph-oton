@@ -41,7 +41,7 @@ public enum EMetaElementType
    */
   private final IMicroQName m_aAttrName;
 
-  private EMetaElementType (@Nonnull final IMicroQName aAttrName)
+  EMetaElementType (@Nonnull final IMicroQName aAttrName)
   {
     m_aAttrName = aAttrName;
   }

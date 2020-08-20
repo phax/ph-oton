@@ -38,7 +38,7 @@ public enum EHCFormMethod implements IHCHasHTMLAttributeValue
 
   private final String m_sMethod;
 
-  private EHCFormMethod (@Nonnull final String sMethod)
+  EHCFormMethod (@Nonnull final String sMethod)
   {
     m_sMethod = sMethod;
   }

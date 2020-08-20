@@ -36,7 +36,7 @@ public enum EHTMLContentKind
 
   private final int m_nValue;
 
-  private EHTMLContentKind (@Nonnegative final int nValue)
+  EHTMLContentKind (@Nonnegative final int nValue)
   {
     m_nValue = nValue;
   }
