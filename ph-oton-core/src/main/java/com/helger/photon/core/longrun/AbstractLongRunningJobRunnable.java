@@ -103,7 +103,7 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
       getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.SUCCESS, aJobResult);
 
       if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Finished long running job '" + sLongRunningJobID + "' with sucess and result of type " + aJobResult.getType ());
+        LOGGER.info ("Finished long running job '" + sLongRunningJobID + "' with success and result of type " + aJobResult.getType ());
 
     }
     catch (final Exception ex)
