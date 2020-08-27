@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
@@ -145,6 +146,12 @@ public class LongRunningJobResult implements Serializable
   public static LongRunningJobResult createText (@Nonnull final String sResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.TEXT, sResult);
+  }
+
+  @Nonnull
+  public static LongRunningJobResult createExceptionText (@Nonnull final Throwable t)
+  {
+    return createText (t.getClass ().getName () + " -  " + t.getMessage () + "\n" + StackTraceHelper.getStackAsString (t));
   }
 
   @Nonnull

@@ -108,13 +108,11 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
     }
     catch (final Exception ex)
     {
-      final String sExText = ex.getClass ().getName () + " - " + ex.getMessage ();
-
       // Mark the long running job as finished
-      getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.FAILURE, LongRunningJobResult.createText ("Exception: " + sExText));
+      getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.FAILURE, LongRunningJobResult.createExceptionText (ex));
 
       if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Finished long running job '" + sLongRunningJobID + "' with failure: " + sExText);
+        LOGGER.info ("Error executing long running job '" + sLongRunningJobID + "'", ex);
     }
   }
 }

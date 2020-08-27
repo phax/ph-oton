@@ -83,18 +83,19 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
                                @Nonnull final IJobExecutionContext aContext,
                                @Nonnull final ESuccess eExecSuccess)
   {
+    // Get long running job ID from JobDataMap
+    final String sLongRunningJobID = aJobDataMap.getAsString (KEY_LONG_RUNNING_JOB_ID);
+
     // End long running job before the request scope is closed
     try
     {
-      // Get long running job ID from JobDataMap
-      final String sLongRunningJobID = aJobDataMap.getAsString (KEY_LONG_RUNNING_JOB_ID);
       if (sLongRunningJobID != null)
       {
         // Create the main result
         final LongRunningJobResult aJobResult = createLongRunningJobResult ();
 
         // Mark the long running job as finished
-        getLongRunningJobManager ().onEndJob (sLongRunningJobID, eExecSuccess, aJobResult);
+        getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.SUCCESS, aJobResult);
       }
       else
         LOGGER.error ("Failed to retrieve long running job ID from JobDataMap " + aJobDataMap);
@@ -105,6 +106,9 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
 
       // Notify custom exception handler
       triggerCustomExceptionHandler (ex, getClass ().getName (), this);
+
+      // Mark the long running job as failed
+      getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.FAILURE, LongRunningJobResult.createExceptionText (ex));
     }
 
     super.afterExecute (aJobDataMap, aContext, eExecSuccess);
