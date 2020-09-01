@@ -99,6 +99,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.2.7 - work in progress
+    * Updated to ph-commons 9.4.7
     * Improved long running job error handling
 * v8.2.6 - 2020-08-20
     * Updated animate.css to 4.1.0
