@@ -25,12 +25,16 @@ import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.config.IConfig;
+import com.helger.config.source.res.ConfigurationSourceJson;
+import com.helger.config.source.res.ConfigurationSourceProperties;
+import com.helger.config.source.res.IConfigurationSourceResource;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
  * A non-persisting manager for {@link ConfigurationFile} objects. Needs to be
  * initialized manually at startup.
- * 
+ *
  * @author Philip Helger
  */
 public final class ConfigurationFileManager extends AbstractGlobalSingleton
@@ -56,6 +60,38 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
     if (m_aMap.containsKey (sID))
       throw new IllegalArgumentException ("A configuration file " + sID + " is already registered!");
     m_aMap.put (sID, aConfigurationFile);
+  }
+
+  /**
+   * Register all configuration sources that are based on resources.
+   *
+   * @param aConfig
+   *        The configuration to use. May not be <code>null</code>.
+   * @since 8.2.7
+   */
+  public void registerAll (@Nonnull final IConfig aConfig)
+  {
+    ValueEnforcer.notNull (aConfig, "Config");
+
+    aConfig.forEachConfigurationValueProvider ( (cvp, prio) -> {
+      if (cvp instanceof IConfigurationSourceResource)
+      {
+        final IConfigurationSourceResource aCVP = (IConfigurationSourceResource) cvp;
+
+        // Find syntax
+        final EConfigurationFileSyntax eSHL;
+        if (aCVP instanceof ConfigurationSourceJson)
+          eSHL = EConfigurationFileSyntax.JSON;
+        else
+          if (aCVP instanceof ConfigurationSourceProperties)
+            eSHL = EConfigurationFileSyntax.PROPERTIES;
+          else
+            eSHL = EConfigurationFileSyntax.NONE;
+
+        // Register
+        registerConfigurationFile (new ConfigurationFile (aCVP.getResource ()).setSyntaxHighlightLanguage (eSHL));
+      }
+    });
   }
 
   @Nonnull
