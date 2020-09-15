@@ -19,6 +19,7 @@ package com.helger.html.hc.html.traits;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCBlockQuote;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -30,6 +31,7 @@ import com.helger.html.hc.html.sections.HCH3;
 import com.helger.html.hc.html.sections.HCH4;
 import com.helger.html.hc.html.sections.HCH5;
 import com.helger.html.hc.html.sections.HCH6;
+import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCCode;
 import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.html.textlevel.HCSmall;
@@ -46,6 +48,42 @@ import com.helger.html.hc.html.textlevel.HCSup;
  */
 public interface IHCTrait
 {
+  @Nonnull
+  default HCA a ()
+  {
+    return new HCA ();
+  }
+
+  @Nonnull
+  default HCA a (@Nullable final ISimpleURL aHref)
+  {
+    return new HCA (aHref);
+  }
+
+  @Nonnull
+  default HCA a (@Nullable final IHCNode aNode)
+  {
+    return new HCA ().addChild (aNode);
+  }
+
+  @Nonnull
+  default HCA a (@Nullable final String s)
+  {
+    return new HCA ().addChild (s);
+  }
+
+  @Nonnull
+  default HCA a (@Nullable final Iterable <? extends IHCNode> aNodes)
+  {
+    return new HCA ().addChildren (aNodes);
+  }
+
+  @Nonnull
+  default HCA a (@Nullable final String... aTexts)
+  {
+    return new HCA ().addChildren (aTexts);
+  }
+
   @Nonnull
   default HCBlockQuote blockquote ()
   {
