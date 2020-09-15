@@ -98,11 +98,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v8.2.7 - work in progress
-    * Updated to ph-commons 9.4.7
+* v8.2.7 - 2020-09-15
+    * Updated to ph-commons 9.4.8
     * Improved long running job error handling
     * Extended `ConfigurationFileManager` API
-    * Using Popper UMD JS
+    * Using Popper UMD JS instead of the default distribution
 * v8.2.6 - 2020-08-20
     * Updated animate.css to 4.1.0
     * Updated to Apache commons-net 3.7
