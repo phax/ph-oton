@@ -18,6 +18,9 @@ package com.helger.photon.core.configfile;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
@@ -39,6 +42,8 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
  */
 public final class ConfigurationFileManager extends AbstractGlobalSingleton
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (ConfigurationFileManager.class);
+
   private final ICommonsOrderedMap <String, ConfigurationFile> m_aMap = new CommonsLinkedHashMap <> ();
 
   @Deprecated
@@ -89,7 +94,12 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
             eSHL = EConfigurationFileSyntax.NONE;
 
         // Register
-        registerConfigurationFile (new ConfigurationFile (aCVP.getResource ()).setSyntaxHighlightLanguage (eSHL));
+        final ConfigurationFile aCF = new ConfigurationFile (aCVP.getResource ()).setSyntaxHighlightLanguage (eSHL);
+        if (!m_aMap.containsKey (aCF.getID ()))
+          registerConfigurationFile (aCF);
+        else
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Ignoring Configuration file '" + aCVP.getResource ().getPath () + "' because it is already registered.");
       }
     });
   }
