@@ -98,6 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v8.2.8 - 2020-09-17
+    * Updated to Jakarta JAXB 2.3.3
 * v8.2.7 - 2020-09-15
     * Updated to ph-commons 9.4.8
     * Improved long running job error handling
