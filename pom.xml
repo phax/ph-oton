@@ -89,7 +89,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>9.4.8</version>
+        <version>9.5.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -101,14 +101,14 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-schedule-parent-pom</artifactId>
-        <version>4.1.0</version>
+        <version>4.1.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-masterdata-parent-pom</artifactId>
-        <version>6.1.7</version>
+        <version>6.1.8</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -122,7 +122,7 @@
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>9.3.3</version>
+        <version>9.3.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -312,23 +312,6 @@
     </dependency>
   </dependencies>
   
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>com.helger.maven</groupId>
-          <artifactId>ph-jscompress-maven-plugin</artifactId>
-          <version>2.2.3</version>
-        </plugin>
-        <plugin>
-          <groupId>com.helger.maven</groupId>
-          <artifactId>ph-csscompress-maven-plugin</artifactId>
-          <version>6.2.3</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-  
   <modules>
     <module>ph-oton-html</module>
     <module>ph-oton-jscode</module>
@@ -359,4 +342,31 @@
     <module>ph-oton-bootstrap4-stub</module>
     <module>ph-oton-bootstrap4-demo</module>
   </modules>
+  
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.helger.maven</groupId>
+          <artifactId>ph-jscompress-maven-plugin</artifactId>
+          <version>2.2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>com.helger.maven</groupId>
+          <artifactId>ph-csscompress-maven-plugin</artifactId>
+          <version>6.2.3</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+        </configuration>
+      </plugin> 
+    </plugins>
+  </build>
 </project>

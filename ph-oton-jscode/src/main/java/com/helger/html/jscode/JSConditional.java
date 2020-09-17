@@ -125,7 +125,7 @@ public class JSConditional extends AbstractJSStatement
   }
 
   /**
-   * Creates <tt>... else if(...) ...</tt> code.
+   * Creates <code>... else if(...) ...</code> code.
    *
    * @param aBoolExp
    *        The boolean expression
