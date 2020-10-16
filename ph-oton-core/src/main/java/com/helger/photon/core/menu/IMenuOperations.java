@@ -367,8 +367,7 @@ public interface IMenuOperations extends Serializable
    *        The ID to be used for this redirect. May not be <code>null</code>.
    *        If this is a random ID, than you don't need a redirect ;-)
    * @param aPage
-   *        The page to redirect to. May not be <code>null</code>. * @return The
-   *        created menu item. Never <code>null</code>.
+   *        The page to redirect to. May not be <code>null</code>.
    * @return The created menu item. Never <code>null</code>.
    */
   @Nonnull
