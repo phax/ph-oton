@@ -91,7 +91,7 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   INTERNAL_ERROR_DESCRIPTION ("Entschuldigung!\n" +
                               "Es ist ein interner Fehler aufgetreten.\n" +
                               "\n" +
-                              "Diese Fehlermeldung wurde automatisch and die zuständigen Personen weitergeleitet.\n" +
+                              "Diese Fehlermeldung wurde automatisch an die zuständigen Personen weitergeleitet.\n" +
                               "Notieren Sie sich bitte ihre persönliche Fehlernummer ''{0}'' für eine mögliche spätere Analyse.\n" +
                               "\n" +
                               "Sie können mit Ihrer Arbeit fortfahren.\n" +
