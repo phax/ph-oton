@@ -286,15 +286,17 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     if (m_aCSSClassProviders == null)
       return null;
 
-    final int nCount = m_aCSSClassProviders.size ();
+    // Create a copy because it might be changed from the outside
+    final ICommonsOrderedSet <ICSSClassProvider> aCSSClassProviders = m_aCSSClassProviders.getClone ();
+    final int nCount = aCSSClassProviders.size ();
     if (nCount == 0)
       return null;
 
     if (nCount == 1)
-      return m_aCSSClassProviders.getFirst ().getCSSClass ();
+      return aCSSClassProviders.getFirst ().getCSSClass ();
 
     final StringBuilder aSB = new StringBuilder ();
-    for (final ICSSClassProvider aCSSClassProvider : m_aCSSClassProviders)
+    for (final ICSSClassProvider aCSSClassProvider : aCSSClassProviders)
     {
       final String sCSSClass = aCSSClassProvider.getCSSClass ();
       if (StringHelper.hasText (sCSSClass))
