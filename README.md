@@ -99,7 +99,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.2.9 - work in progress
-    * Updated to Jetty 9.4.33.v20201020
+    * Updated to Jetty 9.4.34
     * Updated to Apache commons-net 3.7.2
     * Updated to Bootstrap 4.5.3
 * v8.2.8 - 2020-09-17
