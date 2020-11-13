@@ -94,6 +94,12 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
     return setLabel (sLabel == null ? null : new HCFormLabel (sLabel, eLabelType));
   }
 
+  @Nonnull
+  public final BootstrapFormGroup setLabelForCheckBox (@Nullable final String sLabel)
+  {
+    return setLabel (sLabel == null ? null : HCFormLabel.createForCheckBox (sLabel));
+  }
+
   /**
    * Called after the label cell was altered.
    *
