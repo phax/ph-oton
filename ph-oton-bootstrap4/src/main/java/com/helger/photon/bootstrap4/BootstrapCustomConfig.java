@@ -38,17 +38,18 @@ import com.helger.photon.uicore.EUICoreJSPathProvider;
 public final class BootstrapCustomConfig
 {
   private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  private static ICommonsList <ICSSPathProvider> s_aCSS = new CommonsArrayList <> ();
-  private static ICommonsList <IJSPathProvider> s_aJS = new CommonsArrayList <> ();
+  private static final ICommonsList <ICSSPathProvider> CSS = new CommonsArrayList <> ();
+  private static final ICommonsList <IJSPathProvider> JS = new CommonsArrayList <> ();
 
   static
   {
-    // Set default values
-    s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP);
-    s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
-    s_aJS.add (EUICoreJSPathProvider.POPPER);
-    s_aJS.add (EBootstrapJSPathProvider.BOOTSTRAP);
-    s_aJS.add (EBootstrapJSPathProvider.BOOTSTRAP_PH);
+    // Set default values: the default plain CSS and JS
+    CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP);
+    CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
+
+    JS.add (EUICoreJSPathProvider.POPPER);
+    JS.add (EBootstrapJSPathProvider.BOOTSTRAP);
+    JS.add (EBootstrapJSPathProvider.BOOTSTRAP_PH);
   }
 
   private BootstrapCustomConfig ()
@@ -58,27 +59,27 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aCSSPathProvider, "CSSPathProvider");
 
-    s_aRWLock.writeLockedGet ( () -> s_aCSS.setAll (aCSSPathProvider));
+    s_aRWLock.writeLockedGet ( () -> CSS.setAll (aCSSPathProvider));
   }
 
   @Nonnull
   @Nonempty
   public static ICommonsList <ICSSPathProvider> getAllBootstrapCSS ()
   {
-    return s_aRWLock.readLockedGet (s_aCSS::getClone);
+    return s_aRWLock.readLockedGet (CSS::getClone);
   }
 
   public static void setBootstrapJS (@Nonnull @Nonempty final IJSPathProvider... aJSPathProvider)
   {
     ValueEnforcer.notEmptyNoNullValue (aJSPathProvider, "JSPathProvider");
 
-    s_aRWLock.writeLockedGet ( () -> s_aJS.setAll (aJSPathProvider));
+    s_aRWLock.writeLockedGet ( () -> JS.setAll (aJSPathProvider));
   }
 
   @Nonnull
   @Nonempty
   public static ICommonsList <IJSPathProvider> getAllBootstrapJS ()
   {
-    return s_aRWLock.readLockedGet (s_aJS::getClone);
+    return s_aRWLock.readLockedGet (JS::getClone);
   }
 }
