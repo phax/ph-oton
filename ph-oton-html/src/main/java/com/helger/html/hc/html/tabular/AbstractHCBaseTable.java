@@ -17,6 +17,9 @@
 package com.helger.html.hc.html.tabular;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnegative;
@@ -31,6 +34,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.string.ToStringGenerator;
@@ -427,15 +431,54 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
+  public final void forAllChildren (@Nonnull final Consumer <? super IHCNode> aConsumer)
+  {
+    m_aHead.forAllChildren (aConsumer);
+    m_aBody.forAllChildren (aConsumer);
+    m_aFoot.forAllChildren (aConsumer);
+  }
+
+  @Override
+  @Nonnull
+  public final EContinue forAllChildrenBreakable (@Nonnull final Function <? super IHCNode, EContinue> aConsumer)
+  {
+    if (m_aHead.forAllChildrenBreakable (aConsumer).isBreak ())
+      return EContinue.BREAK;
+    if (m_aBody.forAllChildrenBreakable (aConsumer).isBreak ())
+      return EContinue.BREAK;
+    if (m_aFoot.forAllChildrenBreakable (aConsumer).isBreak ())
+      return EContinue.BREAK;
+    return EContinue.CONTINUE;
+  }
+
+  @Override
+  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
+  {
+    m_aHead.forAllChildren (aFilter, aConsumer);
+    m_aBody.forAllChildren (aFilter, aConsumer);
+    m_aFoot.forAllChildren (aFilter, aConsumer);
+  }
+
+  @Override
+  public <DSTTYPE> void forAllChildrenMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
+                                              @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
+                                              @Nonnull final Consumer <? super DSTTYPE> aConsumer)
+  {
+    m_aHead.forAllChildrenMapped (aFilter, aMapper, aConsumer);
+    m_aBody.forAllChildrenMapped (aFilter, aMapper, aConsumer);
+    m_aFoot.forAllChildrenMapped (aFilter, aMapper, aConsumer);
+  }
+
+  @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("colGroup", m_aColGroup)
-                            .append ("cellSpacing", m_nCellSpacing)
-                            .append ("cellPadding", m_nCellPadding)
-                            .append ("header", m_aHead)
-                            .append ("body", m_aBody)
-                            .append ("footer", m_aFoot)
+                            .appendIfNotNull ("ColGroup", m_aColGroup)
+                            .append ("CellSpacing", m_nCellSpacing)
+                            .append ("CellPadding", m_nCellPadding)
+                            .append ("Header", m_aHead)
+                            .append ("Body", m_aBody)
+                            .append ("Footer", m_aFoot)
                             .getToString ();
   }
 }
