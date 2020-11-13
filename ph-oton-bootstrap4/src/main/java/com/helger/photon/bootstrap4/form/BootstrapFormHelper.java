@@ -254,12 +254,8 @@ public final class BootstrapFormHelper
       return aLabel.getPlainText ();
     }
 
-    // Trim eventually trailing ":" from string
-    String sNewPlaceholder = StringHelper.trimEnd (aLabel.getPlainText (), HCFormLabelHelper.LABEL_END);
-    // Trim trailing "*" or "°" marker
-    sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_ALTERNATIVE);
-    sNewPlaceholder = StringHelper.trimEnd (sNewPlaceholder, HCFormLabelHelper.SIGN_MANDATORY);
-    return sNewPlaceholder;
+    // Trim all known suffixes like ":" and "*" from string
+    return HCFormLabelHelper.trimAllKnownSuffixes (aLabel.getPlainText ());
   }
 
   @Nonnull

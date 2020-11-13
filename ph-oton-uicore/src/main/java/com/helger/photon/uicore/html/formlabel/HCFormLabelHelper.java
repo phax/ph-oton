@@ -17,9 +17,12 @@
 package com.helger.photon.uicore.html.formlabel;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNodeWithChildren;
@@ -37,11 +40,7 @@ public final class HCFormLabelHelper
   @Nonnull
   public static String getSuffixString (@Nonnull final ELabelType eType)
   {
-    if (eType.equals (ELabelType.MANDATORY))
-      return SIGN_MANDATORY;
-    if (eType.equals (ELabelType.ALTERNATIVE))
-      return SIGN_ALTERNATIVE;
-    return "";
+    return StringHelper.getNotNull (eType.getSpecialSign ());
   }
 
   @Nonnull
@@ -92,5 +91,43 @@ public final class HCFormLabelHelper
       }
     }
     return aNode;
+  }
+
+  private static final ICommonsSet <String> KNOWN_SUFFIXES = new CommonsHashSet <> (LABEL_END);
+  static
+  {
+    for (final ELabelType e : ELabelType.values ())
+      if (e.hasSpecialSign ())
+        KNOWN_SUFFIXES.add (e.getSpecialSign ());
+  }
+
+  @Nullable
+  public static String trimAllKnownSuffixes (@Nullable final String s)
+  {
+    if (StringHelper.hasNoText (s))
+      return s;
+
+    String ret = s;
+    while (true)
+    {
+      boolean bChange = false;
+      // Try each suffix
+      for (final String sSuffix : KNOWN_SUFFIXES)
+      {
+        final String ret2 = StringHelper.trimEnd (ret, sSuffix);
+        if (ret2.length () != ret.length ())
+        {
+          bChange = true;
+          ret = ret2;
+          break;
+        }
+      }
+      if (!bChange)
+      {
+        // No more suffix found -> stop
+        break;
+      }
+    }
+    return ret;
   }
 }
