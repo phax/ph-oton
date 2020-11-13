@@ -22,6 +22,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 
 /**
  * Represents the possible label states.
@@ -30,18 +32,20 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum ELabelType implements IHasID <String>
 {
-  OPTIONAL ("optional"),
-  MANDATORY ("mandatory"),
-  ALTERNATIVE ("alternative"),
-  NONE ("none");
+  OPTIONAL ("optional", DefaultCSSClassProvider.create ("form-label-optional")),
+  MANDATORY ("mandatory", DefaultCSSClassProvider.create ("form-label-mandatory")),
+  ALTERNATIVE ("alternative", DefaultCSSClassProvider.create ("form-label-alternative")),
+  NONE ("none", null);
 
   public static final ELabelType DEFAULT = OPTIONAL;
 
   private final String m_sID;
+  private final ICSSClassProvider m_aCSSClass;
 
-  ELabelType (@Nonnull @Nonempty final String sID)
+  ELabelType (@Nonnull @Nonempty final String sID, @Nullable final ICSSClassProvider aCSSClass)
   {
     m_sID = sID;
+    m_aCSSClass = aCSSClass;
   }
 
   @Nonnull
@@ -49,6 +53,12 @@ public enum ELabelType implements IHasID <String>
   public String getID ()
   {
     return m_sID;
+  }
+
+  @Nullable
+  public ICSSClassProvider getCSSClass ()
+  {
+    return m_aCSSClass;
   }
 
   public boolean isOptional ()

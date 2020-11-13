@@ -34,9 +34,6 @@ import com.helger.html.hc.impl.HCTextNode;
 public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormLabel
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_LABEL = DefaultCSSClassProvider.create ("form-label");
-  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_OPTIONAL = DefaultCSSClassProvider.create ("form-label-optional");
-  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_MANDATORY = DefaultCSSClassProvider.create ("form-label-mandatory");
-  public static final ICSSClassProvider CSS_CLASS_FORM_LABEL_ALTERNATIVE = DefaultCSSClassProvider.create ("form-label-alternative");
 
   private final ELabelType m_eType;
   private final boolean m_bTextLabel;
@@ -44,22 +41,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
 
   public static void assignFormLabelClasses (@Nonnull final IHCElement <?> aElement, @Nonnull final ELabelType eType)
   {
-    aElement.addClass (CSS_CLASS_FORM_LABEL);
-    switch (eType)
-    {
-      case OPTIONAL:
-        aElement.addClass (CSS_CLASS_FORM_LABEL_OPTIONAL);
-        break;
-      case MANDATORY:
-        aElement.addClass (CSS_CLASS_FORM_LABEL_MANDATORY);
-        break;
-      case ALTERNATIVE:
-        aElement.addClass (CSS_CLASS_FORM_LABEL_ALTERNATIVE);
-        break;
-      case NONE:
-      default:
-        break;
-    }
+    aElement.addClass (CSS_CLASS_FORM_LABEL).addClass (eType.getCSSClass ());
   }
 
   /**

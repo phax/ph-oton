@@ -61,7 +61,10 @@ public final class HCFormLabelHelper
     String sPlainText = StringHelper.trimEnd (sText.trim (), LABEL_END);
     // Append suffix only, if at least some text is present
     if (StringHelper.hasText (sPlainText))
-      sPlainText += getSuffix (eType, !StringHelper.endsWith (sPlainText, '?'));
+    {
+      final boolean bAppendColon = !StringHelper.endsWith (sPlainText, '?');
+      sPlainText += getSuffix (eType, bAppendColon);
+    }
     return sPlainText;
   }
 
