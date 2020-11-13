@@ -28,6 +28,11 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.hc.IHCNode;
 
+/**
+ * Helper class for {@link IHCControl} stuff.
+ *
+ * @author Philip Helger
+ */
 @Immutable
 public final class HCCtrlHelper
 {
