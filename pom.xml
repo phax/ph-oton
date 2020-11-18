@@ -67,7 +67,7 @@
     <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
-    <log4j.version>2.13.3</log4j.version>
+    <log4j.version>2.14.0</log4j.version>
     <jetty.version>9.4.34.v20201102</jetty.version>
   </properties>
 
@@ -122,7 +122,7 @@
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>9.3.4</version>
+        <version>9.5.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
