@@ -22,7 +22,8 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
               version="3.0"
               metadata-complete="true">
-  <name>ph-oton-bootstrap3-stub</name>
+  <!-- May only contain "_" and no "-" for WebLogic -->
+  <name>ph_oton_bootstrap3_stub</name>
   <distributable />
   <ordering>
     <after>
