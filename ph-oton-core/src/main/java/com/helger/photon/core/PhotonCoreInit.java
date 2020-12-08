@@ -28,7 +28,7 @@ import com.helger.xservlet.requesttrack.RequestTracker;
 @Immutable
 public final class PhotonCoreInit
 {
-  private static final AtomicBoolean s_aRegisteredRequestTracker = new AtomicBoolean (false);
+  private static final AtomicBoolean REGISTERED_REQUEST_TRACKER = new AtomicBoolean (false);
 
   private PhotonCoreInit ()
   {}
@@ -38,7 +38,7 @@ public final class PhotonCoreInit
     PhotonAppInit.startUp ();
 
     // Ensure this is done only once
-    if (!s_aRegisteredRequestTracker.getAndSet (true))
+    if (!REGISTERED_REQUEST_TRACKER.getAndSet (true))
     {
       RequestTracker.longRunningRequestCallbacks ().add (AuditingLongRunningRequestCallback.INSTANCE);
       RequestTracker.parallelRunningRequestCallbacks ().add (AuditingParallelRunningRequestCallback.INSTANCE);
@@ -47,7 +47,7 @@ public final class PhotonCoreInit
 
   public static void shutdown ()
   {
-    if (s_aRegisteredRequestTracker.getAndSet (false))
+    if (REGISTERED_REQUEST_TRACKER.getAndSet (false))
     {
       RequestTracker.longRunningRequestCallbacks ().removeObject (AuditingLongRunningRequestCallback.INSTANCE);
       RequestTracker.parallelRunningRequestCallbacks ().removeObject (AuditingParallelRunningRequestCallback.INSTANCE);
