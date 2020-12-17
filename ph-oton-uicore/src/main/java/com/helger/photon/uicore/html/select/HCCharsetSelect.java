@@ -18,20 +18,34 @@ package com.helger.photon.uicore.html.select;
 
 import java.nio.charset.Charset;
 import java.util.Locale;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.charset.CharsetHelper;
 import com.helger.html.request.IHCRequestField;
 
+/**
+ * Select box for character sets
+ *
+ * @author Philip Helger
+ */
 public class HCCharsetSelect extends HCExtSelect
 {
   public HCCharsetSelect (@Nonnull final IHCRequestField aRF, final boolean bOnlyRegistered, @Nonnull final Locale aDisplayLocale)
   {
+    this (aRF, x -> x.isRegistered () || !bOnlyRegistered, aDisplayLocale);
+  }
+
+  public HCCharsetSelect (@Nonnull final IHCRequestField aRF,
+                          @Nullable final Predicate <? super Charset> aFilter,
+                          @Nonnull final Locale aDisplayLocale)
+  {
     super (aRF);
 
     for (final Charset aCharset : CharsetHelper.getAllCharsets ().values ())
-      if (aCharset.isRegistered () || !bOnlyRegistered)
+      if (aFilter == null || aFilter.test (aCharset))
         addOption (aCharset.name (), aCharset.displayName (aDisplayLocale));
 
     addOptionPleaseSelect (aDisplayLocale);

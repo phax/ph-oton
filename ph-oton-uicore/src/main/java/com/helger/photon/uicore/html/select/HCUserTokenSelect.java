@@ -31,7 +31,7 @@ public class HCUserTokenSelect extends HCExtSelect
 {
   public HCUserTokenSelect (@Nonnull final IHCRequestField aRF,
                             @Nonnull final Locale aDisplayLocale,
-                            @Nullable final Predicate <IUserToken> aFilter)
+                            @Nullable final Predicate <? super IUserToken> aFilter)
   {
     super (aRF);
 
