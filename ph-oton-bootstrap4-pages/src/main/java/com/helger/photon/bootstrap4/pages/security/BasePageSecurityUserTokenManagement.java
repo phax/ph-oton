@@ -30,6 +30,8 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.state.EValidity;
+import com.helger.commons.state.IValidityIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
@@ -46,6 +48,7 @@ import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.photon.bootstrap4.button.BootstrapButton;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -81,6 +84,9 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   @Translatable
   protected enum EText implements IHasDisplayTextWithArgs
   {
+    ERROR_NO_USER ("Es existiert kein Benutzer daher kann auch kein Benutzer-Token angelegt werden",
+                   "Since no user exists, no user token can be created"),
+    BUTTON_CREATE_NEW_USER ("Neuen Benutzer anlegen", "Create new user"),
     BUTTON_CREATE_NEW ("Neues Benutzer-Token anlegen", "Create new user token"),
     HEADER_EDIT ("Benutzer-Token von ''{0}'' bearbeiten", "Edit user token of ''{0}''"),
     HEADER_CREATE ("Neues Benutzer-Token anlegen", "Create a new user token"),
@@ -338,6 +344,24 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   {
     super (sID, aName, aDescription);
     _init ();
+  }
+
+  @Override
+  protected IValidityIndicator isValidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
+  {
+    final HCNodeList aNodeList = aWPEC.getNodeList ();
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+    final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
+    if (!aUserMgr.containsAnyActiveUser ())
+    {
+      aNodeList.addChild (error (EText.ERROR_NO_USER.getDisplayText (aDisplayLocale)));
+      aNodeList.addChild (div (new BootstrapButton ().addChild (EText.BUTTON_CREATE_NEW_USER.getDisplayText (aDisplayLocale))
+                                                     .setOnClick (aWPEC.getLinkToMenuItem (BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER))));
+      return EValidity.INVALID;
+    }
+
+    return super.isValidToDisplayPage (aWPEC);
   }
 
   @Override
