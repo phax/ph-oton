@@ -33,7 +33,7 @@ import com.helger.html.js.JSWriterSettings;
 public final class JSBlockTest
 {
   @Test
-  public void testBasic () throws Exception
+  public void testBasic ()
   {
     final JSWriterSettings aSettings = new JSWriterSettings ().setIndentAndAlign (false);
 
@@ -73,11 +73,13 @@ public final class JSBlockTest
     assertEquals ("{var a;var b=5;a=b;b=true;a='c';b=3.1234;a=47.5;b=65599;}", aBlock.getJSCode (aSettings));
 
     aBlock.assign (a, 655996559965599L);
-    assertEquals ("{var a;var b=5;a=b;b=true;a='c';b=3.1234;a=47.5;b=65599;a=655996559965599;}", aBlock.getJSCode (aSettings));
+    assertEquals ("{var a;var b=5;a=b;b=true;a='c';b=3.1234;a=47.5;b=65599;a=655996559965599;}",
+                  aBlock.getJSCode (aSettings));
     final int nCurPos = aBlock.pos ();
 
     aBlock.assign (b, "Ha llo");
-    assertEquals ("{var a;var b=5;a=b;b=true;a='c';b=3.1234;a=47.5;b=65599;a=655996559965599;b='Ha llo';}", aBlock.getJSCode (aSettings));
+    assertEquals ("{var a;var b=5;a=b;b=true;a='c';b=3.1234;a=47.5;b=65599;a=655996559965599;b='Ha llo';}",
+                  aBlock.getJSCode (aSettings));
 
     aBlock.assignPlus (b, '!');
     assertEquals ("{var a;var b=5;a=b;b=true;a='c';b=3.1234;a=47.5;b=65599;a=655996559965599;b='Ha llo';b+='!';}",
@@ -212,13 +214,16 @@ public final class JSBlockTest
     assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;}", aBlock.getJSCode (aSettings));
 
     aBlock.assignModulo (a, 101);
-    assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;a%=101;}", aBlock.getJSCode (aSettings));
+    assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;a%=101;}",
+                  aBlock.getJSCode (aSettings));
 
     aBlock.assignModulo (a, 56L);
-    assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;a%=101;a%=56;}", aBlock.getJSCode (aSettings));
+    assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;a%=101;a%=56;}",
+                  aBlock.getJSCode (aSettings));
 
     aBlock.assign (a, "Test");
-    assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;a%=101;a%=56;a='Test';}", aBlock.getJSCode (aSettings));
+    assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;a%=101;a%=56;a='Test';}",
+                  aBlock.getJSCode (aSettings));
 
     aBlock.invoke (a, "length");
     assertEquals ("{var a=5;a*=2.5;a*=3.25;a*=4;a*=56;a/=4.5;a/=22.0;a/=3;a/=11;a%=101;a%=56;a='Test';a.length();}",
