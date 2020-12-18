@@ -30,6 +30,12 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.photon.core.EPhotonCoreText;
 
+/**
+ * An extension of the simple select box, where you can add a multilingual
+ * "please select" entry.
+ *
+ * @author Philip Helger
+ */
 public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
 {
   /** The value of the "please select" field */

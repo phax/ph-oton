@@ -251,25 +251,25 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllActiveUsers ()
   {
-    return getAll (x -> !x.isDeleted () && x.isEnabled ());
+    return getAll (x -> x.isNotDeleted () && x.isEnabled ());
   }
 
   @Nonnegative
   public int getActiveUserCount ()
   {
-    return getCount (x -> !x.isDeleted () && x.isEnabled ());
+    return getCount (x -> x.isNotDeleted () && x.isEnabled ());
   }
 
   public boolean containsAnyActiveUser ()
   {
-    return containsAny (x -> !x.isDeleted () && x.isEnabled ());
+    return containsAny (x -> x.isNotDeleted () && x.isEnabled ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllDisabledUsers ()
   {
-    return getAll (x -> !x.isDeleted () && x.isDisabled ());
+    return getAll (x -> x.isNotDeleted () && x.isDisabled ());
   }
 
   @Nonnull

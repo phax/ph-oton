@@ -31,6 +31,11 @@ import com.helger.commons.text.display.IDisplayTextProvider;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.locale.DeprecatedLocaleHandler;
 
+/**
+ * Select box for countries
+ *
+ * @author Philip Helger
+ */
 public class HCCountrySelect extends HCExtSelect
 {
   public enum EWithDeprecated

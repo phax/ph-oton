@@ -25,6 +25,11 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
 
+/**
+ * Select box for currencies
+ *
+ * @author Philip Helger
+ */
 public class HCCurrencySelect extends HCExtSelect
 {
   public HCCurrencySelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
