@@ -220,9 +220,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
         if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
         {
-          final String sSender = aWPEC.params ().getAsString (FIELD_TEST_SENDER);
-          final String sReceiver = aWPEC.params ().getAsString (FIELD_TEST_RECEIVER);
-          final String sSubject = aWPEC.params ().getAsString (FIELD_TEST_SUBJECT);
+          final String sSender = aWPEC.params ().getAsStringTrimmed (FIELD_TEST_SENDER);
+          final String sReceiver = aWPEC.params ().getAsStringTrimmed (FIELD_TEST_RECEIVER);
+          final String sSubject = aWPEC.params ().getAsStringTrimmed (FIELD_TEST_SUBJECT);
           final String sBody = aWPEC.params ().getAsString (FIELD_TEST_BODY);
 
           if (!EmailAddressHelper.isValid (sSender))
