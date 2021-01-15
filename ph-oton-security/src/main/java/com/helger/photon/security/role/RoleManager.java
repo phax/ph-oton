@@ -96,7 +96,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
 
     // Store
     m_aRWLock.writeLockedGet ( () -> internalCreateItem (aRole));
-    AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefind-role", sName);
+    AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefined-role", sName);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, true));
