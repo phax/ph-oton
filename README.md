@@ -99,6 +99,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v8.2.10 - work in progress
     * Updated to Jetty 9.4.35
+    * Updated to Bootstrap 4.6.0
     * The name of the WebFragment `ph-oton-bootstrap3-stub` changed to `ph_oton_bootstrap4_stub`
     * The name of the WebFragment `ph-oton-bootstrap4-stub` changed to `ph_oton_bootstrap3_stub`
 * v8.2.9 - 2020-11-18

@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.5.3
+  // 4.6.0
   public static final ICSSClassProvider ACCORDION = DefaultCSSClassProvider.create ("accordion");
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
@@ -544,6 +544,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider H4 = DefaultCSSClassProvider.create ("h4");
   public static final ICSSClassProvider H5 = DefaultCSSClassProvider.create ("h5");
   public static final ICSSClassProvider H6 = DefaultCSSClassProvider.create ("h6");
+  public static final ICSSClassProvider HAS_VALIDATION = DefaultCSSClassProvider.create ("has-validation");
   public static final ICSSClassProvider HIDE = DefaultCSSClassProvider.create ("hide");
   public static final ICSSClassProvider IMG_FLUID = DefaultCSSClassProvider.create ("img-fluid");
   public static final ICSSClassProvider IMG_THUMBNAIL = DefaultCSSClassProvider.create ("img-thumbnail");
@@ -1068,6 +1069,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider NAVBAR_EXPAND_XL = DefaultCSSClassProvider.create ("navbar-expand-xl");
   public static final ICSSClassProvider NAVBAR_LIGHT = DefaultCSSClassProvider.create ("navbar-light");
   public static final ICSSClassProvider NAVBAR_NAV = DefaultCSSClassProvider.create ("navbar-nav");
+  public static final ICSSClassProvider NAVBAR_NAV_SCROLL = DefaultCSSClassProvider.create ("navbar-nav-scroll");
   public static final ICSSClassProvider NAVBAR_TEXT = DefaultCSSClassProvider.create ("navbar-text");
   public static final ICSSClassProvider NAVBAR_TOGGLER = DefaultCSSClassProvider.create ("navbar-toggler");
   public static final ICSSClassProvider NAVBAR_TOGGLER_ICON = DefaultCSSClassProvider.create ("navbar-toggler-icon");

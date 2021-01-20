@@ -23,11 +23,16 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 
+/**
+ * Contains default JS paths within this library.
+ *
+ * @author Philip Helger
+ */
 public enum EBootstrapJSPathProvider implements IJSPathProvider
 {
   /** Default complete Bootstrap JS */
-  BOOTSTRAP ("bootstrap/4.5.3/js/bootstrap.js"),
-  BOOTSTRAP_BUNDLE ("bootstrap/4.5.3/js/bootstrap.bundle.js"),
+  BOOTSTRAP ("bootstrap/4.6.0/js/bootstrap.js"),
+  BOOTSTRAP_BUNDLE ("bootstrap/4.6.0/js/bootstrap.bundle.js"),
   /** Some Bootstrap JS extensions */
   BOOTSTRAP_PH ("ph-oton/bootstrap4-ph.js");
 
