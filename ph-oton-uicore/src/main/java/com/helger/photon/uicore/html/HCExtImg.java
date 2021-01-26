@@ -19,22 +19,53 @@ package com.helger.photon.uicore.html;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.gfx.ImageDataManager;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.embedded.AbstractHCImg;
 import com.helger.photon.app.io.WebFileIO;
+import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.request.RequestHelper;
 
+/**
+ * An extended image that tries to deduce the extent from the image payload.
+ *
+ * @author Philip Helger
+ */
 public class HCExtImg extends AbstractHCImg <HCExtImg>
 {
+  private final IReadableResource m_aImgResource;
+
   public HCExtImg (@Nonnull final ISimpleURL aSrc)
   {
     setSrc (aSrc);
 
     // Remove the session ID (if any)
-    final String sPureSrc = new SimpleURL (RequestHelper.getWithoutSessionID (aSrc.getPath ()),
-                                           aSrc.params (),
-                                           aSrc.getAnchor ()).getAsStringWithEncodedParameters ();
-    setExtent (ImageDataManager.getInstance ().getImageSize (WebFileIO.getServletContextIO ().getResource (sPureSrc)));
+    String sCleanPath = RequestHelper.getWithoutSessionID (aSrc.getPath ());
+
+    // Remove the context path (if any)
+    final String sContextPath = ServletContextPathHolder.getContextPath ();
+    if (StringHelper.hasText (sContextPath) && sCleanPath.startsWith (sContextPath))
+    {
+      // URI contains context path
+      final String sPath = sCleanPath.substring (sContextPath.length ());
+      sCleanPath = sPath.length () > 0 ? sPath : "/";
+    }
+
+    final String sPureSrc = new SimpleURL (sCleanPath, aSrc.params (), aSrc.getAnchor ()).getAsStringWithEncodedParameters ();
+    m_aImgResource = WebFileIO.getServletContextIO ().getResource (sPureSrc);
+    setExtent (ImageDataManager.getInstance ().getImageSize (m_aImgResource));
+  }
+
+  /**
+   * @return The readable resource that was used to determine the image size. It
+   *         might be a non-existing resource.
+   * @since 8.2.10
+   */
+  @Nonnull
+  public final IReadableResource getImgResource ()
+  {
+    return m_aImgResource;
   }
 }
