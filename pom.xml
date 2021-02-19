@@ -68,7 +68,7 @@
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.14.0</log4j.version>
-    <jetty.version>9.4.35.v20201120</jetty.version>
+    <jetty.version>9.4.36.v20210114</jetty.version>
   </properties>
 
   <repositories>
@@ -266,7 +266,7 @@
       <dependency>
         <groupId>commons-net</groupId>
         <artifactId>commons-net</artifactId>
-        <version>3.7.2</version>
+        <version>3.8.0</version>
       </dependency>       
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
