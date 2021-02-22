@@ -47,6 +47,7 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
   PRISMJS_BOOTSTRAP3 ("uictrls/prismjs/prism-bootstrap3.css"),
   PRISMJS_BOOTSTRAP4 ("uictrls/prismjs/prism-bootstrap4.css"),
   SELECT2 ("uictrls/select2/4.0.13/css/select2.css"),
+  SELECT2_BOOTSTRAP4 ("uictrls/select2-bootstrap4-theme/1.5.2/select2-bootstrap4.css"),
   TYPEAHEAD_BOOTSTRAP3 ("uictrls/typeahead/typeahead.js-bootstrap3.css"),
   TYPEAHEAD_BOOTSTRAP4 ("uictrls/typeahead/typeahead.js-bootstrap4.css");
 
