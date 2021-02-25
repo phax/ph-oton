@@ -136,14 +136,20 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
   protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
+    registerExternalResources (m_aPlugins);
+  }
 
-    for (final IPrismPlugin aPlugin : m_aPlugins)
-      aPlugin.registerExternalResourcesBeforePrism ();
+  public static void registerExternalResources (@Nullable final Iterable <? extends IPrismPlugin> aPlugins)
+  {
+    if (aPlugins != null)
+      for (final IPrismPlugin aPlugin : aPlugins)
+        aPlugin.registerExternalResourcesBeforePrism ();
 
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.PRISMJS);
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.PRISMJS);
 
-    for (final IPrismPlugin aPlugin : m_aPlugins)
-      aPlugin.registerExternalResourcesAfterPrism ();
+    if (aPlugins != null)
+      for (final IPrismPlugin aPlugin : aPlugins)
+        aPlugin.registerExternalResourcesAfterPrism ();
   }
 }
