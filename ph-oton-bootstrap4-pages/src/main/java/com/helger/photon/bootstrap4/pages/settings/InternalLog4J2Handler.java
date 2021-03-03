@@ -33,6 +33,7 @@ import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.request.IHCRequestField;
@@ -40,6 +41,7 @@ import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsLogLevel.EText;
 import com.helger.photon.bootstrap4.traits.IHCBootstrap4Trait;
 import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.core.form.RequestField;
@@ -161,14 +163,14 @@ final class InternalLog4J2Handler implements IHCBootstrap4Trait
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    aNodeList.addChild (info ("On this page you can change the root log level of the underlying Log4J 2.x logging on the fly. This will overwrite any custom log levels!"));
+    aNodeList.addChild (info (HCExtHelper.nl2divList (EText.MSG_HEADER.getDisplayText (aDisplayLocale))));
 
     final FormErrorList aFormErrors = new FormErrorList ();
 
     final LoggerContext aLoggerContext = LoggerContext.getContext (false);
     final LoggerConfig aLoggerConfig = aLoggerContext.getConfiguration ().getRootLogger ();
     final Level aExistingLevel = aLoggerConfig.getLevel ();
-    final ELevel eExistingLevel = ELevel.getFromLevelOrNull (aExistingLevel);
+    ELevel eExistingLevel = ELevel.getFromLevelOrNull (aExistingLevel);
 
     if (aWPEC.hasAction (CPageParam.ACTION_PERFORM))
     {
@@ -176,42 +178,52 @@ final class InternalLog4J2Handler implements IHCBootstrap4Trait
       final ELevel eNewLevel = ELevel.getFromIDOrNull (sNewLevel);
 
       if (StringHelper.hasNoText (sNewLevel))
-        aFormErrors.addFieldError (FIELD_NEW_LEVEL, "A log level must be selected");
+        aFormErrors.addFieldError (FIELD_NEW_LEVEL, EText.MSG_ERR_NO_LEVEL.getDisplayText (aDisplayLocale));
       else
         if (eNewLevel == null)
-          aFormErrors.addFieldError (FIELD_NEW_LEVEL, "The provided log level is invalid");
+          aFormErrors.addFieldError (FIELD_NEW_LEVEL, EText.MSG_ERR_INVALID_LEVEL.getDisplayText (aDisplayLocale));
 
       if (aFormErrors.isEmpty ())
       {
         if (eNewLevel == eExistingLevel)
         {
           LOGGER.info ("No change in log levels. Sticking with " + eExistingLevel);
-          aNodeList.addChild (info ("The log level was not changed. It is still '" + eExistingLevel.getDisplayName () + "'"));
+          aNodeList.addChild (info (EText.MSG_NO_CHANGE.getDisplayTextWithArgs (aDisplayLocale, eExistingLevel.getDisplayName ())));
         }
         else
         {
+          // Log before in case we're changing to something less verbose than
+          // info
           LOGGER.info ("Changing log levels from " + eExistingLevel + " to " + eNewLevel);
           Configurator.setRootLevel (eNewLevel.getLevel ());
           AuditHelper.onAuditExecuteSuccess ("change-log-level", eExistingLevel.getDisplayName (), eNewLevel.getDisplayName ());
-          aNodeList.addChild (info ("The log level was changed from '" +
-                                    eExistingLevel.getDisplayName () +
-                                    "' to '" +
-                                    eNewLevel.getDisplayName () +
-                                    "'"));
+          aNodeList.addChild (info (EText.MSG_CHANGE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                     eExistingLevel.getDisplayName (),
+                                                                                     eNewLevel.getDisplayName ())));
+          // Log here in case we're changing to something from less verbose than
+          // info
           LOGGER.info ("Finished changing log levels from " + eExistingLevel + " to " + eNewLevel);
+
+          // For display purposes
+          eExistingLevel = eNewLevel;
         }
       }
     }
 
     // Show form
     final BootstrapForm aForm = aNodeList.addAndReturnChild (new BootstrapForm (aWPEC));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory ("New log level")
+
+    if (eExistingLevel != null)
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXISTING_LEVEL.getDisplayText (aDisplayLocale))
+                                                   .setCtrl (badgeInfo (eExistingLevel.getDisplayName ())));
+
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.MSG_FIELD_LEVEL.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new LevelSelect (new RequestField (FIELD_NEW_LEVEL,
                                                                                               eExistingLevel != null ? eExistingLevel.getID ()
                                                                                                                      : null),
                                                                             aDisplayLocale))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_NEW_LEVEL)));
     aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_PERFORM));
-    aForm.addChild (new BootstrapSubmitButton ().addChild ("Change log level"));
+    aForm.addChild (new BootstrapSubmitButton ().addChild (EText.MSG_SUBMIT_BUTTON.getDisplayText (aDisplayLocale)));
   }
 }

@@ -16,12 +16,18 @@
  */
 package com.helger.photon.bootstrap4.pages.settings;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.Translatable;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.text.IMultilingualText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
+import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.text.util.TextHelper;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
@@ -36,6 +42,38 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  */
 public class BasePageSettingsLogLevel <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
+  @Translatable
+  protected enum EText implements IHasDisplayTextWithArgs
+  {
+    MSG_NO_LOG4J2 ("Log4J2 ist nicht im Classpath", "Log4J2 is not in the classpath"),
+    MSG_HEADER ("Hier kann das Log4J 2.x Log-Level dynamisch geändert werden.\n" +
+                "Hinweis: das überschreibt alle benutzerdefinierten Log-Levels.\n" +
+                "Hinweis: diese Einstellung gilt nur für die Laufzeit des Programms.",
+                "On this page you can change the root log level of the underlying Log4J 2.x logging on the fly.\n" +
+                                                                                       "Note: this will overwrite any custom log levels.\n" +
+                                                                                       "Note: the setting is only active during this application session."),
+    MSG_ERR_NO_LEVEL ("Es muss ein Log-Level ausgewählt werden", "A log level must be selected"),
+    MSG_ERR_INVALID_LEVEL ("Das angegebene Log-Level ist ungültig", "The provided log level is invalid"),
+    MSG_NO_CHANGE ("Das Log-Level wurde nicht geändert. Es ist noch immer ''{0}''", "The log level was not changed. It is still ''{0}''"),
+    MSG_CHANGE_SUCCESS ("Das Log-Level wurde von ''{0}'' auf ''{1}'' geändert.", "The log level was changed from ''{0}'' to ''{1}''"),
+    MSG_EXISTING_LEVEL ("Derzeitiges Log-Level", "Existing log level"),
+    MSG_FIELD_LEVEL ("Neues Log-Level", "New log level"),
+    MSG_SUBMIT_BUTTON ("Log-Level ändern", "Change log level");
+
+    private final IMultilingualText m_aTP;
+
+    EText (final String sDE, final String sEN)
+    {
+      m_aTP = TextHelper.create_DE_EN (sDE, sEN);
+    }
+
+    @Nullable
+    public String getDisplayText (@Nonnull final Locale aContentLocale)
+    {
+      return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
+    }
+  }
+
   public BasePageSettingsLogLevel (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_SETTINGS_LOG_LEVEL.getAsMLT ());
@@ -67,7 +105,8 @@ public class BasePageSettingsLogLevel <WPECTYPE extends IWebPageExecutionContext
     }
     else
     {
-      aWPEC.getNodeList ().addChild (warn ("Log4J2 is not on the class path"));
+      final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+      aWPEC.getNodeList ().addChild (warn (EText.MSG_NO_LOG4J2.getDisplayText (aDisplayLocale)));
     }
   }
 }
