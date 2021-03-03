@@ -101,6 +101,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to Apache commons-net 3.8.0
     * Updated to Bootstrap 4.6.0
     * Updated to Jetty 9.4.36
+    * Updated to jQuery 3.6.0
     * The name of the WebFragment `ph-oton-bootstrap3-stub` changed to `ph_oton_bootstrap4_stub`
     * The name of the WebFragment `ph-oton-bootstrap4-stub` changed to `ph_oton_bootstrap3_stub`
     * Extended `HCExtImg` to correctly remove the servlet context if it is present
