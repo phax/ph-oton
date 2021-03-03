@@ -61,6 +61,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
   public static final String INITPARAM_ALLOWED_REG_EXS = "allowedRegExs";
   public static final String INITPARAM_VALUE_WILDCARD = "*";
   public static final String EXTENSION_MACRO_WEB_DEFAULT = "$web-default$";
+  public static final String WEB_DEFAULT_EXTENSIONS = "js,css,png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2,map";
 
   protected static final String REQUEST_ATTR_OBJECT_DELIVERY_FILENAME = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                                         "object-delivery.filename";
@@ -128,9 +129,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     {
       // Perform some default replacements to avoid updating all references at
       // once before splitting
-      final String sRealItemList = StringHelper.replaceAll (sItemList,
-                                                            EXTENSION_MACRO_WEB_DEFAULT,
-                                                            "js,css,png,jpg,jpeg,gif,eot,svg,ttf,woff,woff2,map");
+      final String sRealItemList = StringHelper.replaceAll (sItemList, EXTENSION_MACRO_WEB_DEFAULT, WEB_DEFAULT_EXTENSIONS);
 
       for (final String sItem : StringHelper.getExploded (',', sRealItemList))
       {
