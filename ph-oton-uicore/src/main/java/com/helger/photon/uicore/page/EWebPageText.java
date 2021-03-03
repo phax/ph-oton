@@ -90,6 +90,7 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
   PAGE_NAME_SETTINGS ("System Einstellungen", "System settings"),
   PAGE_NAME_SETTINGS_GLOBAL ("Globale Einstellungen", "Global settings"),
   PAGE_NAME_SETTINGS_HTML ("HTML Einstellungen", "HTML settings"),
+  PAGE_NAME_SETTINGS_LOG_LEVEL ("Log Level", "Log level"),
   PAGE_NAME_SETTINGS_SMTP ("SMTP-Einstellungen", "SMTP settings"),
   PAGE_NAME_SETTINGS_SYSTEMMESSAGE ("Systemnachricht", "System message");
 

@@ -51,6 +51,7 @@ import com.helger.photon.bootstrap4.pages.security.BasePageSecurityUserManagemen
 import com.helger.photon.bootstrap4.pages.security.BasePageSecurityUserTokenManagement;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsGlobal;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsHTML;
+import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsLogLevel;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsSMTP;
 import com.helger.photon.bootstrap4.pages.settings.BasePageSettingsSystemMessage;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoCACerts;
@@ -133,6 +134,7 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_SETTINGS = "admin_settings";
   public static final String MENU_ADMIN_SETTINGS_GLOBAL = "admin_settings_global";
   public static final String MENU_ADMIN_SETTINGS_HTML = "admin_settings_html";
+  public static final String MENU_ADMIN_SETTINGS_LOG_LEVEL = "admin_settings_log_level";
   public static final String MENU_ADMIN_SETTINGS_SMTP = "admin_settings_smtp";
   public static final String MENU_ADMIN_SETTINGS_SYSTEMMESSAGE = "admin_settings_systemmessage";
 
@@ -363,6 +365,8 @@ public final class BootstrapPagesMenuConfigurator
     aMenuTree.createItem (aAdminSettings, new BasePageSettingsGlobal <WPECTYPE> (MENU_ADMIN_SETTINGS_GLOBAL))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminSettings, new BasePageSettingsHTML <WPECTYPE> (MENU_ADMIN_SETTINGS_HTML)).setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminSettings, new BasePageSettingsLogLevel <WPECTYPE> (MENU_ADMIN_SETTINGS_LOG_LEVEL))
+             .setDisplayFilter (aDisplayFilter);
 
     if (aNamedSMTPSettingsMgr != null)
     {

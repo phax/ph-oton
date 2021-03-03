@@ -105,6 +105,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * The name of the WebFragment `ph-oton-bootstrap4-stub` changed to `ph_oton_bootstrap3_stub`
     * Extended `HCExtImg` to correctly remove the servlet context if it is present
     * Added `BootstrapSelect2` as a Bootstrap 4 theme of Select2
+    * Added new predefined page to change the log level at runtime (when using Log4J 2.x)
 * v8.2.9 - 2020-11-18
     * Updated to Apache commons-net 3.7.2
     * Updated to Bootstrap 4.5.3

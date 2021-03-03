@@ -62,6 +62,12 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-bootstrap4-uictrls</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <scope>compile</scope>
+    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
