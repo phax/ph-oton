@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.forms.AbstractHCSelect;
@@ -85,5 +86,13 @@ public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
   public final HCOption addOptionNone (@Nonnull final Locale aDisplayLocale)
   {
     return addOptionAt (0, createOptionNone (aDisplayLocale));
+  }
+
+  public final boolean containsEffectiveOption ()
+  {
+    // If at least one option is not the "special option" then an effective
+    // option is present
+    final ICommonsList <HCOption> aAllOptions = getAllOptions ();
+    return aAllOptions.containsAny (x -> !x.containsClass (CSS_CLASS_SPECIAL_OPTION));
   }
 }
