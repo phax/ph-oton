@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html.metadata;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -94,6 +96,12 @@ public class HCMeta extends AbstractHCElement <HCMeta>
   {
     m_sCharset = sCharset;
     return this;
+  }
+
+  @Nonnull
+  public final HCMeta setCharset (@Nullable final Charset aCharset)
+  {
+    return setCharset (aCharset == null ? null : aCharset.name ());
   }
 
   @Override
