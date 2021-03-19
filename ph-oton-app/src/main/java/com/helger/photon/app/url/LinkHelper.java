@@ -52,9 +52,9 @@ public final class LinkHelper
   public static final String DEFAULT_STREAM_SERVLET_NAME = "stream";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (LinkHelper.class);
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static String s_sStreamServletName = DEFAULT_STREAM_SERVLET_NAME;
 
   private LinkHelper ()
@@ -69,7 +69,7 @@ public final class LinkHelper
                                           "' passed. It must match the following rexg: " +
                                           STREAM_SERVLET_NAME_REGEX);
 
-    s_aRWLock.writeLockedGet ( () -> s_sStreamServletName = sStreamServletName);
+    RW_LOCK.writeLockedGet ( () -> s_sStreamServletName = sStreamServletName);
   }
 
   /**
@@ -80,7 +80,7 @@ public final class LinkHelper
   @Nonempty
   public static String getStreamServletName ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_sStreamServletName);
+    return RW_LOCK.readLockedGet ( () -> s_sStreamServletName);
   }
 
   /**
@@ -92,7 +92,7 @@ public final class LinkHelper
   @Nonempty
   public static String getStreamServletPath ()
   {
-    return s_aRWLock.readLockedGet ( () -> "/" + s_sStreamServletName);
+    return RW_LOCK.readLockedGet ( () -> "/" + s_sStreamServletName);
   }
 
   /**

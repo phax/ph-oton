@@ -17,6 +17,7 @@
 package com.helger.photon.core.go;
 
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.functional.IFunction;
 import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.commons.statistics.StatisticsManager;
 import com.helger.commons.url.SimpleURL;
@@ -53,9 +53,9 @@ public class GoXServletHandler implements IXServletSimpleHandler
                                                                                                                        "$error");
   private static final IMutableStatisticsHandlerKeyedCounter s_aStatsOK = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
                                                                                                                     "$ok");
-  private final IFunction <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> m_aMenuTreeSupplier;
+  private final Function <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> m_aMenuTreeSupplier;
 
-  public GoXServletHandler (@Nonnull final IFunction <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> aMenuTreeSupplier)
+  public GoXServletHandler (@Nonnull final Function <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> aMenuTreeSupplier)
   {
     ValueEnforcer.notNull (aMenuTreeSupplier, "MenuTreeSupplier");
     m_aMenuTreeSupplier = aMenuTreeSupplier;
@@ -86,7 +86,8 @@ public class GoXServletHandler implements IXServletSimpleHandler
    */
   @Nonnull
   @OverrideOnDemand
-  protected SimpleURL getURLForNonExistingItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sKey)
+  protected SimpleURL getURLForNonExistingItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                @Nonnull final String sKey)
   {
     return new SimpleURL (aRequestScope.getFullContextPath ());
   }
@@ -135,7 +136,9 @@ public class GoXServletHandler implements IXServletSimpleHandler
           // If it is an internal menu item, check if this internal item is an
           // "external menu item" and if so, directly use the URL of the
           // external menu item
-          final String sTargetMenuItemID = RequestParameterManager.getInstance ().getMenuItemFromURL (aGoItem.getTargetURL (), aMenuTree);
+          final String sTargetMenuItemID = RequestParameterManager.getInstance ()
+                                                                  .getMenuItemFromURL (aGoItem.getTargetURL (),
+                                                                                       aMenuTree);
 
           final IMenuObject aMenuObj = aMenuTree.getItemDataWithID (sTargetMenuItemID);
           if (aMenuObj instanceof IMenuItemExternal)

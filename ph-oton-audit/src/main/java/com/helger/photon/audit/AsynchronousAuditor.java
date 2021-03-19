@@ -50,8 +50,8 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 public class AsynchronousAuditor extends AbstractAuditor
 {
   // Just to have custom named threads....
-  private static final ThreadFactory s_aThreadFactory = new BasicThreadFactory.Builder ().setNamingPattern ("AsyncAuditor")
-                                                                                         .setDaemon (true)
+  private static final ThreadFactory THREAD_FACTORY = new BasicThreadFactory.Builder ().namingPattern ("AsyncAuditor")
+                                                                                         .daemon (true)
                                                                                          .build ();
   private static final Logger LOGGER = LoggerFactory.getLogger (AsynchronousAuditor.class);
 
@@ -74,7 +74,7 @@ public class AsynchronousAuditor extends AbstractAuditor
     ValueEnforcer.notNull (aPerformer, "Performer");
 
     m_aCollector = new MyCollector (aPerformer);
-    m_aSenderThreadPool = Executors.newSingleThreadExecutor (s_aThreadFactory);
+    m_aSenderThreadPool = Executors.newSingleThreadExecutor (THREAD_FACTORY);
     m_aSenderThreadPool.submit (m_aCollector::collect);
   }
 

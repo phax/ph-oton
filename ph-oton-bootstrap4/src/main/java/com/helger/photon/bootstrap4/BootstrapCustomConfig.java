@@ -37,7 +37,7 @@ import com.helger.photon.uicore.EUICoreJSPathProvider;
 @ThreadSafe
 public final class BootstrapCustomConfig
 {
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
   private static final ICommonsList <ICSSPathProvider> CSS = new CommonsArrayList <> ();
   private static final ICommonsList <IJSPathProvider> JS = new CommonsArrayList <> ();
 
@@ -59,27 +59,27 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aCSSPathProvider, "CSSPathProvider");
 
-    s_aRWLock.writeLockedGet ( () -> CSS.setAll (aCSSPathProvider));
+    RW_LOCK.writeLockedGet ( () -> CSS.setAll (aCSSPathProvider));
   }
 
   @Nonnull
   @Nonempty
   public static ICommonsList <ICSSPathProvider> getAllBootstrapCSS ()
   {
-    return s_aRWLock.readLockedGet (CSS::getClone);
+    return RW_LOCK.readLockedGet (CSS::getClone);
   }
 
   public static void setBootstrapJS (@Nonnull @Nonempty final IJSPathProvider... aJSPathProvider)
   {
     ValueEnforcer.notEmptyNoNullValue (aJSPathProvider, "JSPathProvider");
 
-    s_aRWLock.writeLockedGet ( () -> JS.setAll (aJSPathProvider));
+    RW_LOCK.writeLockedGet ( () -> JS.setAll (aJSPathProvider));
   }
 
   @Nonnull
   @Nonempty
   public static ICommonsList <IJSPathProvider> getAllBootstrapJS ()
   {
-    return s_aRWLock.readLockedGet (JS::getClone);
+    return RW_LOCK.readLockedGet (JS::getClone);
   }
 }

@@ -28,7 +28,7 @@ import com.helger.photon.uicore.css.CUICoreCSS;
 public final class SecurityUIHelper
 {
   @PresentForCodeCoverage
-  private static final SecurityUIHelper s_aInstance = new SecurityUIHelper ();
+  private static final SecurityUIHelper INSTANCE = new SecurityUIHelper ();
 
   private SecurityUIHelper ()
   {}

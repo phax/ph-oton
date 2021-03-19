@@ -16,11 +16,12 @@
  */
 package com.helger.photon.api;
 
+import java.util.function.BiFunction;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.functional.IBiFunction;
 
 /**
  * Shared interface to resolve API ambiguities. So if a single {@link APIPath}
@@ -30,7 +31,8 @@ import com.helger.commons.functional.IBiFunction;
  * @since 8.1.4
  */
 @FunctionalInterface
-public interface IAPIPathAmbiguityResolver extends IBiFunction <APIPath, ICommonsList <InvokableAPIDescriptor>, InvokableAPIDescriptor>
+public interface IAPIPathAmbiguityResolver extends
+                                           BiFunction <APIPath, ICommonsList <InvokableAPIDescriptor>, InvokableAPIDescriptor>
 {
   /**
    * @param aPath

@@ -52,7 +52,7 @@ public final class SecurityHelper
   private static final Logger LOGGER = LoggerFactory.getLogger (SecurityHelper.class);
 
   @PresentForCodeCoverage
-  private static final SecurityHelper s_aInstance = new SecurityHelper ();
+  private static final SecurityHelper INSTANCE = new SecurityHelper ();
 
   private SecurityHelper ()
   {}

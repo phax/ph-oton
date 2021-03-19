@@ -24,11 +24,13 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.collection.multimap.IMultiMapListBased;
-import com.helger.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.locale.LocaleCache;
 import com.helger.commons.text.IMultilingualText;
@@ -57,7 +59,8 @@ import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> extends
+                                   AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayText
@@ -90,7 +93,9 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
     super (sID, sName);
   }
 
-  public BasePageDataLanguages (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageDataLanguages (@Nonnull @Nonempty final String sID,
+                                @Nonnull final String sName,
+                                @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -108,12 +113,12 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-    final IMultiMapListBased <String, Locale> aMapLanguageToLocale = new MultiHashMapArrayListBased <> ();
+    final ICommonsMap <String, ICommonsList <Locale>> aMapLanguageToLocale = new CommonsHashMap <> ();
     for (final Locale aLocale : LocaleCache.getInstance ().getAllLocales ())
     {
       final String sLanguage = aLocale.getLanguage ();
       if (sLanguage.length () > 0)
-        aMapLanguageToLocale.putSingle (sLanguage, aLocale);
+        aMapLanguageToLocale.computeIfAbsent (sLanguage, k -> new CommonsArrayList <> ()).add (aLocale);
     }
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
@@ -128,7 +133,8 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
       aRow.addCell (CollectionHelper.getFirstElement (aEntry.getValue ()).getDisplayLanguage (aDisplayLocale));
 
       final IHCCell <?> aCell = aRow.addCell ();
-      for (final Locale aLocale : CollectionHelper.getSorted (aEntry.getValue (), Comparator.comparing (Locale::toString)))
+      for (final Locale aLocale : CollectionHelper.getSorted (aEntry.getValue (),
+                                                              Comparator.comparing (Locale::toString)))
       {
         final HCDiv aDiv = new HCDiv ();
         final EFamFamFlagIcon eIcon = EFamFamFlagIcon.getFromIDOrNull (aLocale.getCountry ());

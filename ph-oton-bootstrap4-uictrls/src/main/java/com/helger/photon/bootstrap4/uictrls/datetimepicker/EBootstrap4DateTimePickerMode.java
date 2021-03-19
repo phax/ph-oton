@@ -17,11 +17,11 @@
 package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.datetime.PDTFormatPatterns;
-import com.helger.commons.functional.IFunction;
 
 /**
  * Action mode for the {@link BootstrapDateTimePicker}.
@@ -36,9 +36,9 @@ public enum EBootstrap4DateTimePickerMode
 
   public static final EBootstrap4DateTimePickerMode DEFAULT = DATE;
 
-  private final IFunction <Locale, String> m_aJavaFormatSupplier;
+  private final Function <Locale, String> m_aJavaFormatSupplier;
 
-  EBootstrap4DateTimePickerMode (@Nonnull final IFunction <Locale, String> aFormatSupplier)
+  EBootstrap4DateTimePickerMode (@Nonnull final Function <Locale, String> aFormatSupplier)
   {
     m_aJavaFormatSupplier = aFormatSupplier;
   }

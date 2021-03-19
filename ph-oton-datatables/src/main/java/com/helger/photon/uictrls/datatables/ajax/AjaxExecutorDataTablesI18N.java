@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.locale.LocaleCache;
@@ -46,7 +45,7 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
 
   public AjaxExecutorDataTablesI18N ()
   {
-    this (CGlobal.DEFAULT_LOCALE);
+    this (Locale.US);
   }
 
   public AjaxExecutorDataTablesI18N (@Nonnull final Locale aDefaultLocale)

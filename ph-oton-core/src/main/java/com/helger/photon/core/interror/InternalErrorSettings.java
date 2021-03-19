@@ -19,13 +19,13 @@ package com.helger.photon.core.interror;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
@@ -34,7 +34,6 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.email.IEmailAddress;
-import com.helger.commons.functional.IFunction;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.app.io.WebFileIO;
@@ -65,19 +64,19 @@ public final class InternalErrorSettings
    */
   public static final boolean DEFAULT_SAVE_AS_XML = true;
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("s_aRWLock")
-  private static final InternalErrorEmailSettings s_aEmailSettings = new InternalErrorEmailSettings ();
-  @GuardedBy ("s_aRWLock")
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
+  @GuardedBy ("RW_LOCK")
+  private static final InternalErrorEmailSettings EMAIL_SETTINGS = new InternalErrorEmailSettings ();
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bEnableDumpAllThreads = DEFAULT_ENABLE_FULL_THREAD_DUMPS;
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bSendEmail = DEFAULT_SEND_EMAIL;
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bSaveAsXML = DEFAULT_SAVE_AS_XML;
-  @GuardedBy ("s_aRWLock")
-  private static Locale s_aFallbackLocale = CGlobal.DEFAULT_LOCALE;
+  @GuardedBy ("RW_LOCK")
+  private static Locale s_aFallbackLocale = Locale.US;
   private static CallbackList <IInternalErrorCallback> s_aCallbacks = new CallbackList <> ();
-  private static IFunction <InternalErrorMetadata, File> s_aStorageFileProvider;
+  private static Function <InternalErrorMetadata, File> s_aStorageFileProvider;
 
   static
   {
@@ -89,53 +88,53 @@ public final class InternalErrorSettings
 
   public static void setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
   {
-    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setSMTPSettings (aSMTPSettings));
+    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setSMTPSettings (aSMTPSettings));
   }
 
   @Nullable
   public static ISMTPSettings getSMTPSettings ()
   {
-    return s_aRWLock.readLockedGet (s_aEmailSettings::getSMTPSettings);
+    return RW_LOCK.readLockedGet (EMAIL_SETTINGS::getSMTPSettings);
   }
 
   public static void setSMTPSenderAddress (@Nullable final IEmailAddress aSenderAddress)
   {
-    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setSenderAddress (aSenderAddress));
+    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setSenderAddress (aSenderAddress));
   }
 
   @Nullable
   public static IEmailAddress getSMTPSenderAddress ()
   {
-    return s_aRWLock.readLockedGet (s_aEmailSettings::getSenderAddress);
+    return RW_LOCK.readLockedGet (EMAIL_SETTINGS::getSenderAddress);
   }
 
   public static void setSMTPReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
   {
-    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setReceiverAddress (aReceiverAddress));
+    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setReceiverAddress (aReceiverAddress));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final Iterable <? extends IEmailAddress> aReceiverAddresses)
   {
-    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
+    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setReceiverAddresses (aReceiverAddresses));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
   {
-    s_aRWLock.writeLockedGet ( () -> s_aEmailSettings.setReceiverAddresses (aReceiverAddresses));
+    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setReceiverAddresses (aReceiverAddresses));
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static ICommonsList <IEmailAddress> getSMTPReceiverAddresses ()
   {
-    return s_aRWLock.readLockedGet (s_aEmailSettings::getAllReceiverAddresses);
+    return RW_LOCK.readLockedGet (EMAIL_SETTINGS::getAllReceiverAddresses);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static InternalErrorEmailSettings getCopyOfEmailSettings ()
   {
-    return s_aRWLock.readLockedGet (s_aEmailSettings::getClone);
+    return RW_LOCK.readLockedGet (EMAIL_SETTINGS::getClone);
   }
 
   /**
@@ -148,7 +147,7 @@ public final class InternalErrorSettings
    */
   public static void setDumpAllThreads (final boolean bEnableDumpAllThreads)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bEnableDumpAllThreads = bEnableDumpAllThreads);
+    RW_LOCK.writeLocked ( () -> s_bEnableDumpAllThreads = bEnableDumpAllThreads);
   }
 
   /**
@@ -157,7 +156,7 @@ public final class InternalErrorSettings
    */
   public static boolean isDumpAllThreads ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bEnableDumpAllThreads);
+    return RW_LOCK.readLockedBoolean ( () -> s_bEnableDumpAllThreads);
   }
 
   /**
@@ -169,7 +168,7 @@ public final class InternalErrorSettings
    */
   public static void setSendEmail (final boolean bSendEmail)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bSendEmail = bSendEmail);
+    RW_LOCK.writeLocked ( () -> s_bSendEmail = bSendEmail);
   }
 
   /**
@@ -178,7 +177,7 @@ public final class InternalErrorSettings
    */
   public static boolean isSendEmail ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bSendEmail);
+    return RW_LOCK.readLockedBoolean ( () -> s_bSendEmail);
   }
 
   /**
@@ -189,7 +188,7 @@ public final class InternalErrorSettings
    */
   public static void setSaveAsXML (final boolean bSaveAsXML)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bSaveAsXML = bSaveAsXML);
+    RW_LOCK.writeLocked ( () -> s_bSaveAsXML = bSaveAsXML);
   }
 
   /**
@@ -198,7 +197,7 @@ public final class InternalErrorSettings
    */
   public static boolean isSaveAsXML ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bSaveAsXML);
+    return RW_LOCK.readLockedBoolean ( () -> s_bSaveAsXML);
   }
 
   /**
@@ -211,7 +210,7 @@ public final class InternalErrorSettings
   public static void setFallbackLocale (@Nonnull final Locale aFallbackLocale)
   {
     ValueEnforcer.notNull (aFallbackLocale, "FallbackLocale");
-    s_aRWLock.writeLockedGet ( () -> s_aFallbackLocale = aFallbackLocale);
+    RW_LOCK.writeLocked ( () -> s_aFallbackLocale = aFallbackLocale);
   }
 
   /**
@@ -221,7 +220,7 @@ public final class InternalErrorSettings
   @Nonnull
   public static Locale getFallbackLocale ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_aFallbackLocale);
+    return RW_LOCK.readLockedGet ( () -> s_aFallbackLocale);
   }
 
   /**
@@ -240,7 +239,7 @@ public final class InternalErrorSettings
    * @since 8.0.3
    */
   @Nonnull
-  public static IFunction <InternalErrorMetadata, File> getStorageFileProvider ()
+  public static Function <InternalErrorMetadata, File> getStorageFileProvider ()
   {
     return s_aStorageFileProvider;
   }
@@ -253,7 +252,7 @@ public final class InternalErrorSettings
    *        Storage provider. May not be <code>null</code>
    * @since 8.0.3
    */
-  public static void setStorageFileProvider (@Nonnull final IFunction <InternalErrorMetadata, File> aStorageFileProvider)
+  public static void setStorageFileProvider (@Nonnull final Function <InternalErrorMetadata, File> aStorageFileProvider)
   {
     ValueEnforcer.notNull (aStorageFileProvider, "StorageFileProvider");
     s_aStorageFileProvider = aStorageFileProvider;
@@ -263,7 +262,7 @@ public final class InternalErrorSettings
    * Set the default storage file provider. In case you played around and want
    * to restore the default behavior.
    *
-   * @see #setStorageFileProvider(IFunction)
+   * @see #setStorageFileProvider(Function)
    * @since 8.0.3
    */
   public static void setDefaultStorageFileProvider ()
@@ -289,7 +288,7 @@ public final class InternalErrorSettings
    * to {@link #setDefaultStorageFileProvider()} is, that this version does not
    * contain a "month" subfolder.
    *
-   * @see #setStorageFileProvider(IFunction)
+   * @see #setStorageFileProvider(Function)
    * @since 8.0.3
    */
   public static void setDefaultStorageFileProviderUpTo802 ()

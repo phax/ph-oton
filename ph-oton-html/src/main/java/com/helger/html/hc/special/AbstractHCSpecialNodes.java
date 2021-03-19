@@ -25,7 +25,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.collection.multimap.MultiLinkedHashMapLinkedHashSetBased;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -59,7 +58,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractHCSpecialNodes.class);
 
-  private final MultiLinkedHashMapLinkedHashSetBased <ICSSMediaList, String> m_aExternalCSSs = new MultiLinkedHashMapLinkedHashSetBased <> ();
+  private final ICommonsOrderedMap <ICSSMediaList, ICommonsOrderedSet <String>> m_aExternalCSSs = new CommonsLinkedHashMap <> ();
   private final InlineCSSList m_aInlineCSSBeforeExternal = new InlineCSSList ();
   private final InlineCSSList m_aInlineCSSAfterExternal = new InlineCSSList ();
 
@@ -113,7 +112,9 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     ValueEnforcer.notEmpty (sCSSURI, "CSSURI");
 
     final ICSSMediaList aRealMediaList = getSafeCSSMediaList (aMediaList);
-    if (m_aExternalCSSs.putSingle (aRealMediaList, sCSSURI).isUnchanged ())
+    if (m_aExternalCSSs.computeIfAbsent (aRealMediaList, k -> new CommonsLinkedHashSet <> ())
+                       .addObject (sCSSURI)
+                       .isUnchanged ())
       LOGGER.warn ("Duplicate CSS URI '" + sCSSURI + "' with media list '" + aRealMediaList + "' ignored");
     return thisAsT ();
   }
@@ -134,7 +135,8 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
   }
 
   @Nonnull
-  public IMPLTYPE addInlineCSSBeforeExternal (@Nullable final ICSSMediaList aMediaList, @Nonnull final CharSequence aInlineCSS)
+  public IMPLTYPE addInlineCSSBeforeExternal (@Nullable final ICSSMediaList aMediaList,
+                                              @Nonnull final CharSequence aInlineCSS)
   {
     ValueEnforcer.notNull (aInlineCSS, "InlineCSS");
 
@@ -155,7 +157,8 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
   }
 
   @Nonnull
-  public IMPLTYPE addInlineCSSAfterExternal (@Nullable final ICSSMediaList aMediaList, @Nonnull final CharSequence aInlineCSS)
+  public IMPLTYPE addInlineCSSAfterExternal (@Nullable final ICSSMediaList aMediaList,
+                                             @Nonnull final CharSequence aInlineCSS)
   {
     ValueEnforcer.notNull (aInlineCSS, "InlineCSS");
 
@@ -245,7 +248,8 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
 
     // CSS
-    for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ().entrySet ())
+    for (final Map.Entry <ICSSMediaList, ICommonsList <String>> aEntry : aSpecialNodes.getAllExternalCSSs ()
+                                                                                      .entrySet ())
       for (final String sCSSFile : aEntry.getValue ())
         addExternalCSS (aEntry.getKey (), sCSSFile);
     for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())

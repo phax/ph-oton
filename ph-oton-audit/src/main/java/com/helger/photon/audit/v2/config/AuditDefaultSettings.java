@@ -18,11 +18,11 @@ package com.helger.photon.audit.v2.config;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.functional.ISupplier;
 
 /**
  * Audit default settings.
@@ -32,7 +32,7 @@ import com.helger.commons.functional.ISupplier;
 public final class AuditDefaultSettings
 {
   private static final ILongSupplier s_aAuditEventIDProvider = UUID.randomUUID ()::getMostSignificantBits;
-  private static final ISupplier <LocalDateTime> s_aAuditEventDateTimeProvider = PDTFactory::getCurrentLocalDateTime;
+  private static final Supplier <LocalDateTime> s_aAuditEventDateTimeProvider = PDTFactory::getCurrentLocalDateTime;
 
   private AuditDefaultSettings ()
   {}
@@ -52,7 +52,7 @@ public final class AuditDefaultSettings
    *         {@link PDTFactory#getCurrentLocalDateTime()}.
    */
   @Nonnull
-  public static ISupplier <LocalDateTime> getDefaultAuditEventDateTimeProvider ()
+  public static Supplier <LocalDateTime> getDefaultAuditEventDateTimeProvider ()
   {
     return s_aAuditEventDateTimeProvider;
   }

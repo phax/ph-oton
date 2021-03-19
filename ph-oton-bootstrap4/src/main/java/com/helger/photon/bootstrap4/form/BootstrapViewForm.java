@@ -16,12 +16,13 @@
  */
 package com.helger.photon.bootstrap4.form;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -35,7 +36,8 @@ import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 
 @NotThreadSafe
-public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> implements IBootstrapFormGroupContainer <BootstrapViewForm>
+public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> implements
+                               IBootstrapFormGroupContainer <BootstrapViewForm>
 {
   public static final ICSSClassProvider CSS_CLASS_VIEW_FORM = DefaultCSSClassProvider.create ("view-form");
   public static final int DEFAULT_LEFT_PART = 3;
@@ -105,7 +107,11 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
     ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsXL, "LeftPartsXL", 1, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG, nLeftPartsXL);
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
+                                                                 nLeftPartsSM,
+                                                                 nLeftPartsMD,
+                                                                 nLeftPartsLG,
+                                                                 nLeftPartsXL);
     final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
                                                                   _getRight (nLeftPartsSM),
                                                                   _getRight (nLeftPartsMD),
@@ -116,7 +122,8 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public final BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
+  public final BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft,
+                                               @Nonnull final BootstrapGridSpec aRight)
   {
     ValueEnforcer.notNull (aLeft, "Left");
     ValueEnforcer.notNull (aRight, "Right");
@@ -143,7 +150,7 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
   {
     // TODO find Locale for rendering
     // Usually no error texts are used; so this is not sooo important
-    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup, CGlobal.DEFAULT_LOCALE);
+    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup, Locale.US);
   }
 
   @Nonnull

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.page.external;
 
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -25,7 +27,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.functional.IConsumer;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.IMultilingualText;
@@ -44,7 +45,8 @@ import com.helger.xml.microdom.IMicroNode;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends
+                                  AbstractWebPageResourceContent <WPECTYPE>
 {
   protected final IReadableResource m_aResource;
   @GuardedBy ("m_aRWLock")
@@ -67,7 +69,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
   public BasePageViewExternal (@Nonnull @Nonempty final String sID,
                                @Nonnull final String sName,
                                @Nonnull final IReadableResource aResource,
-                               @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
+                               @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     this (sID, getAsMLT (sName), aResource, aContentCleanser);
   }
@@ -75,7 +77,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
   public BasePageViewExternal (@Nonnull @Nonempty final String sID,
                                @Nonnull final IMultilingualText aName,
                                @Nonnull final IReadableResource aResource,
-                               @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
+                               @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, aContentCleanser);
 
@@ -116,7 +118,8 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> bReadFromResource ? _readFromResource (m_aResource) : m_aParsedContent);
+    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> bReadFromResource ? _readFromResource (m_aResource)
+                                                                               : m_aParsedContent);
 
     aNodeList.addChild (new HCDOMWrapper (aNode));
   }

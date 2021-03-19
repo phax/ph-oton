@@ -36,7 +36,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public final class JSGlobal
 {
   @PresentForCodeCoverage
-  private static final JSGlobal s_aInstance = new JSGlobal ();
+  private static final JSGlobal INSTANCE = new JSGlobal ();
 
   private JSGlobal ()
   {}

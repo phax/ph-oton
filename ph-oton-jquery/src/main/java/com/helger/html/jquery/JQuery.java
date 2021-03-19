@@ -23,8 +23,6 @@ import javax.annotation.concurrent.Immutable;
 
 import org.w3c.dom.Node;
 
-import com.helger.collection.pair.IPair;
-import com.helger.collection.pair.Pair;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.PresentForCodeCoverage;
@@ -63,7 +61,7 @@ public final class JQuery
   public static final AtomicBoolean s_aUseDollar = new AtomicBoolean (true);
 
   @PresentForCodeCoverage
-  private static final JQuery s_aInstance = new JQuery ();
+  private static final JQuery INSTANCE = new JQuery ();
 
   private JQuery ()
   {}
@@ -513,7 +511,8 @@ public final class JQuery
    *         <code>$('element#id')</code> or <code>$('element.class')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull final EHTMLElement eElement, @Nonnull final IJQuerySelector aSelector)
+  public static JQueryInvocation elementNameRef (@Nonnull final EHTMLElement eElement,
+                                                 @Nonnull final IJQuerySelector aSelector)
   {
     return JQuerySelector.element (eElement).chain (aSelector).invoke ();
   }
@@ -530,7 +529,8 @@ public final class JQuery
    *         <code>$('element#id')</code> or <code>$('element.class')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull @Nonempty final String sElementName, @Nonnull final IJQuerySelector aSelector)
+  public static JQueryInvocation elementNameRef (@Nonnull @Nonempty final String sElementName,
+                                                 @Nonnull final IJQuerySelector aSelector)
   {
     return JQuerySelector.element (sElementName).chain (aSelector).invoke ();
   }
@@ -546,7 +546,8 @@ public final class JQuery
    *         <code>$('element#id')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameWithIDRef (@Nonnull final EHTMLElement eElement, @Nonnull @Nonempty final String sID)
+  public static JQueryInvocation elementNameWithIDRef (@Nonnull final EHTMLElement eElement,
+                                                       @Nonnull @Nonempty final String sID)
   {
     return elementNameRef (eElement, JQuerySelector.id (sID));
   }
@@ -562,7 +563,8 @@ public final class JQuery
    *         <code>$('element#id')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameWithIDRef (@Nonnull @Nonempty final String sElementName, @Nonnull @Nonempty final String sID)
+  public static JQueryInvocation elementNameWithIDRef (@Nonnull @Nonempty final String sElementName,
+                                                       @Nonnull @Nonempty final String sID)
   {
     return elementNameRef (sElementName, JQuerySelector.id (sID));
   }
@@ -579,7 +581,8 @@ public final class JQuery
    *         <code>$('element.class')</code>
    */
   @Nonnull
-  public static JQueryInvocation elementNameWithClassRef (@Nonnull final EHTMLElement eElement, @Nonnull final ICSSClassProvider aCSSClass)
+  public static JQueryInvocation elementNameWithClassRef (@Nonnull final EHTMLElement eElement,
+                                                          @Nonnull final ICSSClassProvider aCSSClass)
   {
     return elementNameRef (eElement, JQuerySelector.clazz (aCSSClass));
   }
@@ -618,16 +621,39 @@ public final class JQuery
     return JQuerySelector.nameAttr (sNameAttrValue).invoke ();
   }
 
+  public static class OnDocumentReadyInvocation
+  {
+    private final JQueryInvocation m_aInvocation;
+    private final JSAnonymousFunction m_aAnonFunction;
+
+    public OnDocumentReadyInvocation (@Nonnull final JQueryInvocation aInvocation,
+                                      @Nonnull final JSAnonymousFunction aAnonFunction)
+    {
+      m_aInvocation = aInvocation;
+      m_aAnonFunction = aAnonFunction;
+    }
+
+    public JQueryInvocation getInvocation ()
+    {
+      return m_aInvocation;
+    }
+
+    public JSAnonymousFunction getAnonFunction ()
+    {
+      return m_aAnonFunction;
+    }
+  }
+
   /**
    * @return A pair consisting of the invocation and the anonymous function that
    *         can be filled with code to be executed.
    */
   @Nonnull
-  public static IPair <JQueryInvocation, JSAnonymousFunction> onDocumentReady ()
+  public static OnDocumentReadyInvocation onDocumentReady ()
   {
     final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
     final JQueryInvocation aInvocation = jQueryDocument ().ready (aAnonFunction);
-    return Pair.create (aInvocation, aAnonFunction);
+    return new OnDocumentReadyInvocation (aInvocation, aAnonFunction);
   }
 
   /**

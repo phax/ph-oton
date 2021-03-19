@@ -17,7 +17,9 @@
 package com.helger.photon.core.job.app;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -25,11 +27,9 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.io.misc.SizeHelper;
 import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.core.interror.InternalErrorHandler;
@@ -73,17 +73,21 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
                             @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
   {
     final long nThresholdBytes = aJobDataMap.getAsLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
-    final ISupplier <File> aPathSupplier = aJobDataMap.getCastedValue (JOB_DATA_ATTR_PATH_SUPPLIER);
+    final Supplier <File> aPathSupplier = aJobDataMap.getCastedValue (JOB_DATA_ATTR_PATH_SUPPLIER);
     final File aBasePath = aPathSupplier.get ();
     final String sBasePath = aBasePath.getAbsolutePath ();
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Checking for usable space on '" + sBasePath + "' with a threshold of " + nThresholdBytes + " bytes");
+      LOGGER.debug ("Checking for usable space on '" +
+                    sBasePath +
+                    "' with a threshold of " +
+                    nThresholdBytes +
+                    " bytes");
 
     final long nUsableSpace = aBasePath.getUsableSpace ();
     if (nUsableSpace <= nThresholdBytes)
     {
-      final SizeHelper aSH = SizeHelper.getSizeHelperOfLocale (CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
+      final SizeHelper aSH = SizeHelper.getSizeHelperOfLocale (Locale.US);
       final String sThresholdFormatted = aSH.getAsMatching (nThresholdBytes, 3);
       final String sUsableFormatted = aSH.getAsMatching (nUsableSpace, 3);
 
@@ -149,7 +153,7 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
   @Nonnull
   public static TriggerKey schedule (@Nonnull final IScheduleBuilder <? extends ITrigger> aScheduleBuilder,
                                      @Nonnegative final long nThresholdBytes,
-                                     @Nonnull final ISupplier <File> aPathSupplier)
+                                     @Nonnull final Supplier <File> aPathSupplier)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
     ValueEnforcer.isGE0 (nThresholdBytes, "ThresholdBytes");
@@ -163,7 +167,9 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
     // directories
     return GlobalQuartzScheduler.getInstance ()
                                 .scheduleJob (CheckDiskUsableSpaceJob.class.getName () + JOB_COUNT.incrementAndGet (),
-                                              JDK8TriggerBuilder.newTrigger ().startNow ().withSchedule (aScheduleBuilder),
+                                              JDK8TriggerBuilder.newTrigger ()
+                                                                .startNow ()
+                                                                .withSchedule (aScheduleBuilder),
                                               CheckDiskUsableSpaceJob.class,
                                               aJobDataMap);
   }

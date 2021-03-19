@@ -17,13 +17,13 @@
 package com.helger.photon.core.menu.ui;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.NonBlockingStack;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.html.hc.IHCNode;
@@ -52,7 +52,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
                                   DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   private final ISimpleWebExecutionContext m_aSWEC;
-  private final ISupplier <T> m_aFactory;
+  private final Supplier <T> m_aFactory;
   private final NonBlockingStack <T> m_aMenuListStack;
   private final IMenuItemRenderer <T> m_aRenderer;
   private final ICommonsMap <String, Boolean> m_aDisplayMenuItemIDs;
@@ -62,7 +62,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
   private final String m_sSelectedItem;
 
   protected MenuRendererCallback (@Nonnull final ILayoutExecutionContext aLEC,
-                                  @Nonnull final ISupplier <T> aFactory,
+                                  @Nonnull final Supplier <T> aFactory,
                                   @Nonnull final NonBlockingStack <T> aMenuListStack,
                                   @Nonnull final IMenuItemRenderer <T> aRenderer,
                                   @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
@@ -157,7 +157,11 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
         if (aMenuObj instanceof IMenuItemPage)
         {
           // page item
-          final IHCNode aHCNode = m_aRenderer.renderMenuItemPage (m_aSWEC, (IMenuItemPage) aMenuObj, bHasChildren, bSelected, bExpanded);
+          final IHCNode aHCNode = m_aRenderer.renderMenuItemPage (m_aSWEC,
+                                                                  (IMenuItemPage) aMenuObj,
+                                                                  bHasChildren,
+                                                                  bSelected,
+                                                                  bExpanded);
           HCLI aLI;
           if (aHCNode instanceof HCLI)
             aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
@@ -229,7 +233,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final ISupplier <T> aFactory,
+                                                                    @Nonnull final Supplier <T> aFactory,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer)
   {
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
@@ -237,7 +241,8 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
                                aFactory,
                                aMenuTree.getRootItem (),
                                aRenderer,
-                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree, aLEC.getSelectedMenuItemID ()));
+                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree,
+                                                                                      aLEC.getSelectedMenuItemID ()));
   }
 
   /**
@@ -259,7 +264,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final ISupplier <T> aFactory,
+                                                                    @Nonnull final Supplier <T> aFactory,
                                                                     @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer)
   {
@@ -268,7 +273,8 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
                                aFactory,
                                aStartTreeItem,
                                aRenderer,
-                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree, aLEC.getSelectedMenuItemID ()));
+                               MenuItemDeterminatorCallback.getAllDisplayMenuItemIDs (aMenuTree,
+                                                                                      aLEC.getSelectedMenuItemID ()));
   }
 
   /**
@@ -291,7 +297,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final ISupplier <T> aFactory,
+                                                                    @Nonnull final Supplier <T> aFactory,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
                                                                     @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
@@ -320,7 +326,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    */
   @Nonnull
   public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final ISupplier <T> aFactory,
+                                                                    @Nonnull final Supplier <T> aFactory,
                                                                     @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
                                                                     @Nonnull final IMenuItemRenderer <T> aRenderer,
                                                                     @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
@@ -329,7 +335,12 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
 
     final NonBlockingStack <T> aNodeStack = new NonBlockingStack <> ();
     aNodeStack.push (aFactory.get ());
-    TreeVisitor.visitTreeItem (aStartTreeItem, new MenuRendererCallback <> (aLEC, aFactory, aNodeStack, aRenderer, aDisplayMenuItemIDs));
+    TreeVisitor.visitTreeItem (aStartTreeItem,
+                               new MenuRendererCallback <> (aLEC,
+                                                            aFactory,
+                                                            aNodeStack,
+                                                            aRenderer,
+                                                            aDisplayMenuItemIDs));
     if (aNodeStack.size () != 1)
       throw new IllegalStateException ("Stack is inconsistent: " + aNodeStack);
 

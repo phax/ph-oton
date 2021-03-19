@@ -73,7 +73,7 @@ public final class HCSpecialNodeHandler
   private static final ICommonsMap <String, IHCSpecialNodeListModifier> s_aModifiers = new CommonsHashMap <> ();
 
   @PresentForCodeCoverage
-  private static final HCSpecialNodeHandler s_aInstance = new HCSpecialNodeHandler ();
+  private static final HCSpecialNodeHandler INSTANCE = new HCSpecialNodeHandler ();
 
   private HCSpecialNodeHandler ()
   {}

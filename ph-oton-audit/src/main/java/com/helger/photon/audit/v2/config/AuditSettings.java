@@ -17,11 +17,11 @@
 package com.helger.photon.audit.v2.config;
 
 import java.time.LocalDateTime;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.functional.ISupplier;
 
 /**
  * Settings for auditing
@@ -34,7 +34,7 @@ public class AuditSettings implements IAuditSettings
   public static final IAuditSettings DEFAULT_INSTANCE = new AuditSettings ();
 
   private ILongSupplier m_aAuditEventIDProvider = AuditDefaultSettings.getDefaultAuditEventIDProvider ();
-  private ISupplier <LocalDateTime> m_aAuditEventDateTimeProvider = AuditDefaultSettings.getDefaultAuditEventDateTimeProvider ();
+  private Supplier <LocalDateTime> m_aAuditEventDateTimeProvider = AuditDefaultSettings.getDefaultAuditEventDateTimeProvider ();
 
   public AuditSettings ()
   {}
@@ -54,13 +54,13 @@ public class AuditSettings implements IAuditSettings
   }
 
   @Nonnull
-  public ISupplier <LocalDateTime> getAuditEventDateTimeProvider ()
+  public Supplier <LocalDateTime> getAuditEventDateTimeProvider ()
   {
     return m_aAuditEventDateTimeProvider;
   }
 
   @Nonnull
-  public AuditSettings setAuditEventDateTimeProvider (@Nonnull final ISupplier <LocalDateTime> aDateTimeProvider)
+  public AuditSettings setAuditEventDateTimeProvider (@Nonnull final Supplier <LocalDateTime> aDateTimeProvider)
   {
     ValueEnforcer.notNull (aDateTimeProvider, "DateTimeProvider");
     m_aAuditEventDateTimeProvider = aDateTimeProvider;

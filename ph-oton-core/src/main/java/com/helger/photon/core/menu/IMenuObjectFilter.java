@@ -17,12 +17,12 @@
 package com.helger.photon.core.menu;
 
 import java.util.Locale;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.functional.IPredicate;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.display.IHasDisplayText;
 
@@ -33,7 +33,7 @@ import com.helger.commons.text.display.IHasDisplayText;
  * @author Philip Helger
  */
 @FunctionalInterface
-public interface IMenuObjectFilter extends IPredicate <IMenuObject>, IHasDisplayText
+public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayText
 {
   @Nullable
   default String getDisplayText (@Nonnull final Locale aContentLocale)
@@ -56,7 +56,9 @@ public interface IMenuObjectFilter extends IPredicate <IMenuObject>, IHasDisplay
       @Nullable
       public String getDisplayText (@Nonnull final Locale aContentLocale)
       {
-        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale), " + ", aOther.getDisplayText (aContentLocale));
+        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale),
+                                                     " + ",
+                                                     aOther.getDisplayText (aContentLocale));
       }
     };
   }

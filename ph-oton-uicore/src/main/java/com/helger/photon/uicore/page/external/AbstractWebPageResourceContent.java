@@ -18,6 +18,7 @@ package com.helger.photon.uicore.page.external;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,7 +28,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.functional.IConsumer;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -50,20 +50,21 @@ import com.helger.xml.serialize.read.SAXReaderSettings;
  *        Web page execution context type
  */
 @ThreadSafe
-public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
-                                                     implements
+public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends
+                                                     AbstractWebPage <WPECTYPE> implements
                                                      IWebPageResourceContent
 {
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
 
-  private final IConsumer <? super IMicroContainer> m_aContentCleanser;
+  private final Consumer <? super IMicroContainer> m_aContentCleanser;
   @GuardedBy ("m_aRWLock")
   private boolean m_bReadEveryTime = GlobalDebug.isDebugMode ();
 
   @Nonnull
-  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource, final boolean bPeformStandardCleansing)
+  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
+                                                      final boolean bPeformStandardCleansing)
   {
     return readHTMLPageFragment (aResource,
                                  DEFAULT_CHARSET,
@@ -107,7 +108,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
 
   public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID,
                                          @Nonnull final IMultilingualText aName,
-                                         @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
+                                         @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, null);
     m_aContentCleanser = aContentCleanser;
@@ -126,7 +127,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   }
 
   @Nullable
-  public final IConsumer <? super IMicroContainer> getContentCleanser ()
+  public final Consumer <? super IMicroContainer> getContentCleanser ()
   {
     return m_aContentCleanser;
   }

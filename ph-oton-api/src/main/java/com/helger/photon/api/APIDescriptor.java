@@ -16,6 +16,8 @@
  */
 package com.helger.photon.api;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -26,7 +28,6 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.factory.FactoryNewInstance;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.api.pathdescriptor.PathDescriptor;
@@ -42,7 +43,7 @@ public class APIDescriptor implements IAPIDescriptor
   private final APIPath m_aAPIPath;
   // The path descriptor is automatically build from the APIPath
   private final PathDescriptor m_aPathDescriptor;
-  private final ISupplier <? extends IAPIExecutor> m_aExecutorFactory;
+  private final Supplier <? extends IAPIExecutor> m_aExecutorFactory;
   private final ICommonsOrderedSet <String> m_aRequiredHeaders = new CommonsLinkedHashSet <> ();
   private final ICommonsOrderedSet <String> m_aRequiredParams = new CommonsLinkedHashSet <> ();
   private final ICommonsOrderedSet <String> m_aAllowedMimeTypes = new CommonsLinkedHashSet <> ();
@@ -86,7 +87,7 @@ public class APIDescriptor implements IAPIDescriptor
    *        The factory to be used to create executor instances for every API
    *        invocation. May not be <code>null</code>.
    */
-  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final ISupplier <? extends IAPIExecutor> aExecutorFactory)
+  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final Supplier <? extends IAPIExecutor> aExecutorFactory)
   {
     m_aAPIPath = ValueEnforcer.notNull (aPath, "Path");
     m_aPathDescriptor = PathDescriptor.create (aPath.getPath ());
@@ -106,7 +107,7 @@ public class APIDescriptor implements IAPIDescriptor
   }
 
   @Nonnull
-  public final ISupplier <? extends IAPIExecutor> getExecutorFactory ()
+  public final Supplier <? extends IAPIExecutor> getExecutorFactory ()
   {
     return m_aExecutorFactory;
   }

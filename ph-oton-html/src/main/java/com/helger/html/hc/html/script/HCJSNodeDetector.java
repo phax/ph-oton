@@ -33,7 +33,7 @@ import com.helger.html.hc.IHCNode;
 public final class HCJSNodeDetector
 {
   @PresentForCodeCoverage
-  private static final HCJSNodeDetector s_aInstance = new HCJSNodeDetector ();
+  private static final HCJSNodeDetector INSTANCE = new HCJSNodeDetector ();
 
   private HCJSNodeDetector ()
   {}

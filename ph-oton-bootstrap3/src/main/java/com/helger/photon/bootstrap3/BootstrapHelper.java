@@ -33,7 +33,7 @@ import com.helger.html.hc.html.script.IHCScript;
 public final class BootstrapHelper
 {
   @PresentForCodeCoverage
-  private static final BootstrapHelper s_aInstance = new BootstrapHelper ();
+  private static final BootstrapHelper INSTANCE = new BootstrapHelper ();
 
   private BootstrapHelper ()
   {}

@@ -16,9 +16,10 @@
  */
 package com.helger.photon.bootstrap.demo.ajax;
 
+import java.util.function.Predicate;
+
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.functional.IPredicate;
 import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.bootstrap.demo.app.CApp;
@@ -36,23 +37,23 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public final class CAjax
 {
   public static final IAjaxFunctionDeclaration DATATABLES = AjaxFunctionDeclaration.builder ("dataTables")
-                                                                                   .withExecutor (AjaxExecutorDataTables.class)
+                                                                                   .executor (AjaxExecutorDataTables.class)
                                                                                    .build ();
   public static final IAjaxFunctionDeclaration DATATABLES_I18N = AjaxFunctionDeclaration.builder ("datatables-i18n")
-                                                                                        .withExecutor (new AjaxExecutorDataTablesI18N (CApp.DEFAULT_LOCALE))
+                                                                                        .executor (new AjaxExecutorDataTablesI18N (CApp.DEFAULT_LOCALE))
                                                                                         .build ();
   public static final IAjaxFunctionDeclaration LOGIN = AjaxFunctionDeclaration.builder ("login")
-                                                                              .withExecutor (AjaxExecutorPublicLogin.class)
+                                                                              .executor (AjaxExecutorPublicLogin.class)
                                                                               .build ();
   public static final IAjaxFunctionDeclaration UPDATE_MENU_VIEW_PUB = AjaxFunctionDeclaration.builder ("updateMenuViewPub")
-                                                                                             .withExecutor (AjaxExecutorPublicUpdateMenuView.class)
+                                                                                             .executor (AjaxExecutorPublicUpdateMenuView.class)
                                                                                              .build ();
 
-  private static final IPredicate <? super IRequestWebScopeWithoutResponse> FILTER_LOGIN = x -> LoggedInUserManager.getInstance ()
-                                                                                                                   .isUserLoggedInInCurrentSession ();
+  private static final Predicate <? super IRequestWebScopeWithoutResponse> FILTER_LOGIN = x -> LoggedInUserManager.getInstance ()
+                                                                                                                  .isUserLoggedInInCurrentSession ();
   public static final IAjaxFunctionDeclaration UPDATE_MENU_VIEW_SEC = AjaxFunctionDeclaration.builder ("updateMenuViewSec")
-                                                                                             .withExecutor (AjaxExecutorSecureUpdateMenuView.class)
-                                                                                             .withFilter (FILTER_LOGIN)
+                                                                                             .executor (AjaxExecutorSecureUpdateMenuView.class)
+                                                                                             .filter (FILTER_LOGIN)
                                                                                              .build ();
 
   private CAjax ()

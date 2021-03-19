@@ -16,14 +16,13 @@
  */
 package com.helger.photon.api;
 
-import java.io.Serializable;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.photon.api.pathdescriptor.PathDescriptor;
 
@@ -32,24 +31,13 @@ import com.helger.photon.api.pathdescriptor.PathDescriptor;
  *
  * @author Philip Helger
  */
-public interface IAPIDescriptor extends Serializable
+public interface IAPIDescriptor
 {
   /**
    * @return The API path used. Never <code>null</code>.
    */
   @Nonnull
   APIPath getAPIPath ();
-
-  /**
-   * @return The HTTP method required to call this API.
-   * @deprecated Use {@link #getHttpMethod()} instead
-   */
-  @Deprecated
-  @Nonnull
-  default EHttpMethod getHTTPMethod ()
-  {
-    return getHttpMethod ();
-  }
 
   /**
    * @return The HTTP method required to call this API.
@@ -70,7 +58,7 @@ public interface IAPIDescriptor extends Serializable
    * @return The non-<code>null</code> factory used to create the main invoker.
    */
   @Nonnull
-  ISupplier <? extends IAPIExecutor> getExecutorFactory ();
+  Supplier <? extends IAPIExecutor> getExecutorFactory ();
 
   /**
    * @return The names of all required HTTP headers. Never <code>null</code> but

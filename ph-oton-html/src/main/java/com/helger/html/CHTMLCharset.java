@@ -18,11 +18,9 @@ package com.helger.html;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
@@ -41,11 +39,8 @@ public final class CHTMLCharset
   /** JS charset */
   public static final Charset CHARSET_JS_OBJ = StandardCharsets.UTF_8;
 
-  /** The locale to be used for upper/lowercasing stuff */
-  public static final Locale LOCALE = CGlobal.DEFAULT_LOCALE;
-
   @PresentForCodeCoverage
-  private static final CHTMLCharset s_aInstance = new CHTMLCharset ();
+  private static final CHTMLCharset INSTANCE = new CHTMLCharset ();
 
   private CHTMLCharset ()
   {}

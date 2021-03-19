@@ -55,7 +55,7 @@ public final class PhotonStubServletInitializer
   private static final AtomicBoolean s_aInitialized = new AtomicBoolean (false);
 
   @PresentForCodeCoverage
-  private static final PhotonStubServletInitializer s_aInstance = new PhotonStubServletInitializer ();
+  private static final PhotonStubServletInitializer INSTANCE = new PhotonStubServletInitializer ();
 
   private PhotonStubServletInitializer ()
   {}

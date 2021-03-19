@@ -46,7 +46,7 @@ import com.helger.html.jscode.JSVar;
 public final class JSHtml
 {
   @PresentForCodeCoverage
-  private static final JSHtml s_aInstance = new JSHtml ();
+  private static final JSHtml INSTANCE = new JSHtml ();
 
   private JSHtml ()
   {}

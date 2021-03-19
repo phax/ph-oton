@@ -43,14 +43,14 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   public static final ISystemMessageRenderer FORMATTER_DEFAULT = (sText, aCtrl) -> aCtrl.addChildren (HCExtHelper.nl2divList (sText));
   public static final ISystemMessageRenderer FORMATTER_MARKDOWN = (sText, aCtrl) -> aCtrl.addChild (UITextFormatter.markdown (sText));
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("s_aRWLock")
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
+  @GuardedBy ("RW_LOCK")
   private static ISystemMessageRenderer s_aFormatter = FORMATTER_DEFAULT;
 
   @Nonnull
   public static ISystemMessageRenderer getDefaultFormatter ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_aFormatter);
+    return RW_LOCK.readLockedGet ( () -> s_aFormatter);
   }
 
   /**
@@ -63,7 +63,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   public static void setDefaultFormatter (@Nonnull final ISystemMessageRenderer aFormatter)
   {
     ValueEnforcer.notNull (aFormatter, "Formatter");
-    s_aRWLock.writeLockedGet ( () -> s_aFormatter = aFormatter);
+    RW_LOCK.writeLockedGet ( () -> s_aFormatter = aFormatter);
   }
 
   public static boolean isDefaultMarkdown ()

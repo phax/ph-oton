@@ -38,7 +38,7 @@ import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 public final class NetworkInterfaceHelper
 {
   @PresentForCodeCoverage
-  private static final NetworkInterfaceHelper s_aInstance = new NetworkInterfaceHelper ();
+  private static final NetworkInterfaceHelper INSTANCE = new NetworkInterfaceHelper ();
 
   private NetworkInterfaceHelper ()
   {}

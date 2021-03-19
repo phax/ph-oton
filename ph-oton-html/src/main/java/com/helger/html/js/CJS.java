@@ -43,7 +43,7 @@ public final class CJS
   public static final String FILE_EXTENSION_MIN_JS = ".min.js";
 
   @PresentForCodeCoverage
-  private static final CJS s_aInstance = new CJS ();
+  private static final CJS INSTANCE = new CJS ();
 
   private CJS ()
   {}

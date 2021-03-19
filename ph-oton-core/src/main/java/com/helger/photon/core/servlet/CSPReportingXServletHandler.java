@@ -111,7 +111,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
     final byte [] aBytes = StreamHelper.getAllBytes (aHttpRequest.getInputStream ());
 
     // Try to parse as JSON
-    final IJson aJson = JsonReader.builder ().setSource (new NonBlockingByteArrayInputStream (aBytes)).read ();
+    final IJson aJson = JsonReader.builder ().source (new NonBlockingByteArrayInputStream (aBytes)).read ();
     if (aJson != null)
     {
       if (aJson.isObject ())

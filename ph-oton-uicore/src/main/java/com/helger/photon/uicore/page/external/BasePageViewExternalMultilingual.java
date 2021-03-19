@@ -19,6 +19,7 @@ package com.helger.photon.uicore.page.external;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +32,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.functional.IConsumer;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.locale.LocaleHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -51,7 +51,8 @@ import com.helger.xml.microdom.IMicroNode;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutionContext> extends
+                                              AbstractWebPageResourceContent <WPECTYPE>
 {
   @NotThreadSafe
   private static final class ContentPerLocale implements Serializable
@@ -124,7 +125,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
                                            @Nonnull final String sName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
                                            @Nonnull final Locale aDefaultLocale,
-                                           @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
+                                           @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     this (sID, getAsMLT (sName), aResources, aDefaultLocale, aContentCleanser);
   }
@@ -133,7 +134,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
                                            @Nonnull final IMultilingualText aName,
                                            @Nonnull final Map <Locale, IReadableResource> aResources,
                                            @Nonnull final Locale aDefaultLocale,
-                                           @Nullable final IConsumer <? super IMicroContainer> aContentCleanser)
+                                           @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, aContentCleanser);
     ValueEnforcer.notEmpty (aResources, "Resources");
@@ -198,7 +199,9 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> {
       // Use the default locale as fallback, since we ensured that the default
       // locale is contained!
-      final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale, m_aContent.keySet (), m_aDefaultLocale);
+      final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale,
+                                                                         m_aContent.keySet (),
+                                                                         m_aDefaultLocale);
       final ContentPerLocale aContent = m_aContent.get (aLocaleToUse);
       if (aContent == null)
         throw new IllegalStateException ("Found no content for locale " +

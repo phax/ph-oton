@@ -38,7 +38,7 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 @ThreadSafe
 public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private String m_sLastApplicationID;
   private final ICommonsMap <String, PhotonSessionStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 

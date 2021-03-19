@@ -21,11 +21,9 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.exception.InitializationException;
+import com.helger.config.ConfigFactory;
+import com.helger.config.IConfig;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
-import com.helger.settings.ISettings;
-import com.helger.settings.exchange.configfile.ConfigFile;
-import com.helger.settings.exchange.configfile.ConfigFileBuilder;
 
 /**
  * This class provides access to the settings as contained in the
@@ -35,53 +33,42 @@ import com.helger.settings.exchange.configfile.ConfigFileBuilder;
  */
 public final class AppSettings extends AbstractGlobalSingleton
 {
-  /** The name of the file containing the settings */
-  public static final String FILENAME = "webapp.properties";
-  private static final ConfigFile s_aCF;
-
-  static
-  {
-    s_aCF = new ConfigFileBuilder ().addPath ("private-webapp.properties").addPath (FILENAME).build ();
-    if (!s_aCF.isRead ())
-      throw new InitializationException ("Failed to init properties");
-  }
-
   @Deprecated
   @UsedViaReflection
   private AppSettings ()
   {}
 
   @Nonnull
-  public static ISettings getSettingsObject ()
+  public static IConfig getConfig ()
   {
-    return s_aCF.getSettings ();
+    return ConfigFactory.getDefaultConfig ();
   }
 
   @Nullable
   public static String getGlobalDebug ()
   {
-    return s_aCF.getAsString ("global.debug");
+    return getConfig ().getAsString ("global.debug");
   }
 
   @Nullable
   public static String getGlobalProduction ()
   {
-    return s_aCF.getAsString ("global.production");
+    return getConfig ().getAsString ("global.production");
   }
 
   @Nullable
   public static String getDataPath ()
   {
-    return s_aCF.getAsString ("webapp.datapath");
+    return getConfig ().getAsString ("webapp.datapath");
   }
 
   public static boolean isCheckFileAccess ()
   {
-    return s_aCF.getAsBoolean ("webapp.checkfileaccess", false);
+    return getConfig ().getAsBoolean ("webapp.checkfileaccess", false);
   }
 
   public static boolean isTestVersion ()
   {
-    return s_aCF.getAsBoolean ("webapp.testversion", GlobalDebug.isDebugMode ());
+    return getConfig ().getAsBoolean ("webapp.testversion", GlobalDebug.isDebugMode ());
   }
 }

@@ -189,11 +189,13 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    * @return The create {@link AjaxFunctionDeclaration} to be invoked.
    */
   @Nonnull
-  public static final AjaxFunctionDeclaration addAjax (@Nullable final String sPrefix, @Nonnull final IAjaxExecutor aExecutor)
+  public static final AjaxFunctionDeclaration addAjax (@Nullable final String sPrefix,
+                                                       @Nonnull final IAjaxExecutor aExecutor)
   {
     // null means random name
-    final String sFuncName = StringHelper.hasText (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID () : null;
-    final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder (sFuncName).withExecutor (aExecutor).build ();
+    final String sFuncName = StringHelper.hasText (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID ()
+                                                            : null;
+    final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder (sFuncName).executor (aExecutor).build ();
     GlobalAjaxInvoker.getInstance ().getRegistry ().registerFunction (aFunction);
     return aFunction;
   }

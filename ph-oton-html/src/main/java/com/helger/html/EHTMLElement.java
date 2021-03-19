@@ -16,6 +16,8 @@
  */
 package com.helger.html;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -154,17 +156,19 @@ public enum EHTMLElement
   VIDEO ("video", false, EHTMLContentModelType.FLOW),
   WBR ("wbr", true, EHTMLContentModelType.PHRASING);
 
-  private static final ICommonsSet <String> s_aSelfClosedElements = new CommonsHashSet <> ();
+  private static final ICommonsSet <String> SELF_CLOSED_ELEMENTS_LC = new CommonsHashSet <> ();
 
   private final String m_sElementNameLC;
   private final String m_sElementNameUC;
   private final boolean m_bMayBeSelfClosed;
   private final EHTMLContentModelType m_eType;
 
-  EHTMLElement (@Nonnull @Nonempty final String sElementName, final boolean bMayBeSelfClosed, @Nonnull final EHTMLContentModelType eType)
+  EHTMLElement (@Nonnull @Nonempty final String sElementName,
+                final boolean bMayBeSelfClosed,
+                @Nonnull final EHTMLContentModelType eType)
   {
-    m_sElementNameLC = sElementName.toLowerCase (CHTMLCharset.LOCALE);
-    m_sElementNameUC = sElementName.toUpperCase (CHTMLCharset.LOCALE);
+    m_sElementNameLC = sElementName.toLowerCase (Locale.US);
+    m_sElementNameUC = sElementName.toUpperCase (Locale.US);
     m_bMayBeSelfClosed = bMayBeSelfClosed;
     m_eType = eType;
   }
@@ -229,17 +233,17 @@ public enum EHTMLElement
   @Nonnull
   private static ICommonsSet <String> _getSelfClosedSet ()
   {
-    if (s_aSelfClosedElements.isEmpty ())
+    if (SELF_CLOSED_ELEMENTS_LC.isEmpty ())
     {
       // Lazy init, because it cannot be done in the constructor!
       for (final EHTMLElement e : values ())
         if (e.mayBeSelfClosed ())
         {
           // Always use lower cased value
-          s_aSelfClosedElements.add (e.m_sElementNameLC);
+          SELF_CLOSED_ELEMENTS_LC.add (e.m_sElementNameLC);
         }
     }
-    return s_aSelfClosedElements;
+    return SELF_CLOSED_ELEMENTS_LC;
   }
 
   /**
@@ -255,7 +259,7 @@ public enum EHTMLElement
       return false;
 
     // Always check lower cased
-    return _getSelfClosedSet ().contains (sElementName.toLowerCase (CHTMLCharset.LOCALE));
+    return _getSelfClosedSet ().contains (sElementName.toLowerCase (Locale.US));
   }
 
   /**
@@ -271,7 +275,7 @@ public enum EHTMLElement
       return false;
 
     // Always check lower cased
-    return !_getSelfClosedSet ().contains (sElementName.toLowerCase (CHTMLCharset.LOCALE));
+    return !_getSelfClosedSet ().contains (sElementName.toLowerCase (Locale.US));
   }
 
   /**

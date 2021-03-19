@@ -41,11 +41,11 @@ public final class APISettings
    */
   public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
   private static final CallbackList <IAPIExceptionCallback> s_aExceptionCallbacks = new CallbackList <> ();
   private static final CallbackList <IAPIBeforeExecutionCallback> s_aBeforeExecutionCallbacks = new CallbackList <> ();
   private static final CallbackList <IAPIAfterExecutionCallback> s_aAfterExecutionCallbacks = new CallbackList <> ();
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static long s_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
   private static final CallbackList <IAPILongRunningExecutionCallback> s_aLongRunningExecutionCallbacks = new CallbackList <> ();
 
@@ -83,7 +83,7 @@ public final class APISettings
   @CheckForSigned
   public static long getLongRunningExecutionLimitTime ()
   {
-    return s_aRWLock.readLockedLong ( () -> s_nLongRunningExecutionLimitTime);
+    return RW_LOCK.readLockedLong ( () -> s_nLongRunningExecutionLimitTime);
   }
 
   /**
@@ -94,7 +94,7 @@ public final class APISettings
    */
   public static void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    s_aRWLock.writeLockedLong ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
+    RW_LOCK.writeLockedLong ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @Nonnull

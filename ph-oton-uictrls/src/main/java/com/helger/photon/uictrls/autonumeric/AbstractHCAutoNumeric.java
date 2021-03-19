@@ -68,8 +68,8 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
 
   public static final int DEFAULT_MIN_VALUE = -999999999;
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("s_aRWLock")
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
+  @GuardedBy ("RW_LOCK")
   private static String s_sDefaultThousandSeparator = null;
 
   private String m_sThousandSeparator;
@@ -111,12 +111,12 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   @Nullable
   public static String getDefaultThousandSeparator ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_sDefaultThousandSeparator);
+    return RW_LOCK.readLockedGet ( () -> s_sDefaultThousandSeparator);
   }
 
   public static void setDefaultThousandSeparator (@Nullable final String sDefaultThousandSeparator)
   {
-    s_aRWLock.writeLockedGet ( () -> s_sDefaultThousandSeparator = sDefaultThousandSeparator);
+    RW_LOCK.writeLockedGet ( () -> s_sDefaultThousandSeparator = sDefaultThousandSeparator);
   }
 
   @Nullable

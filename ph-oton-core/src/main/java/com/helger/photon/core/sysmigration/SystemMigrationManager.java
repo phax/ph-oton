@@ -27,13 +27,13 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.collection.multimap.IMultiMapListBased;
-import com.helger.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.SuccessWithValue;
@@ -56,7 +56,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULTS = "systemmigrationresults";
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULT = "systemmigrationresult";
 
-  private final IMultiMapListBased <String, SystemMigrationResult> m_aMap = new MultiHashMapArrayListBased <> ();
+  private final ICommonsMap <String, ICommonsList <SystemMigrationResult>> m_aMap = new CommonsHashMap <> ();
 
   public SystemMigrationManager (@Nullable final String sFilename) throws DAOException
   {
@@ -67,7 +67,8 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   @Override
   protected EChange onRead (final IMicroDocument aDoc)
   {
-    for (final IMicroElement eMigrationResult : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_SYSTEM_MIGRATION_RESULT))
+    for (final IMicroElement eMigrationResult : aDoc.getDocumentElement ()
+                                                    .getAllChildElements (ELEMENT_SYSTEM_MIGRATION_RESULT))
       internalAdd (MicroTypeConverter.convertToNative (eMigrationResult, SystemMigrationResult.class));
     return EChange.UNCHANGED;
   }
@@ -77,9 +78,11 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_SYSTEM_MIGRATION_RESULTS);
-    for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
+    for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ())
+                                                                      .values ())
       for (final SystemMigrationResult aMigrationResult : aMigrationResults)
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult, ELEMENT_SYSTEM_MIGRATION_RESULT));
+        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
+                                                                     ELEMENT_SYSTEM_MIGRATION_RESULT));
     return aDoc;
   }
 
@@ -88,7 +91,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
     ValueEnforcer.notNull (aMigrationResult, "MigrationResult");
 
     final String sMigrationID = aMigrationResult.getID ();
-    m_aMap.putSingle (sMigrationID, aMigrationResult);
+    m_aMap.computeIfAbsent (sMigrationID, k -> new CommonsArrayList <> ()).add (aMigrationResult);
   }
 
   public void addMigrationResult (@Nonnull final SystemMigrationResult aMigrationResult)
@@ -181,7 +184,8 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * @param aMigrationAction
    *        The action to be performed. May not be <code>null</code>.
    */
-  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID, @Nonnull final Runnable aMigrationAction)
+  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID,
+                                           @Nonnull final Runnable aMigrationAction)
   {
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
@@ -232,7 +236,10 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
         // Invoke the callback
         final SuccessWithValue <String> ret = aMigrationAction.get ();
 
-        LOGGER.info ("Finished performing migration '" + sMigrationID + "' with status " + (ret.isSuccess () ? "success" : "error"));
+        LOGGER.info ("Finished performing migration '" +
+                     sMigrationID +
+                     "' with status " +
+                     (ret.isSuccess () ? "success" : "error"));
 
         // Success or error
         if (ret.isSuccess ())

@@ -58,7 +58,7 @@ public final class BootstrapFormHelper
   private static final Logger LOGGER = LoggerFactory.getLogger (BootstrapFormHelper.class);
 
   @PresentForCodeCoverage
-  private static final BootstrapFormHelper s_aInstance = new BootstrapFormHelper ();
+  private static final BootstrapFormHelper INSTANCE = new BootstrapFormHelper ();
 
   private BootstrapFormHelper ()
   {}

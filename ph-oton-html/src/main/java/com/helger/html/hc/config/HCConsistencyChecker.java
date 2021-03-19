@@ -42,7 +42,7 @@ public final class HCConsistencyChecker
   private static final int MAX_CSS_IE = 31;
 
   @PresentForCodeCoverage
-  private static final HCConsistencyChecker s_aInstance = new HCConsistencyChecker ();
+  private static final HCConsistencyChecker INSTANCE = new HCConsistencyChecker ();
 
   private HCConsistencyChecker ()
   {}

@@ -51,7 +51,7 @@ public class FormErrorList extends ErrorList
    */
   public void addFieldInfo (@Nonnull @Nonempty final String sFieldName, @Nonnull @Nonempty final String sText)
   {
-    add (SingleError.builderInfo ().setErrorFieldName (sFieldName).setErrorText (sText).build ());
+    add (SingleError.builderInfo ().errorFieldName (sFieldName).errorText (sText).build ());
   }
 
   /**
@@ -65,7 +65,7 @@ public class FormErrorList extends ErrorList
    */
   public void addFieldWarning (@Nonnull @Nonempty final String sFieldName, @Nonnull @Nonempty final String sText)
   {
-    add (SingleError.builderWarn ().setErrorFieldName (sFieldName).setErrorText (sText).build ());
+    add (SingleError.builderWarn ().errorFieldName (sFieldName).errorText (sText).build ());
   }
 
   /**
@@ -79,7 +79,7 @@ public class FormErrorList extends ErrorList
    */
   public void addFieldError (@Nonnull @Nonempty final String sFieldName, @Nonnull @Nonempty final String sText)
   {
-    add (SingleError.builderError ().setErrorFieldName (sFieldName).setErrorText (sText).build ());
+    add (SingleError.builderError ().errorFieldName (sFieldName).errorText (sText).build ());
   }
 
   @Override

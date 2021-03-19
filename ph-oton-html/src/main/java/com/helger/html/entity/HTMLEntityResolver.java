@@ -43,7 +43,7 @@ import com.helger.xml.sax.InputSourceFactory;
 @Singleton
 public final class HTMLEntityResolver implements EntityResolver
 {
-  private static final HTMLEntityResolver s_aInstance = new HTMLEntityResolver ();
+  private static final HTMLEntityResolver INSTANCE = new HTMLEntityResolver ();
 
   /** Maps public ID to the DTD content for performance reasons */
   private final ICommonsMap <String, byte []> m_aResolveMap = new CommonsHashMap <> ();
@@ -114,7 +114,7 @@ public final class HTMLEntityResolver implements EntityResolver
   @Nonnull
   public static HTMLEntityResolver getInstance ()
   {
-    return s_aInstance;
+    return INSTANCE;
   }
 
   @Nonnull

@@ -16,8 +16,9 @@
  */
 package com.helger.photon.audit;
 
+import java.util.function.BiFunction;
+
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.functional.IBiFunction;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.commons.typeconvert.TypeConverterException;
@@ -32,7 +33,7 @@ import com.helger.json.JsonObject;
  * @author Philip Helger
  */
 @FunctionalInterface
-public interface IAuditActionStringProvider extends IBiFunction <String, Object [], String>
+public interface IAuditActionStringProvider extends BiFunction <String, Object [], String>
 {
   IAuditActionStringProvider PLAIN_STRING = (sAction, aArgs) -> {
     if (ArrayHelper.isEmpty (aArgs))

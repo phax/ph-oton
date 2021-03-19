@@ -16,11 +16,11 @@
  */
 package com.helger.html.jquery.supplementary.main;
 
-import com.helger.collection.multimap.IMultiMapListBased;
-import com.helger.collection.multimap.MultiTreeMapArrayListBased;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.string.StringHelper;
 
@@ -107,7 +107,10 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
             if (aEntry.isRemoved ())
               sLine = "// Removed in jQuery " + aEntry.getRemoved ().getAsString (false) + "\n" + sLine;
             if (aEntry.isDeprecated ())
-              sLine = "// @deprecated Deprecated since jQuery " + aEntry.getDeprecated ().getAsString (false) + "\n" + sLine;
+              sLine = "// @deprecated Deprecated since jQuery " +
+                      aEntry.getDeprecated ().getAsString (false) +
+                      "\n" +
+                      sLine;
             if (aSignature.isAddedAfter10 ())
               sLine = "// @since jQuery " + aSignature.getAdded ().getAsString (false) + "\n" + sLine;
 
@@ -126,10 +129,10 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
     if (false)
     {
       // Collect all methods with the same name
-      final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
+      final ICommonsMap <String, ICommonsList <Entry>> aUsed = new CommonsTreeMap <> ();
       for (final Entry aEntry : aAllEntries)
         if (aEntry.getAPIType () == EAPIType.METHOD)
-          aUsed.putSingle (aEntry.getName (), aEntry);
+          aUsed.computeIfAbsent (aEntry.getName (), k -> new CommonsArrayList <> ()).add (aEntry);
 
       // static methods- for JQuery.java
       if (false)
@@ -157,7 +160,9 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
           if (aEntry.isStaticMethod ())
           {
             String sSince = null;
-            if (aEntries.size () == 1 && aEntry.getSignatureCount () == 1 && aEntry.getSignatureAtIndex (0).isAddedAfter10 ())
+            if (aEntries.size () == 1 &&
+                aEntry.getSignatureCount () == 1 &&
+                aEntry.getSignatureAtIndex (0).isAddedAfter10 ())
               sSince = aEntry.getSignatureAtIndex (0).getAdded ().getAsString (false);
 
             aLines.add ("/**");
@@ -169,14 +174,17 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
                         "()</code> with return type " +
                         StringHelper.getImploded (" or ", aReturnTypes));
             if (bIsDeprecated)
-              aLines.add ("* @deprecated Deprecated since jQuery " + StringHelper.getImploded (" or ", aDeprecatedVersions));
+              aLines.add ("* @deprecated Deprecated since jQuery " +
+                          StringHelper.getImploded (" or ", aDeprecatedVersions));
             if (sSince != null)
               aLines.add (" * @since jQuery " + sSince);
             aLines.add (" */");
             aLines.add ("@Nonnull");
             if (bIsDeprecated)
               aLines.add ("@Deprecated");
-            aLines.add ("public static JQueryInvocation " + StringHelper.trimStart (aEntry.getIdentifier (), "jQuery_") + " ()");
+            aLines.add ("public static JQueryInvocation " +
+                        StringHelper.trimStart (aEntry.getIdentifier (), "jQuery_") +
+                        " ()");
             aLines.add ("{ return new JQueryInvocation (JQueryProperty.jQueryField (), \"" +
                         aEntry.getName ().substring ("jQuery.".length ()) +
                         "\"); }");

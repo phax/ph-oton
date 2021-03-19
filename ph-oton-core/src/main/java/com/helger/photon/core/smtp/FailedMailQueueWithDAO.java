@@ -104,9 +104,7 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     }
   }
 
-  private static final long serialVersionUID = -4807647156903750122L;
-
-  private transient FMQDAO m_aDAO;
+  private FMQDAO m_aDAO;
 
   public FailedMailQueueWithDAO (@Nullable final String sFilename)
   {

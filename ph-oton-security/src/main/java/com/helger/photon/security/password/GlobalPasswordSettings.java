@@ -36,6 +36,7 @@ import com.helger.photon.security.password.hash.IPasswordHashCreatorRegistrarSPI
 import com.helger.photon.security.password.hash.PasswordHashCreatorManager;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
+import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_1000_48;
 import com.helger.security.password.hash.PasswordHashCreatorSHA512;
 import com.helger.security.password.salt.IPasswordSalt;
 
@@ -45,32 +46,34 @@ import com.helger.security.password.salt.IPasswordSalt;
  * @author Philip Helger
  */
 @ThreadSafe
+@SuppressWarnings ("deprecation")
 public final class GlobalPasswordSettings
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (GlobalPasswordSettings.class);
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static IPasswordConstraintList s_aPasswordConstraintList = new PasswordConstraintList ();
 
-  private static final PasswordHashCreatorManager s_aPHCMgr = new PasswordHashCreatorManager ();
+  private static final PasswordHashCreatorManager PHC_MGR = new PasswordHashCreatorManager ();
 
   static
   {
     // Register default implementation so that something is present
-    s_aPHCMgr.registerPasswordHashCreator (new PasswordHashCreatorSHA512 ());
-    s_aPHCMgr.registerPasswordHashCreator (new PasswordHashCreatorPBKDF2_1000_48 ());
+    PHC_MGR.registerPasswordHashCreator (new PasswordHashCreatorSHA512 ());
+    PHC_MGR.registerPasswordHashCreator (new PasswordHashCreatorPBKDF2_1000_48 ());
+    PHC_MGR.registerPasswordHashCreator (new PasswordHashCreatorPBKDF2_SHA256_1000_48 ());
 
     // Set the default password hash creator
-    s_aPHCMgr.setDefaultPasswordHashCreatorAlgorithm (PasswordHashCreatorPBKDF2_1000_48.ALGORITHM);
+    PHC_MGR.setDefaultPasswordHashCreatorAlgorithm (PasswordHashCreatorPBKDF2_1000_48.ALGORITHM);
 
     // Register all custom SPI implementations
     for (final IPasswordHashCreatorRegistrarSPI aSPI : ServiceLoaderHelper.getAllSPIImplementations (IPasswordHashCreatorRegistrarSPI.class))
-      aSPI.registerPasswordHashCreators (s_aPHCMgr);
+      aSPI.registerPasswordHashCreators (PHC_MGR);
   }
 
   @PresentForCodeCoverage
-  private static final GlobalPasswordSettings s_aInstance = new GlobalPasswordSettings ();
+  private static final GlobalPasswordSettings INSTANCE = new GlobalPasswordSettings ();
 
   private GlobalPasswordSettings ()
   {}
@@ -83,7 +86,7 @@ public final class GlobalPasswordSettings
   @ReturnsMutableCopy
   public static IPasswordConstraintList getPasswordConstraintList ()
   {
-    return s_aRWLock.readLockedGet (s_aPasswordConstraintList::getClone);
+    return RW_LOCK.readLockedGet (s_aPasswordConstraintList::getClone);
   }
 
   /**
@@ -98,7 +101,7 @@ public final class GlobalPasswordSettings
 
     // Create a copy
     final IPasswordConstraintList aRealPasswordConstraints = aPasswordConstraintList.getClone ();
-    s_aRWLock.writeLockedGet ( () -> s_aPasswordConstraintList = aRealPasswordConstraints);
+    RW_LOCK.writeLocked ( () -> s_aPasswordConstraintList = aRealPasswordConstraints);
     LOGGER.info ("Set global password constraints to " + aRealPasswordConstraints);
   }
 
@@ -117,7 +120,7 @@ public final class GlobalPasswordSettings
   @Nonnull
   public static PasswordHashCreatorManager getPasswordHashCreatorManager ()
   {
-    return s_aPHCMgr;
+    return PHC_MGR;
   }
 
   /**
@@ -132,9 +135,10 @@ public final class GlobalPasswordSettings
    * @return The password hash. Never <code>null</code>.
    */
   @Nonnull
-  public static PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt, @Nonnull final String sPlainTextPassword)
+  public static PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt,
+                                                            @Nonnull final String sPlainTextPassword)
   {
-    return s_aPHCMgr.createUserDefaultPasswordHash (aSalt, sPlainTextPassword);
+    return PHC_MGR.createUserDefaultPasswordHash (aSalt, sPlainTextPassword);
   }
 
   /**
@@ -156,6 +160,6 @@ public final class GlobalPasswordSettings
                                                      @Nullable final IPasswordSalt aSalt,
                                                      @Nonnull final String sPlainTextPassword)
   {
-    return s_aPHCMgr.createUserPasswordHash (sAlgorithmName, aSalt, sPlainTextPassword);
+    return PHC_MGR.createUserPasswordHash (sAlgorithmName, aSalt, sPlainTextPassword);
   }
 }

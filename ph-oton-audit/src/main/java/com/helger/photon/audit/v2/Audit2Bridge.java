@@ -16,11 +16,12 @@
  */
 package com.helger.photon.audit.v2;
 
+import java.util.function.Function;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.functional.IFunction;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.audit.EAuditActionType;
@@ -42,11 +43,11 @@ public class Audit2Bridge implements IAuditor
 
   private final ICurrentUserIDProvider m_aCurrentUserIDProvider;
   private final IAuditEventConsumer m_aAuditEventConsumer;
-  private final IFunction <Object, String> m_aToStringConverter;
+  private final Function <Object, String> m_aToStringConverter;
 
   public Audit2Bridge (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider,
                        @Nonnull final IAuditEventConsumer aAuditEventConsumer,
-                       @Nonnull final IFunction <Object, String> aToStringConverter)
+                       @Nonnull final Function <Object, String> aToStringConverter)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
     ValueEnforcer.notNull (aAuditEventConsumer, "AuditEventConsumer");

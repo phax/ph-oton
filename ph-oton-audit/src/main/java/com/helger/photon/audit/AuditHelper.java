@@ -35,7 +35,7 @@ import com.helger.photon.app.mock.MockCurrentUserIDProvider;
 @ThreadSafe
 public final class AuditHelper
 {
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
   private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null), "!DEFAULT-AUDITOR! ");
 
@@ -49,7 +49,7 @@ public final class AuditHelper
   @Nonnull
   public static IAuditor getAuditor ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_aAuditor);
+    return RW_LOCK.readLockedGet ( () -> s_aAuditor);
   }
 
   /**
@@ -62,7 +62,7 @@ public final class AuditHelper
   {
     ValueEnforcer.notNull (aAuditor, "Auditor");
 
-    s_aRWLock.writeLockedGet ( () -> s_aAuditor = aAuditor);
+    RW_LOCK.writeLockedGet ( () -> s_aAuditor = aAuditor);
   }
 
   /**

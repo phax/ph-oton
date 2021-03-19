@@ -49,8 +49,8 @@ public final class LoggedInUserStorage
 
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggedInUserStorage.class);
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("s_aRWLock")
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
+  @GuardedBy ("RW_LOCK")
   private static String s_sBaseDirectory = BASE_DIRECTORY;
 
   private LoggedInUserStorage ()
@@ -63,7 +63,7 @@ public final class LoggedInUserStorage
   @Nonnull
   public static String getBaseDirectory ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_sBaseDirectory);
+    return RW_LOCK.readLockedGet ( () -> s_sBaseDirectory);
   }
 
   /**
@@ -77,7 +77,7 @@ public final class LoggedInUserStorage
   {
     ValueEnforcer.notNull (sBaseDirectory, "BaseDirectory");
 
-    s_aRWLock.writeLockedGet ( () -> s_sBaseDirectory = sBaseDirectory);
+    RW_LOCK.writeLockedGet ( () -> s_sBaseDirectory = sBaseDirectory);
   }
 
   /**

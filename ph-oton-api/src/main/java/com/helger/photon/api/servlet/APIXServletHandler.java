@@ -17,6 +17,7 @@
 package com.helger.photon.api.servlet;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletException;
@@ -26,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.CHttp;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.lang.GenericReflection;
@@ -53,16 +53,16 @@ public class APIXServletHandler implements IXServletSimpleHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (APIXServletHandler.class);
 
-  private final ISupplier <? extends IAPIRegistry> m_aRegistryFactory;
-  private final ISupplier <? extends IAPIInvoker> m_aInvokerFactory;
+  private final Supplier <? extends IAPIRegistry> m_aRegistryFactory;
+  private final Supplier <? extends IAPIInvoker> m_aInvokerFactory;
 
   public APIXServletHandler ()
   {
     this ( () -> GlobalAPIInvoker.getInstance ().getRegistry (), () -> GlobalAPIInvoker.getInstance ().getInvoker ());
   }
 
-  public APIXServletHandler (@Nonnull final ISupplier <? extends IAPIRegistry> aRegistryFactory,
-                             @Nonnull final ISupplier <? extends IAPIInvoker> aInvokerFactory)
+  public APIXServletHandler (@Nonnull final Supplier <? extends IAPIRegistry> aRegistryFactory,
+                             @Nonnull final Supplier <? extends IAPIInvoker> aInvokerFactory)
   {
     m_aRegistryFactory = ValueEnforcer.notNull (aRegistryFactory, "RegistryFactory");
     m_aInvokerFactory = ValueEnforcer.notNull (aInvokerFactory, "InvokerFactory");

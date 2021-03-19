@@ -18,10 +18,9 @@ package com.helger.photon.audit.v2.config;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
-
-import com.helger.commons.functional.ISupplier;
 
 /**
  * Read-only interface for audit settings.
@@ -41,5 +40,5 @@ public interface IAuditSettings extends Serializable
    *         returned supplier may not return <code>null</code>.
    */
   @Nonnull
-  ISupplier <LocalDateTime> getAuditEventDateTimeProvider ();
+  Supplier <LocalDateTime> getAuditEventDateTimeProvider ();
 }

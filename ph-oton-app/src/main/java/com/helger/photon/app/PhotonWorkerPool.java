@@ -59,8 +59,8 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   public PhotonWorkerPool (@Nonnegative final int nThreadPoolSize)
   {
     this (Executors.newFixedThreadPool (nThreadPoolSize,
-                                        new BasicThreadFactory.Builder ().setDaemon (true)
-                                                                         .setNamingPattern ("ph-oton-worker-%d")
+                                        new BasicThreadFactory.Builder ().daemon (true)
+                                                                         .namingPattern ("ph-oton-worker-%d")
                                                                          .build ()));
   }
 

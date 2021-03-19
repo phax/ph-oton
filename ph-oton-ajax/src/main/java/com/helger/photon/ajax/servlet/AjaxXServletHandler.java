@@ -17,6 +17,7 @@
 package com.helger.photon.ajax.servlet;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -30,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.state.EContinue;
@@ -70,16 +70,16 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   private static final String SCOPE_ATTR_EXECUTOR = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
                                                     "ajaxservlet.executor";
 
-  private final ISupplier <? extends IAjaxRegistry> m_aRegistryFactory;
-  private final ISupplier <? extends IAjaxInvoker> m_aInvokerFactory;
+  private final Supplier <? extends IAjaxRegistry> m_aRegistryFactory;
+  private final Supplier <? extends IAjaxInvoker> m_aInvokerFactory;
 
   public AjaxXServletHandler ()
   {
     this ( () -> GlobalAjaxInvoker.getInstance ().getRegistry (), () -> GlobalAjaxInvoker.getInstance ().getInvoker ());
   }
 
-  public AjaxXServletHandler (@Nonnull final ISupplier <? extends IAjaxRegistry> aRegistryFactory,
-                              @Nonnull final ISupplier <? extends IAjaxInvoker> aInvokerFactory)
+  public AjaxXServletHandler (@Nonnull final Supplier <? extends IAjaxRegistry> aRegistryFactory,
+                              @Nonnull final Supplier <? extends IAjaxInvoker> aInvokerFactory)
   {
     m_aRegistryFactory = ValueEnforcer.notNull (aRegistryFactory, "aRegistryFactory");
     m_aInvokerFactory = ValueEnforcer.notNull (aInvokerFactory, "InvokerFactory");

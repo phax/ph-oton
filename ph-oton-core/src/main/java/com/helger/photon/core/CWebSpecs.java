@@ -46,7 +46,7 @@ public final class CWebSpecs
   public static final String WEB_FRAGMENT_PATH = "META-INF/web-fragment.xml";
 
   @PresentForCodeCoverage
-  private static final CWebSpecs s_aInstance = new CWebSpecs ();
+  private static final CWebSpecs INSTANCE = new CWebSpecs ();
 
   private CWebSpecs ()
   {}

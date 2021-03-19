@@ -16,15 +16,14 @@
  */
 package com.helger.photon.ajax.decl;
 
-import java.io.Serializable;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.functional.IPredicate;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.url.SimpleURL;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
@@ -36,13 +35,13 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  *
  * @author Philip Helger
  */
-public interface IAjaxFunctionDeclaration extends IHasName, Serializable
+public interface IAjaxFunctionDeclaration extends IHasName
 {
   /**
    * @return The executor factory to be used. May not be <code>null</code>.
    */
   @Nonnull
-  ISupplier <? extends IAjaxExecutor> getExecutorFactory ();
+  Supplier <? extends IAjaxExecutor> getExecutorFactory ();
 
   /**
    * @return An Ajax executor from the executor factory.
@@ -59,7 +58,7 @@ public interface IAjaxFunctionDeclaration extends IHasName, Serializable
    *         May be <code>null</code>.
    */
   @Nullable
-  IPredicate <? super IRequestWebScopeWithoutResponse> getExecutionFilter ();
+  Predicate <? super IRequestWebScopeWithoutResponse> getExecutionFilter ();
 
   /**
    * @return The path to the AJAX servlet. Must start with a slash and end with

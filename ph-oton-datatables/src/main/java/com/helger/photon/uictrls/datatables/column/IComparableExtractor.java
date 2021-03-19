@@ -16,7 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
-import com.helger.commons.functional.IFunction;
+import java.util.function.Function;
 
 /**
  * Helper interface to extract a {@link Comparable} value from a String.
@@ -25,7 +25,7 @@ import com.helger.commons.functional.IFunction;
  * @param <T>
  *        Comparable type to use.
  */
-public interface IComparableExtractor <T extends Comparable <? super T>> extends IFunction <String, T>
+public interface IComparableExtractor <T extends Comparable <? super T>> extends Function <String, T>
 {
   /* empty */
 }

@@ -19,10 +19,10 @@ package com.helger.html.jquery.supplementary.main;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
-import com.helger.collection.multimap.IMultiMapListBased;
-import com.helger.collection.multimap.MultiTreeMapArrayListBased;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.io.file.SimpleFileIO;
 
 public class Main_QueryInvocationFuncTest extends AbstractCreateJQueryAPIList
@@ -34,10 +34,10 @@ public class Main_QueryInvocationFuncTest extends AbstractCreateJQueryAPIList
     final ICommonsList <String> aLines = new CommonsArrayList <> ();
 
     // Collect all methods with the same name
-    final IMultiMapListBased <String, Entry> aUsed = new MultiTreeMapArrayListBased <> ();
+    final ICommonsMap <String, ICommonsList <Entry>> aUsed = new CommonsTreeMap <> ();
     for (final Entry aEntry : aAllEntries)
       if (aEntry.getAPIType () == EAPIType.METHOD)
-        aUsed.putSingle (aEntry.getName (), aEntry);
+        aUsed.computeIfAbsent (aEntry.getName (), k -> new CommonsArrayList <> ()).add (aEntry);
 
     // non static methods for AbstractJQueryInvocation
     for (final ICommonsList <Entry> aEntries : aUsed.values ())

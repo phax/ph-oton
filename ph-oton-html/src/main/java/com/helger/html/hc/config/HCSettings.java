@@ -58,43 +58,43 @@ public final class HCSettings
 
   private static final Logger LOGGER = LoggerFactory.getLogger (HCSettings.class);
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
   /** HC to MicroNode converter settings */
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static HCConversionSettings s_aConversionSettings = new HCConversionSettings (DEFAULT_HTML_VERSION);
 
   /**
    * For security reasons, the password should not be auto-filled by the browser
    * in the release-version
    */
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bAutoCompleteOffForPasswordEdits = DEFAULT_AUTO_COMPLETE_OFF_FOR_PASSWORD_EDITS;
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static int s_nTextAreaDefaultRows = CGlobal.ILLEGAL_UINT;
 
   /** The "on document ready" code provider */
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static IHCOnDocumentReadyProvider s_aOnDocumentReadyProvider = new DefaultHCOnDocumentReadyProvider ();
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static EHCScriptInlineMode s_eScriptInlineMode = DEFAULT_SCRIPT_INLINE_MODE;
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static EHCStyleInlineMode s_eStyleInlineMode = DEFAULT_STYLE_MODE;
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static ENewLineMode s_eNewLineMode = ENewLineMode.DEFAULT;
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bOOBDebugging = false;
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bScriptsInBody = true;
 
   /** Use regular or minified resources */
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bUseRegularResources = GlobalDebug.isDebugMode ();
 
   private static final AtomicBoolean SILENT_MODE = new AtomicBoolean (GlobalDebug.DEFAULT_SILENT_MODE);
@@ -129,7 +129,7 @@ public final class HCSettings
   {
     ValueEnforcer.notNull (aConversionSettings, "ConversionSettings");
 
-    s_aRWLock.writeLockedGet ( () -> s_aConversionSettings = aConversionSettings);
+    RW_LOCK.writeLockedGet ( () -> s_aConversionSettings = aConversionSettings);
   }
 
   /**
@@ -139,7 +139,7 @@ public final class HCSettings
   @ReturnsMutableObject
   public static HCConversionSettings getMutableConversionSettings ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_aConversionSettings);
+    return RW_LOCK.readLockedGet ( () -> s_aConversionSettings);
   }
 
   /**
@@ -216,12 +216,12 @@ public final class HCSettings
 
   public static boolean isAutoCompleteOffForPasswordEdits ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bAutoCompleteOffForPasswordEdits);
+    return RW_LOCK.readLockedBoolean ( () -> s_bAutoCompleteOffForPasswordEdits);
   }
 
   public static void setAutoCompleteOffForPasswordEdits (final boolean bAutoCompleteOffForPasswordEdits)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
+    RW_LOCK.writeLockedBoolean ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default @autocomplete for <input type=password> set to " + (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
@@ -229,12 +229,12 @@ public final class HCSettings
 
   public static int getTextAreaDefaultRows ()
   {
-    return s_aRWLock.readLockedInt ( () -> s_nTextAreaDefaultRows);
+    return RW_LOCK.readLockedInt ( () -> s_nTextAreaDefaultRows);
   }
 
   public static void setTextAreaDefaultRows (final int nTextAreaDefaultRows)
   {
-    s_aRWLock.writeLockedInt ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
+    RW_LOCK.writeLockedInt ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default <textarea> rows set to " + nTextAreaDefaultRows);
@@ -243,14 +243,14 @@ public final class HCSettings
   @Nonnull
   public static IHCOnDocumentReadyProvider getOnDocumentReadyProvider ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_aOnDocumentReadyProvider);
+    return RW_LOCK.readLockedGet ( () -> s_aOnDocumentReadyProvider);
   }
 
   public static void setOnDocumentReadyProvider (@Nonnull final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
     ValueEnforcer.notNull (aOnDocumentReadyProvider, "OnDocumentReadyProvider");
 
-    s_aRWLock.writeLockedGet ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
+    RW_LOCK.writeLockedGet ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
@@ -263,7 +263,7 @@ public final class HCSettings
   @Nonnull
   public static EHCScriptInlineMode getScriptInlineMode ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_eScriptInlineMode);
+    return RW_LOCK.readLockedGet ( () -> s_eScriptInlineMode);
   }
 
   /**
@@ -279,7 +279,7 @@ public final class HCSettings
     ValueEnforcer.notNull (eMode, "Mode");
 
     final EHCScriptInlineMode eOld = getScriptInlineMode ();
-    s_aRWLock.writeLockedGet ( () -> s_eScriptInlineMode = eMode);
+    RW_LOCK.writeLockedGet ( () -> s_eScriptInlineMode = eMode);
     if (!eMode.equals (eOld))
       if (!isSilentMode ())
         if (LOGGER.isInfoEnabled ())
@@ -292,7 +292,7 @@ public final class HCSettings
   @Nonnull
   public static EHCStyleInlineMode getStyleInlineMode ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_eStyleInlineMode);
+    return RW_LOCK.readLockedGet ( () -> s_eStyleInlineMode);
   }
 
   /**
@@ -308,7 +308,7 @@ public final class HCSettings
     ValueEnforcer.notNull (eStyleInlineMode, "mode");
 
     final EHCStyleInlineMode eOld = getStyleInlineMode ();
-    s_aRWLock.writeLockedGet ( () -> s_eStyleInlineMode = eStyleInlineMode);
+    RW_LOCK.writeLockedGet ( () -> s_eStyleInlineMode = eStyleInlineMode);
     if (!eStyleInlineMode.equals (eOld))
       if (!isSilentMode ())
         if (LOGGER.isInfoEnabled ())
@@ -318,7 +318,7 @@ public final class HCSettings
   @Nonnull
   public static ENewLineMode getNewLineMode ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_eNewLineMode);
+    return RW_LOCK.readLockedGet ( () -> s_eNewLineMode);
   }
 
   public static void setNewLineMode (@Nonnull final ENewLineMode eNewLineMode)
@@ -326,7 +326,7 @@ public final class HCSettings
     ValueEnforcer.notNull (eNewLineMode, "NewLineMode");
 
     final ENewLineMode eOld = getNewLineMode ();
-    s_aRWLock.writeLockedGet ( () -> s_eNewLineMode = eNewLineMode);
+    RW_LOCK.writeLockedGet ( () -> s_eNewLineMode = eNewLineMode);
     if (!eNewLineMode.equals (eOld))
       if (!isSilentMode ())
         if (LOGGER.isInfoEnabled ())
@@ -335,12 +335,12 @@ public final class HCSettings
 
   public static boolean isOutOfBandDebuggingEnabled ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bOOBDebugging);
+    return RW_LOCK.readLockedBoolean ( () -> s_bOOBDebugging);
   }
 
   public static void setOutOfBandDebuggingEnabled (final boolean bEnabled)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bOOBDebugging = bEnabled);
+    RW_LOCK.writeLockedBoolean ( () -> s_bOOBDebugging = bEnabled);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
@@ -353,12 +353,12 @@ public final class HCSettings
    */
   public static boolean isScriptsInBody ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bScriptsInBody);
+    return RW_LOCK.readLockedBoolean ( () -> s_bScriptsInBody);
   }
 
   public static void setScriptsInBody (final boolean bEnabled)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bScriptsInBody = bEnabled);
+    RW_LOCK.writeLockedBoolean ( () -> s_bScriptsInBody = bEnabled);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
@@ -370,12 +370,12 @@ public final class HCSettings
    */
   public static boolean isUseRegularResources ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bUseRegularResources);
+    return RW_LOCK.readLockedBoolean ( () -> s_bUseRegularResources);
   }
 
   public static void setUseRegularResources (final boolean bUseRegularResources)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bUseRegularResources = bUseRegularResources);
+    RW_LOCK.writeLockedBoolean ( () -> s_bUseRegularResources = bUseRegularResources);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");

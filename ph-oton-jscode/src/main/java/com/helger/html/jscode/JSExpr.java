@@ -76,7 +76,7 @@ public final class JSExpr
   }
 
   @PresentForCodeCoverage
-  private static final JSExpr s_aInstance = new JSExpr ();
+  private static final JSExpr INSTANCE = new JSExpr ();
 
   /**
    * This class is not instancable.

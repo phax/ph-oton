@@ -24,15 +24,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.helger.collection.multimap.IMultiMapListBased;
-import com.helger.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -57,7 +57,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   private static final String ELEMENT_ITEM = "favorite";
 
   /** Map from user ID to favorites */
-  private final MultiHashMapArrayListBased <String, Favorite> m_aMap = new MultiHashMapArrayListBased <> ();
+  private final ICommonsMap <String, ICommonsList <Favorite>> m_aMap = new CommonsHashMap <> ();
 
   public FavoriteManager (@Nonnull @Nonempty final String sFilename) throws DAOException
   {
@@ -80,7 +80,9 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Override
   protected void onRecoveryDelete (@Nonnull final Favorite aElement)
   {
-    m_aMap.removeSingle (aElement.getUserID (), aElement);
+    final ICommonsList <Favorite> aList = m_aMap.get (aElement.getUserID ());
+    if (aList != null)
+      aList.remove (aElement);
   }
 
   @Override
@@ -123,13 +125,13 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   private void _addItem (@Nonnull final Favorite aFavorite)
   {
     ValueEnforcer.notNull (aFavorite, "Favorite");
-    m_aMap.putSingle (aFavorite.getUserID (), aFavorite);
+    m_aMap.computeIfAbsent (aFavorite.getUserID (), k -> new CommonsArrayList <> ()).add (aFavorite);
   }
 
   @Nonnegative
   public long getSize ()
   {
-    return m_aRWLock.readLockedLong (m_aMap::getTotalValueCount);
+    return m_aRWLock.readLockedInt ( () -> m_aMap.values ().stream ().mapToInt (ICommonsList::size).sum ());
   }
 
   public boolean isEmpty ()
@@ -159,9 +161,9 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
 
   @Nonnull
   @ReturnsMutableCopy
-  public IMultiMapListBased <String, IFavorite> getAll ()
+  public ICommonsMap <String, ICommonsList <IFavorite>> getAll ()
   {
-    final IMultiMapListBased <String, IFavorite> ret = new MultiHashMapArrayListBased <> ();
+    final ICommonsMap <String, ICommonsList <IFavorite>> ret = new CommonsHashMap <> ();
     for (final Map.Entry <String, ICommonsList <Favorite>> aEntry : m_aMap.entrySet ())
       ret.put (aEntry.getKey (), new CommonsArrayList <> (aEntry.getValue ()));
     return ret;
@@ -345,7 +347,12 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Favorite.OT, aFavorite.getID (), sUserID, sMenuItemID, sDisplayName, aAdditionalParams);
+    AuditHelper.onAuditModifySuccess (Favorite.OT,
+                                      aFavorite.getID (),
+                                      sUserID,
+                                      sMenuItemID,
+                                      sDisplayName,
+                                      aAdditionalParams);
     return EChange.CHANGED;
   }
 

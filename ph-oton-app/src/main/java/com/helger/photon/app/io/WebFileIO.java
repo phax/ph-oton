@@ -45,13 +45,13 @@ import com.helger.commons.io.relative.PathRelativeIO;
 public final class WebFileIO
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (WebFileIO.class);
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static IFileRelativeIO s_aDataPath;
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static IPathRelativeIO s_aServletContextPath;
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bSilentMode = false;
 
   private WebFileIO ()
@@ -59,7 +59,7 @@ public final class WebFileIO
 
   public static boolean setSilentMode (final boolean bSilentMode)
   {
-    return s_aRWLock.writeLockedBoolean ( () -> {
+    return RW_LOCK.writeLockedBoolean ( () -> {
       final boolean bOld = s_bSilentMode;
       s_bSilentMode = bSilentMode;
       return bOld;
@@ -68,7 +68,7 @@ public final class WebFileIO
 
   public static boolean isSilentMode ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bSilentMode);
+    return RW_LOCK.readLockedBoolean ( () -> s_bSilentMode);
   }
 
   public static void initPaths (@Nonnull final File aDataPath,
@@ -78,7 +78,7 @@ public final class WebFileIO
     ValueEnforcer.notNull (aDataPath, "DataPath");
     ValueEnforcer.notEmpty (sServletContextPath, "ServletContextPath");
 
-    s_aRWLock.writeLock ().lock ();
+    RW_LOCK.writeLock ().lock ();
     try
     {
       if (s_aDataPath != null)
@@ -102,7 +102,7 @@ public final class WebFileIO
     }
     finally
     {
-      s_aRWLock.writeLock ().unlock ();
+      RW_LOCK.writeLock ().unlock ();
     }
   }
 
@@ -111,7 +111,7 @@ public final class WebFileIO
    */
   public static void resetPaths ()
   {
-    s_aRWLock.writeLocked ( () -> {
+    RW_LOCK.writeLocked ( () -> {
       s_aDataPath = null;
       s_aServletContextPath = null;
     });
@@ -123,7 +123,7 @@ public final class WebFileIO
    */
   public static boolean isInited ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_aDataPath != null);
+    return RW_LOCK.readLockedBoolean ( () -> s_aDataPath != null);
   }
 
   /**
@@ -135,7 +135,7 @@ public final class WebFileIO
   @Nonnull
   public static IFileRelativeIO getDataIO ()
   {
-    final IFileRelativeIO ret = s_aRWLock.readLockedGet ( () -> s_aDataPath);
+    final IFileRelativeIO ret = RW_LOCK.readLockedGet ( () -> s_aDataPath);
     if (ret == null)
       throw new IllegalStateException ("Data path was not initialized!");
     return ret;
@@ -151,7 +151,7 @@ public final class WebFileIO
   @Nonnull
   public static IPathRelativeIO getServletContextIO ()
   {
-    final IPathRelativeIO ret = s_aRWLock.readLockedGet ( () -> s_aServletContextPath);
+    final IPathRelativeIO ret = RW_LOCK.readLockedGet ( () -> s_aServletContextPath);
     if (ret == null)
       throw new IllegalStateException ("Servlet context path was not initialized!");
     return ret;

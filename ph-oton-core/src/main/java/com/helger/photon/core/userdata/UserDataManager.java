@@ -44,7 +44,7 @@ public final class UserDataManager
    */
   public static final String DEFAULT_USER_DATA_PATH = "/user";
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
   private static String s_sUserDataPath = DEFAULT_USER_DATA_PATH;
 
   private UserDataManager ()
@@ -63,7 +63,7 @@ public final class UserDataManager
     ValueEnforcer.isTrue (StringHelper.getLength (sUserDataPath) >= 2, "userDataPath is too short");
     ValueEnforcer.isTrue (StringHelper.startsWith (sUserDataPath, '/'), "userDataPath must start with a slash");
 
-    s_aRWLock.writeLockedGet ( () -> s_sUserDataPath = sUserDataPath);
+    RW_LOCK.writeLockedGet ( () -> s_sUserDataPath = sUserDataPath);
   }
 
   /**
@@ -78,7 +78,7 @@ public final class UserDataManager
   @Nonempty
   public static String getUserDataPath ()
   {
-    return s_aRWLock.readLockedGet ( () -> s_sUserDataPath);
+    return RW_LOCK.readLockedGet ( () -> s_sUserDataPath);
   }
 
   /**

@@ -32,7 +32,7 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 public final class JSOp
 {
   @PresentForCodeCoverage
-  private static final JSOp s_aInstance = new JSOp ();
+  private static final JSOp INSTANCE = new JSOp ();
 
   private JSOp ()
   {}

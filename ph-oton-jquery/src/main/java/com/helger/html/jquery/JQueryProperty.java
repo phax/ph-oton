@@ -37,7 +37,7 @@ public final class JQueryProperty
   public static final AtomicBoolean s_aUseDollar = new AtomicBoolean (true);
 
   @PresentForCodeCoverage
-  private static final JQueryProperty s_aInstance = new JQueryProperty ();
+  private static final JQueryProperty INSTANCE = new JQueryProperty ();
 
   private JQueryProperty ()
   {}

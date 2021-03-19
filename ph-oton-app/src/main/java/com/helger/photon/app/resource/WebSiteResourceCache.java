@@ -47,14 +47,14 @@ public final class WebSiteResourceCache
   private static final Logger LOGGER = LoggerFactory.getLogger (WebSiteResourceCache.class);
   private static final AtomicBoolean SILENT_MODE = new AtomicBoolean (GlobalDebug.DEFAULT_SILENT_MODE);
 
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("s_aRWLock")
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
+  @GuardedBy ("RW_LOCK")
   private static boolean s_bCacheEnabled = !GlobalDebug.isDebugMode ();
-  @GuardedBy ("s_aRWLock")
+  @GuardedBy ("RW_LOCK")
   private static final ICommonsMap <String, WebSiteResource> s_aMap = new CommonsHashMap <> ();
 
   @PresentForCodeCoverage
-  private static final WebSiteResourceCache s_aInstance = new WebSiteResourceCache ();
+  private static final WebSiteResourceCache INSTANCE = new WebSiteResourceCache ();
 
   private WebSiteResourceCache ()
   {}
@@ -87,7 +87,7 @@ public final class WebSiteResourceCache
    */
   public static boolean isCacheEnabled ()
   {
-    return s_aRWLock.readLockedBoolean ( () -> s_bCacheEnabled);
+    return RW_LOCK.readLockedBoolean ( () -> s_bCacheEnabled);
   }
 
   /**
@@ -98,7 +98,7 @@ public final class WebSiteResourceCache
    */
   public static void setCacheEnabled (final boolean bCacheEnabled)
   {
-    s_aRWLock.writeLockedBoolean ( () -> s_bCacheEnabled = bCacheEnabled);
+    RW_LOCK.writeLockedBoolean ( () -> s_bCacheEnabled = bCacheEnabled);
     if (!isSilentMode ())
       LOGGER.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
   }
@@ -124,12 +124,12 @@ public final class WebSiteResourceCache
     final String sCacheKey = eResourceType.getID () + "-" + sPath;
 
     // Entry already existing?
-    final WebSiteResource ret = s_aRWLock.readLockedGet ( () -> s_aMap.get (sCacheKey));
+    final WebSiteResource ret = RW_LOCK.readLockedGet ( () -> s_aMap.get (sCacheKey));
     if (ret != null)
       return ret;
 
     // Try again in write lock
-    return s_aRWLock.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey, k -> new WebSiteResource (eResourceType, sPath, aCharset)));
+    return RW_LOCK.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey, k -> new WebSiteResource (eResourceType, sPath, aCharset)));
   }
 
   @Nonnull
@@ -140,7 +140,7 @@ public final class WebSiteResourceCache
 
     final String sCacheKey = eType.getID () + "-" + sPath;
 
-    return s_aRWLock.writeLockedGet ( () -> s_aMap.removeObject (sCacheKey));
+    return RW_LOCK.writeLockedGet ( () -> s_aMap.removeObject (sCacheKey));
   }
 
   /**
@@ -151,6 +151,6 @@ public final class WebSiteResourceCache
   @Nonnull
   public static EChange clearCache ()
   {
-    return s_aRWLock.writeLockedGet (s_aMap::removeAll);
+    return RW_LOCK.writeLockedGet (s_aMap::removeAll);
   }
 }

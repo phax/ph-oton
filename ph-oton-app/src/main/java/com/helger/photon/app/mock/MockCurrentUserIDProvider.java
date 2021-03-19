@@ -28,7 +28,7 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
  */
 public class MockCurrentUserIDProvider implements ICurrentUserIDProvider
 {
-  private static final MockCurrentUserIDProvider s_aInstance = new MockCurrentUserIDProvider ();
+  private static final MockCurrentUserIDProvider INSTANCE = new MockCurrentUserIDProvider ();
 
   private final String m_sUserID;
 
@@ -45,7 +45,7 @@ public class MockCurrentUserIDProvider implements ICurrentUserIDProvider
   @Nonnull
   public static MockCurrentUserIDProvider getInstance ()
   {
-    return s_aInstance;
+    return INSTANCE;
   }
 
   @Nullable

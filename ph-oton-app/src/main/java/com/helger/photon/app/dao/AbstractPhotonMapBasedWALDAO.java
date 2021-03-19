@@ -16,8 +16,6 @@
  */
 package com.helger.photon.app.dao;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -36,11 +34,12 @@ import com.helger.photon.app.io.WebFileIO;
  * @param <IMPLTYPE>
  *        Implementation type to be handled
  */
-public abstract class AbstractPhotonMapBasedWALDAO <INTERFACETYPE extends IHasID <String> & Serializable, IMPLTYPE extends INTERFACETYPE>
+public abstract class AbstractPhotonMapBasedWALDAO <INTERFACETYPE extends IHasID <String>, IMPLTYPE extends INTERFACETYPE>
                                                    extends
                                                    AbstractMapBasedWALDAO <INTERFACETYPE, IMPLTYPE>
 {
-  public AbstractPhotonMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass, @Nullable final String sFilename) throws DAOException
+  public AbstractPhotonMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
+                                       @Nullable final String sFilename) throws DAOException
   {
     this (aImplClass, sFilename, new InitSettings <> ());
   }

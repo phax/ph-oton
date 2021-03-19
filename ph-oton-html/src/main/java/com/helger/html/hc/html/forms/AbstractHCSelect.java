@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html.forms;
 
+import java.util.function.Predicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +34,6 @@ import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.functional.IPredicate;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
@@ -51,7 +52,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        the implementation type
  */
-public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE> implements
+public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends
+                                       AbstractHCControl <IMPLTYPE> implements
                                        IHCSelect <IMPLTYPE>
 {
   /** By default multi select is disabled */
@@ -292,8 +294,8 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_aOptions.containsAny (c -> c instanceof HCOptGroup);
   }
 
-  private static final IPredicate <IHCNode> PRED_SELECTED_OPTION = aChild -> aChild instanceof HCOption &&
-                                                                             ((HCOption) aChild).isSelected ();
+  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = aChild -> aChild instanceof HCOption &&
+                                                                            ((HCOption) aChild).isSelected ();
 
   @Nonnull
   @ReturnsMutableCopy

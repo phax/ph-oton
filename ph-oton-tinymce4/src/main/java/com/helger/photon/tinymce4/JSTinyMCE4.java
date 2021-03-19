@@ -34,7 +34,7 @@ import com.helger.html.jscode.JSRef;
 public final class JSTinyMCE4
 {
   @PresentForCodeCoverage
-  private static final JSTinyMCE4 s_aInstance = new JSTinyMCE4 ();
+  private static final JSTinyMCE4 INSTANCE = new JSTinyMCE4 ();
 
   private JSTinyMCE4 ()
   {}

@@ -16,12 +16,13 @@
  */
 package com.helger.photon.bootstrap3.form;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -117,7 +118,10 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
     ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX);
     ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG);
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
+                                                                 nLeftPartsSM,
+                                                                 nLeftPartsMD,
+                                                                 nLeftPartsLG);
     final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
                                                                   _getRight (nLeftPartsSM),
                                                                   _getRight (nLeftPartsMD),
@@ -127,7 +131,8 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
+  public BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft,
+                                         @Nonnull final BootstrapGridSpec aRight)
   {
     ValueEnforcer.notNull (aLeft, "Left");
     ValueEnforcer.notNull (aRight, "Right");
@@ -154,7 +159,7 @@ public class BootstrapViewForm extends AbstractHCDiv <BootstrapViewForm> impleme
   {
     // TODO find Locale for rendering
     // Usually no error texts are used; so this is not sooo important
-    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup, CGlobal.DEFAULT_LOCALE);
+    return m_aFormGroupRenderer.renderFormGroup (this, aFormGroup, Locale.US);
   }
 
   @Nonnull
