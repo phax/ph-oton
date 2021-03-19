@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.builder.IBuilder;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -62,7 +63,9 @@ public class MarkdownConfiguration
    * <li><code>codeBlockEmitter = null</code></li>
    * </ul>
    */
-  public static final MarkdownConfiguration DEFAULT_EXTENSIONS = MarkdownConfiguration.builder ().setExtendedProfile (true).build ();
+  public static final MarkdownConfiguration DEFAULT_EXTENSIONS = MarkdownConfiguration.builder ()
+                                                                                      .extendedProfile (true)
+                                                                                      .build ();
 
   /**
    * <p>
@@ -75,7 +78,7 @@ public class MarkdownConfiguration
    * <li><code>codeBlockEmitter = null</code></li>
    * </ul>
    */
-  public static final MarkdownConfiguration DEFAULT_SAFE = MarkdownConfiguration.builder ().setSafeMode (true).build ();
+  public static final MarkdownConfiguration DEFAULT_SAFE = MarkdownConfiguration.builder ().safeMode (true).build ();
 
   /**
    * <p>
@@ -89,8 +92,8 @@ public class MarkdownConfiguration
    * </ul>
    */
   public static final MarkdownConfiguration DEFAULT_SAFE_EXTENSIONS = MarkdownConfiguration.builder ()
-                                                                                           .setSafeMode (true)
-                                                                                           .setExtendedProfile (true)
+                                                                                           .safeMode (true)
+                                                                                           .extendedProfile (true)
                                                                                            .build ();
 
   private final boolean m_bSafeMode;
@@ -207,7 +210,7 @@ public class MarkdownConfiguration
    * @author René Jeschke &lt;rene_jeschke@yahoo.de&gt;
    * @since 0.7
    */
-  public static class Builder
+  public static class Builder implements IBuilder <MarkdownConfiguration>
   {
     private boolean m_bSafeMode = false;
     private boolean m_bForceExtendedProfile = false;
@@ -221,7 +224,7 @@ public class MarkdownConfiguration
     /**
      * Constructor.
      */
-    Builder ()
+    public Builder ()
     {}
 
     /**
@@ -233,7 +236,7 @@ public class MarkdownConfiguration
      * @since 0.7
      */
     @Nonnull
-    public Builder setExtendedProfile (final boolean bExtendedProfile)
+    public Builder extendedProfile (final boolean bExtendedProfile)
     {
       m_bForceExtendedProfile = bExtendedProfile;
       return this;
@@ -260,7 +263,7 @@ public class MarkdownConfiguration
      * @since 0.7
      */
     @Nonnull
-    public Builder setSafeMode (final boolean flag)
+    public Builder safeMode (final boolean flag)
     {
       m_bSafeMode = flag;
       return this;
@@ -276,14 +279,14 @@ public class MarkdownConfiguration
      * @since 0.7
      */
     @Nonnull
-    public Builder setEncoding (@Nonnull final Charset aEncoding)
+    public Builder encoding (@Nonnull final Charset aEncoding)
     {
       m_aEncoding = ValueEnforcer.notNull (aEncoding, "Encoding");
       return this;
     }
 
     @Nonnull
-    public IMarkdownDecorator getDecorator ()
+    public IMarkdownDecorator decorator ()
     {
       return m_aDecorator;
     }
@@ -298,7 +301,7 @@ public class MarkdownConfiguration
      * @since 0.7
      */
     @Nonnull
-    public Builder setDecorator (@Nonnull final IMarkdownDecorator aDecorator)
+    public Builder decorator (@Nonnull final IMarkdownDecorator aDecorator)
     {
       m_aDecorator = ValueEnforcer.notNull (aDecorator, "Decorator");
       return this;
@@ -314,7 +317,7 @@ public class MarkdownConfiguration
      * @since 0.7
      */
     @Nonnull
-    public Builder setCodeBlockEmitter (@Nullable final IMarkdownBlockEmitter emitter)
+    public Builder codeBlockEmitter (@Nullable final IMarkdownBlockEmitter emitter)
     {
       m_aCodeBlockEmitter = emitter;
       return this;
@@ -329,7 +332,7 @@ public class MarkdownConfiguration
      * @since 0.7
      */
     @Nonnull
-    public Builder setSpecialLinkEmitter (@Nullable final IMarkdownSpanEmitter emitter)
+    public Builder specialLinkEmitter (@Nullable final IMarkdownSpanEmitter emitter)
     {
       m_aSpecialLinkEmitter = emitter;
       return this;

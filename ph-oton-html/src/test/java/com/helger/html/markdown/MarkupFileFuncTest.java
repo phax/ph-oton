@@ -194,7 +194,7 @@ public final class MarkupFileFuncTest
   {
     final Builder aBuilder = MarkdownConfiguration.builder ();
     if (m_sTestName.startsWith ("[MarkupFiles/dingus.txt]1("))
-      aBuilder.setExtendedProfile (true);
+      aBuilder.extendedProfile (true);
     assertEquals (m_sTestName,
                   m_sExpectedResult.trim (),
                   new MarkdownProcessor (aBuilder.build ()).process (m_sTestString).getAsHTMLString ());
