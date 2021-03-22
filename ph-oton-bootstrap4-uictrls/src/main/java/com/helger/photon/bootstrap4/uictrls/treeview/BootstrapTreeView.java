@@ -16,7 +16,6 @@
  */
 package com.helger.photon.bootstrap4.uictrls.treeview;
 
-import java.util.List;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
@@ -26,6 +25,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.NonBlockingStack;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.commons.state.ETriState;
@@ -190,7 +190,7 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
     return getJSCollapseAllInvocation ().arg (new JSAssocArray ().add ("levels", nLevels).add ("silent", bSilent));
   }
 
-  private static void _recursiveFillJSTree (@Nullable final List <DefaultTreeItem <BootstrapTreeViewItem>> aTreeItems,
+  private static void _recursiveFillJSTree (@Nullable final ICommonsList <DefaultTreeItem <BootstrapTreeViewItem>> aTreeItems,
                                             @Nonnull final JSArray aTargetArray)
   {
     if (CollectionHelper.isNotEmpty (aTreeItems))
@@ -281,7 +281,8 @@ public class BootstrapTreeView extends AbstractHCDiv <BootstrapTreeView>
       @Override
       public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
       {
-        final DefaultTreeItem <BootstrapTreeViewItem> aChildItem = aParents.peek ().createChildItem (aConverter.apply (aItem.getData ()));
+        final DefaultTreeItem <BootstrapTreeViewItem> aChildItem = aParents.peek ()
+                                                                           .createChildItem (aConverter.apply (aItem.getData ()));
         aParents.push (aChildItem);
         return EHierarchyVisitorReturn.CONTINUE;
       }

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsImmutableObject;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap3.CBootstrapCSS;
@@ -41,7 +41,7 @@ public enum EBootstrapButtonGroupType
 
   EBootstrapButtonGroupType (@Nullable final ICSSClassProvider... aCSSClasses)
   {
-    m_aCSSClasses = CollectionHelper.newList (aCSSClasses);
+    m_aCSSClasses = new CommonsArrayList <> (aCSSClasses);
   }
 
   @Nonnull
@@ -49,6 +49,6 @@ public enum EBootstrapButtonGroupType
   @ReturnsImmutableObject
   public ICommonsList <ICSSClassProvider> getAllCSSClasses ()
   {
-    return CollectionHelper.newList (m_aCSSClasses);
+    return m_aCSSClasses.getClone ();
   }
 }

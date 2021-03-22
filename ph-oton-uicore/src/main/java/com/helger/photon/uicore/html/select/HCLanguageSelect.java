@@ -38,7 +38,7 @@ public class HCLanguageSelect extends HCExtSelect
   {
     super (aRF);
 
-    Comparator <Locale> aComp;
+    final Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
       aComp = IComparator.getComparatorCollating (x -> x.getDisplayLanguage (aDisplayLocale), aDisplayLocale);
     else
@@ -46,7 +46,8 @@ public class HCLanguageSelect extends HCExtSelect
 
     for (final Locale aLocale : CollectionHelper.getSorted (aLocales, aComp))
     {
-      final String sDisplayLanguage = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aLocale, aDisplayLocale)
+      final String sDisplayLanguage = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aLocale,
+                                                                                                          aDisplayLocale)
                                                                    : aLocale.getDisplayLanguage (aDisplayLocale);
       addOption (aLocale.getLanguage (), sDisplayLanguage);
     }

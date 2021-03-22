@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTToString;
@@ -54,7 +55,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayTextWithArgs
@@ -104,7 +106,9 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     super (sID, sName);
   }
 
-  public BasePageSysInfoThreads (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageSysInfoThreads (@Nonnull @Nonempty final String sID,
+                                 @Nonnull final String sName,
+                                 @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -140,8 +144,8 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     // get all threads and sort them by thread ID
-    final Map <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
-                                                                                         Comparator.comparing (Thread::getId));
+    final ICommonsMap <Thread, StackTraceElement []> aThreads = CollectionHelper.getSortedByKey (Thread.getAllStackTraces (),
+                                                                                                 Comparator.comparing (Thread::getId));
 
     aNodeList.addChild (getUIHandler ().createActionHeader (EText.MSG_HEADER.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                      Integer.valueOf (aThreads.size ()),

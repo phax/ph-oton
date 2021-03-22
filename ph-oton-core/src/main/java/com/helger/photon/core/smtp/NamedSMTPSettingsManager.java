@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.smtp;
 
+import java.util.Comparator;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -119,7 +121,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
-    for (final NamedSMTPSettings aNamedSMTPSettings : CollectionHelper.getSortedByKey (m_aMap).values ())
+    for (final NamedSMTPSettings aNamedSMTPSettings : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
       eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aNamedSMTPSettings, ELEMENT_ITEM));
     return aDoc;
   }

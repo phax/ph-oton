@@ -21,7 +21,6 @@ import java.security.Provider;
 import java.security.Provider.Service;
 import java.security.Security;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -34,6 +33,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
@@ -67,7 +67,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext> extends
+                                     AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayText
@@ -115,7 +116,9 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     super (sID, sName);
   }
 
-  public BasePageSysInfoSecurity (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageSysInfoSecurity (@Nonnull @Nonempty final String sID,
+                                  @Nonnull final String sName,
+                                  @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -135,9 +138,9 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
-    final List <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
-                                                                         Comparator.comparing (Provider::getName)
-                                                                                   .thenComparing (Comparator.comparingDouble (Provider::getVersion)));
+    final ICommonsList <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
+                                                                                 Comparator.comparing (Provider::getName)
+                                                                                           .thenComparing (Comparator.comparingDouble (Provider::getVersion)));
 
     // show all Security attributes
     {
@@ -211,7 +214,9 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     // Show all algorithms of all providers
     {
-      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0, 1, 2),
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                      1,
+                                                                                                                      2),
                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (1, 2)
                                                                                                     .setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)),
@@ -242,7 +247,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
-        final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
+        final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                    1),
                                             new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                             new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () + "-" + RegExHelper.getAsIdentifier (sProviderName));
 
@@ -261,11 +267,12 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
         // Add properties of this provider
         final BootstrapTable aPropsTable = new BootstrapTable (HCCol.star (), HCCol.star ());
         aPropsTable.addHeaderRow ()
-                   .addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+                   .addCells (EText.MSG_KEY.getDisplayText (aDisplayLocale),
+                              EText.MSG_VALUE.getDisplayText (aDisplayLocale));
         final ICommonsSet <String> aKeys = new CommonsHashSet <> ();
         for (final Object aName : aSecurityProvider.keySet ())
           aKeys.add ((String) aName);
-        for (final String sName : CollectionHelper.getSorted (aKeys))
+        for (final String sName : aKeys.getSorted (Comparator.naturalOrder ()))
         {
           final HCRow aPropsRow = aPropsTable.addBodyRow ();
           aPropsRow.addCell (sName);
@@ -283,7 +290,9 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     // List details of all SSLContexts
     {
-      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0, 1, 2),
+      final HCTable aTable = new HCTable (new DTCol (EText.MSG_PROVIDER.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                      1,
+                                                                                                                      2),
                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (1, 2),
                                           new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_DEFAULT_PROTOCOLS.getDisplayText (aDisplayLocale)),

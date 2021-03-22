@@ -17,7 +17,6 @@
 package com.helger.photon.bootstrap4.pages.data;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -126,15 +124,14 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
                                         new DTCol (EText.MSG_LOCALES.getDisplayText (aDisplayLocale)).setOrderable (false)).setID (getID ());
 
     // For all languages
-    for (final Map.Entry <String, ? extends List <Locale>> aEntry : aMapLanguageToLocale.entrySet ())
+    for (final Map.Entry <String, ICommonsList <Locale>> aEntry : aMapLanguageToLocale.entrySet ())
     {
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aEntry.getKey ());
-      aRow.addCell (CollectionHelper.getFirstElement (aEntry.getValue ()).getDisplayLanguage (aDisplayLocale));
+      aRow.addCell (aEntry.getValue ().getFirst ().getDisplayLanguage (aDisplayLocale));
 
       final IHCCell <?> aCell = aRow.addCell ();
-      for (final Locale aLocale : CollectionHelper.getSorted (aEntry.getValue (),
-                                                              Comparator.comparing (Locale::toString)))
+      for (final Locale aLocale : aEntry.getValue ().getSortedInline (Comparator.comparing (Locale::toString)))
       {
         final HCDiv aDiv = div ();
         final EFamFamFlagIcon eIcon = EFamFamFlagIcon.getFromIDOrNull (aLocale.getCountry ());

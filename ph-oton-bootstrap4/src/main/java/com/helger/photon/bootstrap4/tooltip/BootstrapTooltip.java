@@ -26,8 +26,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.CommonsTreeSet;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
@@ -234,14 +235,14 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   @ReturnsMutableCopy
   public ICommonsList <EBootstrapTooltipTrigger> getTrigger ()
   {
-    return CollectionHelper.newList (m_aTrigger);
+    return new CommonsArrayList <> (m_aTrigger);
   }
 
   @Nonnull
   public BootstrapTooltip setTrigger (@Nullable final EBootstrapTooltipTrigger... aTrigger)
   {
     // Avoid duplicates!
-    m_aTrigger = CollectionHelper.newSortedSet (aTrigger);
+    m_aTrigger = new CommonsTreeSet <> (aTrigger);
     return this;
   }
 
@@ -249,7 +250,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   public BootstrapTooltip setTrigger (@Nullable final Collection <EBootstrapTooltipTrigger> aTrigger)
   {
     // Avoid duplicates!
-    m_aTrigger = CollectionHelper.newSortedSet (aTrigger);
+    m_aTrigger = new CommonsTreeSet <> (aTrigger);
     return this;
   }
 
@@ -376,7 +377,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
     else
       if (m_aTooltipTitleFunc != null)
         aOptions.add ("title", m_aTooltipTitleFunc);
-    if (CollectionHelper.isNotEmpty (m_aTrigger) && !DEFAULT_TRIGGER.equals (m_aTrigger))
+    if (!m_aTrigger.isEmpty () && !DEFAULT_TRIGGER.equals (m_aTrigger))
       aOptions.add ("trigger", StringHelper.getImplodedMapped (' ', m_aTrigger, EBootstrapTooltipTrigger::getValue));
     if (StringHelper.hasText (m_sOffset))
       aOptions.add ("offset", m_sOffset);

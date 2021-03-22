@@ -59,7 +59,7 @@
       <artifactId>ph-oton-audit</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.masterdata</groupId>
       <artifactId>ph-tenancy</artifactId>
     </dependency>
     
