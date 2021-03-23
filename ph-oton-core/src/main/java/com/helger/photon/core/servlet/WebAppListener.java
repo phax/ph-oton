@@ -602,108 +602,121 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     if (isOnlyOneInstanceAllowed ())
       if (s_aInited.getAndSet (true))
-        throw new IllegalStateException ("WebAppListener was already instantiated!");
-
-    final StopWatch aSW = StopWatch.createdStarted ();
-    m_aInitializationStartDT = PDTFactory.getCurrentLocalDateTime ();
-
-    // Call callback
-    onTheVeryBeginning (aSC);
-
-    // set global debug/trace mode
-    final boolean bDebugMode = StringParser.parseBool (getInitParameterDebug (aSC));
-    final boolean bProductionMode = StringParser.parseBool (getInitParameterProduction (aSC));
-    GlobalDebug.setDebugModeDirect (bDebugMode);
-    GlobalDebug.setProductionModeDirect (bProductionMode);
-
-    final boolean bNoStartupInfo = StringParser.parseBool (getInitParameterNoStartupInfo (aSC));
-    if (!bNoStartupInfo)
-    {
-      // Requires the global debug things to be present
-      logStartupInfo (aSC);
-    }
-
-    // StaticServerInfo
-    {
-      final String sInitParameter = getInitParameterServerURL (aSC, bProductionMode);
-      if (StringHelper.hasText (sInitParameter))
       {
-        final URL aURL = URLHelper.getAsURL (sInitParameter);
-        if (aURL != null)
-        {
-          StaticServerInfo.init (aURL.getProtocol (), aURL.getHost (), aURL.getPort (), aSC.getContextPath ());
-        }
-        else
-          LOGGER.error ("The init-parameter for the server URL" +
-                        (bProductionMode ? " (production mode)" : " (non-production mode)") +
-                        "contains the non-URL value '" +
-                        sInitParameter +
-                        "'");
+        LOGGER.error ("WebAppListener was already instantiated!");
+        throw new IllegalStateException ("WebAppListener was already instantiated!");
       }
-    }
 
-    // Call callback
-    beforeContextInitialized (aSC);
-
-    // begin global context
-    if (isOnlyOneInstanceAllowed () || !WebScopeManager.isGlobalScopePresent ())
+    try
     {
-      // Create scopes
-      WebScopeManager.onGlobalBegin (aSC);
+      final StopWatch aSW = StopWatch.createdStarted ();
+      m_aInitializationStartDT = PDTFactory.getCurrentLocalDateTime ();
 
-      // right order?
-      PhotonCoreInit.startUp ();
+      // Call callback
+      onTheVeryBeginning (aSC);
 
-      // Init IO
-      initPaths (aSC);
+      // set global debug/trace mode
+      final boolean bDebugMode = StringParser.parseBool (getInitParameterDebug (aSC));
+      final boolean bProductionMode = StringParser.parseBool (getInitParameterProduction (aSC));
+      GlobalDebug.setDebugModeDirect (bDebugMode);
+      GlobalDebug.setProductionModeDirect (bProductionMode);
 
-      // Set persistent ID provider - must be done after IO is setup
-      initGlobalIDFactory ();
+      final boolean bNoStartupInfo = StringParser.parseBool (getInitParameterNoStartupInfo (aSC));
+      if (!bNoStartupInfo)
+      {
+        // Requires the global debug things to be present
+        logStartupInfo (aSC);
+      }
 
-      // Init default settings
-      initDefaultGlobalSettings ();
+      // StaticServerInfo
+      {
+        final String sInitParameter = getInitParameterServerURL (aSC, bProductionMode);
+        if (StringHelper.hasText (sInitParameter))
+        {
+          final URL aURL = URLHelper.getAsURL (sInitParameter);
+          if (aURL != null)
+          {
+            StaticServerInfo.init (aURL.getProtocol (), aURL.getHost (), aURL.getPort (), aSC.getContextPath ());
+          }
+          else
+            LOGGER.error ("The init-parameter for the server URL" +
+                          (bProductionMode ? " (production mode)" : " (non-production mode)") +
+                          "contains the non-URL value '" +
+                          sInitParameter +
+                          "'");
+        }
+      }
 
-      // Global properties
-      initGlobalSettings ();
+      // Call callback
+      beforeContextInitialized (aSC);
 
-      // Register application locales
-      initLocales (GlobalLocaleManager.getInstance ());
+      // begin global context
+      if (isOnlyOneInstanceAllowed () || !WebScopeManager.isGlobalScopePresent ())
+      {
+        // Create scopes
+        WebScopeManager.onGlobalBegin (aSC);
 
-      // Init menu (per app)
-      initMenu ();
+        // right order?
+        PhotonCoreInit.startUp ();
 
-      // Register all Ajax functions here
-      initAjax (GlobalAjaxInvoker.getInstance ().getRegistry ());
+        // Init IO
+        initPaths (aSC);
 
-      // Register all API functions here
-      initAPI (GlobalAPIInvoker.getInstance ().getRegistry ());
+        // Set persistent ID provider - must be done after IO is setup
+        initGlobalIDFactory ();
 
-      // Set all security related stuff
-      initSecurity ();
+        // Init default settings
+        initDefaultGlobalSettings ();
 
-      // UI stuff
-      initUI ();
+        // Global properties
+        initGlobalSettings ();
 
-      // Init all managers
-      initManagers ();
+        // Register application locales
+        initLocales (GlobalLocaleManager.getInstance ());
 
-      // Init all jobs, AFTER managers
-      initJobs ();
+        // Init menu (per app)
+        initMenu ();
+
+        // Register all Ajax functions here
+        initAjax (GlobalAjaxInvoker.getInstance ().getRegistry ());
+
+        // Register all API functions here
+        initAPI (GlobalAPIInvoker.getInstance ().getRegistry ());
+
+        // Set all security related stuff
+        initSecurity ();
+
+        // UI stuff
+        initUI ();
+
+        // Init all managers
+        initManagers ();
+
+        // Init all jobs, AFTER managers
+        initJobs ();
+      }
+
+      // Callback
+      afterContextInitialized (aSC);
+
+      // Remember end time
+      m_aInitializationEndDT = PDTFactory.getCurrentLocalDateTime ();
+
+      // Finally
+      if (LOGGER.isInfoEnabled ())
+        LOGGER.info ("Servlet context '" +
+                     aSC.getServletContextName () +
+                     "' was initialized in " +
+                     aSW.stopAndGetMillis () +
+                     " milli seconds");
     }
-
-    // Callback
-    afterContextInitialized (aSC);
-
-    // Remember end time
-    m_aInitializationEndDT = PDTFactory.getCurrentLocalDateTime ();
-
-    // Finally
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Servlet context '" +
-                   aSC.getServletContextName () +
-                   "' was initialized in " +
-                   aSW.stopAndGetMillis () +
-                   " milli seconds");
+    catch (final RuntimeException ex)
+    {
+      // Ensure it is logged on startup - otherwise (especially for Docker
+      // images) it is hard to trace
+      LOGGER.error ("Context Initialization Error", ex);
+      throw ex;
+    }
   }
 
   /**
