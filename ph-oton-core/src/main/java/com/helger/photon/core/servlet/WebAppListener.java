@@ -237,7 +237,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected static final void logThirdpartyModules ()
   {
     // List all third party modules for later evaluation
-    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ().getAllRegisteredThirdPartyModules ();
+    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
+                                                                             .getAllRegisteredThirdPartyModules ();
     if (!aModules.isEmpty ())
     {
       LOGGER.info ("Using the following third party modules:");
@@ -419,7 +420,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       sDataPath = aSC.getInitParameter ("storagePath");
       if (StringHelper.hasText (sDataPath))
       {
-        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" + INIT_PARAMETER_DATA_PATH + "' instead!");
+        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" +
+                      INIT_PARAMETER_DATA_PATH +
+                      "' instead!");
       }
     }
     if (StringHelper.hasNoText (sDataPath))
@@ -596,6 +599,17 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected void initJobs ()
   {}
 
+  /**
+   * @return <code>true</code> if Runtime exceptions on startup and shutdown
+   *         should be logged or not. Enabled by default.
+   * @since 8.3.1
+   */
+  @OverrideOnDemand
+  protected boolean isLogExceptions ()
+  {
+    return true;
+  }
+
   public final void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
     final ServletContext aSC = aSCE.getServletContext ();
@@ -712,9 +726,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     }
     catch (final RuntimeException ex)
     {
-      // Ensure it is logged on startup - otherwise (especially for Docker
-      // images) it is hard to trace
-      LOGGER.error ("Context Initialization Error", ex);
+      if (isLogExceptions ())
+      {
+        // Ensure it is logged on startup - otherwise (especially for Docker
+        // images) it is hard to trace
+        LOGGER.error ("Context Initialization Error", ex);
+      }
       throw ex;
     }
   }
@@ -785,7 +802,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   @OverrideOnDemand
   protected String getStatisticsFilename ()
   {
-    return "statistics/" + PDTFactory.getCurrentYear () + "/statistics_" + PDTIOHelper.getCurrentLocalDateTimeForFilename () + ".xml";
+    return "statistics/" +
+           PDTFactory.getCurrentYear () +
+           "/statistics_" +
+           PDTIOHelper.getCurrentLocalDateTimeForFilename () +
+           ".xml";
   }
 
   /**
@@ -803,7 +824,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       {
         final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
         aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
-        aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
+        aDoc.getDocumentElement ()
+            .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
 
         final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         MicroWriter.writeToFile (aDoc, aDestPath);
@@ -819,36 +841,53 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   public final void contextDestroyed (@Nonnull final ServletContextEvent aSCE)
   {
-    final ServletContext aSC = aSCE.getServletContext ();
-
-    final StopWatch aSW = StopWatch.createdStarted ();
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Servlet context '" + aSC.getServletContextName () + "' is being destroyed");
-
-    // Callback before global scope end
-    beforeContextDestroyed (aSC);
-
-    // Shutdown global scope and destroy all singletons
-    WebScopeManager.onGlobalEnd ();
-
-    // Callback after global scope end
-    afterContextDestroyed (aSC);
-
-    // Handle statistics
-    if (isHandleStatisticsOnEnd ())
-      handleStatisticsOnEnd ();
-
-    // Clean commons stuff etc
-    PhotonCoreInit.shutdown ();
-
-    if (isOnlyOneInstanceAllowed ())
+    try
     {
-      // De-init
-      s_aInited.set (false);
-    }
+      final ServletContext aSC = aSCE.getServletContext ();
 
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Servlet context '" + aSC.getServletContextName () + "' was destroyed in " + aSW.stopAndGetMillis () + " milli seconds");
+      final StopWatch aSW = StopWatch.createdStarted ();
+      if (LOGGER.isInfoEnabled ())
+        LOGGER.info ("Servlet context '" + aSC.getServletContextName () + "' is being destroyed");
+
+      // Callback before global scope end
+      beforeContextDestroyed (aSC);
+
+      // Shutdown global scope and destroy all singletons
+      WebScopeManager.onGlobalEnd ();
+
+      // Callback after global scope end
+      afterContextDestroyed (aSC);
+
+      // Handle statistics
+      if (isHandleStatisticsOnEnd ())
+        handleStatisticsOnEnd ();
+
+      // Clean commons stuff etc
+      PhotonCoreInit.shutdown ();
+
+      if (isOnlyOneInstanceAllowed ())
+      {
+        // De-init
+        s_aInited.set (false);
+      }
+
+      if (LOGGER.isInfoEnabled ())
+        LOGGER.info ("Servlet context '" +
+                     aSC.getServletContextName () +
+                     "' was destroyed in " +
+                     aSW.stopAndGetMillis () +
+                     " milli seconds");
+    }
+    catch (final RuntimeException ex)
+    {
+      if (isLogExceptions ())
+      {
+        // Ensure it is logged on startup - otherwise (especially for Docker
+        // images) it is hard to trace
+        LOGGER.error ("Context Initialization Error", ex);
+      }
+      throw ex;
+    }
   }
 
   /**
