@@ -1,6 +1,9 @@
 dist: xenial
 language: java
 
+node_js:
+  - "10"
+
 env:
   global:
     - SONATYPE_USERNAME=ph@phloc.com
