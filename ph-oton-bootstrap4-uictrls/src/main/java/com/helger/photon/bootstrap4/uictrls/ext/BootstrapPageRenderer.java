@@ -82,7 +82,7 @@ public final class BootstrapPageRenderer
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
 
     // Resolve the page of the selected menu item (if found)
-    IWebPage <WPEC> aDisplayPage;
+    final IWebPage <WPEC> aDisplayPage;
     if (aSelectedMenuItem.matchesDisplayFilter ())
     {
       // Only if we have display rights!

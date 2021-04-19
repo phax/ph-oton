@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletRequest;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.http.CHttpHeader;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
@@ -29,16 +30,35 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+/**
+ * An error handler that redirects to a certain error path with some special URL
+ * parameters.
+ *
+ * @author Philip Helger
+ */
 public class ErrorXServletHandler implements IXServletSimpleHandler
 {
+  public static final String PARAM_HTTP_ERROR = "httpError";
+  public static final String PARAM_HTTP_STATUS_CODE = "httpStatusCode";
+  public static final String PARAM_HTTP_STATUS_MESSAGE = "httpStatusMessage";
+  public static final String PARAM_HTTP_REQUEST_URI = "httpRequestUri";
+  public static final String PARAM_HTTP_REFERRER = "httpReferrer";
+
   private final String m_sServletPath;
 
-  public ErrorXServletHandler (final String sServletPath)
+  public ErrorXServletHandler (@Nonnull @Nonempty final String sServletPath)
   {
-    ValueEnforcer.notEmpty (sServletPath, "ServletPath");
+    ValueEnforcer.notEmpty (sServletPath, "Path");
     ValueEnforcer.isTrue (sServletPath.startsWith ("/"), "Path must start with '/'!");
 
     m_sServletPath = sServletPath;
+  }
+
+  @Nonnull
+  @Nonempty
+  public final String getPath ()
+  {
+    return m_sServletPath;
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -46,11 +66,17 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
   {
     final HttpServletRequest aRequest = aRequestScope.getRequest ();
     final SimpleURL aURL = new SimpleURL (aRequestScope.getContextPath () + m_sServletPath);
-    aURL.add ("httpError", true);
-    aURL.addIf ("httpStatusCode", StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.status_code")), Objects::nonNull);
-    aURL.addIf ("httpStatusMessage", StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.message")), Objects::nonNull);
-    aURL.addIf ("httpRequestUri", StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.request_uri")), Objects::nonNull);
-    aURL.addIf ("httpReferrer", aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER), Objects::nonNull);
+    aURL.add (PARAM_HTTP_ERROR, true);
+    aURL.addIf (PARAM_HTTP_STATUS_CODE,
+                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.status_code")),
+                Objects::nonNull);
+    aURL.addIf (PARAM_HTTP_STATUS_MESSAGE,
+                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.message")),
+                Objects::nonNull);
+    aURL.addIf (PARAM_HTTP_REQUEST_URI,
+                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.request_uri")),
+                Objects::nonNull);
+    aURL.addIf (PARAM_HTTP_REFERRER, aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER), Objects::nonNull);
     aUnifiedResponse.setRedirect (aURL);
   }
 }

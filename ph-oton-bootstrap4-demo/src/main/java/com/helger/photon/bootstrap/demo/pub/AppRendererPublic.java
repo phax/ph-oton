@@ -22,8 +22,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.lang.GenericReflection;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.css.property.CCSSProperties;
@@ -42,11 +40,9 @@ import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap.demo.pub.menu.CMenuPublic;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
-import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumb;
 import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumbProvider;
 import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
-import com.helger.photon.bootstrap4.ext.BootstrapSystemMessage;
 import com.helger.photon.bootstrap4.form.EBootstrapFormType;
 import com.helger.photon.bootstrap4.grid.BootstrapCol;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
@@ -57,6 +53,7 @@ import com.helger.photon.bootstrap4.navbar.BootstrapNavbarToggleable;
 import com.helger.photon.bootstrap4.navbar.EBootstrapNavbarExpandType;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRenderer;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRendererHorz;
+import com.helger.photon.bootstrap4.uictrls.ext.BootstrapPageRenderer;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.appid.CApplicationID;
 import com.helger.photon.core.appid.PhotonGlobalState;
@@ -72,10 +69,7 @@ import com.helger.photon.core.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.core.servlet.LogoutServlet;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.util.SecurityHelper;
-import com.helger.photon.uicore.page.IWebPage;
-import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-import com.helger.xservlet.forcedredirect.ForcedRedirectManager;
 
 /**
  * The viewport renderer (menu + content area)
@@ -160,54 +154,6 @@ public final class AppRendererPublic
   }
 
   @Nonnull
-  public static IHCNode getPageContent (@Nonnull final ILayoutExecutionContext aLEC)
-  {
-    final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
-
-    // Build page content: header + content
-    final HCNodeList aPageContainer = new HCNodeList ();
-
-    final IWebPage <WebPageExecutionContext> aDisplayPage = GenericReflection.uncheckedCast (aLEC.getSelectedPage ());
-    final WebPageExecutionContext aWPEC = new WebPageExecutionContext (aLEC, aDisplayPage);
-
-    // First add the system message
-    aPageContainer.addChild (BootstrapSystemMessage.createDefault ());
-
-    // Handle 404 case here (see error404.jsp)
-    if (aRequestScope.params ().hasStringValue ("httpError", "true"))
-    {
-      final String sHttpStatusCode = aRequestScope.params ().getAsString ("httpStatusCode");
-      final String sHttpStatusMessage = aRequestScope.params ().getAsString ("httpStatusMessage");
-      final String sHttpRequestURI = aRequestScope.params ().getAsString ("httpRequestUri");
-      aPageContainer.addChild (new BootstrapErrorBox ().addChild ("HTTP error " +
-                                                                  sHttpStatusCode +
-                                                                  " (" +
-                                                                  sHttpStatusMessage +
-                                                                  ")" +
-                                                                  (StringHelper.hasText (sHttpRequestURI) ? " for request URI " +
-                                                                                                            sHttpRequestURI
-                                                                                                          : "")));
-    }
-    else
-    {
-      // Add the forced redirect content here
-      if (aWPEC.params ().containsKey (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE))
-        aPageContainer.addChild ((IHCNode) ForcedRedirectManager.getLastForcedRedirectContent (aDisplayPage.getID ()));
-    }
-
-    // Add page header
-    aPageContainer.addChild (aDisplayPage.getHeaderNode (aWPEC));
-
-    // Main fill page content
-    aDisplayPage.getContent (aWPEC);
-
-    // Add page content to result
-    aPageContainer.addChild (aWPEC.getNodeList ());
-
-    return aPageContainer;
-  }
-
-  @Nonnull
   public static IHCNode getContent (@Nonnull final ILayoutExecutionContext aLEC)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -237,7 +183,7 @@ public final class AppRendererPublic
       aCol1.addChild (new HCDiv ().setID (CLayout.LAYOUT_AREAID_SPECIAL));
 
       // content
-      aCol2.addChild (getPageContent (aLEC));
+      aCol2.addChild (BootstrapPageRenderer.getPageContent (aLEC));
     }
 
     // Footer
