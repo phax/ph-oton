@@ -230,7 +230,12 @@ public class ExporterCSV implements IExporterFile
     for (final IExportRecordField aField : aAllFields)
     {
       final Object aFieldValue = aField.getFieldValue ();
-      if (aFieldValue != null)
+      if (aFieldValue == null)
+      {
+        // Add an empty cell
+        aCSVValues.add ("");
+      }
+      else
         aCSVValues.add (TypeConverter.convert (aFieldValue, String.class));
     }
     return aCSVValues;

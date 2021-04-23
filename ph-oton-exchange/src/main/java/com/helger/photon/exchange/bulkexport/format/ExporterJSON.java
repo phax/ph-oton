@@ -40,6 +40,7 @@ import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.json.JsonValue;
 import com.helger.json.serialize.IJsonWriterSettings;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.json.serialize.JsonWriterSettings;
@@ -138,14 +139,15 @@ public class ExporterJSON implements IExporterFile
       {
         final IJsonObject aObject = new JsonObject ();
         aObject.add (ATTR_TYPE, aField.getFieldType ().getID ());
-        if (aFieldValue != null)
+        if (aFieldValue == null)
+          aObject.addJson (ATTR_VALUE, JsonValue.NULL);
+        else
           aObject.add (ATTR_VALUE, aFieldValue);
         ret.add (aObject);
       }
       else
       {
-        if (aFieldValue != null)
-          ret.add (aFieldValue);
+        ret.add (aFieldValue == null ? JsonValue.NULL : aFieldValue);
       }
     }
     return ret;
