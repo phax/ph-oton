@@ -34,6 +34,7 @@ import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.photon.bootstrap4.CBootstrap;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
+import com.helger.photon.bootstrap4.grid.IBootstrapGridElement;
 
 @NotThreadSafe
 public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> implements
@@ -101,11 +102,26 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
                                           @Nonnegative final int nLeftPartsLG,
                                           @Nonnegative final int nLeftPartsXL)
   {
-    ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", 1, CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsXL, "LeftPartsXL", 1, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsXS,
+                                      "LeftPartsXS",
+                                      IBootstrapGridElement.PARTS_EVENLY,
+                                      CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsSM,
+                                      "LeftPartsSM",
+                                      IBootstrapGridElement.PARTS_EVENLY,
+                                      CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsMD,
+                                      "LeftPartsMD",
+                                      IBootstrapGridElement.PARTS_EVENLY,
+                                      CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsLG,
+                                      "LeftPartsLG",
+                                      IBootstrapGridElement.PARTS_EVENLY,
+                                      CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsXL,
+                                      "LeftPartsXL",
+                                      IBootstrapGridElement.PARTS_EVENLY,
+                                      CBootstrap.GRID_SYSTEM_MAX);
 
     final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
                                                                  nLeftPartsSM,
