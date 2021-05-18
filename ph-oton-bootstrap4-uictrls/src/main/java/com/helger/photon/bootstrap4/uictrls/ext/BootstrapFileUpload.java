@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
@@ -40,6 +41,7 @@ import com.helger.css.writer.CSSWriterSettings;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.forms.HCEditFile;
 import com.helger.html.hc.html.forms.HCLabel;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
@@ -134,6 +136,26 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
     return this;
   }
 
+  /**
+   * Create the "placeholder" component. By default it is a "label". To switch
+   * this to a "div" or a "span" just override this method.
+   *
+   * @param sPlaceholder
+   *        Place holder text to use. May not be <code>null</code>.
+   * @return A non-<code>null</code> element to use.
+   * @since 8.3.1
+   */
+  @Nonnull
+  @OverrideOnDemand
+  protected IHCElement <?> createPlaceholderNode (@Nonnull final String sPlaceholder)
+  {
+    final HCLabel aLabel = new HCLabel ();
+    aLabel.setFor (m_aEditFile);
+    aLabel.addClass (CBootstrapCSS.CUSTOM_FILE_LABEL);
+    aLabel.addChild (sPlaceholder);
+    return aLabel;
+  }
+
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -143,15 +165,12 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
 
     addChild (m_aEditFile);
 
-    String sPlacehoder = m_sCustomPlaceholder;
-    if (StringHelper.hasNoText (sPlacehoder))
-      sPlacehoder = EText.BROWSE_LABEL.getDisplayText (m_aDisplayLocale);
+    String sPlaceholder = m_sCustomPlaceholder;
+    if (StringHelper.hasNoText (sPlaceholder))
+      sPlaceholder = EText.BROWSE_LABEL.getDisplayText (m_aDisplayLocale);
 
-    final HCLabel aLabel = new HCLabel ();
-    aLabel.setFor (m_aEditFile);
-    aLabel.addClass (CBootstrapCSS.CUSTOM_FILE_LABEL);
-    aLabel.addChild (sPlacehoder);
-    addChild (aLabel);
+    final IHCElement <?> aPlaceholder = createPlaceholderNode (sPlaceholder);
+    addChild (aPlaceholder);
 
     String sButtonText = m_sCustomButtonText;
     if (StringHelper.hasNoText (sButtonText))
@@ -164,16 +183,21 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
       final CSSSelector aSelector = new CSSSelector ();
       aSelector.addMember (new CSSSelectorSimpleMember (".custom-file-label::after"));
       aStyleRule.addSelector (aSelector);
-      aStyleRule.addDeclaration (new CSSDeclaration (ECSSProperty.CONTENT.getName (), CSSExpression.createString (sButtonText)));
+      aStyleRule.addDeclaration (new CSSDeclaration (ECSSProperty.CONTENT.getName (),
+                                                     CSSExpression.createString (sButtonText)));
       aCSS.addRule (aStyleRule);
       addChild (new HCStyle (aCSS, new CSSWriterSettings ().setOptimizedOutput (true)));
     }
     else
-      addChild (new HCStyle (".custom-file-label::after { content: \"" + StringHelper.replaceAll (sButtonText, "\"", "\\\"") + "\";  }"));
+      addChild (new HCStyle (".custom-file-label::after { content: \"" +
+                             StringHelper.replaceAll (sButtonText, "\"", "\\\"") +
+                             "\";  }"));
 
     // Update label with selected file
     m_aEditFile.addEventHandler (EJSEvent.CHANGE,
                                  false ? JSHtml.consoleLog (JSExpr.THIS.ref ("files").component0 ().ref ("name"))
-                                       : JQuery.idRef (aLabel).empty ().append (JSExpr.THIS.ref ("files").component0 ().ref ("name")));
+                                       : JQuery.idRef (aPlaceholder)
+                                               .empty ()
+                                               .append (JSExpr.THIS.ref ("files").component0 ().ref ("name")));
   }
 }
