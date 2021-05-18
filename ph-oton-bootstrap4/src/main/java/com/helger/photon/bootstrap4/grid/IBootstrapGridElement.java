@@ -19,6 +19,7 @@ package com.helger.photon.bootstrap4.grid;
 import javax.annotation.Nonnull;
 
 import com.helger.html.css.ICSSClassProvider;
+import com.helger.photon.bootstrap4.CBootstrap;
 
 /**
  * Bootstrap3 grid element
@@ -30,6 +31,7 @@ public interface IBootstrapGridElement extends ICSSClassProvider
   int PARTS_NONE = -1;
   int PARTS_AUTO = -2;
   int PARTS_EVENLY = -3;
+  int MIN = PARTS_EVENLY;
 
   /**
    * @return The grid type. Never <code>null</code>.
@@ -46,4 +48,19 @@ public interface IBootstrapGridElement extends ICSSClassProvider
    * @return <code>true</code> if this is element for part 12
    */
   boolean isMax ();
+
+  static int getRight (final int nLeft)
+  {
+    if (nLeft < 0)
+    {
+      // Keep the special part
+      return nLeft;
+    }
+    if (nLeft == CBootstrap.GRID_SYSTEM_MAX)
+    {
+      // Avoid returning 0
+      return CBootstrap.GRID_SYSTEM_MAX;
+    }
+    return CBootstrap.GRID_SYSTEM_MAX - nLeft;
+  }
 }

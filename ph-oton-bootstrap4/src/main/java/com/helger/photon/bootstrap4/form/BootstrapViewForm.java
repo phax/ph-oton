@@ -37,8 +37,7 @@ import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 import com.helger.photon.bootstrap4.grid.IBootstrapGridElement;
 
 @NotThreadSafe
-public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> implements
-                               IBootstrapFormGroupContainer <BootstrapViewForm>
+public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> implements IBootstrapFormGroupContainer <BootstrapViewForm>
 {
   public static final ICSSClassProvider CSS_CLASS_VIEW_FORM = DefaultCSSClassProvider.create ("view-form");
   public static final int DEFAULT_LEFT_PART = 3;
@@ -87,13 +86,6 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
     return m_aRightGrid;
   }
 
-  private static int _getRight (final int nLeft)
-  {
-    if (nLeft == CBootstrap.GRID_SYSTEM_MAX)
-      return CBootstrap.GRID_SYSTEM_MAX;
-    return CBootstrap.GRID_SYSTEM_MAX - nLeft;
-  }
-
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public final BootstrapViewForm setLeft (@Nonnegative final int nLeftPartsXS,
@@ -102,44 +94,24 @@ public class BootstrapViewForm extends AbstractBootstrapDiv <BootstrapViewForm> 
                                           @Nonnegative final int nLeftPartsLG,
                                           @Nonnegative final int nLeftPartsXL)
   {
-    ValueEnforcer.isBetweenInclusive (nLeftPartsXS,
-                                      "LeftPartsXS",
-                                      IBootstrapGridElement.PARTS_EVENLY,
-                                      CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsSM,
-                                      "LeftPartsSM",
-                                      IBootstrapGridElement.PARTS_EVENLY,
-                                      CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsMD,
-                                      "LeftPartsMD",
-                                      IBootstrapGridElement.PARTS_EVENLY,
-                                      CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsLG,
-                                      "LeftPartsLG",
-                                      IBootstrapGridElement.PARTS_EVENLY,
-                                      CBootstrap.GRID_SYSTEM_MAX);
-    ValueEnforcer.isBetweenInclusive (nLeftPartsXL,
-                                      "LeftPartsXL",
-                                      IBootstrapGridElement.PARTS_EVENLY,
-                                      CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsXS, "LeftPartsXS", IBootstrapGridElement.MIN, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsSM, "LeftPartsSM", IBootstrapGridElement.MIN, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsMD, "LeftPartsMD", IBootstrapGridElement.MIN, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsLG, "LeftPartsLG", IBootstrapGridElement.MIN, CBootstrap.GRID_SYSTEM_MAX);
+    ValueEnforcer.isBetweenInclusive (nLeftPartsXL, "LeftPartsXL", IBootstrapGridElement.MIN, CBootstrap.GRID_SYSTEM_MAX);
 
-    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS,
-                                                                 nLeftPartsSM,
-                                                                 nLeftPartsMD,
-                                                                 nLeftPartsLG,
-                                                                 nLeftPartsXL);
-    final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (_getRight (nLeftPartsXS),
-                                                                  _getRight (nLeftPartsSM),
-                                                                  _getRight (nLeftPartsMD),
-                                                                  _getRight (nLeftPartsLG),
-                                                                  _getRight (nLeftPartsXL));
+    final BootstrapGridSpec aNewLeft = BootstrapGridSpec.create (nLeftPartsXS, nLeftPartsSM, nLeftPartsMD, nLeftPartsLG, nLeftPartsXL);
+    final BootstrapGridSpec aNewRight = BootstrapGridSpec.create (IBootstrapGridElement.getRight (nLeftPartsXS),
+                                                                  IBootstrapGridElement.getRight (nLeftPartsSM),
+                                                                  IBootstrapGridElement.getRight (nLeftPartsMD),
+                                                                  IBootstrapGridElement.getRight (nLeftPartsLG),
+                                                                  IBootstrapGridElement.getRight (nLeftPartsXL));
     return setSplitting (aNewLeft, aNewRight);
   }
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public final BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft,
-                                               @Nonnull final BootstrapGridSpec aRight)
+  public final BootstrapViewForm setSplitting (@Nonnull final BootstrapGridSpec aLeft, @Nonnull final BootstrapGridSpec aRight)
   {
     ValueEnforcer.notNull (aLeft, "Left");
     ValueEnforcer.notNull (aRight, "Right");
