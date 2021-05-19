@@ -636,13 +636,14 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       aActionCell.addChild (createEditLink (aWPEC,
                                             aCurObject,
                                             EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getName ())));
+      aActionCell.addChild (" ");
       if (_canDelete (aCurObject))
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aCurObject,
                                                 EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getName ())));
       else
         aActionCell.addChild (createEmptyAction ());
-
+      aActionCell.addChild (" ");
       aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
                                           .add (CPageParam.PARAM_ACTION, ACTION_TEST_MAIL)
                                           .add (CPageParam.PARAM_OBJECT, aCurObject.getID ()))
