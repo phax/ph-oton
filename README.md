@@ -98,7 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
  
 * v8.3.1 - work in progress
-    * Updated to Jetty 9.4.40
+    * Updated to Jetty 9.4.41
+    * Improved the way, Jetty dependencies are handled in the POM
     * `BootstrapForm` and `BootstrapViewForm` handle splitting with negative values for certain grid elements
     * Made the `BootstrapFileUpload` placeholder label customizable
 * v8.3.0 - 2021-03-22

@@ -52,7 +52,11 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
-  
+
+  <!-- 
+    Include this only in this project, to avoid that this spams the import list of all other ph-oton projects
+    as it also contains Spring etc.
+   -->  
   <dependencyManagement>
     <dependencies>
       <dependency>
