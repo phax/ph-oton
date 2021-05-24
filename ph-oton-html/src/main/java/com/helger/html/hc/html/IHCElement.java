@@ -402,6 +402,11 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   @Nonnull
   IMPLTYPE setRole (@Nullable EHTMLRole eRole);
 
+  /**
+   * @return A non-<code>null</code> set of "custom" attributes for which no
+   *         predefined method binding is available. Used e.g. for "aria-*" and
+   *         "data-*" attributes.
+   */
   @Nonnull
   @ReturnsMutableObject
   IHCAttrContainer customAttrs ();
