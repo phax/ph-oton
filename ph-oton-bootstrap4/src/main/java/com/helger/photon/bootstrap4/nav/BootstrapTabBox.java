@@ -17,13 +17,13 @@
 package com.helger.photon.bootstrap4.nav;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.uicore.html.tabbox.AbstractTabBox;
@@ -62,8 +62,35 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
    */
   public static final String JS_EVENT_HIDDEN = "hidden.bs.tab";
 
+  private String m_sNavID;
+
   public BootstrapTabBox ()
   {}
+
+  /**
+   * @return The ID of the {@link BootstrapNav} to be created. May be
+   *         <code>null</code>.
+   * @since 8.3.1
+   */
+  @Nullable
+  public final String getNavID ()
+  {
+    return m_sNavID;
+  }
+
+  /**
+   * @param sNavID
+   *        The ID of the {@link BootstrapNav} to be created. May be
+   *        <code>null</code>.
+   * @return this for chaining
+   * @since 8.3.1
+   */
+  @Nonnull
+  public final BootstrapTabBox setNavID (@Nullable final String sNavID)
+  {
+    m_sNavID = sNavID;
+    return this;
+  }
 
   @Override
   public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
@@ -85,6 +112,7 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
     }
 
     final BootstrapNav aNav = new BootstrapNav (EBootstrapNavType.TABS);
+    aNav.setID (m_sNavID);
 
     // Build code for tabs and content
     final HCDiv aContent = new HCDiv ().addClass (CBootstrapCSS.TAB_CONTENT);
@@ -93,22 +121,17 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
       final boolean bIsActiveTab = aTab.getID ().equals (sActiveTabID);
 
       // header
-      final IHCLI <?> aToggleLI = aNav.addItem ();
+      final BootstrapNavItem aToggleLI = aNav.addItem ();
 
       final HCA aLink = new HCA (aTab.getLinkURL ()).addChild (aTab.getLabel ()).addClass (CBootstrapCSS.NAV_LINK);
       if (bIsActiveTab)
         aLink.addClass (CBootstrapCSS.ACTIVE);
 
       if (aTab.isDisabled ())
-      {
         aToggleLI.addClass (CBootstrapCSS.DISABLED);
-        aToggleLI.addChild (aLink);
-      }
       else
-      {
         aLink.customAttrs ().setDataAttr ("toggle", "tab");
-        aToggleLI.addChild (aLink);
-      }
+      aToggleLI.addChild (aLink);
 
       // content
       final HCDiv aPane = aContent.addAndReturnChild (new HCDiv ().addChild (aTab.getContent ())
