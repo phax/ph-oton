@@ -19,6 +19,7 @@ package com.helger.photon.bootstrap4.uictrls.ext;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -46,7 +47,10 @@ public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCar
   public static final ICSSClassProvider CSS_CLASS_CARD_COLLAPSIBLE = DefaultCSSClassProvider.create ("card-collapsible");
   public static final ICSSClassProvider CSS_CLASS_COLLAPSED = DefaultCSSClassProvider.create ("collapsed");
 
+  private final IHCNode m_aHeaderText;
+  private final boolean m_bIsOpen;
   private final BootstrapCardHeader m_aHeader;
+  private final HCDiv m_aCollapseDiv;
   private final BootstrapCardBody m_aBody;
 
   public BootstrapCardCollapsible (@Nullable final IHCNode aHeaderText)
@@ -56,37 +60,69 @@ public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCar
 
   public BootstrapCardCollapsible (@Nullable final IHCNode aHeaderText, final boolean bIsOpen)
   {
+    m_aHeaderText = aHeaderText;
+    m_bIsOpen = bIsOpen;
     m_aHeader = addAndReturnChild (new BootstrapCardHeader ());
 
     // Collapsible div
-    final HCDiv aCollapseDiv = addAndReturnChild (new HCDiv ().ensureID ().addClass (CBootstrapCSS.COLLAPSE));
+    m_aCollapseDiv = addAndReturnChild (new HCDiv ().ensureID ().addClass (CBootstrapCSS.COLLAPSE));
     if (bIsOpen)
-      aCollapseDiv.addClass (CBootstrapCSS.SHOW);
-    aCollapseDiv.customAttrs ().setAriaLabeledBy (m_aHeader);
-    m_aBody = aCollapseDiv.addAndReturnChild (new BootstrapCardBody ());
-
-    // Toggle in header
-    final HCA aToggle = m_aHeader.addAndReturnChild (new HCA ().setHref (new SimpleURL ("#" + aCollapseDiv.getID ()))
-                                                               .addClass (CBootstrapCSS.D_BLOCK));
-    aToggle.customAttrs ().setDataAttr ("toggle", "collapse");
-    aToggle.customAttrs ().setAriaExpanded (bIsOpen);
-    aToggle.customAttrs ().setAriaControls (aCollapseDiv.getID ());
-    aToggle.addChild (aHeaderText);
-    aToggle.addChild (EFontAwesome4Icon.CHEVRON_DOWN.getAsNode ().addClass (CBootstrapCSS.FLOAT_RIGHT));
-    if (!bIsOpen)
-      aToggle.addClass (CSS_CLASS_COLLAPSED);
+      m_aCollapseDiv.addClass (CBootstrapCSS.SHOW);
+    m_aCollapseDiv.customAttrs ().setAriaLabeledBy (m_aHeader);
+    m_aBody = m_aCollapseDiv.addAndReturnChild (new BootstrapCardBody ());
   }
 
   @Nonnull
-  public BootstrapCardHeader getHeader ()
+  public final IHCNode getHeaderText ()
+  {
+    return m_aHeaderText;
+  }
+
+  public final boolean isOpen ()
+  {
+    return m_bIsOpen;
+  }
+
+  @Nonnull
+  public final BootstrapCardHeader getHeader ()
   {
     return m_aHeader;
   }
 
   @Nonnull
-  public BootstrapCardBody getBody ()
+  public final HCDiv getCollapseDiv ()
+  {
+    return m_aCollapseDiv;
+  }
+
+  @Nonnull
+  public final BootstrapCardBody getBody ()
   {
     return m_aBody;
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  protected IHCNode createCloseIcon ()
+  {
+    return EFontAwesome4Icon.CHEVRON_DOWN.getAsNode ();
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  protected HCA createToggle ()
+  {
+    final HCA aToggle = new HCA ().setHref (new SimpleURL ("#" + m_aCollapseDiv.getID ()))
+                                  .addClass (CBootstrapCSS.D_FLEX)
+                                  .addClass (CBootstrapCSS.JUSTIFY_CONTENT_BETWEEN);
+    aToggle.customAttrs ().setDataAttr ("toggle", "collapse");
+    aToggle.customAttrs ().setAriaExpanded (m_bIsOpen);
+    aToggle.customAttrs ().setAriaControls (m_aCollapseDiv.getID ());
+    aToggle.addChild (m_aHeaderText);
+    aToggle.addChild (createCloseIcon ());
+    if (!m_bIsOpen)
+      aToggle.addClass (CSS_CLASS_COLLAPSED);
+    return aToggle;
   }
 
   @Override
@@ -96,6 +132,10 @@ public class BootstrapCardCollapsible extends AbstractBootstrapDiv <BootstrapCar
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClass (CBootstrapCSS.CARD);
     addClass (CSS_CLASS_CARD_COLLAPSIBLE);
+
+    // Toggle in header
+    final HCA aToggle = createToggle ();
+    m_aHeader.addChild (aToggle);
   }
 
   @Override
