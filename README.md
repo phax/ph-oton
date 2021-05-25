@@ -105,6 +105,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Made the `BootstrapFileUpload` placeholder label customizable
     * Added the possibility to add an ID on the `BootstrapNav` of a `BootstrapTabBox`
     * Made class `BootstrapCardCollapsible` more customizable
+    * Added custom jQuery function `setReadOnly`
 * v8.3.0 - 2021-03-22
     * Updated to Apache commons-net 3.8.0
     * Updated to Bootstrap 4.6.0

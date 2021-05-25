@@ -124,6 +124,43 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   }
 
   /**
+   * @return The invocation of the custom jQuery function
+   *         <code>setReadOnly()</code>
+   * @since 8.3.1
+   */
+  @Nonnull
+  public JQueryInvocation setReadOnly ()
+  {
+    return jqinvoke ("setReadOnly");
+  }
+
+  /**
+   * @param bReadOnly
+   *        <code>true</code> to set read-only
+   * @return The invocation of the custom jQuery function
+   *         <code>setReadOnly()</code>
+   * @since 8.3.1
+   */
+  @Nonnull
+  public JQueryInvocation setReadOnly (final boolean bReadOnly)
+  {
+    return setReadOnly (JSExpr.lit (bReadOnly));
+  }
+
+  /**
+   * @param aExpr
+   *        Expression to determine read-only state
+   * @return The invocation of the custom jQuery function
+   *         <code>setReadOnly()</code>
+   * @since 8.3.1
+   */
+  @Nonnull
+  public JQueryInvocation setReadOnly (@Nonnull final IJSExpression aExpr)
+  {
+    return setReadOnly ().arg (aExpr);
+  }
+
+  /**
    * @return The invocation of the custom jQuery function <code>check()</code>
    */
   @Nonnull

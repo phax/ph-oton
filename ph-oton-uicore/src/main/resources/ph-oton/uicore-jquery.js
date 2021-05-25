@@ -67,6 +67,18 @@
     });
   };
   
+  // Enable or disable an element
+  $.fn.setReadOnly = function(bReadOnly)
+  {
+    return $(this).each(function()
+    {
+      if (bReadOnly)
+        $(this).attr("readonly", "readonly");
+      else
+        $(this).removeAttr("readonly");
+    });
+  };
+
   // Source: http://stackoverflow.com/questions/2830542/prevent-double-submission-of-forms-in-jquery
   // jQuery plugin to prevent double submission of forms
   $.fn.preventDoubleSubmission = function() {
