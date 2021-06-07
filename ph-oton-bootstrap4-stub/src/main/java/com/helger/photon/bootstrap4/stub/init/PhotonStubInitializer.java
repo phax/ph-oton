@@ -49,7 +49,7 @@ import com.helger.photon.uictrls.famfam.EFamFamFlagIcon;
 import com.helger.photon.uictrls.famfam.EFamFamIcon;
 import com.helger.scope.ScopeHelper;
 import com.helger.web.scope.mgr.WebScopeManager;
-import com.helger.xservlet.requesttrack.RequestTracker;
+import com.helger.xservlet.requesttrack.RequestTrackerSettings;
 
 /**
  * This class triggers some default configuration to run ph-oton applications
@@ -121,7 +121,8 @@ public final class PhotonStubInitializer
       }
 
       // Disable in debug mode
-      RequestTracker.getInstance ().getRequestTrackingMgr ().setLongRunningCheckEnabled (false);
+      RequestTrackerSettings.setLongRunningRequestsCheckEnabled (false);
+      RequestTrackerSettings.setParallelRunningRequestsCheckEnabled (false);
     }
 
     // Set new customizer only if the default customizer is present
