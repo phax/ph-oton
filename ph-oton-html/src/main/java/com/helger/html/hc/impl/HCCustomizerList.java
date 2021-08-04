@@ -65,7 +65,7 @@ public class HCCustomizerList extends AbstractHCCustomizer
   public HCCustomizerList addCustomizer (@Nonnull final IHCCustomizer aCustomizer)
   {
     ValueEnforcer.notNull (aCustomizer, "Customizer");
-    m_aRWLock.writeLockedBoolean ( () -> m_aList.add (aCustomizer));
+    m_aRWLock.writeLocked ( () -> m_aList.add (aCustomizer));
     return this;
   }
 

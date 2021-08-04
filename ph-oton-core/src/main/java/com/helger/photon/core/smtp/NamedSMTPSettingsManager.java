@@ -223,8 +223,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     if (StringHelper.hasNoText (sName))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> CollectionHelper.findFirst (m_aMap.values (),
-                                                                       x -> x.getName ().equals (sName)));
+    return m_aRWLock.readLockedGet ( () -> CollectionHelper.findFirst (m_aMap.values (), x -> x.getName ().equals (sName)));
   }
 
   /**
@@ -275,9 +274,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
    * @return {@link EChange#CHANGED} if something was changed.
    */
   @Nullable
-  public EChange updateSettings (@Nullable final String sID,
-                                 @Nonnull @Nonempty final String sName,
-                                 @Nonnull final ISMTPSettings aSettings)
+  public EChange updateSettings (@Nullable final String sID, @Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSettings)
   {
     final NamedSMTPSettings aNamedSettings = getSettings (sID);
     if (aNamedSettings == null)
@@ -286,25 +283,32 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
       return EChange.UNCHANGED;
     }
 
-    return m_aRWLock.writeLockedGet ( () -> {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
       EChange eChange = EChange.UNCHANGED;
       eChange = eChange.or (aNamedSettings.setName (sName));
       eChange = eChange.or (aNamedSettings.setSMTPSettings (aSettings));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
       markAsChanged ();
-      AuditHelper.onAuditModifySuccess (NamedSMTPSettings.OT,
-                                        aNamedSettings.getID (),
-                                        aNamedSettings.getName (),
-                                        aSettings.getHostName (),
-                                        Integer.valueOf (aSettings.getPort ()),
-                                        aSettings.getCharsetName (),
-                                        Boolean.valueOf (aSettings.isSSLEnabled ()),
-                                        Boolean.valueOf (aSettings.isSTARTTLSEnabled ()),
-                                        Long.valueOf (aSettings.getConnectionTimeoutMilliSecs ()),
-                                        Long.valueOf (aSettings.getTimeoutMilliSecs ()));
-      return EChange.CHANGED;
-    });
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+
+    AuditHelper.onAuditModifySuccess (NamedSMTPSettings.OT,
+                                      aNamedSettings.getID (),
+                                      aNamedSettings.getName (),
+                                      aSettings.getHostName (),
+                                      Integer.valueOf (aSettings.getPort ()),
+                                      aSettings.getCharsetName (),
+                                      Boolean.valueOf (aSettings.isSSLEnabled ()),
+                                      Boolean.valueOf (aSettings.isSTARTTLSEnabled ()),
+                                      Long.valueOf (aSettings.getConnectionTimeoutMilliSecs ()),
+                                      Long.valueOf (aSettings.getTimeoutMilliSecs ()));
+    return EChange.CHANGED;
   }
 
   /**
@@ -359,6 +363,6 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("map", m_aMap).getToString ();
+    return new ToStringGenerator (this).append ("Map", m_aMap).getToString ();
   }
 }

@@ -88,7 +88,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
-    m_aRWLock.writeLockedGet ( () -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
+    m_aRWLock.writeLocked ( () -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
   }
 
   @Nullable

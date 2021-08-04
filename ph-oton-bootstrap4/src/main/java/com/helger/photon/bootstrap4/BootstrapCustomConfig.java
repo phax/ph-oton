@@ -59,7 +59,7 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aCSSPathProvider, "CSSPathProvider");
 
-    RW_LOCK.writeLockedGet ( () -> CSS.setAll (aCSSPathProvider));
+    RW_LOCK.writeLocked ( () -> CSS.setAll (aCSSPathProvider));
   }
 
   @Nonnull
@@ -73,7 +73,7 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aJSPathProvider, "JSPathProvider");
 
-    RW_LOCK.writeLockedGet ( () -> JS.setAll (aJSPathProvider));
+    RW_LOCK.writeLocked ( () -> JS.setAll (aJSPathProvider));
   }
 
   @Nonnull

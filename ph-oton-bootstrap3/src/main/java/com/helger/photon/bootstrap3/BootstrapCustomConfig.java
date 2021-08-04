@@ -37,18 +37,18 @@ import com.helger.html.resource.js.IJSPathProvider;
 public final class BootstrapCustomConfig
 {
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
-  private static ICommonsList <ICSSPathProvider> s_aCSS = new CommonsArrayList <> ();
-  private static ICommonsList <IJSPathProvider> s_aJS = new CommonsArrayList <> ();
+  private static final ICommonsList <ICSSPathProvider> CSS = new CommonsArrayList <> ();
+  private static final ICommonsList <IJSPathProvider> JS = new CommonsArrayList <> ();
 
   static
   {
     // Set default values
-    s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP);
-    s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_THEME);
-    s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
-    s_aCSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
-    s_aJS.add (EBootstrapJSPathProvider.BOOTSTRAP);
-    s_aJS.add (EBootstrapJSPathProvider.BOOTSTRAP_PH);
+    CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP);
+    CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_THEME);
+    CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
+    CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
+    JS.add (EBootstrapJSPathProvider.BOOTSTRAP);
+    JS.add (EBootstrapJSPathProvider.BOOTSTRAP_PH);
   }
 
   private BootstrapCustomConfig ()
@@ -58,27 +58,27 @@ public final class BootstrapCustomConfig
   {
     ValueEnforcer.notEmptyNoNullValue (aCSSPathProvider, "CSSPathProvider");
 
-    RW_LOCK.writeLockedGet ( () -> s_aCSS.setAll (aCSSPathProvider));
+    RW_LOCK.writeLocked ( () -> CSS.setAll (aCSSPathProvider));
   }
 
   @Nonnull
   @Nonempty
   public static ICommonsList <ICSSPathProvider> getAllBootstrapCSS ()
   {
-    return RW_LOCK.readLockedGet (s_aCSS::getClone);
+    return RW_LOCK.readLockedGet (CSS::getClone);
   }
 
   public static void setBootstrapJS (@Nonnull @Nonempty final IJSPathProvider... aJSPathProvider)
   {
     ValueEnforcer.notEmptyNoNullValue (aJSPathProvider, "JSPathProvider");
 
-    RW_LOCK.writeLockedGet ( () -> s_aJS.setAll (aJSPathProvider));
+    RW_LOCK.writeLocked ( () -> JS.setAll (aJSPathProvider));
   }
 
   @Nonnull
   @Nonempty
   public static ICommonsList <IJSPathProvider> getAllBootstrapJS ()
   {
-    return RW_LOCK.readLockedGet (s_aJS::getClone);
+    return RW_LOCK.readLockedGet (JS::getClone);
   }
 }

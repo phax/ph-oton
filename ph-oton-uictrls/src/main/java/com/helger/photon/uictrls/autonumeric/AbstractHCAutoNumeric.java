@@ -116,7 +116,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
 
   public static void setDefaultThousandSeparator (@Nullable final String sDefaultThousandSeparator)
   {
-    RW_LOCK.writeLockedGet ( () -> s_sDefaultThousandSeparator = sDefaultThousandSeparator);
+    RW_LOCK.writeLocked ( () -> s_sDefaultThousandSeparator = sDefaultThousandSeparator);
   }
 
   @Nullable

@@ -72,7 +72,7 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerAdded (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLockedGet ( () -> m_aAdded.put (aObj.getID (), aObj));
+    m_aRWLock.writeLocked ( () -> m_aAdded.put (aObj.getID (), aObj));
   }
 
   @Nonnull
@@ -96,7 +96,7 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerChanged (@Nonnull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLockedGet ( () -> m_aChanged.put (aObj.getID (), aObj));
+    m_aRWLock.writeLocked ( () -> m_aChanged.put (aObj.getID (), aObj));
   }
 
   @Nonnull
@@ -120,7 +120,7 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerFailed (final String sID)
   {
-    m_aRWLock.writeLockedBoolean ( () -> m_aFailed.add (sID));
+    m_aRWLock.writeLocked ( () -> m_aFailed.add (sID));
   }
 
   /**
@@ -177,7 +177,7 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void setSuccess (final boolean bSuccess)
   {
-    m_aRWLock.writeLockedBoolean ( () -> m_bSuccess = bSuccess);
+    m_aRWLock.writeLocked ( () -> m_bSuccess = bSuccess);
   }
 
   /**

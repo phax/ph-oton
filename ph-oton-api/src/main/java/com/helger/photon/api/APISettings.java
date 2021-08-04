@@ -42,12 +42,12 @@ public final class APISettings
   public static final long DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS = CGlobal.MILLISECONDS_PER_SECOND;
 
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
-  private static final CallbackList <IAPIExceptionCallback> s_aExceptionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAPIBeforeExecutionCallback> s_aBeforeExecutionCallbacks = new CallbackList <> ();
-  private static final CallbackList <IAPIAfterExecutionCallback> s_aAfterExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPIExceptionCallback> EXCEPTION_CALLBACKS = new CallbackList <> ();
+  private static final CallbackList <IAPIBeforeExecutionCallback> BEFORE_EXECUTION_CALLBACKS = new CallbackList <> ();
+  private static final CallbackList <IAPIAfterExecutionCallback> AFTER_EXECUTION_CALLBACKS = new CallbackList <> ();
   @GuardedBy ("RW_LOCK")
   private static long s_nLongRunningExecutionLimitTime = DEFAULT_LONG_RUNNING_EXECUTION_LIMIT_MS;
-  private static final CallbackList <IAPILongRunningExecutionCallback> s_aLongRunningExecutionCallbacks = new CallbackList <> ();
+  private static final CallbackList <IAPILongRunningExecutionCallback> LONG_RUNNING_EXECUTION_CALLBACKS = new CallbackList <> ();
 
   static
   {
@@ -63,21 +63,21 @@ public final class APISettings
   @ReturnsMutableObject ("design")
   public static CallbackList <IAPIExceptionCallback> exceptionCallbacks ()
   {
-    return s_aExceptionCallbacks;
+    return EXCEPTION_CALLBACKS;
   }
 
   @Nonnull
   @ReturnsMutableObject ("design")
   public static CallbackList <IAPIBeforeExecutionCallback> beforeExecutionCallbacks ()
   {
-    return s_aBeforeExecutionCallbacks;
+    return BEFORE_EXECUTION_CALLBACKS;
   }
 
   @Nonnull
   @ReturnsMutableObject
   public static CallbackList <IAPIAfterExecutionCallback> afterExecutionCallbacks ()
   {
-    return s_aAfterExecutionCallbacks;
+    return AFTER_EXECUTION_CALLBACKS;
   }
 
   @CheckForSigned
@@ -94,13 +94,13 @@ public final class APISettings
    */
   public static void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    RW_LOCK.writeLockedLong ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
+    RW_LOCK.writeLocked ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @Nonnull
   @ReturnsMutableObject
   public static CallbackList <IAPILongRunningExecutionCallback> longRunningExecutionCallbacks ()
   {
-    return s_aLongRunningExecutionCallbacks;
+    return LONG_RUNNING_EXECUTION_CALLBACKS;
   }
 }

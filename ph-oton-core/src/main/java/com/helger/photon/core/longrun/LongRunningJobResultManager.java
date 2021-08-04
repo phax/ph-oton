@@ -41,7 +41,7 @@ public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <L
     if (!aJobData.isEnded ())
       throw new IllegalArgumentException ("Passed jobData is not yet finished");
 
-    m_aRWLock.writeLockedGet ( () -> internalCreateItem (aJobData));
+    m_aRWLock.writeLocked ( () -> internalCreateItem (aJobData));
   }
 
   @Nonnull

@@ -71,8 +71,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements
-                                                      ISessionWebScopeActivationHandler
+  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements ISessionWebScopeActivationHandler
   {
     private transient IUser m_aUser;
     private String m_sUserID;
@@ -265,7 +264,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   public void setLogoutAlreadyLoggedInUser (final boolean bLogoutAlreadyLoggedInUser)
   {
-    m_aRWLock.writeLockedBoolean ( () -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
+    m_aRWLock.writeLocked ( () -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
   }
 
   public boolean isAnonymousLogging ()
@@ -275,7 +274,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   public void setAnonymousLogging (final boolean bAnonymousLogging)
   {
-    m_aRWLock.writeLockedBoolean ( () -> m_bAnonymousLogging = bAnonymousLogging);
+    m_aRWLock.writeLocked ( () -> m_bAnonymousLogging = bAnonymousLogging);
   }
 
   @Nonnull
@@ -299,7 +298,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     ValueEnforcer.notNull (aSessionScope, "SessionScope");
 
     final LoginInfo aInfo = new LoginInfo (aUser, aSessionScope);
-    m_aRWLock.writeLockedGet ( () -> m_aLoggedInUsers.put (aUser.getID (), aInfo));
+    m_aRWLock.writeLocked ( () -> m_aLoggedInUsers.put (aUser.getID (), aInfo));
   }
 
   /**

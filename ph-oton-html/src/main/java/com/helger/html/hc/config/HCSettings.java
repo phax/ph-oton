@@ -129,7 +129,7 @@ public final class HCSettings
   {
     ValueEnforcer.notNull (aConversionSettings, "ConversionSettings");
 
-    RW_LOCK.writeLockedGet ( () -> s_aConversionSettings = aConversionSettings);
+    RW_LOCK.writeLocked ( () -> s_aConversionSettings = aConversionSettings);
   }
 
   /**
@@ -221,7 +221,7 @@ public final class HCSettings
 
   public static void setAutoCompleteOffForPasswordEdits (final boolean bAutoCompleteOffForPasswordEdits)
   {
-    RW_LOCK.writeLockedBoolean ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
+    RW_LOCK.writeLocked ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default @autocomplete for <input type=password> set to " + (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
@@ -234,7 +234,7 @@ public final class HCSettings
 
   public static void setTextAreaDefaultRows (final int nTextAreaDefaultRows)
   {
-    RW_LOCK.writeLockedInt ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
+    RW_LOCK.writeLocked ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default <textarea> rows set to " + nTextAreaDefaultRows);
@@ -250,7 +250,7 @@ public final class HCSettings
   {
     ValueEnforcer.notNull (aOnDocumentReadyProvider, "OnDocumentReadyProvider");
 
-    RW_LOCK.writeLockedGet ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
+    RW_LOCK.writeLocked ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
@@ -279,7 +279,7 @@ public final class HCSettings
     ValueEnforcer.notNull (eMode, "Mode");
 
     final EHCScriptInlineMode eOld = getScriptInlineMode ();
-    RW_LOCK.writeLockedGet ( () -> s_eScriptInlineMode = eMode);
+    RW_LOCK.writeLocked ( () -> s_eScriptInlineMode = eMode);
     if (!eMode.equals (eOld))
       if (!isSilentMode ())
         if (LOGGER.isInfoEnabled ())
@@ -308,7 +308,7 @@ public final class HCSettings
     ValueEnforcer.notNull (eStyleInlineMode, "mode");
 
     final EHCStyleInlineMode eOld = getStyleInlineMode ();
-    RW_LOCK.writeLockedGet ( () -> s_eStyleInlineMode = eStyleInlineMode);
+    RW_LOCK.writeLocked ( () -> s_eStyleInlineMode = eStyleInlineMode);
     if (!eStyleInlineMode.equals (eOld))
       if (!isSilentMode ())
         if (LOGGER.isInfoEnabled ())
@@ -326,7 +326,7 @@ public final class HCSettings
     ValueEnforcer.notNull (eNewLineMode, "NewLineMode");
 
     final ENewLineMode eOld = getNewLineMode ();
-    RW_LOCK.writeLockedGet ( () -> s_eNewLineMode = eNewLineMode);
+    RW_LOCK.writeLocked ( () -> s_eNewLineMode = eNewLineMode);
     if (!eNewLineMode.equals (eOld))
       if (!isSilentMode ())
         if (LOGGER.isInfoEnabled ())
@@ -340,7 +340,7 @@ public final class HCSettings
 
   public static void setOutOfBandDebuggingEnabled (final boolean bEnabled)
   {
-    RW_LOCK.writeLockedBoolean ( () -> s_bOOBDebugging = bEnabled);
+    RW_LOCK.writeLocked ( () -> s_bOOBDebugging = bEnabled);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
@@ -358,7 +358,7 @@ public final class HCSettings
 
   public static void setScriptsInBody (final boolean bEnabled)
   {
-    RW_LOCK.writeLockedBoolean ( () -> s_bScriptsInBody = bEnabled);
+    RW_LOCK.writeLocked ( () -> s_bScriptsInBody = bEnabled);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
@@ -375,7 +375,7 @@ public final class HCSettings
 
   public static void setUseRegularResources (final boolean bUseRegularResources)
   {
-    RW_LOCK.writeLockedBoolean ( () -> s_bUseRegularResources = bUseRegularResources);
+    RW_LOCK.writeLocked ( () -> s_bUseRegularResources = bUseRegularResources);
     if (!isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");

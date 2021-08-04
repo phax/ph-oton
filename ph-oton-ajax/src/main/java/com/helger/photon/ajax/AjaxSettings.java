@@ -98,7 +98,7 @@ public final class AjaxSettings
    */
   public static void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    RW_LOCK.writeLockedLong ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
+    RW_LOCK.writeLocked ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @Nonnull

@@ -555,14 +555,20 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
         aBodyRow.addCell (EPhotonCoreText.getYesOrNo (bUsableNow, aDisplayLocale));
 
         final IHCCell <?> aActionCell = aBodyRow.addCell ();
+
+        // Edit
         if (isActionAllowed (aWPEC, EWebPageFormAction.EDIT, aCurObject))
           aActionCell.addChild (createEditLink (aWPEC,
                                                 aCurObject,
                                                 EText.ACTION_EDIT.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
         else
           aActionCell.addChild (createEmptyAction ());
+
+        // Copy
         aActionCell.addChild (" ");
         aActionCell.addChild (createCopyLink (aWPEC, aCurObject, EText.ACTION_COPY.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
+
+        // Delete
         aActionCell.addChild (" ");
         if (isActionAllowed (aWPEC, EWebPageFormAction.DELETE, aCurObject))
           aActionCell.addChild (createDeleteLink (aWPEC,
@@ -570,6 +576,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                   EText.ACTION_DELETE.getDisplayTextWithArgs (aDisplayLocale, sDisplayName)));
         else
           aActionCell.addChild (createEmptyAction ());
+
+        // Renew
         aActionCell.addChild (" ");
         if (canCreateNewAccessToken (aCurObject))
           aActionCell.addChild (new HCA (aWPEC.getSelfHref ()
@@ -580,6 +588,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                                                                                                                                                     sDisplayName)));
         else
           aActionCell.addChild (createEmptyAction ());
+
+        // Revoke
         aActionCell.addChild (" ");
         if (canRevokeAccessToken (aCurObject))
           aActionCell.addChild (new HCA (aWPEC.getSelfHref ()

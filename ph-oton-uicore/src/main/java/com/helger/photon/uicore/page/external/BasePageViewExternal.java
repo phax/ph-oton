@@ -45,8 +45,7 @@ import com.helger.xml.microdom.IMicroNode;
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends
-                                  AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
 {
   protected final IReadableResource m_aResource;
   @GuardedBy ("m_aRWLock")
@@ -108,7 +107,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
 
   public void updateFromResource ()
   {
-    m_aRWLock.writeLockedGet ( () -> m_aParsedContent = _readFromResource (m_aResource));
+    m_aRWLock.writeLocked ( () -> m_aParsedContent = _readFromResource (m_aResource));
   }
 
   @Override
@@ -118,8 +117,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> bReadFromResource ? _readFromResource (m_aResource)
-                                                                               : m_aParsedContent);
+    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> bReadFromResource ? _readFromResource (m_aResource) : m_aParsedContent);
 
     aNodeList.addChild (new HCDOMWrapper (aNode));
   }

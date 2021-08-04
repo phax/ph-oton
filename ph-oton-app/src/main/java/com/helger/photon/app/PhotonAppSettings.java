@@ -82,7 +82,7 @@ public final class PhotonAppSettings
   {
     ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
 
-    RW_LOCK.writeLockedGet ( () -> s_aURIToURLConverter = aURIToURLConverter);
+    RW_LOCK.writeLocked ( () -> s_aURIToURLConverter = aURIToURLConverter);
   }
 
   @Nonnull
@@ -114,7 +114,7 @@ public final class PhotonAppSettings
 
   public static void setMergeCSSResources (final boolean bMergeCSSResources)
   {
-    RW_LOCK.writeLockedBoolean ( () -> s_bMergeCSSResources = bMergeCSSResources);
+    RW_LOCK.writeLocked ( () -> s_bMergeCSSResources = bMergeCSSResources);
     if (!HCSettings.isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info (bMergeCSSResources ? "Merging CSS resources" : "Using separate CSS resources");
@@ -131,7 +131,7 @@ public final class PhotonAppSettings
 
   public static void setMergeJSResources (final boolean bMergeJSResources)
   {
-    RW_LOCK.writeLockedBoolean ( () -> s_bMergeJSResources = bMergeJSResources);
+    RW_LOCK.writeLocked ( () -> s_bMergeJSResources = bMergeJSResources);
     if (!HCSettings.isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info (bMergeJSResources ? "Merging JS resources" : "Using separate JS resources");
@@ -151,7 +151,7 @@ public final class PhotonAppSettings
   public static void setResourceBundleServletName (@Nonnull @Nonempty final String sResourceBundleServletName)
   {
     ValueEnforcer.notEmpty (sResourceBundleServletName, "ResourceBundleServletName");
-    RW_LOCK.writeLockedGet ( () -> s_sResourceBundleServletName = sResourceBundleServletName);
+    RW_LOCK.writeLocked ( () -> s_sResourceBundleServletName = sResourceBundleServletName);
     if (!HCSettings.isSilentMode ())
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Using ResourceBundleServlet name '" + sResourceBundleServletName + "'");

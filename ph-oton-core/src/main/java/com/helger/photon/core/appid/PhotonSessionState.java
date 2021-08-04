@@ -87,7 +87,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
    */
   void setLastApplicationID (@Nullable final String sLastApplicationID)
   {
-    m_aRWLock.writeLockedGet ( () -> m_sLastApplicationID = sLastApplicationID);
+    m_aRWLock.writeLocked ( () -> m_sLastApplicationID = sLastApplicationID);
   }
 
   /**

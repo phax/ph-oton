@@ -135,10 +135,10 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     // GlobalDebug
     {
       final BootstrapViewForm aForm = new BootstrapViewForm ();
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_GLOBAL_DEBUG.getDisplayText (aDisplayLocale))
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_GLOBAL_DEBUG.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_GLOBAL_DEBUG,
                                                                                                       GlobalDebug.isDebugMode ()))));
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_GLOBAL_PRODUCTION.getDisplayText (aDisplayLocale))
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_GLOBAL_PRODUCTION.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_GLOBAL_PRODUCTION,
                                                                                                       GlobalDebug.isProductionMode ()))));
       aTabBox.addTab ("global", EText.MSG_HEADER_GLOBAL.getDisplayText (aDisplayLocale), aForm);

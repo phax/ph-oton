@@ -62,7 +62,7 @@ public final class AuditHelper
   {
     ValueEnforcer.notNull (aAuditor, "Auditor");
 
-    RW_LOCK.writeLockedGet ( () -> s_aAuditor = aAuditor);
+    RW_LOCK.writeLocked ( () -> s_aAuditor = aAuditor);
   }
 
   /**

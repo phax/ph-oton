@@ -17,6 +17,7 @@
 package com.helger.photon.api;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
@@ -34,7 +35,9 @@ import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 @ThreadSafe
 public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
 {
+  @GuardedBy ("m_aRWLock")
   private IAPIRegistry m_aRegistry = new APIRegistry ();
+  @GuardedBy ("m_aRWLock")
   private IAPIInvoker m_aInvoker = new APIInvoker ();
 
   @Deprecated
@@ -80,7 +83,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
     if (m_aRWLock.readLockedBoolean ( () -> m_aRegistry.getAllAPIDescriptors ().isNotEmpty ()))
       throw new IllegalStateException ("Cannot change the registry after an API was registered!");
 
-    m_aRWLock.writeLockedGet ( () -> m_aRegistry = aRegistry);
+    m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
   }
 
   @Nonnull
@@ -101,7 +104,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   public void setInvoker (@Nonnull final IAPIInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
-    m_aRWLock.writeLockedGet ( () -> m_aInvoker = aInvoker);
+    m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);
   }
 
   @Override

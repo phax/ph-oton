@@ -69,7 +69,7 @@ public final class LinkHelper
                                           "' passed. It must match the following rexg: " +
                                           STREAM_SERVLET_NAME_REGEX);
 
-    RW_LOCK.writeLockedGet ( () -> s_sStreamServletName = sStreamServletName);
+    RW_LOCK.writeLocked ( () -> s_sStreamServletName = sStreamServletName);
   }
 
   /**

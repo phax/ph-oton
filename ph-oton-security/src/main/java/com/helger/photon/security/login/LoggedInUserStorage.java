@@ -77,7 +77,7 @@ public final class LoggedInUserStorage
   {
     ValueEnforcer.notNull (sBaseDirectory, "BaseDirectory");
 
-    RW_LOCK.writeLockedGet ( () -> s_sBaseDirectory = sBaseDirectory);
+    RW_LOCK.writeLocked ( () -> s_sBaseDirectory = sBaseDirectory);
   }
 
   /**

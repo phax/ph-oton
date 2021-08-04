@@ -93,7 +93,7 @@ public final class InternalErrorHandler
   private static final Logger LOGGER = LoggerFactory.getLogger (InternalErrorHandler.class);
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
   @GuardedBy ("RW_LOCK")
-  private static final ICommonsMap <String, MutableInt> s_aIntErrCache = new CommonsHashMap <> ();
+  private static final ICommonsMap <String, MutableInt> INT_ERR_CACHE = new CommonsHashMap <> ();
 
   private InternalErrorHandler ()
   {}
@@ -168,7 +168,7 @@ public final class InternalErrorHandler
     {
       // Check if an internal error was already sent for this stack trace
       // Init with -1 so that it gets send the first time
-      final MutableInt aMI = RW_LOCK.writeLockedGet ( () -> s_aIntErrCache.computeIfAbsent (sThrowableStackTrace,
+      final MutableInt aMI = RW_LOCK.writeLockedGet ( () -> INT_ERR_CACHE.computeIfAbsent (sThrowableStackTrace,
                                                                                               k -> new MutableInt (-1)));
       aMI.inc ();
 

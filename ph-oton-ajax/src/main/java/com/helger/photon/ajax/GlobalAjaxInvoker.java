@@ -17,6 +17,7 @@
 package com.helger.photon.ajax;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
@@ -34,7 +35,9 @@ import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 @ThreadSafe
 public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
 {
+  @GuardedBy ("m_aRWLock")
   private IAjaxRegistry m_aRegistry = new AjaxRegistry ();
+  @GuardedBy ("m_aRWLock")
   private IAjaxInvoker m_aInvoker = new AjaxInvoker ();
 
   /**
@@ -83,7 +86,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
     if (m_aRWLock.readLockedBoolean ( () -> m_aRegistry.getAllRegisteredFunctions ().isNotEmpty ()))
       throw new IllegalStateException ("Cannot change the registry after a function was already registered!");
 
-    m_aRWLock.writeLockedGet ( () -> m_aRegistry = aRegistry);
+    m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
   }
 
   @Nonnull
@@ -104,7 +107,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   public void setInvoker (@Nonnull final IAjaxInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
-    m_aRWLock.writeLockedGet ( () -> m_aInvoker = aInvoker);
+    m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);
   }
 
   @Override

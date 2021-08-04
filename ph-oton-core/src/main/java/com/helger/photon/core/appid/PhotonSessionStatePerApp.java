@@ -54,7 +54,7 @@ public final class PhotonSessionStatePerApp implements Serializable
   @Nonnull
   public PhotonSessionStatePerApp setMenuTree (@Nullable final IMenuTree aMenuTree)
   {
-    m_aRWLock.writeLockedGet ( () -> m_aMenuTree = aMenuTree);
+    m_aRWLock.writeLocked ( () -> m_aMenuTree = aMenuTree);
     return this;
   }
 
@@ -67,7 +67,7 @@ public final class PhotonSessionStatePerApp implements Serializable
   @Nonnull
   public PhotonSessionStatePerApp setMenuItem (@Nullable final IMenuItemPage aMenuItem)
   {
-    m_aRWLock.writeLockedGet ( () -> m_aMenuItem = aMenuItem);
+    m_aRWLock.writeLocked ( () -> m_aMenuItem = aMenuItem);
     return this;
   }
 
@@ -80,7 +80,7 @@ public final class PhotonSessionStatePerApp implements Serializable
   @Nonnull
   public PhotonSessionStatePerApp setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
-    m_aRWLock.writeLockedGet ( () -> m_aDisplayLocale = aDisplayLocale);
+    m_aRWLock.writeLocked ( () -> m_aDisplayLocale = aDisplayLocale);
     return this;
   }
 

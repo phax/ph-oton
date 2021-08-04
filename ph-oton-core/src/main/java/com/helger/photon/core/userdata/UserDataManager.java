@@ -19,6 +19,10 @@ package com.helger.photon.core.userdata;
 import java.io.File;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -44,7 +48,10 @@ public final class UserDataManager
    */
   public static final String DEFAULT_USER_DATA_PATH = "/user";
 
+  private static final Logger LOGGER = LoggerFactory.getLogger (UserDataManager.class);
+
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
+  @GuardedBy ("RW_LOCK")
   private static String s_sUserDataPath = DEFAULT_USER_DATA_PATH;
 
   private UserDataManager ()
@@ -63,7 +70,10 @@ public final class UserDataManager
     ValueEnforcer.isTrue (StringHelper.getLength (sUserDataPath) >= 2, "userDataPath is too short");
     ValueEnforcer.isTrue (StringHelper.startsWith (sUserDataPath, '/'), "userDataPath must start with a slash");
 
-    RW_LOCK.writeLockedGet ( () -> s_sUserDataPath = sUserDataPath);
+    RW_LOCK.writeLocked ( () -> s_sUserDataPath = sUserDataPath);
+
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("Changed global user data path to '" + sUserDataPath + "'");
   }
 
   /**

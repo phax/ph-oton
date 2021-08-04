@@ -70,14 +70,14 @@ public final class PhotonGlobalStatePerApp implements Serializable
     ValueEnforcer.notEmpty (sServletPath, "ApplicationServletPath");
     ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'), "ApplicationServletPath must start with a slash");
     ValueEnforcer.isFalse (StringHelper.endsWith (sServletPath, '/'), "ApplicationServletPath must end with a slash");
-    m_aRWLock.writeLockedGet ( () -> m_sServletPath = sServletPath);
+    m_aRWLock.writeLocked ( () -> m_sServletPath = sServletPath);
     return this;
   }
 
   @Nonnull
   public PhotonGlobalStatePerApp removeServletPath ()
   {
-    m_aRWLock.writeLockedGet ( () -> m_sServletPath = null);
+    m_aRWLock.writeLocked ( () -> m_sServletPath = null);
     return this;
   }
 
@@ -90,7 +90,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
   @Nonnull
   public PhotonGlobalStatePerApp setMenuTree (@Nullable final IMenuTree aMenuTree)
   {
-    m_aRWLock.writeLockedGet ( () -> m_aMenuTree = aMenuTree);
+    m_aRWLock.writeLocked ( () -> m_aMenuTree = aMenuTree);
     return this;
   }
 

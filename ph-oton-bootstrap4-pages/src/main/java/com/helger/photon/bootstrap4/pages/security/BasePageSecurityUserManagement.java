@@ -783,7 +783,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
     else
     {
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_ENABLED,
                                                                                                       aSelectedObject == null ? DEFAULT_USER_ENABLED
                                                                                                                               : aSelectedObject.isEnabled ())))
@@ -911,12 +911,14 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
         aActionCell.addChild (createEmptyAction ());
 
       // Delete user
+      aActionCell.addChild (" ");
       if (isActionAllowed (aWPEC, EWebPageFormAction.DELETE, aCurUser))
         aActionCell.addChild (createDeleteLink (aWPEC, aCurUser));
       else
         aActionCell.addChild (createEmptyAction ());
 
       // Undelete user
+      aActionCell.addChild (" ");
       if (isActionAllowed (aWPEC, EWebPageFormAction.UNDELETE, aCurUser))
         aActionCell.addChild (createUndeleteLink (aWPEC, aCurUser));
       else

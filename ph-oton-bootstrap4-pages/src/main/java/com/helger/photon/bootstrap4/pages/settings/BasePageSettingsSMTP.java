@@ -549,7 +549,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
     {
       final String sSSL = EText.LABEL_SSL.getDisplayText (aDisplayLocale);
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sSSL)
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (sSSL)
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_SSL,
                                                                                                       aSettings == null ? EmailGlobalSettings.isUseSSL ()
                                                                                                                         : aSettings.isSSLEnabled ())))
@@ -558,7 +558,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
     {
       final String sSTARTTLS = EText.LABEL_STARTTLS.getDisplayText (aDisplayLocale);
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sSTARTTLS)
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (sSTARTTLS)
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_STARTTLS,
                                                                                                       aSettings == null ? EmailGlobalSettings.isUseSTARTTLS ()
                                                                                                                         : aSettings.isSTARTTLSEnabled ())))
@@ -587,7 +587,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
 
     {
       final String sDebugSMTP = EText.LABEL_DEBUG_SMTP.getDisplayText (aDisplayLocale);
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sDebugSMTP)
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (sDebugSMTP)
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_DEBUG_SMTP,
                                                                                                       aSettings == null ? EmailGlobalSettings.isDebugSMTP ()
                                                                                                                         : aSettings.isDebugSMTP ())))

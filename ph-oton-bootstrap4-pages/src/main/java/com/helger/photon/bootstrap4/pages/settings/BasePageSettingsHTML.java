@@ -17,17 +17,20 @@
 package com.helger.photon.bootstrap4.pages.settings;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.IHCConversionSettings;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.forms.HCCheckBox;
 import com.helger.html.hc.impl.HCNodeList;
@@ -38,6 +41,8 @@ import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap4.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.core.form.RequestFieldBoolean;
 import com.helger.photon.uicore.css.CPageParam;
+import com.helger.photon.uicore.html.formlabel.ELabelType;
+import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
@@ -67,6 +72,11 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     MSG_OUT_OF_BAND_DEBUGGING ("Out-of-band Knoten debuggen?", "Debug out-of-band nodes?"),
     MSG_SCRIPTS_IN_BODY ("<script>-Element in <body>?", "Put <script> elements in <body>?"),
     MSG_USE_REGULAR_RESOURCES ("Nicht-optimierte JS/CSS inkludieren?", "Include non-minified JS/CSS?"),
+    MSG_NONE ("keines", "none"),
+    MSG_FORM_LABEL_SUFFIX_OPTIONAL ("Formular Label Suffix für optionale Felder", "Form label suffix for optional fields"),
+    MSG_FORM_LABEL_SUFFIX_ALTERNATIVE ("Formular Label Suffix für alternative Felder", "Form label suffix for alternative fields"),
+    MSG_FORM_LABEL_SUFFIX_MANDATORY ("Formular Label Suffix für Pflichtfelder", "Form label suffix for mandatory fields"),
+    MSG_FORM_LABEL_END ("Formular Label Abschluss", "Form label end"),
     MSG_BUTTON_WEBRESBUNDLE ("ResourceBundle Einstellungen", "ResourceBundle settings"),
     MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
 
@@ -166,30 +176,31 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     else
     {
       final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC, bFormSubmitted));
+      aForm.setLeft (3);
 
       {
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_HTML_VERSION.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aConversionSettings.getHTMLVersion ().name ()));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_FORMAT_HTML.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_FORMAT_HTML,
                                                                                                         aConversionSettings.getXMLWriterSettings ()
                                                                                                                            .getIndent ()
                                                                                                                            .isIndent ()))));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_CSS.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_FORMAT_CSS.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_FORMAT_CSS,
                                                                                                         !aConversionSettings.getCSSWriterSettings ()
                                                                                                                             .isOptimizedOutput ()))));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORMAT_JS.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_FORMAT_JS.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_FORMAT_JS,
                                                                                                         aConversionSettings.getJSWriterSettings ()
                                                                                                                            .isIndentAndAlign ()))));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CONSISTENCY_CHECKS_ENABLED.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_CONSISTENCY_CHECKS_ENABLED.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_CONSISTENCY_CHECKS_ENABLED,
                                                                                                         aConversionSettings.areConsistencyChecksEnabled ()))));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_EXTRACT_OUT_OF_BAND_NODES.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_EXTRACT_OUT_OF_BAND_NODES,
                                                                                                         aConversionSettings.isExtractOutOfBandNodes ()))));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
                                                                                                         !HCSettings.isAutoCompleteOffForPasswordEdits ()))));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ON_DOCUMENT_READY_PROVIDER.getDisplayText (aDisplayLocale))
@@ -200,15 +211,26 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
                                                      .setCtrl (HCSettings.getStyleInlineMode ().name ()));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_NEW_LINE_MODE.getDisplayText (aDisplayLocale))
                                                      .setCtrl (HCSettings.getNewLineMode ().name ()));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_OUT_OF_BAND_DEBUGGING.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_OUT_OF_BAND_DEBUGGING.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_OUT_OF_BAND_DEBUG,
                                                                                                         HCSettings.isOutOfBandDebuggingEnabled ()))));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SCRIPTS_IN_BODY.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_SCRIPTS_IN_BODY.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_SCRIPTS_IN_BODY,
                                                                                                         HCSettings.isScriptsInBody ()))));
-        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_USE_REGULAR_RESOURCES.getDisplayText (aDisplayLocale))
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_USE_REGULAR_RESOURCES.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_USE_REGULAR_RESOURCES,
                                                                                                         HCSettings.isUseRegularResources ()))));
+
+        final Function <String, IHCNode> aFormatter = s -> StringHelper.hasNoText (s) ? em (EText.MSG_NONE.getDisplayText (aDisplayLocale))
+                                                                                      : code (s);
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORM_LABEL_SUFFIX_OPTIONAL.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aFormatter.apply (HCFormLabelHelper.getSuffixString (ELabelType.OPTIONAL))));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORM_LABEL_SUFFIX_ALTERNATIVE.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aFormatter.apply (HCFormLabelHelper.getSuffixString (ELabelType.ALTERNATIVE))));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORM_LABEL_SUFFIX_MANDATORY.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aFormatter.apply (HCFormLabelHelper.getSuffixString (ELabelType.MANDATORY))));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORM_LABEL_END.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (aFormatter.apply (HCFormLabelHelper.getDefaultLabelEnd ())));
       }
 
       final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));

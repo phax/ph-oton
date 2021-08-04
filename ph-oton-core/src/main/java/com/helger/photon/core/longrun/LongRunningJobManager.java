@@ -68,7 +68,7 @@ public final class LongRunningJobManager
     // Create a new unique in-memory ID
     final String sJobID = GlobalIDFactory.getNewStringID ();
     final LongRunningJobData aJobData = new LongRunningJobData (sJobID, aJob.getJobDescription (), sStartingUserID);
-    m_aRWLock.writeLockedGet ( () -> m_aRunningJobs.put (sJobID, aJobData));
+    m_aRWLock.writeLocked ( () -> m_aRunningJobs.put (sJobID, aJobData));
     return sJobID;
   }
 

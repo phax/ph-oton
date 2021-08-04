@@ -70,7 +70,7 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   {
     ValueEnforcer.notNull (aMetaElement, "MetaElement");
 
-    m_aRWLock.writeLockedGet ( () -> m_aItems.put (aMetaElement.getName (), aMetaElement));
+    m_aRWLock.writeLocked ( () -> m_aItems.put (aMetaElement.getName (), aMetaElement));
     return this;
   }
 

@@ -51,8 +51,8 @@ public class AsynchronousAuditor extends AbstractAuditor
 {
   // Just to have custom named threads....
   private static final ThreadFactory THREAD_FACTORY = new BasicThreadFactory.Builder ().namingPattern ("AsyncAuditor")
-                                                                                         .daemon (true)
-                                                                                         .build ();
+                                                                                       .daemon (true)
+                                                                                       .build ();
   private static final Logger LOGGER = LoggerFactory.getLogger (AsynchronousAuditor.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
@@ -83,7 +83,7 @@ public class AsynchronousAuditor extends AbstractAuditor
   {
     ValueEnforcer.notNull (aAuditItem, "AuditItem");
 
-    m_aRWLock.writeLockedGet ( () -> m_aCollector.queueObject (aAuditItem));
+    m_aRWLock.writeLocked ( () -> m_aCollector.queueObject (aAuditItem));
   }
 
   @Nonnegative
