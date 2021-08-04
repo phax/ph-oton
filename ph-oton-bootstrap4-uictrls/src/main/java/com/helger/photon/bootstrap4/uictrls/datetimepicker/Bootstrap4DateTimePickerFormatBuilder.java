@@ -40,6 +40,7 @@ import com.helger.photon.uicore.datetime.IDateFormatBuilder;
 
 public class Bootstrap4DateTimePickerFormatBuilder implements IDateFormatBuilder
 {
+  // List of Character or EMomentsDateTimePickerFormatToken
   private final ICommonsList <Object> m_aList = new CommonsArrayList <> ();
 
   public Bootstrap4DateTimePickerFormatBuilder ()
@@ -189,13 +190,13 @@ public class Bootstrap4DateTimePickerFormatBuilder implements IDateFormatBuilder
     }
   }
 
-  private static final PatternCache s_aCache = new PatternCache ();
+  private static final PatternCache CACHE = new PatternCache ();
 
   @Nonnull
   public static IDateFormatBuilder fromJavaPattern (@Nonnull final String sJavaPattern)
   {
     ValueEnforcer.notEmpty (sJavaPattern, "JavaPattern");
 
-    return s_aCache.getFromCache (sJavaPattern);
+    return CACHE.getFromCache (sJavaPattern);
   }
 }

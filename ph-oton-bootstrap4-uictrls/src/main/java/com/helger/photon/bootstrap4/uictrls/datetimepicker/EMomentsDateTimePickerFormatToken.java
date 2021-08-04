@@ -16,17 +16,15 @@
  */
 package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 
-import java.text.SimpleDateFormat;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
 
 /**
- * Defines the possible tokens for the moments.js format.
+ * Defines the possible tokens for the moments.js format. Works for JS and Java
+ * 1.8.
  *
  * @author Philip Helger
- * @see SimpleDateFormat
  */
 public enum EMomentsDateTimePickerFormatToken
 {

@@ -50,8 +50,32 @@ public enum EDateTimePickerDayOfWeek
     return m_nJSValue;
   }
 
+  /**
+   * Get the enum entry matching the specified Java time {@link DayOfWeek}
+   * value.
+   *
+   * @param nJDKValue
+   *        The JDK value.
+   * @return The enum value or <code>null</code> in case of an invalid value.
+   * @deprecated Use {@link #getFromJavaTimeValueOrNull(int)} instead
+   */
+  @Deprecated
   @Nullable
   public static EDateTimePickerDayOfWeek getFromJodaValueOrNull (final int nJDKValue)
+  {
+    return getFromJavaTimeValueOrNull (nJDKValue);
+  }
+
+  /**
+   * Get the enum entry matching the specified Java time {@link DayOfWeek}
+   * value.
+   *
+   * @param nJDKValue
+   *        The JDK value.
+   * @return The enum value or <code>null</code> in case of an invalid value.
+   */
+  @Nullable
+  public static EDateTimePickerDayOfWeek getFromJavaTimeValueOrNull (final int nJDKValue)
   {
     if (nJDKValue == DayOfWeek.MONDAY.getValue ())
       return MONDAY;
@@ -70,8 +94,30 @@ public enum EDateTimePickerDayOfWeek
     return null;
   }
 
+  /**
+   * Get the enum entry matching the specified Java {@link Calendar} value.
+   *
+   * @param nCalendarValue
+   *        The calendar weekday value.
+   * @return The enum value or <code>null</code> in case of an invalid value.
+   * @deprecated Use {@link #getFromJavaCalendarValueOrNull(int)} instead
+   */
+  @Deprecated
   @Nullable
   public static EDateTimePickerDayOfWeek getFromJavaValueOrNull (final int nCalendarValue)
+  {
+    return getFromJavaCalendarValueOrNull (nCalendarValue);
+  }
+
+  /**
+   * Get the enum entry matching the specified Java {@link Calendar} value.
+   *
+   * @param nCalendarValue
+   *        The calendar weekday value.
+   * @return The enum value or <code>null</code> in case of an invalid value.
+   */
+  @Nullable
+  public static EDateTimePickerDayOfWeek getFromJavaCalendarValueOrNull (final int nCalendarValue)
   {
     switch (nCalendarValue)
     {
