@@ -69,10 +69,13 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public static final ICSSClassProvider CSS_CLASS_DATE = DefaultCSSClassProvider.create ("date");
   public static final ICSSClassProvider CSS_CLASS_DATETIMEPICKER_INPUT = DefaultCSSClassProvider.create ("datetimepicker-input");
 
-  private static final String EVENT_SUFFIX = ".datetimepicker";
+  public static final String EVENT_SUFFIX = ".datetimepicker";
   public static final String EVENT_NAME_CHANGE = "change" + EVENT_SUFFIX;
 
   public static final EBootstrap4DateTimePickerViewModeType DEFAULT_VIEW_MODE = EBootstrap4DateTimePickerViewModeType.DAYS;
+
+  // Use the calendar icon as default prefix
+  public static final IHCNode DEFAULT_PREPEND_ICON = EFontAwesome4Icon.CALENDAR.getAsNode ();
 
   private static final LocalDate DUMMY_DATE = PDTFactory.createLocalDate (2018, Month.OCTOBER, 24);
   private static final LocalTime DUMMY_TIME = PDTFactory.createLocalTime (12, 10, 34);
@@ -91,10 +94,11 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private LocalDateTime m_aMinDate;
   private LocalDateTime m_aMaxDate;
   private ETriState m_eUseCurrent = ETriState.FALSE;
+  private IHCNode m_aPrependIcon = DEFAULT_PREPEND_ICON;
   private final ICommonsOrderedMap <String, String> m_aIcons = new CommonsLinkedHashMap <> ();
 
   @Nonnull
-  static String getAsModeSpecificISOString (@Nonnull final EBootstrap4DateTimePickerMode eMode, @Nonnull final LocalDateTime aDT)
+  public static String getAsModeSpecificISOString (@Nonnull final EBootstrap4DateTimePickerMode eMode, @Nonnull final LocalDateTime aDT)
   {
     // Always format with ISO mode
     switch (eMode)
@@ -111,9 +115,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nullable
-  static String getAsModeSpecificUIString (@Nonnull final EBootstrap4DateTimePickerMode eMode,
-                                           @Nullable final LocalDateTime aDT,
-                                           @Nonnull final Locale aDisplayLocale)
+  public static String getAsModeSpecificUIString (@Nonnull final EBootstrap4DateTimePickerMode eMode,
+                                                  @Nullable final LocalDateTime aDT,
+                                                  @Nonnull final Locale aDisplayLocale)
   {
     if (aDT == null)
       return null;
@@ -164,8 +168,6 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     m_aEdit.customAttrs ().setDataAttr ("target", "#" + getID ());
     BootstrapFormHelper.markAsFormControl (m_aEdit);
 
-    // Use the calendar icon as default prefix
-    addChildPrefix (EFontAwesome4Icon.CALENDAR.getAsNode ());
     addChild (m_aEdit);
 
     setMode (eMode);
@@ -481,6 +483,42 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     return this;
   }
 
+  /**
+   * @return The icon that is by default prepended to each date time picker
+   *         input group. By default it is {@link #DEFAULT_PREPEND_ICON}. May
+   *         also be <code>null</code>.
+   * @since 8.3.1
+   */
+  @Nullable
+  public final IHCNode getPrependIcon ()
+  {
+    return m_aPrependIcon;
+  }
+
+  /**
+   * Set the default icon that is prepended to each date time picker input
+   * group. Call this method with <code>null</code> to avoid the default
+   * calendar icon to be drawn.
+   *
+   * @param aPrependIcon
+   *        The prepend icon to be used. May be <code>null</code>.
+   * @return this for chaining
+   * @since 8.3.1
+   */
+  @Nonnull
+  public final BootstrapDateTimePicker setPrependIcon (@Nullable final IHCNode aPrependIcon)
+  {
+    m_aPrependIcon = aPrependIcon;
+    return this;
+  }
+
+  /**
+   * @return The mutable icon map for the calendar. The key depends on the JS
+   *         version used. Currently this can be
+   *         <code>time, date, up, down, previous, next, today, clear or close</code>.
+   *         The value is the String that contains the CSS classes to be applied
+   *         (e.g. <code>fa fa-calendar</code>).
+   */
   @Nonnull
   @ReturnsMutableObject
   public final ICommonsOrderedMap <String, String> icons ()
@@ -630,6 +668,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
+    if (m_aPrependIcon != null)
+      getOrCreateGroupPrepend ().addChildAt (0, getWrapped (m_aPrependIcon));
+
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     addClass (CSS_CLASS_DATE);
 
