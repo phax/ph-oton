@@ -69,11 +69,12 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
 
   public HCConditionalCommentNode (@Nonnull @Nonempty final String sCondition, @Nonnull final IHCNode aWrappedNode)
   {
-    m_sCondition = ValueEnforcer.notEmpty (sCondition, "Condition");
+    ValueEnforcer.notEmpty (sCondition, "Condition");
     ValueEnforcer.notNull (aWrappedNode, "WrappedNode");
     ValueEnforcer.isFalse (aWrappedNode instanceof HCCommentNode, "You cannot wrap a comment inside a conditional comment");
     ValueEnforcer.isFalse (aWrappedNode instanceof HCConditionalCommentNode,
                            "You cannot wrap a conditional comment inside another conditional comment");
+    m_sCondition = sCondition;
     m_aWrappedNode = aWrappedNode;
   }
 
@@ -106,15 +107,13 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
     // Only create a newline when alignment is enabled
     final IXMLWriterSettings aXMLWriterSettings = aConversionSettings.getXMLWriterSettings ();
     final String sLineSeparator = aXMLWriterSettings.getIndent ().isAlign () ? aXMLWriterSettings.getNewLineString () : "";
+    final String sPayload = MicroWriter.getNodeAsString (aWrappedMicroNode, aXMLWriterSettings);
 
     // Now wrap the created XML in the special format required for a conditional
     // comment
-    final HCCommentNode aCommentNode = new HCCommentNode ('[' +
-                                                          m_sCondition +
-                                                          "]>" +
-                                                          sLineSeparator +
-                                                          MicroWriter.getNodeAsString (aWrappedMicroNode, aXMLWriterSettings) +
-                                                          "<![endif]");
+    // Note: this class assumes XML comment rendering with no space between
+    // "<!--" and the provided payload
+    final HCCommentNode aCommentNode = new HCCommentNode ('[' + m_sCondition + "]>" + sLineSeparator + sPayload + "<![endif]");
 
     return HCRenderer.getAsNode (aCommentNode, aConversionSettings);
   }

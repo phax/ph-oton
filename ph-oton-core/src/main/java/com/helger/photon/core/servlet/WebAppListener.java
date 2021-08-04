@@ -145,8 +145,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   /** The logger to use. */
   private static final Logger LOGGER = LoggerFactory.getLogger (WebAppListener.class);
 
-  private static final AtomicBoolean s_aOnlyOneInstanceAllowed = new AtomicBoolean (true);
-  private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
+  private static final AtomicBoolean ONLY_ONE_INSTANCE_ALLOWED = new AtomicBoolean (true);
+  private static final AtomicBoolean INITED = new AtomicBoolean (false);
+
   private LocalDateTime m_aInitializationStartDT;
   private LocalDateTime m_aInitializationEndDT;
   private boolean m_bHandleStatisticsOnEnd = DEFAULT_HANDLE_STATISTICS_ON_END;
@@ -156,12 +157,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   public static void setOnlyOneInstanceAllowed (final boolean bCheck)
   {
-    s_aOnlyOneInstanceAllowed.set (bCheck);
+    ONLY_ONE_INSTANCE_ALLOWED.set (bCheck);
   }
 
   public static boolean isOnlyOneInstanceAllowed ()
   {
-    return s_aOnlyOneInstanceAllowed.get ();
+    return ONLY_ONE_INSTANCE_ALLOWED.get ();
   }
 
   protected static final void logLogo ()
@@ -237,8 +238,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected static final void logThirdpartyModules ()
   {
     // List all third party modules for later evaluation
-    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
-                                                                             .getAllRegisteredThirdPartyModules ();
+    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ().getAllRegisteredThirdPartyModules ();
     if (!aModules.isEmpty ())
     {
       LOGGER.info ("Using the following third party modules:");
@@ -420,9 +420,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       sDataPath = aSC.getInitParameter ("storagePath");
       if (StringHelper.hasText (sDataPath))
       {
-        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" +
-                      INIT_PARAMETER_DATA_PATH +
-                      "' instead!");
+        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" + INIT_PARAMETER_DATA_PATH + "' instead!");
       }
     }
     if (StringHelper.hasNoText (sDataPath))
@@ -612,10 +610,13 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   public final void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Start contextInitialized");
+
     final ServletContext aSC = aSCE.getServletContext ();
 
     if (isOnlyOneInstanceAllowed ())
-      if (s_aInited.getAndSet (true))
+      if (INITED.getAndSet (true))
       {
         LOGGER.error ("WebAppListener was already instantiated!");
         throw new IllegalStateException ("WebAppListener was already instantiated!");
@@ -734,6 +735,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       }
       throw ex;
     }
+    finally
+    {
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("End contextInitialized");
+    }
   }
 
   /**
@@ -802,11 +808,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   @OverrideOnDemand
   protected String getStatisticsFilename ()
   {
-    return "statistics/" +
-           PDTFactory.getCurrentYear () +
-           "/statistics_" +
-           PDTIOHelper.getCurrentLocalDateTimeForFilename () +
-           ".xml";
+    return "statistics/" + PDTFactory.getCurrentYear () + "/statistics_" + PDTIOHelper.getCurrentLocalDateTimeForFilename () + ".xml";
   }
 
   /**
@@ -824,8 +826,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       {
         final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
         aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
-        aDoc.getDocumentElement ()
-            .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
+        aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
 
         final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         MicroWriter.writeToFile (aDoc, aDestPath);
@@ -841,6 +842,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   public final void contextDestroyed (@Nonnull final ServletContextEvent aSCE)
   {
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Start contextDestroyed");
+
     try
     {
       final ServletContext aSC = aSCE.getServletContext ();
@@ -868,7 +872,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       if (isOnlyOneInstanceAllowed ())
       {
         // De-init
-        s_aInited.set (false);
+        INITED.set (false);
       }
 
       if (LOGGER.isInfoEnabled ())
@@ -888,6 +892,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       }
       throw ex;
     }
+    finally
+    {
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("End contextDestroyed");
+    }
   }
 
   /**
@@ -898,8 +907,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   public final void sessionCreated (@Nonnull final HttpSessionEvent aSessionEvent)
   {
-    // Create the SessionScope
     final HttpSession aHttpSession = aSessionEvent.getSession ();
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("A new session was created: " + aHttpSession);
+
+    // Create the SessionScope
     WebScopeManager.onSessionBegin (aHttpSession);
   }
 
@@ -911,8 +924,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   public final void sessionDestroyed (@Nonnull final HttpSessionEvent aSessionEvent)
   {
-    // Destroy the SessionScope
     final HttpSession aHttpSession = aSessionEvent.getSession ();
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Destroying session: " + aHttpSession);
+
+    // Destroy the SessionScope
     WebScopeManager.onSessionEnd (aHttpSession);
   }
 }

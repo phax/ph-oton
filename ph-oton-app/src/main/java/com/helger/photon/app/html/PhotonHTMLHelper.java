@@ -59,6 +59,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 @NotThreadSafe
 public final class PhotonHTMLHelper
 {
+  public static final String META_GENERATOR_VALUE = "https://github.com/phax/ph-oton // phax // ASL 2.0";
+
   private PhotonHTMLHelper ()
   {}
 
@@ -115,10 +117,7 @@ public final class PhotonHTMLHelper
     final HCHtml aHtml = aHTMLProvider.createHTML (aRequestScope);
 
     // Add some ad comment :)
-    aHtml.head ()
-         .metaElements ()
-         .add (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ())
-                            .setContent ("https://github.com/phax/ph-oton // phax // ASL 2.0"));
+    aHtml.head ().metaElements ().add (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ()).setContent (META_GENERATOR_VALUE));
 
     // Convert HTML to String, including namespaces
     try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 * CGlobal.BYTES_PER_KILOBYTE))

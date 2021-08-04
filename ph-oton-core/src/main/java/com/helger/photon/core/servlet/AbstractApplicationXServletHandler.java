@@ -22,6 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.servlet.ServletException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
@@ -39,6 +42,8 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
  */
 public abstract class AbstractApplicationXServletHandler implements IXServletSimpleHandler
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (AbstractApplicationXServletHandler.class);
+
   protected AbstractApplicationXServletHandler ()
   {}
 
@@ -83,10 +88,21 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
   {
-    // Who is responsible for creating the HTML?
-    final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Start handleRequest");
 
-    // Create the HTML and put it into the response
-    PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
+    try
+    {
+      // Who is responsible for creating the HTML?
+      final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
+
+      // Create the HTML and put it into the response
+      PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
+    }
+    finally
+    {
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("End handleRequest");
+    }
   }
 }

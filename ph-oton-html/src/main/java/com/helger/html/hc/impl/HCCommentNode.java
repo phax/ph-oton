@@ -37,15 +37,17 @@ public class HCCommentNode extends AbstractHCNode
   public HCCommentNode (@Nullable final String sText)
   {
     m_sText = sText == null ? "" : sText;
-    if (m_sText.contains (XMLEmitter.COMMENT_START) || m_sText.contains (XMLEmitter.COMMENT_END))
-      throw new IllegalArgumentException ("XML comment contains nested XML comment: " + m_sText);
+    if (m_sText.contains (XMLEmitter.COMMENT_START))
+      throw new IllegalArgumentException ("XML comment contains nested XML comment start: " + m_sText);
+    if (m_sText.contains (XMLEmitter.COMMENT_END))
+      throw new IllegalArgumentException ("XML comment contains nested XML comment end: " + m_sText);
   }
 
   /**
    * @return The unescaped comment text. Never <code>null</code>.
    */
   @Nonnull
-  public String getText ()
+  public final String getText ()
   {
     return m_sText;
   }
@@ -60,6 +62,6 @@ public class HCCommentNode extends AbstractHCNode
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("text", m_sText).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Text", m_sText).getToString ();
   }
 }

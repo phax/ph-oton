@@ -37,7 +37,7 @@ import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCConversionSettings;
 
 /**
- * Global HC settings
+ * Global HTML Control settings
  *
  * @author Philip Helger
  */
