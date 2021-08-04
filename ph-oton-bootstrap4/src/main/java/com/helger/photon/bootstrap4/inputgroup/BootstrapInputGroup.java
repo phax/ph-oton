@@ -89,14 +89,31 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_APPEND);
   }
 
+  /**
+   * If an existing DIV with class "input-group-prepend" is present, reuse it.
+   * Else create a new one and append it. Elements in here are prepended to the
+   * date edit.
+   *
+   * @return Never <code>null</code>.
+   * @see #createGroupPrepend()
+   */
   @Nonnull
   public HCDiv getOrCreateGroupPrepend ()
   {
     // Existing "prepend" present?
     final HCDiv aDiv = (HCDiv) findFirstChild (x -> x instanceof HCDiv && ((HCDiv) x).containsClass (CBootstrapCSS.INPUT_GROUP_PREPEND));
-    return aDiv != null ? aDiv : addAndReturnChild (createGroupPrepend ());
+    // Prepend group MUST always be the first child, so before any control
+    return aDiv != null ? aDiv : addAndReturnChildAt (0, createGroupPrepend ());
   }
 
+  /**
+   * If an existing DIV with class "input-group-append" is present, reuse it.
+   * Else create a new one and append it. Elements in here are appended to the
+   * date edit.
+   *
+   * @return Never <code>null</code>.
+   * @see #createGroupAppend()
+   */
   @Nonnull
   public HCDiv getOrCreateGroupAppend ()
   {
@@ -120,6 +137,15 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return new HCDiv ().addClass (CBootstrapCSS.INPUT_GROUP_TEXT).addChild (aNode);
   }
 
+  /**
+   * Add a new text element to the prepend group.
+   *
+   * @param sText
+   *        The text to be added. May be <code>null</code>.
+   * @return this for chaining
+   * @see #getOrCreateGroupPrepend()
+   * @see #getWrapped(String)
+   */
   @Nonnull
   public final BootstrapInputGroup addChildPrefix (@Nullable final String sText)
   {
@@ -128,6 +154,15 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return this;
   }
 
+  /**
+   * Add a new node to the prepend group.
+   *
+   * @param aNode
+   *        The node to be added. May be <code>null</code>.
+   * @return this for chaining
+   * @see #getOrCreateGroupPrepend()
+   * @see #getWrapped(IHCNode)
+   */
   @Nonnull
   public final BootstrapInputGroup addChildPrefix (@Nullable final IHCNode aNode)
   {
@@ -136,6 +171,15 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return this;
   }
 
+  /**
+   * Add a new text element to the append group.
+   *
+   * @param sText
+   *        The text to be added. May be <code>null</code>.
+   * @return this for chaining
+   * @see #getOrCreateGroupAppend()
+   * @see #getWrapped(String)
+   */
   @Nonnull
   public final BootstrapInputGroup addChildSuffix (@Nullable final String sText)
   {
@@ -144,6 +188,15 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
     return this;
   }
 
+  /**
+   * Add a new node to the append group.
+   *
+   * @param aNode
+   *        The node to be added. May be <code>null</code>.
+   * @return this for chaining
+   * @see #getOrCreateGroupAppend()
+   * @see #getWrapped(IHCNode)
+   */
   @Nonnull
   public final BootstrapInputGroup addChildSuffix (@Nullable final IHCNode aNode)
   {
