@@ -52,7 +52,8 @@ public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecu
   protected enum EText implements IHasDisplayText
   {
     MSG_NAME ("Name", "Name"),
-    MSG_VALUE ("Wert", "Value");
+    MSG_VALUE ("Wert", "Value"),
+    MSG_HIDDEN_VALUE ("*versteckt*", "*hidden*");
 
     private final IMultilingualText m_aTP;
 
@@ -104,9 +105,16 @@ public class BasePageSysInfoEnvironmentVariables <WPECTYPE extends IWebPageExecu
     // For all environment variables
     for (final Map.Entry <String, String> aEntry : System.getenv ().entrySet ())
     {
+      final String sName = aEntry.getKey ();
+      final String sNameLC = sName.toLowerCase (Locale.ROOT);
+      final String sValue = aEntry.getValue ();
+
       final HCRow aRow = aTable.addBodyRow ();
-      aRow.addCell (aEntry.getKey ());
-      aRow.addCell (aEntry.getValue ());
+      aRow.addCell (sName);
+      if (sNameLC.startsWith ("secret_"))
+        aRow.addCell (EText.MSG_HIDDEN_VALUE.getDisplayText (aDisplayLocale));
+      else
+        aRow.addCell (sValue);
     }
     aNodeList.addChild (aTable);
 
