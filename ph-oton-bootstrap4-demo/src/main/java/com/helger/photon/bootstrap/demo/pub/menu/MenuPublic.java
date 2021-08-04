@@ -21,6 +21,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicLogin;
+import com.helger.photon.bootstrap.demo.pub.page.PagePublicUIControls;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome4;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome5;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconMaterialDesign;
@@ -49,6 +50,7 @@ public final class MenuPublic
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome4 ("icon-fa4"));
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome5 ("icon-fa5"));
       aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));
+      aMenuTree.createRootItem (new PagePublicUIControls ("ui-ctrls"));
 
       // Link from "bla" to "icon"
       aMenuTree.createRedirect ("bla", aIcons);
