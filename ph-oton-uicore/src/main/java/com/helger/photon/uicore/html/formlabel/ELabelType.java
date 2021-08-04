@@ -32,22 +32,20 @@ import com.helger.html.css.ICSSClassProvider;
  */
 public enum ELabelType implements IHasID <String>
 {
-  OPTIONAL ("optional", DefaultCSSClassProvider.create ("form-label-optional"), null),
-  MANDATORY ("mandatory", DefaultCSSClassProvider.create ("form-label-mandatory"), HCFormLabelHelper.SIGN_MANDATORY),
-  ALTERNATIVE ("alternative", DefaultCSSClassProvider.create ("form-label-alternative"), HCFormLabelHelper.SIGN_ALTERNATIVE),
-  NONE ("none", null, null);
+  OPTIONAL ("optional", DefaultCSSClassProvider.create ("form-label-optional")),
+  MANDATORY ("mandatory", DefaultCSSClassProvider.create ("form-label-mandatory")),
+  ALTERNATIVE ("alternative", DefaultCSSClassProvider.create ("form-label-alternative")),
+  NONE ("none", null);
 
   public static final ELabelType DEFAULT = OPTIONAL;
 
   private final String m_sID;
   private final ICSSClassProvider m_aCSSClass;
-  private final String m_sSpecialSign;
 
-  ELabelType (@Nonnull @Nonempty final String sID, @Nullable final ICSSClassProvider aCSSClass, @Nullable final String sSpecialSign)
+  ELabelType (@Nonnull @Nonempty final String sID, @Nullable final ICSSClassProvider aCSSClass)
   {
     m_sID = sID;
     m_aCSSClass = aCSSClass;
-    m_sSpecialSign = sSpecialSign;
   }
 
   @Nonnull
@@ -67,18 +65,28 @@ public enum ELabelType implements IHasID <String>
     return m_aCSSClass;
   }
 
+  /**
+   * @return <code>true</code> if a special sign is present, <code>false</code>
+   *         if not.
+   * @deprecated Since 8.3.1; Use the stuff in {@link HCFormLabelHelper}
+   *             instead.
+   */
+  @Deprecated
   public boolean hasSpecialSign ()
   {
-    return m_sSpecialSign != null;
+    return getSpecialSign () != null;
   }
 
   /**
    * @return The special sign for this label type. May be <code>null</code>.
+   * @deprecated Since 8.3.1; Use the stuff in {@link HCFormLabelHelper}
+   *             instead.
    */
   @Nullable
+  @Deprecated
   public String getSpecialSign ()
   {
-    return m_sSpecialSign;
+    return HCFormLabelHelper.getSuffixStringOrNull (this);
   }
 
   public boolean isOptional ()

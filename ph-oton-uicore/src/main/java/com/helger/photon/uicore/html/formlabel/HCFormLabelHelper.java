@@ -21,7 +21,9 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.HCHelper;
@@ -30,24 +32,168 @@ import com.helger.html.hc.IHCNodeWithChildren;
 @Immutable
 public final class HCFormLabelHelper
 {
-  public static final String SIGN_MANDATORY = "*";
-  public static final String SIGN_ALTERNATIVE = "°";
-  public static final String LABEL_END = ":";
+  /** The default sign for optional elements */
+  public static final String DEFAULT_SIGN_OPTIONAL = "";
+  /** The default sign for mandatory elements */
+  public static final String DEFAULT_SIGN_MANDATORY = "*";
+  /**
+   * The default sign for mandatory elements.
+   *
+   * @deprecated Since v8.3.1; Use {@link #DEFAULT_SIGN_MANDATORY} instead
+   */
+  @Deprecated
+  public static final String SIGN_MANDATORY = DEFAULT_SIGN_MANDATORY;
+  /** The default sign for alternative elements */
+  public static final String DEFAULT_SIGN_ALTERNATIVE = "°";
+  /**
+   * The default sign for alternative elements.
+   *
+   * @deprecated Since v8.3.1; Use {@link #DEFAULT_SIGN_ALTERNATIVE} instead
+   */
+  @Deprecated
+  public static final String SIGN_ALTERNATIVE = DEFAULT_SIGN_ALTERNATIVE;
+  /** The default label to be appended to form labels */
+  public static final String DEFAULT_LABEL_END = ":";
+  /**
+   * The default label to be appended to form labels.
+   *
+   * @deprecated Since v8.3.1; Use {@link #DEFAULT_LABEL_END} instead
+   */
+  @Deprecated
+  public static final String LABEL_END = DEFAULT_LABEL_END;
+
+  private static ICommonsMap <ELabelType, String> DEFAULT_SUFFIXES = new CommonsHashMap <> ();
+  static
+  {
+    DEFAULT_SUFFIXES.put (ELabelType.OPTIONAL, DEFAULT_SIGN_OPTIONAL);
+    DEFAULT_SUFFIXES.put (ELabelType.MANDATORY, DEFAULT_SIGN_MANDATORY);
+    DEFAULT_SUFFIXES.put (ELabelType.ALTERNATIVE, DEFAULT_SIGN_ALTERNATIVE);
+  }
+  private static String s_sDefaultLabelEnd = DEFAULT_LABEL_END;
 
   private HCFormLabelHelper ()
   {}
 
+  /**
+   * @return The global "label end" string to use. Never <code>null</code> but
+   *         maybe empty.
+   * @since 8.3.1
+   */
   @Nonnull
-  public static String getSuffixString (@Nonnull final ELabelType eType)
+  public static String getDefaultLabelEnd ()
   {
-    return StringHelper.getNotNull (eType.getSpecialSign ());
+    return s_sDefaultLabelEnd;
+  }
+
+  /**
+   * Set the global "label end" literal. By default it is
+   * {@link #DEFAULT_LABEL_END} which is a single colon. This can only be set on
+   * a global scale, so set this initially.
+   *
+   * @param sDefaultLabelEnd
+   *        The new label end to be used. May be <code>null</code>.
+   * @since 8.3.1
+   */
+  public static void setDefaultLabelEnd (@Nullable final String sDefaultLabelEnd)
+  {
+    s_sDefaultLabelEnd = StringHelper.getNotNull (sDefaultLabelEnd);
+  }
+
+  @Nullable
+  public static String getSuffixStringOrNull (@Nonnull final ELabelType eType)
+  {
+    return DEFAULT_SUFFIXES.get (eType);
   }
 
   @Nonnull
-  public static String getSuffix (@Nonnull final ELabelType eType, final boolean bAppendColon)
+  public static String getSuffixString (@Nonnull final ELabelType eType)
+  {
+    return StringHelper.getNotNull (getSuffixStringOrNull (eType));
+  }
+
+  /**
+   * Change the default suffix string for a certain form label type. This is a
+   * global change and hence should be set on application startup only.
+   *
+   * @param eType
+   *        The label type to change. May not be <code>null</code>.
+   * @param sValue
+   *        The default suffix string to be used. May be <code>null</code> to
+   *        indicate "none".
+   * @since 8.3.1
+   */
+  public static void setDefaultSuffixString (@Nonnull final ELabelType eType, @Nullable final String sValue)
+  {
+    ValueEnforcer.notNull (eType, "Type");
+    DEFAULT_SUFFIXES.put (eType, StringHelper.getNotNull (sValue));
+  }
+
+  /**
+   * Build the overall suffix based on the suffix of the label type and
+   * optionally the label end
+   *
+   * @param eType
+   *        The label type to use
+   * @param bAppendLabelEnd
+   *        <code>true</code> to append the label end, <code>false</code> if not
+   * @return Never <code>null</code> but maybe an empty string.
+   * @see #getSuffixString(ELabelType)
+   * @see #getDefaultLabelEnd()
+   */
+  @Nonnull
+  public static String getSuffix (@Nonnull final ELabelType eType, final boolean bAppendLabelEnd)
   {
     final String sSuffix = getSuffixString (eType);
-    return bAppendColon ? sSuffix + LABEL_END : sSuffix;
+    return bAppendLabelEnd ? sSuffix + getDefaultLabelEnd () : sSuffix;
+  }
+
+  private static boolean _isNoLabelEndNeeded (@Nonnull final String sText)
+  {
+    if (StringHelper.endsWith (sText, '?'))
+      return true;
+    return false;
+  }
+
+  @Nonnull
+  private static String _getTextToAppend (@Nonnull final ELabelType eType, @Nonnull final String sPlainText)
+  {
+    final String sSuffixString = getSuffixString (eType);
+    final String sLabelEnd = getDefaultLabelEnd ();
+
+    if (StringHelper.hasText (sSuffixString) && StringHelper.endsWith (sPlainText, sSuffixString))
+    {
+      // Append only "label end"
+      // No check if "label end is needed", because it would be weird if "Suffix
+      // string" and "label end" would be the same string
+      return sLabelEnd;
+    }
+
+    if (StringHelper.hasText (sLabelEnd))
+    {
+      if (StringHelper.endsWith (sPlainText, sLabelEnd))
+      {
+        // The text already ends with "label end" - nothing to do
+      }
+      else
+      {
+        if (_isNoLabelEndNeeded (sPlainText))
+        {
+          // Append suffix only
+          return sSuffixString;
+        }
+
+        // Append suffix and label end
+        return sSuffixString + sLabelEnd;
+      }
+    }
+    else
+    {
+      // Append suffix only (which might be empty), as there is no "label end"
+      return sSuffixString;
+    }
+
+    // Fallback - nothing to append
+    return "";
   }
 
   @Nonnull
@@ -56,13 +202,13 @@ public final class HCFormLabelHelper
     ValueEnforcer.notNull (sText, "Text");
     ValueEnforcer.notNull (eType, "Type");
 
-    // Trim optional trailing colon
-    String sPlainText = StringHelper.trimEnd (sText.trim (), LABEL_END);
-    // Append suffix only, if at least some text is present
+    // Trim optional trailing label end
+    String sPlainText = StringHelper.trimEnd (sText.trim (), getDefaultLabelEnd ());
+
     if (StringHelper.hasText (sPlainText))
     {
-      final boolean bAppendColon = !StringHelper.endsWith (sPlainText, '?');
-      sPlainText += getSuffix (eType, bAppendColon);
+      // Append suffix only, if at least some text is present
+      sPlainText += _getTextToAppend (eType, sPlainText);
     }
     return sPlainText;
   }
@@ -79,26 +225,15 @@ public final class HCFormLabelHelper
       final String sPlainText = aNode.getPlainText ();
       if (sPlainText.length () > 0)
       {
-        final String sSuffixString = getSuffixString (eType);
-        if (StringHelper.hasText (sSuffixString) && StringHelper.endsWith (sPlainText, sSuffixString))
-        {
-          // Append only colon
-          aNode.addChild (LABEL_END);
-        }
-        else
-          if (!StringHelper.endsWith (sPlainText, LABEL_END))
-            aNode.addChild (getSuffix (eType, true));
+        // Don't trim or modify the plain text, because it would not have any
+        // impact in the application, as the real displayed text is part of e.g.
+        // a HCTextNode
+        final String sTextToAppend = _getTextToAppend (eType, sPlainText);
+        if (!sTextToAppend.isEmpty ())
+          aNode.addChild (sTextToAppend);
       }
     }
     return aNode;
-  }
-
-  private static final ICommonsSet <String> KNOWN_SUFFIXES = new CommonsHashSet <> (LABEL_END);
-  static
-  {
-    for (final ELabelType e : ELabelType.values ())
-      if (e.hasSpecialSign ())
-        KNOWN_SUFFIXES.add (e.getSpecialSign ());
   }
 
   @Nullable
@@ -107,12 +242,24 @@ public final class HCFormLabelHelper
     if (StringHelper.hasNoText (s))
       return s;
 
+    // Get known suffixes list
+    final ICommonsSet <String> aKnownSuffixes = new CommonsHashSet <> ();
+    for (final String sSuffix : DEFAULT_SUFFIXES.values ())
+      if (StringHelper.hasText (sSuffix))
+        aKnownSuffixes.add (sSuffix);
+
+    final String sLabelEnd = getDefaultLabelEnd ();
+    if (StringHelper.hasText (sLabelEnd))
+      aKnownSuffixes.add (sLabelEnd);
+
     String ret = s;
+    // Repeat until no more suffix was found
     while (true)
     {
       boolean bChange = false;
+
       // Try each suffix
-      for (final String sSuffix : KNOWN_SUFFIXES)
+      for (final String sSuffix : aKnownSuffixes)
       {
         final String ret2 = StringHelper.trimEnd (ret, sSuffix);
         if (ret2.length () != ret.length ())
@@ -122,9 +269,10 @@ public final class HCFormLabelHelper
           break;
         }
       }
+
       if (!bChange)
       {
-        // No more suffix found -> stop
+        // No more suffix found -> stop endless loop
         break;
       }
     }

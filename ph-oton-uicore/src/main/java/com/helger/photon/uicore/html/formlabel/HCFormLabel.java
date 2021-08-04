@@ -51,7 +51,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
    * @param aNode
    *        The node to add. May be <code>null</code>.
    */
-  public HCFormLabel (@Nullable final IHCNode aNode)
+  protected HCFormLabel (@Nullable final IHCNode aNode)
   {
     m_eType = ELabelType.NONE;
     m_bTextLabel = false;
@@ -152,6 +152,9 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   public static HCFormLabel createForCheckBox (@Nonnull final String sText)
   {
     // Avoid adding ":" or "?" at the end
+    if (true)
+      return new HCFormLabel (sText, ELabelType.NONE);
+
     return new HCFormLabel (new HCSpan ().addChild (sText));
   }
 }
