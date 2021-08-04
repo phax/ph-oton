@@ -101,12 +101,15 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to Jetty 9.4.43
     * Updated to ph-web 9.6.1
     * Updated DataTables to 1.10.24
+    * Updated Bootstrap4 DateTimePicker to 5.39.0
     * Improved the way, Jetty dependencies are handled in the POM
     * `BootstrapForm` and `BootstrapViewForm` handle splitting with negative values for certain grid elements
     * Made the `BootstrapFileUpload` placeholder label customizable
     * Added the possibility to add an ID on the `BootstrapNav` of a `BootstrapTabBox`
     * Made class `BootstrapCardCollapsible` more customizable
     * Added custom jQuery function `setReadOnly`
+    * Made the BootstrapDateTimePicker default icon customizable - [#9](https://github.com/phax/ph-oton/issues/9)
+    * Hiding environment variables that start with `SECRET_` - see [#10](https://github.com/phax/ph-oton/issues/10)
 * v8.3.0 - 2021-03-22
     * Updated to Apache commons-net 3.8.0
     * Updated to Bootstrap 4.6.0
