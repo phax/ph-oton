@@ -70,8 +70,7 @@ import com.helger.web.scope.mgr.WebScopeManager;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecutionContext> extends
-                                             AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayTextWithArgs
@@ -96,8 +95,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
     MSG_SYSTEM_SC_DIR ("WebApp-Verzeichnis", "WebApp directory"),
     MSG_SYSTEM_SC_DIR_TOTAL ("Speicherplatz im WebApp-Verzeichnis", "Total space in the WebApp directory"),
     MSG_SYSTEM_SC_DIR_FREE ("Freier Speicherplatz im WebApp-Verzeichnis", "Free space in the WebApp directory"),
-    MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis",
-                              "Usable space in the WebApp directory"),
+    MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis", "Usable space in the WebApp directory"),
     MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis: {0}", "Not a directory: {0}"),
     MSG_STARTUP_DATE_TIME ("Startzeit der Anwendung", "Application startup time"),
     MSG_UPTIME ("Uptime", "Uptime"),
@@ -203,8 +201,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       final BootstrapTable aTable = new BootstrapTable (new HCCol (250), HCCol.star ());
       aTable.setID (getID () + "$special");
       aTable.addHeaderRow ()
-            .addCells (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale),
-                       EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale));
+            .addCells (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale), EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale));
 
       // add some other properties
       {
@@ -212,36 +209,23 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
 
         aTable.addBodyRow ()
               .addCells (EText.MSG_SYSTEM_OS.getDisplayText (aDisplayLocale),
-                         SystemHelper.getOperatingSystem ().getDisplayName () +
-                                                                              " / " +
-                                                                              SystemHelper.getOperatingSystemName ());
+                         SystemHelper.getOperatingSystem ().getDisplayName () + " / " + SystemHelper.getOperatingSystemName ());
         aTable.addBodyRow ()
               .addCells (EText.MSG_SYSTEM_NUM_PROCESSORS.getDisplayText (aDisplayLocale),
                          Integer.toString (SystemHelper.getNumberOfProcessors ()));
         aTable.addBodyRow ()
-              .addCells (EText.MSG_SYSTEM_CHARSET.getDisplayText (aDisplayLocale),
-                         SystemHelper.getSystemCharset ().toString ());
+              .addCells (EText.MSG_SYSTEM_CHARSET.getDisplayText (aDisplayLocale), SystemHelper.getSystemCharset ().toString ());
         aTable.addBodyRow ()
-              .addCells (EText.MSG_SYSTEM_LOCALE.getDisplayText (aDisplayLocale),
-                         SystemHelper.getSystemLocale ().toString ());
+              .addCells (EText.MSG_SYSTEM_LOCALE.getDisplayText (aDisplayLocale), SystemHelper.getSystemLocale ().toString ());
         aTable.addBodyRow ()
               .addCells (EText.MSG_SYSTEM_MEM_FREE.getDisplayText (aDisplayLocale),
-                         Long.toString (SystemHelper.getFreeMemory ()) +
-                                                                                    " / " +
-                                                                                    aSH.getAsMatching (SystemHelper.getFreeMemory (),
-                                                                                                       2));
+                         Long.toString (SystemHelper.getFreeMemory ()) + " / " + aSH.getAsMatching (SystemHelper.getFreeMemory (), 2));
         aTable.addBodyRow ()
               .addCells (EText.MSG_SYSTEM_MEM_MAX.getDisplayText (aDisplayLocale),
-                         Long.toString (SystemHelper.getMaxMemory ()) +
-                                                                                   " / " +
-                                                                                   aSH.getAsMatching (SystemHelper.getMaxMemory (),
-                                                                                                      2));
+                         Long.toString (SystemHelper.getMaxMemory ()) + " / " + aSH.getAsMatching (SystemHelper.getMaxMemory (), 2));
         aTable.addBodyRow ()
               .addCells (EText.MSG_SYSTEM_MEM_TOTAL.getDisplayText (aDisplayLocale),
-                         Long.toString (SystemHelper.getTotalMemory ()) +
-                                                                                     " / " +
-                                                                                     aSH.getAsMatching (SystemHelper.getTotalMemory (),
-                                                                                                        2));
+                         Long.toString (SystemHelper.getTotalMemory ()) + " / " + aSH.getAsMatching (SystemHelper.getTotalMemory (), 2));
         aTable.addBodyRow ()
               .addCells (EText.MSG_CONTEXT_CLASSLOADER.getDisplayText (aDisplayLocale),
                          ClassLoaderHelper.getContextClassLoader ().toString ());
@@ -252,11 +236,9 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         final File aBaseDir = WebFileIO.getDataIO ().getBasePathFile ();
         aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_BASEDIR.getDisplayText (aDisplayLocale), aBaseDir.toString ());
         aTable.addBodyRow ()
-              .addCells (EText.MSG_SYSTEM_BASEDIR_TOTAL.getDisplayText (aDisplayLocale),
-                         aSH.getAsMatching (aBaseDir.getTotalSpace (), 2));
+              .addCells (EText.MSG_SYSTEM_BASEDIR_TOTAL.getDisplayText (aDisplayLocale), aSH.getAsMatching (aBaseDir.getTotalSpace (), 2));
         aTable.addBodyRow ()
-              .addCells (EText.MSG_SYSTEM_BASEDIR_FREE.getDisplayText (aDisplayLocale),
-                         aSH.getAsMatching (aBaseDir.getFreeSpace (), 2));
+              .addCells (EText.MSG_SYSTEM_BASEDIR_FREE.getDisplayText (aDisplayLocale), aSH.getAsMatching (aBaseDir.getFreeSpace (), 2));
         aTable.addBodyRow ()
               .addCells (EText.MSG_SYSTEM_BASEDIR_USABLE.getDisplayText (aDisplayLocale),
                          aSH.getAsMatching (aBaseDir.getUsableSpace (), 2));
@@ -270,14 +252,11 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
             sSCDir += " (" + sSCAbsDir + ")";
           aTable.addBodyRow ().addCells (EText.MSG_SYSTEM_SC_DIR.getDisplayText (aDisplayLocale), sSCDir);
           aTable.addBodyRow ()
-                .addCells (EText.MSG_SYSTEM_SC_DIR_TOTAL.getDisplayText (aDisplayLocale),
-                           aSH.getAsMatching (aSCDir.getTotalSpace (), 2));
+                .addCells (EText.MSG_SYSTEM_SC_DIR_TOTAL.getDisplayText (aDisplayLocale), aSH.getAsMatching (aSCDir.getTotalSpace (), 2));
           aTable.addBodyRow ()
-                .addCells (EText.MSG_SYSTEM_SC_DIR_FREE.getDisplayText (aDisplayLocale),
-                           aSH.getAsMatching (aSCDir.getFreeSpace (), 2));
+                .addCells (EText.MSG_SYSTEM_SC_DIR_FREE.getDisplayText (aDisplayLocale), aSH.getAsMatching (aSCDir.getFreeSpace (), 2));
           aTable.addBodyRow ()
-                .addCells (EText.MSG_SYSTEM_SC_DIR_USABLE.getDisplayText (aDisplayLocale),
-                           aSH.getAsMatching (aSCDir.getUsableSpace (), 2));
+                .addCells (EText.MSG_SYSTEM_SC_DIR_USABLE.getDisplayText (aDisplayLocale), aSH.getAsMatching (aSCDir.getUsableSpace (), 2));
         }
         else
         {
@@ -298,8 +277,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         // JCE unlimited strength available?
         aTable.addBodyRow ()
               .addCells (EText.MSG_JCE_UNLIMITED_STRENGTH.getDisplayText (aDisplayLocale),
-                         EPhotonCoreText.getYesOrNo (CryptoPolicy.isUnlimitedStrengthCryptoAvailable (),
-                                                     aDisplayLocale));
+                         EPhotonCoreText.getYesOrNo (CryptoPolicy.isUnlimitedStrengthCryptoAvailable (), aDisplayLocale));
 
         _addDirectoryContent (aTable,
                               "java.endorsed.dirs",
@@ -320,24 +298,29 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale))).setID (getID ());
 
-      // For all system properties
       final String sPathSep = SystemProperties.getPathSeparator ();
+
+      // For all system properties
       for (final Map.Entry <String, String> aEntry : SystemProperties.getAllProperties ()
                                                                      .getSortedByKey (Comparator.naturalOrder ())
                                                                      .entrySet ())
       {
         final String sName = aEntry.getKey ();
+        final String sNameLC = sName.toLowerCase (Locale.ROOT);
         final String sValue = aEntry.getValue ();
         final HCRow aRow = aTable.addBodyRow ();
 
-        if ((sName.endsWith (".path") || sName.endsWith (".dirs")) && sValue.contains (sPathSep))
+        aRow.addCell (sName);
+
+        if ((sNameLC.endsWith (".path") || sNameLC.endsWith (".dirs")) && sValue.contains (sPathSep))
         {
           // Special handling for paths
-          aRow.addCell (sName);
           aRow.addCell (HCExtHelper.nl2brList (StringHelper.replaceAll (sValue, sPathSep, "\n")));
         }
         else
-          aRow.addCells (sName, sValue);
+        {
+          aRow.addCell (sValue);
+        }
       }
       aNodeList.addChild (aTable);
 

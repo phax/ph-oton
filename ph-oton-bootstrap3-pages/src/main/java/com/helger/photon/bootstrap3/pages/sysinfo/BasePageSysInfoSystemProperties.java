@@ -300,22 +300,27 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_HEADER_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_HEADER_VALUE.getDisplayText (aDisplayLocale))).setID (getID ());
 
-      // For all system properties
       final String sPathSep = SystemProperties.getPathSeparator ();
+
+      // For all system properties
       for (final Map.Entry <String, String> aEntry : CollectionHelper.getSortedByKey (SystemProperties.getAllProperties ()).entrySet ())
       {
         final String sName = aEntry.getKey ();
+        final String sNameLC = sName.toLowerCase (Locale.ROOT);
         final String sValue = aEntry.getValue ();
         final HCRow aRow = aTable.addBodyRow ();
 
-        if ((sName.endsWith (".path") || sName.endsWith (".dirs")) && sValue.contains (sPathSep))
+        aRow.addCell (sName);
+
+        if ((sNameLC.endsWith (".path") || sNameLC.endsWith (".dirs")) && sValue.contains (sPathSep))
         {
           // Special handling for paths
-          aRow.addCell (sName);
           aRow.addCell (HCExtHelper.nl2brList (StringHelper.replaceAll (sValue, sPathSep, "\n")));
         }
         else
-          aRow.addCells (sName, sValue);
+        {
+          aRow.addCell (sValue);
+        }
       }
       aNodeList.addChild (aTable);
 
