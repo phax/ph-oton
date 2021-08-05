@@ -103,6 +103,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated DataTables to 1.10.24
     * Updated Bootstrap4 DateTimePicker to 5.39.0
     * Updated FontAwesome to 5.15.4
+    * Added Bootstrap Icons 1.5.0 in ph-oton-icon
     * Improved the way, Jetty dependencies are handled in the POM
     * `BootstrapForm` and `BootstrapViewForm` handle splitting with negative values for certain grid elements
     * Made the `BootstrapFileUpload` placeholder label customizable

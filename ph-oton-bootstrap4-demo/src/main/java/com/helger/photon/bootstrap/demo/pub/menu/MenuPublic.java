@@ -24,6 +24,7 @@ import com.helger.photon.bootstrap.demo.pub.page.PagePublicDataTables;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicDateTimePicker;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicFormGroups;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicLogin;
+import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconBootstrapIcons;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome4;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconFontAwesome5;
 import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconMaterialDesign;
@@ -52,6 +53,7 @@ public final class MenuPublic
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome4 ("icon-fa4"));
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome5 ("icon-fa5"));
       aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));
+      aMenuTree.createItem (aIcons, new PagePublicIconBootstrapIcons ("icon-bootstrap"));
 
       // Link from "bla" to "icon"
       aMenuTree.createRedirect ("bla", aIcons);
