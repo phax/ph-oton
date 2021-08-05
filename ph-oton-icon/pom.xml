@@ -90,6 +90,7 @@
             <exclude>**/*.woff*</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>**/LICENSE</exclude>
+            <exclude>src/main/resources/bootstrap-icons/**</exclude>
             <exclude>src/main/resources/fontawesome/**</exclude>
             <exclude>src/main/resources/materialdesign/**</exclude>
           </excludes>
@@ -118,6 +119,17 @@
             <goals>
               <goal>csscompress</goal>
             </goals>
+            <configuration>
+              <sourceDirectory>${basedir}/src/main/resources/bootstrap-icons</sourceDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>csscompress</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${basedir}/src/main/resources/ph-oton</sourceDirectory>
+            </configuration>
           </execution>
         </executions>
         <configuration>
@@ -125,7 +137,6 @@
           <removeUnnecessaryCode>true</removeUnnecessaryCode>
           <quoteURLs>true</quoteURLs>
           <verbose>true</verbose>
-          <sourceDirectory>${basedir}/src/main/resources/ph-oton</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>
