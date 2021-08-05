@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -51,7 +52,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
    * @param aNode
    *        The node to add. May be <code>null</code>.
    */
-  protected HCFormLabel (@Nullable final IHCNode aNode)
+  public HCFormLabel (@Nullable final IHCNode aNode)
   {
     m_eType = ELabelType.NONE;
     m_bTextLabel = false;
@@ -65,10 +66,13 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     ValueEnforcer.notNull (eType, "Type");
     assignFormLabelClasses (this, eType);
 
-    addChild (new HCTextNode (HCFormLabelHelper.getTextWithState (sText, eType)));
+    // Trim optional trailing label end
+    final String sPlainText = StringHelper.trimEnd (sText.trim (), HCFormLabelHelper.getDefaultLabelEnd ());
+    final String sUIText = HCFormLabelHelper.getTextWithState (sPlainText, eType);
+    addChild (new HCTextNode (sUIText));
     m_eType = eType;
     m_bTextLabel = true;
-    m_sPlainText = sText;
+    m_sPlainText = sPlainText;
   }
 
   public HCFormLabel (@Nonnull final IHCNodeWithChildren <?> aNode, @Nonnull final ELabelType eType)
@@ -77,11 +81,12 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     ValueEnforcer.notNull (eType, "Type");
     assignFormLabelClasses (this, eType);
 
-    // Set the label text, before the signs are appended!
-    m_sPlainText = aNode.getPlainText ();
-    addChild (HCFormLabelHelper.getNodeWithState (aNode, eType));
     m_eType = eType;
     m_bTextLabel = false;
+    // Set the label text, before the suffixes are appended!
+    m_sPlainText = StringHelper.trimEnd (aNode.getPlainText ().trim (), HCFormLabelHelper.getDefaultLabelEnd ());
+    // Append if necessary
+    addChild (HCFormLabelHelper.getNodeWithState (aNode, eType));
   }
 
   @Override
@@ -149,11 +154,25 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   }
 
   @Nonnull
+  public static HCFormLabel createPlain (@Nonnull final String sText)
+  {
+    // Avoid adding ":" or "?" at the end
+    return new HCFormLabel (sText, ELabelType.NONE);
+  }
+
+  @Nonnull
+  public static HCFormLabel createPlain (@Nonnull final IHCElementWithChildren <?> aNode)
+  {
+    // Avoid adding ":" or "?" at the end
+    return new HCFormLabel (aNode, ELabelType.NONE);
+  }
+
+  @Nonnull
   public static HCFormLabel createForCheckBox (@Nonnull final String sText)
   {
     // Avoid adding ":" or "?" at the end
-    if (true)
-      return new HCFormLabel (sText, ELabelType.NONE);
+    if (false)
+      return createPlain (sText);
 
     return new HCFormLabel (new HCSpan ().addChild (sText));
   }

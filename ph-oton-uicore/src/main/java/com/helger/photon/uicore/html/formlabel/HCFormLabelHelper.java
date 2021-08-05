@@ -20,6 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.CommonsHashSet;
@@ -62,6 +65,8 @@ public final class HCFormLabelHelper
   @Deprecated
   public static final String LABEL_END = DEFAULT_LABEL_END;
 
+  private static final Logger LOGGER = LoggerFactory.getLogger (HCFormLabelHelper.class);
+
   private static ICommonsMap <ELabelType, String> DEFAULT_SUFFIXES = new CommonsHashMap <> ();
   static
   {
@@ -96,7 +101,11 @@ public final class HCFormLabelHelper
    */
   public static void setDefaultLabelEnd (@Nullable final String sDefaultLabelEnd)
   {
-    s_sDefaultLabelEnd = StringHelper.getNotNull (sDefaultLabelEnd);
+    final String sRealValue = StringHelper.getNotNull (sDefaultLabelEnd);
+    s_sDefaultLabelEnd = sRealValue;
+
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("The UI default 'label end' was set to '" + sRealValue + "'");
   }
 
   @Nullable
@@ -125,7 +134,12 @@ public final class HCFormLabelHelper
   public static void setDefaultSuffixString (@Nonnull final ELabelType eType, @Nullable final String sValue)
   {
     ValueEnforcer.notNull (eType, "Type");
-    DEFAULT_SUFFIXES.put (eType, StringHelper.getNotNull (sValue));
+
+    final String sRealValue = StringHelper.getNotNull (sValue);
+    DEFAULT_SUFFIXES.put (eType, sRealValue);
+
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("The UI default suffix for type " + eType + " was set to '" + sRealValue + "'");
   }
 
   /**
@@ -147,8 +161,11 @@ public final class HCFormLabelHelper
     return bAppendLabelEnd ? sSuffix + getDefaultLabelEnd () : sSuffix;
   }
 
-  private static boolean _isNoLabelEndNeeded (@Nonnull final String sText)
+  private static boolean _isNoLabelEndNeeded (@Nonnull final ELabelType eType, @Nonnull final String sText)
   {
+    if (eType == ELabelType.NONE)
+      return true;
+
     if (StringHelper.endsWith (sText, '?'))
       return true;
     return false;
@@ -176,7 +193,7 @@ public final class HCFormLabelHelper
       }
       else
       {
-        if (_isNoLabelEndNeeded (sPlainText))
+        if (_isNoLabelEndNeeded (eType, sPlainText))
         {
           // Append suffix only
           return sSuffixString;
@@ -202,9 +219,7 @@ public final class HCFormLabelHelper
     ValueEnforcer.notNull (sText, "Text");
     ValueEnforcer.notNull (eType, "Type");
 
-    // Trim optional trailing label end
-    String sPlainText = StringHelper.trimEnd (sText.trim (), getDefaultLabelEnd ());
-
+    String sPlainText = sText;
     if (StringHelper.hasText (sPlainText))
     {
       // Append suffix only, if at least some text is present

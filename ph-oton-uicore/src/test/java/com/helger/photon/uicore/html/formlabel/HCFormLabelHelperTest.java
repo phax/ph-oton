@@ -31,6 +31,12 @@ public final class HCFormLabelHelperTest
   @Test
   public void test ()
   {
+    // Ensure defaults are set
+    assertEquals (HCFormLabelHelper.DEFAULT_SIGN_OPTIONAL, HCFormLabelHelper.getSuffixString (ELabelType.OPTIONAL));
+    assertEquals (HCFormLabelHelper.DEFAULT_SIGN_ALTERNATIVE, HCFormLabelHelper.getSuffixString (ELabelType.ALTERNATIVE));
+    assertEquals (HCFormLabelHelper.DEFAULT_SIGN_MANDATORY, HCFormLabelHelper.getSuffixString (ELabelType.MANDATORY));
+    assertEquals (HCFormLabelHelper.DEFAULT_LABEL_END, HCFormLabelHelper.getDefaultLabelEnd ());
+
     assertNull (HCFormLabelHelper.trimAllKnownSuffixes (null));
     assertEquals ("", HCFormLabelHelper.trimAllKnownSuffixes (""));
     assertEquals ("abc", HCFormLabelHelper.trimAllKnownSuffixes ("abc:"));

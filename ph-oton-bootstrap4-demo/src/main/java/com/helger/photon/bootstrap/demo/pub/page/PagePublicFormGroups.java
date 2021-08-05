@@ -32,19 +32,27 @@ public class PagePublicFormGroups extends AbstractAppWebPage
 
     final BootstrapForm aForm = aNodeList.addAndReturnChild (getUIHandler ().createFormSelf (aWPEC));
 
+    if (true)
+    {
+      // Playground :)
+      // Attention - affects all forms!
+      HCFormLabelHelper.setDefaultLabelEnd (":");
+      HCFormLabelHelper.setDefaultSuffixString (ELabelType.OPTIONAL, ")");
+      HCFormLabelHelper.setDefaultSuffixString (ELabelType.ALTERNATIVE, "]");
+      HCFormLabelHelper.setDefaultSuffixString (ELabelType.MANDATORY, "}");
+    }
+
     // Specific form labels
-    HCFormLabelHelper.setDefaultLabelEnd ("::");
-    HCFormLabelHelper.setDefaultSuffixString (ELabelType.OPTIONAL, ")");
-    HCFormLabelHelper.setDefaultSuffixString (ELabelType.ALTERNATIVE, "]");
-    HCFormLabelHelper.setDefaultSuffixString (ELabelType.MANDATORY, "}");
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel ("Optional").setCtrl ("foo"));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabel ("Optional?").setCtrl ("foo"));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelAlternative ("Alternative").setCtrl ("foo"));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory ("Mandatory").setCtrl ("foo"));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox ("For CheckBox").setCtrl (new HCCheckBox ()));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory ("For CheckBox").setCtrl (new HCCheckBox ()));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox ("For CheckBox?").setCtrl (new HCCheckBox ()));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox ("For CheckBox)").setCtrl (new HCCheckBox ()));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox ("For CheckBox::").setCtrl (new HCCheckBox ()));
-    aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox ("For RadioButton::").setCtrl (new HCRadioButton ()));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox ("For CheckBox:").setCtrl (new HCCheckBox ()));
+    aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox ("For RadioButton:").setCtrl (new HCRadioButton ()));
     final Function <String, IHCElementWithChildren <?>> sup = s -> new HCSpan ().addChild (s)
                                                                                 .addChild (new HCSup ().addChild (")")
                                                                                                        .addStyle (CCSSProperties.COLOR.newValue ("red")));
