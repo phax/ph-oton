@@ -34,7 +34,7 @@ public enum EIconCSSPathProvider implements ICSSPathProvider
 {
   /** http://fontawesome.io */
   FONT_AWESOME4 ("fontawesome/4.7.0/css/font-awesome.css"),
-  FONT_AWESOME5 ("fontawesome/5.2.0/css/all.css"),
+  FONT_AWESOME5 ("fontawesome/5.15.4/css/all.css"),
   /** https://material.io/icons/ */
   MATERIAL_ICONS ("materialdesign/3.0.1/material-icons.css"),
   MATERIAL_ICONS_LIST ("materialdesign/3.0.1/material-icons-list.css"),

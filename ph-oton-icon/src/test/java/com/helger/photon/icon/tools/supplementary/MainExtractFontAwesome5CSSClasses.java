@@ -58,12 +58,12 @@ public class MainExtractFontAwesome5CSSClasses
     // find all brands
     final ICommonsSet <String> aBrandFields = new CommonsHashSet <> ();
     final IJsonObject aObject = (IJsonObject) JsonReader.builder ()
-                                                        .source (new ClassPathResource ("fontawesome/5.2.0/icons.json"))
+                                                        .source (new ClassPathResource ("fontawesome/5.15.4/icons.json"))
                                                         .read ();
     for (final Map.Entry <String, IJson> aEntry : aObject)
     {
       final String sID = aEntry.getKey ();
-      if (aEntry.getValue ().getAsObject ().get ("styles").getAsArray ().contains ("brands"))
+      if (aEntry.getValue ().getAsObject ().getAsArray ("styles").contains ("brands"))
         aBrandFields.add (createFieldName (sID));
     }
 
@@ -113,12 +113,7 @@ public class MainExtractFontAwesome5CSSClasses
       {
         final String sClassFieldName = createFieldName (sClass.substring (1));
         final String sFieldName = createFieldName (sClassFieldName.substring ("fa-".length ()));
-        System.out.println (sFieldName +
-                            " (CFontAwesome5CSS." +
-                            sClassFieldName +
-                            ", " +
-                            aBrandFields.contains (sFieldName) +
-                            "),");
+        System.out.println (sFieldName + " (CFontAwesome5CSS." + sClassFieldName + ", " + aBrandFields.contains (sFieldName) + "),");
       }
   }
 }
