@@ -33,7 +33,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 @NotThreadSafe
 public final class DefaultIcons
 {
-  private static final EnumMap <EDefaultIcon, IIcon> s_aMap = new EnumMap <> (EDefaultIcon.class);
+  private static final EnumMap <EDefaultIcon, IIcon> MAP = new EnumMap <> (EDefaultIcon.class);
 
   private DefaultIcons ()
   {}
@@ -44,7 +44,7 @@ public final class DefaultIcons
    */
   public static boolean areDefined ()
   {
-    return !s_aMap.isEmpty ();
+    return !MAP.isEmpty ();
   }
 
   /**
@@ -59,7 +59,7 @@ public final class DefaultIcons
   {
     if (eDefaultIcon == null)
       return null;
-    return s_aMap.get (eDefaultIcon);
+    return MAP.get (eDefaultIcon);
   }
 
   /**
@@ -70,7 +70,7 @@ public final class DefaultIcons
   @ReturnsMutableCopy
   public static EnumMap <EDefaultIcon, IIcon> getAll ()
   {
-    return new EnumMap <> (s_aMap);
+    return new EnumMap <> (MAP);
   }
 
   /**
@@ -87,9 +87,9 @@ public final class DefaultIcons
   {
     ValueEnforcer.notNull (eDefaultIcon, "DefaultIcon");
     if (aIcon != null)
-      s_aMap.put (eDefaultIcon, aIcon);
+      MAP.put (eDefaultIcon, aIcon);
     else
-      s_aMap.remove (eDefaultIcon);
+      MAP.remove (eDefaultIcon);
   }
 
   /**
@@ -97,6 +97,6 @@ public final class DefaultIcons
    */
   public static void removeAll ()
   {
-    s_aMap.clear ();
+    MAP.clear ();
   }
 }

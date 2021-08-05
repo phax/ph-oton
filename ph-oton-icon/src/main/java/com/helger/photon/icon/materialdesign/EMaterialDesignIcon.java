@@ -1057,6 +1057,7 @@ public enum EMaterialDesignIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.DELETE, DELETE);
     DefaultIcons.set (EDefaultIcon.DOWN, ARROW_DOWNWARD);
     DefaultIcons.set (EDefaultIcon.EDIT, EDIT);
+    DefaultIcons.set (EDefaultIcon.FORWARD, FORWARD);
     DefaultIcons.set (EDefaultIcon.HELP, HELP);
     DefaultIcons.set (EDefaultIcon.INFO, INFO);
     DefaultIcons.set (EDefaultIcon.KEY, LOCK);
@@ -1071,6 +1072,8 @@ public enum EMaterialDesignIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.SAVE_ALL, SAVE);
     DefaultIcons.set (EDefaultIcon.SAVE_AS, SAVE);
     DefaultIcons.set (EDefaultIcon.SAVE_CLOSE, SAVE);
+    DefaultIcons.set (EDefaultIcon.SUBMIT, SAVE);
+    DefaultIcons.set (EDefaultIcon.UNDELETE, UNDO);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UPWARD);
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }

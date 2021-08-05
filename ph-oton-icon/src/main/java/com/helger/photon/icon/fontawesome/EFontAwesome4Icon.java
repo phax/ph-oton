@@ -955,6 +955,7 @@ public enum EFontAwesome4Icon implements IIcon
     DefaultIcons.set (EDefaultIcon.DELETE, TRASH);
     DefaultIcons.set (EDefaultIcon.DOWN, ARROW_DOWN);
     DefaultIcons.set (EDefaultIcon.EDIT, PENCIL);
+    DefaultIcons.set (EDefaultIcon.FORWARD, ARROW_RIGHT);
     DefaultIcons.set (EDefaultIcon.HELP, QUESTION);
     DefaultIcons.set (EDefaultIcon.INFO, INFO);
     DefaultIcons.set (EDefaultIcon.KEY, LOCK);
@@ -969,6 +970,8 @@ public enum EFontAwesome4Icon implements IIcon
     DefaultIcons.set (EDefaultIcon.SAVE_ALL, SAVE);
     DefaultIcons.set (EDefaultIcon.SAVE_AS, SAVE);
     DefaultIcons.set (EDefaultIcon.SAVE_CLOSE, SAVE);
+    DefaultIcons.set (EDefaultIcon.SUBMIT, PAPER_PLANE);
+    DefaultIcons.set (EDefaultIcon.UNDELETE, ARROW_LEFT);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UP);
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }

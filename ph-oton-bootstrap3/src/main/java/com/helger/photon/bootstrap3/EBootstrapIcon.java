@@ -334,6 +334,7 @@ public enum EBootstrapIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.DELETE, REMOVE);
     DefaultIcons.set (EDefaultIcon.DOWN, ARROW_DOWN);
     DefaultIcons.set (EDefaultIcon.EDIT, PENCIL);
+    DefaultIcons.set (EDefaultIcon.FORWARD, ARROW_RIGHT);
     DefaultIcons.set (EDefaultIcon.HELP, QUESTION_SIGN);
     DefaultIcons.set (EDefaultIcon.INFO, INFO_SIGN);
     DefaultIcons.set (EDefaultIcon.KEY, LOCK);
@@ -348,6 +349,7 @@ public enum EBootstrapIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.SAVE_ALL, HDD);
     DefaultIcons.set (EDefaultIcon.SAVE_AS, HDD);
     DefaultIcons.set (EDefaultIcon.SAVE_CLOSE, HDD);
+    DefaultIcons.set (EDefaultIcon.SUBMIT, HDD);
     DefaultIcons.set (EDefaultIcon.UNDELETE, ARROW_LEFT);
     DefaultIcons.set (EDefaultIcon.UP, ARROW_UP);
     DefaultIcons.set (EDefaultIcon.YES, OK);
