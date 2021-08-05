@@ -37,6 +37,7 @@ public enum EDefaultIcon implements IIcon
   DELETE,
   DOWN,
   EDIT,
+  FORWARD,
   HELP,
   INFO,
   KEY,
@@ -51,6 +52,7 @@ public enum EDefaultIcon implements IIcon
   SAVE_ALL,
   SAVE_AS,
   SAVE_CLOSE,
+  SUBMIT,
   UNDELETE,
   UP,
   YES;
