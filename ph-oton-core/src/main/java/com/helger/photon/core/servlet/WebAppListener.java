@@ -172,7 +172,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     LOGGER.info ("| '_ \\| '_ \\ _____ / _ \\| __/ _ \\| '_ \\ ");
     LOGGER.info ("| |_) | | | |_____| (_) | || (_) | | | |");
     LOGGER.info ("| .__/|_| |_|      \\___/ \\__\\___/|_| |_|");
-    LOGGER.info ("|_|                               v" + CPhotonVersion.BUILD_VERSION);
+    // Ensure version is always right aligned
+    // Use 20 chars to also cater for "SNAPSHOT" versions
+    final String sSpaces = StringHelper.getRepeated (' ', Math.max (20 - CPhotonVersion.BUILD_VERSION.length (), 0));
+    LOGGER.info ("|_|                " + sSpaces + "v" + CPhotonVersion.BUILD_VERSION);
   }
 
   protected final void logServerInfo (@Nonnull final ServletContext aSC)
