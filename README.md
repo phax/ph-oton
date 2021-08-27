@@ -96,7 +96,9 @@ See the submodule `ph-oton-bootstrap3-demo` for a working example project with B
 Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
- 
+
+* v8.3.2 - work in progress
+    * Updated to FineUploader 5.16.2
 * v8.3.1 - 2021-08-05
     * Updated to Jetty 9.4.43
     * Updated to ph-web 9.6.1

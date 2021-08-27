@@ -1,4 +1,4 @@
-// Fine Uploader 5.11.10 - (c) 2013-present Widen Enterprises, Inc. MIT licensed. http://fineuploader.com
+// Fine Uploader 5.16.2 - MIT licensed. http://fineuploader.com
 (function(global) {
     var qq = function(element) {
         "use strict";
@@ -578,7 +578,7 @@
             global.qq = qq;
         }
     })();
-    qq.version = "5.11.10";
+    qq.version = "5.16.2";
     qq.supportedFeatures = function() {
         "use strict";
         var supportsUploading, supportsUploadingBlobs, supportsFileDrop, supportsAjaxFileUploading, supportsFolderDrop, supportsChunking, supportsResume, supportsUploadViaPaste, supportsUploadCors, supportsDeleteFileXdr, supportsDeleteFileCorsXhr, supportsDeleteFileCors, supportsFolderSelection, supportsImagePreviews, supportsUploadProgress;
@@ -595,9 +595,6 @@
                 supported = false;
             }
             return supported;
-        }
-        function isChrome21OrHigher() {
-            return (qq.chrome() || qq.opera()) && navigator.userAgent.match(/Chrome\/[2][1-9]|Chrome\/[3-9][0-9]/) !== undefined;
         }
         function isChrome14OrHigher() {
             return (qq.chrome() || qq.opera()) && navigator.userAgent.match(/Chrome\/[1][4-9]|Chrome\/[2-9][0-9]/) !== undefined;
@@ -636,7 +633,11 @@
         supportsAjaxFileUploading = supportsUploading && qq.isXhrUploadSupported();
         supportsUploadingBlobs = supportsAjaxFileUploading && !qq.androidStock();
         supportsFileDrop = supportsAjaxFileUploading && isDragAndDropSupported();
-        supportsFolderDrop = supportsFileDrop && isChrome21OrHigher();
+        supportsFolderDrop = supportsFileDrop && function() {
+            var input = document.createElement("input");
+            input.type = "file";
+            return !!("webkitdirectory" in (input || document.querySelectorAll("input[type=file]")[0]));
+        }();
         supportsChunking = supportsAjaxFileUploading && qq.isFileChunkingSupported();
         supportsResume = supportsAjaxFileUploading && supportsChunking && isLocalStorageSupported();
         supportsUploadViaPaste = supportsAjaxFileUploading && isChrome14OrHigher();
@@ -765,12 +766,7 @@
             var parseEntryPromise = new qq.Promise();
             if (entry.isFile) {
                 entry.file(function(file) {
-                    var name = entry.name, fullPath = entry.fullPath, indexOfNameInFullPath = fullPath.indexOf(name);
-                    fullPath = fullPath.substr(0, indexOfNameInFullPath);
-                    if (fullPath.charAt(0) === "/") {
-                        fullPath = fullPath.substr(1);
-                    }
-                    file.qqPath = fullPath;
+                    file.qqPath = extractDirectoryPath(entry);
                     droppedFiles.push(file);
                     parseEntryPromise.success();
                 }, function(fileError) {
@@ -797,6 +793,14 @@
                 });
             }
             return parseEntryPromise;
+        }
+        function extractDirectoryPath(entry) {
+            var name = entry.name, fullPath = entry.fullPath, indexOfNameInFullPath = fullPath.lastIndexOf(name);
+            fullPath = fullPath.substr(0, indexOfNameInFullPath);
+            if (fullPath.charAt(0) === "/") {
+                fullPath = fullPath.substr(1);
+            }
+            return fullPath;
         }
         function getFilesInDirectory(entry, reader, accumEntries, existingPromise) {
             var promise = existingPromise || new qq.Promise(), dirReader = reader || entry.createReader();
@@ -885,9 +889,6 @@
             return fileDrag;
         }
         function leavingDocumentOut(e) {
-            if (qq.firefox()) {
-                return !e.relatedTarget;
-            }
             if (qq.safari()) {
                 return e.x < 0 || e.y < 0;
             }
@@ -927,8 +928,10 @@
                 maybeHideDropZones();
             });
             disposeSupport.attach(document, "drop", function(e) {
-                e.preventDefault();
-                maybeHideDropZones();
+                if (isFileDrag(e)) {
+                    e.preventDefault();
+                    maybeHideDropZones();
+                }
             });
             disposeSupport.attach(document, HIDE_ZONES_EVENT_NAME, maybeHideDropZones);
         }
@@ -953,6 +956,8 @@
                 });
             }
         });
+        this._testing = {};
+        this._testing.extractDirectoryPath = extractDirectoryPath;
     };
     qq.DragAndDrop.callbacks = function() {
         "use strict";
@@ -1005,7 +1010,7 @@
             }
             var effectTest, dt = e.dataTransfer, isSafari = qq.safari();
             effectTest = qq.ie() && qq.supportedFeatures.fileDrop ? true : dt.effectAllowed !== "none";
-            return dt && effectTest && (dt.files || !isSafari && dt.types.contains && dt.types.contains("Files"));
+            return dt && effectTest && (dt.files && dt.files.length || !isSafari && dt.types.contains && dt.types.contains("Files") || dt.types.includes && dt.types.includes("Files"));
         }
         function isOrSetDropDisabled(isDisabled) {
             if (isDisabled !== undefined) {
@@ -1088,6 +1093,8 @@
                 return element;
             }
         });
+        this._testing = {};
+        this._testing.isValidFileDrag = isValidFileDrag;
     };
 })(window);
 //# sourceMappingURL=dnd.js.map
