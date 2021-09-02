@@ -88,7 +88,7 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  */
 public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
-  public static interface IHttpClientMetaProvider
+  public interface IHttpClientMetaProvider
   {
     /**
      * @param sTargetURI
@@ -100,7 +100,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     HttpClientSettings getHttpClientSettings (@Nonnull @Nonempty String sTargetURI);
   }
 
-  public static interface IHttpClientConfig extends IHasID <String>, IHasDisplayName, IHttpClientMetaProvider
+  public interface IHttpClientConfig extends IHasID <String>, IHasDisplayName, IHttpClientMetaProvider
   {
     /* empty */
   }
@@ -325,10 +325,17 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
           final HttpRequestBase aReq = HttpClientHelper.createRequest (eHttpMethod, new SimpleURL (sURI));
           sResultContent = aHCM.execute (aReq, aResponseHdl);
           bSuccess = true;
+          LOGGER.info ("http client " + eHttpMethod.getName () + " query succeeded");
         }
         catch (final IOException ex)
         {
           sResultContent = BootstrapTechnicalUI.getTechnicalDetailsString (ex, aDisplayLocale);
+          LOGGER.warn ("http client " +
+                       eHttpMethod.getName () +
+                       " query failed with " +
+                       ex.getClass ().getName () +
+                       " - " +
+                       ex.getMessage ());
         }
         aSW.stop ();
 
