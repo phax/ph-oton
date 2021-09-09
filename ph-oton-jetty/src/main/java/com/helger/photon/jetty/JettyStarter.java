@@ -17,6 +17,7 @@
 package com.helger.photon.jetty;
 
 import java.io.File;
+import java.util.function.IntUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -82,7 +83,7 @@ public class JettyStarter
   private int m_nPort = DEFAULT_PORT;
   private boolean m_bRunStopMonitor = true;
   private String m_sStopKey = DEFAULT_STOP_KEY;
-  private int m_nStopPort = DEFAULT_STOP_PORT;
+  private IntUnaryOperator m_aStopPort = x -> DEFAULT_STOP_PORT;
   private boolean m_bSpecialSessionMgr = true;
   private Resource m_aResourceBase = _asRes ("target/webapp-classes");
   private String m_sWebXmlResource;
@@ -205,13 +206,34 @@ public class JettyStarter
   public final JettyStarter setStopPort (@Nonnegative final int nStopPort)
   {
     ValueEnforcer.isGT0 (nStopPort, "StopPort");
-    m_nStopPort = nStopPort;
+    // Set a constant value
+    return setStopPort (x -> nStopPort);
+  }
+
+  /**
+   * Set the port on which the "stop monitor" should be running. Defaults to
+   * {@link #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each
+   * instance must use it's own stop port. If this is set here, it must also be
+   * set in {@link JettyStopper}.<br>
+   * This overload lets you set a function that takes as input the default port
+   * and you can calculate the stop port from it.
+   *
+   * @param aStopPort
+   *        The stop port to be used. May not be <code>null</code>.
+   * @return this for chaining
+   * @since 8.3.2
+   */
+  @Nonnull
+  public final JettyStarter setStopPort (@Nonnull final IntUnaryOperator aStopPort)
+  {
+    ValueEnforcer.notNull (aStopPort, "StopPort");
+    m_aStopPort = aStopPort;
     return this;
   }
 
   public int getStopPort ()
   {
-    return m_nStopPort;
+    return m_aStopPort.applyAsInt (m_nPort);
   }
 
   /**
@@ -621,13 +643,15 @@ public class JettyStarter
     try
     {
       // Starting shutdown listener thread
+      final int nStopPort = m_aStopPort.applyAsInt (m_nPort);
+
       // May fail if port is in use
       if (m_bRunStopMonitor)
-        new InternalJettyStopMonitorThread (m_nStopPort, m_sStopKey, aServer::stop).start ();
+        new InternalJettyStopMonitorThread (nStopPort, m_sStopKey, aServer::stop).start ();
 
       // Starting the engines:
       aServer.start ();
-      LOGGER.info ("Started Jetty" + ":" + m_nPort + ":" + m_nStopPort + " " + m_sAppName);
+      LOGGER.info ("Started Jetty" + ":" + m_nPort + ":" + nStopPort + " " + m_sAppName);
 
       // Callback
       onServerStarted (aServer);
