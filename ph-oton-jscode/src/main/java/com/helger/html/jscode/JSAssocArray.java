@@ -19,6 +19,7 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoublePredicate;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
@@ -212,6 +213,16 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   public JSAssocArray add (@Nonnull final String sKey, @Nonnull final IJSExpression aValue)
   {
     return add (getKey (sKey), aValue);
+  }
+
+  @Nonnull
+  public <T extends IJSExpression> JSAssocArray addIf (@Nonnull final String sKey,
+                                                       @Nonnull final T aValue,
+                                                       @Nonnull final BooleanSupplier aFilter)
+  {
+    if (aFilter.getAsBoolean ())
+      return add (getKey (sKey), aValue);
+    return this;
   }
 
   @Nonnull
