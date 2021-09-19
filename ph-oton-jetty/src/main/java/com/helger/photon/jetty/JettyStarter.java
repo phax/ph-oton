@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.http.HttpCookie;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -545,6 +546,9 @@ public class JettyStarter
       aWebAppCtx.setSessionHandler (aHdl);
     }
 
+    // Hack to circumvent API limits - ensure SameSite for Session cookie
+    aWebAppCtx.getSessionHandler ().getSessionCookieConfig ().setComment (HttpCookie.SAME_SITE_STRICT_COMMENT);
+    aWebAppCtx.getSessionHandler ().getSessionCookieConfig ().setHttpOnly (true);
     if (StringHelper.hasText (m_sSessionCookieName))
       aWebAppCtx.getSessionHandler ().setSessionCookie (m_sSessionCookieName);
 
