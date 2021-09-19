@@ -32,8 +32,9 @@ import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTConfig;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTToString;
 import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -58,9 +59,10 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
-  protected enum EText implements IHasDisplayText
+  protected enum EText implements IHasDisplayTextWithArgs
   {
     MSG_CURRENT_TIMEZONE ("Eingestellte Zeitzone: ", "Time zone set: "),
+    MSG_CURRENT_LOCAL_TIME ("Aktuelle lokale Uhrzeit: {0}", "Current local time: {0}"),
     MSG_ID ("ID", "ID"),
     MSG_NAME ("Name", "Name"),
     MSG_SHORTNAME ("Kurzer Name", "Short name"),
@@ -118,6 +120,12 @@ public class BasePageDataTimeZones <WPECTYPE extends IWebPageExecutionContext> e
                                                             aCurrentDTZ.getId () +
                                                             " - " +
                                                             aCurrentDTZ.getDisplayName (TextStyle.FULL, aDisplayLocale)));
+
+    // Show current local date time
+    aNodeList.addChild (div (EText.MSG_CURRENT_LOCAL_TIME.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                  PDTToString.getAsString (PDTFactory.getCurrentLocalDateTime (),
+                                                                                                           aDisplayLocale))));
+
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_ID.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)),
                                         new DTCol (EText.MSG_SHORTNAME.getDisplayText (aDisplayLocale)),
