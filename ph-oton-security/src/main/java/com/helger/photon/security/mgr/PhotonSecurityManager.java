@@ -47,6 +47,7 @@ import com.helger.commons.lang.ClassHelper;
 import com.helger.dao.DAOException;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.audit.AuditManager;
+import com.helger.photon.audit.IAuditManager;
 import com.helger.photon.security.lock.DefaultLockManager;
 import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.login.ELoginResult;
@@ -87,21 +88,54 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
    */
   public interface IFactory
   {
+    /**
+     * @return A new instance of {@link IAuditManager}.
+     * @throws Exception
+     *         In case of error
+     * @since 8.3.2
+     */
+    @Nonnull
+    IAuditManager createAuditManager () throws Exception;
+
+    /**
+     * @return A new instance of {@link IUserManager}
+     * @throws Exception
+     *         In case of error
+     */
     @Nonnull
     IUserManager createUserMgr () throws Exception;
 
+    /**
+     * @return A new instance of {@link IRoleManager}
+     * @throws Exception
+     *         In case of error
+     */
     @Nonnull
     IRoleManager createRoleMgr () throws Exception;
 
+    /**
+     * @param aUserMgr
+     *        The user manager. Never <code>null</code>.
+     * @param aRoleMgr
+     *        The role manager. Never <code>null</code>.
+     * @return A new instance of {@link IUserGroupManager}
+     * @throws Exception
+     *         In case of error
+     */
     @Nonnull
     IUserGroupManager createUserGroupMgr (@Nonnull IUserManager aUserMgr, @Nonnull IRoleManager aRoleMgr) throws Exception;
 
+    /**
+     * @return A new instance of {@link IUserTokenManager}
+     * @throws Exception
+     *         In case of error
+     */
     @Nonnull
     IUserTokenManager createUserTokenMgr () throws Exception;
   }
 
   /**
-   * Default Factory implementation using XML backend.
+   * Default {@link IFactory} implementation using XML backend.
    *
    * @author Philip Helger
    * @since 8.2.4
@@ -109,11 +143,18 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   @Immutable
   public static class FactoryXML implements IFactory
   {
+    public static final String DIRECTORY_AUDITS = "audits/";
     public static final String DIRECTORY_SECURITY = "security/";
     public static final String FILENAME_USERS_XML = "users.xml";
     public static final String FILENAME_ROLES_XML = "roles.xml";
     public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
     public static final String FILENAME_USERTOKENS_XML = "usertokens.xml";
+
+    @Nonnull
+    public IAuditManager createAuditManager () throws DAOException
+    {
+      return new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
+    }
 
     @Nonnull
     public IUserManager createUserMgr () throws DAOException
@@ -141,8 +182,6 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     }
   }
 
-  public static final String DIRECTORY_AUDITS = "audits/";
-
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonSecurityManager.class);
 
   /** The global factory to be used. */
@@ -160,7 +199,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     s_aFactory = aFactory;
   }
 
-  private AuditManager m_aAuditMgr;
+  private IAuditManager m_aAuditMgr;
   private IUserManager m_aUserMgr;
   private IRoleManager m_aRoleMgr;
   private IUserGroupManager m_aUserGroupMgr;
@@ -199,7 +238,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   {
     try
     {
-      m_aAuditMgr = new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
+      m_aAuditMgr = s_aFactory.createAuditManager ();
       AuditHelper.setAuditor (m_aAuditMgr.getAuditor ());
       AuditHelper.onAuditExecuteSuccess ("audit-initialized");
 
@@ -250,7 +289,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Nonnull
-  public static AuditManager getAuditMgr ()
+  public static IAuditManager getAuditMgr ()
   {
     return getInstance ().m_aAuditMgr;
   }
