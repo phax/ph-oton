@@ -24,6 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.DevelopersNote;
 import com.helger.commons.annotation.UnsupportedOperation;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.app.mock.MockCurrentUserIDProvider;
 
@@ -50,6 +51,15 @@ public final class AuditHelper
   public static IAuditor getAuditor ()
   {
     return RW_LOCK.readLockedGet ( () -> s_aAuditor);
+  }
+
+  /**
+   * @return <code>true</code> if the current Auditor is the default auditor.
+   * @since 8.3.2
+   */
+  public static boolean isDefaultAuditorSet ()
+  {
+    return RW_LOCK.readLockedBoolean ( () -> EqualsHelper.identityEqual (s_aAuditor, DEFAULT_AUDITOR));
   }
 
   /**
