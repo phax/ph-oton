@@ -44,6 +44,16 @@ public class Role extends AbstractBusinessObject implements IRole
   private String m_sName;
   private String m_sDescription;
 
+  /**
+   * Constructor for new object.
+   *
+   * @param sName
+   *        Role name. May neither be <code>null</code> nor empty.
+   * @param sDescription
+   *        Role description. May be <code>null</code>.
+   * @param aCustomAttrs
+   *        Optional attributes. May be <code>null</code>.
+   */
   public Role (@Nonnull @Nonempty final String sName,
                @Nullable final String sDescription,
                @Nullable final Map <String, String> aCustomAttrs)
@@ -51,7 +61,17 @@ public class Role extends AbstractBusinessObject implements IRole
     this (StubObject.createForCurrentUser (aCustomAttrs), sName, sDescription);
   }
 
-  protected Role (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
+  /**
+   * Constructor for deserialization.
+   *
+   * @param aStubObject
+   *        The base data. May not be <code>null</code>.
+   * @param sName
+   *        Role name. May neither be <code>null</code> nor empty.
+   * @param sDescription
+   *        Role description. May be <code>null</code>.
+   */
+  public Role (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);
@@ -72,7 +92,7 @@ public class Role extends AbstractBusinessObject implements IRole
   }
 
   @Nonnull
-  protected EChange setName (@Nonnull @Nonempty final String sName)
+  public EChange setName (@Nonnull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
 
@@ -89,7 +109,7 @@ public class Role extends AbstractBusinessObject implements IRole
   }
 
   @Nonnull
-  protected EChange setDescription (@Nullable final String sDescription)
+  public EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))
       return EChange.UNCHANGED;

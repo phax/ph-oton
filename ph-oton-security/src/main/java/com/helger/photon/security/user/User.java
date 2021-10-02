@@ -135,7 +135,7 @@ public class User extends AbstractBusinessObject implements IUser
    * For deserialization only.
    *
    * @param aStubObject
-   *        Stub init object
+   *        Stub init object. May not be <code>null</code>.
    * @param sLoginName
    *        Login name of the user. May neither be <code>null</code> nor empty.
    * @param sEmailAddress
@@ -159,18 +159,18 @@ public class User extends AbstractBusinessObject implements IUser
    * @param bDisabled
    *        <code>true</code> if the user is disabled
    */
-  protected User (@Nonnull final StubObject aStubObject,
-                  @Nonnull @Nonempty final String sLoginName,
-                  @Nullable final String sEmailAddress,
-                  @Nonnull final PasswordHash aPasswordHash,
-                  @Nullable final String sFirstName,
-                  @Nullable final String sLastName,
-                  @Nullable final String sDescription,
-                  @Nullable final Locale aDesiredLocale,
-                  @Nullable final LocalDateTime aLastLoginDT,
-                  @Nonnegative final int nLoginCount,
-                  @Nonnegative final int nConsecutiveFailedLoginCount,
-                  final boolean bDisabled)
+  public User (@Nonnull final StubObject aStubObject,
+               @Nonnull @Nonempty final String sLoginName,
+               @Nullable final String sEmailAddress,
+               @Nonnull final PasswordHash aPasswordHash,
+               @Nullable final String sFirstName,
+               @Nullable final String sLastName,
+               @Nullable final String sDescription,
+               @Nullable final Locale aDesiredLocale,
+               @Nullable final LocalDateTime aLastLoginDT,
+               @Nonnegative final int nLoginCount,
+               @Nonnegative final int nConsecutiveFailedLoginCount,
+               final boolean bDisabled)
   {
     super (aStubObject);
     ValueEnforcer.isGE0 (nLoginCount, "LoginCount");
@@ -207,7 +207,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setLoginName (@Nonnull @Nonempty final String sLoginName)
+  public EChange setLoginName (@Nonnull @Nonempty final String sLoginName)
   {
     ValueEnforcer.notEmpty (sLoginName, "loginName");
 
@@ -224,7 +224,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setEmailAddress (@Nullable final String sEmailAddress)
+  public EChange setEmailAddress (@Nullable final String sEmailAddress)
   {
     if (EqualsHelper.equals (sEmailAddress, m_sEmailAddress))
       return EChange.UNCHANGED;
@@ -240,7 +240,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setPasswordHash (@Nonnull final PasswordHash aPasswordHash)
+  public EChange setPasswordHash (@Nonnull final PasswordHash aPasswordHash)
   {
     ValueEnforcer.notNull (aPasswordHash, "PasswordHash");
 
@@ -257,7 +257,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setFirstName (@Nullable final String sFirstName)
+  public EChange setFirstName (@Nullable final String sFirstName)
   {
     if (EqualsHelper.equals (sFirstName, m_sFirstName))
       return EChange.UNCHANGED;
@@ -272,7 +272,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setLastName (@Nullable final String sLastName)
+  public EChange setLastName (@Nullable final String sLastName)
   {
     if (EqualsHelper.equals (sLastName, m_sLastName))
       return EChange.UNCHANGED;
@@ -287,7 +287,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setDescription (@Nullable final String sDescription)
+  public EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))
       return EChange.UNCHANGED;
@@ -302,7 +302,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setDesiredLocale (@Nullable final Locale aDesiredLocale)
+  public EChange setDesiredLocale (@Nullable final Locale aDesiredLocale)
   {
     if (EqualsHelper.equals (aDesiredLocale, m_aDesiredLocale))
       return EChange.UNCHANGED;
@@ -346,7 +346,7 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   @Nonnull
-  protected EChange setDisabled (final boolean bDisabled)
+  public EChange setDisabled (final boolean bDisabled)
   {
     if (bDisabled == m_bDisabled)
       return EChange.UNCHANGED;
