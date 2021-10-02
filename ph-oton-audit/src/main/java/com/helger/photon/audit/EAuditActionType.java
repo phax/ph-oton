@@ -36,6 +36,12 @@ public enum EAuditActionType implements IHasID <String>
   UNDELETE ("undelete"),
   EXECUTE ("execute");
 
+  /**
+   * The maximum ID length - that needs to be maintained for database
+   * compatibility.
+   */
+  public static final int MAX_ID_LENGTH = 10;
+
   private final String m_sID;
 
   EAuditActionType (@Nonnull @Nonempty final String sID)
