@@ -18,6 +18,7 @@ package com.helger.photon.security.role;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.ICallback;
 
 /**
@@ -42,27 +43,27 @@ public interface IRoleModificationCallback extends ICallback
   /**
    * Called after a role was edited fully.
    *
-   * @param aRole
-   *        The modified role. Never <code>null</code>.
+   * @param sRoleID
+   *        The modified role ID. Never <code>null</code>.
    */
-  default void onRoleUpdated (@Nonnull final IRole aRole)
+  default void onRoleUpdated (@Nonnull @Nonempty final String sRoleID)
   {}
 
   /**
    * Called after a role was renamed.
    *
-   * @param aRole
-   *        The modified role. Never <code>null</code>.
+   * @param sRoleID
+   *        The modified role ID. Never <code>null</code>.
    */
-  default void onRoleRenamed (@Nonnull final IRole aRole)
+  default void onRoleRenamed (@Nonnull @Nonempty final String sRoleID)
   {}
 
   /**
    * Called after a role was deleted.
    *
-   * @param aRole
-   *        The deleted role. Never <code>null</code>.
+   * @param sRoleID
+   *        The deleted role ID. Never <code>null</code>.
    */
-  default void onRoleDeleted (@Nonnull final IRole aRole)
+  default void onRoleDeleted (@Nonnull @Nonempty final String sRoleID)
   {}
 }

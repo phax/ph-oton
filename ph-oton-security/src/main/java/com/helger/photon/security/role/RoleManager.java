@@ -78,20 +78,28 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
   }
 
   @Nonnull
+  private void _createNewRole (@Nonnull final Role aRole, final boolean bPredefined)
+  {
+    // Store
+    m_aRWLock.writeLocked ( () -> internalCreateItem (aRole));
+    AuditHelper.onAuditCreateSuccess (Role.OT,
+                                      aRole.getID (),
+                                      aRole.getName (),
+                                      aRole.getDescription (),
+                                      bPredefined ? "predefined" : "custom");
+
+    // Execute callback as the very last action
+    m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, bPredefined));
+  }
+
+  @Nonnull
   public IRole createNewRole (@Nonnull @Nonempty final String sName,
                               @Nullable final String sDescription,
                               @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create role
     final Role aRole = new Role (sName, sDescription, aCustomAttrs);
-
-    // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aRole));
-    AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), sName);
-
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, false));
-
+    _createNewRole (aRole, false);
     return aRole;
   }
 
@@ -103,14 +111,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
   {
     // Create role
     final Role aRole = new Role (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
-
-    // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aRole));
-    AuditHelper.onAuditCreateSuccess (Role.OT, aRole.getID (), "predefined-role", sName);
-
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, true));
-
+    _createNewRole (aRole, true);
     return aRole;
   }
 
@@ -136,7 +137,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditDeleteSuccess (Role.OT, sRoleID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onRoleDeleted (aDeletedRole));
+    m_aCallbacks.forEach (aCB -> aCB.onRoleDeleted (sRoleID));
 
     return EChange.CHANGED;
   }
@@ -174,7 +175,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditModifySuccess (Role.OT, "name", sRoleID, sNewName);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onRoleRenamed (aRole));
+    m_aCallbacks.forEach (aCB -> aCB.onRoleRenamed (sRoleID));
 
     return EChange.CHANGED;
   }
@@ -212,7 +213,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     AuditHelper.onAuditModifySuccess (Role.OT, "all", aRole.getID (), sNewName, sNewDescription, aNewCustomAttrs);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onRoleUpdated (aRole));
+    m_aCallbacks.forEach (aCB -> aCB.onRoleUpdated (sRoleID));
 
     return EChange.CHANGED;
   }
