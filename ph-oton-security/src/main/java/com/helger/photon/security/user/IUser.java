@@ -106,6 +106,18 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   Locale getDesiredLocale ();
 
   /**
+   * @return The desired locale of the user as a String. May be
+   *         <code>null</code>.
+   * @since 8.3.2
+   */
+  @Nullable
+  default String getDesiredLocaleAsString ()
+  {
+    final Locale aLocale = getDesiredLocale ();
+    return aLocale != null ? aLocale.toString () : null;
+  }
+
+  /**
    * @return The date time when the user last logged in. May be
    *         <code>null</code> if the user never logged in.
    * @since 2.4.2

@@ -190,7 +190,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return The number of all contained enabled and not-deleted users
    */
   @Nonnegative
-  int getActiveUserCount ();
+  long getActiveUserCount ();
 
   /**
    * @return A non-<code>null</code> collection of all contained disabled and

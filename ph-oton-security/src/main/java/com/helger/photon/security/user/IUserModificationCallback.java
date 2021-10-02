@@ -18,6 +18,7 @@ package com.helger.photon.security.user;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.ICallback;
 
 /**
@@ -43,57 +44,57 @@ public interface IUserModificationCallback extends ICallback
   /**
    * Called after a user was edited fully.
    *
-   * @param aUser
-   *        The modified user. Never <code>null</code>.
+   * @param sUserID
+   *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserUpdated (@Nonnull final IUser aUser)
+  default void onUserUpdated (@Nonnull @Nonempty final String sUserID)
   {}
 
   /**
    * Called after a user's last failed login was updated.
    *
-   * @param aUser
-   *        The modified user. Never <code>null</code>.
+   * @param sUserID
+   *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserLastFailedLoginUpdated (@Nonnull final IUser aUser)
+  default void onUserLastFailedLoginUpdated (@Nonnull @Nonempty final String sUserID)
   {}
 
   /**
    * Called after a user's password was changed.
    *
-   * @param aUser
-   *        The modified user. Never <code>null</code>.
+   * @param sUserID
+   *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserPasswordChanged (@Nonnull final IUser aUser)
+  default void onUserPasswordChanged (@Nonnull @Nonempty final String sUserID)
   {}
 
   /**
    * Called after a user was deleted.
    *
-   * @param aUser
-   *        The deleted user. Never <code>null</code>.
+   * @param sUserID
+   *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserDeleted (@Nonnull final IUser aUser)
+  default void onUserDeleted (@Nonnull @Nonempty final String sUserID)
   {}
 
   /**
    * Called after a user was undeleted.
    *
-   * @param aUser
-   *        The undeleted user. Never <code>null</code>.
+   * @param sUserID
+   *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserUndeleted (@Nonnull final IUser aUser)
+  default void onUserUndeleted (@Nonnull @Nonempty final String sUserID)
   {}
 
   /**
    * Called after a user was enabled or disabled.
    *
-   * @param aUser
-   *        The enabled or disabled user. Never <code>null</code>.
+   * @param sUserID
+   *        The enabled or disabled user ID. Never <code>null</code>.
    * @param bEnabled
    *        <code>true</code> if the user was enabled, <code>false</code> if it
    *        was disabled
    */
-  default void onUserEnabled (@Nonnull final IUser aUser, final boolean bEnabled)
+  default void onUserEnabled (@Nonnull @Nonempty final String sUserID, final boolean bEnabled)
   {}
 }

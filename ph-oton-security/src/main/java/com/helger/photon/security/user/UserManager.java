@@ -274,7 +274,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   }
 
   @Nonnegative
-  public int getActiveUserCount ()
+  public long getActiveUserCount ()
   {
     return getCount (x -> x.isNotDeleted () && x.isEnabled ());
   }
@@ -347,7 +347,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     }
     AuditHelper.onAuditModifySuccess (User.OT,
                                       "all",
-                                      aUser.getID (),
+                                      sUserID,
                                       sNewLoginName,
                                       sNewEmailAddress,
                                       sNewFirstName,
@@ -358,7 +358,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                       Boolean.valueOf (bNewDisabled));
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserUpdated (aUser));
+    m_aCallbacks.forEach (aCB -> aCB.onUserUpdated (sUserID));
 
     return EChange.CHANGED;
   }
@@ -393,7 +393,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     AuditHelper.onAuditModifySuccess (User.OT, "password", sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserPasswordChanged (aUser));
+    m_aCallbacks.forEach (aCB -> aCB.onUserPasswordChanged (sUserID));
 
     return EChange.CHANGED;
   }
@@ -447,7 +447,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     AuditHelper.onAuditModifySuccess (User.OT, "update-last-failed-login", sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserLastFailedLoginUpdated (aUser));
+    m_aCallbacks.forEach (aCB -> aCB.onUserLastFailedLoginUpdated (sUserID));
 
     return EChange.CHANGED;
   }
@@ -479,7 +479,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     AuditHelper.onAuditDeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserDeleted (aUser));
+    m_aCallbacks.forEach (aCB -> aCB.onUserDeleted (sUserID));
 
     return EChange.CHANGED;
   }
@@ -508,7 +508,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     AuditHelper.onAuditUndeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserUndeleted (aUser));
+    m_aCallbacks.forEach (aCB -> aCB.onUserUndeleted (sUserID));
 
     return EChange.CHANGED;
   }
@@ -537,7 +537,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     AuditHelper.onAuditModifySuccess (User.OT, "disable", sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserEnabled (aUser, false));
+    m_aCallbacks.forEach (aCB -> aCB.onUserEnabled (sUserID, false));
 
     return EChange.CHANGED;
   }
@@ -566,7 +566,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     AuditHelper.onAuditModifySuccess (User.OT, "enable", sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserEnabled (aUser, true));
+    m_aCallbacks.forEach (aCB -> aCB.onUserEnabled (sUserID, true));
 
     return EChange.CHANGED;
   }
