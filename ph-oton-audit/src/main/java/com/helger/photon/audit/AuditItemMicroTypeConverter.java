@@ -78,10 +78,10 @@ public class AuditItemMicroTypeConverter implements IMicroTypeConverter <AuditIt
     if (StringHelper.hasNoText (sUserID))
       throw new IllegalStateException ("Failed to find user ID");
 
-    final String sType = eItem.getAttributeValue (ATTR_TYPE);
-    final EAuditActionType eType = EAuditActionType.getFromIDOrNull (sType);
+    final String sAuditActionType = eItem.getAttributeValue (ATTR_TYPE);
+    final EAuditActionType eType = EAuditActionType.getFromIDOrNull (sAuditActionType);
     if (eType == null)
-      throw new IllegalStateException ("Failed to parse action type '" + sType + "'");
+      throw new IllegalStateException ("Failed to parse action type '" + sAuditActionType + "'");
 
     String sSuccess = eItem.getAttributeValue (ATTR_SUCCESS);
     if (sSuccess == null)

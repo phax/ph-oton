@@ -16,6 +16,8 @@
  */
 package com.helger.photon.security.mgr;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Copyright (C) 2014-2015 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
@@ -183,6 +185,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonSecurityManager.class);
+  private static final AtomicBoolean INITED = new AtomicBoolean (false);
 
   /** The global factory to be used. */
   private static IFactory s_aFactory = new FactoryXML ();
@@ -196,7 +199,10 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   public static void setFactory (@Nonnull final IFactory aFactory)
   {
     ValueEnforcer.notNull (aFactory, "Factory");
+    if (INITED.get ())
+      LOGGER.error ("Setting the PhotonSecurityManager factory after initialization has no effect!");
     s_aFactory = aFactory;
+    LOGGER.info ("Setting the PhotonSecurityManager to " + aFactory.toString ());
   }
 
   private IAuditManager m_aAuditMgr;
@@ -247,6 +253,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aUserGroupMgr = s_aFactory.createUserGroupMgr (m_aUserMgr, m_aRoleMgr);
       // Must be after user manager
       m_aUserTokenMgr = s_aFactory.createUserTokenMgr ();
+      INITED.set (true);
 
       // Init callbacks after all managers
       _initCallbacks ();

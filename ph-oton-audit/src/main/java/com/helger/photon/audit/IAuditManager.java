@@ -74,8 +74,9 @@ public interface IAuditManager
   /**
    * @return The earliest date for which auditing information is present. If
    *         this is an in-memory audit manager, it must return the current
-   *         date. Never <code>null</code>.
+   *         date. May be <code>null</code> if a persistent storage is used and
+   *         no entry is present yet.
    */
-  @Nonnull
+  @Nullable
   LocalDate getEarliestAuditDate ();
 }

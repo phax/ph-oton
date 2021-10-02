@@ -56,11 +56,11 @@ public final class AuditItem implements IAuditItem
           sAction);
   }
 
-  AuditItem (@Nonnull final LocalDateTime aDateTime,
-             @Nonnull final String sUserID,
-             @Nonnull final EAuditActionType eType,
-             @Nonnull final ESuccess eSuccess,
-             @Nonnull final String sAction)
+  public AuditItem (@Nonnull final LocalDateTime aDateTime,
+                    @Nonnull final String sUserID,
+                    @Nonnull final EAuditActionType eType,
+                    @Nonnull final ESuccess eSuccess,
+                    @Nonnull final String sAction)
   {
     m_aDateTime = ValueEnforcer.notNull (aDateTime, "LocalDateTime");
     m_sUserID = ValueEnforcer.notEmpty (sUserID, "UserID");

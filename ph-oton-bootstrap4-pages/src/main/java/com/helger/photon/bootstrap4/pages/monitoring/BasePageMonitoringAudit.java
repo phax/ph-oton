@@ -142,8 +142,8 @@ public class BasePageMonitoringAudit <WPECTYPE extends IWebPageExecutionContext>
     aNodeList.addChild (aToolbar);
 
     // Info
-    aNodeList.addChild (div (EText.MSG_EARLIEST_DATA.getDisplayText (aDisplayLocale) +
-                             PDTToString.getAsString (m_aAuditMgr.getEarliestAuditDate (), aDisplayLocale)));
+    aNodeList.addChild (div (EText.MSG_EARLIEST_DATA.getDisplayText (aDisplayLocale)).addChild (PDTToString.getAsString (m_aAuditMgr.getEarliestAuditDate (),
+                                                                                                                         aDisplayLocale)));
 
     // Check max items parameter
     int nMaxItems = aWPEC.params ().getAsInt (PARAM_MAX_ITEMS);
