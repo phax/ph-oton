@@ -105,32 +105,6 @@ public class User extends AbstractBusinessObject implements IUser
           bDisabled);
   }
 
-  // Internal use only
-  protected User (@Nonnull @Nonempty final String sID,
-                  @Nonnull @Nonempty final String sLoginName,
-                  @Nullable final String sEmailAddress,
-                  @Nonnull final PasswordHash aPasswordHash,
-                  @Nullable final String sFirstName,
-                  @Nullable final String sLastName,
-                  @Nullable final String sDescription,
-                  @Nullable final Locale aDesiredLocale,
-                  @Nullable final Map <String, String> aCustomAttrs,
-                  final boolean bDisabled)
-  {
-    this (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
-          sLoginName,
-          sEmailAddress,
-          aPasswordHash,
-          sFirstName,
-          sLastName,
-          sDescription,
-          aDesiredLocale,
-          (LocalDateTime) null,
-          0,
-          0,
-          bDisabled);
-  }
-
   /**
    * For deserialization only.
    *
@@ -384,5 +358,32 @@ public class User extends AbstractBusinessObject implements IUser
                             .append ("ConsecutiveFailedLoginCount", m_nConsecutiveFailedLoginCount)
                             .append ("Disabled", m_bDisabled)
                             .getToString ();
+  }
+
+  // Internal use only
+  @Nonnull
+  public static User createdPredefinedUser (@Nonnull @Nonempty final String sID,
+                                            @Nonnull @Nonempty final String sLoginName,
+                                            @Nullable final String sEmailAddress,
+                                            @Nonnull final PasswordHash aPasswordHash,
+                                            @Nullable final String sFirstName,
+                                            @Nullable final String sLastName,
+                                            @Nullable final String sDescription,
+                                            @Nullable final Locale aDesiredLocale,
+                                            @Nullable final Map <String, String> aCustomAttrs,
+                                            final boolean bDisabled)
+  {
+    return new User (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
+                     sLoginName,
+                     sEmailAddress,
+                     aPasswordHash,
+                     sFirstName,
+                     sLastName,
+                     sDescription,
+                     aDesiredLocale,
+                     (LocalDateTime) null,
+                     0,
+                     0,
+                     bDisabled);
   }
 }

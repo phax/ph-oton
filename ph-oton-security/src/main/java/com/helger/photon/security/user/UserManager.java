@@ -59,46 +59,49 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   @Nonnull
   public static User createDefaultUserAdministrator ()
   {
-    return new User (CSecurity.USER_ADMINISTRATOR_ID,
-                     CSecurity.USER_ADMINISTRATOR_LOGIN,
-                     CSecurity.USER_ADMINISTRATOR_EMAIL,
-                     GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), CSecurity.USER_ADMINISTRATOR_PASSWORD),
-                     CSecurity.USER_ADMINISTRATOR_NAME,
-                     (String) null,
-                     (String) null,
-                     (Locale) null,
-                     (Map <String, String>) null,
-                     false);
+    return User.createdPredefinedUser (CSecurity.USER_ADMINISTRATOR_ID,
+                                       CSecurity.USER_ADMINISTRATOR_LOGIN,
+                                       CSecurity.USER_ADMINISTRATOR_EMAIL,
+                                       GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                             CSecurity.USER_ADMINISTRATOR_PASSWORD),
+                                       CSecurity.USER_ADMINISTRATOR_NAME,
+                                       (String) null,
+                                       (String) null,
+                                       (Locale) null,
+                                       (Map <String, String>) null,
+                                       false);
   }
 
   @Nonnull
   public static User createDefaultUserUser ()
   {
-    return new User (CSecurity.USER_USER_ID,
-                     CSecurity.USER_USER_LOGIN,
-                     CSecurity.USER_USER_EMAIL,
-                     GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), CSecurity.USER_USER_PASSWORD),
-                     CSecurity.USER_USER_NAME,
-                     (String) null,
-                     (String) null,
-                     (Locale) null,
-                     (Map <String, String>) null,
-                     false);
+    return User.createdPredefinedUser (CSecurity.USER_USER_ID,
+                                       CSecurity.USER_USER_LOGIN,
+                                       CSecurity.USER_USER_EMAIL,
+                                       GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                             CSecurity.USER_USER_PASSWORD),
+                                       CSecurity.USER_USER_NAME,
+                                       (String) null,
+                                       (String) null,
+                                       (Locale) null,
+                                       (Map <String, String>) null,
+                                       false);
   }
 
   @Nonnull
   public static User createDefaultUserGuest ()
   {
-    return new User (CSecurity.USER_GUEST_ID,
-                     CSecurity.USER_GUEST_LOGIN,
-                     CSecurity.USER_GUEST_EMAIL,
-                     GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), CSecurity.USER_GUEST_PASSWORD),
-                     CSecurity.USER_GUEST_NAME,
-                     (String) null,
-                     (String) null,
-                     (Locale) null,
-                     (Map <String, String>) null,
-                     false);
+    return User.createdPredefinedUser (CSecurity.USER_GUEST_ID,
+                                       CSecurity.USER_GUEST_LOGIN,
+                                       CSecurity.USER_GUEST_EMAIL,
+                                       GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                             CSecurity.USER_GUEST_PASSWORD),
+                                       CSecurity.USER_GUEST_NAME,
+                                       (String) null,
+                                       (String) null,
+                                       (Locale) null,
+                                       (Map <String, String>) null,
+                                       false);
   }
 
   public void createDefaults ()
@@ -197,16 +200,17 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     }
 
     // Create user
-    final User aUser = new User (sID,
-                                 sLoginName,
-                                 sEmailAddress,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sPlainTextPassword),
-                                 sFirstName,
-                                 sLastName,
-                                 sDescription,
-                                 aDesiredLocale,
-                                 aCustomAttrs,
-                                 bDisabled);
+    final User aUser = User.createdPredefinedUser (sID,
+                                                   sLoginName,
+                                                   sEmailAddress,
+                                                   GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                                                                         sPlainTextPassword),
+                                                   sFirstName,
+                                                   sLastName,
+                                                   sDescription,
+                                                   aDesiredLocale,
+                                                   aCustomAttrs,
+                                                   bDisabled);
 
     // Store
     m_aRWLock.writeLocked ( () -> internalCreateItem (aUser));
