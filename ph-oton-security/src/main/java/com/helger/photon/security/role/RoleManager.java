@@ -48,16 +48,26 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     super (Role.class, sFilename);
   }
 
+  @Nonnull
+  public static Role createDefaultRoleAdministrator ()
+  {
+    return new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
+                     CSecurity.ROLE_ADMINISTRATOR_NAME,
+                     (String) null);
+  }
+
+  @Nonnull
+  public static Role createDefaultRoleUser ()
+  {
+    return new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_USER_ID), CSecurity.ROLE_USER_NAME, (String) null);
+  }
+
   public void createDefaults ()
   {
     if (!containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
-      internalCreateItem (new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
-                                    CSecurity.ROLE_ADMINISTRATOR_NAME,
-                                    (String) null));
+      internalCreateItem (createDefaultRoleAdministrator ());
     if (!containsWithID (CSecurity.ROLE_USER_ID))
-      internalCreateItem (new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
-                                    CSecurity.ROLE_USER_NAME,
-                                    (String) null));
+      internalCreateItem (createDefaultRoleUser ());
   }
 
   @Nonnull
