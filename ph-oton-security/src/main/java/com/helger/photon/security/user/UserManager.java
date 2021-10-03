@@ -24,6 +24,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -49,6 +52,8 @@ import com.helger.security.password.salt.PasswordSalt;
 @ThreadSafe
 public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> implements IUserManager
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (UserManager.class);
+
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserManager (@Nonnull @Nonempty final String sFilename) throws DAOException
@@ -391,6 +396,9 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (User.OT, "password", sUserID);
+
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("The password of user '" + sUserID + "' was changed");
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserPasswordChanged (sUserID));
