@@ -47,7 +47,7 @@ public final class TenantManagerTest
   @Test
   public void testAny () throws DAOException
   {
-    PhotonSecurityManager.getUserMgr ().createDefaults ();
+    PhotonSecurityManager.getUserMgr ().createDefaultsForTest ();
 
     final TenantManager aMgr = new TenantManager ("dummy-tenant.xml");
 

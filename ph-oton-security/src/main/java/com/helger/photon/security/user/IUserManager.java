@@ -45,7 +45,7 @@ public interface IUserManager extends IPhotonManager <IUser>
   /**
    * Create default users. This is only for internal testing purposes.
    */
-  void createDefaults ();
+  void createDefaultsForTest ();
 
   /**
    * @return The user callback list. Never <code>null</code>.

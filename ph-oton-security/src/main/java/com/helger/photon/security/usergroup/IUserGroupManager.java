@@ -51,7 +51,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
   /**
    * Create default users. This is only for internal testing purposes.
    */
-  void createDefaults ();
+  void createDefaultsForTest ();
 
   /**
    * @return The user group callback list. Never <code>null</code>.

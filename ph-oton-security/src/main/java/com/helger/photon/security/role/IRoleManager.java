@@ -38,7 +38,7 @@ public interface IRoleManager extends IPhotonManager <IRole>
   /**
    * Create the default roles. This is only for internal testing purposes.
    */
-  void createDefaults ();
+  void createDefaultsForTest ();
 
   /**
    * @return The role callback list. Never <code>null</code>.

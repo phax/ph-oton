@@ -104,7 +104,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                        false);
   }
 
-  public void createDefaults ()
+  public void createDefaultsForTest ()
   {
     // Create Administrator
     if (!containsWithID (CSecurity.USER_ADMINISTRATOR_ID))

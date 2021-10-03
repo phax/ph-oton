@@ -48,7 +48,7 @@ public final class LoggedInUserManagerTest
   @Test
   public void testLoginLogout ()
   {
-    PhotonSecurityManager.getUserMgr ().createDefaults ();
+    PhotonSecurityManager.getUserMgr ().createDefaultsForTest ();
 
     final LoggedInUserManager aUM = LoggedInUserManager.getInstance ();
     // Check any non-present user

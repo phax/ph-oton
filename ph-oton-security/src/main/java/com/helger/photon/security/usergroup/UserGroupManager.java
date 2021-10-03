@@ -98,7 +98,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
                           (String) null);
   }
 
-  public void createDefaults ()
+  public void createDefaultsForTest ()
   {
     // Administrators user group
     UserGroup aUG = getOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);

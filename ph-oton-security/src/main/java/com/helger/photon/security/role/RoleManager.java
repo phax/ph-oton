@@ -62,7 +62,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     return new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_USER_ID), CSecurity.ROLE_USER_NAME, (String) null);
   }
 
-  public void createDefaults ()
+  public void createDefaultsForTest ()
   {
     if (!containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
       internalCreateItem (createDefaultRoleAdministrator ());
