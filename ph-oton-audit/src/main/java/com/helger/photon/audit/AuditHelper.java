@@ -29,7 +29,12 @@ import com.helger.commons.type.ObjectType;
 import com.helger.photon.app.mock.MockCurrentUserIDProvider;
 
 /**
- * Simplify system auditing calls.
+ * Simplify system auditing calls.<br>
+ * For each predefined action (see {@link EAuditActionType} - CREATE, MODIFY,
+ * DELETE, UNDELETE, EXECUTE) this class provided static helpers methods.<br>
+ * For MODIFY actions, the performed action (like "set-name") should always be
+ * first.<br>
+ * Error details should always go last.
  *
  * @author Philip Helger
  */
