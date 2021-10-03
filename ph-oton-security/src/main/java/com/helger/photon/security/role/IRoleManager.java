@@ -36,7 +36,7 @@ import com.helger.photon.app.mgr.IPhotonManager;
 public interface IRoleManager extends IPhotonManager <IRole>
 {
   /**
-   * Create the default roles.
+   * Create the default roles. This is only for internal testing purposes.
    */
   void createDefaults ();
 

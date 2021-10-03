@@ -41,7 +41,7 @@ public final class BusinessObjectHelper
 
   @Nonnull
   @Nonempty
-  private static String _getUserID ()
+  public static String getUserIDOrFallback ()
   {
     String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
     if (StringHelper.hasNoText (sCurrentUserID))
@@ -54,18 +54,18 @@ public final class BusinessObjectHelper
 
   public static void setLastModificationNow (@Nonnull final AbstractBusinessObject aObj)
   {
-    aObj.setLastModification (PDTFactory.getCurrentLocalDateTime (), _getUserID ());
+    aObj.setLastModification (PDTFactory.getCurrentLocalDateTime (), getUserIDOrFallback ());
   }
 
   @Nonnull
   public static EChange setDeletionNow (@Nonnull final AbstractBusinessObject aObj)
   {
-    return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (), _getUserID ());
+    return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (), getUserIDOrFallback ());
   }
 
   @Nonnull
   public static EChange setUndeletionNow (@Nonnull final AbstractBusinessObject aObj)
   {
-    return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (), _getUserID ());
+    return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (), getUserIDOrFallback ());
   }
 }

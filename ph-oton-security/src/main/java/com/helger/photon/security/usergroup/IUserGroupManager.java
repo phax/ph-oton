@@ -48,6 +48,9 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
   @Nonnull
   IRoleManager getRoleManager ();
 
+  /**
+   * Create default users. This is only for internal testing purposes.
+   */
   void createDefaults ();
 
   /**

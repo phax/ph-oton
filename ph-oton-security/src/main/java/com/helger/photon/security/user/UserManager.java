@@ -528,6 +528,8 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     {
       if (aUser.setDisabled (true).isUnchanged ())
         return EChange.UNCHANGED;
+
+      BusinessObjectHelper.setLastModificationNow (aUser);
       internalUpdateItem (aUser);
     }
     finally
@@ -557,6 +559,8 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     {
       if (aUser.setDisabled (false).isUnchanged ())
         return EChange.UNCHANGED;
+
+      BusinessObjectHelper.setLastModificationNow (aUser);
       internalUpdateItem (aUser);
     }
     finally

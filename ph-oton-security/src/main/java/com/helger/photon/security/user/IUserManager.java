@@ -42,6 +42,9 @@ import com.helger.security.password.salt.IPasswordSalt;
  */
 public interface IUserManager extends IPhotonManager <IUser>
 {
+  /**
+   * Create default users. This is only for internal testing purposes.
+   */
   void createDefaults ();
 
   /**
