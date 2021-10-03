@@ -42,9 +42,17 @@ import com.helger.photon.security.user.IUserManager;
 @ThreadSafe
 public interface IUserGroupManager extends IPhotonManager <IUserGroup>
 {
+  /**
+   * @return The user manager this manager is acting upon. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   IUserManager getUserManager ();
 
+  /**
+   * @return The role manager this manager is acting upon. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   IRoleManager getRoleManager ();
 
@@ -250,8 +258,6 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
   @ReturnsMutableCopy
   ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable String sUserID);
 
-  boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable String sUserID, @Nullable String sRoleID);
-
   /**
    * Get a collection of all user group IDs to which a certain user is assigned
    * to.
@@ -329,4 +335,6 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
   ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable String sRoleID);
 
   boolean containsUserGroupWithAssignedRole (@Nullable String sRoleID);
+
+  boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable String sUserID, @Nullable String sRoleID);
 }

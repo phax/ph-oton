@@ -148,7 +148,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     if (getUserOfLoginName (sLoginName) != null)
     {
       // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName);
+      AuditHelper.onAuditCreateFailure (User.OT, sLoginName, "login-name-already-in-use");
       return null;
     }
 
@@ -200,7 +200,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     if (getUserOfLoginName (sLoginName) != null)
     {
       // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName, "predefined-user");
+      AuditHelper.onAuditCreateFailure (User.OT, sLoginName, "predefined-user", "login-name-already-in-use");
       return null;
     }
 
@@ -325,7 +325,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id");
+      AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -351,7 +351,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
       m_aRWLock.writeLock ().unlock ();
     }
     AuditHelper.onAuditModifySuccess (User.OT,
-                                      "all",
+                                      "set-all",
                                       sUserID,
                                       sNewLoginName,
                                       sNewEmailAddress,
@@ -375,7 +375,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "password");
+      AuditHelper.onAuditModifyFailure (User.OT, "set-password", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -395,7 +395,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (User.OT, "password", sUserID);
+    AuditHelper.onAuditModifySuccess (User.OT, "set-password", sUserID);
 
     if (LOGGER.isInfoEnabled ())
       LOGGER.info ("The password of user '" + sUserID + "' was changed");
@@ -413,7 +413,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-login");
+      AuditHelper.onAuditModifyFailure (User.OT, "update-last-login", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -438,7 +438,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "update-last-failed-login");
+      AuditHelper.onAuditModifyFailure (User.OT, "update-last-failed-login", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -466,7 +466,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditDeleteFailure (User.OT, "no-such-user-id", sUserID);
+      AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -475,7 +475,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     {
       if (BusinessObjectHelper.setDeletionNow (aUser).isUnchanged ())
       {
-        AuditHelper.onAuditDeleteFailure (User.OT, "already-deleted", sUserID);
+        AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "already-deleted");
         return EChange.UNCHANGED;
       }
       internalMarkItemDeleted (aUser);
@@ -498,7 +498,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "no-such-user-id");
+      AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -506,7 +506,10 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     try
     {
       if (BusinessObjectHelper.setUndeletionNow (aUser).isUnchanged ())
+      {
+        AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "not-deleted");
         return EChange.UNCHANGED;
+      }
       internalMarkItemUndeleted (aUser);
     }
     finally
@@ -527,7 +530,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "disable");
+      AuditHelper.onAuditModifyFailure (User.OT, "disable", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -558,7 +561,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = getOfID (sUserID);
     if (aUser == null)
     {
-      AuditHelper.onAuditModifyFailure (User.OT, sUserID, "no-such-user-id", "enable");
+      AuditHelper.onAuditModifyFailure (User.OT, "enable", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 

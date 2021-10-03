@@ -125,7 +125,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
       aDeletedRole = internalDeleteItem (sRoleID);
       if (aDeletedRole == null)
       {
-        AuditHelper.onAuditDeleteFailure (Role.OT, "no-such-role-id", sRoleID);
+        AuditHelper.onAuditDeleteFailure (Role.OT, sRoleID, "no-such-id");
         return EChange.UNCHANGED;
       }
       BusinessObjectHelper.setDeletionNow (aDeletedRole);
@@ -155,7 +155,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     final Role aRole = getOfID (sRoleID);
     if (aRole == null)
     {
-      AuditHelper.onAuditModifyFailure (Role.OT, sRoleID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (Role.OT, "set-name", sRoleID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -172,7 +172,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Role.OT, "name", sRoleID, sNewName);
+    AuditHelper.onAuditModifySuccess (Role.OT, "set-name", sRoleID, sNewName);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onRoleRenamed (sRoleID));
@@ -190,7 +190,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     final Role aRole = getOfID (sRoleID);
     if (aRole == null)
     {
-      AuditHelper.onAuditModifyFailure (Role.OT, sRoleID, "no-such-role-id");
+      AuditHelper.onAuditModifyFailure (Role.OT, "set-all", sRoleID, "no-such-role-id");
       return EChange.UNCHANGED;
     }
 
@@ -210,7 +210,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (Role.OT, "all", aRole.getID (), sNewName, sNewDescription, aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (Role.OT, "set-all", aRole.getID (), sNewName, sNewDescription, aNewCustomAttrs);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onRoleUpdated (sRoleID));

@@ -81,7 +81,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
-      AuditHelper.onAuditModifyFailure (UserToken.OT, sUserTokenID, "no-such-id");
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "set-all", sUserTokenID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -101,7 +101,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserToken.OT, sUserTokenID, aCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserToken.OT, "set-all", sUserTokenID, aCustomAttrs);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserTokenUpdated (aUserToken));
@@ -115,7 +115,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
-      AuditHelper.onAuditDeleteFailure (UserToken.OT, "no-such-id", sUserTokenID);
+      AuditHelper.onAuditDeleteFailure (UserToken.OT, sUserTokenID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -124,7 +124,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     {
       if (BusinessObjectHelper.setDeletionNow (aUserToken).isUnchanged ())
       {
-        AuditHelper.onAuditDeleteFailure (UserToken.OT, "already-deleted", aUserToken.getID ());
+        AuditHelper.onAuditDeleteFailure (UserToken.OT, sUserTokenID, "already-deleted");
         return EChange.UNCHANGED;
       }
       internalMarkItemDeleted (aUserToken);
@@ -133,7 +133,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditDeleteSuccess (UserToken.OT, aUserToken.getID ());
+    AuditHelper.onAuditDeleteSuccess (UserToken.OT, sUserTokenID);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserTokenDeleted (aUserToken));
@@ -151,7 +151,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
-      AuditHelper.onAuditModifyFailure (UserToken.OT, "no-such-id", sUserTokenID);
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "create-new-access-token", sUserTokenID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -170,7 +170,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     }
     AuditHelper.onAuditModifySuccess (UserToken.OT,
                                       "create-new-access-token",
-                                      aUserToken.getID (),
+                                      sUserTokenID,
                                       sRevocationUserID,
                                       aRevocationDT,
                                       sRevocationReason,
@@ -191,7 +191,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
     {
-      AuditHelper.onAuditModifyFailure (UserToken.OT, "no-such-id", sUserTokenID);
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "revoke-access-token", sUserTokenID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -200,7 +200,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     {
       if (aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason).isUnchanged ())
       {
-        AuditHelper.onAuditModifyFailure (UserToken.OT, "already-revoked", sUserTokenID);
+        AuditHelper.onAuditModifyFailure (UserToken.OT, "revoke-access-token", sUserTokenID, "already-revoked");
         return EChange.UNCHANGED;
       }
       BusinessObjectHelper.setLastModificationNow (aUserToken);

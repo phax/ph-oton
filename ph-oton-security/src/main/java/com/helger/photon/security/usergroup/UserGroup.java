@@ -155,6 +155,16 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
   }
 
   @Nonnull
+  public EChange assignUsers (@Nullable final Iterable <String> aUserIDs)
+  {
+    EChange ret = EChange.UNCHANGED;
+    if (aUserIDs != null)
+      for (final String sUserID : aUserIDs)
+        ret = ret.or (assignUser (sUserID));
+    return ret;
+  }
+
+  @Nonnull
   public EChange unassignUser (@Nonnull final String sUserID)
   {
     return EChange.valueOf (m_aUserIDs.remove (sUserID));
@@ -189,6 +199,16 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     ValueEnforcer.notEmpty (sRoleID, "RoleID");
 
     return EChange.valueOf (m_aRoleIDs.add (sRoleID));
+  }
+
+  @Nonnull
+  public EChange assignRoles (@Nullable final Iterable <String> aRoleIDs)
+  {
+    EChange ret = EChange.UNCHANGED;
+    if (aRoleIDs != null)
+      for (final String sRoleID : aRoleIDs)
+        ret = ret.or (assignRole (sRoleID));
+    return ret;
   }
 
   @Nonnull

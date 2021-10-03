@@ -181,12 +181,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     final UserGroup aDeletedUserGroup = getOfID (sUserGroupID);
     if (aDeletedUserGroup == null)
     {
-      AuditHelper.onAuditDeleteFailure (UserGroup.OT, "no-such-usergroup-id", sUserGroupID);
-      return EChange.UNCHANGED;
-    }
-    if (aDeletedUserGroup.isDeleted ())
-    {
-      AuditHelper.onAuditDeleteFailure (UserGroup.OT, "already-deleted", sUserGroupID);
+      AuditHelper.onAuditDeleteFailure (UserGroup.OT, sUserGroupID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -195,7 +190,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     {
       if (BusinessObjectHelper.setDeletionNow (aDeletedUserGroup).isUnchanged ())
       {
-        AuditHelper.onAuditDeleteFailure (UserGroup.OT, "already-deleted", sUserGroupID);
+        AuditHelper.onAuditDeleteFailure (UserGroup.OT, sUserGroupID, "already-deleted");
         return EChange.UNCHANGED;
       }
       internalMarkItemDeleted (aDeletedUserGroup);
@@ -207,7 +202,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     AuditHelper.onAuditDeleteSuccess (UserGroup.OT, sUserGroupID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupDeleted (aDeletedUserGroup));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupDeleted (sUserGroupID));
 
     return EChange.CHANGED;
   }
@@ -226,7 +221,10 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     try
     {
       if (BusinessObjectHelper.setUndeletionNow (aUserGroup).isUnchanged ())
+      {
+        AuditHelper.onAuditUndeleteFailure (UserGroup.OT, sUserGroupID, "not-deleted");
         return EChange.UNCHANGED;
+      }
       internalMarkItemUndeleted (aUserGroup);
     }
     finally
@@ -236,7 +234,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     AuditHelper.onAuditUndeleteSuccess (UserGroup.OT, sUserGroupID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUndeleted (aUserGroup));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUndeleted (sUserGroupID));
 
     return EChange.CHANGED;
   }
@@ -268,7 +266,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "name");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, "set-name", sUserGroupID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -285,10 +283,10 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserGroup.OT, "name", sUserGroupID, sNewName);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "set-name", sUserGroupID, sNewName);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRenamed (aUserGroup));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRenamed (sUserGroupID));
 
     return EChange.CHANGED;
   }
@@ -303,7 +301,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, "set-all", sUserGroupID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -323,10 +321,10 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserGroup.OT, "all", aUserGroup.getID (), sNewName, sNewDescription, aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT, "set-all", aUserGroup.getID (), sNewName, sNewDescription, aNewCustomAttrs);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUpdated (aUserGroup));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUpdated (sUserGroupID));
 
     return EChange.CHANGED;
   }
@@ -334,11 +332,15 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
   {
+    ValueEnforcer.notEmpty (sUserID, "UserID");
+    if (StringHelper.hasNoText (sUserGroupID))
+      return EChange.UNCHANGED;
+
     // Resolve user group
     final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "assign-user");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, "assign-user", sUserGroupID, sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -346,7 +348,10 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     try
     {
       if (aUserGroup.assignUser (sUserID).isUnchanged ())
+      {
+        AuditHelper.onAuditModifyFailure (UserGroup.OT, "assign-user", sUserGroupID, sUserID, "already-assigned");
         return EChange.UNCHANGED;
+      }
 
       BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
@@ -358,7 +363,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-user", sUserGroupID, sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (aUserGroup, sUserID, true));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (sUserGroupID, sUserID, true));
 
     return EChange.CHANGED;
   }
@@ -366,11 +371,16 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
+    if (StringHelper.hasNoText (sUserGroupID))
+      return EChange.UNCHANGED;
+    if (StringHelper.hasNoText (sUserID))
+      return EChange.UNCHANGED;
+
     // Resolve user group
     final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "unassign-user");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, "unassign-user", sUserGroupID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -378,7 +388,10 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     try
     {
       if (aUserGroup.unassignUser (sUserID).isUnchanged ())
+      {
+        AuditHelper.onAuditModifyFailure (UserGroup.OT, "unassign-user", sUserGroupID, sUserID, "not-assigned");
         return EChange.UNCHANGED;
+      }
 
       BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
@@ -390,7 +403,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-user", sUserGroupID, sUserID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (aUserGroup, sUserID, false));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (sUserGroupID, sUserID, false));
 
     return EChange.CHANGED;
   }
@@ -416,7 +429,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
         }
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
-
     }
     finally
     {
@@ -426,7 +438,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
 
     // Execute callback as the very last action
     for (final IUserGroup aUserGroup : aAffectedUserGroups)
-      m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (aUserGroup, sUserID, false));
+      m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (aUserGroup.getID (), sUserID, false));
 
     return EChange.CHANGED;
   }
@@ -451,24 +463,18 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), IUserGroup::getID);
   }
 
-  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID, @Nullable final String sRoleID)
-  {
-    if (StringHelper.hasNoText (sUserID))
-      return false;
-    if (StringHelper.hasNoText (sRoleID))
-      return false;
-
-    return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));
-  }
-
   @Nonnull
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
   {
+    ValueEnforcer.notEmpty (sRoleID, "RoleID");
+    if (StringHelper.hasNoText (sUserGroupID))
+      return EChange.UNCHANGED;
+
     // Resolve user group
     final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "assign-role");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, "assign-role", sUserGroupID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -476,7 +482,10 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     try
     {
       if (aUserGroup.assignRole (sRoleID).isUnchanged ())
+      {
+        AuditHelper.onAuditModifyFailure (UserGroup.OT, "assign-role", sUserGroupID, sRoleID, "already-assigned");
         return EChange.UNCHANGED;
+      }
 
       BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
@@ -488,7 +497,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-role", sUserGroupID, sRoleID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, true));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (sUserGroupID, sRoleID, true));
 
     return EChange.CHANGED;
   }
@@ -496,11 +505,16 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
+    if (StringHelper.hasNoText (sUserGroupID))
+      return EChange.UNCHANGED;
+    if (StringHelper.hasNoText (sRoleID))
+      return EChange.UNCHANGED;
+
     // Resolve user group
     final UserGroup aUserGroup = getOfID (sUserGroupID);
     if (aUserGroup == null)
     {
-      AuditHelper.onAuditModifyFailure (UserGroup.OT, sUserGroupID, "no-such-usergroup-id", "unassign-role");
+      AuditHelper.onAuditModifyFailure (UserGroup.OT, "unassign-role", sUserGroupID, "no-such-id");
       return EChange.UNCHANGED;
     }
 
@@ -508,8 +522,10 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     try
     {
       if (aUserGroup.unassignRole (sRoleID).isUnchanged ())
+      {
+        AuditHelper.onAuditModifyFailure (UserGroup.OT, "unassign-role", sUserGroupID, sRoleID, "not-assigned");
         return EChange.UNCHANGED;
-
+      }
       BusinessObjectHelper.setLastModificationNow (aUserGroup);
       internalUpdateItem (aUserGroup);
     }
@@ -520,7 +536,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     AuditHelper.onAuditModifySuccess (UserGroup.OT, "unassign-role", sUserGroupID, sRoleID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, false));
+    m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (sUserGroupID, sRoleID, false));
 
     return EChange.CHANGED;
   }
@@ -555,7 +571,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
 
     // Execute callback as the very last action
     for (final IUserGroup aUserGroup : aAffectedUserGroups)
-      m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup, sRoleID, false));
+      m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (aUserGroup.getID (), sRoleID, false));
 
     return EChange.CHANGED;
   }
@@ -583,5 +599,15 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
   {
     return containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
+  }
+
+  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID, @Nullable final String sRoleID)
+  {
+    if (StringHelper.hasNoText (sUserID))
+      return false;
+    if (StringHelper.hasNoText (sRoleID))
+      return false;
+
+    return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));
   }
 }
