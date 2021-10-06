@@ -36,11 +36,32 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public interface IRequestParameterManager
 {
+  /**
+   * @return The main URL parameter handler. May not be <code>null</code>.
+   */
   @Nonnull
   IRequestParameterHandler getParameterHandler ();
 
+  /**
+   * Set a new URL parameter handler.
+   *
+   * @param aRequestParameterHdl
+   */
   void setParameterHandler (@Nonnull IRequestParameterHandler aRequestParameterHdl);
 
+  /**
+   * Get the link to the provided menu item, extracting the application ID from
+   * the request.
+   *
+   * @param aRequestScope
+   *        The current request scope.
+   * @param aDisplayLocale
+   *        The display locale currently in use.
+   * @param sMenuItemID
+   *        The selected menu item. May not be <code>null</code>.
+   * @return A server absolute URL but without hostname and port. E.g. like
+   *         this: <code>/context/public/locale/menuitemid</code>.
+   */
   @Nonnull
   default SimpleURL getLinkToMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                        @Nonnull final Locale aDisplayLocale,
@@ -49,12 +70,37 @@ public interface IRequestParameterManager
     return getLinkToMenuItem (RequestSettings.getApplicationID (aRequestScope), aRequestScope, aDisplayLocale, sMenuItemID);
   }
 
+  /**
+   * Get the link to the provided menu item.
+   *
+   * @param sAppID
+   *        The photon application ID to use. May neither be <code>null</code>
+   *        nor empty.
+   * @param aRequestScope
+   *        The current request scope.
+   * @param aDisplayLocale
+   *        The display locale currently in use.
+   * @param sMenuItemID
+   *        The selected menu item. May not be <code>null</code>.
+   * @return A server absolute URL but without hostname and port. E.g. like
+   *         this: <code>/context/public/locale/menuitemid</code>.
+   */
   @Nonnull
   SimpleURL getLinkToMenuItem (@Nonnull @Nonempty String sAppID,
                                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
                                @Nonnull Locale aDisplayLocale,
                                @Nonnull String sMenuItemID);
 
+  /**
+   * Extract the menu item ID from the provided URL using the given menu tree.
+   *
+   * @param aURL
+   *        The URL to extract from. May be <code>null</code>.
+   * @param aMenuTree
+   *        The menu tree to match against. May not be <code>null</code>.
+   * @return <code>null</code> if either the URL was <code>null</code> or if no
+   *         matching menu item was found in the URL.
+   */
   @Nullable
   default String getMenuItemFromURL (@Nullable final ISimpleURL aURL, @Nonnull final IMenuTree aMenuTree)
   {
@@ -63,6 +109,16 @@ public interface IRequestParameterManager
     return getParameterHandler ().getParametersFromURL (aURL, aMenuTree).getMenuItemAsString ();
   }
 
+  /**
+   * Extract the locale from the provided URL using the given menu tree.
+   *
+   * @param aURL
+   *        The URL to extract from. May be <code>null</code>.
+   * @param aMenuTree
+   *        The menu tree to match against. May not be <code>null</code>.
+   * @return <code>null</code> if either the URl was <code>null</code> or if no
+   *         locale was found in the URL.
+   */
   @Nullable
   default String getLocaleFromURL (@Nullable final ISimpleURL aURL, @Nonnull final IMenuTree aMenuTree)
   {
