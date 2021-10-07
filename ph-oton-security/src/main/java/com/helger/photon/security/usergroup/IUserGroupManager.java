@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2021 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
@@ -79,9 +79,10 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        .
    * @param aCustomAttrs
    *        A set of custom attributes. May be <code>null</code>.
-   * @return The created user group.
+   * @return The created user group. May be <code>null</code> if serialization
+   *         fails.
    */
-  @Nonnull
+  @Nullable
   IUserGroup createNewUserGroup (@Nonnull @Nonempty String sName,
                                  @Nullable String sDescription,
                                  @Nullable Map <String, String> aCustomAttrs);
@@ -99,9 +100,10 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        .
    * @param aCustomAttrs
    *        A set of custom attributes. May be <code>null</code>.
-   * @return The created user group.
+   * @return The created user group. May be <code>null</code> if serialization
+   *         fails.
    */
-  @Nonnull
+  @Nullable
   IUserGroup createPredefinedUserGroup (@Nonnull @Nonempty String sID,
                                         @Nonnull @Nonempty String sName,
                                         @Nullable String sDescription,

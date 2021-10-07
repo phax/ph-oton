@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2021 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
@@ -75,10 +75,10 @@ public interface IUserManager extends IPhotonManager <IUser>
    *        The users default locale. May be <code>null</code>.
    * @param aCustomAttrs
    *        Custom attributes. May be <code>null</code>.
-   * @return The created user or <code>null</code> if another user with the same
-   *         email address is already present.
    * @param bDisabled
    *        <code>true</code> if the user is disabled
+   * @return The created user or <code>null</code> if another user with the same
+   *         email address is already present or if serialization failed.
    */
   @Nullable
   IUser createNewUser (@Nonnull @Nonempty String sLoginName,
@@ -114,10 +114,10 @@ public interface IUserManager extends IPhotonManager <IUser>
    *        The users default locale. May be <code>null</code>.
    * @param aCustomAttrs
    *        Custom attributes. May be <code>null</code>.
-   * @return The created user or <code>null</code> if another user with the same
-   *         email address is already present.
    * @param bDisabled
    *        <code>true</code> if the user is disabled
+   * @return The created user or <code>null</code> if another user with the same
+   *         email address is already present or if serialization failed.
    */
   @Nullable
   IUser createPredefinedUser (@Nonnull @Nonempty String sID,
@@ -141,6 +141,15 @@ public interface IUserManager extends IPhotonManager <IUser>
   @Nullable
   IUser getUserOfID (@Nullable String sUserID);
 
+  /**
+   * Get the user with the specified ID but only if the user is neither deleted
+   * nor disabled.
+   *
+   * @param sUserID
+   *        The user ID to resolve. May be <code>null</code>.
+   * @return <code>null</code> if no such user exists or if the user exists but
+   *         is either deleted or disabled.
+   */
   @Nullable
   default IUser getActiveUserOfID (@Nullable final String sUserID)
   {

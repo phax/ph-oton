@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2021 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
@@ -57,9 +57,9 @@ public interface IRoleManager extends IPhotonManager <IRole>
    *        Optional description text. May be <code>null</code>.
    * @param aCustomAttrs
    *        A set of custom attributes. May be <code>null</code>.
-   * @return The created role and never <code>null</code>.
+   * @return The created role. May be <code>null</code> if persisting fails.
    */
-  @Nonnull
+  @Nullable
   IRole createNewRole (@Nonnull @Nonempty String sName, @Nullable String sDescription, @Nullable Map <String, String> aCustomAttrs);
 
   /**
@@ -73,9 +73,9 @@ public interface IRoleManager extends IPhotonManager <IRole>
    *        Optional description text. May be <code>null</code>.
    * @param aCustomAttrs
    *        A set of custom attributes. May be <code>null</code>.
-   * @return The created role and never <code>null</code>.
+   * @return The created role. May be <code>null</code> if persisting fails.
    */
-  @Nonnull
+  @Nullable
   IRole createPredefinedRole (@Nonnull @Nonempty String sID,
                               @Nonnull @Nonempty String sName,
                               @Nullable String sDescription,
