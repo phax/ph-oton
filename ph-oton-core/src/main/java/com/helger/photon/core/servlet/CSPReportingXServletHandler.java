@@ -36,7 +36,6 @@ import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
@@ -111,7 +110,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
     final byte [] aBytes = StreamHelper.getAllBytes (aHttpRequest.getInputStream ());
 
     // Try to parse as JSON
-    final IJson aJson = JsonReader.builder ().source (new NonBlockingByteArrayInputStream (aBytes)).read ();
+    final IJson aJson = JsonReader.builder ().source (aBytes).read ();
     if (aJson != null)
     {
       if (aJson.isObject ())
