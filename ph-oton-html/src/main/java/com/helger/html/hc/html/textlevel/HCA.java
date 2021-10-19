@@ -57,6 +57,20 @@ public class HCA extends AbstractHCA <HCA>
     if (!URLValidator.isValid (sWebsite))
       return new HCTextNode (sWebsite);
 
-    return new HCA (new SimpleURL (sWebsite)).setTarget (aTarget).addChild (sWebsite);
+    return HCA.of (sWebsite).setTarget (aTarget).addChild (sWebsite);
+  }
+
+  /**
+   * @param sHref
+   *        The target URL to link to. May be <code>null</code>.
+   * @return A new {@link HCA} - depending on the link.
+   * @since 8.3.2
+   */
+  @Nonnull
+  public static HCA of (@Nullable final String sHref)
+  {
+    if (StringHelper.hasNoText (sHref))
+      return new HCA ();
+    return new HCA (new SimpleURL (sHref));
   }
 }
