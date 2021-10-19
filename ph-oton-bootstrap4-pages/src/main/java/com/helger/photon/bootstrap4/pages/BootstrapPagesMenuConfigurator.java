@@ -63,6 +63,8 @@ import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoServletContext;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoSystemProperties;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoThirdPartyLibraries;
 import com.helger.photon.bootstrap4.pages.sysinfo.BasePageSysInfoThreads;
+import com.helger.photon.bootstrap4.pages.utils.BasePageUtilsBase64Decode;
+import com.helger.photon.bootstrap4.pages.utils.BasePageUtilsBase64Encode;
 import com.helger.photon.bootstrap4.pages.utils.BasePageUtilsHttpClient;
 import com.helger.photon.bootstrap4.pages.utils.BasePageUtilsPortChecker;
 import com.helger.photon.core.go.GoMappingManager;
@@ -128,7 +130,9 @@ public final class BootstrapPagesMenuConfigurator
   public static final String MENU_ADMIN_DATA_TIMEZONES = "admin_data_timezones";
 
   public static final String MENU_ADMIN_UTILS = "admin_utils";
-  public static final String MENU_ADMIN_UTILS_HTTP_CLIENT = "admin_uitls_httpclient";
+  public static final String MENU_ADMIN_UTILS_BASE64_DECODE = "admin_utils_base64decode";
+  public static final String MENU_ADMIN_UTILS_BASE64_ENCODE = "admin_utils_base64encode";
+  public static final String MENU_ADMIN_UTILS_HTTP_CLIENT = "admin_utils_httpclient";
   public static final String MENU_ADMIN_UTILS_PORT_CHECKER = "admin_utils_portchecker";
 
   public static final String MENU_ADMIN_SETTINGS = "admin_settings";
@@ -333,6 +337,10 @@ public final class BootstrapPagesMenuConfigurator
                                                                                                  EWebPageText.PAGE_NAME_UTILS.getAsMLT (),
                                                                                                  aMenuTree))
                                                .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminUtils, new BasePageUtilsBase64Decode <WPECTYPE> (MENU_ADMIN_UTILS_BASE64_DECODE))
+             .setDisplayFilter (aDisplayFilter);
+    aMenuTree.createItem (aAdminUtils, new BasePageUtilsBase64Encode <WPECTYPE> (MENU_ADMIN_UTILS_BASE64_ENCODE))
+             .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminUtils, new BasePageUtilsHttpClient <WPECTYPE> (MENU_ADMIN_UTILS_HTTP_CLIENT))
              .setDisplayFilter (aDisplayFilter);
     aMenuTree.createItem (aAdminUtils, new BasePageUtilsPortChecker <WPECTYPE> (MENU_ADMIN_UTILS_PORT_CHECKER))

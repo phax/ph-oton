@@ -101,6 +101,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to FineUploader 5.16.2
     * Updated to Jetty 9.4.44
     * Made the `IAuditManager` customizable in the PhotonSecurityManager
+    * Added built-in Base64 encode and decode pages in the "Utilities" menu area
 * v8.3.1 - 2021-08-05
     * Updated to Jetty 9.4.43
     * Updated to ph-web 9.6.1
