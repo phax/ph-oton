@@ -35,10 +35,10 @@ import com.helger.photon.bootstrap4.CBootstrap;
 public final class ThirdPartyModuleProvider_ph_oton_bootstrap4 implements IThirdPartyModuleProviderSPI
 {
   public static final IThirdPartyModule BOOTSTRAP4 = new ThirdPartyModule ("Bootstrap",
-                                                                           "Twitter",
+                                                                           "Bootstrap",
                                                                            ELicense.MIT,
-                                                                           CBootstrap.BOOTSTRAP_VERSION_45,
-                                                                           "http://getbootstrap.com/docs/4.5");
+                                                                           CBootstrap.BOOTSTRAP_VERSION_46,
+                                                                           "https://getbootstrap.com/docs/4.6");
 
   @Nullable
   public IThirdPartyModule [] getAllThirdPartyModules ()

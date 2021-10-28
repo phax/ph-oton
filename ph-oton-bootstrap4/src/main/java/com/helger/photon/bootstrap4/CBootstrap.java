@@ -21,7 +21,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.version.Version;
 
 /**
- * Constants for usage with Bootstrap3
+ * Constants for usage with Bootstrap4
  *
  * @author Philip Helger
  */
@@ -29,7 +29,7 @@ import com.helger.commons.version.Version;
 public final class CBootstrap
 {
   /** Bootstrap version */
-  public static final Version BOOTSTRAP_VERSION_45 = new Version (4, 5, 3);
+  public static final Version BOOTSTRAP_VERSION_46 = new Version (4, 6, 1);
 
   /** The maximum number of columns a grid system can be separated into */
   public static final int GRID_SYSTEM_MAX = 12;

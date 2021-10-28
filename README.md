@@ -98,6 +98,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.3.2 - work in progress
+    * Updated to Bootstrap 4.6.1
     * Updated to FineUploader 5.16.2
     * Updated to Jetty 9.4.44
     * Made the `IAuditManager` customizable in the PhotonSecurityManager
