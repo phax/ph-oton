@@ -67,7 +67,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return User.createdPredefinedUser (CSecurity.USER_ADMINISTRATOR_ID,
                                        CSecurity.USER_ADMINISTRATOR_LOGIN,
                                        CSecurity.USER_ADMINISTRATOR_EMAIL,
-                                       GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                       GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
                                                                                              CSecurity.USER_ADMINISTRATOR_PASSWORD),
                                        CSecurity.USER_ADMINISTRATOR_NAME,
                                        (String) null,
@@ -83,7 +83,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return User.createdPredefinedUser (CSecurity.USER_USER_ID,
                                        CSecurity.USER_USER_LOGIN,
                                        CSecurity.USER_USER_EMAIL,
-                                       GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                       GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
                                                                                              CSecurity.USER_USER_PASSWORD),
                                        CSecurity.USER_USER_NAME,
                                        (String) null,
@@ -99,7 +99,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return User.createdPredefinedUser (CSecurity.USER_GUEST_ID,
                                        CSecurity.USER_GUEST_LOGIN,
                                        CSecurity.USER_GUEST_EMAIL,
-                                       GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                       GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
                                                                                              CSecurity.USER_GUEST_PASSWORD),
                                        CSecurity.USER_GUEST_NAME,
                                        (String) null,
@@ -155,7 +155,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     // Create user
     final User aUser = new User (sLoginName,
                                  sEmailAddress,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sPlainTextPassword),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (), sPlainTextPassword),
                                  sFirstName,
                                  sLastName,
                                  sDescription,
@@ -208,7 +208,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     final User aUser = User.createdPredefinedUser (sID,
                                                    sLoginName,
                                                    sEmailAddress,
-                                                   GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (),
+                                                   GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
                                                                                                          sPlainTextPassword),
                                                    sFirstName,
                                                    sLastName,
@@ -380,7 +380,8 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     }
 
     // Create a new password salt upon password change
-    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (new PasswordSalt (), sNewPlainTextPassword);
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
+                                                                                             sNewPlainTextPassword);
     m_aRWLock.writeLock ().lock ();
     try
     {
