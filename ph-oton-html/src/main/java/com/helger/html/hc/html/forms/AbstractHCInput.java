@@ -113,9 +113,9 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
   }
 
   @Nonnull
-  public final IMPLTYPE setType (@Nonnull final EHCInputType eType)
+  public final IMPLTYPE setType (@Nullable final EHCInputType eType)
   {
-    m_eType = ValueEnforcer.notNull (eType, "Type");
+    m_eType = eType;
     return thisAsT ();
   }
 
