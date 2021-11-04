@@ -78,19 +78,20 @@ public final class BootstrapFormHelper
 
         // May be null!
         final EHCInputType eType = aInput.getType ();
-        switch (eType)
-        {
-          case CHECKBOX:
-          case RADIO:
-            aCSSClassToAdd = CBootstrapCSS.FORM_CHECK_INPUT;
-            break;
-          case FILE:
-            aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL_FILE;
-            break;
-          case HIDDEN:
-            aCSSClassToAdd = null;
-            break;
-        }
+        if (eType != null)
+          switch (eType)
+          {
+            case CHECKBOX:
+            case RADIO:
+              aCSSClassToAdd = CBootstrapCSS.FORM_CHECK_INPUT;
+              break;
+            case FILE:
+              aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL_FILE;
+              break;
+            case HIDDEN:
+              aCSSClassToAdd = null;
+              break;
+          }
       }
 
       if (aCSSClassToAdd != null)
