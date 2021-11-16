@@ -16,6 +16,7 @@
  */
 package com.helger.photon.connect.sftp;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -43,6 +44,23 @@ public interface IChannelSftpRunnable extends IHasDisplayName
   void execute (@Nonnull ChannelSftp aChannel) throws SftpException;
 
   /**
+   * Create a new runnable that first executes this action, and than the
+   * provided one.
+   *
+   * @param aOther
+   *        The other runnable to execute after this. May not be
+   *        <code>null</code>.
+   * @return Never <code>null</code>.
+   * @since 8.3.2
+   */
+  @Nonnull
+  @CheckReturnValue
+  default IChannelSftpRunnable followedBy (@Nonnull final IChannelSftpRunnable aOther)
+  {
+    return and (this, aOther);
+  }
+
+  /**
    * Create a new {@link IChannelSftpRunnable} that contains both parameters in
    * a row.
    *
@@ -54,6 +72,7 @@ public interface IChannelSftpRunnable extends IHasDisplayName
    * @since 8.3.2
    */
   @Nonnull
+  @CheckReturnValue
   static IChannelSftpRunnable and (@Nonnull final IChannelSftpRunnable aLhs, @Nonnull final IChannelSftpRunnable aRhs)
   {
     ValueEnforcer.notNull (aLhs, "Lhs");
