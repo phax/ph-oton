@@ -18,6 +18,8 @@ package com.helger.photon.connect.sftp;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.name.IHasDisplayName;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
@@ -39,4 +41,37 @@ public interface IChannelSftpRunnable extends IHasDisplayName
    *         In case anything goes wrong.
    */
   void execute (@Nonnull ChannelSftp aChannel) throws SftpException;
+
+  /**
+   * Create a new {@link IChannelSftpRunnable} that contains both parameters in
+   * a row.
+   *
+   * @param aLhs
+   *        First runnable. May not be <code>null</code>.
+   * @param aRhs
+   *        Second runnable. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   * @since 8.3.2
+   */
+  @Nonnull
+  static IChannelSftpRunnable and (@Nonnull final IChannelSftpRunnable aLhs, @Nonnull final IChannelSftpRunnable aRhs)
+  {
+    ValueEnforcer.notNull (aLhs, "Lhs");
+    ValueEnforcer.notNull (aRhs, "Rhs");
+    return new IChannelSftpRunnable ()
+    {
+      @Nonnull
+      @Nonempty
+      public String getDisplayName ()
+      {
+        return aLhs.getDisplayName () + " & " + aRhs.getDisplayName ();
+      }
+
+      public void execute (@Nonnull final ChannelSftp aChannel) throws SftpException
+      {
+        aLhs.execute (aChannel);
+        aRhs.execute (aChannel);
+      }
+    };
+  }
 }
