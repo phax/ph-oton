@@ -74,11 +74,13 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     initialRead ();
   }
 
+  @Override
   public boolean isReloadable ()
   {
     return true;
   }
 
+  @Override
   public void reload () throws DAOException
   {
     m_aRWLock.writeLockedThrowing ( () -> {

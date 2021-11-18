@@ -58,6 +58,7 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
   }
 
   @Nonnull
+  @Override
   public EContinue onException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                                 @Nonnull final UnifiedResponse aUnifiedResponse,
                                 @Nonnull final Throwable t)

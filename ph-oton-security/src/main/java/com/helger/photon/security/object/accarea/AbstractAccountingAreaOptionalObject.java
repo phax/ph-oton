@@ -47,7 +47,7 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   private final ITenant m_aTenant;
   private final IAccountingArea m_aAccountingArea;
   // Status vars
-  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
+  private int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   protected AbstractAccountingAreaOptionalObject (@Nonnull final IAccountingAreaObject aOther)
   {
@@ -115,6 +115,7 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   }
 
   @Nullable
+  @Override
   public final String getAccountingAreaID ()
   {
     return m_aAccountingArea == null ? null : m_aAccountingArea.getID ();

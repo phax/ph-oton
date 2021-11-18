@@ -147,15 +147,18 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
       @Override
       protected void showQuery (@Nonnull final WPECTYPE aWPEC,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final FailedMailData aSelectedObject)
+                                @Nullable final FailedMailData aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
         aForm.addChild (question (EText.DELETE_QUERY.getDisplayText (aDisplayLocale)));
       }
 
       @Override
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final FailedMailData aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         // Delete a single failed mail without querying
@@ -169,8 +172,9 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     addCustomHandler (CPageParam.ACTION_DELETE_ALL, new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
     {
       @Nonnull
-      public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         // Delete all failed mails
@@ -189,8 +193,9 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (true)
     {
       @Nonnull
-      public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         // Resend a single failed mail

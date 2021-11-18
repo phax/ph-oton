@@ -187,15 +187,18 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       @Override
       protected void showQuery (@Nonnull final WPECTYPE aWPEC,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final NamedSMTPSettings aSelectedObject)
+                                @Nullable final NamedSMTPSettings aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
         aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getName ())));
       }
 
       @Override
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final NamedSMTPSettings aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         if (m_aMgr.removeSettings (aSelectedObject.getID ()).isChanged ())

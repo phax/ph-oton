@@ -150,16 +150,19 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       @OverrideOnDemand
       protected void showQuery (@Nonnull final WPECTYPE aWPEC,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final IUserToken aSelectedObject)
+                                @Nullable final IUserToken aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
         aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getDisplayName ())));
       }
 
       @Override
       @OverrideOnDemand
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUserToken aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
@@ -174,14 +177,17 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     addCustomHandler (ACTION_CREATE_NEW_ACCESS_TOKEN, new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
     {
       @Override
-      public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUserToken aSelectedObject)
       {
+        assert aSelectedObject != null;
+
         return canCreateNewAccessToken (aSelectedObject);
       }
 
       @Nonnull
-      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUserToken aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final HCNodeList aNodeList = aWPEC.getNodeList ();
         final boolean bRevokedOld = aSelectedObject.getActiveAccessToken () != null;
@@ -267,6 +273,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     });
     addCustomHandler (ACTION_REVOKE_ACCESS_TOKEN, new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
     {
+      @Override
       public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
       {
         return canRevokeAccessToken (aSelectedObject);

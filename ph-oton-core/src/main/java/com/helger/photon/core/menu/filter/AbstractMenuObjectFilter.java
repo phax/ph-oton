@@ -61,6 +61,7 @@ public abstract class AbstractMenuObjectFilter implements IMenuObjectFilter
   }
 
   @Nullable
+  @Override
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return m_aDescription == null ? null : m_aDescription.getText (aContentLocale);

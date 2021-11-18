@@ -18,31 +18,22 @@ package com.helger.html.request;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
+
 /**
  * Defines an abstract request field for input controls. It encapsulates a name
- * and a single request value.
+ * only.
  *
  * @author Philip Helger
+ * @since 8.3.2
  */
-public interface IHCRequestField extends IHCBaseRequestField
+public interface IHCBaseRequestField
 {
   /**
-   * Get the default value that should be used if no request value is present.
-   *
-   * @return The default value to be used as fallback. May not be
-   *         <code>null</code>. <code>null</code> have to be returned as empty
-   *         strings!
+   * @return The field name of this request field. Neither <code>null</code> nor
+   *         empty.
    */
   @Nonnull
-  String getDefaultValue ();
-
-  /**
-   * Get the value of the request - optionally falling back to an eventually
-   * provided default value if no such request parameter is present
-   *
-   * @return A single request value as string.
-   * @see #getDefaultValue()
-   */
-  @Nonnull
-  String getRequestValue ();
+  @Nonempty
+  String getFieldName ();
 }

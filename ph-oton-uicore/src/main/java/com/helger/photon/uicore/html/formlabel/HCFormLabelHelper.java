@@ -67,7 +67,7 @@ public final class HCFormLabelHelper
 
   private static final Logger LOGGER = LoggerFactory.getLogger (HCFormLabelHelper.class);
 
-  private static ICommonsMap <ELabelType, String> DEFAULT_SUFFIXES = new CommonsHashMap <> ();
+  private static final ICommonsMap <ELabelType, String> DEFAULT_SUFFIXES = new CommonsHashMap <> ();
   static
   {
     DEFAULT_SUFFIXES.put (ELabelType.OPTIONAL, DEFAULT_SIGN_OPTIONAL);

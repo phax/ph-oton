@@ -56,11 +56,13 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
     initialRead ();
   }
 
+  @Override
   public boolean isReloadable ()
   {
     return true;
   }
 
+  @Override
   public void reload ()
   {
     m_aRWLock.writeLocked ( () -> {

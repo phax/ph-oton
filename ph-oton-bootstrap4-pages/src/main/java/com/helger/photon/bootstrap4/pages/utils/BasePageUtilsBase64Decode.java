@@ -102,7 +102,7 @@ public class BasePageUtilsBase64Decode <WPECTYPE extends IWebPageExecutionContex
   private static final String FIELD_DECODE = "decode";
   private static final String FIELD_SHOW_AS_STRING = "showasstring";
   private static final boolean DEFAULT_SHOW_AS_STRING = false;
-  private static AjaxFunctionDeclaration AJAX_GET_DECODED;
+  private static final AjaxFunctionDeclaration AJAX_GET_DECODED;
 
   static
   {

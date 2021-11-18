@@ -666,6 +666,11 @@ public class JettyStarter
           aServer.stop ();
           aServer.join ();
         }
+        catch (final InterruptedException ex)
+        {
+          Thread.currentThread ().interrupt ();
+          LOGGER.error ("ShutdownHook of JettyStarter has been interrupted!");
+        }
         catch (final Exception ex)
         {
           LOGGER.error ("Exception in ShutdownHook of JettyStarter!", ex);

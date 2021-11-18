@@ -102,6 +102,7 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return m_aExprs == null || m_aExprs.isEmpty ();
   }
 
+  @Override
   public boolean isNotEmpty ()
   {
     return m_aExprs != null && m_aExprs.isNotEmpty ();

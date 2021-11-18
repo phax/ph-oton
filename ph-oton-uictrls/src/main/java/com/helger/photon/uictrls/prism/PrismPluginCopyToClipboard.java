@@ -34,6 +34,7 @@ public class PrismPluginCopyToClipboard implements IPrismPlugin
   public PrismPluginCopyToClipboard ()
   {}
 
+  @Override
   public void registerExternalResourcesBeforePrism ()
   {
     // External JS is needed

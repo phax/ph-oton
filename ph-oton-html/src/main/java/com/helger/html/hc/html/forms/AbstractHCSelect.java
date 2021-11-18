@@ -52,8 +52,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        the implementation type
  */
-public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends
-                                       AbstractHCControl <IMPLTYPE> implements
+public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE> implements
                                        IHCSelect <IMPLTYPE>
 {
   /** By default multi select is disabled */
@@ -249,13 +248,13 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   @Nonnegative
   public final int getOptionCount ()
   {
-    return m_aOptions.getCount (c -> c instanceof HCOption);
+    return m_aOptions.getCount (HCOption.class::isInstance);
   }
 
   @Nonnegative
   public final int getOptionGroupCount ()
   {
-    return m_aOptions.getCount (c -> c instanceof HCOptGroup);
+    return m_aOptions.getCount (HCOptGroup.class::isInstance);
   }
 
   @Nonnull
@@ -275,27 +274,26 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   @Nullable
   public final HCOption getOptionAtIndex (@Nonnegative final int nIndex)
   {
-    return m_aOptions.getAtIndexMapped (aChild -> aChild instanceof HCOption, nIndex, aChild -> (HCOption) aChild);
+    return m_aOptions.getAtIndexMapped (HCOption.class::isInstance, nIndex, HCOption.class::cast);
   }
 
   @Nullable
   public final HCOptGroup getOptionGroupAtIndex (@Nonnegative final int nIndex)
   {
-    return m_aOptions.getAtIndexMapped (aChild -> aChild instanceof HCOptGroup, nIndex, aChild -> (HCOptGroup) aChild);
+    return m_aOptions.getAtIndexMapped (HCOptGroup.class::isInstance, nIndex, HCOptGroup.class::cast);
   }
 
   public final boolean hasOptions ()
   {
-    return m_aOptions.containsAny (c -> c instanceof HCOption);
+    return m_aOptions.containsAny (HCOption.class::isInstance);
   }
 
   public final boolean hasOptionGroups ()
   {
-    return m_aOptions.containsAny (c -> c instanceof HCOptGroup);
+    return m_aOptions.containsAny (HCOptGroup.class::isInstance);
   }
 
-  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = aChild -> aChild instanceof HCOption &&
-                                                                            ((HCOption) aChild).isSelected ();
+  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = x -> x instanceof HCOption && ((HCOption) x).isSelected ();
 
   @Nonnull
   @ReturnsMutableCopy

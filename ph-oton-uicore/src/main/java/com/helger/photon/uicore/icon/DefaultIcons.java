@@ -17,6 +17,7 @@
 package com.helger.photon.uicore.icon;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,7 +69,7 @@ public final class DefaultIcons
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static EnumMap <EDefaultIcon, IIcon> getAll ()
+  public static Map <EDefaultIcon, IIcon> getAll ()
   {
     return new EnumMap <> (MAP);
   }

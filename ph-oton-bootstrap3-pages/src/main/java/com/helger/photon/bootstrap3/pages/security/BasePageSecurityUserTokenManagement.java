@@ -265,6 +265,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     });
     addCustomHandler (ACTION_REVOKE_ACCESS_TOKEN, new AbstractBootstrapWebPageActionHandler <IUserToken, WPECTYPE> (true)
     {
+      @Override
       public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserToken aSelectedObject)
       {
         return canRevokeAccessToken (aSelectedObject);

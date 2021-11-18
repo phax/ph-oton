@@ -42,6 +42,7 @@ import com.helger.commons.text.IMultilingualText;
 import com.helger.commons.text.display.IHasDisplayTextWithArgs;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
+import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.grouping.HCOL;
 import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -66,8 +67,7 @@ import com.helger.security.keystore.LoadedKeyStore;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> extends
-                                    AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayTextWithArgs
@@ -92,8 +92,7 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
     MSG_SYSTEM_SC_DIR ("WebApp-Verzeichnis", "WebApp directory"),
     MSG_SYSTEM_SC_DIR_TOTAL ("Speicherplatz im WebApp-Verzeichnis", "Total space in the WebApp directory"),
     MSG_SYSTEM_SC_DIR_FREE ("Freier Speicherplatz im WebApp-Verzeichnis", "Free space in the WebApp directory"),
-    MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis",
-                              "Usable space in the WebApp directory"),
+    MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis", "Usable space in the WebApp directory"),
     MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis: {0}", "Not a directory: {0}"),
     MSG_STARTUP_DATE_TIME ("Startzeit der Anwendung", "Application startup time"),
     MSG_UPTIME ("Uptime", "Uptime"),
@@ -128,9 +127,7 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
     super (sID, sName);
   }
 
-  public BasePageSysInfoCACerts (@Nonnull @Nonempty final String sID,
-                                 @Nonnull final String sName,
-                                 @Nullable final String sDescription)
+  public BasePageSysInfoCACerts (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -140,6 +137,81 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
                                  @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
+  }
+
+  private void _showKeyStore (@Nonnull final WPECTYPE aWPEC,
+                              final int nFileIndex,
+                              @Nonnull final IHCElementWithChildren <?> aTarget,
+                              @Nonnull final KeyStore aKS)
+  {
+    final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+    try
+    {
+      final ICommonsList <String> aAliases = new CommonsArrayList <> (aKS.aliases ());
+      final HCTable aTable = new HCTable (new DTCol ("Alias"),
+                                          new DTCol ("Subject").setInitialSorting (ESortOrder.ASCENDING),
+                                          new DTCol ("Root cert?"),
+                                          new DTCol ("Valid from").setWidth (170).setDisplayType (EDTColType.DATETIME, aDisplayLocale),
+                                          new DTCol ("Valid to").setWidth (170).setDisplayType (EDTColType.DATETIME, aDisplayLocale))
+                                                                                                                                     .setID (getID () +
+                                                                                                                                             nFileIndex);
+      for (final String sAlias : aAliases)
+      {
+        final HCRow aRow = aTable.addBodyRow ();
+        aRow.addCell (sAlias);
+        try
+        {
+          final KeyStore.Entry aEntry = aKS.getEntry (sAlias, null);
+          if (aEntry instanceof KeyStore.TrustedCertificateEntry)
+          {
+            final KeyStore.TrustedCertificateEntry aTCEntry = (TrustedCertificateEntry) aEntry;
+            final Certificate aCert = aTCEntry.getTrustedCertificate ();
+            if (aCert instanceof X509Certificate)
+            {
+              final X509Certificate aX509Cert = (X509Certificate) aCert;
+              final String sSubject = aX509Cert.getSubjectX500Principal ().getName ();
+              final String sIssuer = aX509Cert.getIssuerX500Principal ().getName ();
+              final boolean bIsRoot = sSubject.equals (sIssuer);
+              aRow.addCell (sSubject);
+              // Show the issuer only if it is not root
+              aRow.addCell (EPhotonCoreText.getYesOrNo (bIsRoot, aDisplayLocale), bIsRoot ? null : sIssuer);
+              final LocalDateTime aNotBefore = PDTFactory.createLocalDateTime (aX509Cert.getNotBefore ());
+              aRow.addCell (PDTToString.getAsString (aNotBefore, aDisplayLocale));
+              final LocalDateTime aNotAfter = PDTFactory.createLocalDateTime (aX509Cert.getNotAfter ());
+              aRow.addCell (PDTToString.getAsString (aNotAfter, aDisplayLocale));
+            }
+            else
+            {
+              aRow.addCell (em ("Not an X509 certificate"));
+              aRow.addCell ();
+              aRow.addCell ();
+              aRow.addCell ();
+            }
+          }
+          else
+          {
+            aRow.addCell (em ("Unsupported type: " + ClassHelper.getClassLocalName (aEntry)));
+            aRow.addCell ();
+            aRow.addCell ();
+            aRow.addCell ();
+          }
+        }
+        catch (final GeneralSecurityException ex)
+        {
+          aRow.addCell (em ("password required?"));
+          aRow.addCell ();
+          aRow.addCell ();
+          aRow.addCell ();
+        }
+      }
+      aTarget.addChild (aTable).addChild (BootstrapDataTables.createDefaultDataTables (aWPEC, aTable));
+    }
+    catch (final GeneralSecurityException ex)
+    {
+      aTarget.addChild (error (div ("Error traversing trust store.")).addChild (BootstrapTechnicalUI.getTechnicalDetailsNode (ex,
+                                                                                                                              aDisplayLocale)));
+    }
   }
 
   @Override
@@ -168,75 +240,7 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
             if (aLKS.isSuccess ())
             {
               final KeyStore aKS = aLKS.getKeyStore ();
-              try
-              {
-                final ICommonsList <String> aAliases = new CommonsArrayList <> (aKS.aliases ());
-                final HCTable aTable = new HCTable (new DTCol ("Alias"),
-                                                    new DTCol ("Subject").setInitialSorting (ESortOrder.ASCENDING),
-                                                    new DTCol ("Root cert?"),
-                                                    new DTCol ("Valid from").setWidth (170)
-                                                                            .setDisplayType (EDTColType.DATETIME,
-                                                                                             aDisplayLocale),
-                                                    new DTCol ("Valid to").setWidth (170)
-                                                                          .setDisplayType (EDTColType.DATETIME,
-                                                                                           aDisplayLocale)).setID (getID () +
-                                                                                                                   nFileIndex);
-                for (final String sAlias : aAliases)
-                {
-                  final HCRow aRow = aTable.addBodyRow ();
-                  aRow.addCell (sAlias);
-                  try
-                  {
-                    final KeyStore.Entry aEntry = aKS.getEntry (sAlias, null);
-                    if (aEntry instanceof KeyStore.TrustedCertificateEntry)
-                    {
-                      final KeyStore.TrustedCertificateEntry aTCEntry = (TrustedCertificateEntry) aEntry;
-                      final Certificate aCert = aTCEntry.getTrustedCertificate ();
-                      if (aCert instanceof X509Certificate)
-                      {
-                        final X509Certificate aX509Cert = (X509Certificate) aCert;
-                        final String sSubject = aX509Cert.getSubjectX500Principal ().getName ();
-                        final String sIssuer = aX509Cert.getIssuerX500Principal ().getName ();
-                        final boolean bIsRoot = sSubject.equals (sIssuer);
-                        aRow.addCell (sSubject);
-                        // Show the issuer only if it is not root
-                        aRow.addCell (EPhotonCoreText.getYesOrNo (bIsRoot, aDisplayLocale), bIsRoot ? null : sIssuer);
-                        final LocalDateTime aNotBefore = PDTFactory.createLocalDateTime (aX509Cert.getNotBefore ());
-                        aRow.addCell (PDTToString.getAsString (aNotBefore, aDisplayLocale));
-                        final LocalDateTime aNotAfter = PDTFactory.createLocalDateTime (aX509Cert.getNotAfter ());
-                        aRow.addCell (PDTToString.getAsString (aNotAfter, aDisplayLocale));
-                      }
-                      else
-                      {
-                        aRow.addCell (em ("Not an X509 certificate"));
-                        aRow.addCell ();
-                        aRow.addCell ();
-                        aRow.addCell ();
-                      }
-                    }
-                    else
-                    {
-                      aRow.addCell (em ("Unsupported type: " + ClassHelper.getClassLocalName (aEntry)));
-                      aRow.addCell ();
-                      aRow.addCell ();
-                      aRow.addCell ();
-                    }
-                  }
-                  catch (final GeneralSecurityException ex)
-                  {
-                    aRow.addCell (em ("password required?"));
-                    aRow.addCell ();
-                    aRow.addCell ();
-                    aRow.addCell ();
-                  }
-                }
-                aLI.addChild (aTable).addChild (BootstrapDataTables.createDefaultDataTables (aWPEC, aTable));
-              }
-              catch (final GeneralSecurityException ex)
-              {
-                aLI.addChild (error (div ("Error traversing trust store.")).addChild (BootstrapTechnicalUI.getTechnicalDetailsNode (ex,
-                                                                                                                                    aDisplayLocale)));
-              }
+              _showKeyStore (aWPEC, nFileIndex, aLI, aKS);
             }
             else
               aLI.addChild (error ("Failed to load the keystore - " + aLKS.getErrorText (aDisplayLocale)));

@@ -73,9 +73,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    */
   public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements ISessionWebScopeActivationHandler
   {
-    private transient IUser m_aUser;
+    private IUser m_aUser;
     private String m_sUserID;
-    private transient LoggedInUserManager m_aOwningMgr;
+    private LoggedInUserManager m_aOwningMgr;
 
     @Deprecated
     @UsedViaReflection

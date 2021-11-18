@@ -54,6 +54,7 @@ public abstract class AbstractHCNode implements IHCNode
   private EHCNodeState m_eNodeState = EHCNodeState.INITIAL;
 
   @OverrideOnDemand
+  @Override
   public boolean hasChildren ()
   {
     return false;
@@ -80,22 +81,26 @@ public abstract class AbstractHCNode implements IHCNode
     return null;
   }
 
+  @Override
   public void forAllChildren (@Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     // empty
   }
 
   @Nonnull
+  @Override
   public EContinue forAllChildrenBreakable (@Nonnull final Function <? super IHCNode, EContinue> aConsumer)
   {
     return EContinue.CONTINUE;
   }
 
+  @Override
   public void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     // empty
   }
 
+  @Override
   public <DSTTYPE> void forAllChildrenMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
                                               @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
                                               @Nonnull final Consumer <? super DSTTYPE> aConsumer)
@@ -112,6 +117,7 @@ public abstract class AbstractHCNode implements IHCNode
 
   @Nullable
   @OverrideOnDemand
+  @Override
   public IHCNode getFirstChild ()
   {
     return null;
@@ -134,6 +140,7 @@ public abstract class AbstractHCNode implements IHCNode
 
   @Nullable
   @OverrideOnDemand
+  @Override
   public IHCNode getLastChild ()
   {
     return null;

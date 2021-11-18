@@ -394,7 +394,7 @@ public final class HCExtHelper
   }
 
   @FunctionalInterface
-  public static interface ILineConsumer
+  public interface ILineConsumer
   {
     void accept (@Nonnull String sLine, boolean bIsLast);
   }

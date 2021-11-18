@@ -54,11 +54,10 @@ public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayT
       }
 
       @Nullable
+      @Override
       public String getDisplayText (@Nonnull final Locale aContentLocale)
       {
-        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale),
-                                                     " + ",
-                                                     aOther.getDisplayText (aContentLocale));
+        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale), " + ", aOther.getDisplayText (aContentLocale));
       }
     };
   }
@@ -76,6 +75,7 @@ public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayT
       }
 
       @Nullable
+      @Override
       public String getDisplayText (@Nonnull final Locale aContentLocale)
       {
         return StringHelper.getNotNull (aThis.getDisplayText (aContentLocale), aOther.getDisplayText (aContentLocale));

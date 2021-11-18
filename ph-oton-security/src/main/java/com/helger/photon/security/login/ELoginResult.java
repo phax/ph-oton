@@ -64,11 +64,6 @@ public enum ELoginResult implements ICredentialValidationResult
     return this == SUCCESS || this == SUCCESS_WITH_LOGOUT;
   }
 
-  public boolean isFailure ()
-  {
-    return !isSuccess ();
-  }
-
   public boolean hasMessage ()
   {
     // SUCCESS_WITH_LOGOUT is worth displaying

@@ -25,6 +25,19 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
+/**
+ * Abstract, generic implementation of {@link IWebPageActionHandler}.
+ *
+ * @author Philip Helger
+ * @param <DATATYPE>
+ *        The data type of the object to be handled.
+ * @param <WPECTYPE>
+ *        Web page execution context type
+ * @param <FORM_TYPE>
+ *        Form type to use
+ * @param <TOOLBAR_TYPE>
+ *        Toolbar type to use
+ */
 public abstract class AbstractWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                    implements
                                                    IWebPageActionHandler <DATATYPE, WPECTYPE>

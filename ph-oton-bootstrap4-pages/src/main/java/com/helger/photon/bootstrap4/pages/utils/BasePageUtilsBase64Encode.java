@@ -96,7 +96,7 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
   private static final String FIELD_TEXT = "text";
   private static final String FIELD_SHOW_AS_STRING = "showasstring";
   private static final boolean DEFAULT_SHOW_AS_STRING = true;
-  private static AjaxFunctionDeclaration AJAX_GET_ENCODED;
+  private static final AjaxFunctionDeclaration AJAX_GET_ENCODED;
 
   static
   {

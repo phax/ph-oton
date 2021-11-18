@@ -16,11 +16,8 @@
  */
 package com.helger.html.request;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.ICommonsList;
 
 /**
@@ -30,16 +27,8 @@ import com.helger.commons.collection.impl.ICommonsList;
  * @author Philip Helger´
  * @since 8.0.2
  */
-public interface IHCRequestFieldMultiValue extends Serializable
+public interface IHCRequestFieldMultiValue extends IHCBaseRequestField
 {
-  /**
-   * @return The field name of this request field. Neither <code>null</code> nor
-   *         empty.
-   */
-  @Nonnull
-  @Nonempty
-  String getFieldName ();
-
   /**
    * Get the default values that should be used if no request value is present.
    *

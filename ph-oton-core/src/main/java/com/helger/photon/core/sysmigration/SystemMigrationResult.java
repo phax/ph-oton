@@ -74,6 +74,7 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
     return m_bSuccess;
   }
 
+  @Override
   public boolean isFailure ()
   {
     return !m_bSuccess;
