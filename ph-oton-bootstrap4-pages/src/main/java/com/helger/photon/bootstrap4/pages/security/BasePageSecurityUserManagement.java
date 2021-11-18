@@ -197,7 +197,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     {
       @Override
       @OverrideOnDemand
-      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nonnull final IUser aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nullable final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getDisplayName ())));
@@ -205,7 +205,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
       @Override
       @OverrideOnDemand
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
@@ -222,7 +222,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     {
       @Override
       @OverrideOnDemand
-      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nonnull final IUser aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nullable final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (question (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getDisplayName ())));
@@ -230,7 +230,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
 
       @Override
       @OverrideOnDemand
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUser aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
@@ -246,13 +246,13 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     addCustomHandler (ACTION_RESET_PASSWORD, new AbstractBootstrapWebPageActionHandler <IUser, WPECTYPE> (true)
     {
       @Override
-      public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      public boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUser aSelectedObject)
       {
         return SecurityUIHelper.canResetPassword (aSelectedObject);
       }
 
       @Nonnull
-      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUser aSelectedObject)
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUser aSelectedObject)
       {
         final HCNodeList aNodeList = aWPEC.getNodeList ();
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();

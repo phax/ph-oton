@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.html.formlabel;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -24,9 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.CommonsEnumMap;
 import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.HCHelper;
@@ -67,7 +68,7 @@ public final class HCFormLabelHelper
 
   private static final Logger LOGGER = LoggerFactory.getLogger (HCFormLabelHelper.class);
 
-  private static final ICommonsMap <ELabelType, String> DEFAULT_SUFFIXES = new CommonsHashMap <> ();
+  private static final Map <ELabelType, String> DEFAULT_SUFFIXES = new CommonsEnumMap <> (ELabelType.class);
   static
   {
     DEFAULT_SUFFIXES.put (ELabelType.OPTIONAL, DEFAULT_SIGN_OPTIONAL);

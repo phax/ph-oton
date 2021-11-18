@@ -144,7 +144,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       @Override
       protected void showQuery (@Nonnull final WPECTYPE aWPEC,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final IUserGroup aSelectedObject)
+                                @Nullable final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -152,7 +152,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       }
 
       @Override
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
@@ -170,7 +170,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       @Override
       protected void showQuery (@Nonnull final WPECTYPE aWPEC,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final IUserGroup aSelectedObject)
+                                @Nullable final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -178,7 +178,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       }
 
       @Override
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IUserGroup aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();

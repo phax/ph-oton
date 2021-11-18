@@ -115,7 +115,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IRole, WPECTYPE> ()
     {
       @Override
-      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nonnull final IRole aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nullable final IRole aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -123,7 +123,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       }
 
       @Override
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final IRole aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IRole aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
