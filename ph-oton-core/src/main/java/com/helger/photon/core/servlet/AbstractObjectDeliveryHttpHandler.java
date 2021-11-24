@@ -18,7 +18,7 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -75,7 +75,9 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
    * classpath resources.
    */
   protected static final String ETAG_VALUE_OBJECT_DELIVERY_SERVLET = '"' +
-                                                                     Long.toString (MathHelper.abs (new Random ().nextLong ()), 16) +
+                                                                     Long.toString (MathHelper.abs (ThreadLocalRandom.current ()
+                                                                                                                     .nextLong ()),
+                                                                                    16) +
                                                                      '"';
 
   private final ICommonsOrderedSet <String> m_aDeniedFilenames = new CommonsLinkedHashSet <> ();

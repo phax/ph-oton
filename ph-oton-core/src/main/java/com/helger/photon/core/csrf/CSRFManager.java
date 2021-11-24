@@ -17,6 +17,7 @@
 package com.helger.photon.core.csrf;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -75,7 +76,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     return m_aRWLock.writeLockedGet ( () -> {
       String sNonce;
       int nCount = 0;
-      final Random aRandom = new Random ();
+      final Random aRandom = ThreadLocalRandom.current ();
       do
       {
         // Ensure a unique nonce

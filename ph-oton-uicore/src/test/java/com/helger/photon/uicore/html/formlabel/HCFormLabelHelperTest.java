@@ -29,7 +29,7 @@ import org.junit.Test;
 public final class HCFormLabelHelperTest
 {
   @Test
-  public void test ()
+  public void testBasic ()
   {
     // Ensure defaults are set
     assertEquals (HCFormLabelHelper.DEFAULT_SIGN_OPTIONAL, HCFormLabelHelper.getSuffixString (ELabelType.OPTIONAL));

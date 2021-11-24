@@ -17,7 +17,7 @@
 package com.helger.photon.security.token.accesstoken;
 
 import java.time.LocalDateTime;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -121,7 +121,7 @@ public final class AccessToken implements IAccessToken
   public static String createNewTokenString (@Nonnegative final int nBytes)
   {
     final byte [] aBytes = new byte [nBytes];
-    new Random ().nextBytes (aBytes);
+    ThreadLocalRandom.current ().nextBytes (aBytes);
     // Returns a +33% longer byte string
     return Base64.encodeBytes (aBytes);
   }

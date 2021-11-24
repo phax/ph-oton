@@ -17,7 +17,7 @@
 package com.helger.html.markdown;
 
 import java.util.Locale;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
@@ -60,7 +60,7 @@ final class MarkdownHelper
    */
   public static int rnd ()
   {
-    return new Random ().nextInt (1024);
+    return ThreadLocalRandom.current ().nextInt (1024);
   }
 
   /**

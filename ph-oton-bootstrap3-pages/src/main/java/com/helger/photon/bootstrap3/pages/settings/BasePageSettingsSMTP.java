@@ -191,7 +191,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       @Override
       protected void showQuery (@Nonnull final WPECTYPE aWPEC,
                                 @Nonnull final BootstrapForm aForm,
-                                @Nonnull final NamedSMTPSettings aSelectedObject)
+                                @Nullable final NamedSMTPSettings aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         aForm.addChild (new BootstrapQuestionBox ().addChild (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
@@ -199,7 +199,7 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
       }
 
       @Override
-      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nonnull final NamedSMTPSettings aSelectedObject)
+      protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final NamedSMTPSettings aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
