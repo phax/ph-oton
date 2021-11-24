@@ -190,19 +190,45 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   /** The global factory to be used. */
   private static IFactory s_aFactory = new FactoryXML ();
 
+  /**
+   * @return <code>true</code> if the {@link PhotonSecurityManager} was already
+   *         initialized, <code>false</code> if not.
+   * @since 8.3.2
+   */
+  public static boolean isAlreadyInitialized ()
+  {
+    return INITED.get ();
+  }
+
+  /**
+   * @return The currently installed factory for security managers. By default
+   *         an instance of {@link FactoryXML} is returned.
+   * @see #setFactory(IFactory)
+   */
   @Nonnull
   public static IFactory getFactory ()
   {
     return s_aFactory;
   }
 
+  /**
+   * Set a new global factory for security managers.
+   *
+   * @param aFactory
+   *        The new factory to be set. May not be <code>null</code>.
+   */
   public static void setFactory (@Nonnull final IFactory aFactory)
   {
     ValueEnforcer.notNull (aFactory, "Factory");
-    if (INITED.get ())
-      LOGGER.error ("Setting the PhotonSecurityManager factory after initialization has no effect!");
-    s_aFactory = aFactory;
-    LOGGER.info ("Setting the PhotonSecurityManager to " + aFactory.toString ());
+    if (isAlreadyInitialized ())
+    {
+      LOGGER.error ("Setting the PhotonSecurityManager factory after initialization has no effect and is ignored!");
+    }
+    else
+    {
+      s_aFactory = aFactory;
+      LOGGER.info ("Setting the PhotonSecurityManager to " + aFactory.toString ());
+    }
   }
 
   private IAuditManager m_aAuditMgr;
