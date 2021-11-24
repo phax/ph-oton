@@ -23,6 +23,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
@@ -152,7 +153,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                 @Nonnull final BootstrapForm aForm,
                                 @Nullable final IUserToken aSelectedObject)
       {
-        assert aSelectedObject != null;
+        ValueEnforcer.notNull (aSelectedObject, "SelectedObject");
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getDisplayName ())));
@@ -162,7 +163,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       @OverrideOnDemand
       protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final IUserToken aSelectedObject)
       {
-        assert aSelectedObject != null;
+        ValueEnforcer.notNull (aSelectedObject, "SelectedObject");
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
         final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 

@@ -131,8 +131,7 @@ public class BasePageAppInfoGo <WPECTYPE extends IWebPageExecutionContext> exten
     aNodeList.addChild (aToolbar);
 
     aNodeList.addChild (new HCDiv ().addChild (EText.MSG_GO_SERVLET.getDisplayText (aDisplayLocale) +
-                                               EPhotonCoreText.getYesOrNo (ServletStatusManager.getInstance ()
-                                                                                               .isServletRegistered (GoServlet.class),
+                                               EPhotonCoreText.getYesOrNo (ServletStatusManager.isServletRegistered (GoServlet.class),
                                                                            aDisplayLocale)));
 
     final HCTable aTable = new HCTable (new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),

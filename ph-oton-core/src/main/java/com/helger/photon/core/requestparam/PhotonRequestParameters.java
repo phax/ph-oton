@@ -33,7 +33,7 @@ import com.helger.photon.core.locale.ILocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuItemRedirectToPage;
 import com.helger.photon.core.menu.IMenuObject;
-import com.helger.photon.core.menu.IMenuTree;
+import com.helger.photon.core.menu.IMenuOperations;
 
 /**
  * Holder for the special ph-oton parameters
@@ -126,7 +126,7 @@ public class PhotonRequestParameters implements Serializable
   }
 
   @Nullable
-  public IMenuItemPage setMenuItemFromString (@Nonnull final IMenuTree aTree, @Nullable final String sMenuItemID)
+  public IMenuItemPage setMenuItemFromString (@Nonnull final IMenuOperations aTree, @Nullable final String sMenuItemID)
   {
     IMenuItemPage ret = null;
     if (StringHelper.hasText (sMenuItemID))

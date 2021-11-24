@@ -23,6 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.equals.EqualsHelper;
@@ -47,6 +50,8 @@ import com.helger.html.resource.js.IJSPathProvider;
 @Immutable
 public class WebSiteResourceWithCondition
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (WebSiteResourceWithCondition.class);
+
   private final WebSiteResource m_aResource;
   private final String m_sConditionalComment;
   private final boolean m_bIsBundlable;
@@ -129,6 +134,8 @@ public class WebSiteResourceWithCondition
       return false;
 
     // Can be bundled!
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("this can be bundled with " + aOther);
     return true;
   }
 

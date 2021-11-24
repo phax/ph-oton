@@ -54,6 +54,6 @@ public final class ResourceBundleServlet extends AbstractXServlet
 
   public static boolean isServletRegisteredInServletContext ()
   {
-    return ServletStatusManager.getInstance ().isServletRegistered (ResourceBundleServlet.class);
+    return ServletStatusManager.isServletRegistered (ResourceBundleServlet.class);
   }
 }
