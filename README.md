@@ -97,7 +97,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v8.3.2 - work in progress
+* v8.3.2 - 2021-11-24
     * Updated to Bootstrap 4.6.1
     * Updated to FineUploader 5.16.2
     * Updated to Jetty 9.4.44
@@ -105,6 +105,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Made the `IAuditManager` customizable in the PhotonSecurityManager
     * Added built-in Base64 encode and decode pages in the "Utilities" menu area
     * Added class `CountingSftpProgressMonitor`
+    * Fixed some SonarQube issues - nothing serious
 * v8.3.1 - 2021-08-05
     * Updated to Jetty 9.4.43
     * Updated to ph-web 9.6.1
