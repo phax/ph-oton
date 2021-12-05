@@ -27,10 +27,10 @@ import com.helger.photon.jetty.JettyStarter;
  * @author Philip Helger
  */
 @Immutable
-public final class RunInJettyPHOTONDEMO
+public final class RunInJettyPHOTONDEMO_BS3
 {
   public static void main (final String [] args) throws Exception
   {
-    new JettyStarter (RunInJettyPHOTONDEMO.class).run ();
+    new JettyStarter (RunInJettyPHOTONDEMO_BS3.class).run ();
   }
 }

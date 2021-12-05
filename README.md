@@ -97,6 +97,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v8.3.3 - work in progress
+    * Updated DataTables to 1.11.3
 * v8.3.2 - 2021-11-24
     * Updated to Bootstrap 4.6.1
     * Updated to FineUploader 5.16.2
