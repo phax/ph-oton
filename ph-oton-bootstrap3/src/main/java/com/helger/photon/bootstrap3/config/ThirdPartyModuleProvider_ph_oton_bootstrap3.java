@@ -37,7 +37,7 @@ public final class ThirdPartyModuleProvider_ph_oton_bootstrap3 implements IThird
   public static final IThirdPartyModule BOOTSTRAP3 = new ThirdPartyModule ("Bootstrap",
                                                                            "Twitter",
                                                                            ELicense.MIT,
-                                                                           CBootstrap.BOOTSTRAP_VERSION_340,
+                                                                           CBootstrap.BOOTSTRAP_VERSION_34,
                                                                            "http://getbootstrap.com/docs/3.4");
 
   @Nullable
