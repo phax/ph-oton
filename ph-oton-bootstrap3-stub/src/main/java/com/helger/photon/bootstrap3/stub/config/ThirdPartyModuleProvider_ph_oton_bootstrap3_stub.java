@@ -19,11 +19,9 @@ package com.helger.photon.bootstrap3.stub.config;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.commons.thirdparty.ELicense;
 import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.IThirdPartyModuleProviderSPI;
-import com.helger.commons.thirdparty.ThirdPartyModule;
-import com.helger.commons.version.Version;
+import com.helger.photon.app.PhotonAppConfig;
 
 /**
  * Implement this SPI interface if your JAR file contains external third party
@@ -34,15 +32,9 @@ import com.helger.commons.version.Version;
 @IsSPIImplementation
 public final class ThirdPartyModuleProvider_ph_oton_bootstrap3_stub implements IThirdPartyModuleProviderSPI
 {
-  public static final IThirdPartyModule LOG4J2 = new ThirdPartyModule ("Apache Log4j 2",
-                                                                       "Apache",
-                                                                       ELicense.APACHE2,
-                                                                       new Version (2, 14, 0),
-                                                                       "http://logging.apache.org/log4j/2.x/");
-
   @Nullable
   public IThirdPartyModule [] getAllThirdPartyModules ()
   {
-    return new IThirdPartyModule [] { LOG4J2 };
+    return new IThirdPartyModule [] { PhotonAppConfig.LOG4J2 };
   }
 }
