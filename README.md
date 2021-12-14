@@ -98,11 +98,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.3.4 - 2021-12-14
-    * Updated Log2J to 2.16.0 - fixes CVE-2021-44228 - again - see https://www.lunasec.io/docs/blog/log4j-zero-day/
+    * Updated Log2J to 2.16.0 - fixes CVE-2021-45046 - see https://www.lunasec.io/docs/blog/log4j-zero-day/
     * Corrected error in DataTables 1.11.3 integration that lead to CSP errors because too much was included
 * v8.3.3 - 2021-12-13
+    * Updated Log2J to 2.15.0 - fixes CVE-2021-44228 - see https://www.lunasec.io/docs/blog/log4j-zero-day/
     * Updated DataTables to 1.11.3
-    * Updated Log2J to 2.15.0 - fixes CVE-2021-44228
 * v8.3.2 - 2021-11-24
     * Updated to Bootstrap 4.6.1
     * Updated to FineUploader 5.16.2
