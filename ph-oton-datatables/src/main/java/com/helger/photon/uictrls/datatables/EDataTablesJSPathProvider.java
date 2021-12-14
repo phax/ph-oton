@@ -31,7 +31,9 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EDataTablesJSPathProvider implements IJSPathProvider
 {
-  DATATABLES_1_11 ("datatables/1.11.3/datatables.js"),
+  DATATABLES_1_11 ("datatables/1.11.3/js/jquery.dataTables.js"),
+  DATATABLES_1_11_BOOTSTRAP3 ("datatables/1.11.3/js/dataTables.bootstrap.js"),
+  DATATABLES_1_11_BOOTSTRAP4 ("datatables/1.11.3/js/dataTables.bootstrap4.js"),
   DATATABLES_AUTO_FILL ("datatables/AutoFill-2.3.7/js/dataTables.autoFill.js"),
   DATATABLES_AUTO_FILL_BOOTSTRAP3 ("datatables/AutoFill-2.3.7/js/autoFill.bootstrap.js"),
   DATATABLES_AUTO_FILL_BOOTSTRAP4 ("datatables/AutoFill-2.3.7/js/autoFill.bootstrap4.js"),

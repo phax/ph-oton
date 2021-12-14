@@ -337,7 +337,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public DataTables setJSVariableName (@Nonnull @Nonempty final String sJSVariableName)
   {
     ValueEnforcer.notEmpty (sJSVariableName, "JSVariableName");
-    ValueEnforcer.isTrue (JSMarshaller.isJSIdentifier (sJSVariableName), "JS Variable name is not an identifier: " + sJSVariableName);
+    ValueEnforcer.isTrue (JSMarshaller.isJSIdentifier (sJSVariableName), ()->"JS Variable name is not an identifier: " + sJSVariableName);
     m_sJSVariableName = sJSVariableName;
     return this;
   }

@@ -32,7 +32,9 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EDataTablesCSSPathProvider implements ICSSPathProvider
 {
-  DATATABLES_1_11 ("datatables/1.11.3/datatables.css"),
+  DATATABLES_1_11 ("datatables/1.11.3/css/jquery.dataTables.css"),
+  DATATABLES_1_11_BOOTSTRAP3 ("datatables/1.11.3/css/dataTables.bootstrap.css"),
+  DATATABLES_1_11_BOOTSTRAP4 ("datatables/1.11.3/css/dataTables.bootstrap4.css"),
   DATATABLES_AUTO_FILL ("datatables/AutoFill-2.3.7/css/autoFill.dataTables.css"),
   DATATABLES_AUTO_FILL_BOOTSTRAP3 ("datatables/AutoFill-2.3.7/css/autoFill.bootstrap.css"),
   DATATABLES_AUTO_FILL_BOOTSTRAP4 ("datatables/AutoFill-2.3.7/css/autoFill.bootstrap4.css"),
