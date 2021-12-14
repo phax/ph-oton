@@ -97,6 +97,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v8.3.4 - work in progress
+    * Updated Log2J to 2.16.0
 * v8.3.3 - 2021-12-13
     * Updated DataTables to 1.11.3
     * Updated Log2J to 2.15.0 - fixes CVE-2021-44228
