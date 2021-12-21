@@ -1,7 +1,8 @@
 # ph-oton
 
-[![Build Status](https://travis-ci.org/phax/ph-oton.svg?branch=master)](https://travis-ci.org/phax/ph-oton)
-﻿
+[![javadoc](https://javadoc.io/badge2/com.helger.photon/ph-oton-parent-pom/javadoc.svg)](https://javadoc.io/doc/com.helger.photon/ph-oton-parent-pom)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.helger.photon/ph-oton-parent-pom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.helger.photon/ph-oton-parent-pom) 
+
 This set of Java libraries forms a package to build Java web applications.
 
 Contained subprojects are:
