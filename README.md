@@ -98,6 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v8.3.6 - work in progress
+    * Updated Log2J to 2.17.1 - fixes CVE-2021-44832 - see https://logging.apache.org/log4j/2.x/security.html
 * v8.3.5 - 2021-12-21
     * Updated Log2J to 2.17.0 - fixes CVE-2021-45105 - see https://logging.apache.org/log4j/2.x/security.html
 * v8.3.4 - 2021-12-14
