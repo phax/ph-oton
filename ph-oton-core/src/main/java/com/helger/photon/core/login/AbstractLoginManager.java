@@ -200,6 +200,23 @@ public abstract class AbstractLoginManager
   }
 
   /**
+   * Get the redirect URL to which the user should be redirected after a
+   * successful login.
+   *
+   * @param aRequestScope
+   *        The current request scope.
+   * @return A non-<code>null</code> absolute URL.
+   * @since 8.3.6
+   */
+  @OverrideOnDemand
+  protected String getPostLoginRedirectURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    // NOTE: this method does not fit well, when behind a reverse proxy. It is
+    // only contained for backwards compatibility
+    return aRequestScope.getURLEncoded ();
+  }
+
+  /**
    * Main login routine.
    *
    * @param aRequestScope
@@ -285,7 +302,12 @@ public abstract class AbstractLoginManager
     {
       // Avoid double submit by simply redirecting to the desired destination
       // URL without the login parameters
-      aUnifiedResponse.setRedirect (aRequestScope.getURLEncoded ());
+      final String sRedirectURL = getPostLoginRedirectURL (aRequestScope);
+
+      if (LOGGER.isInfoEnabled ())
+        LOGGER.info ("Redirecting user after login to '" + sRedirectURL + "'");
+
+      aUnifiedResponse.setRedirect (sRedirectURL);
       return EContinue.BREAK;
     }
 
