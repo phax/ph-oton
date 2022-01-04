@@ -91,7 +91,7 @@ public final class PhotonStubInitializer
     // Meta elements
     PhotonMetaElements.registerMetaElementForGlobal (MetaElement.createMetaCharset (CHTMLCharset.CHARSET_HTML_OBJ));
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.GENERATOR.getAsMetaElement ("ph-oton stack - https://github.com/phax/ph-oton"));
-    // Source: https://getbootstrap.com/docs/4.0/getting-started/introduction/
+    // Source: https://getbootstrap.com/docs/4.6/getting-started/introduction/
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.VIEWPORT.getAsMetaElement ("width=device-width, initial-scale=1, shrink-to-fit=no"));
 
     // Finally read stuff from files that may be defined within the application
