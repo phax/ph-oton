@@ -201,7 +201,7 @@ public abstract class AbstractLoginManager
 
   /**
    * Get the redirect URL to which the user should be redirected after a
-   * successful login.
+   * successful login. This should be an absolute URL.
    *
    * @param aRequestScope
    *        The current request scope.
