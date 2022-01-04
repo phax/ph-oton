@@ -50,7 +50,11 @@ import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.exception.InitializationException;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.lang.ClassPathHelper;
+import com.helger.commons.locale.LocaleCache;
+import com.helger.commons.locale.country.CountryCache;
+import com.helger.commons.locale.language.LanguageCache;
 import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.pool.ObjectPool;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.system.EJVMVendor;
@@ -59,8 +63,10 @@ import com.helger.commons.system.SystemProperties;
 import com.helger.commons.thirdparty.IThirdPartyModule;
 import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
 import com.helger.commons.timing.StopWatch;
+import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.commons.url.URLHelper;
 import com.helger.css.propertyvalue.CSSValue;
+import com.helger.dao.AbstractDAO;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.photon.ajax.GlobalAjaxInvoker;
@@ -69,6 +75,7 @@ import com.helger.photon.api.GlobalAPIInvoker;
 import com.helger.photon.api.IAPIRegistry;
 import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.app.io.WebIOLongIDFactory;
+import com.helger.photon.app.resource.WebSiteResourceCache;
 import com.helger.photon.core.CPhotonVersion;
 import com.helger.photon.core.PhotonCoreInit;
 import com.helger.photon.core.locale.GlobalLocaleManager;
@@ -77,14 +84,17 @@ import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.security.password.constraint.PasswordConstraintMinLength;
+import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.ServletHelper;
 import com.helger.servlet.StaticServerInfo;
+import com.helger.servlet.response.UnifiedResponse;
 import com.helger.smtp.EmailGlobalSettings;
 import com.helger.smtp.transport.listener.LoggingConnectionListener;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.util.statistics.StatisticsExporter;
+import com.helger.xservlet.filter.XServletFilterConsistency;
 
 /**
  * This class is intended to handle the initial application startup and the
@@ -934,5 +944,27 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     // Destroy the SessionScope
     WebScopeManager.onSessionEnd (aHttpSession);
+  }
+
+  public static void setSilentMode (final boolean bSilentMode)
+  {
+    // ph-commons
+    LocaleCache.setSilentMode (bSilentMode);
+    CountryCache.setSilentMode (bSilentMode);
+    LanguageCache.setSilentMode (bSilentMode);
+    ObjectPool.setSilentMode (bSilentMode);
+    TypeConverter.setSilentMode (bSilentMode);
+    AbstractDAO.setSilentMode (bSilentMode);
+    // JAXBContextCache.setSilentMode (bSilentMode);
+
+    // ph-web
+    ServletContextPathHolder.setSilentMode (bSilentMode);
+    XServletFilterConsistency.setSilentMode (bSilentMode);
+    UnifiedResponse.setSilentMode (bSilentMode);
+
+    // ph-oton
+    HCSettings.setSilentMode (bSilentMode);
+    WebSiteResourceCache.setSilentMode (bSilentMode);
+    // DefaultLockManager instance
   }
 }
