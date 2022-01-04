@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.mime.CMimeType;
+import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
@@ -107,9 +108,10 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
           final TemporaryUserDataObject aUDO = new TemporaryUserDataObject (sPath);
           try
           {
-            if (aFileItem.write (aUDO.getAsFile ()).isFailure ())
+            final ISuccessIndicator aWriteSuccess = aFileItem.write (aUDO.getAsFile ());
+            if (aWriteSuccess.isFailure ())
             {
-              ret = createError ("Failed to store uploaded file " + aFileItem + " to " + aUDO);
+              ret = createError ("Failed to store uploaded file " + aFileItem + " to " + aUDO + " - " + aWriteSuccess);
             }
             else
             {
