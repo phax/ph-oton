@@ -43,6 +43,20 @@ import com.helger.security.password.salt.IPasswordSalt;
 public interface IUserManager extends IPhotonManager <IUser>
 {
   /**
+   * The maximum string length of the login name.
+   *
+   * @since 8.3.7
+   */
+  public static final int LOGIN_NAME_MAX_LENGTH = 200;
+
+  /**
+   * The maximum string length of the email address.
+   *
+   * @since 8.3.7
+   */
+  public static final int EMAIL_ADDRESS_MAX_LENGTH = 200;
+
+  /**
    * Create default users. This is only for internal testing purposes.
    */
   void createDefaultsForTest ();

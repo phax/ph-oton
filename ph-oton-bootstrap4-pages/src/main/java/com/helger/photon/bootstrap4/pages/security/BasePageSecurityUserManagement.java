@@ -139,8 +139,12 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     LABEL_ROLES_N ("Rollen ({0})", "Roles ({0})"),
     LABEL_ATTRIBUTES ("Attribute", "Attributes"),
     ERROR_LOGINNAME_REQUIRED ("Es muss ein Benutzername angegeben werden!", "A user name must be specified!"),
+    ERROR_LOGINNAME_TOO_LONG ("Die Länge des Benutzername ({0}) darf {1} Zeichen nicht übersteigen!",
+                              "The user name length ({0}) must not exceed {1} characters!"),
     ERROR_LASTNAME_REQUIRED ("Es muss ein Nachname angegeben werden!", "A last name must be specified!"),
     ERROR_EMAIL_REQUIRED ("Es muss eine E-Mail-Adresse angegeben werden!", "An email address must be specified!"),
+    ERROR_EMAIL_TOO_LONG ("Die Länge der E-Mail-Adresse ({0}) darf {1} Zeichen nicht übersteigen!",
+                          "The email address length ({0}) must not exceed {1} characters!"),
     ERROR_EMAIL_INVALID ("Es muss eine gültige E-Mail-Adresse angegeben werden!", "A valid email address must be specified!"),
     ERROR_EMAIL_IN_USE ("Ein anderer Benutzer mit dieser E-Mail-Adresse existiert bereits!",
                         "Another user with this email address already exists!"),
@@ -583,6 +587,12 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     {
       if (StringHelper.hasNoText (sLoginName))
         aFormErrors.addFieldError (FIELD_LOGINNAME, EText.ERROR_LOGINNAME_REQUIRED.getDisplayText (aDisplayLocale));
+      else
+        if (sLoginName.length () > IUserManager.LOGIN_NAME_MAX_LENGTH)
+          aFormErrors.addFieldError (FIELD_LOGINNAME,
+                                     EText.ERROR_LOGINNAME_TOO_LONG.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                            Integer.toString (sLoginName.length ()),
+                                                                                            Integer.toString (IUserManager.LOGIN_NAME_MAX_LENGTH)));
     }
 
     if (StringHelper.hasNoText (sLastName))
@@ -600,12 +610,20 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (!EmailAddressHelper.isValid (sEmailAddress))
         aFormErrors.addFieldError (FIELD_EMAILADDRESS, EText.ERROR_EMAIL_INVALID.getDisplayText (aDisplayLocale));
       else
-      {
-        final IUser aSameLoginUser = aUserMgr.getUserOfLoginName (sEmailAddress);
-        if (aSameLoginUser != null)
-          if (!bEdit || !aSameLoginUser.equals (aSelectedObject))
-            aFormErrors.addFieldError (FIELD_EMAILADDRESS, EText.ERROR_EMAIL_IN_USE.getDisplayText (aDisplayLocale));
-      }
+        if (sLoginName.length () > IUserManager.EMAIL_ADDRESS_MAX_LENGTH)
+        {
+          aFormErrors.addFieldError (FIELD_EMAILADDRESS,
+                                     EText.ERROR_EMAIL_TOO_LONG.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                        Integer.toString (sLoginName.length ()),
+                                                                                        Integer.toString (IUserManager.LOGIN_NAME_MAX_LENGTH)));
+        }
+        else
+        {
+          final IUser aSameLoginUser = aUserMgr.getUserOfLoginName (sEmailAddress);
+          if (aSameLoginUser != null)
+            if (!bEdit || !aSameLoginUser.equals (aSelectedObject))
+              aFormErrors.addFieldError (FIELD_EMAILADDRESS, EText.ERROR_EMAIL_IN_USE.getDisplayText (aDisplayLocale));
+        }
 
     if (!bEdit)
     {
@@ -722,7 +740,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sLoginName)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_LOGINNAME,
                                                                                            aSelectedObject == null ? null
-                                                                                                                   : aSelectedObject.getLoginName ())).setPlaceholder (sLoginName))
+                                                                                                                   : aSelectedObject.getLoginName ())).setPlaceholder (sLoginName)
+                                                                                                                                                      .setMaxLength (IUserManager.LOGIN_NAME_MAX_LENGTH))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_LOGINNAME)));
     }
 
@@ -751,7 +770,8 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sEmail, isEmailMandatory () ? ELabelType.MANDATORY : ELabelType.OPTIONAL)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_EMAILADDRESS,
                                                                                            aSelectedObject == null ? null
-                                                                                                                   : aSelectedObject.getEmailAddress ())).setPlaceholder (sEmail))
+                                                                                                                   : aSelectedObject.getEmailAddress ())).setPlaceholder (sEmail)
+                                                                                                                                                         .setMaxLength (IUserManager.EMAIL_ADDRESS_MAX_LENGTH))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_EMAILADDRESS)));
     }
 
