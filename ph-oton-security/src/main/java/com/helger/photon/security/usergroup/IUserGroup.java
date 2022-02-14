@@ -31,5 +31,17 @@ import com.helger.tenancy.IBusinessObject;
 @MustImplementEqualsAndHashcode
 public interface IUserGroup extends IBusinessObject, IHasName, IHasDescription, IUserContainer, IRoleContainer
 {
-  /* empty */
+  /**
+   * The maximum string length of the ID.
+   *
+   * @since 8.3.7
+   */
+  int USER_GROUP_ID_MAX_LENGTH = 45;
+
+  /**
+   * The maximum string length of the user group name.
+   *
+   * @since 8.3.7
+   */
+  int USER_GROUP_NAME_MAX_LENGTH = 255;
 }

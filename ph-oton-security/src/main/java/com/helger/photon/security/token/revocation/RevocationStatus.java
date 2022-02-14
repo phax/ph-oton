@@ -43,16 +43,19 @@ public class RevocationStatus implements IRevocationStatus
 
   /**
    * Create a new, not revoked object.
+   *
+   * @deprecated Since 8.3.7. Use {@link #createUnrevoked()} instead.
    */
+  @Deprecated
   public RevocationStatus ()
   {
     this (false, null, null, null);
   }
 
-  RevocationStatus (final boolean bRevoked,
-                    @Nullable final String sRevocationUserID,
-                    @Nullable final LocalDateTime aRevocationDT,
-                    @Nullable final String sRevocationReason)
+  protected RevocationStatus (final boolean bRevoked,
+                              @Nullable final String sRevocationUserID,
+                              @Nullable final LocalDateTime aRevocationDT,
+                              @Nullable final String sRevocationReason)
   {
     if (bRevoked)
     {
@@ -66,22 +69,26 @@ public class RevocationStatus implements IRevocationStatus
     m_sRevocationReason = sRevocationReason;
   }
 
-  public boolean isRevoked ()
+  @Nullable
+  public final boolean isRevoked ()
   {
     return m_bRevoked;
   }
 
-  public String getRevocationUserID ()
+  @Nullable
+  public final String getRevocationUserID ()
   {
     return m_sRevocationUserID;
   }
 
-  public LocalDateTime getRevocationDateTime ()
+  @Nullable
+  public final LocalDateTime getRevocationDateTime ()
   {
     return m_aRevocationDT;
   }
 
-  public String getRevocationReason ()
+  @Nullable
+  public final String getRevocationReason ()
   {
     return m_sRevocationReason;
   }
@@ -148,5 +155,11 @@ public class RevocationStatus implements IRevocationStatus
                                        .appendIfNotNull ("RevocationDT", m_aRevocationDT)
                                        .appendIfNotNull ("RevocationReason", m_sRevocationReason)
                                        .getToString ();
+  }
+
+  @Nonnull
+  public static RevocationStatus createUnrevoked ()
+  {
+    return new RevocationStatus (false, null, null, null);
   }
 }

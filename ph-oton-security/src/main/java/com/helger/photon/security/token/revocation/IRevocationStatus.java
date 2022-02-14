@@ -16,7 +16,6 @@
  */
 package com.helger.photon.security.token.revocation;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.annotation.Nullable;
@@ -27,7 +26,7 @@ import javax.annotation.Nullable;
  *
  * @author Philip Helger
  */
-public interface IRevocationStatus extends Serializable
+public interface IRevocationStatus
 {
   /**
    * @return <code>true</code> if this object is revoked, <code>false</code>

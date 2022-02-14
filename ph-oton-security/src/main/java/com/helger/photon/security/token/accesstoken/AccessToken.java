@@ -112,14 +112,17 @@ public final class AccessToken implements IAccessToken
   /**
    * @param nBytes
    *        The number of bytes to be used for the token. Must be &gt; 0.
-   *        Suggested value is 64.
-   * @return A newly created random token of x bytes as a hex-encoded String.
+   *        Suggested value is 66 (dividable by 3).
+   * @return A newly created random token of x bytes as a Base64-encoded String.
    *         Never <code>null</code>.
    */
   @Nonnull
   @Nonempty
   public static String createNewTokenString (@Nonnegative final int nBytes)
   {
+    ValueEnforcer.isGT0 (nBytes, "Bytes");
+    ValueEnforcer.isTrue ((nBytes % 3) == 0, "Bytes must be dividable by 3");
+
     final byte [] aBytes = new byte [nBytes];
     ThreadLocalRandom.current ().nextBytes (aBytes);
     // Returns a +33% longer byte string
@@ -153,6 +156,6 @@ public final class AccessToken implements IAccessToken
     // Length 66 so that the Base64 encoding does not add the "==" signs
     // Length must be dividable by 3
     final String sRealTokenString = StringHelper.hasText (sTokenString) ? sTokenString : createNewTokenString (66);
-    return new AccessToken (sRealTokenString, PDTFactory.getCurrentLocalDateTime (), null, new RevocationStatus ());
+    return new AccessToken (sRealTokenString, PDTFactory.getCurrentLocalDateTime (), null, RevocationStatus.createUnrevoked ());
   }
 }

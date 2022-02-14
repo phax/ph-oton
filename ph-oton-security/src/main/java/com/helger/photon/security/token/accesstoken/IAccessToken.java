@@ -16,7 +16,6 @@
  */
 package com.helger.photon.security.token.accesstoken;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
@@ -33,8 +32,15 @@ import com.helger.photon.security.token.revocation.IRevocationStatus;
  *
  * @author Philip Helger
  */
-public interface IAccessToken extends Serializable
+public interface IAccessToken
 {
+  /**
+   * The maximum string length of the token string.
+   *
+   * @since 8.3.7
+   */
+  int TOKEN_STRING_MAX_LENGTH = 200;
+
   /**
    * @return The hex-encoded string with the random data.
    */
