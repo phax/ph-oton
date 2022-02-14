@@ -36,6 +36,20 @@ import com.helger.photon.app.mgr.IPhotonManager;
 public interface IRoleManager extends IPhotonManager <IRole>
 {
   /**
+   * The maximum string length of the ID.
+   *
+   * @since 8.3.7
+   */
+  int ROLE_ID_MAX_LENGTH = 45;
+
+  /**
+   * The maximum string length of the role name.
+   *
+   * @since 8.3.7
+   */
+  int ROLE_NAME_MAX_LENGTH = 255;
+
+  /**
    * Create the default roles. This is only for internal testing purposes.
    */
   void createDefaultsForTest ();
