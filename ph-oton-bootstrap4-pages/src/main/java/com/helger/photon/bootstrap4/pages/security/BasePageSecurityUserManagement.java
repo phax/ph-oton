@@ -588,11 +588,11 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (StringHelper.hasNoText (sLoginName))
         aFormErrors.addFieldError (FIELD_LOGINNAME, EText.ERROR_LOGINNAME_REQUIRED.getDisplayText (aDisplayLocale));
       else
-        if (sLoginName.length () > IUserManager.LOGIN_NAME_MAX_LENGTH)
+        if (sLoginName.length () > IUser.LOGIN_NAME_MAX_LENGTH)
           aFormErrors.addFieldError (FIELD_LOGINNAME,
                                      EText.ERROR_LOGINNAME_TOO_LONG.getDisplayTextWithArgs (aDisplayLocale,
                                                                                             Integer.toString (sLoginName.length ()),
-                                                                                            Integer.toString (IUserManager.LOGIN_NAME_MAX_LENGTH)));
+                                                                                            Integer.toString (IUser.LOGIN_NAME_MAX_LENGTH)));
     }
 
     if (StringHelper.hasNoText (sLastName))
@@ -610,12 +610,12 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
       if (!EmailAddressHelper.isValid (sEmailAddress))
         aFormErrors.addFieldError (FIELD_EMAILADDRESS, EText.ERROR_EMAIL_INVALID.getDisplayText (aDisplayLocale));
       else
-        if (sLoginName.length () > IUserManager.EMAIL_ADDRESS_MAX_LENGTH)
+        if (sLoginName.length () > IUser.EMAIL_ADDRESS_MAX_LENGTH)
         {
           aFormErrors.addFieldError (FIELD_EMAILADDRESS,
                                      EText.ERROR_EMAIL_TOO_LONG.getDisplayTextWithArgs (aDisplayLocale,
                                                                                         Integer.toString (sLoginName.length ()),
-                                                                                        Integer.toString (IUserManager.LOGIN_NAME_MAX_LENGTH)));
+                                                                                        Integer.toString (IUser.LOGIN_NAME_MAX_LENGTH)));
         }
         else
         {
@@ -741,7 +741,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_LOGINNAME,
                                                                                            aSelectedObject == null ? null
                                                                                                                    : aSelectedObject.getLoginName ())).setPlaceholder (sLoginName)
-                                                                                                                                                      .setMaxLength (IUserManager.LOGIN_NAME_MAX_LENGTH))
+                                                                                                                                                      .setMaxLength (IUser.LOGIN_NAME_MAX_LENGTH))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_LOGINNAME)));
     }
 
@@ -771,7 +771,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_EMAILADDRESS,
                                                                                            aSelectedObject == null ? null
                                                                                                                    : aSelectedObject.getEmailAddress ())).setPlaceholder (sEmail)
-                                                                                                                                                         .setMaxLength (IUserManager.EMAIL_ADDRESS_MAX_LENGTH))
+                                                                                                                                                         .setMaxLength (IUser.EMAIL_ADDRESS_MAX_LENGTH))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_EMAILADDRESS)));
     }
 
