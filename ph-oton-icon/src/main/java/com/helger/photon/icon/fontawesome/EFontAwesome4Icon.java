@@ -843,6 +843,7 @@ public enum EFontAwesome4Icon implements IIcon
   public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
   {
     aElement.addClasses (CFontAwesome4CSS.FA, m_aCSSClass);
+    aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 

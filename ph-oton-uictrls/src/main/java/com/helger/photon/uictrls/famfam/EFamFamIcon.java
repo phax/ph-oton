@@ -1060,15 +1060,14 @@ public enum EFamFamIcon implements IIcon
   @Nonnull
   public IHCElement <?> getAsNode ()
   {
-    final HCSpan ret = new HCSpan ();
-    ret.addClasses (CSS_CLASS_ICON_FAMFAM, this);
-    return ret;
+    return applyToNode (new HCSpan ());
   }
 
   @Nonnull
   public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
   {
     aElement.addClasses (CSS_CLASS_ICON_FAMFAM, this);
+    aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 

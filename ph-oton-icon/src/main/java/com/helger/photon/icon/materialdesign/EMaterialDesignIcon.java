@@ -990,6 +990,7 @@ public enum EMaterialDesignIcon implements IIcon
   public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
   {
     aElement.addClasses (CMaterialDesignCSS.MATERIAL_ICONS, m_aCSSClass);
+    aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 

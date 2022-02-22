@@ -1429,6 +1429,7 @@ public enum EBootstrapIcon implements IIcon
   {
     // No additional classes needed
     aElement.addClass (m_aCSSClass);
+    aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 

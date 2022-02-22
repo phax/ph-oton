@@ -1525,6 +1525,7 @@ public enum EFontAwesome5Icon implements IIcon
       aElement.addClasses (CFontAwesome5CSS.FAB, m_aCSSClass);
     else
       aElement.addClasses (CFontAwesome5CSS.FA, m_aCSSClass);
+    aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 

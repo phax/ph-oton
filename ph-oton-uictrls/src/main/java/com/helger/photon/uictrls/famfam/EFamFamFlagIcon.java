@@ -318,6 +318,7 @@ public enum EFamFamFlagIcon implements IIcon, IHasID <String>
   {
     final HCSpan ret = new HCSpan ();
     ret.addClasses (CSS_CLASS_ICON_FAMFAM_FLAG, this);
+    ret.customAttrs ().setAriaHidden (true);
     return ret;
   }
 

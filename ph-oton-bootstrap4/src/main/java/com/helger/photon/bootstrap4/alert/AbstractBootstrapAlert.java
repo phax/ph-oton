@@ -19,6 +19,7 @@ package com.helger.photon.bootstrap4.alert;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -56,6 +57,7 @@ public abstract class AbstractBootstrapAlert <IMPLTYPE extends AbstractBootstrap
   {
     super ();
     setType (eType);
+    setRole (EHTMLRole.ALERT);
   }
 
   @Nonnull
