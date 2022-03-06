@@ -67,7 +67,7 @@
     <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
-    <log4j.version>2.17.1</log4j.version>
+    <log4j.version>2.17.2</log4j.version>
     <jetty.version>9.4.45.v20220203</jetty.version>
   </properties>
 
@@ -96,7 +96,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-poi</artifactId>
-        <version>5.3.1</version>
+        <version>5.3.2</version>
       </dependency>
       <dependency>
         <groupId>com.helger.schedule</groupId>
