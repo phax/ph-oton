@@ -29,9 +29,17 @@ public enum EHTMLContentModelType
   PHRASING_METADATA (EHTMLContentKind.METADATA.getValue () | EHTMLContentKind.PHRASING.getValue ()),
   METADATA (EHTMLContentKind.METADATA.getValue ()),
   PHRASING (EHTMLContentKind.PHRASING.getValue ()),
-  EMPTY (0),
+  /** No content */
+  NOTHING (0),
+  /** Derived from parent element */
+  TRANSPARENT (0),
+  /** Specific child elements */
   CHILD (0),
+  /** Specific rules are defined */
   SPECIAL (0),
+  /**
+   * Because the element is undefined in HTML 5, no documentation is available
+   */
   UNDEFINED (0),
   LEGACY_PHRASING (EHTMLContentKind.PHRASING.getValue ());
 

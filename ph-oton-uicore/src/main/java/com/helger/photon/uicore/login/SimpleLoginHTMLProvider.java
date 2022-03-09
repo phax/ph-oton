@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.url.SimpleURL;
+import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.html.deprecated.HCCenter;
 import com.helger.html.hc.html.forms.HCButton_Submit;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCEditPassword;
@@ -100,9 +100,9 @@ public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();
 
     final HCBody aBody = aHtml.body ();
-    final HCSpan aSpan = aBody.addAndReturnChild (new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN));
-    final HCCenter aCenter = aSpan.addAndReturnChild (new HCCenter ());
-    final HCForm aForm = aCenter.addAndReturnChild (new HCForm (new SimpleURL (aRequestScope.getURLDecoded ())));
+    final HCSpan aSpan = aBody.addAndReturnChild (new HCSpan ().setID (CLogin.LAYOUT_AREAID_LOGIN)
+                                                               .addStyle (CCSSProperties.MARGIN.newValue ("0 auto")));
+    final HCForm aForm = aSpan.addAndReturnChild (new HCForm (new SimpleURL (aRequestScope.getURLDecoded ())));
     aForm.setSubmitPressingEnter (true);
 
     // The hidden field that triggers the validation

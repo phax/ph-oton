@@ -14,26 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.hc.html.deprecated;
+package com.helger.html.hc.html.script;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.DeprecatedInHTML5;
+import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
- * Represents an HTML &lt;CENTER&gt; element
+ * BAse class for HTML &lt;slot&gt; elements.
  *
  * @author Philip Helger
+ * @since 8.4.0
  */
-@DeprecatedInHTML5
-@Deprecated
-public class HCCenter extends AbstractHCElementWithChildren <HCCenter>
+@SinceHTML5
+public class HCSlot extends AbstractHCElementWithChildren <HCSlot>
 {
-  /**
-   * Create a new CENTER element
-   */
-  public HCCenter ()
+  public HCSlot ()
   {
-    super (EHTMLElement.CENTER);
+    super (EHTMLElement.SLOT);
   }
 }

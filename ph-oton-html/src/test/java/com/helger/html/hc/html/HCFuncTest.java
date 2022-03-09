@@ -36,9 +36,11 @@ import com.helger.html.hc.html.deprecated.HCFrame;
 import com.helger.html.hc.html.deprecated.HCFrameset;
 import com.helger.html.hc.html.edits.HCDel;
 import com.helger.html.hc.html.edits.HCIns;
+import com.helger.html.hc.html.embedded.HCArea;
 import com.helger.html.hc.html.embedded.HCEmbed;
 import com.helger.html.hc.html.embedded.HCIFrame;
 import com.helger.html.hc.html.embedded.HCImg;
+import com.helger.html.hc.html.embedded.HCMap;
 import com.helger.html.hc.html.embedded.HCObject;
 import com.helger.html.hc.html.embedded.HCParam;
 import com.helger.html.hc.html.forms.HCButton;
@@ -68,6 +70,7 @@ import com.helger.html.hc.html.grouping.HCOL;
 import com.helger.html.hc.html.grouping.HCP;
 import com.helger.html.hc.html.grouping.HCPre;
 import com.helger.html.hc.html.grouping.HCUL;
+import com.helger.html.hc.html.interactive.HCDialog;
 import com.helger.html.hc.html.metadata.EHCLinkType;
 import com.helger.html.hc.html.metadata.HCLink;
 import com.helger.html.hc.html.metadata.HCStyle;
@@ -75,6 +78,7 @@ import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.script.HCNoScript;
 import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.hc.html.script.HCScriptInline;
+import com.helger.html.hc.html.script.HCSlot;
 import com.helger.html.hc.html.sections.HCAddress;
 import com.helger.html.hc.html.sections.HCBody;
 import com.helger.html.hc.html.sections.HCH1;
@@ -112,6 +116,7 @@ import com.helger.html.js.UnparsedJSCodeProvider;
  *
  * @author Philip Helger
  */
+@SuppressWarnings ("deprecation")
 public final class HCFuncTest
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (HCFuncTest.class);
@@ -126,6 +131,7 @@ public final class HCFuncTest
     b.addChild (new HCA (new SimpleURL ("http://www.helger.com")).setTarget (HC_Target.SELF).addChild ("helger"));
     b.addChild (new HCAbbr ().addChild ("abbr"));
     b.addChild (new HCAddress ().addChild ("address"));
+    b.addChild (new HCArea ());
     b.addChild (new HCB ().addChild ("echt fett"));
     b.addChild (new HCBDO ().addChild ("bdo"));
     b.addChild (new HCBlockQuote ().addChild ("blockQuote"));
@@ -148,6 +154,7 @@ public final class HCFuncTest
     aDL.addItem (new HCDT ().addChild ("term"));
     b.addChild (new HCDel ());
     b.addChild (new HCDel ().addChild ("gelöscht"));
+    b.addChild (new HCDialog ());
     b.addChild (new HCDiv ());
     b.addChild (new HCDiv ().addChild ("Absatz"));
     b.addChild (new HCEdit ("filename").setValue ("autoexec.bat"));
@@ -190,6 +197,7 @@ public final class HCFuncTest
     b.addChild (new HCLegend ());
     b.addChild (new HCLegend ().addChild ("Legend"));
     b.addChild (new HCLink ().setRel (EHCLinkType.ALTERNATE).setType (CMimeType.TEXT_HTML).setHref (new SimpleURL ("any.html")));
+    b.addChild (new HCMap ());
     final HCMenu aMenu = new HCMenu ();
     aMenu.addItem ("File");
     aMenu.addItem ("Settings");
@@ -220,6 +228,7 @@ public final class HCFuncTest
     aSelect.addOption ("y", "Ypsilon");
     aSelect.addOption ("z", "Zet");
     b.addChild (aSelect);
+    b.addChild (new HCSlot ());
     b.addChild (new HCSpan ());
     b.addChild (new HCSpan ().addChild ("List"));
     b.addChild (new HCStrong ());

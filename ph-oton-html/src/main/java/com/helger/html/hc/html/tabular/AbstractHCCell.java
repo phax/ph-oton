@@ -89,12 +89,14 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
     return thisAsT ();
   }
 
+  @Deprecated
   @Nullable
   public final EHCCellAlign getAlign ()
   {
     return m_eAlign;
   }
 
+  @Deprecated
   @Nonnull
   public final IMPLTYPE setAlign (@Nullable final EHCCellAlign eAlign)
   {
@@ -107,9 +109,9 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (m_nColspan > 1)
+    if (m_nColspan >= 1 && m_nColspan <= 1000)
       aElement.setAttribute (CHTMLAttributes.COLSPAN, m_nColspan);
-    if (m_nRowspan > 1)
+    if (m_nRowspan >= 0 && m_nRowspan <= 65534)
       aElement.setAttribute (CHTMLAttributes.ROWSPAN, m_nRowspan);
     if (m_eAlign != null)
       aElement.setAttribute (CHTMLAttributes.ALIGN, m_eAlign);

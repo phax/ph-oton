@@ -26,6 +26,7 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * @author Philip Helger
  */
 @DeprecatedInHTML5
+@Deprecated
 public class HCFont extends AbstractHCElementWithChildren <HCFont>
 {
   /**

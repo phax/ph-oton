@@ -37,6 +37,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @author Philip Helger
  */
 @DeprecatedInHTML5
+@Deprecated
 public class HCFrame extends AbstractHCElement <HCFrame>
 {
   /** By default a frame border is visible */

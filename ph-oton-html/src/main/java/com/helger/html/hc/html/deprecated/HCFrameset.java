@@ -33,6 +33,7 @@ import com.helger.xml.microdom.IMicroElement;
  * @author Philip Helger
  */
 @DeprecatedInHTML5
+@Deprecated
 public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
 {
   private int m_nCols = CGlobal.ILLEGAL_UINT;

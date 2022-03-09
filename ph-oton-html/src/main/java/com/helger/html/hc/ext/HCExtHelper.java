@@ -96,6 +96,7 @@ import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.html.script.HCCanvas;
 import com.helger.html.hc.html.script.HCNoScript;
 import com.helger.html.hc.html.script.HCScriptInline;
+import com.helger.html.hc.html.script.HCSlot;
 import com.helger.html.hc.html.sections.HCAddress;
 import com.helger.html.hc.html.sections.HCArticle;
 import com.helger.html.hc.html.sections.HCAside;
@@ -127,6 +128,7 @@ import com.helger.html.hc.impl.HCTextNode;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+@SuppressWarnings ("deprecation")
 @Immutable
 @SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public final class HCExtHelper
@@ -337,6 +339,8 @@ public final class HCExtHelper
         return new HCSection ();
       case SELECT:
         return new HCSelect ();
+      case SLOT:
+        return new HCSlot ();
       case SMALL:
         return new HCSmall ();
       case SOURCE:

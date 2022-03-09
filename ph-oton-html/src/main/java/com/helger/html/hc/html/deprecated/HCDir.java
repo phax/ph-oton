@@ -26,6 +26,7 @@ import com.helger.html.hc.html.grouping.AbstractHCListLI;
  * @author Philip Helger
  */
 @DeprecatedInHTML5
+@Deprecated
 public class HCDir extends AbstractHCListLI <HCDir>
 {
   public HCDir ()
