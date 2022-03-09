@@ -77,6 +77,8 @@ public class JettyStarter
   public static final String DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN = null;
   public static final String DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN = null;
   public static final String DEFAULT_SESSION_COOKIE_NAME = "PHOTONSESSIONID";
+  public static final boolean DEFAULT_ALLOW_ANNOTATION_BASED_CONFIG = true;
+  public static final boolean DEFAULT_ALLOW_DIRECTORY_LISTING = false;
   private static final Logger LOGGER = LoggerFactory.getLogger (JettyStarter.class);
 
   private final String m_sAppName;
@@ -92,7 +94,8 @@ public class JettyStarter
   private String m_sContainerIncludeJarPattern = DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN;
   private String m_sWebInfIncludeJarPattern = DEFAULT_WEB_INF_INCLUDE_JAR_PATTERN;
   private ThreadPool m_aThreadPool;
-  private boolean m_bAllowAnnotationBasedConfig = true;
+  private boolean m_bAllowAnnotationBasedConfig = DEFAULT_ALLOW_ANNOTATION_BASED_CONFIG;
+  private boolean m_bAllowDirectoryListing = DEFAULT_ALLOW_DIRECTORY_LISTING;
   private String m_sSessionCookieName = DEFAULT_SESSION_COOKIE_NAME;
 
   @Nonnull
@@ -126,6 +129,15 @@ public class JettyStarter
   }
 
   /**
+   * @return Port to run on.
+   */
+  @Nonnegative
+  public int getPort ()
+  {
+    return m_nPort;
+  }
+
+  /**
    * Set the port to be used to run the application. Defaults to
    * {@value #DEFAULT_PORT}
    *
@@ -141,13 +153,9 @@ public class JettyStarter
     return this;
   }
 
-  /**
-   * @return Port to run on.
-   */
-  @Nonnegative
-  public int getPort ()
+  public boolean isRunStopMonitor ()
   {
-    return m_nPort;
+    return m_bRunStopMonitor;
   }
 
   /**
@@ -165,9 +173,10 @@ public class JettyStarter
     return this;
   }
 
-  public boolean isRunStopMonitor ()
+  @Nonnull
+  public String getStopKey ()
   {
-    return m_bRunStopMonitor;
+    return m_sStopKey;
   }
 
   /**
@@ -187,10 +196,9 @@ public class JettyStarter
     return this;
   }
 
-  @Nonnull
-  public String getStopKey ()
+  public int getStopPort ()
   {
-    return m_sStopKey;
+    return m_aStopPort.applyAsInt (m_nPort);
   }
 
   /**
@@ -232,9 +240,9 @@ public class JettyStarter
     return this;
   }
 
-  public int getStopPort ()
+  public boolean isSpecialSessionMgr ()
   {
-    return m_aStopPort.applyAsInt (m_nPort);
+    return m_bSpecialSessionMgr;
   }
 
   /**
@@ -248,6 +256,12 @@ public class JettyStarter
   {
     m_bSpecialSessionMgr = bSpecialSessionMgr;
     return this;
+  }
+
+  @Nonnull
+  public Resource getResourceBase ()
+  {
+    return m_aResourceBase;
   }
 
   /**
@@ -281,10 +295,10 @@ public class JettyStarter
     return this;
   }
 
-  @Nonnull
-  public Resource getResourceBase ()
+  @Nullable
+  public String getWebXmlResource ()
   {
-    return m_aResourceBase;
+    return m_sWebXmlResource;
   }
 
   /**
@@ -302,10 +316,11 @@ public class JettyStarter
     return this;
   }
 
-  @Nullable
-  public String getWebXmlResource ()
+  @Nonnull
+  @Nonempty
+  public String getContextPath ()
   {
-    return m_sWebXmlResource;
+    return m_sContextPath;
   }
 
   /**
@@ -325,11 +340,10 @@ public class JettyStarter
     return this;
   }
 
-  @Nonnull
-  @Nonempty
-  public String getContextPath ()
+  @Nullable
+  public String getContainerIncludeJarPattern ()
   {
-    return m_sContextPath;
+    return m_sContainerIncludeJarPattern;
   }
 
   /**
@@ -349,9 +363,9 @@ public class JettyStarter
   }
 
   @Nullable
-  public String getContainerIncludeJarPattern ()
+  public String getWebInfIncludeJarPattern ()
   {
-    return m_sContainerIncludeJarPattern;
+    return m_sWebInfIncludeJarPattern;
   }
 
   @Nonnull
@@ -362,9 +376,9 @@ public class JettyStarter
   }
 
   @Nullable
-  public String getWebInfIncludeJarPattern ()
+  public ThreadPool getThreadPool ()
   {
-    return m_sWebInfIncludeJarPattern;
+    return m_aThreadPool;
   }
 
   /**
@@ -383,10 +397,9 @@ public class JettyStarter
     return this;
   }
 
-  @Nullable
-  public ThreadPool getThreadPool ()
+  public boolean isAllowAnnotationBasedConfig ()
   {
-    return m_aThreadPool;
+    return m_bAllowAnnotationBasedConfig;
   }
 
   /**
@@ -405,9 +418,35 @@ public class JettyStarter
     return this;
   }
 
-  public boolean isAllowAnnotationBasedConfig ()
+  public boolean isAllowDirectoryListing ()
   {
-    return m_bAllowAnnotationBasedConfig;
+    return m_bAllowDirectoryListing;
+  }
+
+  /**
+   * Enable or disable the listing of Directories. Turned off by default for
+   * security reasons.
+   *
+   * @param bAllowDirectoryListing
+   *        <code>true</code> to enable it.
+   * @return this
+   * @since 8.3.7
+   */
+  @Nonnull
+  public final JettyStarter setAllowDirectoryListing (final boolean bAllowDirectoryListing)
+  {
+    m_bAllowDirectoryListing = bAllowDirectoryListing;
+    return this;
+  }
+
+  /**
+   * @return The name of the session cookie or null to use Jetty default. The
+   *         default values is {@link #DEFAULT_SESSION_COOKIE_NAME}.
+   */
+  @Nullable
+  public String getSessionCookieName ()
+  {
+    return m_sSessionCookieName;
   }
 
   /**
@@ -426,16 +465,6 @@ public class JettyStarter
   {
     m_sSessionCookieName = sSessionCookieName;
     return this;
-  }
-
-  /**
-   * @return The name of the session cookie or null to use Jetty default. The
-   *         default values is {@link #DEFAULT_SESSION_COOKIE_NAME}.
-   */
-  @Nullable
-  public String getSessionCookieName ()
-  {
-    return m_sSessionCookieName;
   }
 
   /**
@@ -530,6 +559,8 @@ public class JettyStarter
                                                              new JettyWebXmlConfiguration () });
       }
       // else leave default
+
+      aWebAppCtx.setInitParameter ("org.eclipse.jetty.servlet.Default.dirAllowed", Boolean.toString (m_bAllowDirectoryListing));
     }
 
     // Set session store directory to passivate/activate sessions
