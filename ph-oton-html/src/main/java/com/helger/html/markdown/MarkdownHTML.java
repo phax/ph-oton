@@ -53,6 +53,7 @@ final class MarkdownHTML
                                                           EHTMLElement.UL };
 
   /** HTML unsafe elements. */
+  @SuppressWarnings ("deprecation")
   private static final EHTMLElement [] UNSAFE_ELEMENTS = { EHTMLElement.APPLET,
                                                            EHTMLElement.HEAD,
                                                            EHTMLElement.HTML,

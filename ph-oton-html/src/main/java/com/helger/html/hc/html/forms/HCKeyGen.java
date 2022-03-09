@@ -29,6 +29,7 @@ import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.IHCHasState;
 import com.helger.xml.microdom.IMicroElement;
 
+@Deprecated
 public class HCKeyGen extends AbstractHCElement <HCKeyGen> implements IHCHasState <HCKeyGen>, IHCHasFocus <HCKeyGen>
 {
   public static final boolean DEFAULT_AUTOFOCUS = false;

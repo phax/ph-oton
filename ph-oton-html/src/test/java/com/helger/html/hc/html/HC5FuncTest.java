@@ -59,6 +59,7 @@ import com.helger.html.hc.render.HCRenderer;
  *
  * @author Philip Helger
  */
+@SuppressWarnings ("deprecation")
 public final class HC5FuncTest
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (HC5FuncTest.class);

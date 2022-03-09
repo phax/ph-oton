@@ -48,12 +48,14 @@ public abstract class AbstractHCULBase <IMPLTYPE extends AbstractHCULBase <IMPLT
   }
 
   @Nullable
+  @Deprecated
   public final EHCULType getType ()
   {
     return m_eType;
   }
 
   @Nonnull
+  @Deprecated
   public final IMPLTYPE setType (@Nullable final EHCULType eType)
   {
     m_eType = eType;

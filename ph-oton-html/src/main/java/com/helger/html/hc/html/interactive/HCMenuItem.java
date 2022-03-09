@@ -36,6 +36,7 @@ import com.helger.xml.microdom.IMicroElement;
  *
  * @author Philip Helger
  */
+@Deprecated
 public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> implements IHCLI <HCMenuItem>
 {
   /**

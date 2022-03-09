@@ -29,6 +29,7 @@ import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
  *
  * @author Philip Helger
  */
+@Deprecated
 public enum EHCKeyGenType implements IHCHasHTMLAttributeValue
 {
   /**

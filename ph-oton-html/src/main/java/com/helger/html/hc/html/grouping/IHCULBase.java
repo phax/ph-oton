@@ -35,15 +35,17 @@ public interface IHCULBase <IMPLTYPE extends IHCULBase <IMPLTYPE, ITEMTYPE>, ITE
    * @return UL type. May be <code>null</code>
    */
   @Nullable
+  @Deprecated
   EHCULType getType ();
 
   /**
    * Set the list type.
-   * 
+   *
    * @param eType
    *        Type to use. May be <code>null</code>.
    * @return this for chaining
    */
   @Nonnull
+  @Deprecated
   IMPLTYPE setType (@Nullable EHCULType eType);
 }
