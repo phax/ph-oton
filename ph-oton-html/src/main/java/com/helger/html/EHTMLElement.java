@@ -63,6 +63,7 @@ public enum EHTMLElement
   DEL ("del", false, EHTMLContentModelType.FLOW),
   DETAILS ("details", false, EHTMLContentModelType.FLOW),
   DFN ("dfn", false, EHTMLContentModelType.PHRASING),
+  DIALOG ("dialog", false, EHTMLContentModelType.FLOW),
   DIR ("dir", false, EHTMLContentModelType.LEGACY_PHRASING),
   DIV ("div", false, EHTMLContentModelType.FLOW),
   DL ("dl", false, EHTMLContentModelType.FLOW),
@@ -163,9 +164,7 @@ public enum EHTMLElement
   private final boolean m_bMayBeSelfClosed;
   private final EHTMLContentModelType m_eType;
 
-  EHTMLElement (@Nonnull @Nonempty final String sElementName,
-                final boolean bMayBeSelfClosed,
-                @Nonnull final EHTMLContentModelType eType)
+  EHTMLElement (@Nonnull @Nonempty final String sElementName, final boolean bMayBeSelfClosed, @Nonnull final EHTMLContentModelType eType)
   {
     m_sElementNameLC = sElementName.toLowerCase (Locale.US);
     m_sElementNameUC = sElementName.toUpperCase (Locale.US);
