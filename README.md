@@ -108,6 +108,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Added classes `HCMap`, `HCArea`, `EHCReferrerPolicy`
     * Improved the overall HTML compliance according to the latest standard
     * Dropped the specific HTML 5 annotations
+    * `HCMenu` now takes `HCLI` children instead of `HCMenuItem` children
 * v8.3.6 - 2022-01-04
     * Updated Log2J to 2.17.1 - fixes CVE-2021-44832 - see https://logging.apache.org/log4j/2.x/security.html
     * Made redirect URL after login customizable in `AbstractLoginManager`
