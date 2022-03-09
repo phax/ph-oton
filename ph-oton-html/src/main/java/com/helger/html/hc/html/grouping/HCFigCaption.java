@@ -17,7 +17,6 @@
 package com.helger.html.hc.html.grouping;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
@@ -25,7 +24,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  *
  * @author Philip Helger
  */
-@SinceHTML5
 public class HCFigCaption extends AbstractHCElementWithChildren <HCFigCaption>
 {
   public HCFigCaption ()

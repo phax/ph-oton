@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
 
 /**
@@ -34,24 +33,15 @@ public enum EHCInputType implements IHCHasHTMLAttributeValue
 {
   HIDDEN ("hidden", false),
   TEXT ("text", true),
-  @SinceHTML5
   SEARCH ("search", true),
-  @SinceHTML5
   TEL ("tel", true),
-  @SinceHTML5
   URL ("url", true),
-  @SinceHTML5
   EMAIL ("email", true),
   PASSWORD ("password", true),
-  @SinceHTML5
   DATE ("date", true),
-  @SinceHTML5
   TIME ("time", true),
-  @SinceHTML5
   NUMBER ("number", true),
-  @SinceHTML5
   RANGE ("range", false),
-  @SinceHTML5
   COLOR ("color", true),
   CHECKBOX ("checkbox", false),
   RADIO ("radio", false),

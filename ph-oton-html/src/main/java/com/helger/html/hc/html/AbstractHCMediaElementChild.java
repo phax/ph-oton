@@ -19,7 +19,6 @@ package com.helger.html.hc.html;
 import javax.annotation.Nonnull;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 
 /**
  * Base class for &lt;source&gt; and &lt;track
@@ -28,7 +27,6 @@ import com.helger.html.annotation.SinceHTML5;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-@SinceHTML5
 public abstract class AbstractHCMediaElementChild <IMPLTYPE extends AbstractHCMediaElementChild <IMPLTYPE>> extends
                                                   AbstractHCElement <IMPLTYPE> implements
                                                   IHCMediaElementChild <IMPLTYPE>

@@ -16,9 +16,6 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.html.annotation.SinceHTML5;
-
-@SinceHTML5
 public class HCMeter extends AbstractHCMeter <HCMeter>
 {
   public HCMeter ()

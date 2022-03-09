@@ -34,12 +34,10 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
 
-@SinceHTML5
 public class HCTime extends AbstractHCElementWithChildren <HCTime>
 {
   public static final int LENGTH_YEAR = 4;

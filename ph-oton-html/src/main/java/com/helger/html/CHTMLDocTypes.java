@@ -18,7 +18,6 @@ package com.helger.html;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.xml.microdom.IMicroDocumentType;
 import com.helger.xml.microdom.MicroDocumentType;
 
@@ -47,7 +46,6 @@ public final class CHTMLDocTypes
   public static final IMicroDocumentType DOCTYPE_XHTML11 = new MicroDocumentType (EHTMLElement.HTML.getElementName (),
                                                                                   DOCTYPE_XHTML11_QNAME,
                                                                                   DOCTYPE_XHTML11_URI);
-  @SinceHTML5
   public static final IMicroDocumentType DOCTYPE_HTML5 = new HTML5DocumentType ();
 
   private CHTMLDocTypes ()

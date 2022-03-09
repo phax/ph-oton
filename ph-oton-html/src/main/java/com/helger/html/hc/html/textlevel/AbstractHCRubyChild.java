@@ -19,10 +19,8 @@ package com.helger.html.hc.html.textlevel;
 import javax.annotation.Nonnull;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
-@SinceHTML5
 public abstract class AbstractHCRubyChild <IMPLTYPE extends AbstractHCRubyChild <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                           implements
                                           IHCRubyChild <IMPLTYPE>

@@ -20,10 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
 
-@SinceHTML5
 public class HCRuby extends AbstractHCElementWithInternalChildren <HCRuby, IHCRubyChild <?>>
 {
   public HCRuby ()

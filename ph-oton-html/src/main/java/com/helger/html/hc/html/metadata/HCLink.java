@@ -30,7 +30,6 @@ import com.helger.css.media.ECSSMedium;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.DeprecatedInHTML5;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
@@ -140,14 +139,14 @@ public class HCLink extends AbstractHCElement <HCLink>
   }
 
   @Nullable
-  @DeprecatedInHTML5
+  @Deprecated
   public final HC_Target getTarget ()
   {
     return m_aTarget;
   }
 
   @Nonnull
-  @DeprecatedInHTML5
+  @Deprecated
   public final HCLink setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;

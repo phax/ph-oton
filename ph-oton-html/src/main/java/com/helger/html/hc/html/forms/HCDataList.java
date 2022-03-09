@@ -17,10 +17,8 @@
 package com.helger.html.hc.html.forms;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
-@SinceHTML5
 public class HCDataList extends AbstractHCElementWithChildren <HCDataList>
 {
   public HCDataList ()

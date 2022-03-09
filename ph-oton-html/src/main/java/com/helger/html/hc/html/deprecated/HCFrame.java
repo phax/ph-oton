@@ -25,7 +25,6 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.DeprecatedInHTML5;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.EHCScrolling;
@@ -36,7 +35,6 @@ import com.helger.xml.microdom.IMicroElement;
  *
  * @author Philip Helger
  */
-@DeprecatedInHTML5
 @Deprecated
 public class HCFrame extends AbstractHCElement <HCFrame>
 {

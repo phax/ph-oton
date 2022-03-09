@@ -17,9 +17,7 @@
 package com.helger.html.hc.html.embedded;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML51;
 
-@SinceHTML51
 public class HCPicture extends AbstractHCMediaElement <HCPicture>
 {
   public HCPicture ()

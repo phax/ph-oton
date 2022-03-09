@@ -27,13 +27,11 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
 import com.helger.html.hc.html.IHCMediaElementChild;
 import com.helger.xml.microdom.IMicroElement;
 
-@SinceHTML5
 public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaElement <IMPLTYPE>> extends
                                              AbstractHCElementWithInternalChildren <IMPLTYPE, IHCMediaElementChild <?>> implements
                                              IHCMediaElement <IMPLTYPE>

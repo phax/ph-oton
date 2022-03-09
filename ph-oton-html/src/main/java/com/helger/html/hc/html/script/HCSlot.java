@@ -17,7 +17,6 @@
 package com.helger.html.hc.html.script;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
@@ -26,7 +25,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * @author Philip Helger
  * @since 8.4.0
  */
-@SinceHTML5
 public class HCSlot extends AbstractHCElementWithChildren <HCSlot>
 {
   public HCSlot ()

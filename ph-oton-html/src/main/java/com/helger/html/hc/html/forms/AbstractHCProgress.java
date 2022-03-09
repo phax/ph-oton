@@ -22,14 +22,12 @@ import com.helger.commons.CGlobal;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
 
-@SinceHTML5
 public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                          implements
                                          IHCProgress <IMPLTYPE>

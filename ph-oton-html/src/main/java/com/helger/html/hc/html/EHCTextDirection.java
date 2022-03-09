@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.annotation.SinceHTML5;
 
 /**
  * Enum for HTML text directions.
@@ -38,7 +37,6 @@ public enum EHCTextDirection implements IHCHasHTMLAttributeValue
   RTL ("rtl"),
 
   /** automatic */
-  @SinceHTML5
   AUTO ("auto");
 
   /**

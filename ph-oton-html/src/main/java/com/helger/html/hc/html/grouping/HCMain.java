@@ -17,10 +17,8 @@
 package com.helger.html.hc.html.grouping;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
-@SinceHTML5
 public class HCMain extends AbstractHCElementWithChildren <HCMain>
 {
   public HCMain ()

@@ -17,10 +17,8 @@
 package com.helger.html.hc.html.textlevel;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
-@SinceHTML5
 public class HCMark extends AbstractHCElementWithChildren <HCMark>
 {
   public HCMark ()

@@ -25,13 +25,11 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.IHCHasState;
 import com.helger.xml.microdom.IMicroElement;
 
-@SinceHTML5
 public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasState <HCCommand>
 {
   /** By default checked is disabled */

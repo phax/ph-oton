@@ -19,10 +19,8 @@ package com.helger.html.hc.html.textlevel;
 import javax.annotation.Nonnull;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElement;
 
-@SinceHTML5
 public class HCWBR extends AbstractHCElement <HCWBR>
 {
   public HCWBR ()

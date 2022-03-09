@@ -17,12 +17,8 @@
 package com.helger.html.hc.html.sections;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.DeprecatedInHTML5;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
-@SinceHTML5
-@DeprecatedInHTML5
 public class HCHGroup extends AbstractHCElementWithChildren <HCHGroup>
 {
   public HCHGroup ()

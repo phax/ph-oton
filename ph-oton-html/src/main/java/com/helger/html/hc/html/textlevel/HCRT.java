@@ -17,9 +17,7 @@
 package com.helger.html.hc.html.textlevel;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 
-@SinceHTML5
 public class HCRT extends AbstractHCRubyChild <HCRT>
 {
   public HCRT ()

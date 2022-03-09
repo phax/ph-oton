@@ -18,7 +18,6 @@ package com.helger.html.hc.html.forms;
 
 import javax.annotation.Nonnull;
 
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.IHCElementWithChildren;
 
 /**
@@ -28,7 +27,6 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-@SinceHTML5
 public interface IHCProgress <IMPLTYPE extends IHCProgress <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>
 {
   double getValue ();

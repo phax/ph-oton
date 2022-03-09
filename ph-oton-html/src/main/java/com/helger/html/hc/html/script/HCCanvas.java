@@ -16,9 +16,6 @@
  */
 package com.helger.html.hc.html.script;
 
-import com.helger.html.annotation.SinceHTML5;
-
-@SinceHTML5
 public class HCCanvas extends AbstractHCCanvas <HCCanvas>
 {
   public HCCanvas ()

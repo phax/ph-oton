@@ -17,7 +17,6 @@
 package com.helger.html.hc.html.deprecated;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.DeprecatedInHTML5;
 import com.helger.html.hc.html.grouping.AbstractHCListLI;
 
 /**
@@ -25,7 +24,6 @@ import com.helger.html.hc.html.grouping.AbstractHCListLI;
  *
  * @author Philip Helger
  */
-@DeprecatedInHTML5
 @Deprecated
 public class HCDir extends AbstractHCListLI <HCDir>
 {

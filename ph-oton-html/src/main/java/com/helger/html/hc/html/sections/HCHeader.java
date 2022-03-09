@@ -17,7 +17,6 @@
 package com.helger.html.hc.html.sections;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
@@ -27,7 +26,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  *
  * @author Philip Helger
  */
-@SinceHTML5
 public class HCHeader extends AbstractHCElementWithChildren <HCHeader>
 {
   public HCHeader ()

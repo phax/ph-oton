@@ -17,7 +17,6 @@
 package com.helger.html.hc.html.sections;
 
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
@@ -27,7 +26,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-@SinceHTML5
 public abstract class AbstractHCNav <IMPLTYPE extends AbstractHCNav <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE> implements
                                     IHCNav <IMPLTYPE>
 {

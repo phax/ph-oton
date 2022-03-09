@@ -19,9 +19,6 @@ package com.helger.html.hc.html;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.html.annotation.SinceHTML5;
-
-@SinceHTML5
 public interface IHCHasMedia <IMPLTYPE extends IHCHasMedia <IMPLTYPE>>
 {
   /**

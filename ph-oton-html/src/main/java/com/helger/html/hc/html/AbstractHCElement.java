@@ -30,7 +30,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.cache.AnnotationUsageCache;
 import com.helger.commons.collection.attr.AttributeContainer;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
@@ -51,8 +50,6 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;
 import com.helger.html.EHTMLVersion;
-import com.helger.html.annotation.DeprecatedInHTML5;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -640,32 +637,10 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
       addEventHandler (EJSEvent.FOCUS, FakeJS.JS_BLUR);
   }
 
-  private static final AnnotationUsageCache s_aAUC_D_HTML5 = new AnnotationUsageCache (DeprecatedInHTML5.class);
-  private static final AnnotationUsageCache s_aAUC_S_HTML5 = new AnnotationUsageCache (SinceHTML5.class);
-
-  private static void _checkDeprecation (final Class <?> aElementClass, final String sElementName, final EHTMLVersion eHTMLVersion)
-  {
-    if (eHTMLVersion.isAtLeastHTML5 ())
-    {
-      // HTML5 specifics checks
-      if (s_aAUC_D_HTML5.hasAnnotation (aElementClass))
-        HCConsistencyChecker.consistencyError ("The element '" + sElementName + "' is deprecated in HTML5");
-    }
-    else
-    {
-      // pre-HTML5 checks
-      if (s_aAUC_S_HTML5.hasAnnotation (aElementClass))
-        HCConsistencyChecker.consistencyError ("The element '" + sElementName + "' is only available in HTML5");
-    }
-  }
-
   @Override
   protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     final EHTMLVersion eHTMLVersion = aConversionSettings.getHTMLVersion ();
-
-    // Deprecation is checked for all elements
-    _checkDeprecation (getClass (), getTagName (), eHTMLVersion);
 
     if (eHTMLVersion.isAtLeastHTML5 ())
     {

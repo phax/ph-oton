@@ -25,8 +25,6 @@ import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsImmutableObject;
 import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.html.annotation.DeprecatedInHTML5;
-import com.helger.html.annotation.SinceHTML5;
 
 /**
  * This enumeration contains all known java script events.
@@ -40,55 +38,36 @@ public enum EJSEvent
   ERROR ("error", EJSEventType.WINDOW, EJSEventType.MEDIA),
   FOCUS ("focus", EJSEventType.WINDOW, EJSEventType.FORM),
   LOAD ("load", EJSEventType.WINDOW),
-  @SinceHTML5
   RESIZE ("resize", EJSEventType.WINDOW),
-  @SinceHTML5
   SCROLL ("scroll", EJSEventType.MOUSE),
 
   // Window events
-  @SinceHTML5
   AFTERPRINT ("afterprint", EJSEventType.WINDOW),
-  @SinceHTML5
   BEFOREPRINT ("beforeprint", EJSEventType.WINDOW),
-  @SinceHTML5
   BEFOREUNLOAD ("beforeunload", EJSEventType.WINDOW),
-  @SinceHTML5
   HASHCHANGE ("hashchange", EJSEventType.WINDOW),
-  @SinceHTML5
   MESSAGE ("message", EJSEventType.WINDOW),
-  @SinceHTML5
   OFFLINE ("offline", EJSEventType.WINDOW),
-  @SinceHTML5
   ONLINE ("online", EJSEventType.WINDOW),
-  @SinceHTML5
   PAGEHIDE ("pagehide", EJSEventType.WINDOW),
-  @SinceHTML5
   PAGESHOW ("pageshow", EJSEventType.WINDOW),
-  @SinceHTML5
   POPSTATE ("popstate", EJSEventType.WINDOW),
-  @SinceHTML5
   STORAGE ("storage", EJSEventType.WINDOW),
   UNLOAD ("unload", EJSEventType.WINDOW),
 
   // Document events
-  @SinceHTML5
   READYSTATECHANGE ("readystatechange", EJSEventType.MEDIA),
 
   // Form events
   // also blur
   CHANGE ("change", EJSEventType.FORM),
-  @SinceHTML5
   CONTEXTMENU ("contextmenu", EJSEventType.FORM),
   // also focus
-  @SinceHTML5
   FORMCHANGE ("formchange", EJSEventType.FORM),
-  @SinceHTML5
   FORMINPUT ("forminput", EJSEventType.FORM),
-  @SinceHTML5
   INPUT ("input", EJSEventType.FORM),
-  @SinceHTML5
   INVALID ("invalid", EJSEventType.FORM),
-  @DeprecatedInHTML5
+  @Deprecated
   RESET ("reset", EJSEventType.FORM),
   SELECT ("select", EJSEventType.FORM),
   SUBMIT ("submit", EJSEventType.FORM),
@@ -101,70 +80,42 @@ public enum EJSEvent
   // Mouse events
   CLICK ("click", EJSEventType.MOUSE),
   DBLCLICK ("dblclick", EJSEventType.MOUSE),
-  @SinceHTML5
   DRAG ("drag", EJSEventType.MOUSE),
-  @SinceHTML5
   DRAGEND ("dragend", EJSEventType.MOUSE),
-  @SinceHTML5
   DRAGENTER ("dragenter", EJSEventType.MOUSE),
-  @SinceHTML5
   DRAGLEAVE ("dragleave", EJSEventType.MOUSE),
-  @SinceHTML5
   DRAGOVER ("dragover", EJSEventType.MOUSE),
-  @SinceHTML5
   DRAGSTART ("dragstart", EJSEventType.MOUSE),
-  @SinceHTML5
   DROP ("drop", EJSEventType.MOUSE),
   MOUSEDOWN ("mousedown", EJSEventType.MOUSE),
   MOUSEMOVE ("mousemove", EJSEventType.MOUSE),
   MOUSEOUT ("mouseout", EJSEventType.MOUSE),
   MOUSEOVER ("mouseover", EJSEventType.MOUSE),
   MOUSEUP ("mouseup", EJSEventType.MOUSE),
-  @SinceHTML5
   MOUSEWHEEL ("mousewheel", EJSEventType.MOUSE),
 
   // Media events
   ABORT ("abort", EJSEventType.MEDIA),
-  @SinceHTML5
   CANPLAY ("canplay", EJSEventType.MEDIA),
-  @SinceHTML5
   CANPLAYTHROUGH ("canplaythrough", EJSEventType.MEDIA),
-  @SinceHTML5
   DURATIONCHANGE ("durationchange", EJSEventType.MEDIA),
-  @SinceHTML5
   EMPTIED ("emptied", EJSEventType.MEDIA),
-  @SinceHTML5
   ENDED ("ended", EJSEventType.MEDIA),
   // also error
-  @SinceHTML5
   LOADEDDATA ("loadeddata", EJSEventType.MEDIA),
-  @SinceHTML5
   LOADEDMETADATA ("loadedmetadata", EJSEventType.MEDIA),
-  @SinceHTML5
   LOADSTART ("loadstart", EJSEventType.MEDIA),
-  @SinceHTML5
   PAUSE ("pause", EJSEventType.MEDIA),
-  @SinceHTML5
   PLAY ("play", EJSEventType.MEDIA),
-  @SinceHTML5
   PLAYING ("playing", EJSEventType.MEDIA),
-  @SinceHTML5
   PROGRESS ("progress", EJSEventType.MEDIA),
-  @SinceHTML5
   RATECHANGE ("ratechange", EJSEventType.MEDIA),
-  @SinceHTML5
   SEEKEND ("seekend", EJSEventType.MEDIA),
-  @SinceHTML5
   SEEKING ("seeking", EJSEventType.MEDIA),
-  @SinceHTML5
   STALLED ("stalled", EJSEventType.MEDIA),
-  @SinceHTML5
   SUSPEND ("suspend", EJSEventType.MEDIA),
-  @SinceHTML5
   TIMEUPDATE ("timeupdate", EJSEventType.MEDIA),
-  @SinceHTML5
   VOLUMECHANGE ("volumechange", EJSEventType.MEDIA),
-  @SinceHTML5
   WAITING ("waiting", EJSEventType.MEDIA),
 
   // Touch events
@@ -188,9 +139,7 @@ public enum EJSEvent
   LOSTPOINTERCAPTURE ("lostpointercapture", EJSEventType.POINTER),
   // rest
 
-  @SinceHTML5
   CANCEL ("cancel", EJSEventType.FORM),
-  @SinceHTML5
   CUECHANGE ("cuechange", EJSEventType.FORM);
 
   private final String m_sEvent;

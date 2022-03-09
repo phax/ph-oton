@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 import com.helger.commons.CGlobal;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
@@ -33,7 +32,6 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-@SinceHTML5
 public abstract class AbstractHCCanvas <IMPLTYPE extends AbstractHCCanvas <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                        implements
                                        IHCCanvas <IMPLTYPE>

@@ -16,9 +16,6 @@
  */
 package com.helger.html.hc.html.sections;
 
-import com.helger.html.annotation.SinceHTML5;
-
-@SinceHTML5
 public class HCFooter extends AbstractHCFooter <HCFooter>
 {
   public HCFooter ()

@@ -24,13 +24,11 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
-import com.helger.html.annotation.SinceHTML5;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.IHCHasState;
 import com.helger.xml.microdom.IMicroElement;
 
-@SinceHTML5
 public class HCKeyGen extends AbstractHCElement <HCKeyGen> implements IHCHasState <HCKeyGen>, IHCHasFocus <HCKeyGen>
 {
   public static final boolean DEFAULT_AUTOFOCUS = false;
