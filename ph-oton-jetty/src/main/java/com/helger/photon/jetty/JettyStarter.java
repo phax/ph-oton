@@ -27,6 +27,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.http.HttpCookie;
 import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -470,6 +472,32 @@ public class JettyStarter
   /**
    * Customize
    *
+   * @param aHttpConfiguration
+   *        HTTP configuration
+   * @throws Exception
+   *         in case of error
+   * @since 8.4.0
+   */
+  @OverrideOnDemand
+  protected void customizeHttpConfiguration (@Nonnull final HttpConfiguration aHttpConfiguration) throws Exception
+  {}
+
+  /**
+   * Customize
+   *
+   * @param aHttpConnectionFactory
+   *        HTTP connection factory
+   * @throws Exception
+   *         in case of error
+   * @since 8.4.0
+   */
+  @OverrideOnDemand
+  protected void customizeHttpConnectionFactory (@Nonnull final HttpConnectionFactory aHttpConnectionFactory) throws Exception
+  {}
+
+  /**
+   * Customize
+   *
    * @param aServerConnector
    *        Server connector
    * @throws Exception
@@ -641,11 +669,20 @@ public class JettyStarter
     // Create main server
     final Server aServer = new Server (m_aThreadPool);
     {
+      final HttpConfiguration aHC = new HttpConfiguration ();
+      aHC.setSendServerVersion (false);
+      aHC.setSendXPoweredBy (false);
+      customizeHttpConfiguration (aHC);
+
+      final HttpConnectionFactory aHCF = new HttpConnectionFactory (aHC);
+      customizeHttpConnectionFactory (aHCF);
+
       // Create connector on Port
-      final ServerConnector aConnector = new ServerConnector (aServer);
+      final ServerConnector aConnector = new ServerConnector (aServer, aHCF);
       aConnector.setPort (m_nPort);
       aConnector.setIdleTimeout (30_000);
       customizeServerConnector (aConnector);
+
       aServer.setConnectors (new Connector [] { aConnector });
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize", Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));

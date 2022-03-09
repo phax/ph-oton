@@ -102,6 +102,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to Jetty 9.4.45
     * Updated the list of predefined `aria-` attributes
     * Disabled the "directory listing" in the JettyStarter by default
+    * Disabled sending the server version and the `X-Powered-By` header in JettyStarter by default
     * Added support for HTML element `<dialog>`
     * Moved class `HCHgroup` from package `.deprecated` to `.section`
     * Moved class `HCMenu` from package `.interactive` to `.grouping`
