@@ -26,7 +26,7 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * Available since Firefox 98
  *
  * @author Philip Helger
- * @since 8.3.7
+ * @since 8.4.0
  */
 @SinceHTML5
 public class HCDialog extends AbstractHCElementWithChildren <HCDialog>

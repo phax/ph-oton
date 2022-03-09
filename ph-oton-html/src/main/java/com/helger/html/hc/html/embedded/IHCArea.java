@@ -14,33 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.hc.html.textlevel;
+package com.helger.html.hc.html.embedded;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.mime.IMimeType;
 import com.helger.commons.url.ISimpleURL;
-import com.helger.html.hc.IHCHasName;
 import com.helger.html.hc.html.HC_Target;
-import com.helger.html.hc.html.IHCElementWithChildren;
-import com.helger.html.hc.html.IHCHasMedia;
+import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.links.EHCReferrerPolicy;
-import com.helger.html.js.EJSEvent;
-import com.helger.html.js.IHasJSCode;
 
 /**
- * Interface for As
+ * Interface for AREAs
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
-                      IHCElementWithChildren <IMPLTYPE>,
-                      IHCHasMedia <IMPLTYPE>,
-                      IHCHasName <IMPLTYPE>
+public interface IHCArea <IMPLTYPE extends IHCArea <IMPLTYPE>> extends IHCElement <IMPLTYPE>
 {
+  @Nullable
+  String getAlt ();
+
+  @Nonnull
+  IMPLTYPE setAlt (@Nullable String sAlt);
+
+  @Nullable
+  String getCoords ();
+
+  @Nonnull
+  IMPLTYPE setCoords (@Nullable String sCoords);
+
+  @Nullable
+  String getShape ();
+
+  @Nonnull
+  IMPLTYPE setShape (@Nullable String sShape);
+
   @Nullable
   ISimpleURL getHref ();
 
@@ -83,40 +93,8 @@ public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
   IMPLTYPE setRel (@Nullable String sRel);
 
   @Nullable
-  IMimeType getType ();
-
-  @Nonnull
-  IMPLTYPE setType (@Nullable IMimeType aType);
-
-  @Nullable
   EHCReferrerPolicy getReferrerPolicy ();
 
   @Nonnull
   IMPLTYPE setReferrerPolicy (@Nullable EHCReferrerPolicy eReferrerPolicy);
-
-  /**
-   * Shortcut for <code>setEventHandler(EJSEvent.ONCLICK, aOnClick)</code>
-   *
-   * @param aOnClick
-   *        JS event to trigger
-   * @return this
-   */
-  @Nonnull
-  default IMPLTYPE setOnClick (@Nullable final IHasJSCode aOnClick)
-  {
-    return setEventHandler (EJSEvent.CLICK, aOnClick);
-  }
-
-  /**
-   * Shortcut for <code>addEventHandler(EJSEvent.ONCLICK, aOnClick)</code>
-   *
-   * @param aOnClick
-   *        JS event to trigger
-   * @return this
-   */
-  @Nonnull
-  default IMPLTYPE addOnClick (@Nullable final IHasJSCode aOnClick)
-  {
-    return addEventHandler (EJSEvent.CLICK, aOnClick);
-  }
 }

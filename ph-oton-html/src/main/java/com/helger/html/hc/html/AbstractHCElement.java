@@ -99,30 +99,44 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   /** The cached element name */
   private final String m_sElementName;
 
-  private String m_sID;
-  private String m_sTitle;
-  private String m_sLanguage;
+  private String m_sAccessKey;
+  // TODO autocapitalize
+  // TODO autofocus
+  private EHCContentEditable m_eContentEditable;
   private EHCTextDirection m_eDirection;
-  private ICommonsOrderedSet <ICSSClassProvider> m_aCSSClassProviders;
+  private EHCDraggable m_eDraggable;
+  // TODO enterkeyhint
+  private boolean m_bHidden = DEFAULT_HIDDEN;
+  // TODO inputmode
+  // TODO is
+  // TODO itemid
+  // TODO itemprop
+  // TODO itemref
+  // TODO itemscope
+  // TODO itemtype
+  private String m_sLanguage;
+  // TODO nonce
+  private boolean m_bSpellCheck = DEFAULT_SPELLCHECK;
   private ICommonsOrderedMap <ECSSProperty, ICSSValue> m_aStyles;
+  private long m_nTabIndex = DEFAULT_TABINDEX;
+  private String m_sTitle;
+  private ETriState m_eTranslate = DEFAULT_TRANSLATE;
+
+  private ICommonsOrderedSet <ICSSClassProvider> m_aCSSClassProviders;
+  private String m_sID;
+  // TODO slot
+
   /*
    * Use 1 pointer instead of many to save memory if no handler is used at all
    * (which happens quite often)!
    */
   private JSEventMap m_aJSHandler;
-  private boolean m_bUnfocusable = DEFAULT_UNFOCUSABLE;
-  private long m_nTabIndex = DEFAULT_TABINDEX;
-  private String m_sAccessKey;
 
-  // HTML5 global attributes
-  private ETriState m_eTranslate = DEFAULT_TRANSLATE;
-  private EHCContentEditable m_eContentEditable;
-  private String m_sContextMenuID;
-  private EHCDraggable m_eDraggable;
-  private EHCDropZone m_eDropZone;
-  private boolean m_bHidden = DEFAULT_HIDDEN;
-  private boolean m_bSpellCheck = DEFAULT_SPELLCHECK;
+  // ARIA stuff
   private EHTMLRole m_eRole;
+
+  // HC specific stuff
+  private boolean m_bUnfocusable = DEFAULT_UNFOCUSABLE;
 
   private static final class HCAttrCont extends AttributeContainer <IMicroQName, String> implements IHCAttrContainer
   {}
@@ -571,19 +585,6 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   @Nullable
-  public final String getContextMenu ()
-  {
-    return m_sContextMenuID;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setContextMenu (@Nullable final String sContextMenuID)
-  {
-    m_sContextMenuID = sContextMenuID;
-    return thisAsT ();
-  }
-
-  @Nullable
   public final EHCDraggable getDraggable ()
   {
     return m_eDraggable;
@@ -593,19 +594,6 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   public final IMPLTYPE setDraggable (@Nullable final EHCDraggable eDraggable)
   {
     m_eDraggable = eDraggable;
-    return thisAsT ();
-  }
-
-  @Nullable
-  public final EHCDropZone getDropZone ()
-  {
-    return m_eDropZone;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setDropZone (@Nullable final EHCDropZone eDropZone)
-  {
-    m_eDropZone = eDropZone;
     return thisAsT ();
   }
 
@@ -781,12 +769,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
         aElement.setAttribute (CHTMLAttributes.TRANSLATE, m_eTranslate.isTrue () ? CHTMLAttributeValues.YES : CHTMLAttributeValues.NO);
       if (m_eContentEditable != null)
         aElement.setAttribute (CHTMLAttributes.CONTENTEDITABLE, m_eContentEditable);
-      if (StringHelper.hasText (m_sContextMenuID))
-        aElement.setAttribute (CHTMLAttributes.CONTEXTMENU, m_sContextMenuID);
       if (m_eDraggable != null)
         aElement.setAttribute (CHTMLAttributes.DRAGGABLE, m_eDraggable);
-      if (m_eDropZone != null)
-        aElement.setAttribute (CHTMLAttributes.DROPZONE, m_eDropZone);
       if (m_bHidden)
         aElement.setAttribute (CHTMLAttributes.HIDDEN, CHTMLAttributeValues.HIDDEN);
       if (m_bSpellCheck)
@@ -855,9 +839,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
                             .appendIfNotNull ("accessKey", m_sAccessKey)
                             .appendIfNotNull ("translate", m_eTranslate)
                             .appendIfNotNull ("contentEditable", m_eContentEditable)
-                            .appendIfNotNull ("contextMenu", m_sContextMenuID)
                             .appendIfNotNull ("draggable", m_eDraggable)
-                            .appendIfNotNull ("dropZone", m_eDropZone)
                             .append ("hidden", m_bHidden)
                             .append ("spellcheck", m_bSpellCheck)
                             .appendIfNotNull ("role", m_eRole)

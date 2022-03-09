@@ -14,68 +14,91 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.hc.html.textlevel;
+package com.helger.html.hc.html.embedded;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
-import com.helger.html.hc.config.HCConsistencyChecker;
-import com.helger.html.hc.html.AbstractHCElementWithChildren;
-import com.helger.html.hc.html.HCHTMLHelper;
+import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.links.EHCReferrerPolicy;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
- * Represents an HTML &lt;a&gt; element
+ * Represents an HTML &lt;area&gt; element
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE> implements
-                                  IHCA <IMPLTYPE>
+public abstract class AbstractHCArea <IMPLTYPE extends AbstractHCArea <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE> implements
+                                     IHCArea <IMPLTYPE>
 {
-  private String m_sName;
+  private String m_sAlt;
+  private String m_sCoords;
+  private String m_sShape;
   private ISimpleURL m_aHref;
   private HC_Target m_aTarget;
   private String m_sDownload;
   private ISimpleURL m_aPing;
   private String m_sRel;
-  private IMimeType m_aType;
   private EHCReferrerPolicy m_eReferrerPolicy;
-  private String m_sMediaQuery;
 
-  public AbstractHCA ()
+  public AbstractHCArea ()
   {
-    super (EHTMLElement.A);
+    super (EHTMLElement.AREA);
   }
 
-  public AbstractHCA (@Nonnull final ISimpleURL aHref)
+  public AbstractHCArea (@Nonnull final ISimpleURL aHref)
   {
     this ();
     setHref (aHref);
   }
 
   @Nullable
-  public final String getName ()
+  public final String getAlt ()
   {
-    return m_sName;
+    return m_sAlt;
   }
 
   @Nonnull
-  public final IMPLTYPE setName (@Nullable final String sName)
+  public final IMPLTYPE setAlt (@Nullable final String sAlt)
   {
-    m_sName = sName;
+    m_sAlt = sAlt;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final String getCoords ()
+  {
+    return m_sCoords;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setCoords (@Nullable final String sCoords)
+  {
+    m_sCoords = sCoords;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final String getShape ()
+  {
+    return m_sShape;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setShape (@Nullable final String sShape)
+  {
+    m_sShape = sShape;
     return thisAsT ();
   }
 
@@ -147,19 +170,6 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
   }
 
   @Nullable
-  public final IMimeType getType ()
-  {
-    return m_aType;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setType (@Nullable final IMimeType aType)
-  {
-    m_aType = aType;
-    return thisAsT ();
-  }
-
-  @Nullable
   public final EHCReferrerPolicy getReferrerPolicy ()
   {
     return m_eReferrerPolicy;
@@ -172,44 +182,22 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return thisAsT ();
   }
 
-  @Nullable
-  public final String getMedia ()
-  {
-    return m_sMediaQuery;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setMedia (@Nullable final String sMediaQuery)
-  {
-    m_sMediaQuery = sMediaQuery;
-    return thisAsT ();
-  }
-
-  @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
-  {
-    super.onConsistencyCheck (aConversionSettings);
-    if (HCHTMLHelper.recursiveContainsChildWithTagName (this, EHTMLElement.A))
-      HCConsistencyChecker.consistencyError ("<A> may never contain other links!");
-    if (HCHTMLHelper.recursiveContainsChildWithTagName (this, EHTMLElement.SELECT))
-      HCConsistencyChecker.consistencyError ("<A> contains invalid child element!");
-  }
-
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sName))
-      aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
+    if (StringHelper.hasText (m_sAlt))
+      aElement.setAttribute (CHTMLAttributes.ALT, m_sAlt);
+    if (StringHelper.hasText (m_sCoords))
+      aElement.setAttribute (CHTMLAttributes.COORDS, m_sCoords);
+    if (StringHelper.hasText (m_sShape))
+      aElement.setAttribute (CHTMLAttributes.SHAPE, m_sShape);
     if (m_aHref != null)
     {
       final String sHref = m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ());
       aElement.setAttribute (CHTMLAttributes.HREF, sHref);
     }
-
-    // The target, download, ping, rel, hreflang, type, and referrerpolicy
-    // attributes must be omitted if the href attribute is not present.
     if (m_aTarget != null)
     {
       // Note: attribute "target" is not allowed in XHTML 1.0 strict (but in
@@ -225,28 +213,23 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     }
     if (StringHelper.hasText (m_sRel))
       aElement.setAttribute (CHTMLAttributes.REL, m_sRel);
-    if (m_aType != null)
-      aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
     if (m_eReferrerPolicy != null)
       aElement.setAttribute (CHTMLAttributes.REFERRERPOLICY, m_eReferrerPolicy);
-    // HTML5 only:
-    if (StringHelper.hasText (m_sMediaQuery))
-      aElement.setAttribute (CHTMLAttributes.MEDIA, m_sMediaQuery);
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("Name", m_sName)
+                            .appendIfNotNull ("Href", m_sAlt)
+                            .appendIfNotNull ("Coords", m_sCoords)
+                            .appendIfNotNull ("Shape", m_sShape)
                             .appendIfNotNull ("Href", m_aHref)
                             .appendIfNotNull ("Target", m_aTarget)
                             .appendIfNotNull ("Download", m_sDownload)
                             .appendIfNotNull ("Ping", m_aPing)
                             .appendIfNotNull ("Rel", m_sRel)
-                            .appendIfNotNull ("Type", m_aType)
                             .appendIfNotNull ("ReferrerPolicy", m_eReferrerPolicy)
-                            .appendIfNotNull ("MediaQuery", m_sMediaQuery)
                             .getToString ();
   }
 }

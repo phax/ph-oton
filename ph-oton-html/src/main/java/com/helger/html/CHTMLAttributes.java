@@ -75,6 +75,7 @@ public final class CHTMLAttributes
   public static final IMicroQName COMPACT = new MicroQName ("compact");
   public static final IMicroQName CONTENT = new MicroQName ("content");
   public static final IMicroQName CONTENTEDITABLE = new MicroQName ("contenteditable");
+  @Deprecated
   public static final IMicroQName CONTEXTMENU = new MicroQName ("contextmenu");
   public static final IMicroQName CONTROLLER = new MicroQName ("controller");
   public static final IMicroQName CONTROLS = new MicroQName ("controls");
@@ -88,7 +89,9 @@ public final class CHTMLAttributes
   public static final IMicroQName DIR = new MicroQName ("dir");
   public static final IMicroQName DIRNAME = new MicroQName ("dirname");
   public static final IMicroQName DISABLED = new MicroQName ("disabled");
+  public static final IMicroQName DOWNLOAD = new MicroQName ("download");
   public static final IMicroQName DRAGGABLE = new MicroQName ("draggable");
+  @Deprecated
   public static final IMicroQName DROPZONE = new MicroQName ("dropzone");
   public static final IMicroQName ENCTYPE = new MicroQName ("enctype");
   public static final IMicroQName ENDTIME = new MicroQName ("endtime");
@@ -149,6 +152,7 @@ public final class CHTMLAttributes
   public static final IMicroQName OPTIMUM = new MicroQName ("optimum");
   public static final IMicroQName PALETTE = new MicroQName ("palette");
   public static final IMicroQName PATTERN = new MicroQName ("pattern");
+  public static final IMicroQName PING = new MicroQName ("ping");
   public static final IMicroQName PLACEHOLDER = new MicroQName ("placeholder");
   public static final IMicroQName PLAYCOUNT = new MicroQName ("playcount");
   public static final IMicroQName PLUGINSPAGE = new MicroQName ("pluginspage");
@@ -158,6 +162,7 @@ public final class CHTMLAttributes
   public static final IMicroQName QUALITY = new MicroQName ("quality");
   public static final IMicroQName RADIOGROUP = new MicroQName ("radiogroup");
   public static final IMicroQName READONLY = new MicroQName ("readonly");
+  public static final IMicroQName REFERRERPOLICY = new MicroQName ("referrerpolicy");
   public static final IMicroQName REQUIRED = new MicroQName ("required");
   public static final IMicroQName REL = new MicroQName ("rel");
   public static final IMicroQName REV = new MicroQName ("rev");

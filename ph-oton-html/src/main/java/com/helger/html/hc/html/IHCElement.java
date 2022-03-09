@@ -272,22 +272,6 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setDraggable (@Nullable EHCDraggable eDraggable);
 
   /**
-   * @return The drop zone value. May be <code>null</code>.
-   */
-  @Nullable
-  EHCDropZone getDropZone ();
-
-  /**
-   * Set the drop zone value of this element.
-   *
-   * @param eDropZone
-   *        Value to set. May be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE setDropZone (@Nullable EHCDropZone eDropZone);
-
-  /**
    * @return <code>true</code> if HTML <code>translate</code> is
    *         <code>true</code>.
    */
@@ -349,24 +333,6 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    */
   @Nonnull
   IMPLTYPE setContentEditable (@Nullable EHCContentEditable eContentEditable);
-
-  /**
-   * @return The ID of the <code>menu</code> element that should be used as the
-   *         context menu. May be <code>null</code>.
-   */
-  @Nullable
-  String getContextMenu ();
-
-  /**
-   * Set the ID of the <code>menu</code> element that should add as a context
-   * menu
-   *
-   * @param sContextMenu
-   *        The ID of the &lt;menu&gt; element
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE setContextMenu (@Nullable String sContextMenu);
 
   /**
    * @return <code>true</code> if spell check is enabled, <code>false</code>

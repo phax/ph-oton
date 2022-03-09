@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.hc.html.deprecated;
+package com.helger.html.hc.html.sections;
 
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.DeprecatedInHTML5;

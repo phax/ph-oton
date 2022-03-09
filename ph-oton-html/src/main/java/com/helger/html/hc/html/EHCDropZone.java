@@ -28,6 +28,7 @@ import com.helger.commons.string.StringHelper;
  *
  * @author Philip Helger
  */
+@Deprecated
 public enum EHCDropZone implements IHCHasHTMLAttributeValue
 {
   /**

@@ -98,11 +98,14 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v8.3.7 - work in progress
+* v8.4.0 - work in progress
     * Updated to Jetty 9.4.45
     * Updated the list of predefined `aria-` attributes
     * Disabled the "directory listing" in the JettyStarter by default
     * Added support for HTML element `<dialog>`
+    * Moved class `HCHgroup` from package `.deprecated` to `.section`
+    * Moved class `HCMenu` from package `.interactive` to `.grouping`
+    * Added classes `HCMap`, `HCArea`, `EHCReferrerPolicy`
 * v8.3.6 - 2022-01-04
     * Updated Log2J to 2.17.1 - fixes CVE-2021-44832 - see https://logging.apache.org/log4j/2.x/security.html
     * Made redirect URL after login customizable in `AbstractLoginManager`

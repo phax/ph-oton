@@ -36,14 +36,15 @@ import com.helger.html.hc.html.deprecated.HCDir;
 import com.helger.html.hc.html.deprecated.HCFont;
 import com.helger.html.hc.html.deprecated.HCFrame;
 import com.helger.html.hc.html.deprecated.HCFrameset;
-import com.helger.html.hc.html.deprecated.HCHGroup;
 import com.helger.html.hc.html.deprecated.HCNoBR;
 import com.helger.html.hc.html.edits.HCDel;
 import com.helger.html.hc.html.edits.HCIns;
+import com.helger.html.hc.html.embedded.HCArea;
 import com.helger.html.hc.html.embedded.HCAudio;
 import com.helger.html.hc.html.embedded.HCEmbed;
 import com.helger.html.hc.html.embedded.HCIFrame;
 import com.helger.html.hc.html.embedded.HCImg;
+import com.helger.html.hc.html.embedded.HCMap;
 import com.helger.html.hc.html.embedded.HCObject;
 import com.helger.html.hc.html.embedded.HCParam;
 import com.helger.html.hc.html.embedded.HCPicture;
@@ -74,6 +75,7 @@ import com.helger.html.hc.html.grouping.HCFigure;
 import com.helger.html.hc.html.grouping.HCHR;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.HCMain;
+import com.helger.html.hc.html.grouping.HCMenu;
 import com.helger.html.hc.html.grouping.HCOL;
 import com.helger.html.hc.html.grouping.HCOutput;
 import com.helger.html.hc.html.grouping.HCP;
@@ -81,7 +83,7 @@ import com.helger.html.hc.html.grouping.HCPre;
 import com.helger.html.hc.html.grouping.HCUL;
 import com.helger.html.hc.html.interactive.HCCommand;
 import com.helger.html.hc.html.interactive.HCDetails;
-import com.helger.html.hc.html.interactive.HCMenu;
+import com.helger.html.hc.html.interactive.HCDialog;
 import com.helger.html.hc.html.interactive.HCMenuItem;
 import com.helger.html.hc.html.interactive.HCSummary;
 import com.helger.html.hc.html.metadata.HCBase;
@@ -105,6 +107,7 @@ import com.helger.html.hc.html.sections.HCH3;
 import com.helger.html.hc.html.sections.HCH4;
 import com.helger.html.hc.html.sections.HCH5;
 import com.helger.html.hc.html.sections.HCH6;
+import com.helger.html.hc.html.sections.HCHGroup;
 import com.helger.html.hc.html.sections.HCHeader;
 import com.helger.html.hc.html.sections.HCNav;
 import com.helger.html.hc.html.sections.HCSection;
@@ -151,7 +154,7 @@ public final class HCExtHelper
       case APPLET:
         return new HCGenericElementWithChildren (eElement);
       case AREA:
-        return new HCGenericElementWithChildren (eElement);
+        return new HCArea ();
       case ARTICLE:
         return new HCArticle ();
       case ASIDE:
@@ -202,6 +205,8 @@ public final class HCExtHelper
         return new HCDetails ();
       case DFN:
         return new HCDFN ();
+      case DIALOG:
+        return new HCDialog ();
       case DIR:
         return new HCDir ();
       case DIV:
@@ -277,7 +282,7 @@ public final class HCExtHelper
       case MAIN:
         return new HCMain ();
       case MAP:
-        return new HCGenericElementWithChildren (eElement);
+        return new HCMap ();
       case MARK:
         return new HCMark ();
       case MENU:
