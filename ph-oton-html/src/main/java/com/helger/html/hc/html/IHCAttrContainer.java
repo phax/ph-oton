@@ -17,6 +17,7 @@
 package com.helger.html.hc.html;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,8 +26,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
@@ -166,6 +169,17 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange setAriaDescribedBy (@Nonnull final IHCElement <?> aDescribedBy)
+  {
+    return setAriaDescribedBy (aDescribedBy.ensureID ().getID ());
+  }
+
+  @Nonnull
+  default EChange setAriaDescribedBy(@Nonnull final ICommonsCollection<IHCElement<?>> aDescribedByMultiple) {
+    return setAriaDescribedBy(StringHelper.getImploded(" ", aDescribedByMultiple.stream().map(aDescribedBy -> aDescribedBy.ensureID().getID()).collect(Collectors.toList())));
+  }
+
+  @Nonnull
   default EChange setAriaExpanded (final boolean bIsExpanded)
   {
     return putIn (CHTMLAttributes.ARIA_EXPANDED, Boolean.toString (bIsExpanded));
@@ -190,15 +204,20 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange setAriaLabeledBy (@Nonnull final String sLabeledBy)
+  {
+    return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
+  }
+
+  @Nonnull
   default EChange setAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
   {
     return setAriaLabeledBy (aLabeledBy.ensureID ().getID ());
   }
 
   @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final String sLabeledBy)
-  {
-    return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
+  default EChange setAriaLabeledBy(@Nonnull final ICommonsCollection<IHCElement<?>> aLabeledByMultiple) {
+    return setAriaLabeledBy(StringHelper.getImploded(" ", aLabeledByMultiple.stream().map(aLabeledBy -> aLabeledBy.ensureID().getID()).collect(Collectors.toList())));
   }
 
   @Nonnull
