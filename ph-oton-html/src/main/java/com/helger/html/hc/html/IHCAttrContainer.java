@@ -166,6 +166,12 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange setAriaDescribedBy (@Nonnull final IHCElement <?> aDescribedBy)
+  {
+    return setAriaDescribedBy (aDescribedBy.ensureID ().getID ());
+  }
+
+  @Nonnull
   default EChange setAriaExpanded (final boolean bIsExpanded)
   {
     return putIn (CHTMLAttributes.ARIA_EXPANDED, Boolean.toString (bIsExpanded));
