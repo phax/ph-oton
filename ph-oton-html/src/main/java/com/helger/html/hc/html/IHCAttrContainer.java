@@ -17,7 +17,6 @@
 package com.helger.html.hc.html;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -175,8 +174,21 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
-  default EChange setAriaDescribedBy(@Nonnull final ICommonsCollection<IHCElement<?>> aDescribedByMultiple) {
-    return setAriaDescribedBy(StringHelper.getImploded(" ", aDescribedByMultiple.stream().map(aDescribedBy -> aDescribedBy.ensureID().getID()).collect(Collectors.toList())));
+  default EChange setAriaDescribedBy (@Nonnull final ICommonsCollection <? extends IHCElement <?>> aDescribedByMultiple)
+  {
+    return setAriaDescribedBy (StringHelper.imploder ()
+                                           .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                           .separator (' ')
+                                           .build ());
+  }
+
+  @Nonnull
+  default EChange setAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
+  {
+    return setAriaDescribedBy (StringHelper.imploder ()
+                                           .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                           .separator (' ')
+                                           .build ());
   }
 
   @Nonnull
@@ -216,8 +228,15 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
-  default EChange setAriaLabeledBy(@Nonnull final ICommonsCollection<IHCElement<?>> aLabeledByMultiple) {
-    return setAriaLabeledBy(StringHelper.getImploded(" ", aLabeledByMultiple.stream().map(aLabeledBy -> aLabeledBy.ensureID().getID()).collect(Collectors.toList())));
+  default EChange setAriaLabeledBy (@Nonnull final ICommonsCollection <? extends IHCElement <?>> aLabeledByMultiple)
+  {
+    return setAriaLabeledBy (StringHelper.imploder ().source (aLabeledByMultiple, x -> x.ensureID ().getID ()).separator (' ').build ());
+  }
+
+  @Nonnull
+  default EChange setAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
+  {
+    return setAriaLabeledBy (StringHelper.imploder ().source (aLabeledByMultiple, x -> x.ensureID ().getID ()).separator (' ').build ());
   }
 
   @Nonnull
