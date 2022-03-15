@@ -25,8 +25,10 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.state.EChange;
+import com.helger.commons.string.StringHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
@@ -166,6 +168,30 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange setAriaDescribedBy (@Nonnull final IHCElement <?> aDescribedBy)
+  {
+    return setAriaDescribedBy (aDescribedBy.ensureID ().getID ());
+  }
+
+  @Nonnull
+  default EChange setAriaDescribedBy (@Nonnull final ICommonsCollection <? extends IHCElement <?>> aDescribedByMultiple)
+  {
+    return setAriaDescribedBy (StringHelper.imploder ()
+                                           .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                           .separator (' ')
+                                           .build ());
+  }
+
+  @Nonnull
+  default EChange setAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
+  {
+    return setAriaDescribedBy (StringHelper.imploder ()
+                                           .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                           .separator (' ')
+                                           .build ());
+  }
+
+  @Nonnull
   default EChange setAriaExpanded (final boolean bIsExpanded)
   {
     return putIn (CHTMLAttributes.ARIA_EXPANDED, Boolean.toString (bIsExpanded));
@@ -190,15 +216,27 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange setAriaLabeledBy (@Nonnull final String sLabeledBy)
+  {
+    return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
+  }
+
+  @Nonnull
   default EChange setAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
   {
     return setAriaLabeledBy (aLabeledBy.ensureID ().getID ());
   }
 
   @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final String sLabeledBy)
+  default EChange setAriaLabeledBy (@Nonnull final ICommonsCollection <? extends IHCElement <?>> aLabeledByMultiple)
   {
-    return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
+    return setAriaLabeledBy (StringHelper.imploder ().source (aLabeledByMultiple, x -> x.ensureID ().getID ()).separator (' ').build ());
+  }
+
+  @Nonnull
+  default EChange setAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
+  {
+    return setAriaLabeledBy (StringHelper.imploder ().source (aLabeledByMultiple, x -> x.ensureID ().getID ()).separator (' ').build ());
   }
 
   @Nonnull
