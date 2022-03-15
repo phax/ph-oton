@@ -174,7 +174,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
-  default EChange setAriaDescribedBy (@Nonnull final ICommonsCollection <? extends IHCElement <?>> aDescribedByMultiple)
+  default EChange setAriaDescribedBy (@Nonnull final Iterable <? extends IHCElement <?>> aDescribedByMultiple)
   {
     return setAriaDescribedBy (StringHelper.imploder ()
                                            .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
@@ -228,7 +228,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final ICommonsCollection <? extends IHCElement <?>> aLabeledByMultiple)
+  default EChange setAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
   {
     return setAriaLabeledBy (StringHelper.imploder ().source (aLabeledByMultiple, x -> x.ensureID ().getID ()).separator (' ').build ());
   }
