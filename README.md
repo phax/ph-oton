@@ -110,6 +110,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Improved the overall HTML compliance according to the latest standard
     * Dropped the specific HTML 5 annotations
     * `HCMenu` now takes `HCLI` children instead of `HCMenuItem` children
+    * Extended HTML accessibility API - thx to @Dafnik
+    * Updated chart.js from 1.0.2 to 1.1.1
 * v8.3.6 - 2022-01-04
     * Updated Log2J to 2.17.1 - fixes CVE-2021-44832 - see https://logging.apache.org/log4j/2.x/security.html
     * Made redirect URL after login customizable in `AbstractLoginManager`
