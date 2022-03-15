@@ -141,6 +141,16 @@ public final class BootstrapFormHelper
     }
   }
 
+  public static void connectFormControlsWithErrors(@Nullable final Iterable <? extends  IHCElement <?>> aCtrls,
+                                              @Nullable final Iterable<? extends IHCElement<?>> aErrorNodes) {
+    if (aCtrls != null && aErrorNodes != null) {
+      for (final IHCElement <?> aCurCtrl : aCtrls)
+      {
+        aCurCtrl.customAttrs().setAriaDescribedBy(aErrorNodes);
+      }
+    }
+  }
+
   public static void applyFormControlValidityState (@Nullable final IHCElement <?> aElement, @Nullable final IErrorList aErrorList)
   {
     ValueEnforcer.notNull (aElement, "Element");
