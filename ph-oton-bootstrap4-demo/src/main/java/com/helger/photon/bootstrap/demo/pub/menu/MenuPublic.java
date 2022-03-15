@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.photon.bootstrap.demo.pub.page.PagePublicCharts;
+import com.helger.photon.bootstrap.demo.pub.page.PagePublicChartsV1;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicDataTables;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicDateTimePicker;
 import com.helger.photon.bootstrap.demo.pub.page.PagePublicFormGroups;
@@ -66,7 +66,7 @@ public final class MenuPublic
       aMenuTree.createItem (aUICtrls, new PagePublicDataTables ("ui-datatables"));
       aMenuTree.createItem (aUICtrls, new PagePublicDateTimePicker ("ui-datetimepicker"));
       aMenuTree.createItem (aUICtrls, new PagePublicFormGroups ("ui-formgroups"));
-      aMenuTree.createItem (aUICtrls, new PagePublicCharts ("ui-charts"));
+      aMenuTree.createItem (aUICtrls, new PagePublicChartsV1 ("ui-chartsv1"));
     }
 
     // Common stuff

@@ -27,11 +27,11 @@ import com.helger.photon.uictrls.chart.ChartBar;
 import com.helger.photon.uictrls.chart.ChartLine;
 import com.helger.photon.uictrls.chart.HCChart;
 
-public class PagePublicCharts extends AbstractAppWebPage
+public class PagePublicChartsV1 extends AbstractAppWebPage
 {
-  public PagePublicCharts (final String sID)
+  public PagePublicChartsV1 (final String sID)
   {
-    super (sID, "Charts example");
+    super (sID, "Charts V1 example");
   }
 
   @Override
