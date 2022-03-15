@@ -37,6 +37,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   /** BigDecimal support for JS */
   BIG_DECIMAL ("uictrls/js/big.js"),
   CHART_1 ("uictrls/chart/1.1.1/Chart.js"),
+  CHART_3 ("uictrls/chart/3.7.1/Chart.js"),
   CLIPBOARD ("uictrls/clipboardjs/2.0.6/clipboard.js"),
   COLORBOX ("uictrls/colorbox/1.6.0/jquery.colorbox.js"),
   EXCANVAS ("uictrls/chart/excanvas.js", "if lt IE 9"),
