@@ -194,9 +194,8 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       aFirstControl = null;
 
     // Check form errors - highlighting
-    final ICommonsList<IHCElement<?>> aErrorCommonList = new CommonsArrayList<IHCElement<?>>();
-    if (aErrorList != null && aErrorList.isNotEmpty ())
-    {
+    final ICommonsList <IHCElement <?>> aErrorCommonList = new CommonsArrayList <> ();
+    if (aErrorList != null)
       for (final IError aError : aErrorList)
       {
         final IHCElement <?> aErrorNode = createSingleErrorNode (aError, aDisplayLocale);
@@ -207,13 +206,12 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
         }
         aErrorCommonList.add (aErrorNode);
       }
-    }
 
     // Set "aria-describedby"
-    BootstrapFormHelper.connectFormControlsWithErrors(aAllCtrls, aErrorCommonList);
+    BootstrapFormHelper.connectFormControlsWithErrors (aAllCtrls, aErrorCommonList);
 
-    final HCNodeList aErrorListNode = new HCNodeList();
-    aErrorListNode.addChildren(aErrorCommonList);
+    final HCNodeList aErrorListNode = new HCNodeList ();
+    aErrorListNode.addChildren (aErrorCommonList);
 
     // Help text (only if a control is present)
     IHCElement <?> aHelpTextNode = null;

@@ -31,9 +31,6 @@ import com.helger.html.resource.js.IJSPathProvider;
 public enum EUICoreJSPathProvider implements IJSPathProvider
 {
   COOKIE_CONSENT ("uicore/cookieconsent/3.1.1/cookieconsent.js"),
-  /** Insert in &lt;head&gt; element (after or before your CSS) for IE &lt; 9 */
-  HTML5SHIV ("uicore/html5shiv/3.7.3/html5shiv.js", "if lt IE 9"),
-  HTML5SHIV_PRINTSHIV ("uicore/html5shiv/3.7.3/html5shiv-printshiv.js", "if lt IE 9"),
   /** JQuery 3.x */
   JQUERY_3 ("uicore/jquery/jquery-3.6.0.js"),
   JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
@@ -41,18 +38,11 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.4.1.js"),
   JQUERY_MIGRATE_3 ("uicore/jqueryplugins/jquery-migrate-3.0.0.js"),
   JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
-  JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/2.1.2/jquery.placeholder.js", "if lt IE 10"),
-  JQUERY_PLACEHOLDER_ALL ("uicore/jqueryplaceholder/jquery.placeholder-all.js", "if lt IE 10"),
   JS_COOKIE ("uicore/jqueryplugins/js.cookie.js"),
   JS_STORAGE ("uicore/jqueryplugins/js.storage.js"),
   MOMENT ("uicore/moment/2.22.2/moment-with-locales.js"),
   POPPER ("uicore/popper/1.16.1-lts/popper.js"),
   POPPER_UTILS ("uicore/popper/1.16.1-lts/popper-utils.js"),
-  /**
-   * Source: https://github.com/scottjehl/Respond - only for IE6-8 so use it
-   * only in a conditional comment!
-   */
-  RESPOND ("uicore/respond/respond.js", "if lt IE 9"),
   SERVERLOG ("ph-oton/serverlog/serverlog.js"),
   /** https://github.com/stacktracejs/stacktrace.js/ */
   STACKTRACE ("uicore/stacktrace/stacktrace.js"),

@@ -43,10 +43,7 @@ public enum EHCScriptInlineMode
    * my &lt; script
    * //--&gt;&lt;/script&gt;
    * </pre>
-   *
-   * @deprecated This is so XHTML
    */
-  @Deprecated
   PLAIN_TEXT_WRAPPED_IN_COMMENT,
   /**
    * Wrap the whole JS code in an XML CDATA container.

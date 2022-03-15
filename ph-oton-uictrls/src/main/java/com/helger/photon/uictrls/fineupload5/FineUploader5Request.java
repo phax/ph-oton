@@ -209,7 +209,7 @@ public class FineUploader5Request implements IFineUploader5Part
 
   /**
    * Specify a method to use when sending files to a traditional endpoint. This
-   * option is ignored in older browsers (such as IE 9 and older).
+   * option is ignored in older browsers (such as IE9 and older).
    *
    * @param eMethod
    *        New value. May not be <code>null</code>.

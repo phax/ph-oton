@@ -38,7 +38,6 @@ public enum EUICoreCSSPathProvider implements ICSSPathProvider
   COOKIE_CONSENT_MEDIA ("uicore/cookieconsent/3.1.1/styles/media.css"),
   COOKIE_CONSENT_THEMES_CLASSIC ("uicore/cookieconsent/3.1.1/styles/themes/classic.css"),
   COOKIE_CONSENT_THEMES_EDGELESS ("uicore/cookieconsent/3.1.1/styles/themes/edgeless.css"),
-  JQUERY_PLACEHOLDER ("uicore/jqueryplaceholder/jquery.placeholder.css", "if lt IE 10"),
   /** Custom development */
   UICORE ("ph-oton/uicore.css");
 

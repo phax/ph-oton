@@ -100,6 +100,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v8.4.0 - work in progress
     * Updated to Jetty 9.4.45
+    * Updated chart.js from 1.0.2 to 1.1.1
+    * Updated to Bootstrap Icons 1.8.1
     * Updated the list of predefined `aria-` attributes
     * Disabled the "directory listing" in the JettyStarter by default
     * Disabled sending the server version and the `X-Powered-By` header in JettyStarter by default
@@ -111,9 +113,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Dropped the specific HTML 5 annotations
     * `HCMenu` now takes `HCLI` children instead of `HCMenuItem` children
     * Extended HTML accessibility API - thx to @Dafnik
-    * Updated chart.js from 1.0.2 to 1.1.1
     * The default script mode for inline scripts was changed from `PLAIN_TEXT_WRAPPED_IN_COMMENT` to `PLAIN_TEXT_NO_ESCAPE`
-    * Updated to Bootstrap Icons 1.8.1
+    * Dropped support for Internet Explorer
 * v8.3.6 - 2022-01-04
     * Updated Log2J to 2.17.1 - fixes CVE-2021-44832 - see https://logging.apache.org/log4j/2.x/security.html
     * Made redirect URL after login customizable in `AbstractLoginManager`

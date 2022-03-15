@@ -311,7 +311,6 @@ public class HCChart extends AbstractHCCanvas <HCChart>
                                               final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART_1);
-    PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.EXCANVAS);
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.CHART_1);
   }
 

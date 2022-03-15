@@ -70,21 +70,12 @@ public final class PhotonStubInitializer
     EFamFamFlagIcon.registerResourcesForGlobal ();
     PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.UICORE);
 
-    // With conditional comments
-    PhotonCSS.registerCSSIncludeForGlobal (EUICoreCSSPathProvider.JQUERY_PLACEHOLDER);
-
     // JS
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_3);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_JQUERY);
     PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.UICORE_FORM);
     for (final IJSPathProvider aPP : BootstrapCustomConfig.getAllBootstrapJS ())
       PhotonJS.registerJSIncludeForGlobal (aPP);
-
-    // With conditional comments
-    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.HTML5SHIV);
-    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.RESPOND);
-    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_PLACEHOLDER);
-    PhotonJS.registerJSIncludeForGlobal (EUICoreJSPathProvider.JQUERY_PLACEHOLDER_ALL);
 
     // Meta elements
     PhotonMetaElements.registerMetaElementForGlobal (EStandardMetaElement.GENERATOR.getAsMetaElement ("ph-oton stack - https://github.com/phax/ph-oton"));

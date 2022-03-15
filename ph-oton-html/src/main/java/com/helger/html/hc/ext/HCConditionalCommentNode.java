@@ -44,6 +44,8 @@ import com.helger.xml.serialize.write.IXMLWriterSettings;
  * &lt;![endif]--&gt;
  * </pre>
  *
+ * Since 8.4.0 (dropping of IE support) this should not be needed anymore.
+ *
  * @author Philip Helger
  */
 @Immutable

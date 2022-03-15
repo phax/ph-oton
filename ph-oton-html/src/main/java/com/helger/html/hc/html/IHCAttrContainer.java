@@ -25,7 +25,6 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.attr.IAttributeContainer;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;

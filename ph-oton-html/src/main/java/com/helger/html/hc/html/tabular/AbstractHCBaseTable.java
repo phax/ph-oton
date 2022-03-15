@@ -36,19 +36,14 @@ import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.css.ECSSUnit;
-import com.helger.css.property.CCSSProperties;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
-import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElement;
-import com.helger.html.hc.impl.HCEntityNode;
 
 /**
  * This is the common base class for regular HC tables as well as for more
@@ -271,33 +266,6 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   //
   // code generation
   //
-
-  @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
-  {
-    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-
-    /*
-     * bug fix for IE9 table layout bug
-     * (http://msdn.microsoft.com/en-us/library/ms531161%28v=vs.85%29.aspx) IE9
-     * only interprets column widths if the first row does not use colspan (i.e.
-     * at least one row does not use colspan)
-     */
-    if (m_aColGroup != null && m_aColGroup.hasColumns () && hasBodyRows () && getFirstBodyRow ().isColspanUsed ())
-    {
-      // Create a dummy row with explicit widths
-      final HCRow aRow = new HCRow (false).addClass (CSS_FORCE_COLSPAN);
-      for (final IHCCol <?> aCol : m_aColGroup.getAllColumns ())
-      {
-        final IHCCell <?> aCell = aRow.addAndReturnCell (HCEntityNode.newNBSP ());
-        final int nWidth = StringParser.parseInt (aCol.getWidth (), -1);
-        if (nWidth >= 0)
-          aCell.addStyle (CCSSProperties.WIDTH.newValue (ECSSUnit.px (nWidth)));
-      }
-      addBodyRowAt (0, aRow);
-    }
-  }
 
   @Override
   @OverridingMethodsMustInvokeSuper

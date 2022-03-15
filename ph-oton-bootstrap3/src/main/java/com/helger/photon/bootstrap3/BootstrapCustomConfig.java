@@ -46,7 +46,6 @@ public final class BootstrapCustomConfig
     CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP);
     CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_THEME);
     CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_PH);
-    CSS.add (EBootstrapCSSPathProvider.BOOTSTRAP_IE9);
     JS.add (EBootstrapJSPathProvider.BOOTSTRAP);
     JS.add (EBootstrapJSPathProvider.BOOTSTRAP_PH);
   }

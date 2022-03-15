@@ -22,12 +22,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.collection.impl.ICommonsCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
@@ -142,13 +142,15 @@ public final class BootstrapFormHelper
     }
   }
 
-  public static void connectFormControlsWithErrors(@Nullable final ICommonsCollection <? extends  IHCElement <?>> aCtrls,
-                                              @Nullable final ICommonsCollection<? extends IHCElement<?>> aErrorNodes) {
-    if (aCtrls != null && aErrorNodes != null && aCtrls.isNotEmpty() &&aErrorNodes.isNotEmpty()) {
-      for (final IHCElement <?> aCurCtrl : aCtrls)
-      {
-        aCurCtrl.customAttrs().setAriaDescribedBy(aErrorNodes);
-      }
+  public static void connectFormControlsWithErrors (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
+                                                    @Nullable final ICommonsCollection <? extends IHCElement <?>> aErrorNodes)
+  {
+    if (aCtrls != null)
+    {
+      final String sDescribedBy = StringHelper.imploder ().source (aErrorNodes, x -> x.ensureID ().getID ()).separator (' ').build ();
+      if (StringHelper.hasText (sDescribedBy))
+        for (final IHCElement <?> aCurCtrl : aCtrls)
+          aCurCtrl.customAttrs ().setAriaDescribedBy (sDescribedBy);
     }
   }
 
