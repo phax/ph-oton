@@ -91,13 +91,7 @@ public final class HCSpecialNodeHandlerTest
                   "<h1>root</h1>" +
                   sCRLF +
                   "<script type=\"text/javascript\">" +
-                  sCRLF +
-                  "<!--" +
-                  sCRLF +
                   "var y=0;" +
-                  sCRLF +
-                  "//-->" +
-                  sCRLF +
                   "</script>" +
                   sCRLF +
                   "</body>" +

@@ -103,16 +103,13 @@ public final class HCHtmlTest
     // Must be done for HCHtml separately
     HCRenderer.prepareHtmlForConversion (aHtml, HCSettings.getConversionSettings ());
 
-    final String sCRLF = HCSettings.getNewLineMode ().getText ();
     assertEquals ("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">" +
                   "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\">" +
                   "<head><meta name=\"foo\" content=\"bar\" /></head>" +
                   "<body><h1>Test</h1>" +
-                  "<script type=\"text/javascript\"><!--" +
-                  sCRLF +
+                  "<script type=\"text/javascript\">" +
                   "$(document).ready(function(){a=b;c=d;});" +
-                  sCRLF +
-                  "//--></script>" +
+                  "</script>" +
                   "</body>" +
                   "</html>",
                   HCRenderer.getAsHTMLString (aHtml));
@@ -121,11 +118,9 @@ public final class HCHtmlTest
                   "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\">" +
                   "<head><meta name=\"foo\" content=\"bar\" /></head>" +
                   "<body><h1>Test</h1>" +
-                  "<script type=\"text/javascript\"><!--" +
-                  sCRLF +
+                  "<script type=\"text/javascript\">" +
                   "$(document).ready(function(){a=b;c=d;});" +
-                  sCRLF +
-                  "//--></script>" +
+                  "</script>" +
                   "</body>" +
                   "</html>",
                   HCRenderer.getAsHTMLString (aHtml));
