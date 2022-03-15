@@ -194,7 +194,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       aFirstControl = null;
 
     // Check form errors - highlighting
-    final CommonsArrayList<IHCElement<?>> aErrorCommonList = new CommonsArrayList<IHCElement<?>>();
+    final ICommonsList<IHCElement<?>> aErrorCommonList = new CommonsArrayList<IHCElement<?>>();
     if (aErrorList != null && aErrorList.isNotEmpty ())
     {
       for (final IError aError : aErrorList)
@@ -213,9 +213,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     BootstrapFormHelper.connectFormControlsWithErrors(aAllCtrls, aErrorCommonList);
 
     final HCNodeList aErrorListNode = new HCNodeList();
-    for (final IHCElement<?> aError : aErrorCommonList) {
-      aErrorListNode.addChild(aError);
-    }
+    aErrorListNode.addChildren(aErrorCommonList);
 
     // Help text (only if a control is present)
     IHCElement <?> aHelpTextNode = null;
