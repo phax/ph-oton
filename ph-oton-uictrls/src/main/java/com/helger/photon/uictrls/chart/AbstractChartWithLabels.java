@@ -66,6 +66,13 @@ public abstract class AbstractChartWithLabels <IMPLTYPE extends AbstractChartWit
   }
 
   @Nonnull
+  public IMPLTYPE setLabels (@Nullable final Iterable <String> aLabels)
+  {
+    m_aLabels = new CommonsArrayList <> (aLabels);
+    return thisAsT ();
+  }
+
+  @Nonnull
   public JSArray getLabelsAsArray ()
   {
     final JSArray ret = new JSArray ();
