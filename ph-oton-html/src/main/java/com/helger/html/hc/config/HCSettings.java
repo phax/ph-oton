@@ -50,8 +50,8 @@ public final class HCSettings
   /** Default auto-complete for password fields: only in debug mode */
   public static final boolean DEFAULT_AUTO_COMPLETE_OFF_FOR_PASSWORD_EDITS = !GlobalDebug.isDebugMode ();
 
-  /** By default inline scripts are emitted in mode "wrap in comment" */
-  public static final EHCScriptInlineMode DEFAULT_SCRIPT_INLINE_MODE = EHCScriptInlineMode.PLAIN_TEXT_WRAPPED_IN_COMMENT;
+  /** By default inline scripts are emitted in mode "plain text" */
+  public static final EHCScriptInlineMode DEFAULT_SCRIPT_INLINE_MODE = EHCScriptInlineMode.PLAIN_TEXT_NO_ESCAPE;
 
   /** By default plain text without escape is used */
   public static final EHCStyleInlineMode DEFAULT_STYLE_MODE = EHCStyleInlineMode.PLAIN_TEXT_NO_ESCAPE;
