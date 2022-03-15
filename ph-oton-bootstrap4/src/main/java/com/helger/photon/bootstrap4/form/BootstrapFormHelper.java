@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.collection.impl.ICommonsCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,6 +138,16 @@ public final class BootstrapFormHelper
           bSetLabel = true;
         }
         aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
+      }
+    }
+  }
+
+  public static void connectFormControlsWithErrors(@Nullable final ICommonsCollection <? extends  IHCElement <?>> aCtrls,
+                                              @Nullable final ICommonsCollection<? extends IHCElement<?>> aErrorNodes) {
+    if (aCtrls != null && aErrorNodes != null && aCtrls.isNotEmpty() &&aErrorNodes.isNotEmpty()) {
+      for (final IHCElement <?> aCurCtrl : aCtrls)
+      {
+        aCurCtrl.customAttrs().setAriaDescribedBy(aErrorNodes);
       }
     }
   }

@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
@@ -193,7 +194,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
       aFirstControl = null;
 
     // Check form errors - highlighting
-    final HCNodeList aErrorListNode = new HCNodeList ();
+    final ICommonsList<IHCElement<?>> aErrorCommonList = new CommonsArrayList<IHCElement<?>>();
     if (aErrorList != null && aErrorList.isNotEmpty ())
     {
       for (final IError aError : aErrorList)
@@ -204,9 +205,15 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
           // Enforce display!
           aErrorNode.addClass (CBootstrapCSS.D_BLOCK);
         }
-        aErrorListNode.addChild (aErrorNode);
+        aErrorCommonList.add (aErrorNode);
       }
     }
+
+    // Set "aria-describedby"
+    BootstrapFormHelper.connectFormControlsWithErrors(aAllCtrls, aErrorCommonList);
+
+    final HCNodeList aErrorListNode = new HCNodeList();
+    aErrorListNode.addChildren(aErrorCommonList);
 
     // Help text (only if a control is present)
     IHCElement <?> aHelpTextNode = null;
