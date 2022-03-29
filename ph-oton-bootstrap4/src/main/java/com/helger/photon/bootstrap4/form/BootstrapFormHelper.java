@@ -90,6 +90,7 @@ public final class BootstrapFormHelper
               aCSSClassToAdd = CBootstrapCSS.FORM_CONTROL_FILE;
               break;
             case HIDDEN:
+              // Not even form-control for hidden fields
               aCSSClassToAdd = null;
               break;
           }
@@ -113,12 +114,15 @@ public final class BootstrapFormHelper
       aParent.forAllChildren (aChild -> markAsFormControls (HCCtrlHelper.getAllHCControls (aChild)));
   }
 
-  public static void connectFormControlWithLabel (@Nullable final IHCElement <?> aCtrl, @Nullable final HCFormLabel aLabel)
+  public static void connectFormControlWithLabel (@Nullable final IHCElement <?> aCtrl,
+                                                  @Nullable final HCFormLabel aLabel)
   {
-    // Set "aria-labelledby"
     if (aCtrl != null && aLabel != null)
     {
+      // Set "for" in label
       aLabel.setFor (aCtrl);
+
+      // Set "aria-labelledby"
       aCtrl.customAttrs ().setAriaLabeledBy (aLabel);
     }
   }
@@ -126,7 +130,6 @@ public final class BootstrapFormHelper
   public static void connectFormControlsWithLabel (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
                                                    @Nullable final HCFormLabel aLabel)
   {
-    // Set "aria-labelledby"
     if (aCtrls != null && aLabel != null)
     {
       boolean bSetLabel = false;
@@ -134,9 +137,12 @@ public final class BootstrapFormHelper
       {
         if (!bSetLabel)
         {
+          // Set "for" in label - can only reference one control
           aLabel.setFor (aCurCtrl);
           bSetLabel = true;
         }
+
+        // Set "aria-labelledby"
         aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
       }
     }
@@ -147,14 +153,18 @@ public final class BootstrapFormHelper
   {
     if (aCtrls != null)
     {
-      final String sDescribedBy = StringHelper.imploder ().source (aErrorNodes, x -> x.ensureID ().getID ()).separator (' ').build ();
+      final String sDescribedBy = StringHelper.imploder ()
+                                              .source (aErrorNodes, x -> x.ensureID ().getID ())
+                                              .separator (' ')
+                                              .build ();
       if (StringHelper.hasText (sDescribedBy))
         for (final IHCElement <?> aCurCtrl : aCtrls)
           aCurCtrl.customAttrs ().setAriaDescribedBy (sDescribedBy);
     }
   }
 
-  public static void applyFormControlValidityState (@Nullable final IHCElement <?> aElement, @Nullable final IErrorList aErrorList)
+  public static void applyFormControlValidityState (@Nullable final IHCElement <?> aElement,
+                                                    @Nullable final IErrorList aErrorList)
   {
     ValueEnforcer.notNull (aElement, "Element");
 
@@ -182,7 +192,8 @@ public final class BootstrapFormHelper
   }
 
   @Nonnull
-  public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError, @Nonnull final Locale aContentLocale)
+  public static BootstrapInvalidFeedback createDefaultErrorNode (@Nonnull final IError aError,
+                                                                 @Nonnull final Locale aContentLocale)
   {
     return createDefaultErrorNode (aError, aContentLocale, false);
   }
@@ -222,7 +233,8 @@ public final class BootstrapFormHelper
   }
 
   @Nonnull
-  public static HCNodeList createDefaultErrorNode (@Nullable final IErrorList aErrorList, @Nonnull final Locale aContentLocale)
+  public static HCNodeList createDefaultErrorNode (@Nullable final IErrorList aErrorList,
+                                                   @Nonnull final Locale aContentLocale)
   {
     return createDefaultErrorNode (aErrorList, aContentLocale, false);
   }

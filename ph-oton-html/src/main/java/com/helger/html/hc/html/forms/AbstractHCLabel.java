@@ -35,8 +35,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                      implements
+public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYPE>> extends
+                                      AbstractHCElementWithChildren <IMPLTYPE> implements
                                       IHCLabel <IMPLTYPE>
 {
   private String m_sFor;
@@ -63,11 +63,7 @@ public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYP
   @Nonnull
   public final IMPLTYPE setFor (@Nullable final IHCHasID <?> aFor)
   {
-    if (aFor == null)
-      m_sFor = null;
-    else
-      m_sFor = aFor.ensureID ().getID ();
-    return thisAsT ();
+    return setFor (aFor == null ? null : aFor.ensureID ().getID ());
   }
 
   @Nullable
@@ -97,8 +93,8 @@ public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYP
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("for", m_sFor)
-                            .appendIfNotNull ("form", m_sForm)
+                            .appendIfNotNull ("For", m_sFor)
+                            .appendIfNotNull ("Form", m_sForm)
                             .getToString ();
   }
 }
