@@ -99,9 +99,10 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.4.0 - work in progress
-    * Updated to Jetty 9.4.45
+    * Updated to Jetty 9.4.46
     * Updated chart.js from 1.0.2 to 1.1.1
     * Updated to Bootstrap Icons 1.8.1
+    * Updated to DataTables 1.11.5 and latest plugin versions
     * Updated the list of predefined `aria-` attributes
     * Disabled the "directory listing" in the JettyStarter by default
     * Disabled sending the server version and the `X-Powered-By` header in JettyStarter by default
