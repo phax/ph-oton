@@ -150,6 +150,16 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   }
 
   @Nonnull
+  public PhotonUnifiedResponse xml (@Nonnull final byte [] aXML, @Nonnull final Charset aCharset)
+  {
+    setContent (aXML);
+    setCharset (aCharset);
+    setMimeType (new MimeType (CMimeType.APPLICATION_XML).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
+                                                                        aCharset.name ()));
+    return this;
+  }
+
+  @Nonnull
   public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode)
   {
     return xml (aNode, m_aXWS);
