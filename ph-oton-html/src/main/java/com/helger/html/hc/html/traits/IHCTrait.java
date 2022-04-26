@@ -39,6 +39,7 @@ import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.html.textlevel.HCSub;
 import com.helger.html.hc.html.textlevel.HCSup;
+import com.helger.html.hc.impl.HCTextNode;
 
 /**
  * Trait interface to add simpler UI codes.
@@ -592,5 +593,35 @@ public interface IHCTrait
   default HCSup sup (@Nullable final String... aTexts)
   {
     return new HCSup ().addChildren (aTexts);
+  }
+
+  @Nonnull
+  default HCTextNode text (@Nullable final String s)
+  {
+    return HCTextNode.createOnDemand (s);
+  }
+
+  @Nonnull
+  default HCTextNode text (@Nullable final char [] a)
+  {
+    return HCTextNode.createOnDemand (a);
+  }
+
+  @Nonnull
+  default HCTextNode text (final char n)
+  {
+    return new HCTextNode (n);
+  }
+
+  @Nonnull
+  default HCTextNode text (final int n)
+  {
+    return new HCTextNode (n);
+  }
+
+  @Nonnull
+  default HCTextNode text (final long n)
+  {
+    return new HCTextNode (n);
   }
 }

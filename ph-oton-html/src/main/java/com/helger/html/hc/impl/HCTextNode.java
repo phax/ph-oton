@@ -62,4 +62,10 @@ public class HCTextNode extends AbstractHCTextNode <HCTextNode>
   {
     return sText == null ? null : new HCTextNode (sText);
   }
+
+  @Nullable
+  public static HCTextNode createOnDemand (@Nullable final char [] aText)
+  {
+    return aText == null ? null : new HCTextNode (aText);
+  }
 }
