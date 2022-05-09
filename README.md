@@ -98,6 +98,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v8.4.1 - work in progress
+    * Made class `DoNothingAuditor` final
+    * Added class `DoNothingAuditManager`
 * v8.4.0 - 2022-04-04
     * Updated to Jetty 9.4.46
     * Updated chart.js from 1.0.2 to 1.1.1

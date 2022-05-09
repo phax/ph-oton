@@ -25,11 +25,12 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
  *
  * @author Philip Helger
  */
-public class DoNothingAuditor extends AbstractAuditor
+public final class DoNothingAuditor extends AbstractAuditor
 {
   public DoNothingAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider)
   {
-    super (aUserIDProvider);
+    // Use the specific audit string provide that is quickest ;-)
+    super (aUserIDProvider, (x, y) -> null);
   }
 
   @Override
