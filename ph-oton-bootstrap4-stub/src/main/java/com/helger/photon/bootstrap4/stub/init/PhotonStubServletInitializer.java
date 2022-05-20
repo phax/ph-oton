@@ -52,7 +52,7 @@ import com.helger.servlet.filter.CharacterEncodingFilter;
 public final class PhotonStubServletInitializer
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonStubServletInitializer.class);
-  private static final AtomicBoolean s_aInitialized = new AtomicBoolean (false);
+  private static final AtomicBoolean INITIALIZED = new AtomicBoolean (false);
 
   @PresentForCodeCoverage
   private static final PhotonStubServletInitializer INSTANCE = new PhotonStubServletInitializer ();
@@ -66,7 +66,7 @@ public final class PhotonStubServletInitializer
    */
   public static boolean areServletsRegistered ()
   {
-    return s_aInitialized.get ();
+    return INITIALIZED.get ();
   }
 
   /**
@@ -79,7 +79,7 @@ public final class PhotonStubServletInitializer
   {
     ValueEnforcer.notNull (aSC, "ServletContext");
 
-    if (s_aInitialized.compareAndSet (false, true))
+    if (INITIALIZED.compareAndSet (false, true))
     {
       // Check SC version
       if (aSC.getMajorVersion () < 3)
