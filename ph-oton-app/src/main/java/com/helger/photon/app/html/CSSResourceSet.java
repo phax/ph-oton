@@ -53,10 +53,15 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   private static final Logger LOGGER = LoggerFactory.getLogger (CSSResourceSet.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+
+  // For order with indexed insertion
   @GuardedBy ("m_aRWLock")
   private final ICommonsList <ICSSPathProvider> m_aList = new CommonsArrayList <> ();
+
+  // For uniqueness check
   @GuardedBy ("m_aRWLock")
   private final ICommonsSet <ICSSPathProvider> m_aSet = new CommonsHashSet <> ();
+
   @GuardedBy ("m_aRWLock")
   private boolean m_bIsCollected = false;
 
@@ -212,6 +217,11 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   public Iterator <ICSSPathProvider> iterator ()
   {
     return m_aRWLock.readLockedGet (m_aList::iterator);
+  }
+
+  public boolean isCollected ()
+  {
+    return m_aRWLock.readLockedBoolean ( () -> m_bIsCollected);
   }
 
   public void markAsCollected ()
