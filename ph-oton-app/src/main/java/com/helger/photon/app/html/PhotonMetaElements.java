@@ -54,8 +54,8 @@ public final class PhotonMetaElements
 
   private static final String REQUEST_ATTR_METAELEMENTS = PhotonMetaElements.class.getName ();
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonMetaElements.class);
-  private static final MetaElementList s_aGlobal = new MetaElementList ();
-  private static final SimpleLock s_aLock = new SimpleLock ();
+  private static final MetaElementList GLOBAL = new MetaElementList ();
+  private static final SimpleLock LOCK = new SimpleLock ();
 
   private PhotonMetaElements ()
   {}
@@ -78,7 +78,7 @@ public final class PhotonMetaElements
 
   public static void readMetaElementsForGlobal (@Nonnull final IReadableResource aRes)
   {
-    _readMetaElements (aRes, s_aGlobal);
+    _readMetaElements (aRes, GLOBAL);
   }
 
   /**
@@ -89,7 +89,7 @@ public final class PhotonMetaElements
    */
   public static void registerMetaElementForGlobal (@Nonnull final IMetaElement aMetaElement)
   {
-    s_aGlobal.addMetaElement (aMetaElement);
+    GLOBAL.addMetaElement (aMetaElement);
   }
 
   /**
@@ -100,7 +100,7 @@ public final class PhotonMetaElements
    */
   public static void unregisterMetaElementForGlobal (@Nullable final String sMetaElementName)
   {
-    s_aGlobal.removeMetaElement (sMetaElementName);
+    GLOBAL.removeMetaElement (sMetaElementName);
   }
 
   /**
@@ -108,7 +108,7 @@ public final class PhotonMetaElements
    */
   public static void unregisterAllMetaElementsFromGlobal ()
   {
-    s_aGlobal.removeAllMetaElements ();
+    GLOBAL.removeAllMetaElements ();
   }
 
   /**
@@ -119,12 +119,12 @@ public final class PhotonMetaElements
   @ReturnsMutableCopy
   public static ICommonsList <IMetaElement> getAllRegisteredMetaElementsForGlobal ()
   {
-    return s_aGlobal.getAllMetaElements ();
+    return GLOBAL.getAllMetaElements ();
   }
 
   public static void getAllRegisteredMetaElementsForGlobal (@Nonnull final Collection <? super IMetaElement> aTarget)
   {
-    s_aGlobal.getAllMetaElements (aTarget);
+    GLOBAL.getAllMetaElements (aTarget);
   }
 
   /**
@@ -133,7 +133,7 @@ public final class PhotonMetaElements
    */
   public static boolean hasRegisteredMetaElementsForGlobal ()
   {
-    return s_aGlobal.hasMetaElements ();
+    return GLOBAL.hasMetaElements ();
   }
 
   @Nullable
@@ -141,7 +141,7 @@ public final class PhotonMetaElements
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    return s_aLock.lockedGet ( () -> {
+    return LOCK.lockedGet ( () -> {
       MetaElementList ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_METAELEMENTS);
       if (ret == null && bCreateIfNotExisting)
       {

@@ -59,8 +59,8 @@ public final class PhotonCSS
 
   private static final String REQUEST_ATTR_CSSRESOURCES = PhotonCSS.class.getName ();
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonCSS.class);
-  private static final CSSResourceSet s_aGlobal = new CSSResourceSet ();
-  private static final SimpleLock s_aLock = new SimpleLock ();
+  private static final CSSResourceSet GLOBAL = new CSSResourceSet ();
+  private static final SimpleLock LOCK = new SimpleLock ();
 
   private PhotonCSS ()
   {}
@@ -117,7 +117,7 @@ public final class PhotonCSS
 
   public static void readCSSIncludesForGlobal (@Nonnull final IReadableResource aRes)
   {
-    _readCSSIncludes (aRes, s_aGlobal);
+    _readCSSIncludes (aRes, GLOBAL);
   }
 
   /**
@@ -128,7 +128,7 @@ public final class PhotonCSS
    */
   public static void registerCSSIncludeForGlobal (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
-    s_aGlobal.addItem (aCSSPathProvider);
+    GLOBAL.addItem (aCSSPathProvider);
   }
 
   /**
@@ -142,7 +142,7 @@ public final class PhotonCSS
    */
   public static void registerCSSIncludeForGlobal (final int nIndex, @Nonnull final ICSSPathProvider aCSSPathProvider)
   {
-    s_aGlobal.addItem (nIndex, aCSSPathProvider);
+    GLOBAL.addItem (nIndex, aCSSPathProvider);
   }
 
   /**
@@ -153,7 +153,7 @@ public final class PhotonCSS
    */
   public static void unregisterCSSIncludeForGlobal (@Nonnull final ICSSPathProvider aCSSPathProvider)
   {
-    s_aGlobal.removeItem (aCSSPathProvider);
+    GLOBAL.removeItem (aCSSPathProvider);
   }
 
   /**
@@ -161,7 +161,7 @@ public final class PhotonCSS
    */
   public static void unregisterAllCSSIncludesFromGlobal ()
   {
-    s_aGlobal.removeAll ();
+    GLOBAL.removeAll ();
   }
 
   /**
@@ -172,12 +172,12 @@ public final class PhotonCSS
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ICSSPathProvider> getAllRegisteredCSSIncludesForGlobal ()
   {
-    return s_aGlobal.getAllItems ();
+    return GLOBAL.getAllItems ();
   }
 
   public static void getAllRegisteredCSSIncludesForGlobal (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
   {
-    s_aGlobal.getAllItems (aTarget);
+    GLOBAL.getAllItems (aTarget);
   }
 
   /**
@@ -186,7 +186,7 @@ public final class PhotonCSS
    */
   public static boolean hasRegisteredCSSIncludesForGlobal ()
   {
-    return s_aGlobal.isNotEmpty ();
+    return GLOBAL.isNotEmpty ();
   }
 
   @Nullable
@@ -194,7 +194,7 @@ public final class PhotonCSS
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    return s_aLock.lockedGet ( () -> {
+    return LOCK.lockedGet ( () -> {
       CSSResourceSet ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_CSSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {

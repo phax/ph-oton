@@ -56,8 +56,8 @@ public final class PhotonJS
 
   private static final String REQUEST_ATTR_JSRESOURCES = PhotonJS.class.getName ();
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonJS.class);
-  private static final JSResourceSet s_aGlobal = new JSResourceSet ();
-  private static final SimpleLock s_aLock = new SimpleLock ();
+  private static final JSResourceSet GLOBAL = new JSResourceSet ();
+  private static final SimpleLock LOCK = new SimpleLock ();
 
   private PhotonJS ()
   {}
@@ -99,7 +99,7 @@ public final class PhotonJS
 
   public static void readJSIncludesForGlobal (@Nonnull final IReadableResource aRes)
   {
-    _readJSIncludes (aRes, s_aGlobal);
+    _readJSIncludes (aRes, GLOBAL);
   }
 
   /**
@@ -110,7 +110,7 @@ public final class PhotonJS
    */
   public static void registerJSIncludeForGlobal (@Nonnull final IJSPathProvider aJSPathProvider)
   {
-    s_aGlobal.addItem (aJSPathProvider);
+    GLOBAL.addItem (aJSPathProvider);
   }
 
   /**
@@ -124,7 +124,7 @@ public final class PhotonJS
    */
   public static void registerJSIncludeForGlobal (final int nIndex, @Nonnull final IJSPathProvider aJSPathProvider)
   {
-    s_aGlobal.addItem (nIndex, aJSPathProvider);
+    GLOBAL.addItem (nIndex, aJSPathProvider);
   }
 
   /**
@@ -135,7 +135,7 @@ public final class PhotonJS
    */
   public static void unregisterJSIncludeForGlobal (@Nonnull final IJSPathProvider aJSPathProvider)
   {
-    s_aGlobal.removeItem (aJSPathProvider);
+    GLOBAL.removeItem (aJSPathProvider);
   }
 
   /**
@@ -143,7 +143,7 @@ public final class PhotonJS
    */
   public static void unregisterAllJSIncludesFromGlobal ()
   {
-    s_aGlobal.removeAll ();
+    GLOBAL.removeAll ();
   }
 
   /**
@@ -154,12 +154,12 @@ public final class PhotonJS
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <IJSPathProvider> getAllRegisteredJSIncludesForGlobal ()
   {
-    return s_aGlobal.getAllItems ();
+    return GLOBAL.getAllItems ();
   }
 
   public static void getAllRegisteredJSIncludesForGlobal (@Nonnull final Collection <? super IJSPathProvider> aTarget)
   {
-    s_aGlobal.getAllItems (aTarget);
+    GLOBAL.getAllItems (aTarget);
   }
 
   /**
@@ -168,7 +168,7 @@ public final class PhotonJS
    */
   public static boolean hasRegisteredJSIncludesForGlobal ()
   {
-    return s_aGlobal.isNotEmpty ();
+    return GLOBAL.isNotEmpty ();
   }
 
   @Nullable
@@ -176,7 +176,7 @@ public final class PhotonJS
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    return s_aLock.lockedGet ( () -> {
+    return LOCK.lockedGet ( () -> {
       JSResourceSet ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_JSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {
