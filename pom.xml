@@ -67,7 +67,7 @@
     <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
-    <log4j.version>2.17.2</log4j.version>
+    <log4j.version>2.18.0</log4j.version>
     <jetty.version>9.4.48.v20220622</jetty.version>
   </properties>
 
