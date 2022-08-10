@@ -30,7 +30,7 @@ import com.helger.html.css.ICSSClassProvider;
 public final class CBootstrapCSS
 {
   // Note: all CSS classes were created via MainExtractBootstrap4CSSClasses for
-  // 4.6.1
+  // 4.6.2
   public static final ICSSClassProvider ACCORDION = DefaultCSSClassProvider.create ("accordion");
   public static final ICSSClassProvider ACTIVE = DefaultCSSClassProvider.create ("active");
   public static final ICSSClassProvider ALERT = DefaultCSSClassProvider.create ("alert");
@@ -1578,6 +1578,7 @@ public final class CBootstrapCSS
   public static final ICSSClassProvider W_75 = DefaultCSSClassProvider.create ("w-75");
   public static final ICSSClassProvider W_AUTO = DefaultCSSClassProvider.create ("w-auto");
   public static final ICSSClassProvider WAS_VALIDATED = DefaultCSSClassProvider.create ("was-validated");
+  public static final ICSSClassProvider WIDTH = DefaultCSSClassProvider.create ("width");
 
   private CBootstrapCSS ()
   {}

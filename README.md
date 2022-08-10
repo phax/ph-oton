@@ -99,6 +99,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.4.1 - work in progress
+    * Updated to Bootstrap 4.6.2
     * Updated to Jetty 9.4.48
     * Updated to Log2J 2.18.0
     * Made class `DoNothingAuditor` final
