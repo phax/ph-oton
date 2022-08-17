@@ -41,8 +41,8 @@ import com.helger.xml.microdom.MicroText;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptInline <IMPLTYPE>> extends AbstractHCScript <IMPLTYPE>
-                                             implements
+public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptInline <IMPLTYPE>> extends
+                                             AbstractHCScript <IMPLTYPE> implements
                                              IHCScriptInline <IMPLTYPE>
 {
   /** By default place inline JS after script files */
@@ -54,22 +54,15 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
 
   private transient String m_sCachedJSCode;
 
-  public AbstractHCScriptInline ()
+  protected AbstractHCScriptInline ()
   {
     super ();
   }
 
-  public AbstractHCScriptInline (@Nonnull final IHasJSCode aProvider)
+  protected AbstractHCScriptInline (@Nonnull final IHasJSCode aProvider)
   {
     this ();
     setJSCodeProvider (aProvider);
-  }
-
-  @Nonnull
-  public final IMPLTYPE setJSCodeProvider (@Nonnull final IHasJSCode aProvider)
-  {
-    m_aJSProvider = ValueEnforcer.notNull (aProvider, "Provider");
-    return thisAsT ();
   }
 
   /**
@@ -79,6 +72,13 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   public final IHasJSCode getJSCodeProvider ()
   {
     return m_aJSProvider;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setJSCodeProvider (@Nonnull final IHasJSCode aProvider)
+  {
+    m_aJSProvider = ValueEnforcer.notNull (aProvider, "Provider");
+    return thisAsT ();
   }
 
   /**
@@ -186,17 +186,20 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
     super.fillMicroElement (aElement, aConversionSettings);
 
     // m_sJSCode is set in canConvertToNode which is called before this method!
-    setInlineScript (aElement, m_sCachedJSCode, m_eScriptMode, aConversionSettings.getXMLWriterSettings ().getNewLineString ());
+    setInlineScript (aElement,
+                     m_sCachedJSCode,
+                     m_eScriptMode,
+                     aConversionSettings.getXMLWriterSettings ().getNewLineString ());
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("provider", m_aJSProvider)
-                            .append ("mode", m_eScriptMode)
-                            .append ("emitAfterFiles", m_bEmitAfterFiles)
-                            .append ("cachedJSCode", m_sCachedJSCode)
+                            .append ("JSProvider", m_aJSProvider)
+                            .append ("ScriptMode", m_eScriptMode)
+                            .append ("EmitAfterFiles", m_bEmitAfterFiles)
+                            .append ("CachedJSCode", m_sCachedJSCode)
                             .getToString ();
   }
 }

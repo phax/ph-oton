@@ -100,7 +100,7 @@ public abstract class AbstractLoginManager
 
   private Duration m_aFailedLoginWaitTime = Duration.ZERO;
 
-  public AbstractLoginManager ()
+  protected AbstractLoginManager ()
   {}
 
   @Nonnull
