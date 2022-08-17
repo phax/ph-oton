@@ -130,7 +130,10 @@ public abstract class AbstractLoginManager
   }
 
   /**
-   * Set the duration to wait in case of a failed login.
+   * Set the duration to wait in case of a failed login. The waiting time is
+   * multiplied with the number of consecutive failed logins of a user. So for
+   * the first failed login the duration is x1, for the second consecutive
+   * failed login the duration is x2 etc.
    *
    * @param aFailedLoginWaitTime
    *        The failed login waiting time. May not be <code>null</code>.
