@@ -109,6 +109,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Class `AbstractLoginManager` now has the possibility to specify a waiting time in case of a failed login
     * Deprecated classes `HCUniversalAnalytics` and `HCGoogleAnalytics`
     * Added support for Google Analytics V4
+    * Fixed an error in the MarkDown "safe mode" processing
+    * The `UITextFormatter` and the `BootstrapSystemMessage` MarkDown renderer now use the "safe mode" as the default
 * v8.4.0 - 2022-04-04
     * Updated to Jetty 9.4.46
     * Updated chart.js from 1.0.2 to 1.1.1

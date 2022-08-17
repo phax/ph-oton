@@ -16,8 +16,11 @@
  */
 package com.helger.html.markdown;
 
+import javax.annotation.Nullable;
+
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.IURLProtocol;
 import com.helger.commons.url.URLProtocolRegistry;
 import com.helger.html.EHTMLElement;
@@ -101,24 +104,28 @@ final class MarkdownHTML
   }
 
   /**
-   * @param value
+   * @param sValue
    *        String to check.
    * @return Returns <code>true</code> if the given String is a HTML block level
    *         tag.
    */
-  public static boolean isHtmlBlockElement (final String value)
+  public static boolean isHtmlBlockElement (@Nullable final String sValue)
   {
-    return HTML_BLOCK_ELEMENTS.contains (value);
+    if (StringHelper.hasNoText (sValue))
+      return false;
+    return HTML_BLOCK_ELEMENTS.contains (EHTMLElement.getUnifiedHTMLElementName (sValue));
   }
 
   /**
-   * @param value
+   * @param sValue
    *        String to check.
    * @return Returns <code>true</code> if the given String is an unsafe HTML
    *         tag.
    */
-  public static boolean isUnsafeHtmlElement (final String value)
+  public static boolean isUnsafeHtmlElement (@Nullable final String sValue)
   {
-    return HTML_UNSAFE.contains (value);
+    if (StringHelper.hasNoText (sValue))
+      return false;
+    return HTML_UNSAFE.contains (EHTMLElement.getUnifiedHTMLElementName (sValue));
   }
 }

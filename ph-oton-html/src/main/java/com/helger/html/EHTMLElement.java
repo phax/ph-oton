@@ -174,9 +174,17 @@ public enum EHTMLElement
   private final boolean m_bMayBeSelfClosed;
   private final EHTMLContentModelType m_eType;
 
-  EHTMLElement (@Nonnull @Nonempty final String sElementName, final boolean bMayBeSelfClosed, @Nonnull final EHTMLContentModelType eType)
+  @Nonnull
+  public static String getUnifiedHTMLElementName (@Nonnull final String sElementName)
   {
-    m_sElementNameLC = sElementName.toLowerCase (Locale.US);
+    return sElementName.toLowerCase (Locale.US);
+  }
+
+  EHTMLElement (@Nonnull @Nonempty final String sElementName,
+                final boolean bMayBeSelfClosed,
+                @Nonnull final EHTMLContentModelType eType)
+  {
+    m_sElementNameLC = getUnifiedHTMLElementName (sElementName);
     m_sElementNameUC = sElementName.toUpperCase (Locale.US);
     m_bMayBeSelfClosed = bMayBeSelfClosed;
     m_eType = eType;
@@ -268,7 +276,7 @@ public enum EHTMLElement
       return false;
 
     // Always check lower cased
-    return _getSelfClosedSet ().contains (sElementName.toLowerCase (Locale.US));
+    return _getSelfClosedSet ().contains (getUnifiedHTMLElementName (sElementName));
   }
 
   /**
@@ -284,7 +292,7 @@ public enum EHTMLElement
       return false;
 
     // Always check lower cased
-    return !_getSelfClosedSet ().contains (sElementName.toLowerCase (Locale.US));
+    return !_getSelfClosedSet ().contains (getUnifiedHTMLElementName (sElementName));
   }
 
   /**

@@ -52,7 +52,6 @@
 package com.helger.html.markdown;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -78,11 +77,14 @@ public final class EdgeCasesFuncTest
     assertEquals ("<p>First line<table><tbody><tr><td><td>Block level</td></td></tr></tbody></table>.</p>",
                   p.process ("First line<table><tr><td>Block level</td></tr></table>.").getAsHTMLString ());
     assertEquals ("<p>First line<table><tbody><tr><td><td>Block level</td></td></tr></tbody></table>.</p>",
-                  p.process ("First line<table><tbody><tr><td>Block level</td></tr></tbody></table>.").getAsHTMLString ());
+                  p.process ("First line<table><tbody><tr><td>Block level</td></tr></tbody></table>.")
+                   .getAsHTMLString ());
     assertEquals ("<p>First line<table><thead><tr><td><td>Block level</td></td></tr></thead></table>.</p>",
-                  p.process ("First line<table><thead><tr><td>Block level</td></tr></thead></table>.").getAsHTMLString ());
+                  p.process ("First line<table><thead><tr><td>Block level</td></tr></thead></table>.")
+                   .getAsHTMLString ());
     assertEquals ("<p>First line<table><tfoot><tr><td><td>Block level</td></td></tr></tfoot></table>.</p>",
-                  p.process ("First line<table><tfoot><tr><td>Block level</td></tr></tfoot></table>.").getAsHTMLString ());
+                  p.process ("First line<table><tfoot><tr><td>Block level</td></tr></tfoot></table>.")
+                   .getAsHTMLString ());
     assertEquals ("<p>First line *unclosed</p>", p.process ("First line *unclosed").getAsHTMLString ());
     assertEquals ("<p>First line **unclosed</p>", p.process ("First line **unclosed").getAsHTMLString ());
     assertEquals ("<p>First line unclosed*</p>", p.process ("First line unclosed*").getAsHTMLString ());
@@ -112,8 +114,9 @@ public final class EdgeCasesFuncTest
   @Test
   public void testImages () throws IOException
   {
-    final String url = "![an *image*](/images/an_image_with_underscores.jpg \"An_image_title\")";
-    final String processed = new MarkdownProcessor ().process (url).getAsHTMLString ();
+    final String sMD = "![an *image*](/images/an_image_with_underscores.jpg \"An_image_title\")";
+
+    final String processed = new MarkdownProcessor ().process (sMD).getAsHTMLString ();
     final String output = "<p><img title=\"An_image_title\" src=\"/images/an_image_with_underscores.jpg\" alt=\"an *image*\" /></p>";
     assertEquals (output, processed);
   }
@@ -121,16 +124,25 @@ public final class EdgeCasesFuncTest
   @Test
   public void testAutoLinks () throws IOException
   {
-    final String url = "[a _link_](http://url.com/a_tale_of_two_cities?var1=a_query_&var2=string \"A_link_title\")";
-    final String processed = new MarkdownProcessor ().process (url).getAsHTMLString ();
+    final String sMD = "[a _link_](http://url.com/a_tale_of_two_cities?var1=a_query_&var2=string \"A_link_title\")";
+
+    final String processed = new MarkdownProcessor ().process (sMD).getAsHTMLString ();
     final String output = "<p><a title=\"A_link_title\" href=\"http://url.com/a_tale_of_two_cities?var1=a_query_&amp;var2=string\">a <em>link</em></a></p>";
     assertEquals (output, processed);
   }
 
   @Test
-  public void testLinkPrefix ()
+  public void testUnsafeHtml () throws IOException
   {
-    assertTrue (MarkdownHTML.isLinkPrefix ("http"));
-    assertTrue (MarkdownHTML.isLinkPrefix ("https"));
+    final String sMD = "<script type='text/js'>function c()</script>";
+
+    final String processed = new MarkdownProcessor (MarkdownConfiguration.DEFAULT).process (sMD).getAsHTMLString ();
+    final String output = "<p><script type=\"text/javascript\">function c()</script></p>";
+    assertEquals (output, processed);
+
+    final String processed2 = new MarkdownProcessor (MarkdownConfiguration.DEFAULT_SAFE).process (sMD)
+                                                                                        .getAsHTMLString ();
+    final String output2 = "<p>&lt;script type=&#39;text /js&#39;&gt;function c()&lt;/script&gt;</p>";
+    assertEquals (output2, processed2);
   }
 }

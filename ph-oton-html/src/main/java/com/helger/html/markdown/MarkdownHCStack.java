@@ -25,6 +25,7 @@ import com.helger.commons.collection.NonBlockingStack;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeWithChildren;
+import com.helger.html.hc.IHCTextNode;
 import com.helger.html.hc.html.IHCMediaElementChild;
 import com.helger.html.hc.html.embedded.IHCMediaElement;
 import com.helger.html.hc.html.forms.HCOptGroup;
@@ -33,6 +34,7 @@ import com.helger.html.hc.html.grouping.HCDL;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCDefinitionItem;
 import com.helger.html.hc.html.grouping.IHCList;
+import com.helger.html.hc.html.script.AbstractHCScriptInline;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCColGroup;
 import com.helger.html.hc.html.tabular.HCRow;
@@ -46,6 +48,7 @@ import com.helger.html.hc.html.textlevel.HCRuby;
 import com.helger.html.hc.html.textlevel.IHCRubyChild;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.html.js.UnparsedJSCodeProvider;
 
 @NotThreadSafe
 final class MarkdownHCStack
@@ -158,11 +161,35 @@ final class MarkdownHCStack
                         {
                           final IHCNodeWithChildren <?> aRealParent = ((IHCNodeWithChildren <?>) aParent);
                           if (aNode instanceof HCTextNode && aRealParent.getLastChild () instanceof HCTextNode)
+                          {
+                            // Append
                             ((HCTextNode) aRealParent.getLastChild ()).appendText (((HCTextNode) aNode).getText ());
+                          }
                           else
+                          {
+                            // Set
                             aRealParent.addChild (aNode);
+                          }
                         }
                         else
-                          throw new MarkdownException ("Cannot add node " + aNode + " to " + aParent);
+                          if (aParent instanceof AbstractHCScriptInline <?> && aNode instanceof IHCTextNode <?>)
+                          {
+                            final AbstractHCScriptInline <?> aRealParent = ((AbstractHCScriptInline <?>) aParent);
+
+                            if (aRealParent.getJSCodeProvider () instanceof UnparsedJSCodeProvider)
+                            {
+                              // Append
+                              final String sOld = ((UnparsedJSCodeProvider) aRealParent.getJSCodeProvider ()).getJSCode ();
+                              aRealParent.setJSCodeProvider (new UnparsedJSCodeProvider (sOld +
+                                                                                         ((IHCTextNode <?>) aNode).getText ()));
+                            }
+                            else
+                            {
+                              // Set
+                              aRealParent.setJSCodeProvider (new UnparsedJSCodeProvider (((IHCTextNode <?>) aNode).getText ()));
+                            }
+                          }
+                          else
+                            throw new MarkdownException ("Cannot add node " + aNode + " to " + aParent);
   }
 }

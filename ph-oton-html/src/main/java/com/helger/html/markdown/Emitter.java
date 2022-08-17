@@ -315,7 +315,8 @@ final class Emitter
           return -1;
         aTmp.setLength (0);
         final boolean bUseLt = sIn.charAt (nPos) == '<';
-        nPos = bUseLt ? MarkdownHelper.readUntil (aTmp, sIn, nPos + 1, '>') : MarkdownHelper.readMdLink (aTmp, sIn, nPos);
+        nPos = bUseLt ? MarkdownHelper.readUntil (aTmp, sIn, nPos + 1, '>')
+                      : MarkdownHelper.readMdLink (aTmp, sIn, nPos);
         if (nPos < nStart)
           return -1;
         if (bUseLt)
@@ -467,7 +468,10 @@ final class Emitter
     if (nStart + 2 < in.length ())
     {
       // nPos = nStart;
-      if (nStart + 3 < in.length () && in.charAt (nStart + 1) == '!' && in.charAt (nStart + 2) == '-' && in.charAt (nStart + 3) == '-')
+      if (nStart + 3 < in.length () &&
+          in.charAt (nStart + 1) == '!' &&
+          in.charAt (nStart + 2) == '-' &&
+          in.charAt (nStart + 3) == '-')
       {
         nPos = nStart + 4;
         final int nCommentStartPos = nPos;
@@ -492,7 +496,8 @@ final class Emitter
       }
 
       aTmp.setLength (0);
-      final int nNewPos = MarkdownHelper.readXMLElement (aTmp, in, nStart, m_aConfig.isSafeMode ());
+      final boolean bSafeMode = m_aConfig.isSafeMode ();
+      final int nNewPos = MarkdownHelper.readXMLElement (aTmp, in, nStart, bSafeMode);
       if (nNewPos != -1)
       {
         final String sElement = aTmp.toString ();
@@ -501,7 +506,7 @@ final class Emitter
           // Self closed tag - can be parsed
           final IMicroDocument aXML = MicroReader.readMicroXML (sElement);
           if (aXML == null)
-            throw new MarkdownException ("Failed to parse XML: " + sElement);
+            throw new MarkdownException ("Failed to parse XML '" + sElement + "'");
           // And use the root element
           out.append (new HCDOMWrapper (aXML.getDocumentElement ().detachFromParent ()));
         }
@@ -514,29 +519,39 @@ final class Emitter
           else
           {
             // Opening tag - parse as self-closed tag and push to stack
-            final String sParseCode = sElement.substring (0, sElement.length () - 1) + "/>";
-            final IMicroDocument aXML = MicroReader.readMicroXML (sParseCode);
-            if (aXML == null)
-              throw new MarkdownException ("Failed to parse XML: " + sParseCode);
-            final IMicroElement eRoot = aXML.getDocumentElement ();
-
-            // And use the root element
-            final IHCElement <?> aHC = HCExtHelper.createHCElementFromName (eRoot.getTagName ());
-            if (aHC == null)
-              throw new MarkdownException ("Failed to get HC element: " + eRoot.getTagName ());
-
-            // Clone all attributes
-            eRoot.forAllAttributes (aAttr -> aHC.customAttrs ().putIn (aAttr.getAttributeQName (), aAttr.getAttributeValue ()));
-
-            if (aHC.getElement ().mayBeSelfClosed ())
+            if (bSafeMode && sElement.startsWith ("&lt;"))
             {
-              // e.g. <hr />
-              out.append (aHC);
+              // Append as-is - no parsing
+              // Just get rid of "&lt;" to avoid it becomes "&amp;lt;"
+              out.append ("<" + sElement.substring (4));
             }
             else
             {
-              // Push
-              out.push (aHC);
+              final String sParseCode = sElement.substring (0, sElement.length () - 1) + "/>";
+              final IMicroDocument aXML = MicroReader.readMicroXML (sParseCode);
+              if (aXML == null)
+                throw new MarkdownException ("Failed to parse XML '" + sParseCode + "'");
+              final IMicroElement eRoot = aXML.getDocumentElement ();
+
+              // And use the root element
+              final IHCElement <?> aHC = HCExtHelper.createHCElementFromName (eRoot.getTagName ());
+              if (aHC == null)
+                throw new MarkdownException ("Failed to get HC element '" + eRoot.getTagName () + "'");
+
+              // Clone all attributes
+              eRoot.forAllAttributes (aAttr -> aHC.customAttrs ()
+                                                  .putIn (aAttr.getAttributeQName (), aAttr.getAttributeValue ()));
+
+              if (aHC.getElement ().mayBeSelfClosed ())
+              {
+                // e.g. <hr />
+                out.append (aHC);
+              }
+              else
+              {
+                // Push
+                out.push (aHC);
+              }
             }
           }
 
@@ -617,7 +632,10 @@ final class Emitter
    * @return The position of the matching Token or -1 if token was NONE or no
    *         Token could be found.
    */
-  private int _recursiveEmitLine (final MarkdownHCStack aOut, final String sIn, final int nStart, final EMarkToken eToken)
+  private int _recursiveEmitLine (final MarkdownHCStack aOut,
+                                  final String sIn,
+                                  final int nStart,
+                                  final EMarkToken eToken)
   {
     int nPos = nStart;
     int a;
@@ -862,7 +880,9 @@ final class Emitter
         }
         if (m_bUseExtensions)
         {
-          return Character.isLetterOrDigit (c0) && c0 != '_' && Character.isLetterOrDigit (c1) ? EMarkToken.NONE : EMarkToken.EM_UNDERSCORE;
+          return Character.isLetterOrDigit (c0) &&
+                 c0 != '_' &&
+                 Character.isLetterOrDigit (c1) ? EMarkToken.NONE : EMarkToken.EM_UNDERSCORE;
         }
         return c0 != ' ' || c1 != ' ' ? EMarkToken.EM_UNDERSCORE : EMarkToken.NONE;
       case '~':
@@ -976,23 +996,26 @@ final class Emitter
    */
   private void _emitXMLLines (final MarkdownHCStack aOut, final Line aLines)
   {
-    Line aLine = aLines;
-    if (m_aConfig.isSafeMode ())
+    Line aMutableLines = aLines;
+
+    final boolean bSafeMode = m_aConfig.isSafeMode ();
+    if (bSafeMode)
     {
       final StringBuilder aTmpSB = new StringBuilder ();
-      while (aLine != null)
+      while (aMutableLines != null)
       {
-        if (!aLine.m_bIsEmpty)
-          aTmpSB.append (aLine.m_sValue.trim ());
-        aLine = aLine.m_aNext;
+        if (!aMutableLines.m_bIsEmpty)
+          aTmpSB.append (aMutableLines.m_sValue.trim ());
+        aMutableLines = aMutableLines.m_aNext;
       }
+
       final String sIn = aTmpSB.toString ();
       for (int nPos = 0; nPos < sIn.length (); nPos++)
       {
         if (sIn.charAt (nPos) == '<')
         {
           aTmpSB.setLength (0);
-          final int nNewPos = MarkdownHelper.readXMLElement (aTmpSB, sIn, nPos, m_aConfig.isSafeMode ());
+          final int nNewPos = MarkdownHelper.readXMLElement (aTmpSB, sIn, nPos, bSafeMode);
           if (nNewPos != -1)
           {
             // XXX Is this correct???
@@ -1014,14 +1037,14 @@ final class Emitter
     {
       final StringBuilder aXML = new StringBuilder ();
       int nLines = 0;
-      while (aLine != null)
+      while (aMutableLines != null)
       {
-        if (!aLine.m_bIsEmpty)
+        if (!aMutableLines.m_bIsEmpty)
         {
-          aXML.append (aLine.m_sValue.trim ());
+          aXML.append (aMutableLines.m_sValue.trim ());
           ++nLines;
         }
-        aLine = aLine.m_aNext;
+        aMutableLines = aMutableLines.m_aNext;
       }
 
       String sXML = aXML.toString ();
@@ -1057,7 +1080,9 @@ final class Emitter
 
     // Trim only once, so that newlines before or after a comment start/close is
     // removed
-    final String sContent = StringHelper.trimStartAndEnd (aXML.toString ().trim (), XMLEmitter.COMMENT_START, XMLEmitter.COMMENT_END);
+    final String sContent = StringHelper.trimStartAndEnd (aXML.toString ().trim (),
+                                                          XMLEmitter.COMMENT_START,
+                                                          XMLEmitter.COMMENT_END);
     aOut.append (new HCCommentNode (sContent));
   }
 
@@ -1071,7 +1096,10 @@ final class Emitter
    * @param sMeta
    *        Meta information.
    */
-  private void _emitCodeLines (final MarkdownHCStack aOut, final Line aLines, @Nonnull final String sMeta, final boolean bRemoveIndent)
+  private void _emitCodeLines (final MarkdownHCStack aOut,
+                               final Line aLines,
+                               @Nonnull final String sMeta,
+                               final boolean bRemoveIndent)
   {
     Line aLine = aLines;
     if (m_aConfig.getCodeBlockEmitter () != null)

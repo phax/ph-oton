@@ -455,7 +455,10 @@ final class MarkdownHelper
    * @return The new position or -1 if this is no valid XML element.
    */
   @CheckForSigned
-  public static int readXMLElement (final StringBuilder aSB, final String sIn, final int nStart, final boolean bSafeMode)
+  public static int readXMLElement (final StringBuilder aSB,
+                                    final String sIn,
+                                    final int nStart,
+                                    final boolean bSafeMode)
   {
     try
     {
@@ -466,7 +469,7 @@ final class MarkdownHelper
       }
 
       int pos;
-      boolean bIsCloseTag;
+      final boolean bIsCloseTag;
       if (sIn.charAt (nStart + 1) == '/')
       {
         bIsCloseTag = true;
@@ -484,20 +487,21 @@ final class MarkdownHelper
         pos = _readRawUntil (temp, sIn, pos, ' ', '/', '>');
         if (pos == -1)
           return -1;
-        final String tag = temp.toString ().trim ().toLowerCase (Locale.US);
+        final String tag = temp.toString ().trim ();
         if (MarkdownHTML.isUnsafeHtmlElement (tag))
         {
+          // Use "&lt;" to not evaluate it but just print it
           aSB.append ("&lt;");
           if (bIsCloseTag)
             aSB.append ('/');
-          aSB.append (temp);
+          aSB.append (tag);
         }
         else
         {
           aSB.append ('<');
           if (bIsCloseTag)
             aSB.append ('/');
-          aSB.append (temp);
+          aSB.append (tag);
         }
       }
       else
