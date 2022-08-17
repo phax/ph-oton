@@ -98,6 +98,9 @@ public abstract class AbstractLoginManager
    */
   private ICommonsSet <String> m_aRequiredRoleIDs;
 
+  /**
+   * The duration to wait after a failed login try.
+   */
   private Duration m_aFailedLoginWaitTime = Duration.ZERO;
 
   protected AbstractLoginManager ()
@@ -314,9 +317,14 @@ public abstract class AbstractLoginManager
 
           if (m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
           {
+            // Every failed login increases the time
+            final long nMultiplier = Math.min (aUser.getConsecutiveFailedLoginCount (), 1L);
+            final Duration aRealWaitDuration = m_aFailedLoginWaitTime.multipliedBy (nMultiplier);
+
             if (LOGGER.isDebugEnabled ())
-              LOGGER.debug ("Now waiting " + m_aFailedLoginWaitTime + " because of a failed login");
-            ThreadHelper.sleep (m_aFailedLoginWaitTime);
+              LOGGER.debug ("Now waiting " + aRealWaitDuration + " because of a failed login");
+
+            ThreadHelper.sleep (aRealWaitDuration);
           }
         }
       }
