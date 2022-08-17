@@ -27,7 +27,8 @@ import com.helger.html.EHTMLVersion;
 import com.helger.xml.microdom.IMicroNode;
 
 /**
- * Base interface for a main HC node.
+ * Base interface for a main HC node.<br>
+ * TODO get rid of Serializable
  *
  * @author Philip Helger
  */
