@@ -44,9 +44,10 @@ public final class ConstantJSPathProvider implements IJSPathProvider
                                  final boolean bIsBundlable)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
-    ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sPath), "Path");
+    ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sPath), () -> "'" + sPath + "' is not a valid JS filename");
     ValueEnforcer.notEmpty (sMinifiedPath, "MinifiedPath");
-    ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sMinifiedPath), "Minified Path");
+    ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sMinifiedPath),
+                          () -> "'" + sMinifiedPath + "' is not a valid minified JS filename");
     m_sPath = sPath;
     m_sMinifiedPath = sMinifiedPath;
     m_sConditionalComment = sConditionalComment;
@@ -132,13 +133,19 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   public static ConstantJSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
                                                                      @Nullable final String sConditionalComment)
   {
-    return new ConstantJSPathProvider (sPath, JSFilenameHelper.getMinifiedJSFilename (sPath), sConditionalComment, DEFAULT_IS_BUNDLABLE);
+    return new ConstantJSPathProvider (sPath,
+                                       JSFilenameHelper.getMinifiedJSFilename (sPath),
+                                       sConditionalComment,
+                                       DEFAULT_IS_BUNDLABLE);
   }
 
   @Nonnull
   public static ConstantJSPathProvider createBundlable (@Nonnull @Nonempty final String sPath, final boolean bBundlable)
   {
-    return new ConstantJSPathProvider (sPath, JSFilenameHelper.getMinifiedJSFilename (sPath), DEFAULT_CONDITIONAL_COMMENT, bBundlable);
+    return new ConstantJSPathProvider (sPath,
+                                       JSFilenameHelper.getMinifiedJSFilename (sPath),
+                                       DEFAULT_CONDITIONAL_COMMENT,
+                                       bBundlable);
   }
 
   @Nonnull
@@ -148,7 +155,8 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   }
 
   @Nonnull
-  public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI, @Nullable final String sConditionalComment)
+  public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
+                                                       @Nullable final String sConditionalComment)
   {
     // External JS are never bundleable
     return new ConstantJSPathProvider (sURI, sURI, sConditionalComment, false);
