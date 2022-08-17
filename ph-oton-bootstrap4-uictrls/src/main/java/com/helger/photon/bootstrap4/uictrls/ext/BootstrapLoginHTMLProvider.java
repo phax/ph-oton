@@ -53,7 +53,10 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  */
 public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
 {
+  public static final boolean DEFAULT_SHOW_LOGIN_ERROR_DETAILS = false;
+
   private final IHCNode m_aPageTitle;
+  private boolean m_bShowLoginErrorDetails = DEFAULT_SHOW_LOGIN_ERROR_DETAILS;
 
   public BootstrapLoginHTMLProvider (final boolean bLoginError,
                                      @Nonnull final ICredentialValidationResult aLoginResult,
@@ -63,12 +66,34 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     m_aPageTitle = aPageTitle;
   }
 
+  public final boolean isShowLoginErrorDetails ()
+  {
+    return m_bShowLoginErrorDetails;
+  }
+
+  public final void setShowLoginErrorDetails (final boolean bShowLoginErrorDetails)
+  {
+    m_bShowLoginErrorDetails = bShowLoginErrorDetails;
+  }
+
   @Override
   @Nullable
   @OverrideOnDemand
   protected String getTextFieldUserName (@Nonnull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale);
+  }
+
+  @Override
+  @Nullable
+  @OverrideOnDemand
+  protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale,
+                                        @Nonnull final ICredentialValidationResult aLoginResult)
+  {
+    String ret = EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale);
+    if (m_bShowLoginErrorDetails)
+      ret += " " + aLoginResult.getDisplayText (aDisplayLocale);
+    return ret;
   }
 
   /**
@@ -106,7 +131,8 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
    */
   @Nullable
   @OverrideOnDemand
-  protected IHCNode createPageHeader (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nullable final IHCNode aPageTitle)
+  protected IHCNode createPageHeader (@Nonnull final ISimpleWebExecutionContext aSWEC,
+                                      @Nullable final IHCNode aPageTitle)
   {
     return BootstrapPageHeader.createOnDemand (aPageTitle);
   }
@@ -166,7 +192,10 @@ public class BootstrapLoginHTMLProvider extends AbstractLoginHTMLProvider
     aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
 
     if (isLoginError ())
+    {
+      // Show the error message
       aForm.addChild (new BootstrapErrorBox ().addChild (getTextErrorMessage (aDisplayLocale, getLoginResult ())));
+    }
 
     // User name and password table
     final String sUserName = getTextFieldUserName (aDisplayLocale);
