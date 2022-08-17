@@ -30,6 +30,7 @@ import com.helger.html.hc.render.HCRenderer;
  *
  * @author Philip Helger
  */
+@Deprecated
 public final class HCGoogleAnalyticsTest
 {
   @Rule

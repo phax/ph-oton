@@ -44,6 +44,7 @@ import com.helger.html.jscode.type.JSPrimitiveTypes;
  * @author Philip Helger
  */
 @OutOfBandNode
+@Deprecated
 public class HCUniversalAnalytics extends AbstractHCScriptInline <HCUniversalAnalytics>
 {
   private final String m_sAccount;
@@ -189,7 +190,9 @@ public class HCUniversalAnalytics extends AbstractHCScriptInline <HCUniversalAna
                                                       @Nullable final String sLabel,
                                                       @Nullable final Integer aValue)
   {
-    final JSAssocArray aArray = new JSAssocArray ().add ("hitType", "event").add ("eventCategory", sCategory).add ("eventAction", sAction);
+    final JSAssocArray aArray = new JSAssocArray ().add ("hitType", "event")
+                                                   .add ("eventCategory", sCategory)
+                                                   .add ("eventAction", sAction);
     if (StringHelper.hasText (sLabel))
       aArray.add ("eventLabel", sLabel);
     if (aValue != null)

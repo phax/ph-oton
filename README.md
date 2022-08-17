@@ -107,6 +107,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Made class `DoNothingAuditor` final
     * Added class `DoNothingAuditManager`
     * Class `AbstractLoginManager` now has the possibility to specify a waiting time in case of a failed login
+    * Deprecated classes `HCUniversalAnalytics` and `HCGoogleAnalytics`
 * v8.4.0 - 2022-04-04
     * Updated to Jetty 9.4.46
     * Updated chart.js from 1.0.2 to 1.1.1
