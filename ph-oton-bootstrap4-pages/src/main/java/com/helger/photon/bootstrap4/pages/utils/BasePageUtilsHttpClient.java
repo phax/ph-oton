@@ -25,14 +25,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.ContentType;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
+import org.apache.hc.core5.http.message.StatusLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +85,8 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
  *        Web Page Execution Context type
  * @since 8.2.3
  */
-public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext> extends
+                                     AbstractBootstrapWebPage <WPECTYPE>
 {
   public interface IHttpClientMetaProvider
   {
@@ -207,7 +207,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     }
   }
 
-  private static final class DebugResponseHandler implements ResponseHandler <String>
+  private static final class DebugResponseHandler implements HttpClientResponseHandler <String>
   {
     private final Charset m_aDefaultCharset;
     private StatusLine m_aUsedStatusLine;
@@ -220,7 +220,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     }
 
     @Nullable
-    public String handleResponse (@Nonnull final HttpResponse aHttpResponse) throws IOException
+    public String handleResponse (@Nonnull final ClassicHttpResponse aHttpResponse) throws IOException
     {
       // Convert to entity
       final HttpEntity aEntity = ResponseHandlerHttpEntity.INSTANCE.handleResponse (aHttpResponse);
@@ -228,7 +228,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         return null;
 
       final Charset aCharset;
-      final ContentType aContentType = ContentType.get (aEntity);
+      final ContentType aContentType = HttpClientHelper.getContentType (aEntity);
       if (aContentType == null)
         aCharset = m_aDefaultCharset;
       else
@@ -237,13 +237,13 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         aCharset = HttpClientHelper.getCharset (aContentType, m_aDefaultCharset);
       }
 
-      m_aUsedStatusLine = aHttpResponse.getStatusLine ();
+      m_aUsedStatusLine = new StatusLine (aHttpResponse);
       m_aUsedCharset = aCharset;
       m_aUsedHeaders.removeAll ();
-      for (final Header aHeader : aHttpResponse.getAllHeaders ())
+      for (final Header aHeader : aHttpResponse.getHeaders ())
         m_aUsedHeaders.addHeader (aHeader.getName (), aHeader.getValue ());
 
-      return EntityUtils.toString (aEntity, aCharset);
+      return HttpClientHelper.entityToString (aEntity, aCharset);
     }
   }
 
@@ -262,7 +262,9 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     super (sID, sName);
   }
 
-  public BasePageUtilsHttpClient (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageUtilsHttpClient (@Nonnull @Nonempty final String sID,
+                                  @Nonnull final String sName,
+                                  @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -314,7 +316,14 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         String sResultContent;
         boolean bSuccess = false;
 
-        LOGGER.info ("http client " + eHttpMethod.getName () + " query '" + sURI + "' using configuration '" + aConfig.getID () + "'");
+        if (LOGGER.isInfoEnabled ())
+          LOGGER.info ("http client " +
+                       eHttpMethod.getName () +
+                       " query '" +
+                       sURI +
+                       "' using configuration '" +
+                       aConfig.getID () +
+                       "'");
 
         final StopWatch aSW = StopWatch.createdStarted ();
         final HttpClientSettings aHCS = aConfig.getHttpClientSettings (sURI);
@@ -322,7 +331,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         try (final HttpClientManager aHCM = HttpClientManager.create (aHCS))
         {
           // Create depending on the method
-          final HttpRequestBase aReq = HttpClientHelper.createRequest (eHttpMethod, new SimpleURL (sURI));
+          final HttpUriRequestBase aReq = HttpClientHelper.createRequest (eHttpMethod, new SimpleURL (sURI));
           sResultContent = aHCM.execute (aReq, aResponseHdl);
           bSuccess = true;
           LOGGER.info ("http client " + eHttpMethod.getName () + " query succeeded");
@@ -330,12 +339,13 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         catch (final IOException ex)
         {
           sResultContent = BootstrapTechnicalUI.getTechnicalDetailsString (ex, aDisplayLocale);
-          LOGGER.warn ("http client " +
-                       eHttpMethod.getName () +
-                       " query failed with " +
-                       ex.getClass ().getName () +
-                       " - " +
-                       ex.getMessage ());
+          if (LOGGER.isWarnEnabled ())
+            LOGGER.warn ("http client " +
+                         eHttpMethod.getName () +
+                         " query failed with " +
+                         ex.getClass ().getName () +
+                         " - " +
+                         ex.getMessage ());
         }
         aSW.stop ();
 
@@ -343,7 +353,8 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
                                                        .addChild (" using ")
                                                        .addChild (em (aConfig.getDisplayName ()))
                                                        .addChild (": ")
-                                                       .addChild (bSuccess ? badgeSuccess ("success") : badgeDanger ("error")));
+                                                       .addChild (bSuccess ? badgeSuccess ("success")
+                                                                           : badgeDanger ("error")));
         aNodeList.addChild (div ("Querying took " + aSW.getMillis () + " milliseconds"));
         if (aResponseHdl.m_aUsedStatusLine != null)
         {
@@ -366,7 +377,10 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
           aDT.setInfo (false);
           aNodeList.addChild (aTable).addChild (aDT);
         }
-        aNodeList.addChild (new HCTextArea ("responsepayload").setRows (Math.min (10, 1 + StringHelper.getCharCount (sResultContent, '\n')))
+        aNodeList.addChild (new HCTextArea ("responsepayload").setRows (Math.min (10,
+                                                                                  1 +
+                                                                                      StringHelper.getCharCount (sResultContent,
+                                                                                                                 '\n')))
                                                               .setValue (sResultContent)
                                                               .addClass (CBootstrapCSS.FORM_CONTROL)
                                                               .addClass (CBootstrapCSS.TEXT_MONOSPACE)
@@ -378,7 +392,8 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     aForm.setLeft (2);
 
     {
-      final HCExtSelect aSelect = new HCExtSelect (new RequestField (FIELD_CONFIG, HttpClientConfigRegistry.DEFAULT_CONFIG_ID));
+      final HCExtSelect aSelect = new HCExtSelect (new RequestField (FIELD_CONFIG,
+                                                                     HttpClientConfigRegistry.DEFAULT_CONFIG_ID));
       aSelect.addOptionPleaseSelect (aDisplayLocale);
       for (final IHttpClientConfig aHCC : HttpClientConfigRegistry.iterate ())
         aSelect.addOption (aHCC.getID (), aHCC.getDisplayName ());

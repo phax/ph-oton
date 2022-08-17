@@ -21,13 +21,12 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.http.client.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
@@ -54,7 +53,8 @@ public final class ReCaptchaServerSideValidator
    * @return {@link ESuccess}
    */
   @Nonnull
-  public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey, @Nullable final String sReCaptchaResponse)
+  public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey,
+                                @Nullable final String sReCaptchaResponse)
   {
     final HttpClientSettings aSettings = new HttpClientSettings ();
     // For proxy etc
@@ -87,7 +87,8 @@ public final class ReCaptchaServerSideValidator
 
     try (HttpClientManager aMgr = HttpClientManager.create (aHCS))
     {
-      final HttpPost aPost = new HttpPost (new SimpleURL ("https://www.google.com/recaptcha/api/siteverify").add ("secret", sServerSideKey)
+      final HttpPost aPost = new HttpPost (new SimpleURL ("https://www.google.com/recaptcha/api/siteverify").add ("secret",
+                                                                                                                  sServerSideKey)
                                                                                                             .add ("response",
                                                                                                                   sReCaptchaResponse)
                                                                                                             .getAsURI ());
@@ -97,8 +98,8 @@ public final class ReCaptchaServerSideValidator
       {
         final boolean bSuccess = aJson.getAsObject ().getAsBoolean ("success", false);
 
-        if (GlobalDebug.isDebugMode ())
-          LOGGER.info ("ReCpatcha Response for '" + sReCaptchaResponse + "': " + aJson.getAsJsonString ());
+        if (LOGGER.isDebugEnabled ())
+          LOGGER.debug ("ReCpatcha Response for '" + sReCaptchaResponse + "': " + aJson.getAsJsonString ());
 
         return ESuccess.valueOf (bSuccess);
       }
