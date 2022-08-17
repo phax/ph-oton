@@ -98,12 +98,12 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v8.4.1 - work in progress
+* v8.4.1 - 2022-08-17
     * Updated to Apache HttpClient 5.x
     * Updated to Bootstrap 4.6.2
     * Updated to Jetty 9.4.48
     * Updated to Log2J 2.18.0
-    * Updated to ph-web 9.7.0
+    * Updated to ph-web 9.7.1
     * Made class `DoNothingAuditor` final
     * Added class `DoNothingAuditManager`
     * Class `AbstractLoginManager` now has the possibility to specify a waiting time in case of a failed login
