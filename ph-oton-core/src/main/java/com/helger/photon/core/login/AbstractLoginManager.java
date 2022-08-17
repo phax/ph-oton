@@ -321,7 +321,7 @@ public abstract class AbstractLoginManager
           if (m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
           {
             // Every failed login increases the time
-            final long nMultiplier = Math.min (aUser.getConsecutiveFailedLoginCount (), 1L);
+            final long nMultiplier = Math.max (aUser.getConsecutiveFailedLoginCount (), 1L);
             final Duration aRealWaitDuration = m_aFailedLoginWaitTime.multipliedBy (nMultiplier);
 
             if (LOGGER.isDebugEnabled ())
