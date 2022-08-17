@@ -200,7 +200,9 @@ public class MarkdownProcessor
         else
         {
           // Store linkRef and skip line
-          final LinkRef aLinkRef = new LinkRef (sLink, sComment, sComment != null && (sLink.length () == 1 && sLink.charAt (0) == '*'));
+          final LinkRef aLinkRef = new LinkRef (sLink,
+                                                sComment,
+                                                sComment != null && (sLink.length () == 1 && sLink.charAt (0) == '*'));
           m_aEmitter.addLinkRef (sID, aLinkRef);
           if (sComment == null)
             aLastLinkRef = aLinkRef;
@@ -252,7 +254,7 @@ public class MarkdownProcessor
       final ELineType eType = aLine.getLineType (m_bUseExtensions);
       if (eType == ELineType.OLIST ||
           eType == ELineType.ULIST ||
-          (!aLine.m_bIsEmpty && aLine.m_bPrevEmpty && aLine.m_nLeading == 0 && !(eType == ELineType.OLIST || eType == ELineType.ULIST)))
+          (!aLine.m_bIsEmpty && aLine.m_bPrevEmpty && aLine.m_nLeading == 0))
       {
         aRoot.split (aLine.m_aPrevious).m_eType = EBlockType.LIST_ITEM;
       }
@@ -302,7 +304,8 @@ public class MarkdownProcessor
             final ELineType eType2 = aLine.getLineType (m_bUseExtensions);
             if ((bListMode || m_bUseExtensions) && (eType2 == ELineType.OLIST || eType2 == ELineType.ULIST))
               break;
-            if (m_bUseExtensions && (eType2 == ELineType.CODE || eType2 == ELineType.FENCED_CODE || eType2 == ELineType.PLUGIN))
+            if (m_bUseExtensions &&
+                (eType2 == ELineType.CODE || eType2 == ELineType.FENCED_CODE || eType2 == ELineType.PLUGIN))
               break;
             if (eType2 == ELineType.HEADLINE ||
                 eType2 == ELineType.HEADLINE1 ||
@@ -323,7 +326,8 @@ public class MarkdownProcessor
           }
           else
           {
-            eBlockType = (bListMode && (aLine == null || !aLine.m_bIsEmpty) && !bWasEmpty) ? EBlockType.NONE : EBlockType.PARAGRAPH;
+            eBlockType = (bListMode && (aLine == null || !aLine.m_bIsEmpty) && !bWasEmpty) ? EBlockType.NONE
+                                                                                           : EBlockType.PARAGRAPH;
             aRoot.split (aLine == null ? aRoot.m_aLineTail : aLine).m_eType = eBlockType;
             aRoot.removeLeadingEmptyLines ();
           }
@@ -440,7 +444,9 @@ public class MarkdownProcessor
           {
             final ELineType eType2 = aLine.getLineType (m_bUseExtensions);
             if (!aLine.m_bIsEmpty &&
-                (aLine.m_bPrevEmpty && aLine.m_nLeading == 0 && !(eType2 == ELineType.OLIST || eType2 == ELineType.ULIST)))
+                (aLine.m_bPrevEmpty &&
+                 aLine.m_nLeading == 0 &&
+                 !(eType2 == ELineType.OLIST || eType2 == ELineType.ULIST)))
               break;
             aLine = aLine.m_aNext;
           }
