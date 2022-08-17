@@ -71,7 +71,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @author Philip Helger
    */
-  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements ISessionWebScopeActivationHandler
+  public static final class InternalSessionUserHolder extends AbstractSessionWebSingleton implements
+                                                      ISessionWebScopeActivationHandler
   {
     private IUser m_aUser;
     private String m_sUserID;
@@ -278,7 +279,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   @Nonnull
-  private String _getUserIDLogText (@Nonnull final String sUserID)
+  private String _getUserIDLogText (@Nullable final String sUserID)
   {
     if (isAnonymousLogging ())
       return "a user";
@@ -389,6 +390,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       AuditHelper.onAuditExecuteFailure ("login", sUserID, "invalid-password");
       return _onLoginError (sUserID, ELoginResult.INVALID_PASSWORD);
     }
+    assert sPlainTextPassword != null;
 
     // Are all roles present?
     if (!SecurityHelper.hasUserAllRoles (sUserID, aRequiredRoleIDs))
@@ -406,6 +408,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       // This implicitly implies using the default hash creator algorithm
       // This automatically saves the file
       aUserMgr.setUserPassword (sUserID, sPlainTextPassword);
+
       if (LOGGER.isInfoEnabled ())
         LOGGER.info ("Updated password hash of " +
                      _getUserIDLogText (sUserID) +
@@ -490,7 +493,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nonnull
   public EChange logoutUser (@Nullable final String sUserID)
   {
-    LoginInfo aInfo;
+    final LoginInfo aInfo;
     m_aRWLock.writeLock ().lock ();
     try
     {
