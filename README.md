@@ -104,6 +104,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to Log2J 2.18.0
     * Made class `DoNothingAuditor` final
     * Added class `DoNothingAuditManager`
+    * Class `AbstractLoginManager` now has the possibility to specify a waiting time in case of a failed login
 * v8.4.0 - 2022-04-04
     * Updated to Jetty 9.4.46
     * Updated chart.js from 1.0.2 to 1.1.1

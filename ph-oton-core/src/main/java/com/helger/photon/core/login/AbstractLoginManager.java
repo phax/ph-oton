@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.login;
 
+import java.time.Duration;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
@@ -24,9 +25,12 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.concurrent.ThreadHelper;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.string.StringHelper;
@@ -92,14 +96,46 @@ public abstract class AbstractLoginManager
    * A list of all role IDs that the user must have so that he can login! May be
    * <code>null</code> to indicate that any valid user can login.
    */
-  private ICommonsCollection <String> m_aRequiredRoleIDs;
+  private ICommonsSet <String> m_aRequiredRoleIDs;
+
+  private Duration m_aFailedLoginWaitTime = Duration.ZERO;
 
   public AbstractLoginManager ()
   {}
 
-  public void setRequiredRoleIDs (@Nullable final Collection <String> aRequiredRoleIDs)
+  @Nonnull
+  @ReturnsMutableCopy
+  public final ICommonsSet <String> getAllRequiredRoles ()
+  {
+    return new CommonsHashSet <> (m_aRequiredRoleIDs);
+  }
+
+  public final void setRequiredRoleIDs (@Nullable final Collection <String> aRequiredRoleIDs)
   {
     m_aRequiredRoleIDs = aRequiredRoleIDs == null ? null : new CommonsHashSet <> (aRequiredRoleIDs);
+  }
+
+  /**
+   * @return The duration to wait, in case of a failed login. Never
+   *         <code>null</code>.
+   * @since v8.4.1
+   */
+  @Nonnull
+  public final Duration getFailedLoginWaitingTime ()
+  {
+    return m_aFailedLoginWaitTime;
+  }
+
+  /**
+   * Set the duration to wait in case of a failed login.
+   *
+   * @param aFailedLoginWaitTime
+   *        The failed login waiting time. May not be <code>null</code>.
+   */
+  public final void setFailedLoginWaitingTime (@Nonnull final Duration aFailedLoginWaitTime)
+  {
+    ValueEnforcer.notNull (aFailedLoginWaitTime, "FailedLoginWaitTime");
+    m_aFailedLoginWaitTime = aFailedLoginWaitTime;
   }
 
   /**
@@ -113,7 +149,8 @@ public abstract class AbstractLoginManager
    * @return Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract IHTMLProvider createLoginScreen (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult);
+  protected abstract IHTMLProvider createLoginScreen (final boolean bLoginError,
+                                                      @Nonnull final ICredentialValidationResult aLoginResult);
 
   /**
    * Check if the login process is in progress
@@ -126,7 +163,8 @@ public abstract class AbstractLoginManager
   @OverrideOnDemand
   protected boolean isLoginInProgress (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
-    return CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS.equals (aRequestScope.params ().getAsString (CLogin.REQUEST_PARAM_ACTION));
+    return CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS.equals (aRequestScope.params ()
+                                                                                 .getAsString (CLogin.REQUEST_PARAM_ACTION));
   }
 
   /**
@@ -196,7 +234,9 @@ public abstract class AbstractLoginManager
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURIEncoded ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT, aRequestScope.getUserAgent ().getAsString ());
-    aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_COUNT, Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
+    aLoginInfo.attrs ()
+              .putIn (LOGIN_INFO_REQUEST_COUNT,
+                      Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
   }
 
   /**
@@ -265,11 +305,19 @@ public abstract class AbstractLoginManager
         {
           // Credentials are invalid
           if (GlobalDebug.isDebugMode ())
-            LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+            if (LOGGER.isWarnEnabled ())
+              LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
 
           // Anyway show the error message only if at least some credential
           // values are passed
           bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
+
+          if (m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
+          {
+            if (LOGGER.isDebugEnabled ())
+              LOGGER.debug ("Now waiting " + m_aFailedLoginWaitTime + " because of a failed login");
+            ThreadHelper.sleep (m_aFailedLoginWaitTime);
+          }
         }
       }
 
@@ -295,7 +343,8 @@ public abstract class AbstractLoginManager
     {
       // Internal inconsistency
       if (sSessionUserID != null)
-        LOGGER.error ("Failed to resolve LoginInfo of user ID '" + sSessionUserID + "'");
+        if (LOGGER.isErrorEnabled ())
+          LOGGER.error ("Failed to resolve LoginInfo of user ID '" + sSessionUserID + "'");
     }
 
     if (bLoggedInInThisRequest)
