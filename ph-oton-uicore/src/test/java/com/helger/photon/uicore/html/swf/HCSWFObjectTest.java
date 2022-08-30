@@ -32,6 +32,7 @@ import com.helger.xml.microdom.IMicroNode;
  *
  * @author Philip Helger
  */
+@Deprecated
 public final class HCSWFObjectTest
 {
   @Rule
