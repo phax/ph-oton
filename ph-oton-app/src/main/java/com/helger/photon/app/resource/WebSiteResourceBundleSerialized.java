@@ -123,10 +123,11 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
           for (final WebSiteResource aRes : m_aBundle.getAllResources ())
           {
             // This type of comment works for CSS and JS!
+            // Update don't display the resource as URL because that might
+            // reveal internal paths
             final String sMetaInfo = "/* " +
                                      aRes.getPath () +
-                                     " - " +
-                                     aRes.getResource ().getAsURL () +
+                                     (true ? "" : " - " + aRes.getResource ().getAsURL ()) +
                                      " - " +
                                      aRes.getContentHashAsString () +
                                      " */\n";
