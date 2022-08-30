@@ -121,26 +121,26 @@ public class WebSiteResource
   }
 
   @Nonnull
-  public EWebSiteResourceType getResourceType ()
+  public final EWebSiteResourceType getResourceType ()
   {
     return m_eResourceType;
   }
 
   @Nonnull
   @Nonempty
-  public String getPath ()
+  public final String getPath ()
   {
     return m_sPath;
   }
 
   @Nonnull
-  public IReadableResource getResource ()
+  public final IReadableResource getResource ()
   {
     return m_aResource;
   }
 
   @Nonnull
-  public Charset getCharset ()
+  public final Charset getCharset ()
   {
     return m_aCharset;
   }
