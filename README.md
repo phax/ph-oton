@@ -101,6 +101,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 * v8.4.2 - work in progress
     * Updated to jQuery 3.6.1
     * Updated to jQuery Migrate 3.4.0
+    * Updated to js-cookie v3.0.1
     * Deprecated `HCSWFObject`
 * v8.4.1 - 2022-08-17
     * Updated to Apache HttpClient 5.x
