@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -105,10 +106,11 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   @Override
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
-    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.MOMENT);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.MOMENT_WITH_LOCALES);
     PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_SORTING_MOMENT);
   }
 
+  @Nullable
   public IJSExpression getInitParams ()
   {
     return null;

@@ -98,7 +98,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   private final ICommonsOrderedMap <String, String> m_aIcons = new CommonsLinkedHashMap <> ();
 
   @Nonnull
-  public static String getAsModeSpecificISOString (@Nonnull final EBootstrap4DateTimePickerMode eMode, @Nonnull final LocalDateTime aDT)
+  public static String getAsModeSpecificISOString (@Nonnull final EBootstrap4DateTimePickerMode eMode,
+                                                   @Nonnull final LocalDateTime aDT)
   {
     // Always format with ISO mode
     switch (eMode)
@@ -539,7 +540,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   @Nonnull
-  public static JSInvocation invoke (@Nonnull final JQueryInvocation aJQueryInvocation, @Nonnull final JSAssocArray aOptions)
+  public static JSInvocation invoke (@Nonnull final JQueryInvocation aJQueryInvocation,
+                                     @Nonnull final JSAssocArray aOptions)
   {
     return invoke (aJQueryInvocation).arg (aOptions);
   }
@@ -550,7 +552,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     return invoke ().arg (aOptions);
   }
 
-  private void _add (@Nonnull final JSAssocArray ret, @Nonnull final String sKey, @Nonnull final EBootstrap4DateTimePickerTexts eText)
+  private void _add (@Nonnull final JSAssocArray ret,
+                     @Nonnull final String sKey,
+                     @Nonnull final EBootstrap4DateTimePickerTexts eText)
   {
     final String sValue = eText.getDisplayText (m_aDisplayLocale);
     if (StringHelper.hasText (sValue))
@@ -690,7 +694,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   public static void registerResourcesForThisRequest ()
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.JQUERY_3);
-    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.MOMENT);
+    PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.MOMENT_WITH_LOCALES);
     PhotonJS.registerJSIncludeForThisRequest (EBootstrapUICtrlsJSPathProvider.DATETIMEPICKER);
 
     EFontAwesome4Icon.registerResourcesForThisRequest ();
