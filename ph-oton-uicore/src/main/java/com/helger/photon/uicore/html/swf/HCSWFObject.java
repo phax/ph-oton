@@ -44,6 +44,7 @@ import com.helger.photon.uicore.EUICoreJSPathProvider;
  *
  * @author Philip Helger
  */
+@Deprecated
 public class HCSWFObject extends AbstractHCDiv <HCSWFObject>
 {
   // Required:
