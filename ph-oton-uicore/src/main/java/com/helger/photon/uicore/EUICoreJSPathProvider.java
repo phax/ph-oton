@@ -46,6 +46,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
   SERVERLOG ("ph-oton/serverlog/serverlog.js"),
   /** https://github.com/stacktracejs/stacktrace.js/ */
   STACKTRACE ("uicore/stacktrace/stacktrace.js"),
+  @Deprecated
   SWFOBJECT ("uicore/swf/swfobject.js"),
   UICORE_FORM ("ph-oton/uicore-form.js"),
   UICORE_JQUERY ("ph-oton/uicore-jquery.js");
