@@ -148,7 +148,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   public static final String ID_FILENAME = "persistent_id.dat";
 
-  public static final int DEFAULT_PASSWORD_MIN_LENGTH = 6;
+  public static final int DEFAULT_PASSWORD_MIN_LENGTH = 8;
 
   public static final boolean DEFAULT_HANDLE_STATISTICS_ON_END = true;
 

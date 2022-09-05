@@ -52,6 +52,8 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
    *        Web execution context
    * @param aHtml
    *        HTML object to be filled
+   * @throws ForcedRedirectException
+   *         to indicate that the current page should be left.
    */
   protected abstract void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
                                     @Nonnull final HCHtml aHtml) throws ForcedRedirectException;

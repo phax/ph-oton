@@ -105,6 +105,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to js-storage v1.0.4
     * Updated to Moment.js 2.29.4
     * Integrated ph-oton-jdbc submodule
+    * The default minimum password length changed from 6 to 8
     * Deprecated `HCSWFObject`
 * v8.4.1 - 2022-08-17
     * Updated to Apache HttpClient 5.x
