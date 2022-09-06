@@ -64,13 +64,13 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   }
 
   @Nonnull
-  public String getID ()
+  public final String getID ()
   {
     return m_sID;
   }
 
   @Nonnull
-  public IReadableResource getResource ()
+  public final IReadableResource getResource ()
   {
     return m_aRes;
   }
@@ -97,7 +97,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
    *         <code>null</code>.
    */
   @Nullable
-  public String getDescription ()
+  public final String getDescription ()
   {
     return m_sDescription;
   }
@@ -111,33 +111,33 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
    * @return this
    */
   @Nonnull
-  public ConfigurationFile setDescription (@Nullable final String sDescription)
+  public final ConfigurationFile setDescription (@Nullable final String sDescription)
   {
     m_sDescription = sDescription;
     return this;
   }
 
   @Nonnull
-  public Charset getDefaultCharset ()
+  public final Charset getDefaultCharset ()
   {
     return m_aDefaultCharset;
   }
 
   @Nonnull
-  public ConfigurationFile setDefaultCharset (@Nonnull final Charset aDefaultCharset)
+  public final ConfigurationFile setDefaultCharset (@Nonnull final Charset aDefaultCharset)
   {
     m_aDefaultCharset = ValueEnforcer.notNull (aDefaultCharset, "DefaultCharset");
     return this;
   }
 
   @Nonnull
-  public EConfigurationFileSyntax getSyntaxHighlightLanguage ()
+  public final EConfigurationFileSyntax getSyntaxHighlightLanguage ()
   {
     return m_eSyntaxHighlightLanguage;
   }
 
   @Nonnull
-  public ConfigurationFile setSyntaxHighlightLanguage (@Nonnull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
+  public final ConfigurationFile setSyntaxHighlightLanguage (@Nonnull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
   {
     m_eSyntaxHighlightLanguage = ValueEnforcer.notNull (eSyntaxHighlightLanguage, "SyntaxHighlightLanguage");
     return this;
