@@ -94,12 +94,18 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
             eSHL = EConfigurationFileSyntax.NONE;
 
         // Register
-        final ConfigurationFile aCF = new ConfigurationFile (aCVP.getResource ()).setSyntaxHighlightLanguage (eSHL);
+        final ConfigurationFile aCF = new ConfigurationFile (aCVP.getResource ()).setSyntaxHighlightLanguage (eSHL)
+                                                                                 .setDescription ("Configuration Source; priority: " +
+                                                                                                  aCVP.getPriority ());
         if (!m_aMap.containsKey (aCF.getID ()))
           registerConfigurationFile (aCF);
         else
+        {
           if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Ignoring Configuration file '" + aCVP.getResource ().getPath () + "' because it is already registered.");
+            LOGGER.debug ("Ignoring Configuration file '" +
+                          aCVP.getResource ().getPath () +
+                          "' because it is already registered.");
+        }
       }
     });
   }
