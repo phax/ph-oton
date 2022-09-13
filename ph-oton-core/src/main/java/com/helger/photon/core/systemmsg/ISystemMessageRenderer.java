@@ -19,6 +19,7 @@ package com.helger.photon.core.systemmsg;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.html.hc.html.IHCElementWithChildren;
 
 /**
@@ -27,7 +28,7 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * @author Philip Helger
  * @since 8.2.2
  */
-public interface ISystemMessageRenderer
+public interface ISystemMessageRenderer extends IHasDisplayText
 {
   /**
    * Render the system message onto the provided control.

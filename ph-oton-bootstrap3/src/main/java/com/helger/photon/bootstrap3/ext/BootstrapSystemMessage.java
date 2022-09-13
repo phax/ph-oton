@@ -22,16 +22,15 @@ import javax.annotation.concurrent.GuardedBy;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.photon.bootstrap3.alert.AbstractBootstrapAlert;
 import com.helger.photon.bootstrap3.alert.EBootstrapAlertType;
 import com.helger.photon.core.mgr.PhotonBasicManager;
 import com.helger.photon.core.systemmsg.ESystemMessageType;
 import com.helger.photon.core.systemmsg.ISystemMessageRenderer;
 import com.helger.photon.core.systemmsg.SystemMessageManager;
-import com.helger.photon.uicore.UITextFormatter;
+import com.helger.photon.uicore.systemmsg.SystemMessageRendererMarkdown;
+import com.helger.photon.uicore.systemmsg.SystemMessageRendererPlainText;
 
 /**
  * Render the system message using a Bootstrap alert window.
@@ -40,8 +39,7 @@ import com.helger.photon.uicore.UITextFormatter;
  */
 public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSystemMessage>
 {
-  public static final ISystemMessageRenderer FORMATTER_DEFAULT = (sText, aCtrl) -> aCtrl.addChildren (HCExtHelper.nl2divList (sText));
-  public static final ISystemMessageRenderer FORMATTER_MARKDOWN = (sText, aCtrl) -> aCtrl.addChild (UITextFormatter.markdown (sText));
+  public static final ISystemMessageRenderer FORMATTER_DEFAULT = SystemMessageRendererPlainText.INSTANCE;
 
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
   @GuardedBy ("RW_LOCK")
@@ -55,7 +53,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
 
   public static boolean isDefaultMarkdown ()
   {
-    return EqualsHelper.identityEqual (getDefaultFormatter (), FORMATTER_MARKDOWN);
+    return getDefaultFormatter () instanceof SystemMessageRendererMarkdown;
   }
 
   /**
@@ -80,7 +78,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
    */
   public static void setDefaultUseMarkdown (final boolean bUseMarkdown)
   {
-    setDefaultFormatter (bUseMarkdown ? FORMATTER_MARKDOWN : FORMATTER_DEFAULT);
+    setDefaultFormatter (bUseMarkdown ? SystemMessageRendererMarkdown.INSTANCE : SystemMessageRendererPlainText.INSTANCE);
   }
 
   @Nonnull

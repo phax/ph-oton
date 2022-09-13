@@ -150,6 +150,7 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
         aForm.addChild (new HCSystemMessageTypeSelect (new RequestField (FIELD_MESSAGE_TYPE, aSystemMsgMgr.getMessageType ().getID ()),
                                                        aDisplayLocale));
         aForm.addChild (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE, sSystemMessage)));
+        aForm.addChild (div (BootstrapSystemMessage.getDefaultFormatter ().getDisplayText (aDisplayLocale)));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE));
         aForm.addChild (getCSRFHandler ().createCSRFNonceField ());

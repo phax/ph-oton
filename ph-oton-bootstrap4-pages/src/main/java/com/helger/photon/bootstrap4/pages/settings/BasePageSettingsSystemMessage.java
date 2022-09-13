@@ -58,7 +58,6 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
   {
     LABEL_SEVERITY ("Typ", "Severity"),
     LABEL_MESSAGE ("Nachricht", "Message"),
-    MARKDOWN_IS_SUPPORTED ("Markdown wird unterstützt.", "Markdown syntax is supported"),
     SAVE_SUCCESS ("Die neue Systemnachricht wurde erfolgreich gespeichert", "The new system message was saved successfully."),
     LAST_UPDATE ("Letzte Aktualisierung: {0}", "Last update: {0}"),
     CURRENT_MESSAGE_TYPE ("Aktuelle Systemnachricht vom Typ ''{0}''", "Current system message of type ''{0}''"),
@@ -155,12 +154,10 @@ public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionCo
                                                                                               aDisplayLocale)));
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_MESSAGE.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_MESSAGE, sSystemMessage))));
+        aForm.addChild (div (BootstrapSystemMessage.getDefaultFormatter ().getDisplayText (aDisplayLocale)));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT));
         aForm.addChild (new HCHiddenField (CPageParam.PARAM_SUBACTION, CPageParam.ACTION_SAVE));
         aForm.addChild (getCSRFHandler ().createCSRFNonceField ());
-
-        if (BootstrapSystemMessage.isDefaultMarkdown ())
-          aForm.addChild (div (EText.MARKDOWN_IS_SUPPORTED.getDisplayText (aDisplayLocale)));
 
         final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
         // Submit before cancel
