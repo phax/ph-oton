@@ -73,7 +73,7 @@ public class JSForIn extends AbstractJSStatement
 
   public void state (@Nonnull final JSFormatter aFormatter)
   {
-    aFormatter.plain ("for(var ").var (m_aLoopVar).plain (" in ").generatable (m_aCollection).plain (')');
+    aFormatter.plain ("for(var ").var_ (m_aLoopVar).plain (" in ").generatable (m_aCollection).plain (')');
     if (m_aBody != null)
       aFormatter.generatable (m_aBody).nl ();
     else
@@ -94,7 +94,9 @@ public class JSForIn extends AbstractJSStatement
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final JSForIn rhs = (JSForIn) o;
-    return m_aLoopVar.equals (rhs.m_aLoopVar) && m_aCollection.equals (rhs.m_aCollection) && EqualsHelper.equals (m_aBody, rhs.m_aBody);
+    return m_aLoopVar.equals (rhs.m_aLoopVar) &&
+           m_aCollection.equals (rhs.m_aCollection) &&
+           EqualsHelper.equals (m_aBody, rhs.m_aBody);
   }
 
   @Override

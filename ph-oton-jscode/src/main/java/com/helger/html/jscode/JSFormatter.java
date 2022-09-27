@@ -95,7 +95,8 @@ public class JSFormatter implements Closeable
    * @param aSettings
    *        The settings to be used.
    */
-  public JSFormatter (@Nonnull @WillCloseWhenClosed final PrintWriter aPrintWriter, @Nullable final IJSWriterSettings aSettings)
+  public JSFormatter (@Nonnull @WillCloseWhenClosed final PrintWriter aPrintWriter,
+                      @Nullable final IJSWriterSettings aSettings)
   {
     m_aPW = ValueEnforcer.notNull (aPrintWriter, "PrintWriter");
     m_aSettings = JSWriterSettings.createCloneOnDemand (aSettings);
@@ -319,9 +320,24 @@ public class JSFormatter implements Closeable
    * @param aVar
    *        the {@link JSVar} object
    * @return this
+   * @deprecated Since 8.4.3; Use {@link #var_(JSVar)} instead.
    */
   @Nonnull
+  @Deprecated
   public JSFormatter var (@Nonnull final JSVar aVar)
+  {
+    return var_ (aVar);
+  }
+
+  /**
+   * Cause the {@link JSVar} to generate source for itself
+   *
+   * @param aVar
+   *        the {@link JSVar} object
+   * @return this
+   */
+  @Nonnull
+  public JSFormatter var_ (@Nonnull final JSVar aVar)
   {
     aVar.bind (this);
     return this;

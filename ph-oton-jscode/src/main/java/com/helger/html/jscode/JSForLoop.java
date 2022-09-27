@@ -126,7 +126,7 @@ public class JSForLoop extends AbstractJSStatement
       else
         aFormatter.plain (',');
       if (aInit instanceof JSVar)
-        aFormatter.plain ("var ").var ((JSVar) aInit);
+        aFormatter.plain ("var ").var_ ((JSVar) aInit);
       else
         aFormatter.generatable (aInit);
     }
@@ -160,7 +160,11 @@ public class JSForLoop extends AbstractJSStatement
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aInits).append (m_aTest).append (m_aUpdates).append (m_aBody).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aInits)
+                                       .append (m_aTest)
+                                       .append (m_aUpdates)
+                                       .append (m_aBody)
+                                       .getHashCode ();
   }
 
   @Override

@@ -69,7 +69,7 @@ public class JSCatchBlock implements IJSGeneratable
   {
     if (m_aVar == null)
       m_aVar = new JSVar (DEFAULT_VAR_NAME, null);
-    aFormatter.plain ("catch (").var (m_aVar).plain (')').generatable (m_aBody);
+    aFormatter.plain ("catch (").var_ (m_aVar).plain (')').generatable (m_aBody);
   }
 
   @Nonnull
