@@ -60,6 +60,8 @@ public final class PhotonCoreValidator
             final String sClassName = e.getTextContentTrimmed ();
             try
             {
+              if (LOGGER.isDebugEnabled ())
+                LOGGER.debug ("Trying to resolve class '" + sClassName + "'");
               Class.forName (sClassName);
             }
             catch (final Exception ex)
@@ -73,7 +75,7 @@ public final class PhotonCoreValidator
 
   /**
    * Check if the referenced JS and CSS files exist
-   * 
+   *
    * @throws IllegalStateException
    *         if not
    */
