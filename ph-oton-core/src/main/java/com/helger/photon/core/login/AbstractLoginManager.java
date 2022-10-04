@@ -147,7 +147,7 @@ public abstract class AbstractLoginManager
   /**
    * Create the HTML code used to render the login screen
    *
-   * @param bLoginError
+   * @param bShowLoginError
    *        If <code>true</code> an error occurred in a previous login action
    * @param aLoginResult
    *        The login result - only relevant in case of a login error. Never
@@ -155,7 +155,7 @@ public abstract class AbstractLoginManager
    * @return Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract IHTMLProvider createLoginScreen (final boolean bLoginError,
+  protected abstract IHTMLProvider createLoginScreen (final boolean bShowLoginError,
                                                       @Nonnull final ICredentialValidationResult aLoginResult);
 
   /**
@@ -284,7 +284,7 @@ public abstract class AbstractLoginManager
     if (sSessionUserID == null)
     {
       // No user currently logged in -> start login
-      boolean bLoginError = false;
+      boolean bShowLoginError = false;
       ICredentialValidationResult aLoginResult = ELoginResult.SUCCESS;
 
       // Is the special login-check action present?
@@ -316,7 +316,7 @@ public abstract class AbstractLoginManager
 
           // Anyway show the error message only if at least some credential
           // values are passed
-          bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
+          bShowLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
 
           if (aUser != null && m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
           {
@@ -335,7 +335,7 @@ public abstract class AbstractLoginManager
       if (sSessionUserID == null)
       {
         // Show login screen as no user is in the session
-        final IHTMLProvider aLoginScreenProvider = createLoginScreen (bLoginError, aLoginResult);
+        final IHTMLProvider aLoginScreenProvider = createLoginScreen (bShowLoginError, aLoginResult);
         PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aLoginScreenProvider);
       }
     }
