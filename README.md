@@ -98,7 +98,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v8.4.3 - work in progress
+* v8.4.3 - 2022-10-04
     * Updated to Jetty 9.4.49
     * Updated to Log2J 2.19.0
     * Extended the interface `ISystemMessageRenderer` with a display text
