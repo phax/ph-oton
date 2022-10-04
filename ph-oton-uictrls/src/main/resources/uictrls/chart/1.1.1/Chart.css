@@ -32,14 +32,14 @@
   background-color: #fafafa;
 }
 
-.line-legend li span,
-.bar-legend li span,
-.radar-legend li span,
-.polararea-legend li span,
-.pie-legend li span,
-.doughnut-legend li span {
+.line-legend-icon,
+.bar-legend-icon,
+.radar-legend-icon,
+.polararea-legend-icon,
+.pie-legend-icon,
+.doughnut-legend-icon {
   border-radius: 5px;
-  display: block;
+  display: inline-block;
   height: 100%;
   left: 0;
   position: absolute;
