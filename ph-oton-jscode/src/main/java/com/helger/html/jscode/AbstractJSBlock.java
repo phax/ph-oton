@@ -326,11 +326,47 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @return Newly generated {@link JSVar}
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String)} instead
    */
+  @Deprecated
   @Nonnull
   public JSVar var (@Nonnull @Nonempty final String sName)
   {
-    return var (sName, (IJSExpression) null);
+    return variable (sName);
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSVar variable (@Nonnull @Nonempty final String sName)
+  {
+    return variable (sName, (IJSExpression) null);
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param bInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,boolean)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public JSVar var (@Nonnull @Nonempty final String sName, final boolean bInitValue)
+  {
+    return variable (sName, bInitValue);
   }
 
   /**
@@ -345,9 +381,28 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final boolean bInitValue)
+  public JSVar variable (@Nonnull @Nonempty final String sName, final boolean bInitValue)
   {
-    return var (sName, JSExpr.lit (bInitValue));
+    return variable (sName, JSExpr.lit (bInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param cInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,char)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public JSVar var (@Nonnull @Nonempty final String sName, final char cInitValue)
+  {
+    return variable (sName, cInitValue);
   }
 
   /**
@@ -362,9 +417,28 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final char cInitValue)
+  public JSVar variable (@Nonnull @Nonempty final String sName, final char cInitValue)
   {
-    return var (sName, JSExpr.lit (cInitValue));
+    return variable (sName, JSExpr.lit (cInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param dInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,double)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public JSVar var (@Nonnull @Nonempty final String sName, final double dInitValue)
+  {
+    return variable (sName, dInitValue);
   }
 
   /**
@@ -379,9 +453,28 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final double dInitValue)
+  public JSVar variable (@Nonnull @Nonempty final String sName, final double dInitValue)
   {
-    return var (sName, JSExpr.lit (dInitValue));
+    return variable (sName, JSExpr.lit (dInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param fInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,float)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public JSVar var (@Nonnull @Nonempty final String sName, final float fInitValue)
+  {
+    return variable (sName, fInitValue);
   }
 
   /**
@@ -396,9 +489,9 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, final float fInitValue)
+  public JSVar variable (@Nonnull @Nonempty final String sName, final float fInitValue)
   {
-    return var (sName, JSExpr.lit (fInitValue));
+    return variable (sName, JSExpr.lit (fInitValue));
   }
 
   /**
@@ -411,11 +504,13 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @return Newly generated {@link JSVar}
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,int)} instead
    */
+  @Deprecated
   @Nonnull
   public JSVar var (@Nonnull @Nonempty final String sName, final int nInitValue)
   {
-    return var (sName, JSExpr.lit (nInitValue));
+    return variable (sName, nInitValue);
   }
 
   /**
@@ -430,9 +525,64 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
+  public JSVar variable (@Nonnull @Nonempty final String sName, final int nInitValue)
+  {
+    return variable (sName, JSExpr.lit (nInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param nInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,long)} instead
+   */
+  @Deprecated
+  @Nonnull
   public JSVar var (@Nonnull @Nonempty final String sName, final long nInitValue)
   {
-    return var (sName, JSExpr.lit (nInitValue));
+    return variable (sName, nInitValue);
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param nInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSVar variable (@Nonnull @Nonempty final String sName, final long nInitValue)
+  {
+    return variable (sName, JSExpr.lit (nInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param sInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,String)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
+  {
+    return variable (sName, sInitValue);
   }
 
   /**
@@ -447,9 +597,29 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
+  public JSVar variable (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
   {
-    return var (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
+    return variable (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param aInitExpression
+   *        Initialization expression for this variable. May be null.
+   * @return Newly generated {@link JSVar}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   * @deprecated Since 8.4.3; Use {@link #variable(String,IJSExpression)}
+   *             instead
+   */
+  @Nonnull
+  @Deprecated
+  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
+  {
+    return variable (sName, aInitExpression);
   }
 
   /**
@@ -464,7 +634,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *         if the name is not unique
    */
   @Nonnull
-  public JSVar var (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
+  public JSVar variable (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
   {
     final JSVar aVar = new JSVar (sName, aInitExpression);
     return addDeclaration (aVar);
@@ -1032,7 +1202,9 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @return Newly generated conditional statement
    */
   @Nonnull
-  public JSConditional _if (@Nonnull final IJSExpression aTest, @Nullable final IHasJSCode aThen, @Nullable final IHasJSCode aElse)
+  public JSConditional _if (@Nonnull final IJSExpression aTest,
+                            @Nullable final IHasJSCode aThen,
+                            @Nullable final IHasJSCode aElse)
   {
     return addStatement (new JSConditional (aTest, aThen, aElse));
   }

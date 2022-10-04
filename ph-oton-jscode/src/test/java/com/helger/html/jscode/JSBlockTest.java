@@ -42,12 +42,12 @@ public final class JSBlockTest
     assertTrue (aBlock.isEmpty ());
     assertEquals ("{}", aBlock.getJSCode (aSettings));
 
-    JSVar a = aBlock.var ("a");
+    JSVar a = aBlock.variable ("a");
     assertEquals (1, aBlock.pos ());
     assertFalse (aBlock.isEmpty ());
     assertEquals ("{var a;}", aBlock.getJSCode (aSettings));
 
-    final JSVar b = aBlock.var ("b", 5);
+    final JSVar b = aBlock.variable ("b", 5);
     assertEquals (2, aBlock.pos ());
     assertFalse (aBlock.isEmpty ());
     assertEquals ("{var a;var b=5;}", aBlock.getJSCode (aSettings));
@@ -160,7 +160,7 @@ public final class JSBlockTest
     assertTrue (aBlock.isEmpty ());
     assertEquals (0, aBlock.pos ());
 
-    a = aBlock.var ("a", 5);
+    a = aBlock.variable ("a", 5);
     assertEquals (1, aBlock.pos ());
     assertFalse (aBlock.isEmpty ());
     assertEquals ("{var a=5;}", aBlock.getJSCode (aSettings));

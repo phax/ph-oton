@@ -126,7 +126,7 @@ public class JSForLoop extends AbstractJSStatement
       else
         aFormatter.plain (',');
       if (aInit instanceof JSVar)
-        aFormatter.plain ("var ").var_ ((JSVar) aInit);
+        aFormatter.plain ("var ").variable ((JSVar) aInit);
       else
         aFormatter.generatable (aInit);
     }

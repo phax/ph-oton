@@ -100,6 +100,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v8.4.3 - work in progress
     * Extended the interface `ISystemMessageRenderer` with a display text
+    * Renamed method `var` to `variable` in `JS*` classes
+    * Fixed a potential NPE when trying to login with a non-existing user
 * v8.4.2 - 2022-09-07
     * Updated to jQuery 3.6.1
     * Updated to jQuery Migrate 3.4.0

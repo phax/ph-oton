@@ -54,7 +54,7 @@ public class HCGoogleAnalytics extends AbstractHCScriptInline <HCGoogleAnalytics
     ValueEnforcer.notEmpty (sAccount, "Account");
 
     final JSPackage aPkg = new JSPackage ();
-    final JSVar gaq = aPkg.var ("_gaq", JSExpr.ref ("_gaq").cor (new JSArray ()));
+    final JSVar gaq = aPkg.variable ("_gaq", JSExpr.ref ("_gaq").cor (new JSArray ()));
     aPkg.add (gaq.invoke ("push").arg (new JSArray ().add ("_setAccount").add (sAccount)));
     if (bEnhancedLinkAttribution)
     {
@@ -76,7 +76,7 @@ public class HCGoogleAnalytics extends AbstractHCScriptInline <HCGoogleAnalytics
     aPkg.add (gaq.invoke ("push").arg (new JSArray ().add ("_trackPageLoadTime")));
 
     final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
-    final JSVar ga = aAnonFunction.body ().var ("ga", JSHtml.documentCreateElement (EHTMLElement.SCRIPT));
+    final JSVar ga = aAnonFunction.body ().variable ("ga", JSHtml.documentCreateElement (EHTMLElement.SCRIPT));
     aAnonFunction.body ().add (ga.ref ("type").assign (CMimeType.TEXT_JAVASCRIPT.getAsString ()));
     aAnonFunction.body ().add (ga.ref ("async").assign (true));
     aAnonFunction.body ()
@@ -86,7 +86,7 @@ public class HCGoogleAnalytics extends AbstractHCScriptInline <HCGoogleAnalytics
                                              JSExpr.lit ("http://www"))
                                       .plus (".google-analytics.com/ga.js")));
     final JSVar s = aAnonFunction.body ()
-                                 .var ("s", JSHtml.documentGetElementsByTagName (EHTMLElement.SCRIPT).component0 ());
+                                 .variable ("s", JSHtml.documentGetElementsByTagName (EHTMLElement.SCRIPT).component0 ());
     aAnonFunction.body ().add (s.ref ("parentNode").invoke ("insertBefore").arg (ga).arg (s));
     aPkg.invoke (aAnonFunction);
     return aPkg;

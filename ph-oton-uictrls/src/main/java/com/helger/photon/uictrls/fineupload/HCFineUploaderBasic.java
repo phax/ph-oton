@@ -108,10 +108,10 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
     // The global variable holding the number of files selected for upload
     IJSAssignmentTarget aGlobalCnt;
     if (!WebScopeManager.getRequestScope ().attrs ().getAndSetFlag ("fineuploader-globalvars"))
-      aGlobalCnt = aPkg.var ("g_nUploadCnt", 0);
+      aGlobalCnt = aPkg.variable ("g_nUploadCnt", 0);
     else
       aGlobalCnt = JSExpr.ref ("g_nUploadCnt");
-    final JSVar aLocalCnt = aPkg.var ("nCnt" + sID, 0);
+    final JSVar aLocalCnt = aPkg.variable ("nCnt" + sID, 0);
 
     // On submit, inc counter
     final JSAnonymousFunction aOnSubmit = new JSAnonymousFunction ();
@@ -122,7 +122,7 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
     aOnCancel.body ().decrPrefix (aGlobalCnt);
     aOnCancel.body ().decrPrefix (aLocalCnt);
 
-    final JSVar aUpload = aPkg.var ("u" + sID, JQuery.idRef (sID));
+    final JSVar aUpload = aPkg.variable ("u" + sID, JQuery.idRef (sID));
     aPkg.add (aUpload.invoke ("fineUploader")
                      .arg (m_aUploader.getJSON ())
                      .invoke ("on")
@@ -137,7 +137,7 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
       // Manually trigger upload when form is submitted
 
       // Get closest form to the input ID
-      final JSVar aForm = aPkg.var ("f" + sID, aUpload.invoke ("closest").arg (EHTMLElement.FORM));
+      final JSVar aForm = aPkg.variable ("f" + sID, aUpload.invoke ("closest").arg (EHTMLElement.FORM));
 
       final JSAnonymousFunction aOnClick = new JSAnonymousFunction ();
 

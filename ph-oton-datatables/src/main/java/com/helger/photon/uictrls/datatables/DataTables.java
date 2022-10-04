@@ -1297,7 +1297,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     if (m_aJSBeforeModifier != null)
       m_aJSBeforeModifier.accept (aJSCode);
 
-    final JSVar aJSTable = aJSCode.var (m_sJSVariableName, invokeDataTables ().arg (aParams));
+    final JSVar aJSTable = aJSCode.variable (m_sJSVariableName, invokeDataTables ().arg (aParams));
 
     // Add plugin init JS
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)

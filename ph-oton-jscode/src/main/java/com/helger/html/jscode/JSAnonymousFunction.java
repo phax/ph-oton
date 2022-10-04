@@ -182,7 +182,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
         bFirst = false;
       else
         aFormatter.plain (',');
-      aFormatter.var_ (aParam);
+      aFormatter.variable (aParam);
     }
     aFormatter.plain (')').stmt (body ());
   }

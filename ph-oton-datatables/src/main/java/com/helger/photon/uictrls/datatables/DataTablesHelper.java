@@ -148,13 +148,13 @@ public final class DataTablesHelper
     ret.param ("start");
     ret.param ("end");
     ret.param ("display");
-    final JSVar aAPI = ret.body ().var ("api", JSExpr.THIS.invoke ("api"));
+    final JSVar aAPI = ret.body ().variable ("api", JSExpr.THIS.invoke ("api"));
 
     for (final FooterCallbackSumColumn aColumn : aColumns)
     {
       final String sSuffix = Integer.toString (aColumn.getPrintColumn ());
-      final JSVar aIntVal = ret.body ().var ("funcIntVal" + sSuffix, aColumn.getJSFuncIntVal ());
-      final JSVar aPrintSum = ret.body ().var ("funcPrintSum" + sSuffix, aColumn.getJSFuncPrintSum ());
+      final JSVar aIntVal = ret.body ().variable ("funcIntVal" + sSuffix, aColumn.getJSFuncIntVal ());
+      final JSVar aPrintSum = ret.body ().variable ("funcPrintSum" + sSuffix, aColumn.getJSFuncPrintSum ());
 
       // The reduce function: plus
       final JSAnonymousFunction aFuncReduce = new JSAnonymousFunction ();
@@ -163,11 +163,11 @@ public final class DataTablesHelper
         final JSVar aParam2 = aFuncReduce.param ("b");
         aFuncReduce.body ()._return (JSExpr.invoke (aIntVal).arg (aParam1).plus (JSExpr.invoke (aIntVal).arg (aParam2)));
       }
-      final JSVar aReduce = ret.body ().var ("funcReduce" + sSuffix, aFuncReduce);
+      final JSVar aReduce = ret.body ().variable ("funcReduce" + sSuffix, aFuncReduce);
 
       // Calc overall total
       final JSVar aTotal = ret.body ()
-                              .var ("total" + sSuffix,
+                              .variable ("total" + sSuffix,
                                     aAPI.invoke ("column")
                                         .arg (aColumn.getCalcColumn ())
                                         .invoke ("data")
@@ -176,7 +176,7 @@ public final class DataTablesHelper
                                         .arg (0));
       // Calc visible total
       final JSVar aPageTotal = ret.body ()
-                                  .var ("pagetotal" + sSuffix,
+                                  .variable ("pagetotal" + sSuffix,
                                         aAPI.invoke ("column")
                                             .arg (aColumn.getCalcColumn ())
                                             .arg (new JSAssocArray ().add ("page", "current"))

@@ -320,13 +320,13 @@ public class JSFormatter implements Closeable
    * @param aVar
    *        the {@link JSVar} object
    * @return this
-   * @deprecated Since 8.4.3; Use {@link #var_(JSVar)} instead.
+   * @deprecated Since 8.4.3; Use {@link #variable(JSVar)} instead.
    */
   @Nonnull
   @Deprecated
   public JSFormatter var (@Nonnull final JSVar aVar)
   {
-    return var_ (aVar);
+    return variable (aVar);
   }
 
   /**
@@ -337,7 +337,7 @@ public class JSFormatter implements Closeable
    * @return this
    */
   @Nonnull
-  public JSFormatter var_ (@Nonnull final JSVar aVar)
+  public JSFormatter variable (@Nonnull final JSVar aVar)
   {
     aVar.bind (this);
     return this;

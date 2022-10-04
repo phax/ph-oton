@@ -193,7 +193,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
         bFirst = false;
       else
         aFormatter.plain (',');
-      aFormatter.var_ (aParam);
+      aFormatter.variable (aParam);
     }
     aFormatter.plain (')').stmt (body ());
   }

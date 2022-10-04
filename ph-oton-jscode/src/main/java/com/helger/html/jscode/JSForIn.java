@@ -50,9 +50,20 @@ public class JSForIn extends AbstractJSStatement
 
   /**
    * @return a reference to the loop variable.
+   * @deprecated Since 8.4.3; Use {@link #variable()} instead
    */
+  @Deprecated
   @Nonnull
   public JSVar var ()
+  {
+    return variable ();
+  }
+
+  /**
+   * @return a reference to the loop variable.
+   */
+  @Nonnull
+  public JSVar variable ()
   {
     return m_aLoopVar;
   }
@@ -73,7 +84,7 @@ public class JSForIn extends AbstractJSStatement
 
   public void state (@Nonnull final JSFormatter aFormatter)
   {
-    aFormatter.plain ("for(var ").var_ (m_aLoopVar).plain (" in ").generatable (m_aCollection).plain (')');
+    aFormatter.plain ("for(var ").variable (m_aLoopVar).plain (" in ").generatable (m_aCollection).plain (')');
     if (m_aBody != null)
       aFormatter.generatable (m_aBody).nl ();
     else

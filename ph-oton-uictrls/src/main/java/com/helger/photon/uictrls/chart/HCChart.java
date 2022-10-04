@@ -266,7 +266,7 @@ public class HCChart extends AbstractHCCanvas <HCChart>
       aJSDelOld.delete (aOldChart);
     }
 
-    final JSVar aJSCanvas = aJSBody.var (getCanvasID (), JSHtml.documentGetElementById (this));
+    final JSVar aJSCanvas = aJSBody.variable (getCanvasID (), JSHtml.documentGetElementById (this));
     if (m_aWidth != null)
       aJSBody.add (aJSCanvas.ref ("width").assign (m_aWidth));
     if (m_aHeight != null)
@@ -275,13 +275,13 @@ public class HCChart extends AbstractHCCanvas <HCChart>
     // Init after width and height was of the canvas was set
 
     // Get the data to be displayed
-    final JSVar aJSData = aJSBody.var (getJSDataVar (), m_aChart.getJSData ());
+    final JSVar aJSData = aJSBody.variable (getJSDataVar (), m_aChart.getJSData ());
 
     // First take options from chart
     final JSAssocArray aJSOptions = getJSOptions ();
 
     // Build main chart
-    final JSVar aJSChart = aJSBody.var (getJSChartVar (),
+    final JSVar aJSChart = aJSBody.variable (getJSChartVar (),
                                         new JSDefinedClass ("Chart")._new ()
                                                                     .arg (aJSCanvas.invoke ("getContext").arg ("2d"))
                                                                     .invoke (m_aChart.getJSMethodName ())
