@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.collection.impl.ICommonsMap;
@@ -44,6 +45,10 @@ public class PhotonCoreTestRule extends WebScopeTestRule
 {
   public static final File RESOURCE_BASE_FILE = new File ("target/test-classes").getAbsoluteFile ();
 
+  /**
+   * @return The default Servlet Context init parameters to be used. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public static StringMap createDefaultServletContextInitParameters ()
@@ -63,23 +68,24 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   }
 
   @Override
+  @OverrideOnDemand
   protected void initListener ()
   {
     MockHttpListener.removeAllDefaultListeners ();
-    final WebAppListener aListener = new WebAppListener ();
-    aListener.setHandleStatisticsOnEnd (false);
-    MockHttpListener.addDefaultListener (aListener);
+    MockHttpListener.addDefaultListener (new WebAppListener ().setHandleStatisticsOnEnd (false));
     MockHttpListener.addDefaultListener (new MockServletRequestListenerScopeAware ());
     MockHttpListener.setCurrentToDefault ();
   }
 
   @Override
   @Nonnull
+  @OverrideOnDemand
   protected MockServletContext createMockServletContext (@Nullable final String sContextPath,
                                                          @Nullable final Map <String, String> aInitParams)
   {
     // Use the special resource base path
     // Use default resource provider
+    // This is, where all the ServletContext Listeners are invoked
     return MockServletContext.create (sContextPath, RESOURCE_BASE_FILE.getAbsolutePath (), (IReadableResourceProvider) null, aInitParams);
   }
 }
