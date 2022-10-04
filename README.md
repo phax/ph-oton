@@ -99,6 +99,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v8.4.3 - work in progress
+    * Updated to Jetty 9.4.49
+    * Updated to Log2J 2.19.0
     * Extended the interface `ISystemMessageRenderer` with a display text
     * Renamed method `var` to `variable` in `JS*` classes
     * Fixed a potential NPE when trying to login with a non-existing user
