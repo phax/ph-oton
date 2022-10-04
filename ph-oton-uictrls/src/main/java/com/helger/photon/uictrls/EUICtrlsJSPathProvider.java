@@ -37,6 +37,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   /** BigDecimal support for JS */
   BIG_DECIMAL ("uictrls/js/big.js"),
   CHART_1 ("uictrls/chart/1.1.1/Chart.js"),
+  CHART_2 ("uictrls/chart/2.9.4/Chart.js"),
   CHART_3 ("uictrls/chart/3.7.1/chart.js"),
   CLIPBOARD ("uictrls/clipboardjs/2.0.6/clipboard.js"),
   COLORBOX ("uictrls/colorbox/1.6.0/jquery.colorbox.js"),
@@ -93,7 +94,9 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (), "{0}", sLanguage),
+    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
+                                                                                         "{0}",
+                                                                                         sLanguage),
                                                                 m_aPP.getConditionalComment ());
   }
 }

@@ -43,12 +43,17 @@ public class PagePublicChartsV1 extends AbstractAppWebPage
     {
       aNodeList.addChild (h3 ("Bar chart (v1)"));
       final ChartBar aChart = new ChartBar ();
-      aChart.addDataSet (new ChartBar.DataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
+      aChart.addDataSet (new ChartBar.DataSet ().setData (10,
+                                                          15,
+                                                          10 + ThreadLocalRandom.current ().nextInt (10),
+                                                          20,
+                                                          15)
                                                 .setFillColor ("#c94"));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChart aHCChart = new HCChart (aChart);
       aHCChart.setWidth (800).setHeight (300);
+      aHCChart.setShowLegend (true);
       aNodeList.addChild (aHCChart);
     }
 
@@ -56,9 +61,17 @@ public class PagePublicChartsV1 extends AbstractAppWebPage
     {
       aNodeList.addChild (h3 ("Line chart (v1)"));
       final ChartLine aChart = new ChartLine ();
-      aChart.addDataSet (new ChartLine.DataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
+      aChart.addDataSet (new ChartLine.DataSet ().setData (10,
+                                                           15,
+                                                           10 + ThreadLocalRandom.current ().nextInt (10),
+                                                           20,
+                                                           15)
                                                  .setStrokeColor ("#4c9"));
-      aChart.addDataSet (new ChartLine.DataSet ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
+      aChart.addDataSet (new ChartLine.DataSet ().setData (20,
+                                                           5,
+                                                           10 - ThreadLocalRandom.current ().nextInt (10),
+                                                           10,
+                                                           25)
                                                  .setStrokeColor ("#c94")
                                                  .setPointColor ("red"));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
@@ -66,6 +79,7 @@ public class PagePublicChartsV1 extends AbstractAppWebPage
 
       final HCChart aHCChart = new HCChart (aChart);
       aHCChart.setWidth (800).setHeight (300);
+      aHCChart.setShowLegend (true);
       aNodeList.addChild (aHCChart);
     }
   }

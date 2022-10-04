@@ -35,7 +35,8 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
   /** https://github.com/daneden/animate.css */
   ANIMATE ("uictrls/animate/animate.css"),
   AUTONUMERIC ("uictrls/autonumeric/autonumeric.css"),
-  CHART_1 ("uictrls/chart/Chart.css"),
+  CHART_1 ("uictrls/chart/1.1.1/Chart.css"),
+  CHART_2 ("uictrls/chart/2.9.4/Chart.css"),
   COLORBOX ("uictrls/colorbox/1.6.0/colorbox.css"),
   FAMFAM_ICONS ("uictrls/famfam/013/famfam.css"),
   FAMFAM_FLAGS ("uictrls/famfam/flags/flags.css"),
