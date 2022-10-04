@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger.photon</groupId>
     <artifactId>ph-oton-parent-pom</artifactId>
-    <version>8.4.3-SNAPSHOT</version>
+    <version>8.4.3</version>
   </parent>
   <artifactId>ph-oton-datatables</artifactId>
   <packaging>bundle</packaging>
