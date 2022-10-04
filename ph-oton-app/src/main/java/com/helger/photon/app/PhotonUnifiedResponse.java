@@ -78,6 +78,12 @@ import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
+/**
+ * Extends the {@link UnifiedResponse} with additional sanity methods for easier
+ * pratical use.
+ *
+ * @author Philip Helger
+ */
 public class PhotonUnifiedResponse extends UnifiedResponse
 {
   private final IRequestWebScopeWithoutResponse m_aRequestScope;
