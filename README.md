@@ -102,6 +102,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Extended the interface `ISystemMessageRenderer` with a display text
     * Renamed method `var` to `variable` in `JS*` classes
     * Fixed a potential NPE when trying to login with a non-existing user
+    * Fixed an issue in chartjs v1 CSS
+    * Changed chart.js package from `com.helger.photon.uictrls.chart` to `com.helger.photon.uictrls.chart.v1` (backwards incompatible change)
 * v8.4.2 - 2022-09-07
     * Updated to jQuery 3.6.1
     * Updated to jQuery Migrate 3.4.0
