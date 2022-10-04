@@ -14,49 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.chart;
+package com.helger.photon.uictrls.chart.v1;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Base class for all chartjs.org charts.
+ * Line Chart
  *
  * @author Philip Helger
  */
-public interface IChart
+@NotThreadSafe
+public class ChartLine extends AbstractChartComplex <ChartLine>
 {
-  /**
-   * @return The JS method name required for invocation.
-   */
+  public ChartLine ()
+  {}
+
   @Nonnull
   @Nonempty
-  String getJSMethodName ();
+  public final String getJSMethodName ()
+  {
+    return "Line";
+  }
 
-  /**
-   * @return The JS data array for invocation.
-   */
+  @Override
   @Nonnull
   @ReturnsMutableCopy
-  IJSExpression getJSData ();
-
-  /**
-   * @param aJSDataSets
-   *        the data sets to be used. Must be an array.
-   * @return The JS data array for invocation.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  IJSExpression getJSData (@Nonnull IJSExpression aJSDataSets);
-
-  /**
-   * @return The JS options of this chart.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  JSAssocArray getJSOptions ();
+  public final JSAssocArray getJSOptions ()
+  {
+    return super.getJSOptions ();
+  }
 }

@@ -23,9 +23,9 @@ import javax.annotation.Nonnull;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
-import com.helger.photon.uictrls.chart.ChartBar;
-import com.helger.photon.uictrls.chart.ChartLine;
-import com.helger.photon.uictrls.chart.HCChart;
+import com.helger.photon.uictrls.chart.v1.ChartBar;
+import com.helger.photon.uictrls.chart.v1.ChartLine;
+import com.helger.photon.uictrls.chart.v1.HCChart;
 
 public class PagePublicChartsV1 extends AbstractAppWebPage
 {
@@ -48,6 +48,7 @@ public class PagePublicChartsV1 extends AbstractAppWebPage
                                                           10 + ThreadLocalRandom.current ().nextInt (10),
                                                           20,
                                                           15)
+                                                .setLabel ("Week days")
                                                 .setFillColor ("#c94"));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
@@ -66,12 +67,14 @@ public class PagePublicChartsV1 extends AbstractAppWebPage
                                                            10 + ThreadLocalRandom.current ().nextInt (10),
                                                            20,
                                                            15)
+                                                 .setLabel ("Sequence 1")
                                                  .setStrokeColor ("#4c9"));
       aChart.addDataSet (new ChartLine.DataSet ().setData (20,
                                                            5,
                                                            10 - ThreadLocalRandom.current ().nextInt (10),
                                                            10,
                                                            25)
+                                                 .setLabel ("Sequence 2")
                                                  .setStrokeColor ("#c94")
                                                  .setPointColor ("red"));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");

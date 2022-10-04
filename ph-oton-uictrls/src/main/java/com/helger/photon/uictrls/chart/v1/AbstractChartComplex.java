@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.chart;
+package com.helger.photon.uictrls.chart.v1;
 
 import java.math.BigDecimal;
 
@@ -24,23 +24,25 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.mutable.MutableBigDecimal;
+import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Bar Chart
+ * Base chart for Line and Radar
  *
  * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Real implementation type
  */
 @NotThreadSafe
-public class ChartBar extends AbstractChartWithLabels <ChartBar>
+public abstract class AbstractChartComplex <IMPLTYPE extends AbstractChartComplex <IMPLTYPE>> extends AbstractChartWithLabels <IMPLTYPE>
 {
   /**
    * Single data set for a complex chart.
@@ -53,8 +55,10 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
     private String m_sLabel;
     private String m_sFillColor;
     private String m_sStrokeColor;
-    private String m_sHighlightFill;
-    private String m_sHighlightStroke;
+    private String m_sPointColor;
+    private String m_sPointStrokeColor;
+    private String m_sPointHighlightFill;
+    private String m_sPointHighlightStroke;
     private JSArray m_aData;
 
     public DataSet ()
@@ -82,16 +86,30 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
     }
 
     @Nonnull
-    public DataSet setHighlightFill (@Nullable final String sHighlightFill)
+    public DataSet setPointColor (@Nullable final String sPointColor)
     {
-      m_sHighlightFill = sHighlightFill;
+      m_sPointColor = sPointColor;
       return this;
     }
 
     @Nonnull
-    public DataSet setHighlightStroke (@Nullable final String sHighlightStroke)
+    public DataSet setPointStrokeColor (@Nullable final String sPointStrokeColor)
     {
-      m_sHighlightStroke = sHighlightStroke;
+      m_sPointStrokeColor = sPointStrokeColor;
+      return this;
+    }
+
+    @Nonnull
+    public DataSet setPointHighlightFill (@Nullable final String sPointHighlightFill)
+    {
+      m_sPointHighlightFill = sPointHighlightFill;
+      return this;
+    }
+
+    @Nonnull
+    public DataSet setPointHighlightStroke (@Nullable final String sPointHighlightStroke)
+    {
+      m_sPointHighlightStroke = sPointHighlightStroke;
       return this;
     }
 
@@ -137,10 +155,14 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
         ret.add ("fillColor", m_sFillColor);
       if (StringHelper.hasText (m_sStrokeColor))
         ret.add ("strokeColor", m_sStrokeColor);
-      if (StringHelper.hasText (m_sHighlightFill))
-        ret.add ("highlightFill", m_sHighlightFill);
-      if (StringHelper.hasText (m_sHighlightStroke))
-        ret.add ("highlightStroke", m_sHighlightStroke);
+      if (StringHelper.hasText (m_sPointColor))
+        ret.add ("pointColor", m_sPointColor);
+      if (StringHelper.hasText (m_sPointStrokeColor))
+        ret.add ("pointStrokeColor", m_sPointStrokeColor);
+      if (StringHelper.hasText (m_sPointHighlightFill))
+        ret.add ("pointHighlightFill", m_sPointHighlightFill);
+      if (StringHelper.hasText (m_sPointHighlightStroke))
+        ret.add ("pointHighlightStroke", m_sPointHighlightStroke);
       if (m_aData != null)
         ret.add ("data", m_aData);
       return ret;
@@ -148,8 +170,9 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
   }
 
   private final ICommonsList <DataSet> m_aDataSets = new CommonsArrayList <> ();
+  private ETriState m_eDatasetFill = ETriState.UNDEFINED;
 
-  public ChartBar ()
+  public AbstractChartComplex ()
   {}
 
   public boolean hasDataSet ()
@@ -171,18 +194,11 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
   }
 
   @Nonnull
-  public ChartBar addDataSet (@Nonnull final DataSet aDataSet)
+  public IMPLTYPE addDataSet (@Nonnull final DataSet aDataSet)
   {
     ValueEnforcer.notNull (aDataSet, "DataSet");
     m_aDataSets.add (aDataSet);
-    return this;
-  }
-
-  @Nonnull
-  @Nonempty
-  public final String getJSMethodName ()
-  {
-    return "Bar";
+    return thisAsT ();
   }
 
   @Nonnull
@@ -200,18 +216,28 @@ public class ChartBar extends AbstractChartWithLabels <ChartBar>
   public final JSAssocArray getJSData (@Nonnull final IJSExpression aJSDataSets)
   {
     final JSAssocArray aData = new JSAssocArray ();
-    // Labels is a mandatory element to print always
-    aData.add ("labels", getLabelsAsArray ());
+    if (hasLabels ())
+      aData.add ("labels", getLabelsAsArray ());
 
     aData.add ("datasets", aJSDataSets);
     return aData;
   }
 
+  @Nonnull
+  public IMPLTYPE setDatasetFill (final boolean bDatasetFill)
+  {
+    m_eDatasetFill = ETriState.valueOf (bDatasetFill);
+    return thisAsT ();
+  }
+
   @Override
   @Nonnull
   @ReturnsMutableCopy
-  public final JSAssocArray getJSOptions ()
+  public JSAssocArray getJSOptions ()
   {
-    return super.getJSOptions ();
+    final JSAssocArray aOptions = super.getJSOptions ();
+    if (m_eDatasetFill.isDefined ())
+      aOptions.add ("datasetFill", m_eDatasetFill.getAsBooleanValue (true));
+    return aOptions;
   }
 }

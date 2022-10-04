@@ -14,42 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.chart;
+package com.helger.photon.uictrls.chart.v1;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.state.ETriState;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * PolarArea Chart
+ * Radar Chart
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ChartPolarArea extends AbstractChartSimple <ChartPolarArea>
+public class ChartRadar extends AbstractChartComplex <ChartRadar>
 {
-  // options
-  private ETriState m_eAnimateRotate = ETriState.UNDEFINED;
-
-  public ChartPolarArea ()
+  public ChartRadar ()
   {}
-
-  @Nonnull
-  public ChartPolarArea setAnimateRotate (final boolean bAnimateRotate)
-  {
-    m_eAnimateRotate = ETriState.valueOf (bAnimateRotate);
-    return this;
-  }
 
   @Nonnull
   @Nonempty
   public final String getJSMethodName ()
   {
-    return "PolarArea";
+    return "Radar";
   }
 
   @Override
@@ -57,9 +46,6 @@ public class ChartPolarArea extends AbstractChartSimple <ChartPolarArea>
   @ReturnsMutableCopy
   public final JSAssocArray getJSOptions ()
   {
-    final JSAssocArray aOptions = super.getJSOptions ();
-    if (m_eAnimateRotate.isDefined ())
-      aOptions.add ("animateRotate", m_eAnimateRotate.getAsBooleanValue (true));
-    return aOptions;
+    return super.getJSOptions ();
   }
 }

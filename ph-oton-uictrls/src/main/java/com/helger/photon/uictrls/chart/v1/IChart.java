@@ -14,38 +14,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uictrls.chart;
+package com.helger.photon.uictrls.chart.v1;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Radar Chart
+ * Base class for all chartjs.org charts.
  *
  * @author Philip Helger
  */
-@NotThreadSafe
-public class ChartRadar extends AbstractChartComplex <ChartRadar>
+public interface IChart
 {
-  public ChartRadar ()
-  {}
-
+  /**
+   * @return The JS method name required for invocation.
+   */
   @Nonnull
   @Nonempty
-  public final String getJSMethodName ()
-  {
-    return "Radar";
-  }
+  String getJSMethodName ();
 
-  @Override
+  /**
+   * @return The JS data array for invocation.
+   */
   @Nonnull
   @ReturnsMutableCopy
-  public final JSAssocArray getJSOptions ()
-  {
-    return super.getJSOptions ();
-  }
+  IJSExpression getJSData ();
+
+  /**
+   * @param aJSDataSets
+   *        the data sets to be used. Must be an array.
+   * @return The JS data array for invocation.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  IJSExpression getJSData (@Nonnull IJSExpression aJSDataSets);
+
+  /**
+   * @return The JS options of this chart.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  JSAssocArray getJSOptions ();
 }
