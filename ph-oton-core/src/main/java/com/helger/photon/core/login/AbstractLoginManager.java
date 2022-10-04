@@ -318,7 +318,7 @@ public abstract class AbstractLoginManager
           // values are passed
           bLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
 
-          if (m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
+          if (aUser != null && m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
           {
             // Every failed login increases the time
             final long nMultiplier = Math.max (aUser.getConsecutiveFailedLoginCount (), 1L);
