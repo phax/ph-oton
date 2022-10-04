@@ -31,6 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.IsLocked;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
@@ -58,7 +61,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
 
-  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+  protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final Consumer <? super IJsonObject> m_aJsonHandler;
   private boolean m_bFilterDuplicates = true;
   @GuardedBy ("m_aRWLock")
@@ -72,6 +75,16 @@ public class CSPReportingXServletHandler implements IXServletHandler
   public CSPReportingXServletHandler (@Nonnull final Consumer <? super IJsonObject> aJsonHandler)
   {
     m_aJsonHandler = ValueEnforcer.notNull (aJsonHandler, "JsonHandler");
+  }
+
+  /**
+   * @return The JSON consumer provided in the constructor. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public final Consumer <? super IJsonObject> getJsonHandler ()
+  {
+    return m_aJsonHandler;
   }
 
   /**
@@ -93,6 +106,13 @@ public class CSPReportingXServletHandler implements IXServletHandler
   public final void setFilterDuplicates (final boolean bFilterDuplicates)
   {
     m_bFilterDuplicates = bFilterDuplicates;
+  }
+
+  @IsLocked (ELockType.WRITE)
+  protected final boolean rememberBlockedURL (@Nonnull @Nonempty final String sBlockedURI)
+  {
+    ValueEnforcer.notEmpty (sBlockedURI, "BlockedURI");
+    return m_aRWLock.writeLockedBoolean ( () -> !m_aBlockedURIs.add (sBlockedURI));
   }
 
   public static void logCSPReport (@Nonnull final IJsonObject aJson)
@@ -118,9 +138,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
         final IJsonObject aJsonObj = aJson.getAsObject ();
         final String sBlockedURI = aJsonObj.getAsString ("blocked-uri");
 
-        final boolean bIsDuplicate = m_bFilterDuplicates &&
-                                     StringHelper.hasText (sBlockedURI) &&
-                                     m_aRWLock.writeLockedBoolean ( () -> !m_aBlockedURIs.add (sBlockedURI));
+        final boolean bIsDuplicate = m_bFilterDuplicates && StringHelper.hasText (sBlockedURI) && rememberBlockedURL (sBlockedURI);
 
         if (bIsDuplicate)
         {
@@ -139,19 +157,19 @@ public class CSPReportingXServletHandler implements IXServletHandler
     else
       LOGGER.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
 
-    // Ack
+    // Ack (202)
     aHttpResponse.setStatus (HttpServletResponse.SC_ACCEPTED);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsSet <String> getAllBlockedURIs ()
+  public final ICommonsSet <String> getAllBlockedURIs ()
   {
     return m_aRWLock.readLockedGet (m_aBlockedURIs::getClone);
   }
 
   @Nonnull
-  public EChange clearAllBlockedURIs ()
+  public final EChange clearAllBlockedURIs ()
   {
     return m_aRWLock.readLockedGet (m_aBlockedURIs::removeAll);
   }
