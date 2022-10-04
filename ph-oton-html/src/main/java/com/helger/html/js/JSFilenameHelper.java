@@ -102,7 +102,8 @@ public final class JSFilenameHelper
   public static String getMinifiedJSFilename (@Nonnull final String sJSFilename)
   {
     if (!isJSFilename (sJSFilename))
-      throw new IllegalArgumentException ("Passed file name '" + sJSFilename + "' is not a JS file name!");
+      throw new IllegalArgumentException ("Passed filename '" + sJSFilename + "' is not a JS filename!");
+
     if (isMinifiedJSFilename (sJSFilename))
       return sJSFilename;
 
