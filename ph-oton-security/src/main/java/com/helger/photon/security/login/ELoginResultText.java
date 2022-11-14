@@ -38,7 +38,7 @@ public enum ELoginResultText implements IHasDisplayText
   SUCCESS_WITH_LOGOUT ("Die Anmeldung war erfolgreich. Eine andere Sitzung wurde automatisch beendet.",
                        "User logged in successfully. Another session was automatically closed."),
   USER_NOT_EXISTING ("Der Benutzername ist ungültig.", "No such user exists."),
-  USER_IS_DELETED ("Der Benutzer existiert nicht mehr.", "The user not longer exists."),
+  USER_IS_DELETED ("Der Benutzer existiert nicht mehr.", "The user no longer exists."),
   USER_IS_DISABLED ("Der Benutzer ist deaktiviert.", "The user is disabled."),
   USER_IS_MISSING_ROLE ("Der Benutzer hat keine Berechtigung sich anzumelden.", "The user has no rights to login."),
   INVALID_PASSWORD ("Das Passwort ist ungültig.", "Invalid password provided."),
