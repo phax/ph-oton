@@ -46,10 +46,10 @@ public class BootstrapDataTables extends DataTables
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_1_11_BOOTSTRAP3);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_1_13_BOOTSTRAP3);
     // Original CSS not needed, when Bootstrap is used
-    PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_11);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_11_BOOTSTRAP3);
+    PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_13);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_13_BOOTSTRAP3);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.BOOTSTRAP3_DATATABLES_PH);
   }
 
