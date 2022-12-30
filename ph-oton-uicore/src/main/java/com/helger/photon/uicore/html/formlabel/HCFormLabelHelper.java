@@ -73,19 +73,22 @@ public final class HCFormLabelHelper
 
   static
   {
-    resetToDefault ();
+    resetToDefault (false);
   }
 
   private HCFormLabelHelper ()
   {}
 
-  public static void resetToDefault ()
+  public static void resetToDefault (final boolean bLog)
   {
     s_sDefaultLabelEnd = DEFAULT_LABEL_END;
     DEFAULT_SUFFIXES.clear ();
     DEFAULT_SUFFIXES.put (ELabelType.OPTIONAL, DEFAULT_SIGN_OPTIONAL);
     DEFAULT_SUFFIXES.put (ELabelType.MANDATORY, DEFAULT_SIGN_MANDATORY);
     DEFAULT_SUFFIXES.put (ELabelType.ALTERNATIVE, DEFAULT_SIGN_ALTERNATIVE);
+
+    if (bLog)
+      LOGGER.info ("The UI label configuration was reset to default");
   }
 
   /**

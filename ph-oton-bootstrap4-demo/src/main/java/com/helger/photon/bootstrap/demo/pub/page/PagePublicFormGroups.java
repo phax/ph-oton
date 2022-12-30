@@ -78,7 +78,7 @@ public class PagePublicFormGroups extends AbstractAppWebPage
     }
     finally
     {
-      HCFormLabelHelper.resetToDefault ();
+      HCFormLabelHelper.resetToDefault (true);
     }
   }
 }
