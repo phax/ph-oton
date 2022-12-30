@@ -153,6 +153,7 @@ public final class BootstrapFormHelper
   {
     if (aCtrls != null)
     {
+      // Use all error node HTML IDs and add them as one "aria-describedby"
       final String sDescribedBy = StringHelper.imploder ()
                                               .source (aErrorNodes, x -> x.ensureID ().getID ())
                                               .separator (' ')
