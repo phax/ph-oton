@@ -151,7 +151,7 @@ public final class BootstrapFormHelper
   public static void connectFormControlsWithErrors (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
                                                     @Nullable final ICommonsCollection <? extends IHCElement <?>> aErrorNodes)
   {
-    if (aCtrls != null)
+    if (aCtrls != null && aErrorNodes != null)
     {
       // Use all error node HTML IDs and add them as one "aria-describedby"
       final String sDescribedBy = StringHelper.imploder ()
@@ -160,7 +160,18 @@ public final class BootstrapFormHelper
                                               .build ();
       if (StringHelper.hasText (sDescribedBy))
         for (final IHCElement <?> aCurCtrl : aCtrls)
-          aCurCtrl.customAttrs ().setAriaDescribedBy (sDescribedBy);
+          aCurCtrl.customAttrs ().addToAriaDescribedBy (sDescribedBy);
+    }
+  }
+
+  public static void connectFormControlsWithHelpText (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
+                                                      @Nullable final IHCElement <?> aHelpTextNode)
+  {
+    if (aCtrls != null && aHelpTextNode != null)
+    {
+      final String sDescribedBy = aHelpTextNode.ensureID ().getID ();
+      for (final IHCElement <?> aCurCtrl : aCtrls)
+        aCurCtrl.customAttrs ().addToAriaDescribedBy (sDescribedBy);
     }
   }
 

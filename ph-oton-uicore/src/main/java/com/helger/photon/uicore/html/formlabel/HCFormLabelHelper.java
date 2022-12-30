@@ -20,7 +20,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNodeWithChildren;
 
-@Immutable
+@NotThreadSafe
 public final class HCFormLabelHelper
 {
   /** The default sign for optional elements */
@@ -69,16 +69,24 @@ public final class HCFormLabelHelper
   private static final Logger LOGGER = LoggerFactory.getLogger (HCFormLabelHelper.class);
 
   private static final Map <ELabelType, String> DEFAULT_SUFFIXES = new CommonsEnumMap <> (ELabelType.class);
+  private static String s_sDefaultLabelEnd;
+
   static
   {
+    resetToDefault ();
+  }
+
+  private HCFormLabelHelper ()
+  {}
+
+  public static void resetToDefault ()
+  {
+    s_sDefaultLabelEnd = DEFAULT_LABEL_END;
+    DEFAULT_SUFFIXES.clear ();
     DEFAULT_SUFFIXES.put (ELabelType.OPTIONAL, DEFAULT_SIGN_OPTIONAL);
     DEFAULT_SUFFIXES.put (ELabelType.MANDATORY, DEFAULT_SIGN_MANDATORY);
     DEFAULT_SUFFIXES.put (ELabelType.ALTERNATIVE, DEFAULT_SIGN_ALTERNATIVE);
   }
-  private static String s_sDefaultLabelEnd = DEFAULT_LABEL_END;
-
-  private HCFormLabelHelper ()
-  {}
 
   /**
    * @return The global "label end" string to use. Never <code>null</code> but
@@ -230,7 +238,8 @@ public final class HCFormLabelHelper
   }
 
   @Nonnull
-  public static <T extends IHCNodeWithChildren <?>> T getNodeWithState (@Nonnull final T aNode, @Nonnull final ELabelType eType)
+  public static <T extends IHCNodeWithChildren <?>> T getNodeWithState (@Nonnull final T aNode,
+                                                                        @Nonnull final ELabelType eType)
   {
     ValueEnforcer.notNull (aNode, "Node");
     ValueEnforcer.notNull (eType, "Type");

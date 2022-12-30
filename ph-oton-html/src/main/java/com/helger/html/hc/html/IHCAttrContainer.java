@@ -173,9 +173,23 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange addToAriaDescribedBy (@Nonnull final String sDescribedBy)
+  {
+    final String sOldDescribedBy = getValue (CHTMLAttributes.ARIA_DESCRIBEDBY);
+    return setAriaDescribedBy (StringHelper.hasText (sOldDescribedBy) ? sOldDescribedBy + ' ' + sDescribedBy
+                                                                      : sDescribedBy);
+  }
+
+  @Nonnull
   default EChange setAriaDescribedBy (@Nonnull final IHCElement <?> aDescribedBy)
   {
     return setAriaDescribedBy (aDescribedBy.ensureID ().getID ());
+  }
+
+  @Nonnull
+  default EChange addToAriaDescribedBy (@Nonnull final IHCElement <?> aDescribedBy)
+  {
+    return addToAriaDescribedBy (aDescribedBy.ensureID ().getID ());
   }
 
   @Nonnull
@@ -188,12 +202,30 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange addToAriaDescribedBy (@Nonnull final Iterable <? extends IHCElement <?>> aDescribedByMultiple)
+  {
+    return addToAriaDescribedBy (StringHelper.imploder ()
+                                             .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                             .separator (' ')
+                                             .build ());
+  }
+
+  @Nonnull
   default EChange setAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
   {
     return setAriaDescribedBy (StringHelper.imploder ()
                                            .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
                                            .separator (' ')
                                            .build ());
+  }
+
+  @Nonnull
+  default EChange addToAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
+  {
+    return addToAriaDescribedBy (StringHelper.imploder ()
+                                             .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                             .separator (' ')
+                                             .build ());
   }
 
   @Nonnull
