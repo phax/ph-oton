@@ -161,6 +161,12 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange setAriaControls (@Nonnull final String sControls)
+  {
+    return putIn (CHTMLAttributes.ARIA_CONTROLS, sControls);
+  }
+
+  @Nonnull
   default EChange setAriaDescribedBy (@Nonnull final String sDescribedBy)
   {
     return putIn (CHTMLAttributes.ARIA_DESCRIBEDBY, sDescribedBy);
@@ -229,18 +235,24 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   @Nonnull
   default EChange setAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
   {
-    return setAriaLabeledBy (StringHelper.imploder ().source (aLabeledByMultiple, x -> x.ensureID ().getID ()).separator (' ').build ());
+    return setAriaLabeledBy (StringHelper.imploder ()
+                                         .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
+                                         .separator (' ')
+                                         .build ());
   }
 
   @Nonnull
   default EChange setAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
   {
-    return setAriaLabeledBy (StringHelper.imploder ().source (aLabeledByMultiple, x -> x.ensureID ().getID ()).separator (' ').build ());
+    return setAriaLabeledBy (StringHelper.imploder ()
+                                         .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
+                                         .separator (' ')
+                                         .build ());
   }
 
   @Nonnull
-  default EChange setAriaControls (@Nonnull final String sControls)
+  default EChange setAriaRequired (final boolean bIsRequired)
   {
-    return putIn (CHTMLAttributes.ARIA_CONTROLS, sControls);
+    return putIn (CHTMLAttributes.ARIA_REQUIRED, Boolean.toString (bIsRequired));
   }
 }
