@@ -186,26 +186,25 @@ public final class BootstrapFormHelper
   {
     ValueEnforcer.notNull (aElement, "Element");
 
-    if (aErrorList != null)
-      if (aErrorList.containsAtLeastOneError ())
-      {
-        // Required so that error text is shown
-        aElement.addClass (CBootstrapCSS.IS_INVALID);
-      }
+    if (aErrorList != null && aErrorList.containsAtLeastOneError ())
+    {
+      // Required so that error text is shown
+      aElement.addClass (CBootstrapCSS.IS_INVALID);
+      aElement.customAttrs ().setAriaInvalid (true);
+    }
   }
 
   public static void applyFormControlValidityState (@Nullable final Iterable <? extends IHCElement <?>> aCtrls,
                                                     @Nullable final IErrorList aErrorList)
   {
-    if (aCtrls != null && aErrorList != null)
+    if (aCtrls != null && aErrorList != null && aErrorList.containsAtLeastOneError ())
     {
-      final boolean bIsInvalid = aErrorList.containsAtLeastOneError ();
       for (final IHCElement <?> aCurCtrl : aCtrls)
-        if (bIsInvalid)
-        {
-          // Required so that error text is shown
-          aCurCtrl.addClass (CBootstrapCSS.IS_INVALID);
-        }
+      {
+        // Required so that error text is shown
+        aCurCtrl.addClass (CBootstrapCSS.IS_INVALID);
+        aCurCtrl.customAttrs ().setAriaInvalid (true);
+      }
     }
   }
 

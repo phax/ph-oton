@@ -247,6 +247,12 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange setAriaInvalid (final boolean bInvalid)
+  {
+    return putIn (CHTMLAttributes.ARIA_INVALID, Boolean.toString (bInvalid));
+  }
+
+  @Nonnull
   default EChange setAriaLabel (@Nonnull final String sLabel)
   {
     return putIn (CHTMLAttributes.ARIA_LABEL, sLabel);
