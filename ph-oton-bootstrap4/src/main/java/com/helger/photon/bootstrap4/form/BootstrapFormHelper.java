@@ -135,15 +135,21 @@ public final class BootstrapFormHelper
       boolean bSetLabel = false;
       for (final IHCElement <?> aCurCtrl : aCtrls)
       {
+        boolean bSetLabelForForThisCtrl = false;
         if (!bSetLabel)
         {
           // Set "for" in label - can only reference one control
           aLabel.setFor (aCurCtrl);
           bSetLabel = true;
+          bSetLabelForForThisCtrl = true;
         }
 
-        // Set "aria-labelledby"
-        aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
+        // Avoid having both, because that is redundant according to WAI
+        if (!bSetLabelForForThisCtrl)
+        {
+          // Set "aria-labelledby"
+          aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
+        }
       }
     }
   }
