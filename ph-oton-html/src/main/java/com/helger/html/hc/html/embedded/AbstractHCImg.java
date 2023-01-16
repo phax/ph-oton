@@ -38,7 +38,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        The implementation type.
  */
-public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> extends AbstractHCMediaElementChild <IMPLTYPE> implements
+public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> extends
+                                    AbstractHCMediaElementChild <IMPLTYPE> implements
                                     IHCImg <IMPLTYPE>
 {
   // Inline images can be SimpleURLs as well!
@@ -208,7 +209,8 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC,
+                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sSrcSet))
       aElement.setAttribute (CHTMLAttributes.SRCSET, m_sSrcSet);
     if (StringHelper.hasText (m_sSizes))
@@ -220,15 +222,18 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     }
 
     // Ensure that the alt attribute is present
-    final String sTitle = getTitle ();
-    final String sRealAlt = StringHelper.hasText (m_sAlt) ? m_sAlt : sTitle;
-    aElement.setAttribute (CHTMLAttributes.ALT, sRealAlt);
+    // For WAI conformity, only alt but not title should be present
+    if (StringHelper.hasText (m_sAlt))
+    {
+      aElement.setAttribute (CHTMLAttributes.ALT, m_sAlt);
+      aElement.removeAttribute (CHTMLAttributes.TITLE);
+    }
+    else
+    {
+      aElement.setAttribute (CHTMLAttributes.ALT, getTitle ());
+      aElement.removeAttribute (CHTMLAttributes.TITLE);
+    }
 
-    // If the title is empty, but the alternative text is present, use the
-    // alternative text as title
-    // The default "title" attribute is set in a base class!
-    if (StringHelper.hasNoText (sTitle) && StringHelper.hasText (m_sAlt))
-      aElement.setAttribute (CHTMLAttributes.TITLE, m_sAlt);
     if (m_eCrossOrigin != null)
       aElement.setAttribute (CHTMLAttributes.CROSSORIGIN, m_eCrossOrigin);
     if (m_eLoading != null)
