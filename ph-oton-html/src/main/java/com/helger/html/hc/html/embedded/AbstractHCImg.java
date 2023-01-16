@@ -230,8 +230,14 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     }
     else
     {
-      aElement.setAttribute (CHTMLAttributes.ALT, getTitle ());
-      aElement.removeAttribute (CHTMLAttributes.TITLE);
+      final String sTitle = getTitle ();
+      if (sTitle != null)
+      {
+        aElement.setAttribute (CHTMLAttributes.ALT, sTitle);
+        aElement.removeAttribute (CHTMLAttributes.TITLE);
+      }
+      else
+        aElement.setAttribute (CHTMLAttributes.ALT, "");
     }
 
     if (m_eCrossOrigin != null)
