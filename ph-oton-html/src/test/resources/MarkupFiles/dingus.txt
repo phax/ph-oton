@@ -20,7 +20,7 @@ An [example](http://www.example.com/)
 # Test 4 (Inline images)
 ![alt textPane](/path/img.jpg "Title")
 # Result 4
-<p><img title="Title" src="/path/img.jpg" alt="alt textPane" /></p>
+<p><img src="/path/img.jpg" alt="alt textPane" /></p>
 
 # Test 5 (setext-style headers)
 Header 1

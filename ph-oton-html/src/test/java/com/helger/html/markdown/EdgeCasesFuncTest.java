@@ -117,7 +117,9 @@ public final class EdgeCasesFuncTest
     final String sMD = "![an *image*](/images/an_image_with_underscores.jpg \"An_image_title\")";
 
     final String processed = new MarkdownProcessor ().process (sMD).getAsHTMLString ();
-    final String output = "<p><img title=\"An_image_title\" src=\"/images/an_image_with_underscores.jpg\" alt=\"an *image*\" /></p>";
+    String output = "<p><img title=\"An_image_title\" src=\"/images/an_image_with_underscores.jpg\" alt=\"an *image*\" /></p>";
+    output = "<p><img src=\"/images/an_image_with_underscores.jpg\" alt=\"an *image*\" /></p>";
+    // According to WCAG title should not be set if title is there
     assertEquals (output, processed);
   }
 
