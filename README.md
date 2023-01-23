@@ -98,10 +98,12 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v8.4.4 - work in progress
+* v8.4.4 - 2012-01-23
     * Updated to jQuery 3.6.3
     * Updated to DataTables 1.13.1 and latest plugin versions
-    * Added method `IHCAttrContainer.setAriaRequired`
+    * Added methods `setAriaRequired`, `addToAriaDescribedBy` and `setAriaInvalid` to class `IHCAttrContainer`
+    * Added method `IHCElement.withCustomAttrs`
+    * Made some general accessibility improvements
 * v8.4.3 - 2022-10-04
     * Updated to Jetty 9.4.49
     * Updated to Log2J 2.19.0
