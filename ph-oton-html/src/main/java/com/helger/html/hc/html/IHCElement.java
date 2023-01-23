@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html;
 
+import java.util.function.Consumer;
+
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -376,4 +378,21 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   @Nonnull
   @ReturnsMutableObject
   IHCAttrContainer customAttrs ();
+
+  /**
+   * A helper method that deals with custom attributes, but maintains the
+   * chainable manner of this API.
+   *
+   * @param aConsumer
+   *        The consumer that deals with the custom attributes. May not be
+   *        <code>null</code>.
+   * @return this for chaining
+   * @since 8.4.4
+   */
+  @Nonnull
+  default IMPLTYPE withCustomAttrs (@Nonnull final Consumer <? super IHCAttrContainer> aConsumer)
+  {
+    aConsumer.accept (customAttrs ());
+    return thisAsT ();
+  }
 }
