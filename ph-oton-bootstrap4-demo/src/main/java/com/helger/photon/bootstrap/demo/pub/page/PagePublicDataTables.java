@@ -45,9 +45,13 @@ public class PagePublicDataTables extends AbstractAppWebPage
     final HCTable aTable = new HCTable (new DTCol ("Key").setDisplayType (EDTColType.TEXT, aDisplayLocale),
                                         new DTCol ("Value 1").setDisplayType (EDTColType.INT, aDisplayLocale)
                                                              .setInitialSorting (ESortOrder.ASCENDING),
-                                        new DTCol ("Value 2").setDisplayType (EDTColType.INT, aDisplayLocale)).setID ("demo-table");
-    for (int i = 0; i < 10; ++i)
-      aTable.addBodyRow ().addCell ("Key " + (i + 1)).addCell (Integer.toString (Math.abs (100 - i))).addCell (Integer.toString (i * 10));
+                                        new DTCol ("Value 2").setDisplayType (EDTColType.INT, aDisplayLocale))
+                                                                                                              .setID ("demo-table");
+    for (int i = 0; i < 100; ++i)
+      aTable.addBodyRow ()
+            .addCell ("Key " + (i + 1))
+            .addCell (Integer.toString (Math.abs (100 - i)))
+            .addCell (Integer.toString (i * 10));
     aNodeList.addChild (aTable).addChild (BootstrapDataTables.createDefaultDataTables (aWPEC, aTable));
   }
 }
