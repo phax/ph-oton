@@ -71,7 +71,7 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
   {
     private String m_sData;
 
-    @Deprecated
+    @Deprecated (forRemoval = false)
     @UsedViaReflection
     public Encoded ()
     {}

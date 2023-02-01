@@ -67,8 +67,6 @@ public enum EJSEvent
   FORMINPUT ("forminput", EJSEventType.FORM),
   INPUT ("input", EJSEventType.FORM),
   INVALID ("invalid", EJSEventType.FORM),
-  @Deprecated
-  RESET ("reset", EJSEventType.FORM),
   SELECT ("select", EJSEventType.FORM),
   SUBMIT ("submit", EJSEventType.FORM),
 
