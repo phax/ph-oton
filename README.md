@@ -102,6 +102,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Using Java 11 as the baseline
     * Updated to ph-commons 11
     * Updated to Jetty 9.4.50
+    * Updated from `org.apache.logging.log4j:log4j-slf4j-impl` to `org.apache.logging.log4j:log4j-slf4j2-impl` for SLF4J 2.x
 * v8.4.4 - 2012-01-23
     * Updated to jQuery 3.6.3
     * Updated to DataTables 1.13.1 and latest plugin versions
