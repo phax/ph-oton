@@ -43,7 +43,8 @@ public final class AuditHelper
 {
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
-  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null), "!DEFAULT-AUDITOR! ");
+  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null),
+                                                                      "!DEFAULT-AUDITOR! ");
 
   // This is the default dummy auditor that should be replaced with something
   // meaningful!
@@ -101,7 +102,7 @@ public final class AuditHelper
   }
 
   @SuppressWarnings ("unused")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
   public static void onAuditCreateFailure (@Nonnull final ObjectType aObjectType)
@@ -115,7 +116,7 @@ public final class AuditHelper
   }
 
   @SuppressWarnings ("unused")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
   public static void onAuditModifySuccess (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat)
@@ -131,7 +132,7 @@ public final class AuditHelper
   }
 
   @SuppressWarnings ("unused")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
   public static void onAuditModifyFailure (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat)
@@ -147,7 +148,7 @@ public final class AuditHelper
   }
 
   @SuppressWarnings ("unused")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
   public static void onAuditDeleteSuccess (@Nonnull final ObjectType aObjectType)
@@ -161,7 +162,7 @@ public final class AuditHelper
   }
 
   @SuppressWarnings ("unused")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
   public static void onAuditDeleteFailure (@Nonnull final ObjectType aObjectType)
@@ -175,7 +176,7 @@ public final class AuditHelper
   }
 
   @SuppressWarnings ("unused")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
   public static void onAuditUndeleteSuccess (@Nonnull final ObjectType aObjectType)
@@ -189,7 +190,7 @@ public final class AuditHelper
   }
 
   @SuppressWarnings ("unused")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
   public static void onAuditUndeleteFailure (@Nonnull final ObjectType aObjectType)

@@ -41,17 +41,6 @@ public class RevocationStatus implements IRevocationStatus
   private LocalDateTime m_aRevocationDT;
   private String m_sRevocationReason;
 
-  /**
-   * Create a new, not revoked object.
-   *
-   * @deprecated Since 8.3.7. Use {@link #createUnrevoked()} instead.
-   */
-  @Deprecated
-  public RevocationStatus ()
-  {
-    this (false, null, null, null);
-  }
-
   protected RevocationStatus (final boolean bRevoked,
                               @Nullable final String sRevocationUserID,
                               @Nullable final LocalDateTime aRevocationDT,

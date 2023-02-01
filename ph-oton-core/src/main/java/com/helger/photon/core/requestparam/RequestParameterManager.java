@@ -45,7 +45,7 @@ public class RequestParameterManager extends AbstractGlobalWebSingleton implemen
 {
   private IRequestParameterHandler m_aRequestParamHdl = new RequestParameterHandlerURLParameter ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public RequestParameterManager ()
   {}

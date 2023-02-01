@@ -31,7 +31,7 @@ public final class CaptchaStateSessionSingleton extends AbstractSessionWebSingle
 {
   private boolean m_bChecked = false;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public CaptchaStateSessionSingleton ()
   {}

@@ -35,7 +35,7 @@ public final class ObjectLockManager extends AbstractGlobalSingleton
 {
   private final DefaultLockManager <String> m_aMgr = new DefaultLockManager <> (LoggedInUserManager.getInstance ());
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public ObjectLockManager ()
   {}

@@ -42,7 +42,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   private String m_sLastApplicationID;
   private final ICommonsMap <String, PhotonSessionStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public PhotonSessionState ()
   {}

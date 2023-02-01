@@ -33,7 +33,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
-import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.embedded.EHCCORSSettings;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.xml.microdom.IMicroElement;
@@ -51,7 +50,6 @@ public class HCLink extends AbstractHCElement <HCLink>
   private IMimeType m_aType;
   private ISimpleURL m_aHref;
   private String m_sHrefLang;
-  private HC_Target m_aTarget;
   private String m_sCharset;
   private CSSMediaList m_aMediaList;
   private String m_sSizes;
@@ -135,21 +133,6 @@ public class HCLink extends AbstractHCElement <HCLink>
   public final HCLink setHrefLang (@Nullable final String sHrefLang)
   {
     m_sHrefLang = sHrefLang;
-    return this;
-  }
-
-  @Nullable
-  @Deprecated
-  public final HC_Target getTarget ()
-  {
-    return m_aTarget;
-  }
-
-  @Nonnull
-  @Deprecated
-  public final HCLink setTarget (@Nullable final HC_Target aTarget)
-  {
-    m_aTarget = aTarget;
     return this;
   }
 
@@ -294,11 +277,10 @@ public class HCLink extends AbstractHCElement <HCLink>
     if (m_aType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
     if (m_aHref != null)
-      aElement.setAttribute (CHTMLAttributes.HREF, m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.HREF,
+                             m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sHrefLang))
       aElement.setAttribute (CHTMLAttributes.HREFLANG, m_sHrefLang);
-    if (m_aTarget != null)
-      aElement.setAttribute (CHTMLAttributes.TARGET, m_aTarget);
     if (StringHelper.hasText (m_sCharset))
       aElement.setAttribute (CHTMLAttributes.CHARSET, m_sCharset);
     if (m_aMediaList != null && m_aMediaList.hasAnyMedia ())
@@ -326,7 +308,6 @@ public class HCLink extends AbstractHCElement <HCLink>
                             .appendIfNotNull ("Type", m_aType)
                             .appendIfNotNull ("Href", m_aHref)
                             .appendIfNotNull ("HrefLang", m_sHrefLang)
-                            .appendIfNotNull ("Target", m_aTarget)
                             .appendIfNotNull ("Charset", m_sCharset)
                             .appendIfNotNull ("MediaList", m_aMediaList)
                             .appendIfNotNull ("Sizes", m_sSizes)

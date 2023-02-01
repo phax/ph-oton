@@ -36,8 +36,8 @@ public enum EHTMLElement
   A ("a", false, EHTMLContentModelType.FLOW),
   ABBR ("abbr", false, EHTMLContentModelType.PHRASING),
   ADDRESS ("address", false, EHTMLContentModelType.FLOW),
-  @Deprecated
-  APPLET ("applet", false, EHTMLContentModelType.FLOW),
+  @Deprecated (forRemoval = false)
+  APPLET("applet", false, EHTMLContentModelType.FLOW),
   AREA ("area", true, EHTMLContentModelType.PHRASING),
   ARTICLE ("article", false, EHTMLContentModelType.FLOW),
   ASIDE ("aside", false, EHTMLContentModelType.FLOW),
@@ -52,8 +52,8 @@ public enum EHTMLElement
   BUTTON ("button", false, EHTMLContentModelType.PHRASING),
   CANVAS ("canvas", false, EHTMLContentModelType.FLOW),
   CAPTION ("caption", false, EHTMLContentModelType.FLOW),
-  @Deprecated
-  CENTER ("center", false, EHTMLContentModelType.LEGACY_PHRASING),
+  @Deprecated (forRemoval = false)
+  CENTER("center", false, EHTMLContentModelType.LEGACY_PHRASING),
   CITE ("cite", false, EHTMLContentModelType.PHRASING),
   CODE ("code", false, EHTMLContentModelType.PHRASING),
   COL ("col", true, EHTMLContentModelType.NOTHING),
@@ -66,8 +66,8 @@ public enum EHTMLElement
   DETAILS ("details", false, EHTMLContentModelType.FLOW),
   DFN ("dfn", false, EHTMLContentModelType.PHRASING),
   DIALOG ("dialog", false, EHTMLContentModelType.FLOW),
-  @Deprecated
-  DIR ("dir", false, EHTMLContentModelType.LEGACY_PHRASING),
+  @Deprecated (forRemoval = false)
+  DIR("dir", false, EHTMLContentModelType.LEGACY_PHRASING),
   DIV ("div", false, EHTMLContentModelType.FLOW),
   DL ("dl", false, EHTMLContentModelType.FLOW),
   DT ("dt", false, EHTMLContentModelType.FLOW),
@@ -76,14 +76,14 @@ public enum EHTMLElement
   FIELDSET ("fieldset", false, EHTMLContentModelType.FLOW),
   FIGCAPTION ("figcaption", false, EHTMLContentModelType.FLOW),
   FIGURE ("figure", false, EHTMLContentModelType.FLOW),
-  @Deprecated
-  FONT ("font", false, EHTMLContentModelType.UNDEFINED),
+  @Deprecated (forRemoval = false)
+  FONT("font", false, EHTMLContentModelType.UNDEFINED),
   FOOTER ("footer", false, EHTMLContentModelType.FLOW),
   FORM ("form", false, EHTMLContentModelType.FLOW),
-  @Deprecated
-  FRAME ("frame", true, EHTMLContentModelType.UNDEFINED),
-  @Deprecated
-  FRAMESET ("frameset", false, EHTMLContentModelType.UNDEFINED),
+  @Deprecated (forRemoval = false)
+  FRAME("frame", true, EHTMLContentModelType.UNDEFINED),
+  @Deprecated (forRemoval = false)
+  FRAMESET("frameset", false, EHTMLContentModelType.UNDEFINED),
   H1 ("h1", false, EHTMLContentModelType.FLOW),
   H2 ("h2", false, EHTMLContentModelType.FLOW),
   H3 ("h3", false, EHTMLContentModelType.FLOW),
@@ -101,8 +101,6 @@ public enum EHTMLElement
   INS ("ins", false, EHTMLContentModelType.FLOW),
   INPUT ("input", true, EHTMLContentModelType.PHRASING),
   KBD ("kbd", false, EHTMLContentModelType.PHRASING),
-  @Deprecated
-  KEYGEN ("keygen", true, EHTMLContentModelType.PHRASING),
   LABEL ("label", false, EHTMLContentModelType.PHRASING),
   LEGEND ("legend", false, EHTMLContentModelType.CHILD),
   LI ("li", false, EHTMLContentModelType.CHILD),
@@ -111,13 +109,13 @@ public enum EHTMLElement
   MAP ("map", false, EHTMLContentModelType.FLOW),
   MARK ("mark", false, EHTMLContentModelType.PHRASING),
   MENU ("menu", false, EHTMLContentModelType.FLOW),
-  @Deprecated
-  MENUITEM ("menuitem", false, EHTMLContentModelType.FLOW),
+  @Deprecated (forRemoval = false)
+  MENUITEM("menuitem", false, EHTMLContentModelType.FLOW),
   META ("meta", true, EHTMLContentModelType.METADATA),
   METER ("meter", false, EHTMLContentModelType.PHRASING),
   NAV ("nav", false, EHTMLContentModelType.FLOW),
-  @Deprecated
-  NOBR ("nobr", false, EHTMLContentModelType.UNDEFINED),
+  @Deprecated (forRemoval = false)
+  NOBR("nobr", false, EHTMLContentModelType.UNDEFINED),
   NOSCRIPT ("noscript", false, EHTMLContentModelType.FLOW_METADATA),
   OBJECT ("object", false, EHTMLContentModelType.FLOW),
   OL ("ol", false, EHTMLContentModelType.FLOW),

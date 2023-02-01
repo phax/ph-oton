@@ -149,7 +149,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * @deprecated Use addColumn instead.
    */
   @Nonnull
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @DevelopersNote ("Use addColumn")
   default IMPLTYPE addColumns (@Nullable final IHCCol <?> aCol)
   {

@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.mail.event.ConnectionListener;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
@@ -48,6 +47,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.smtp.EmailGlobalSettings;
 import com.helger.smtp.listener.IEmailDataTransportListener;
 
+import jakarta.mail.event.ConnectionListener;
+
 /**
  * Page with global basic settings
  *
@@ -55,7 +56,8 @@ import com.helger.smtp.listener.IEmailDataTransportListener;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayText
@@ -102,7 +104,9 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     super (sID, sName);
   }
 
-  public BasePageSettingsGlobal (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageSettingsGlobal (@Nonnull @Nonempty final String sID,
+                                 @Nonnull final String sName,
+                                 @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -124,7 +128,9 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     {
       // Save changes
       final boolean bGlobalDebug = aWPEC.params ().isCheckBoxChecked (FIELD_GLOBAL_DEBUG, GlobalDebug.isDebugMode ());
-      final boolean bGlobalProduction = aWPEC.params ().isCheckBoxChecked (FIELD_GLOBAL_PRODUCTION, GlobalDebug.isProductionMode ());
+      final boolean bGlobalProduction = aWPEC.params ()
+                                             .isCheckBoxChecked (FIELD_GLOBAL_PRODUCTION,
+                                                                 GlobalDebug.isProductionMode ());
 
       GlobalDebug.setDebugModeDirect (bGlobalDebug);
       GlobalDebug.setProductionModeDirect (bGlobalProduction);
@@ -155,14 +161,17 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_MAX_SEND_COUNT.getDisplayText (aDisplayLocale))
                                                    .setCtrl (Long.toString (EmailGlobalSettings.getMaxMailSendCount ())));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_USE_SSL.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSSL (), aDisplayLocale)));
+                                                   .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSSL (),
+                                                                                         aDisplayLocale)));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_USE_STARTTLS.getDisplayText (aDisplayLocale))
                                                    .setCtrl (EPhotonCoreText.getYesOrNo (EmailGlobalSettings.isUseSTARTTLS (),
                                                                                          aDisplayLocale)));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_CONNECTION_TIMEOUT.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (Long.toString (EmailGlobalSettings.getConnectionTimeoutMilliSecs ()) + "ms"));
+                                                   .setCtrl (Long.toString (EmailGlobalSettings.getConnectionTimeoutMilliSecs ()) +
+                                                             "ms"));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_EMAIL_SOCKET_TIMEOUT.getDisplayText (aDisplayLocale))
-                                                   .setCtrl (Long.toString (EmailGlobalSettings.getTimeoutMilliSecs ()) + "ms"));
+                                                   .setCtrl (Long.toString (EmailGlobalSettings.getTimeoutMilliSecs ()) +
+                                                             "ms"));
       {
         final HCNodeList aCtrl = new HCNodeList ();
         for (final ConnectionListener aListener : EmailGlobalSettings.getAllConnectionListeners ())

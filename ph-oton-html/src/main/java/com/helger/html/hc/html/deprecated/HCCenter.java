@@ -24,7 +24,7 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  *
  * @author Philip Helger
  */
-@Deprecated
+@Deprecated (forRemoval = false)
 public class HCCenter extends AbstractHCElementWithChildren <HCCenter>
 {
   /**

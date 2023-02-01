@@ -98,6 +98,10 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.0.0 - 2023-02-01
+    * Using Java 11 as the baseline
+    * Updated to ph-commons 11
+    * Updated to Jetty 9.4.50
 * v8.4.4 - 2012-01-23
     * Updated to jQuery 3.6.3
     * Updated to DataTables 1.13.1 and latest plugin versions

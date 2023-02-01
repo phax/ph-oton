@@ -39,7 +39,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   @GuardedBy ("m_aRWLock")
   private String m_sNonce;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public CSRFSessionManager ()
   {

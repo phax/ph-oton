@@ -37,7 +37,7 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
 {
   private final String m_sGeneratedKey;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public ServerLogSessionKey ()
   {

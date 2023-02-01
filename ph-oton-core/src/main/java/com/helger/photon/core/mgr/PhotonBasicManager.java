@@ -61,7 +61,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   private SystemMessageManager m_aSystemMessageMgr;
   private SystemMigrationManager m_aSystemMigrationMgr;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public PhotonBasicManager ()
   {}

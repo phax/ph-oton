@@ -78,7 +78,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     private String m_sUserID;
     private LoggedInUserManager m_aOwningMgr;
 
-    @Deprecated
+    @Deprecated (forRemoval = false)
     @UsedViaReflection
     public InternalSessionUserHolder ()
     {}
@@ -216,7 +216,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
   private boolean m_bAnonymousLogging = DEFAULT_ANONYMOUS_LOGGING;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public LoggedInUserManager ()
   {

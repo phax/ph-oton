@@ -45,7 +45,7 @@ public final class PhotonAppManager extends AbstractGlobalSingleton
 
   private WebSiteResourceBundleManager m_aWebSiteResourceBundleMgr;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public PhotonAppManager ()
   {}

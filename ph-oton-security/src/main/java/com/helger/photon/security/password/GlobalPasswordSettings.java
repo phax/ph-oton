@@ -35,7 +35,6 @@ import com.helger.photon.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.security.password.hash.IPasswordHashCreatorRegistrarSPI;
 import com.helger.photon.security.password.hash.PasswordHashCreatorManager;
 import com.helger.security.password.hash.PasswordHash;
-import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
 import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_1000_48;
 import com.helger.security.password.hash.PasswordHashCreatorSHA512;
 import com.helger.security.password.salt.IPasswordSalt;
@@ -61,11 +60,11 @@ public final class GlobalPasswordSettings
   {
     // Register default implementation so that something is present
     PHC_MGR.registerPasswordHashCreator (new PasswordHashCreatorSHA512 ());
-    PHC_MGR.registerPasswordHashCreator (new PasswordHashCreatorPBKDF2_1000_48 ());
+    PHC_MGR.registerPasswordHashCreator (new LegacyPasswordHashCreatorPBKDF2_1000_48 ());
     PHC_MGR.registerPasswordHashCreator (new PasswordHashCreatorPBKDF2_SHA256_1000_48 ());
 
     // Set the default password hash creator
-    PHC_MGR.setDefaultPasswordHashCreatorAlgorithm (PasswordHashCreatorPBKDF2_1000_48.ALGORITHM);
+    PHC_MGR.setDefaultPasswordHashCreatorAlgorithm (PasswordHashCreatorPBKDF2_SHA256_1000_48.ALGORITHM);
 
     // Register all custom SPI implementations
     for (final IPasswordHashCreatorRegistrarSPI aSPI : ServiceLoaderHelper.getAllSPIImplementations (IPasswordHashCreatorRegistrarSPI.class))

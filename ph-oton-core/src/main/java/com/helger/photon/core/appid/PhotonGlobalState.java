@@ -45,7 +45,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   private String m_sDefaultApplicationID;
   private final ICommonsMap <String, PhotonGlobalStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public PhotonGlobalState ()
   {}

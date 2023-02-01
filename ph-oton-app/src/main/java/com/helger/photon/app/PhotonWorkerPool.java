@@ -49,7 +49,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
 
   private final ExecutorService m_aES;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public PhotonWorkerPool ()
   {

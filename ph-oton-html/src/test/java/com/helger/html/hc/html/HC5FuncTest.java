@@ -30,7 +30,6 @@ import com.helger.html.hc.html.embedded.HCAudio;
 import com.helger.html.hc.html.embedded.HCSource;
 import com.helger.html.hc.html.embedded.HCTrack;
 import com.helger.html.hc.html.embedded.HCVideo;
-import com.helger.html.hc.html.forms.HCKeyGen;
 import com.helger.html.hc.html.forms.HCMeter;
 import com.helger.html.hc.html.forms.HCProgress;
 import com.helger.html.hc.html.grouping.HCFigure;
@@ -59,7 +58,6 @@ import com.helger.html.hc.render.HCRenderer;
  *
  * @author Philip Helger
  */
-@SuppressWarnings ("deprecation")
 public final class HC5FuncTest
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (HC5FuncTest.class);
@@ -91,7 +89,6 @@ public final class HC5FuncTest
     b.addChild (new HCHeader ().addChild ("Bla foo"));
     b.addChild (new HCHGroup ());
     b.addChild (new HCHGroup ().addChild ("Bla foo"));
-    b.addChild (new HCKeyGen ("kg1"));
     b.addChild (new HCMark ());
     b.addChild (new HCMark ().addChild ("Bla foo"));
     b.addChild (new HCMeter ());

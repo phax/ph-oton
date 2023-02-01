@@ -50,17 +50,6 @@ public class JSForIn extends AbstractJSStatement
 
   /**
    * @return a reference to the loop variable.
-   * @deprecated Since 8.4.3; Use {@link #variable()} instead
-   */
-  @Deprecated
-  @Nonnull
-  public JSVar var ()
-  {
-    return variable ();
-  }
-
-  /**
-   * @return a reference to the loop variable.
    */
   @Nonnull
   public JSVar variable ()

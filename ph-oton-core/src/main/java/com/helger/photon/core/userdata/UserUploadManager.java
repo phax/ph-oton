@@ -57,7 +57,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, TemporaryUserDataObject> m_aMap = new CommonsHashMap <> ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public UserUploadManager ()
   {}

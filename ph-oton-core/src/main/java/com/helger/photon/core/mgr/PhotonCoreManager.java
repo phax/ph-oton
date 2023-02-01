@@ -55,7 +55,7 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
   private GoMappingManager m_aGoMappingMgr;
   private NamedSMTPSettingsManager m_aSMTPSettingsMgr;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public PhotonCoreManager ()
   {}

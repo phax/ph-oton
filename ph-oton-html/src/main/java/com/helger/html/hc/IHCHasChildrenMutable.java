@@ -36,7 +36,8 @@ import com.helger.commons.traits.IGenericImplTrait;
  * @param <CHILDTYPE>
  *        Desired child type
  */
-public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode> extends
+public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <IMPLTYPE, CHILDTYPE>, CHILDTYPE extends IHCNode>
+                                       extends
                                        IHCNode,
                                        IGenericImplTrait <IMPLTYPE>
 {
@@ -85,7 +86,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        happens.
    * @return this
    */
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @DevelopersNote ("Use addChild instead")
   default IMPLTYPE addChildren (@Nullable final CHILDTYPE aChild)
   {
@@ -154,7 +155,8 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * @return this
    */
   @Nonnull
-  default IMPLTYPE addChildrenAt (@Nonnegative final int nIndex, @Nullable final Iterable <? extends CHILDTYPE> aChildren)
+  default IMPLTYPE addChildrenAt (@Nonnegative final int nIndex,
+                                  @Nullable final Iterable <? extends CHILDTYPE> aChildren)
   {
     ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, getChildCount ());
     if (aChildren != null)

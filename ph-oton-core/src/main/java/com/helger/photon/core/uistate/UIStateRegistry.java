@@ -51,7 +51,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class UIStateRegistry extends AbstractSessionWebSingleton implements IScopeRenewalAware, ISessionWebScopeDontPassivate
+public final class UIStateRegistry extends AbstractSessionWebSingleton implements
+                                   IScopeRenewalAware,
+                                   ISessionWebScopeDontPassivate
 {
   /** ObjectType */
   public static final ObjectType OT_HCNODE = new ObjectType ("hcnode");
@@ -60,7 +62,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
   private final ICommonsMap <ObjectType, ICommonsMap <String, IHasUIState>> m_aMap = new CommonsHashMap <> ();
 
   @UsedViaReflection
-  @Deprecated
+  @Deprecated (forRemoval = false)
   public UIStateRegistry ()
   {}
 

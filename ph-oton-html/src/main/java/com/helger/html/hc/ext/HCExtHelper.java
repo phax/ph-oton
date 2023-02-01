@@ -56,7 +56,6 @@ import com.helger.html.hc.html.forms.HCDataList;
 import com.helger.html.hc.html.forms.HCFieldSet;
 import com.helger.html.hc.html.forms.HCForm;
 import com.helger.html.hc.html.forms.HCInput;
-import com.helger.html.hc.html.forms.HCKeyGen;
 import com.helger.html.hc.html.forms.HCLabel;
 import com.helger.html.hc.html.forms.HCLegend;
 import com.helger.html.hc.html.forms.HCMeter;
@@ -271,8 +270,6 @@ public final class HCExtHelper
         return new HCInput ();
       case KBD:
         return new HCKBD ();
-      case KEYGEN:
-        return new HCKeyGen ();
       case LABEL:
         return new HCLabel ();
       case LEGEND:

@@ -31,7 +31,7 @@ import com.helger.xml.microdom.IMicroElement;
  *
  * @author Philip Helger
  */
-@Deprecated
+@Deprecated (forRemoval = false)
 public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
 {
   private int m_nCols = CGlobal.ILLEGAL_UINT;
@@ -79,6 +79,9 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("cols", m_nCols).append ("rows", m_nRows).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("cols", m_nCols)
+                            .append ("rows", m_nRows)
+                            .getToString ();
   }
 }

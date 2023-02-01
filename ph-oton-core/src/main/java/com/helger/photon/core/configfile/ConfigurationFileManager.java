@@ -46,7 +46,7 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
 
   private final ICommonsOrderedMap <String, ConfigurationFile> m_aMap = new CommonsLinkedHashMap <> ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public ConfigurationFileManager ()
   {}

@@ -61,18 +61,6 @@ public class APIPath implements Serializable
   /**
    * @return The HTTP method as provided in the constructor. Never
    *         <code>null</code>.
-   * @deprecated in 8.2.2; Use {@link #getHttpMethod()} instead
-   */
-  @Deprecated
-  @Nonnull
-  public EHttpMethod getHTTPMethod ()
-  {
-    return getHttpMethod ();
-  }
-
-  /**
-   * @return The HTTP method as provided in the constructor. Never
-   *         <code>null</code>.
    */
   @Nonnull
   public EHttpMethod getHttpMethod ()

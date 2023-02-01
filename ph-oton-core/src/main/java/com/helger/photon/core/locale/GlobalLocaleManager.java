@@ -39,7 +39,7 @@ public final class GlobalLocaleManager extends AbstractGlobalWebSingleton implem
 {
   private final LocaleManager m_aInstance = new LocaleManager ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public GlobalLocaleManager ()
   {}

@@ -16,9 +16,6 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 /**
  * Interface for ULs
  *
@@ -31,21 +28,5 @@ import javax.annotation.Nullable;
 public interface IHCULBase <IMPLTYPE extends IHCULBase <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>> extends
                            IHCList <IMPLTYPE, ITEMTYPE>
 {
-  /**
-   * @return UL type. May be <code>null</code>
-   */
-  @Nullable
-  @Deprecated
-  EHCULType getType ();
-
-  /**
-   * Set the list type.
-   *
-   * @param eType
-   *        Type to use. May be <code>null</code>.
-   * @return this for chaining
-   */
-  @Nonnull
-  @Deprecated
-  IMPLTYPE setType (@Nullable EHCULType eType);
+  // empty
 }

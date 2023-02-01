@@ -46,6 +46,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.commons.url.SimpleURL;
+import com.helger.commons.version.Version;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
@@ -140,7 +141,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     final ICommonsList <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
                                                                                  Comparator.comparing (Provider::getName)
-                                                                                           .thenComparing (Comparator.comparingDouble (Provider::getVersion)));
+                                                                                           .thenComparing (Comparator.comparing (p -> Version.parse (p.getVersionStr ()))));
 
     // show all Security attributes
     {
@@ -200,7 +201,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       {
         final HCRow aRow = aTable.addBodyRow ();
         aRow.addCell (aSecurityProvider.getName ());
-        aRow.addCell (Double.toString (aSecurityProvider.getVersion ()));
+        aRow.addCell (aSecurityProvider.getVersionStr ());
         aRow.addCell (aSecurityProvider.getInfo ());
       }
 
@@ -223,7 +224,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
                                           new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () + "-algorithm");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
-        final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
+        final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersionStr ();
 
         for (final Service aService : aSecurityProvider.getServices ())
         {
@@ -246,7 +247,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
     {
       for (final Provider aSecurityProvider : aSortedProviders)
       {
-        final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
+        final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersionStr ();
         final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                     1),
                                             new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
@@ -301,7 +302,7 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
                                           new DTCol (EText.MSG_SUPPORTED_CIPHER_SUITES.getDisplayText (aDisplayLocale))).setID (getID () + "-sslcontexts");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
-        final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersion ();
+        final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersionStr ();
 
         for (final Service aService : aSecurityProvider.getServices ())
           if ("SSLContext".equals (aService.getType ()))

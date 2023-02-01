@@ -43,7 +43,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   /**
    * Constructor. Used only internally.
    */
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public GlobalAjaxInvoker ()
   {}
@@ -113,6 +113,9 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("Registry", m_aRegistry).append ("Invoker", m_aInvoker).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Registry", m_aRegistry)
+                            .append ("Invoker", m_aInvoker)
+                            .getToString ();
   }
 }

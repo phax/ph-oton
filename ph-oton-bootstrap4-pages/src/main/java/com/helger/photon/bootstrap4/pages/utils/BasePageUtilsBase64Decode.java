@@ -69,18 +69,20 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
  *        Web Page Execution Context type
  * @since 8.3.2
  */
-public class BasePageUtilsBase64Decode <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageUtilsBase64Decode <WPECTYPE extends IWebPageExecutionContext> extends
+                                       AbstractBootstrapWebPage <WPECTYPE>
 {
   public static class Decoded extends AbstractSessionWebSingleton
   {
     private byte [] m_aData;
     private IMimeType m_aMimeType;
 
-    @Deprecated
+    @Deprecated (forRemoval = false)
     @UsedViaReflection
     public Decoded ()
     {}
 
+    @Nonnull
     public static Decoded getInstance ()
     {
       return getSessionSingleton (Decoded.class);
@@ -131,7 +133,9 @@ public class BasePageUtilsBase64Decode <WPECTYPE extends IWebPageExecutionContex
     super (sID, sName);
   }
 
-  public BasePageUtilsBase64Decode (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageUtilsBase64Decode (@Nonnull @Nonempty final String sID,
+                                    @Nonnull final String sName,
+                                    @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -180,7 +184,9 @@ public class BasePageUtilsBase64Decode <WPECTYPE extends IWebPageExecutionContex
                                      " characters to " +
                                      aDecoded.length +
                                      " bytes (=" +
-                                     LocaleFormatter.getFormattedPercent ((double) aDecoded.length / sDecode.length (), 2, aDisplayLocale) +
+                                     LocaleFormatter.getFormattedPercent ((double) aDecoded.length / sDecode.length (),
+                                                                          2,
+                                                                          aDisplayLocale) +
                                      ")!" +
                                      (bShowAsString ? " Showing result in charset '" + aCharset.name () + "'" : "")));
         if (bShowAsString)
@@ -221,7 +227,8 @@ public class BasePageUtilsBase64Decode <WPECTYPE extends IWebPageExecutionContex
                                                                                                            .setPlaceholder ("Text to be Base64 decoded"))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_DECODE)));
 
-    final HCCheckBox aShowAsString = new HCCheckBox (new RequestFieldBoolean (FIELD_SHOW_AS_STRING, DEFAULT_SHOW_AS_STRING));
+    final HCCheckBox aShowAsString = new HCCheckBox (new RequestFieldBoolean (FIELD_SHOW_AS_STRING,
+                                                                              DEFAULT_SHOW_AS_STRING));
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel ("Show result as String?")
                                                  .setCtrl (aShowAsString)
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_SHOW_AS_STRING)));

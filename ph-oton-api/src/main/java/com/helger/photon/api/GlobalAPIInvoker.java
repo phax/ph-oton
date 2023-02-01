@@ -40,7 +40,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   @GuardedBy ("m_aRWLock")
   private IAPIInvoker m_aInvoker = new APIInvoker ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public GlobalAPIInvoker ()
   {}
@@ -110,6 +110,9 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("Registry", m_aRegistry).append ("Invoker", m_aInvoker).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Registry", m_aRegistry)
+                            .append ("Invoker", m_aInvoker)
+                            .getToString ();
   }
 }

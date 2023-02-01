@@ -40,31 +40,10 @@ public final class HCFormLabelHelper
   public static final String DEFAULT_SIGN_OPTIONAL = "";
   /** The default sign for mandatory elements */
   public static final String DEFAULT_SIGN_MANDATORY = "*";
-  /**
-   * The default sign for mandatory elements.
-   *
-   * @deprecated Since v8.3.1; Use {@link #DEFAULT_SIGN_MANDATORY} instead
-   */
-  @Deprecated
-  public static final String SIGN_MANDATORY = DEFAULT_SIGN_MANDATORY;
   /** The default sign for alternative elements */
   public static final String DEFAULT_SIGN_ALTERNATIVE = "°";
-  /**
-   * The default sign for alternative elements.
-   *
-   * @deprecated Since v8.3.1; Use {@link #DEFAULT_SIGN_ALTERNATIVE} instead
-   */
-  @Deprecated
-  public static final String SIGN_ALTERNATIVE = DEFAULT_SIGN_ALTERNATIVE;
   /** The default label to be appended to form labels */
   public static final String DEFAULT_LABEL_END = ":";
-  /**
-   * The default label to be appended to form labels.
-   *
-   * @deprecated Since v8.3.1; Use {@link #DEFAULT_LABEL_END} instead
-   */
-  @Deprecated
-  public static final String LABEL_END = DEFAULT_LABEL_END;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (HCFormLabelHelper.class);
 

@@ -30,11 +30,12 @@ import com.helger.html.hc.impl.HCTextNode;
  * @param <IMPLTYPE>
  *        The type of the contained child objects.
  */
-public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPLTYPE>> extends IHCHasChildrenMutable <IMPLTYPE, IHCNode>
+public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPLTYPE>> extends
+                                     IHCHasChildrenMutable <IMPLTYPE, IHCNode>
 {
   /**
    * Add a new text node, if the passed text is non-<code>null</code>.
-   * 
+   *
    * @param sText
    *        Child text to add. May be <code>null</code>.
    * @return this
@@ -50,7 +51,7 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
 
   /**
    * Remove all existing children and set only the provided text.
-   * 
+   *
    * @param sText
    *        Child text to add. May be <code>null</code>.
    * @return this
@@ -87,7 +88,7 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
    */
   @Nonnull
   @DevelopersNote ("Use addChild instead")
-  @Deprecated
+  @Deprecated (forRemoval = false)
   default IMPLTYPE addChildren (@Nullable final String sChild)
   {
     return addChild (sChild);

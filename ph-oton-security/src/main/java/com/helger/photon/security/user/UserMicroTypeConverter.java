@@ -28,7 +28,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.security.password.hash.PasswordHash;
-import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_1000_48;
+import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_1000_48;
 import com.helger.security.password.salt.IPasswordSalt;
 import com.helger.security.password.salt.PasswordSalt;
 import com.helger.xml.microdom.IMicroElement;
@@ -37,7 +37,6 @@ import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
 
-@SuppressWarnings ("deprecation")
 public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <User>
 {
   private static final IMicroQName ATTR_DESIREDLOCALE = new MicroQName ("desiredlocale");
@@ -95,8 +94,8 @@ public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTyp
     String sPasswordHashAlgorithm = ePasswordHash.getAttributeValue (ATTR_ALGORITHM);
     if (sPasswordHashAlgorithm == null)
     {
-      // migration
-      sPasswordHashAlgorithm = PasswordHashCreatorPBKDF2_1000_48.ALGORITHM;
+      // migration to Default algorithm
+      sPasswordHashAlgorithm = PasswordHashCreatorPBKDF2_SHA256_1000_48.ALGORITHM;
     }
     final String sSalt = ePasswordHash.getAttributeValue (ATTR_SALT);
     final IPasswordSalt aSalt = PasswordSalt.createFromStringMaybe (sSalt);

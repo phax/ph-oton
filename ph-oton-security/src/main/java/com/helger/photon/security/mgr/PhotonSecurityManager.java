@@ -125,7 +125,8 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      *         In case of error
      */
     @Nonnull
-    IUserGroupManager createUserGroupMgr (@Nonnull IUserManager aUserMgr, @Nonnull IRoleManager aRoleMgr) throws Exception;
+    IUserGroupManager createUserGroupMgr (@Nonnull IUserManager aUserMgr,
+                                          @Nonnull IRoleManager aRoleMgr) throws Exception;
 
     /**
      * @return A new instance of {@link IUserTokenManager}
@@ -237,7 +238,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   private IUserGroupManager m_aUserGroupMgr;
   private IUserTokenManager m_aUserTokenMgr;
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public PhotonSecurityManager ()
   {}

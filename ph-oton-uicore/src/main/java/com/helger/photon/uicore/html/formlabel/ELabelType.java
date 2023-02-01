@@ -65,30 +65,6 @@ public enum ELabelType implements IHasID <String>
     return m_aCSSClass;
   }
 
-  /**
-   * @return <code>true</code> if a special sign is present, <code>false</code>
-   *         if not.
-   * @deprecated Since 8.3.1; Use the stuff in {@link HCFormLabelHelper}
-   *             instead.
-   */
-  @Deprecated
-  public boolean hasSpecialSign ()
-  {
-    return getSpecialSign () != null;
-  }
-
-  /**
-   * @return The special sign for this label type. May be <code>null</code>.
-   * @deprecated Since 8.3.1; Use the stuff in {@link HCFormLabelHelper}
-   *             instead.
-   */
-  @Nullable
-  @Deprecated
-  public String getSpecialSign ()
-  {
-    return HCFormLabelHelper.getSuffixStringOrNull (this);
-  }
-
   public boolean isOptional ()
   {
     return this == OPTIONAL;

@@ -65,7 +65,7 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
   IMPLTYPE addStyle (@Nullable ICSSValue aValue);
 
   @Nonnull
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @DevelopersNote ("Use addStyle instead!")
   default IMPLTYPE addStyles (@Nullable final ICSSValue aValue)
   {

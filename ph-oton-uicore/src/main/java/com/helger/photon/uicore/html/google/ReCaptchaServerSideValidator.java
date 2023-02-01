@@ -51,14 +51,14 @@ public final class ReCaptchaServerSideValidator
    *        The value of the <code>g-recaptcha-response</code> request
    *        parameter.
    * @return {@link ESuccess}
+   * @deprecated Use {@link #check(String, String, HttpClientSettings)} instead
    */
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.0.0")
   public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey,
                                 @Nullable final String sReCaptchaResponse)
   {
     final HttpClientSettings aSettings = new HttpClientSettings ();
-    // For proxy etc
-    aSettings.setUseSystemProperties (true);
     return check (sServerSideKey, sReCaptchaResponse, aSettings);
   }
 

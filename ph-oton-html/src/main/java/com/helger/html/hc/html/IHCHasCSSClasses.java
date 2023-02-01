@@ -37,7 +37,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
   @Nonnull
   IMPLTYPE addClass (@Nullable ICSSClassProvider aProvider);
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @DevelopersNote ("Use addClass instead!")
   @Nonnull
   default IMPLTYPE addClasses (@Nullable final ICSSClassProvider aProvider)

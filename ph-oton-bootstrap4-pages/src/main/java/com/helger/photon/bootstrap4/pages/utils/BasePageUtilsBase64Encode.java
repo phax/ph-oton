@@ -64,7 +64,8 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
  *        Web Page Execution Context type
  * @since 8.3.2
  */
-public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContext> extends
+                                       AbstractBootstrapWebPage <WPECTYPE>
 {
   public static class Encoded extends AbstractSessionWebSingleton
   {
@@ -75,6 +76,7 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
     public Encoded ()
     {}
 
+    @Nonnull
     public static Encoded getInstance ()
     {
       return getSessionSingleton (Encoded.class);
@@ -125,7 +127,9 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
     super (sID, sName);
   }
 
-  public BasePageUtilsBase64Encode (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageUtilsBase64Encode (@Nonnull @Nonempty final String sID,
+                                    @Nonnull final String sName,
+                                    @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -194,7 +198,8 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
                                      " bytes to " +
                                      sEncoded.length () +
                                      " characters (=" +
-                                     LocaleFormatter.getFormattedPercent ((double) sEncoded.length () / aBytesToEncode.length,
+                                     LocaleFormatter.getFormattedPercent ((double) sEncoded.length () /
+                                                                          aBytesToEncode.length,
                                                                           2,
                                                                           aDisplayLocale) +
                                      ")!"));
@@ -245,7 +250,8 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
                                                                                                       DEFAULT_SHOW_AS_STRING)))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_SHOW_AS_STRING)));
 
-      aForm.addChild (new BootstrapSubmitButton ().addChild ("Create Base64 encoded version").setIcon (EDefaultIcon.YES));
+      aForm.addChild (new BootstrapSubmitButton ().addChild ("Create Base64 encoded version")
+                                                  .setIcon (EDefaultIcon.YES));
       aTabBox.addTab ("file", "Upload file", aForm, bFileSelected);
     }
 
@@ -264,7 +270,8 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
                                                                                                       DEFAULT_SHOW_AS_STRING)))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_SHOW_AS_STRING)));
 
-      aForm.addChild (new BootstrapSubmitButton ().addChild ("Create Base64 encoded version").setIcon (EDefaultIcon.YES));
+      aForm.addChild (new BootstrapSubmitButton ().addChild ("Create Base64 encoded version")
+                                                  .setIcon (EDefaultIcon.YES));
       aTabBox.addTab ("text", "Edit text to encode", aForm, !bFileSelected);
     }
   }

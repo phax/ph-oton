@@ -54,15 +54,4 @@ public interface IHCCell <IMPLTYPE extends IHCCell <IMPLTYPE>> extends IHCElemen
 
   @Nonnull
   IMPLTYPE setRowspan (@Nonnegative int nRowspan);
-
-  /**
-   * @return The cell content alignment. Defaults to <code>null</code>.
-   */
-  @Deprecated
-  @Nullable
-  EHCCellAlign getAlign ();
-
-  @Deprecated
-  @Nonnull
-  IMPLTYPE setAlign (@Nullable EHCCellAlign eAlign);
 }

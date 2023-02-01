@@ -52,7 +52,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   @GuardedBy ("m_aRWLock")
   private final ICommonsSet <String> m_aNonces = new CommonsHashSet <> ();
 
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public CSRFManager ()
   {}

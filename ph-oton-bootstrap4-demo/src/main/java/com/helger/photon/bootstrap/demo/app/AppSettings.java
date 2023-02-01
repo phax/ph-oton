@@ -33,8 +33,7 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
  */
 public final class AppSettings extends AbstractGlobalSingleton
 {
-
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   private AppSettings ()
   {}

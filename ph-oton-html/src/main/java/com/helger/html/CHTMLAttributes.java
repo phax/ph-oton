@@ -75,8 +75,6 @@ public final class CHTMLAttributes
   public static final IMicroQName COMPACT = new MicroQName ("compact");
   public static final IMicroQName CONTENT = new MicroQName ("content");
   public static final IMicroQName CONTENTEDITABLE = new MicroQName ("contenteditable");
-  @Deprecated
-  public static final IMicroQName CONTEXTMENU = new MicroQName ("contextmenu");
   public static final IMicroQName CONTROLLER = new MicroQName ("controller");
   public static final IMicroQName CONTROLS = new MicroQName ("controls");
   public static final IMicroQName COORDS = new MicroQName ("coords");
@@ -91,8 +89,6 @@ public final class CHTMLAttributes
   public static final IMicroQName DISABLED = new MicroQName ("disabled");
   public static final IMicroQName DOWNLOAD = new MicroQName ("download");
   public static final IMicroQName DRAGGABLE = new MicroQName ("draggable");
-  @Deprecated
-  public static final IMicroQName DROPZONE = new MicroQName ("dropzone");
   public static final IMicroQName ENCTYPE = new MicroQName ("enctype");
   public static final IMicroQName ENDTIME = new MicroQName ("endtime");
   public static final IMicroQName FACE = new MicroQName ("face");
@@ -224,9 +220,6 @@ public final class CHTMLAttributes
   public static final IMicroQName ARIA_DESCRIPTION = new MicroQName (PREFIX_ARIA + "description");
   public static final IMicroQName ARIA_DETAILS = new MicroQName (PREFIX_ARIA + "details");
   public static final IMicroQName ARIA_DISABLED = new MicroQName (PREFIX_ARIA + "disabled");
-  // Deprecated in ARIA 1.1
-  @Deprecated
-  public static final IMicroQName ARIA_DROPEFFECT = new MicroQName (PREFIX_ARIA + "dropeffect");
   public static final IMicroQName ARIA_ERRORMESSAGE = new MicroQName (PREFIX_ARIA + "errormessage");
   public static final IMicroQName ARIA_EXPANDED = new MicroQName (PREFIX_ARIA + "expanded");
   public static final IMicroQName ARIA_FLOWTO = new MicroQName (PREFIX_ARIA + "flowto");

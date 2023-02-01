@@ -36,14 +36,13 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                     implements
+public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>> extends
+                                     AbstractHCElementWithChildren <IMPLTYPE> implements
                                      IHCCell <IMPLTYPE>
 {
   private HCRow m_aParentRow;
   private int m_nColspan = CGlobal.ILLEGAL_UINT;
   private int m_nRowspan = CGlobal.ILLEGAL_UINT;
-  private EHCCellAlign m_eAlign;
 
   public AbstractHCCell (@Nonnull final EHTMLElement aElement)
   {
@@ -89,21 +88,6 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
     return thisAsT ();
   }
 
-  @Deprecated
-  @Nullable
-  public final EHCCellAlign getAlign ()
-  {
-    return m_eAlign;
-  }
-
-  @Deprecated
-  @Nonnull
-  public final IMPLTYPE setAlign (@Nullable final EHCCellAlign eAlign)
-  {
-    m_eAlign = eAlign;
-    return thisAsT ();
-  }
-
   @Override
   @OverridingMethodsMustInvokeSuper
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
@@ -113,8 +97,6 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
       aElement.setAttribute (CHTMLAttributes.COLSPAN, m_nColspan);
     if (m_nRowspan >= 0 && m_nRowspan <= 65534)
       aElement.setAttribute (CHTMLAttributes.ROWSPAN, m_nRowspan);
-    if (m_eAlign != null)
-      aElement.setAttribute (CHTMLAttributes.ALIGN, m_eAlign);
   }
 
   @Override
@@ -123,7 +105,6 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("colspan", m_nColspan)
                             .append ("rowSpan", m_nRowspan)
-                            .append ("align", m_eAlign)
                             .getToString ();
   }
 }
