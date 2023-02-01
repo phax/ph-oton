@@ -153,7 +153,12 @@ public class XHTMLParser
                                                                    EXMLIncorrectCharacterHandling.DEFAULT,
                                                                    m_eHTMLVersion.getDocType ()) +
                           "<html" +
-                          (sHTMLNamespaceURI != null ? ' ' + XMLConstants.XMLNS_ATTRIBUTE + "=\"" + sHTMLNamespaceURI + '"' : "") +
+                          (sHTMLNamespaceURI != null ? ' ' +
+                                                       XMLConstants.XMLNS_ATTRIBUTE +
+                                                       "=\"" +
+                                                       sHTMLNamespaceURI +
+                                                       '"'
+                                                     : "") +
                           "><head><title></title></head><body>" +
                           StringHelper.getNotNull (sXHTMLFragment) +
                           "</body></html>";
@@ -173,7 +178,10 @@ public class XHTMLParser
   public IMicroDocument parseXHTMLDocument (@Nullable final String sXHTML)
   {
     return MicroReader.readMicroXML (sXHTML,
-                                     m_aAdditionalSAXReaderSettings.getClone ().setEntityResolver (HTMLEntityResolver.getInstance ()));
+                                     m_aAdditionalSAXReaderSettings.getClone ()
+                                                                   .setEntityResolver (HTMLEntityResolver.getInstance ())
+                                                                   .setFeatureValue (EXMLParserFeature.DISALLOW_DOCTYPE_DECL,
+                                                                                     false));
   }
 
   /**

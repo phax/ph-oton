@@ -18,13 +18,13 @@ package com.helger.photon.uicore.html.google;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 import com.helger.html.hc.config.EHCScriptInlineMode;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.photon.core.mock.PhotonCoreWebAppTestRule;
 
 /**
  * Test class for class {@link HCGoogleAnalyticsV4}
@@ -36,26 +36,19 @@ public final class HCGoogleAnalyticsV4Test
   @Rule
   public final HCTestRuleOptimized m_aRule = new HCTestRuleOptimized ();
 
+  @Rule
+  public final PhotonCoreWebAppTestRule m_aRule2 = new PhotonCoreWebAppTestRule ();
+
   @Test
-  @Ignore
-  // TODO
   public void testBasic1 ()
   {
     final HCGoogleAnalyticsV4 aGA = new HCGoogleAnalyticsV4 ("tag");
     aGA.setMode (EHCScriptInlineMode.PLAIN_TEXT_NO_ESCAPE);
     assertEquals ("<script xmlns=\"http://www.w3.org/1999/xhtml\" type=\"text/javascript\">" +
-                  "var _gaq=(_gaq||[]);" +
-                  "_gaq.push(['_setAccount','abc']);" +
-                  "_gaq.push(['_trackPageview']);" +
-                  "_gaq.push(['_trackPageLoadTime']);" +
-                  "(function(){" +
-                  "var ga=document.createElement('script');" +
-                  "ga.type='text\\/javascript';" +
-                  "ga.async=true;" +
-                  "ga.src=((('https:'==window.location.protocol)?'https:\\/\\/ssl':'http:\\/\\/www')+'.google-analytics.com\\/ga.js');" +
-                  "var s=document.getElementsByTagName('script')[0];" +
-                  "s.parentNode.insertBefore(ga,s);" +
-                  "})();" +
+                  "window.dataLayer=(window.dataLayer||[]);" +
+                  "function gtag(){dataLayer.push(arguments);}" +
+                  "gtag('js',new Date());" +
+                  "gtag('config','tag');" +
                   "</script>",
                   HCRenderer.getAsHTMLString (aGA));
   }
