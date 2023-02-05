@@ -101,7 +101,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 * v9.0.0 - 2023-02-01
     * Using Java 11 as the baseline
     * Updated to ph-commons 11
-    * Updated to Jetty 9.4.50
+    * Using Servlet API 4.0.1 as the baseline: JakartaEE 8, Java 11+, Apache Tomcat v9.x, Jetty 10.0.x
+    * Updated to Jetty 10.0.13
     * Updated from `org.apache.logging.log4j:log4j-slf4j-impl` to `org.apache.logging.log4j:log4j-slf4j2-impl` for SLF4J 2.x
 * v8.4.4 - 2012-01-23
     * Updated to jQuery 3.6.3

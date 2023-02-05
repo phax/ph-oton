@@ -31,6 +31,6 @@ public final class RunInJettyPHOTONDEMO_BS4
 {
   public static void main (final String [] args) throws Exception
   {
-    new JettyStarter (RunInJettyPHOTONDEMO_BS4.class).setContainerIncludeJarPattern (null).run ();
+    new JettyStarter (RunInJettyPHOTONDEMO_BS4.class).run ();
   }
 }

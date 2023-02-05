@@ -37,11 +37,14 @@ import org.eclipse.jetty.server.session.FileSessionDataStore;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
+import org.eclipse.jetty.webapp.JspConfiguration;
 import org.eclipse.jetty.webapp.MetaInfConfiguration;
+import org.eclipse.jetty.webapp.WebAppConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
 import org.eclipse.jetty.webapp.WebXmlConfiguration;
@@ -81,7 +84,10 @@ public class JettyStarter
   public static final String DEFAULT_SESSION_COOKIE_NAME = "PHOTONSESSIONID";
   public static final boolean DEFAULT_ALLOW_ANNOTATION_BASED_CONFIG = true;
   public static final boolean DEFAULT_ALLOW_DIRECTORY_LISTING = false;
+
   private static final Logger LOGGER = LoggerFactory.getLogger (JettyStarter.class);
+  private static final String CONTAINER_JAR_PATTERN = "org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern";
+  private static final String WEBINF_JAR_PATTERN = "org.eclipse.jetty.server.webapp.WebInfIncludeJarPattern";
 
   private final String m_sAppName;
   private final String m_sDirBaseName;
@@ -125,6 +131,10 @@ public class JettyStarter
     m_sDirBaseName = FilenameHelper.getAsSecureValidFilename (sAppName);
     if (StringHelper.hasNoText (m_sDirBaseName))
       throw new IllegalStateException ("FolderName for application name '" + sAppName + "' is empty.");
+
+    // Use recommended thread pool
+    m_aThreadPool = new QueuedThreadPool ();
+    ((QueuedThreadPool) m_aThreadPool).setName ("jetty-server");
 
     // Must be directly called on System to have an effect!
     System.setProperty ("log4j2.disable.jmx", "true");
@@ -552,7 +562,8 @@ public class JettyStarter
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
       aWebAppCtx.setBaseResource (m_aResourceBase);
-      aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
+      aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource
+                                                          : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
       aWebAppCtx.setContextPath (sContextPath);
       aWebAppCtx.setTempDirectory (new File (sTempDir, m_sDirBaseName + ".webapp"));
       /*
@@ -567,13 +578,13 @@ public class JettyStarter
       aWebAppCtx.setThrowUnavailableOnStartupException (true);
       if (m_sContainerIncludeJarPattern != null)
       {
-        // http://www.eclipse.org/jetty/documentation/9.4.x/configuring-webapps.html#container-include-jar-pattern
+        // https://www.eclipse.org/jetty/documentation/jetty-9/index.html#configuring-webapps
         // https://github.com/eclipse/jetty.project/issues/680
-        aWebAppCtx.setAttribute (WebInfConfiguration.CONTAINER_JAR_PATTERN, m_sContainerIncludeJarPattern);
+        aWebAppCtx.setAttribute (CONTAINER_JAR_PATTERN, m_sContainerIncludeJarPattern);
       }
       if (m_sWebInfIncludeJarPattern != null)
       {
-        aWebAppCtx.setAttribute (WebInfConfiguration.WEBINF_JAR_PATTERN, m_sWebInfIncludeJarPattern);
+        aWebAppCtx.setAttribute (WEBINF_JAR_PATTERN, m_sWebInfIncludeJarPattern);
       }
 
       if (m_bAllowAnnotationBasedConfig)
@@ -581,14 +592,17 @@ public class JettyStarter
         // Important to add the AnnotationConfiguration!
         aWebAppCtx.setConfigurations (new Configuration [] { new WebInfConfiguration (),
                                                              new WebXmlConfiguration (),
+                                                             new WebAppConfiguration (),
                                                              new MetaInfConfiguration (),
                                                              new FragmentConfiguration (),
                                                              new AnnotationConfiguration (),
-                                                             new JettyWebXmlConfiguration () });
+                                                             new JettyWebXmlConfiguration (),
+                                                             new JspConfiguration () });
       }
       // else leave default
 
-      aWebAppCtx.setInitParameter ("org.eclipse.jetty.servlet.Default.dirAllowed", Boolean.toString (m_bAllowDirectoryListing));
+      aWebAppCtx.setInitParameter ("org.eclipse.jetty.servlet.Default.dirAllowed",
+                                   Boolean.toString (m_bAllowDirectoryListing));
     }
 
     // Set session store directory to passivate/activate sessions
@@ -684,7 +698,8 @@ public class JettyStarter
       customizeServerConnector (aConnector);
 
       aServer.setConnectors (new Connector [] { aConnector });
-      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize", Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
+      aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormContentSize",
+                            Integer.valueOf (2 * CGlobal.BYTES_PER_MEGABYTE));
       aServer.setAttribute ("org.eclipse.jetty.server.Request.maxFormKeys", Integer.valueOf (20000));
     }
 
