@@ -134,7 +134,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
           if (aUnifiedResponse.isStatusCodeDefined () || aUnifiedResponse.isRedirectDefined ())
           {
             // Status codes are not meant to be cached
-            aUnifiedResponse.removeCaching ();
+            aUnifiedResponse.disableCaching ();
           }
           else
             if (!aUnifiedResponse.isStatusCodeDefined () &&
