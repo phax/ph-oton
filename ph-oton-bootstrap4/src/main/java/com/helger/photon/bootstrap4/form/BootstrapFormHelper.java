@@ -132,9 +132,14 @@ public final class BootstrapFormHelper
   {
     if (aCtrls != null && aLabel != null)
     {
+      final boolean bIsMandatory = aLabel.getType ().isMandatory ();
       boolean bSetLabel = false;
       for (final IHCElement <?> aCurCtrl : aCtrls)
       {
+        // Set aria-required
+        if (bIsMandatory)
+          aCurCtrl.customAttrs ().setAriaRequired (true);
+
         boolean bSetLabelForForThisCtrl = false;
         if (!bSetLabel)
         {
