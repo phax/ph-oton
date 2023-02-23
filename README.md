@@ -98,6 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v8.4.5 - work in progress
+    * Fixed default caching option for non GET requests 
 * v8.4.4 - 2012-01-23
     * Updated to jQuery 3.6.3
     * Updated to DataTables 1.13.1 and latest plugin versions
