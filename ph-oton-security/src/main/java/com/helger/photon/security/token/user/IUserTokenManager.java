@@ -58,9 +58,10 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    *        The user it belongs to. May not be <code>null</code>.
    * @param sDescription
    *        The description of the user token. May be <code>null</code>.
-   * @return The created user token. Never <code>null</code>.
+   * @return The created user token. Returns <code>null</code> in case
+   *         persistence fails.
    */
-  @Nonnull
+  @Nullable
   UserToken createUserToken (@Nullable String sTokenString,
                              @Nullable Map <String, String> aCustomAttrs,
                              @Nonnull IUser aUser,

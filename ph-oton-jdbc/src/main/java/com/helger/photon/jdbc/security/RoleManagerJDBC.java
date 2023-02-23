@@ -194,7 +194,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  public Role internalCreateNewRole (@Nonnull final Role aRole, final boolean bPredefined)
+  public Role internalCreateNewRole (@Nonnull final Role aRole, final boolean bPredefined, final boolean bRunCallback)
   {
     // Store
     if (_internalCreateItem (aRole).isFailure ())
@@ -214,8 +214,11 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                       aRole.getDescription (),
                                       bPredefined ? "predefined" : "custom");
 
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, bPredefined));
+    if (bRunCallback)
+    {
+      // Execute callback as the very last action
+      m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, bPredefined));
+    }
 
     return aRole;
   }
@@ -227,7 +230,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   {
     // Create role
     final Role aRole = new Role (sName, sDescription, aCustomAttrs);
-    return internalCreateNewRole (aRole, false);
+    return internalCreateNewRole (aRole, false, true);
   }
 
   @Nullable
@@ -238,7 +241,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   {
     // Create role
     final Role aRole = new Role (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
-    return internalCreateNewRole (aRole, true);
+    return internalCreateNewRole (aRole, true, true);
   }
 
   @Nonnull

@@ -95,6 +95,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     ERR_USER_EMPTY ("Es muss ein Benutzer ausgewählt werden!", "A user must be selected!"),
     CREATE_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich erstellt.",
                     "The user token for ''{0}'' was successfully created."),
+    CREATE_ERROR ("Das Benutzer-Token für ''{0}'' konnte nicht erstellt werden.",
+                  "Error creating user token for ''{0}''."),
     EDIT_SUCCESS ("Das Benutzer-Token für ''{0}'' wurde erfolgreich bearbeitet.",
                   "The user token for ''{0}'' was successfully edited."),
     DELETE_QUERY ("Sind Sie sicher, dass Sie das Benutzer-Token für ''{0}'' löschen wollen?",
@@ -538,9 +540,16 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
       }
       else
       {
-        aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aUser, sDescription);
-        aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                         aUser.getDisplayName ())));
+        if (aUserTokenMgr.createUserToken (sTokenString, aCustomAttrMap, aUser, sDescription) != null)
+        {
+          aWPEC.postRedirectGetInternal (new BootstrapSuccessBox ().addChild (EText.CREATE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                           aUser.getDisplayName ())));
+        }
+        else
+        {
+          aWPEC.postRedirectGetInternal (new BootstrapErrorBox ().addChild (EText.CREATE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                       aUser.getDisplayName ())));
+        }
       }
     }
   }

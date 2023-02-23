@@ -79,7 +79,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        .
    * @param aCustomAttrs
    *        A set of custom attributes. May be <code>null</code>.
-   * @return The created user group. May be <code>null</code> if serialization
+   * @return The created user group. May be <code>null</code> if persistence
    *         fails.
    */
   @Nullable
