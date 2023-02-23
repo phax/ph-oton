@@ -364,10 +364,10 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
-    final ICommonsList <IRole> aActiveRoles = aRoleMgr.getAll ();
+    final ICommonsList <IRole> aAllRoles = aRoleMgr.getAll ();
     aTabBox.addTab ("active",
-                    EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aActiveRoles.size ())),
-                    getTabWithRoles (aWPEC, aActiveRoles, getID () + "1"));
+                    EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aAllRoles.size ())),
+                    getTabWithRoles (aWPEC, aAllRoles, getID () + "1"));
     aNodeList.addChild (aTabBox);
   }
 }

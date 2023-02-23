@@ -27,6 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.Translatable;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.compare.ESortOrder;
@@ -585,15 +586,15 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
   @Nonnull
   private IHCNode _createList (@Nonnull final WPECTYPE aWPEC,
                                @Nonnull final String sIDSuffix,
+                               @Nonnull final ICommonsList <IUserToken> aUserTokens,
                                @Nullable final Predicate <? super IUserToken> aFilter)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
 
     final HCTable aTable = new HCTable (new DTCol (EText.HEADER_USER.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                         new DTCol (EText.HEADER_USABLE.getDisplayText (aDisplayLocale)),
                                         new BootstrapDTColAction (aDisplayLocale)).setID (getID () + sIDSuffix);
-    for (final IUserToken aCurObject : aUserTokenMgr.getAll ())
+    for (final IUserToken aCurObject : aUserTokens)
       if (aFilter == null || aFilter.test (aCurObject))
       {
         final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
@@ -671,13 +672,17 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     final BootstrapButtonToolbar aToolbar = aNodeList.addAndReturnChild (new BootstrapButtonToolbar (aWPEC));
     aToolbar.addButtonNew (EText.BUTTON_CREATE_NEW.getDisplayText (aDisplayLocale), createCreateURL (aWPEC));
 
+    // Query only once
+    final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
+    final ICommonsList <IUserToken> aUserTokens = aUserTokenMgr.getAll ();
+
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
     aTabBox.addTab ("active",
                     EText.TAB_LABEL_ACTIVE.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "active", IUserToken::isNotDeleted));
+                    _createList (aWPEC, "active", aUserTokens, IUserToken::isNotDeleted));
     aTabBox.addTab ("deleted",
                     EText.TAB_LABEL_DELETED.getDisplayText (aDisplayLocale),
-                    _createList (aWPEC, "deleted", IUserToken::isDeleted));
+                    _createList (aWPEC, "deleted", aUserTokens, IUserToken::isDeleted));
     aNodeList.addChild (aTabBox);
   }
 }
