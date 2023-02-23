@@ -41,10 +41,24 @@ public class RevocationStatus implements IRevocationStatus
   private LocalDateTime m_aRevocationDT;
   private String m_sRevocationReason;
 
-  protected RevocationStatus (final boolean bRevoked,
-                              @Nullable final String sRevocationUserID,
-                              @Nullable final LocalDateTime aRevocationDT,
-                              @Nullable final String sRevocationReason)
+  /**
+   * Constructor for deserialization only. Use {@link #createUnrevoked()}
+   * instead.
+   *
+   * @param bRevoked
+   *        <code>true</code> if it is revoked, <code>false</code> if not
+   * @param sRevocationUserID
+   *        The user ID that revoked the object. May be <code>null</code>.
+   * @param aRevocationDT
+   *        The date time when the revocation took place. May be
+   *        <code>null</code>.
+   * @param sRevocationReason
+   *        The reason for the revocation. May be <code>null</code>.
+   */
+  public RevocationStatus (final boolean bRevoked,
+                           @Nullable final String sRevocationUserID,
+                           @Nullable final LocalDateTime aRevocationDT,
+                           @Nullable final String sRevocationReason)
   {
     if (bRevoked)
     {

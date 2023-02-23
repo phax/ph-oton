@@ -22,7 +22,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
 
 /**
@@ -32,19 +34,19 @@ import com.helger.xml.microdom.util.MicroHelper;
  */
 public final class RoleMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <Role>
 {
-  private static final String ATTR_NAME = "name";
+  private static final IMicroQName ATTR_NAME = new MicroQName ("name");
   private static final String ELEMENT_DESCRIPTION = "description";
 
   @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Role aRole,
+  public IMicroElement convertToMicroElement (@Nonnull final Role aValue,
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
-    setObjectFields (aRole, aElement);
-    aElement.setAttribute (ATTR_NAME, aRole.getName ());
-    if (StringHelper.hasText (aRole.getDescription ()))
-      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aRole.getDescription ());
+    setObjectFields (aValue, aElement);
+    aElement.setAttribute (ATTR_NAME, aValue.getName ());
+    if (StringHelper.hasText (aValue.getDescription ()))
+      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aValue.getDescription ());
     return aElement;
   }
 

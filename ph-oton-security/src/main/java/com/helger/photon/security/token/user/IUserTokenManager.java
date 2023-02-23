@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.photon.app.mgr.IPhotonManager;
@@ -38,6 +40,13 @@ import com.helger.photon.security.user.IUser;
 public interface IUserTokenManager extends IPhotonManager <IUserToken>
 {
   /**
+   * @return The user token callback list. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  CallbackList <IUserTokenModificationCallback> userTokenModificationCallbacks ();
+
+  /**
    * Create a new user token.
    *
    * @param sTokenString
@@ -47,22 +56,31 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    *        Custom attributes. May be <code>null</code>.
    * @param aUser
    *        The user it belongs to. May not be <code>null</code>.
+   * @param sDescription
+   *        The description of the user token. May be <code>null</code>.
    * @return The created user token. Never <code>null</code>.
    */
   @Nonnull
-  UserToken createUserToken (@Nullable String sTokenString, @Nullable Map <String, String> aCustomAttrs, @Nonnull IUser aUser);
+  UserToken createUserToken (@Nullable String sTokenString,
+                             @Nullable Map <String, String> aCustomAttrs,
+                             @Nonnull IUser aUser,
+                             @Nullable String sDescription);
 
   /**
    * Update an existing token.
    *
    * @param sUserTokenID
    *        The ID of the token to be updated.
-   * @param aCustomAttrs
+   * @param aNewCustomAttrs
    *        Custom attributes. May be <code>null</code>.
+   * @param sNewDescription
+   *        The description of the user token. May be <code>null</code>.
    * @return {@link EChange}
    */
   @Nonnull
-  EChange updateUserToken (@Nullable String sUserTokenID, @Nullable Map <String, String> aCustomAttrs);
+  EChange updateUserToken (@Nullable String sUserTokenID,
+                           @Nullable Map <String, String> aNewCustomAttrs,
+                           @Nullable String sNewDescription);
 
   /**
    * Delete an existing token.

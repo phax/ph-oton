@@ -49,9 +49,6 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     super (UserToken.class, sFilename);
   }
 
-  /**
-   * @return The user token callback list. Never <code>null</code>.
-   */
   @Nonnull
   @ReturnsMutableObject
   public CallbackList <IUserTokenModificationCallback> userTokenModificationCallbacks ()
@@ -62,12 +59,13 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
   @Nonnull
   public UserToken createUserToken (@Nullable final String sTokenString,
                                     @Nullable final Map <String, String> aCustomAttrs,
-                                    @Nonnull final IUser aUser)
+                                    @Nonnull final IUser aUser,
+                                    @Nullable final String sDescription)
   {
-    final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aUser);
+    final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aUser, sDescription);
 
     m_aRWLock.writeLocked ( () -> internalCreateItem (aUserToken));
-    AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aUser.getID ());
+    AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aUser.getID (), sDescription);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreated (aUserToken));
@@ -76,7 +74,9 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
   }
 
   @Nonnull
-  public EChange updateUserToken (@Nullable final String sUserTokenID, @Nullable final Map <String, String> aCustomAttrs)
+  public EChange updateUserToken (@Nullable final String sUserTokenID,
+                                  @Nullable final Map <String, String> aNewCustomAttrs,
+                                  @Nullable final String sNewDescription)
   {
     final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
@@ -90,7 +90,8 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     {
       EChange eChange = EChange.UNCHANGED;
       // tenant ID cannot be changed!
-      eChange = eChange.or (aUserToken.attrs ().setAll (aCustomAttrs));
+      eChange = eChange.or (aUserToken.attrs ().setAll (aNewCustomAttrs));
+      eChange = eChange.or (aUserToken.setDescription (sNewDescription));
       if (eChange.isUnchanged ())
         return EChange.UNCHANGED;
 
@@ -101,10 +102,10 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserToken.OT, "set-all", sUserTokenID, aCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserToken.OT, "set-all", sUserTokenID, aNewCustomAttrs, sNewDescription);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserTokenUpdated (aUserToken));
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenUpdated (sUserTokenID));
 
     return EChange.CHANGED;
   }
@@ -136,7 +137,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     AuditHelper.onAuditDeleteSuccess (UserToken.OT, sUserTokenID);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserTokenDeleted (aUserToken));
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenDeleted (sUserTokenID));
 
     return EChange.CHANGED;
   }
