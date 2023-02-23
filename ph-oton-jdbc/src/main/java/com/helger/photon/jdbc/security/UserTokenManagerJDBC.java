@@ -24,6 +24,7 @@ import com.helger.commons.mutable.MutableLong;
 import com.helger.commons.state.EChange;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.wrapper.Wrapper;
 import com.helger.db.api.helper.DBValueHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
 import com.helger.db.jdbc.executor.DBExecutor;
@@ -38,6 +39,8 @@ import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
+import com.helger.photon.security.token.object.AccessTokenList;
+import com.helger.photon.security.token.object.IAccessTokenList;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 import com.helger.photon.security.token.user.IUserToken;
@@ -98,9 +101,10 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   }
 
   @Nonnull
-  private static String _asString (@Nonnull final ICommonsList <? extends IAccessToken> aTokens)
+  private static String _asString (@Nonnull final IAccessTokenList aTokens)
   {
-    return new JsonArray ().addAllMapped (aTokens, UserTokenManagerJDBC::_asJson).getAsJsonString ();
+    return new JsonArray ().addAllMapped (aTokens.getAllAccessTokens (), UserTokenManagerJDBC::_asJson)
+                           .getAsJsonString ();
   }
 
   @Nullable
@@ -259,7 +263,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                          DBValueHelper.getTrimmedToLength (aUserToken.getDeletionUserID (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          attrsToString (aUserToken.attrs ()),
-                                                                                                         _asString (aUserToken.getAllAccessTokens ()),
+                                                                                                         _asString (aUserToken.getAccessTokenList ()),
                                                                                                          DBValueHelper.getTrimmedToLength (aUserToken.getUserID (),
                                                                                                                                            IUser.USER_ID_MAX_LENGTH),
                                                                                                          aUserToken.getDescription ()));
@@ -336,7 +340,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
     if (aUpdated.is0 ())
     {
-      // No such role ID
+      // No such user token ID
       AuditHelper.onAuditModifyFailure (UserToken.OT, "set-all", sUserTokenID, "no-such-id");
       return EChange.UNCHANGED;
     }
@@ -399,41 +403,237 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                        @Nonnull @Nonempty final String sRevocationReason,
                                        @Nullable final String sTokenString)
   {
-    // TODO
-    return null;
+    if (StringHelper.hasNoText (sUserTokenID))
+      return EChange.UNCHANGED;
+
+    // Read existing access tokens from DB
+    final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
+    newExecutor ().querySingle ("SELECT accesstokens FROM " + m_sTableName + " WHERE id=?",
+                                new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sUserTokenID,
+                                                                                                             IUserToken.USER_TOKEN_ID_MAX_LENGTH)),
+                                aDBResult::set);
+
+    if (aDBResult.isNotSet ())
+      return EChange.UNCHANGED;
+
+    final DBResultRow aRow = aDBResult.get ();
+    final String sAccessTokens = aRow.getAsString (0);
+    final ICommonsList <AccessToken> aAccessTokens = _parseAccessTokens (sAccessTokens);
+    final AccessTokenList aAccessTokenList = new AccessTokenList (aAccessTokens);
+
+    // Main actions
+    aAccessTokenList.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
+    final AccessToken aAccessToken = aAccessTokenList.createNewAccessToken (sTokenString);
+
+    // Update in DB
+    final MutableLong aUpdated = new MutableLong (-1);
+    final DBExecutor aExecutor = newExecutor ();
+    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+      // Update existing
+      final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
+                                                              m_sTableName +
+                                                              " SET accesstokens=?, lastmoddt=?, lastmoduserid=? WHERE id=?",
+                                                              new ConstantPreparedStatementDataProvider (_asString (aAccessTokenList),
+                                                                                                         DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
+                                                                                                         DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
+                                                                                                                                           GlobalIDFactory.STRING_ID_MAX_LENGTH),
+                                                                                                         DBValueHelper.getTrimmedToLength (sUserTokenID,
+                                                                                                                                           IUserToken.USER_TOKEN_ID_MAX_LENGTH)));
+      aUpdated.set (nUpdated);
+    });
+
+    if (eSuccess.isFailure ())
+    {
+      // DB error
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "create-new-access-token", sUserTokenID, "database-error");
+      return EChange.UNCHANGED;
+    }
+
+    if (aUpdated.is0 ())
+    {
+      // No such user ID - would be unexpected
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "create-new-access-token", sUserTokenID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
+    AuditHelper.onAuditModifySuccess (UserToken.OT,
+                                      "create-new-access-token",
+                                      sUserTokenID,
+                                      sRevocationUserID,
+                                      aRevocationDT,
+                                      sRevocationReason,
+                                      sTokenString);
+
+    // Execute callback as the very last action
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreateAccessToken (sUserTokenID, aAccessToken));
+
+    return EChange.CHANGED;
   }
 
-  public EChange revokeAccessToken (final String sUserTokenID,
-                                    final String sRevocationUserID,
-                                    final LocalDateTime aRevocationDT,
-                                    final String sRevocationReason)
+  @Nonnull
+  public EChange revokeAccessToken (@Nullable final String sUserTokenID,
+                                    @Nonnull @Nonempty final String sRevocationUserID,
+                                    @Nonnull final LocalDateTime aRevocationDT,
+                                    @Nonnull @Nonempty final String sRevocationReason)
   {
-    // TODO
-    return null;
+    if (StringHelper.hasNoText (sUserTokenID))
+      return EChange.UNCHANGED;
+
+    // Read existing access tokens from DB
+    final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
+    newExecutor ().querySingle ("SELECT accesstokens FROM " + m_sTableName + " WHERE id=?",
+                                new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sUserTokenID,
+                                                                                                             IUserToken.USER_TOKEN_ID_MAX_LENGTH)),
+                                aDBResult::set);
+
+    if (aDBResult.isNotSet ())
+      return EChange.UNCHANGED;
+
+    final DBResultRow aRow = aDBResult.get ();
+    final String sAccessTokens = aRow.getAsString (0);
+    final ICommonsList <AccessToken> aAccessTokens = _parseAccessTokens (sAccessTokens);
+    final AccessTokenList aAccessTokenList = new AccessTokenList (aAccessTokens);
+
+    // Main actions
+    if (aAccessTokenList.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason).isUnchanged ())
+    {
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "revoke-access-token", sUserTokenID, "already-revoked");
+      return EChange.UNCHANGED;
+    }
+
+    // Update in DB
+    final MutableLong aUpdated = new MutableLong (-1);
+    final DBExecutor aExecutor = newExecutor ();
+    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+      // Update existing
+      final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
+                                                              m_sTableName +
+                                                              " SET accesstokens=?, lastmoddt=?, lastmoduserid=? WHERE id=?",
+                                                              new ConstantPreparedStatementDataProvider (_asString (aAccessTokenList),
+                                                                                                         DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
+                                                                                                         DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
+                                                                                                                                           GlobalIDFactory.STRING_ID_MAX_LENGTH),
+                                                                                                         DBValueHelper.getTrimmedToLength (sUserTokenID,
+                                                                                                                                           IUserToken.USER_TOKEN_ID_MAX_LENGTH)));
+      aUpdated.set (nUpdated);
+    });
+
+    if (eSuccess.isFailure ())
+    {
+      // DB error
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "revoke-access-token", sUserTokenID, "database-error");
+      return EChange.UNCHANGED;
+    }
+
+    if (aUpdated.is0 ())
+    {
+      // No such user ID - would be unexpected
+      AuditHelper.onAuditModifyFailure (UserToken.OT, "revoke-access-token", sUserTokenID, "no-such-id");
+      return EChange.UNCHANGED;
+    }
+
+    AuditHelper.onAuditModifySuccess (UserToken.OT,
+                                      "revoke-access-token",
+                                      sUserTokenID,
+                                      sRevocationUserID,
+                                      aRevocationDT,
+                                      sRevocationReason);
+
+    // Execute callback as the very last action
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenRevokeAccessToken (sUserTokenID));
+
+    return EChange.CHANGED;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public ICommonsList <IUserToken> getAllActiveUserTokens ()
   {
-    // TODO
+    return _getAllWhere ("deletedt IS NULL", null);
+  }
+
+  @Nullable
+  public IUserToken getUserTokenOfID (@Nullable final String sUserTokenID)
+  {
+    if (StringHelper.hasNoText (sUserTokenID))
+      return null;
+
+    final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
+    newExecutor ().querySingle ("SELECT creationdt, creationuserid, lastmoddt, lastmoduserid, deletedt, deleteuserid, attrs," +
+                                " accesstokens, userid, description" +
+                                " FROM " +
+                                m_sTableName +
+                                " WHERE id=?",
+                                new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sUserTokenID,
+                                                                                                             IUserToken.USER_TOKEN_ID_MAX_LENGTH)),
+                                aDBResult::set);
+    if (aDBResult.isNotSet ())
+      return null;
+
+    final DBResultRow aRow = aDBResult.get ();
+    final StubObject aStub = new StubObject (sUserTokenID,
+                                             aRow.getAsLocalDateTime (0),
+                                             aRow.getAsString (1),
+                                             aRow.getAsLocalDateTime (2),
+                                             aRow.getAsString (3),
+                                             aRow.getAsLocalDateTime (4),
+                                             aRow.getAsString (5),
+                                             attrsToMap (aRow.getAsString (6)));
+
+    final String sAccessTokens = aRow.getAsString (7);
+    final ICommonsList <AccessToken> aAccessTokens = _parseAccessTokens (sAccessTokens);
+
+    final String sUserID = aRow.getAsString (8);
+    final IUser aUser = m_aUserMgr.getUserOfID (sUserID);
+
+    final String sDescription = aRow.getAsString (9);
+
+    return new UserToken (aStub, aAccessTokens, aUser, sDescription);
+  }
+
+  @Nullable
+  public IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
+  {
+    if (StringHelper.hasNoText (sTokenString))
+      return null;
+
+    final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT id, accesstokens" +
+                                                                          " FROM " +
+                                                                          m_sTableName);
+    if (aDBResult != null)
+      for (final DBResultRow aRow : aDBResult)
+      {
+        final String sUserTokenID = aRow.getAsString (0);
+        final String sAccessTokens = aRow.getAsString (1);
+        final ICommonsList <AccessToken> aAccessTokens = _parseAccessTokens (sAccessTokens);
+        final AccessTokenList aAccessTokenList = new AccessTokenList (aAccessTokens);
+
+        if (sTokenString.equals (aAccessTokenList.getActiveTokenString ()))
+          return getUserTokenOfID (sUserTokenID);
+      }
+
     return null;
   }
 
-  public IUserToken getUserTokenOfID (final String sID)
+  public boolean isAccessTokenUsed (@Nullable final String sTokenString)
   {
-    // TODO
-    return null;
-  }
+    if (StringHelper.hasNoText (sTokenString))
+      return false;
 
-  public IUserToken getUserTokenOfTokenString (final String sTokenString)
-  {
-    // TODO
-    return null;
-  }
+    final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT accesstokens" +
+                                                                          " FROM " +
+                                                                          m_sTableName);
+    if (aDBResult != null)
+      for (final DBResultRow aRow : aDBResult)
+      {
+        final String sAccessTokens = aRow.getAsString (0);
+        final ICommonsList <AccessToken> aAccessTokens = _parseAccessTokens (sAccessTokens);
+        final AccessTokenList aAccessTokenList = new AccessTokenList (aAccessTokens);
 
-  public boolean isAccessTokenUsed (final String sTokenString)
-  {
-    // TODO
+        if (aAccessTokenList.findFirstAccessToken (x -> x.getTokenString ().equals (sTokenString)) != null)
+          return true;
+      }
+
     return false;
   }
-
 }

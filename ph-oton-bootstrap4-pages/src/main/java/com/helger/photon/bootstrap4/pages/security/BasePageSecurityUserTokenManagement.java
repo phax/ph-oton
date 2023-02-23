@@ -143,7 +143,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
 
   public static boolean canRevokeAccessToken (@Nullable final IUserToken aUserToken)
   {
-    return aUserToken != null && !aUserToken.isDeleted () && aUserToken.getActiveAccessToken () != null;
+    return aUserToken != null && !aUserToken.isDeleted () && aUserToken.getAccessTokenList ().hasActiveAccessToken ();
   }
 
   private void _init ()
@@ -198,7 +198,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           assert aSelectedObject != null;
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
                           final HCNodeList aNodeList = aWPEC.getNodeList ();
-                          final boolean bRevokedOld = aSelectedObject.getActiveAccessToken () != null;
+                          final boolean bRevokedOld = aSelectedObject.getAccessTokenList ().hasActiveAccessToken ();
 
                           final FormErrorList aFormErrors = new FormErrorList ();
                           if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
@@ -438,7 +438,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                                                      .setCtrl (createUserLink (aWPEC, aSelectedObject.getUser ())));
 
     {
-      final IHCNode aAT = createAccessTokenListUI (aSelectedObject.getAllAccessTokens (), aDisplayLocale);
+      final IHCNode aAT = createAccessTokenListUI (aSelectedObject.getAccessTokenList ().getAllAccessTokens (),
+                                                   aDisplayLocale);
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_ACCESS_TOKENS.getDisplayText (aDisplayLocale))
                                                        .setCtrl (aAT));
     }
@@ -507,7 +508,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EBaseText.LABEL_TOKEN_STRING.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (FIELD_TOKEN_STRING,
                                                                                          aSelectedObject == null ? null
-                                                                                                                 : aSelectedObject.getActiveTokenString ())).setReadOnly (bEdit))
+                                                                                                                 : aSelectedObject.getAccessTokenList ()
+                                                                                                                                  .getActiveTokenString ())).setReadOnly (bEdit))
                                                  .setHelpText (EBaseText.HELPTEXT_TOKEN_STRING.getDisplayText (aDisplayLocale))
                                                  .setErrorList (aFormErrors.getListOfField (FIELD_TOKEN_STRING)));
 
@@ -588,8 +590,8 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
         final ISimpleURL aViewURL = createViewURL (aWPEC, aCurObject);
         final String sDisplayName = aCurObject.getDisplayName ();
         final boolean bUsableNow = !aCurObject.isDeleted () &&
-                                   aCurObject.getActiveAccessToken () != null &&
-                                   aCurObject.getActiveAccessToken ().isValidNow ();
+                                   aCurObject.getAccessTokenList ().hasActiveAccessToken () &&
+                                   aCurObject.getAccessTokenList ().getActiveAccessToken ().isValidNow ();
 
         final HCRow aBodyRow = aTable.addBodyRow ();
         aBodyRow.addCell (new HCA (aViewURL).addChild (sDisplayName));

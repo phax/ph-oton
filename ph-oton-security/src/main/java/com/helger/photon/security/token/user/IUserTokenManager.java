@@ -146,12 +146,12 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
   /**
    * Get the user token with the passed ID
    *
-   * @param sID
+   * @param sUserTokenID
    *        The ID to search. May be <code>null</code>.
    * @return <code>null</code> if no such user token exists.
    */
   @Nullable
-  IUserToken getUserTokenOfID (@Nullable String sID);
+  IUserToken getUserTokenOfID (@Nullable String sUserTokenID);
 
   /**
    * Find the user token that has the provided access token string.
