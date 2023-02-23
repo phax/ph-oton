@@ -24,7 +24,9 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
@@ -35,9 +37,9 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  */
 public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter <AccessToken>
 {
-  private static final String ATTR_TOKEN_STRING = "tokenstring";
-  private static final String ATTR_NOT_BEFORE = "notbefore";
-  private static final String ATTR_NOT_AFTER = "notafter";
+  private static final IMicroQName ATTR_TOKEN_STRING = new MicroQName ("tokenstring");
+  private static final IMicroQName ATTR_NOT_BEFORE = new MicroQName ("notbefore");
+  private static final IMicroQName ATTR_NOT_AFTER = new MicroQName ("notafter");
   private static final String ELEMENT_REVOCATION = "revocation";
 
   @Nonnull
@@ -49,7 +51,9 @@ public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter 
     aElement.setAttribute (ATTR_TOKEN_STRING, aValue.getTokenString ());
     aElement.setAttributeWithConversion (ATTR_NOT_BEFORE, aValue.getNotBefore ());
     aElement.setAttributeWithConversion (ATTR_NOT_AFTER, aValue.getNotAfter ());
-    aElement.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getRevocationStatus (), sNamespaceURI, ELEMENT_REVOCATION));
+    aElement.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getRevocationStatus (),
+                                                                    sNamespaceURI,
+                                                                    ELEMENT_REVOCATION));
     return aElement;
   }
 

@@ -19,6 +19,7 @@ package com.helger.photon.security.token.user;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.text.IHasDescription;
 import com.helger.photon.security.token.object.IObjectWithAccessToken;
 import com.helger.photon.security.user.IUser;
 
@@ -29,8 +30,15 @@ import com.helger.photon.security.user.IUser;
  *
  * @author Philip Helger
  */
-public interface IUserToken extends IObjectWithAccessToken
+public interface IUserToken extends IObjectWithAccessToken, IHasDescription
 {
+  /**
+   * The maximum string length of the ID.
+   *
+   * @since 8.4.5
+   */
+  int USER_TOKEN_ID_MAX_LENGTH = 45;
+
   /**
    * @return The user to which this user token belongs. Never <code>null</code>.
    */

@@ -63,6 +63,13 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   int EMAIL_ADDRESS_MAX_LENGTH = 200;
 
   /**
+   * The maximum string length of the desired locale.
+   *
+   * @since 8.4.5
+   */
+  int DESIRED_LOCALE_MAX_LENGTH = 20;
+
+  /**
    * @return <code>true</code> if the user has the ID
    *         {@link com.helger.photon.security.CSecurity#USER_ADMINISTRATOR_ID}
    *         , <code>false</code> otherwise

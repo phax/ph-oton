@@ -16,22 +16,15 @@
  */
 package com.helger.photon.security.token.object;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EChange;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.photon.security.token.accesstoken.AccessToken;
-import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
 
@@ -42,71 +35,21 @@ import com.helger.tenancy.IBusinessObject;
  */
 public abstract class AbstractObjectWithAccessToken extends AbstractBusinessObject implements IObjectWithAccessToken
 {
-  private final ICommonsList <AccessToken> m_aAccessTokens;
-
-  // Status vars
-  private AccessToken m_aActiveAccessToken;
-
-  @Nullable
-  protected static AccessToken _getIfNotRevoked (@Nullable final AccessToken aAccessToken)
-  {
-    return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
-  }
+  private final AccessTokenList m_aAccessTokenList;
 
   public AbstractObjectWithAccessToken (@Nonnull final IBusinessObject aStubObject,
                                         @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
   {
     super (aStubObject);
     ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
-    m_aAccessTokens = new CommonsArrayList <> (aAccessTokens);
-    m_aActiveAccessToken = _getIfNotRevoked (CollectionHelper.getLastElement (aAccessTokens));
+    m_aAccessTokenList = new AccessTokenList (aAccessTokens);
   }
 
   @Nonnull
-  @Nonempty
-  public ICommonsList <AccessToken> getAllAccessTokens ()
+  @ReturnsMutableObject
+  public AccessTokenList getAccessTokenList ()
   {
-    return m_aAccessTokens.getClone ();
-  }
-
-  @Nullable
-  public IAccessToken findFirstAccessToken (@Nullable final Predicate <? super IAccessToken> aFilter)
-  {
-    return m_aAccessTokens.findFirst (aFilter);
-  }
-
-  @Nullable
-  public IAccessToken getActiveAccessToken ()
-  {
-    return m_aActiveAccessToken;
-  }
-
-  @Nonnull
-  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
-                                          @Nonnull final LocalDateTime aRevocationDT,
-                                          @Nonnull @Nonempty final String sRevocationReason)
-  {
-    if (m_aActiveAccessToken == null)
-    {
-      // No active token present
-      return EChange.UNCHANGED;
-    }
-    m_aActiveAccessToken.markRevoked (sRevocationUserID, aRevocationDT, sRevocationReason);
-    m_aActiveAccessToken.setNotAfter (aRevocationDT);
-    m_aActiveAccessToken = null;
-    return EChange.CHANGED;
-  }
-
-  @Nonnull
-  public AccessToken createNewAccessToken (@Nullable final String sTokenString)
-  {
-    if (m_aActiveAccessToken != null)
-      throw new IllegalStateException ("You need to revoke the previous access token before creating a new one!");
-
-    final AccessToken aNewToken = AccessToken.createAccessTokenValidFromNow (sTokenString);
-    m_aAccessTokens.add (aNewToken);
-    m_aActiveAccessToken = aNewToken;
-    return aNewToken;
+    return m_aAccessTokenList;
   }
 
   @Override
@@ -127,8 +70,7 @@ public abstract class AbstractObjectWithAccessToken extends AbstractBusinessObje
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("AccessTokens", m_aAccessTokens)
-                            .append ("ActiveAccessToken", m_aActiveAccessToken)
+                            .append ("AccessTokenList", m_aAccessTokenList)
                             .getToString ();
   }
 }

@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.string.StringHelper;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.photon.security.token.accesstoken.AccessToken;
@@ -29,8 +30,11 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.IUserManager;
 import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
+import com.helger.xml.microdom.util.MicroHelper;
 
 /**
  * Micro type converter for class {@link UserToken}.
@@ -40,7 +44,8 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
 public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <UserToken>
 {
   private static final String ELEMENT_ACCESS_TOKEN = "accesstoken";
-  private static final String ATTR_USER_ID = "userid";
+  private static final IMicroQName ATTR_USER_ID = new MicroQName ("userid");
+  private static final String ELEMENT_DESCRIPTION = "description";
 
   @Nonnull
   public IMicroElement convertToMicroElement (@Nonnull final UserToken aValue,
@@ -49,9 +54,13 @@ public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMic
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
-    for (final IAccessToken aAccessToken : aValue.getAllAccessTokens ())
-      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken, sNamespaceURI, ELEMENT_ACCESS_TOKEN));
+    for (final IAccessToken aAccessToken : aValue.getAccessTokenList ().getAllAccessTokens ())
+      aElement.appendChild (MicroTypeConverter.convertToMicroElement (aAccessToken,
+                                                                      sNamespaceURI,
+                                                                      ELEMENT_ACCESS_TOKEN));
     aElement.setAttribute (ATTR_USER_ID, aValue.getUser ().getID ());
+    if (StringHelper.hasText (aValue.getDescription ()))
+      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aValue.getDescription ());
     return aElement;
   }
 
@@ -69,6 +78,8 @@ public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMic
     if (aUser == null)
       throw new IllegalStateException ("Failed to resolve user with ID '" + sUserID + "'");
 
-    return new UserToken (getStubObject (aElement), aAccessTokens, aUser);
+    final String sDescription = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_DESCRIPTION);
+
+    return new UserToken (getStubObject (aElement), aAccessTokens, aUser, sDescription);
   }
 }

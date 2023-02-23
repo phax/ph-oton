@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.photon.app.mgr.IPhotonManager;
@@ -38,6 +40,13 @@ import com.helger.photon.security.user.IUser;
 public interface IUserTokenManager extends IPhotonManager <IUserToken>
 {
   /**
+   * @return The user token callback list. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  CallbackList <IUserTokenModificationCallback> userTokenModificationCallbacks ();
+
+  /**
    * Create a new user token.
    *
    * @param sTokenString
@@ -47,22 +56,32 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    *        Custom attributes. May be <code>null</code>.
    * @param aUser
    *        The user it belongs to. May not be <code>null</code>.
-   * @return The created user token. Never <code>null</code>.
+   * @param sDescription
+   *        The description of the user token. May be <code>null</code>.
+   * @return The created user token. Returns <code>null</code> in case
+   *         persistence fails.
    */
-  @Nonnull
-  UserToken createUserToken (@Nullable String sTokenString, @Nullable Map <String, String> aCustomAttrs, @Nonnull IUser aUser);
+  @Nullable
+  UserToken createUserToken (@Nullable String sTokenString,
+                             @Nullable Map <String, String> aCustomAttrs,
+                             @Nonnull IUser aUser,
+                             @Nullable String sDescription);
 
   /**
    * Update an existing token.
    *
    * @param sUserTokenID
    *        The ID of the token to be updated.
-   * @param aCustomAttrs
+   * @param aNewCustomAttrs
    *        Custom attributes. May be <code>null</code>.
+   * @param sNewDescription
+   *        The description of the user token. May be <code>null</code>.
    * @return {@link EChange}
    */
   @Nonnull
-  EChange updateUserToken (@Nullable String sUserTokenID, @Nullable Map <String, String> aCustomAttrs);
+  EChange updateUserToken (@Nullable String sUserTokenID,
+                           @Nullable Map <String, String> aNewCustomAttrs,
+                           @Nullable String sNewDescription);
 
   /**
    * Delete an existing token.
@@ -128,12 +147,12 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
   /**
    * Get the user token with the passed ID
    *
-   * @param sID
+   * @param sUserTokenID
    *        The ID to search. May be <code>null</code>.
    * @return <code>null</code> if no such user token exists.
    */
   @Nullable
-  IUserToken getUserTokenOfID (@Nullable String sID);
+  IUserToken getUserTokenOfID (@Nullable String sUserTokenID);
 
   /**
    * Find the user token that has the provided access token string.

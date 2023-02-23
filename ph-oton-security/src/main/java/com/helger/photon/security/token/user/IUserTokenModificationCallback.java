@@ -18,6 +18,7 @@ package com.helger.photon.security.token.user;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.callback.ICallback;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 
@@ -34,42 +35,48 @@ public interface IUserTokenModificationCallback extends ICallback
    * @param aUserToken
    *        The created user token. Never <code>null</code>.
    */
-  void onUserTokenCreated (@Nonnull IUserToken aUserToken);
+  default void onUserTokenCreated (@Nonnull final IUserToken aUserToken)
+  {}
 
   /**
    * Called after a user token was edited fully.
    *
-   * @param aUserToken
-   *        The modified user token. Never <code>null</code>.
+   * @param sUserTokenID
+   *        The modified user token ID. Never <code>null</code>.
    */
-  void onUserTokenUpdated (@Nonnull IUserToken aUserToken);
+  default void onUserTokenUpdated (@Nonnull @Nonempty final String sUserTokenID)
+  {}
 
   /**
    * Called after a user token was deleted.
    *
-   * @param aUserToken
-   *        The deleted user token. Never <code>null</code>.
+   * @param sUserTokenID
+   *        The deleted user token ID. Never <code>null</code>.
    */
-  void onUserTokenDeleted (@Nonnull IUserToken aUserToken);
+  default void onUserTokenDeleted (@Nonnull @Nonempty final String sUserTokenID)
+  {}
 
   /**
    * Called after a new access token was created for a user token.
    *
-   * @param aUserToken
-   *        The changed user token. Never <code>null</code>.
+   * @param sUserTokenID
+   *        The changed user token ID. Never <code>null</code>.
    * @param aAccessToken
    *        The created new access token. Never <code>null</code>.
    */
-  void onUserTokenCreateAccessToken (@Nonnull IUserToken aUserToken, @Nonnull AccessToken aAccessToken);
+  default void onUserTokenCreateAccessToken (@Nonnull @Nonempty final String sUserTokenID,
+                                             @Nonnull final AccessToken aAccessToken)
+  {}
 
   /**
    * Called after the current access token of a user token got revoked and no
    * new access token was created. In case a new access token is directly
-   * created only {@link #onUserTokenCreateAccessToken(IUserToken, AccessToken)}
-   * is called.
+   * created only {@link #onUserTokenCreateAccessToken(String, AccessToken)} is
+   * called.
    *
-   * @param aUserToken
-   *        The changed user token. Never <code>null</code>.
+   * @param sUserTokenID
+   *        The changed user token ID. Never <code>null</code>.
    */
-  void onUserTokenRevokeAccessToken (@Nonnull IUserToken aUserToken);
+  default void onUserTokenRevokeAccessToken (@Nonnull @Nonempty final String sUserTokenID)
+  {}
 }

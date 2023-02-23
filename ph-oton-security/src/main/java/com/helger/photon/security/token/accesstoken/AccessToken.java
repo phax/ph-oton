@@ -47,10 +47,26 @@ public final class AccessToken implements IAccessToken
   private LocalDateTime m_aNotAfter;
   private final RevocationStatus m_aRevocationStatus;
 
-  AccessToken (@Nonnull @Nonempty final String sTokenString,
-               @Nonnull final LocalDateTime aNotBefore,
-               @Nullable final LocalDateTime aNotAfter,
-               @Nonnull final RevocationStatus aRevocationStatus)
+  /**
+   * Internal constructor for deserialization only. Use
+   * {@link #createNewAccessTokenValidFromNow()} or
+   * {@link #createAccessTokenValidFromNow(String)} instead.
+   *
+   * @param sTokenString
+   *        The token string. May neither be <code>null</code> nor empty.
+   * @param aNotBefore
+   *        The date time before which the access token is invalid. May not be
+   *        <code>null</code>.
+   * @param aNotAfter
+   *        The date time after which the access token is invalid. May be
+   *        <code>null</code>.
+   * @param aRevocationStatus
+   *        The revocation status. May not be <code>null</code>.
+   */
+  public AccessToken (@Nonnull @Nonempty final String sTokenString,
+                      @Nonnull final LocalDateTime aNotBefore,
+                      @Nullable final LocalDateTime aNotAfter,
+                      @Nonnull final RevocationStatus aRevocationStatus)
   {
     m_sTokenString = ValueEnforcer.notEmpty (sTokenString, "TokenString");
     m_aNotBefore = ValueEnforcer.notNull (aNotBefore, "NotBefore");
@@ -82,7 +98,11 @@ public final class AccessToken implements IAccessToken
   {
     ValueEnforcer.notNull (aNotAfter, "NotAfter");
     if (aNotAfter.isBefore (m_aNotBefore))
-      throw new IllegalArgumentException ("Not after date (" + aNotAfter + ") must be >= not before date (" + m_aNotBefore + ")");
+      throw new IllegalArgumentException ("Not after date (" +
+                                          aNotAfter +
+                                          ") must be >= not before date (" +
+                                          m_aNotBefore +
+                                          ")");
     m_aNotAfter = aNotAfter;
   }
 
@@ -156,6 +176,9 @@ public final class AccessToken implements IAccessToken
     // Length 66 so that the Base64 encoding does not add the "==" signs
     // Length must be dividable by 3
     final String sRealTokenString = StringHelper.hasText (sTokenString) ? sTokenString : createNewTokenString (66);
-    return new AccessToken (sRealTokenString, PDTFactory.getCurrentLocalDateTime (), null, RevocationStatus.createUnrevoked ());
+    return new AccessToken (sRealTokenString,
+                            PDTFactory.getCurrentLocalDateTime (),
+                            null,
+                            RevocationStatus.createUnrevoked ());
   }
 }

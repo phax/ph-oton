@@ -28,7 +28,9 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.commons.mutable.MutableLong;
@@ -57,9 +59,6 @@ import com.helger.photon.security.role.RoleManager;
  */
 public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implements IRoleManager
 {
-  private static final int ROLE_ID_MAX_LENGTH = 45;
-  private static final int ROLE_NAME_MAX_LENGTH = 255;
-
   private final String m_sTableName;
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
@@ -70,6 +69,10 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     m_sTableName = aTableNameCustomizer.apply ("secrole");
   }
 
+  /**
+   * @return The name of the database table this class is operating on. Neither
+   *         <code>null</code> nor empty.
+   */
   @Nonnull
   @Nonempty
   public final String getTableName ()
@@ -107,18 +110,39 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     if (StringHelper.hasNoText (sID))
       return false;
 
-    return newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
-                                      new ConstantPreparedStatementDataProvider (sID)) > 0;
+    final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
+                                                   new ConstantPreparedStatementDataProvider (sID));
+    return nCount > 0;
   }
 
   public boolean containsAllIDs (@Nullable final Iterable <String> aIDs)
   {
     if (aIDs != null)
     {
-      // TODO could be optimized
-      for (final String sID : aIDs)
-        if (!containsWithID (sID))
-          return false;
+      // Make unique, maintain order
+      final ICommonsOrderedSet <String> aUniqueIDs = new CommonsLinkedHashSet <> (aIDs);
+      final int nIDCount = aUniqueIDs.size ();
+      if (nIDCount == 1)
+        return containsWithID (aUniqueIDs.getFirst ());
+
+      if (nIDCount > 0)
+      {
+        final StringBuilder aCond = new StringBuilder (nIDCount * 2);
+        for (int i = 0; i < nIDCount; ++i)
+        {
+          if (i > 0)
+            aCond.append (',');
+          aCond.append ('?');
+        }
+
+        final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " +
+                                                       m_sTableName +
+                                                       " WHERE id IN (" +
+                                                       aCond.toString () +
+                                                       ")",
+                                                       new ConstantPreparedStatementDataProvider (aIDs));
+        return nCount == nIDCount;
+      }
     }
     return true;
   }
@@ -150,7 +174,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                               " name, description)" +
                                                               " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                                                               new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (aRole.getID (),
-                                                                                                                                           ROLE_ID_MAX_LENGTH),
+                                                                                                                                           IRole.ROLE_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.toTimestamp (aRole.getCreationDateTime ()),
                                                                                                          DBValueHelper.getTrimmedToLength (aRole.getCreationUserID (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
@@ -162,7 +186,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          attrsToString (aRole.attrs ()),
                                                                                                          DBValueHelper.getTrimmedToLength (aRole.getName (),
-                                                                                                                                           ROLE_NAME_MAX_LENGTH),
+                                                                                                                                           IRole.ROLE_NAME_MAX_LENGTH),
                                                                                                          aRole.getDescription ()));
       if (nCreated != 1)
         throw new IllegalStateException ("Failed to create new DB entry (" + nCreated + ")");
@@ -230,12 +254,14 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     final DBExecutor aExecutor = newExecutor ();
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Update existing
-      final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " + m_sTableName + " SET deletedt=?, deleteuserid=? WHERE id=?",
+      final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
+                                                              m_sTableName +
+                                                              " SET deletedt=?, deleteuserid=? WHERE id=?",
                                                               new ConstantPreparedStatementDataProvider (DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
                                                                                                          DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.getTrimmedToLength (sRoleID,
-                                                                                                                                           ROLE_ID_MAX_LENGTH)));
+                                                                                                                                           IRole.ROLE_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
 
@@ -273,7 +299,8 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                 " FROM " +
                                 m_sTableName +
                                 " WHERE id=?",
-                                new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sRoleID, ROLE_ID_MAX_LENGTH)),
+                                new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sRoleID,
+                                                                                                             IRole.ROLE_ID_MAX_LENGTH)),
                                 aDBResult::set);
     if (aDBResult.isNotSet ())
       return null;
@@ -308,7 +335,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                          DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.getTrimmedToLength (sRoleID,
-                                                                                                                                           ROLE_ID_MAX_LENGTH)));
+                                                                                                                                           IRole.ROLE_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
 
@@ -357,14 +384,20 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                          DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.getTrimmedToLength (sRoleID,
-                                                                                                                                           ROLE_ID_MAX_LENGTH)));
+                                                                                                                                           IRole.ROLE_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
 
     if (eSuccess.isFailure ())
     {
       // DB error
-      AuditHelper.onAuditModifyFailure (Role.OT, "set-all", sRoleID, sNewName, sNewDescription, aNewCustomAttrs, "database-error");
+      AuditHelper.onAuditModifyFailure (Role.OT,
+                                        "set-all",
+                                        sRoleID,
+                                        sNewName,
+                                        sNewDescription,
+                                        aNewCustomAttrs,
+                                        "database-error");
       return EChange.UNCHANGED;
     }
 

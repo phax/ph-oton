@@ -30,7 +30,9 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.id.factory.GlobalIDFactory;
@@ -66,7 +68,6 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   private final String m_sTableName;
   private final IUserManager m_aUserMgr;
   private final IRoleManager m_aRoleMgr;
-
   private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserGroupManagerJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
@@ -80,6 +81,10 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     m_aRoleMgr = ValueEnforcer.notNull (aRoleMgr, "RoleManager");
   }
 
+  /**
+   * @return The name of the database table this class is operating on. Neither
+   *         <code>null</code> nor empty.
+   */
   @Nonnull
   @Nonempty
   public final String getTableName ()
@@ -156,18 +161,39 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     if (StringHelper.hasNoText (sID))
       return false;
 
-    return newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
-                                      new ConstantPreparedStatementDataProvider (sID)) > 0;
+    final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
+                                                   new ConstantPreparedStatementDataProvider (sID));
+    return nCount > 0;
   }
 
   public boolean containsAllIDs (@Nullable final Iterable <String> aIDs)
   {
     if (aIDs != null)
     {
-      // TODO could be optimized
-      for (final String sID : aIDs)
-        if (!containsWithID (sID))
-          return false;
+      // Make unique, maintain order
+      final ICommonsOrderedSet <String> aUniqueIDs = new CommonsLinkedHashSet <> (aIDs);
+      final int nIDCount = aUniqueIDs.size ();
+      if (nIDCount == 1)
+        return containsWithID (aUniqueIDs.getFirst ());
+
+      if (nIDCount > 0)
+      {
+        final StringBuilder aCond = new StringBuilder (nIDCount * 2);
+        for (int i = 0; i < nIDCount; ++i)
+        {
+          if (i > 0)
+            aCond.append (',');
+          aCond.append ('?');
+        }
+
+        final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " +
+                                                       m_sTableName +
+                                                       " WHERE id IN (" +
+                                                       aCond.toString () +
+                                                       ")",
+                                                       new ConstantPreparedStatementDataProvider (aIDs));
+        return nCount == nIDCount;
+      }
     }
     return true;
   }
@@ -229,7 +255,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                               " name, description, userids, roleids)" +
                                                               " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                                                               new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (aUserGroup.getID (),
-                                                                                                                                           45),
+                                                                                                                                           IUserGroup.USER_GROUP_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.toTimestamp (aUserGroup.getCreationDateTime ()),
                                                                                                          DBValueHelper.getTrimmedToLength (aUserGroup.getCreationUserID (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
@@ -241,7 +267,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          attrsToString (aUserGroup.attrs ()),
                                                                                                          DBValueHelper.getTrimmedToLength (aUserGroup.getName (),
-                                                                                                                                           255),
+                                                                                                                                           IUserGroup.USER_GROUP_NAME_MAX_LENGTH),
                                                                                                          aUserGroup.getDescription (),
                                                                                                          idsToString (aUserGroup.getAllContainedUserIDs ()),
                                                                                                          idsToString (aUserGroup.getAllContainedRoleIDs ())));
@@ -251,7 +277,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   }
 
   @Nullable
-  public UserGroup internalCreateNewUserGroup (@Nonnull final UserGroup aUserGroup, final boolean bPredefined, final boolean bRunCallback)
+  public UserGroup internalCreateNewUserGroup (@Nonnull final UserGroup aUserGroup,
+                                               final boolean bPredefined,
+                                               final boolean bRunCallback)
   {
     // Store
     if (_internalCreateItem (aUserGroup).isFailure ())
@@ -299,7 +327,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
-    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
+    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
+                                                sName,
+                                                sDescription);
     return internalCreateNewUserGroup (aUserGroup, true, true);
   }
 
@@ -313,12 +343,14 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final DBExecutor aExecutor = newExecutor ();
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Update existing
-      final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " + m_sTableName + " SET deletedt=?, deleteuserid=? WHERE id=?",
+      final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
+                                                              m_sTableName +
+                                                              " SET deletedt=?, deleteuserid=? WHERE id=?",
                                                               new ConstantPreparedStatementDataProvider (DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
                                                                                                          DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                           45)));
+                                                                                                                                           IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
 
@@ -361,7 +393,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                          DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                           45)));
+                                                                                                                                           IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
 
@@ -451,7 +483,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                          DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                           45)));
+                                                                                                                                           IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
 
@@ -499,7 +531,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                          DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                           45)));
+                                                                                                                                           IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
 
@@ -523,7 +555,12 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       return EChange.UNCHANGED;
     }
 
-    AuditHelper.onAuditModifySuccess (UserGroup.OT, "set-all", sUserGroupID, sNewName, sNewDescription, aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT,
+                                      "set-all",
+                                      sUserGroupID,
+                                      sNewName,
+                                      sNewDescription,
+                                      aNewCustomAttrs);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserGroupUpdated (sUserGroupID));
@@ -564,7 +601,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                            DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                              GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                            DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                             45)));
+                                                                                                                                             IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
         aUpdated.set (nUpdated);
       }
     });
@@ -614,7 +651,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       newExecutor ().querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
                                   new ConstantPreparedStatementDataProvider (sUserGroupID),
                                   aDBResult::set);
-      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ().getAsString (0));
+      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null
+                                                                      : idsToSet (aDBResult.get ().getAsString (0));
 
       if (aAssignedIDs != null && aAssignedIDs.remove (sUserID))
       {
@@ -629,7 +667,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                            DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                              GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                            DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                             45)));
+                                                                                                                                             IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
         aUpdated.set (nUpdated);
       }
     });
@@ -692,7 +730,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                              DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                                GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                              DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                               45)));
+                                                                                                                                               IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
           aUpdated.inc (nUpdated);
         }
       }
@@ -776,7 +814,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                            DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                              GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                            DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                             45)));
+                                                                                                                                             IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
         aUpdated.set (nUpdated);
       }
     });
@@ -826,7 +864,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       newExecutor ().querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
                                   new ConstantPreparedStatementDataProvider (sUserGroupID),
                                   aDBResult::set);
-      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ().getAsString (0));
+      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null
+                                                                      : idsToSet (aDBResult.get ().getAsString (0));
 
       if (aAssignedIDs != null && aAssignedIDs.remove (sRoleID))
       {
@@ -841,7 +880,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                            DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                              GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                            DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                             45)));
+                                                                                                                                             IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
         aUpdated.set (nUpdated);
       }
     });
@@ -904,7 +943,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                              DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
                                                                                                                                                GlobalIDFactory.STRING_ID_MAX_LENGTH),
                                                                                                              DBValueHelper.getTrimmedToLength (sUserGroupID,
-                                                                                                                                               45)));
+                                                                                                                                               IUserGroup.USER_GROUP_ID_MAX_LENGTH)));
           aUpdated.inc (nUpdated);
         }
       }
@@ -963,7 +1002,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                          .containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 
-  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID, @Nullable final String sRoleID)
+  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,
+                                                              @Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sUserID))
       return false;
