@@ -272,7 +272,37 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     });
   }
 
-  @Nonnull
+  @Nullable
+  public UserToken internalCreateUserToken (@Nonnull final UserToken aUserToken, final boolean bRunCallback)
+  {
+    // Store
+    if (_internalCreateItem (aUserToken).isFailure ())
+    {
+      AuditHelper.onAuditCreateFailure (UserToken.OT,
+                                        aUserToken.getID (),
+                                        aUserToken.attrs (),
+                                        aUserToken.getUserID (),
+                                        aUserToken.getDescription (),
+                                        "database-error");
+      return null;
+    }
+
+    AuditHelper.onAuditCreateSuccess (UserToken.OT,
+                                      aUserToken.getID (),
+                                      aUserToken.attrs (),
+                                      aUserToken.getUserID (),
+                                      aUserToken.getDescription ());
+
+    if (bRunCallback)
+    {
+      // Execute callback as the very last action
+      m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreated (aUserToken));
+    }
+
+    return aUserToken;
+  }
+
+  @Nullable
   public UserToken createUserToken (@Nullable final String sTokenString,
                                     @Nullable final Map <String, String> aCustomAttrs,
                                     @Nonnull final IUser aUser,
@@ -280,25 +310,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   {
     // The AccessToken is created internally
     final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aUser, sDescription);
-
-    // Store
-    if (_internalCreateItem (aUserToken).isFailure ())
-    {
-      AuditHelper.onAuditCreateFailure (UserToken.OT,
-                                        aUserToken.getID (),
-                                        aCustomAttrs,
-                                        aUser.getID (),
-                                        sDescription,
-                                        "database-error");
-      return null;
-    }
-
-    AuditHelper.onAuditCreateSuccess (UserToken.OT, aUserToken.getID (), aCustomAttrs, aUser.getID (), sDescription);
-
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreated (aUserToken));
-
-    return aUserToken;
+    return internalCreateUserToken (aUserToken, true);
   }
 
   @Nonnull

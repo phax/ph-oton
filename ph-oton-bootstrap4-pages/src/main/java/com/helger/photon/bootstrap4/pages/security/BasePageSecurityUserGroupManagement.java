@@ -104,15 +104,20 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     TITLE_EDIT ("Benutzergruppe ''{0}'' bearbeiten", "Edit user group ''{0}''"),
     ERROR_NAME_REQUIRED ("Es muss ein Name angegeben werden!", "A name must be specified!"),
     ERROR_NO_ROLE ("Es muss mindestens eine Rolle ausgewählt werden!", "At least one role must be selected!"),
-    ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!", "At least one selected role is invalid!"),
-    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?", "Are you sure to delete the user group ''{0}''?"),
-    DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!", "The user group ''{0}'' was successfully deleted!"),
+    ERROR_INVALID_ROLES ("Mindestens eine der angegebenen Rolle ist ungültig!",
+                         "At least one selected role is invalid!"),
+    DELETE_QUERY ("Soll die Benutzergruppe ''{0}'' wirklich gelöscht werden?",
+                  "Are you sure to delete the user group ''{0}''?"),
+    DELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurden erfolgreich gelöscht!",
+                    "The user group ''{0}'' was successfully deleted!"),
     DELETE_ERROR ("Fehler beim Löschen der Benutzergruppe ''{0}''!", "Error deleting the user group ''{0}''!"),
     UNDELETE_QUERY ("Sind Sie sicher, dass Sie die Benutzergruppe ''{0}'' wiederherstellen wollen?",
                     "Are you sure you want to undelete user group ''{0}''?"),
-    UNDELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurde erfolgreich wiederhergestellt!", "User group ''{0}'' was successfully undeleted!"),
+    UNDELETE_SUCCESS ("Die Benutzergruppe ''{0}'' wurde erfolgreich wiederhergestellt!",
+                      "User group ''{0}'' was successfully undeleted!"),
     UNDELETE_ERROR ("Beim Wiederherstellen der Benutzergruppe ''{0}'' ist ein Fehler aufgetreten!",
                     "An error occurred while undeleting user group ''{0}''!"),
+    ERROR_CREATE ("Die neue BenutzerGruppe konnte nicht angelegt werden!", "Failed to create the new user group!"),
     SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
     SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
 
@@ -144,7 +149,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                 @Nullable final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getName ())));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                             aSelectedObject.getName ())));
       }
 
       @Override
@@ -157,7 +163,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
           aWPEC.postRedirectGetInternal (success (EText.DELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                aSelectedObject.getName ())));
         else
-          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                           aSelectedObject.getName ())));
       }
     });
     setUndeleteHandler (new AbstractBootstrapWebPageActionHandlerUndelete <IUserGroup, WPECTYPE> ()
@@ -168,7 +175,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                                 @Nullable final IUserGroup aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
-        aForm.addChild (question (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getName ())));
+        aForm.addChild (question (EText.UNDELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                               aSelectedObject.getName ())));
       }
 
       @Override
@@ -181,7 +189,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
           aWPEC.postRedirectGetInternal (success (EText.UNDELETE_SUCCESS.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                  aSelectedObject.getName ())));
         else
-          aWPEC.postRedirectGetInternal (error (EText.UNDELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (error (EText.UNDELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                             aSelectedObject.getName ())));
       }
     });
   }
@@ -192,7 +201,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     _init ();
   }
 
-  public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  public BasePageSecurityUserGroupManagement (@Nonnull @Nonempty final String sID,
+                                              @Nonnull @Nonempty final String sName)
   {
     super (sID, sName);
     _init ();
@@ -314,14 +324,18 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.attrs ();
 
     // Callback for custom attributes
-    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aViewForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
+                                                                                aSelectedObject,
+                                                                                aCustomAttrs,
+                                                                                aViewForm);
 
     if (aCustomAttrs.isNotEmpty ())
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ()
-                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale), EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
+                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
@@ -366,7 +380,10 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         aFormErrors.addFieldError (FIELD_ROLES, EText.ERROR_INVALID_ROLES.getDisplayText (aDisplayLocale));
 
     // Call custom method
-    final ICommonsMap <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC, aSelectedObject, aFormErrors, eFormAction);
+    final ICommonsMap <String, String> aCustomAttrMap = validateCustomInputParameters (aWPEC,
+                                                                                       aSelectedObject,
+                                                                                       aFormErrors,
+                                                                                       eFormAction);
 
     if (aFormErrors.isEmpty ())
     {
@@ -400,12 +417,18 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       {
         // We're creating a new object
         final IUserGroup aNewUserGroup = aUserGroupMgr.createNewUserGroup (sName, sDescription, aCustomAttrMap);
+        if (aNewUserGroup == null)
+        {
+          aWPEC.postRedirectGetInternal (error (EText.ERROR_CREATE.getDisplayText (aDisplayLocale)));
+        }
+        else
+        {
+          // assign to the matching internal user groups
+          for (final String sRoleID : aRoleIDs)
+            aUserGroupMgr.assignRoleToUserGroup (aNewUserGroup.getID (), sRoleID);
 
-        // assign to the matching internal user groups
-        for (final String sRoleID : aRoleIDs)
-          aUserGroupMgr.assignRoleToUserGroup (aNewUserGroup.getID (), sRoleID);
-
-        aWPEC.postRedirectGetInternal (success (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+          aWPEC.postRedirectGetInternal (success (EText.SUCCESS_CREATE.getDisplayText (aDisplayLocale)));
+        }
       }
     }
   }
@@ -445,7 +468,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     // Role assignment
     {
-      final ICommonsCollection <String> aRoleIDs = aSelectedObject == null ? aWPEC.params ().getAsStringList (FIELD_ROLES)
+      final ICommonsCollection <String> aRoleIDs = aSelectedObject == null ? aWPEC.params ()
+                                                                                  .getAsStringList (FIELD_ROLES)
                                                                            : aSelectedObject.getAllContainedRoleIDs ();
       final HCRoleForUserGroupSelect aSelect = new HCRoleForUserGroupSelect (new RequestField (FIELD_ROLES), aRoleIDs);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (EText.LABEL_ROLES_0.getDisplayText (aDisplayLocale))
@@ -493,14 +517,16 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final IHCCell <?> aActionCell = aRow.addCell ();
       aActionCell.addChild (createEditLink (aWPEC,
                                             aUserGroup,
-                                            EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aUserGroup.getName ())));
+                                            EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                             aUserGroup.getName ())));
 
       aActionCell.addChild (" ");
       if (canDeleteUserGroup (aUserGroup))
       {
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aUserGroup,
-                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale, aUserGroup.getName ())));
+                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                   aUserGroup.getName ())));
       }
       else
       {
@@ -540,12 +566,14 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
 
     final ICommonsList <IUserGroup> aActiveUserGroups = aUserGroupMgr.getAllActiveUserGroups ();
     aTabBox.addTab ("active",
-                    EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aActiveUserGroups.size ())),
+                    EText.TAB_ACTIVE.getDisplayTextWithArgs (aDisplayLocale,
+                                                             Integer.toString (aActiveUserGroups.size ())),
                     getTabWithUserGroups (aWPEC, aActiveUserGroups, getID () + "1"));
 
     final ICommonsList <IUserGroup> aDeletedUserGroups = aUserGroupMgr.getAllDeletedUserGroups ();
     aTabBox.addTab ("deleted",
-                    EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (aDeletedUserGroups.size ())),
+                    EText.TAB_DELETED.getDisplayTextWithArgs (aDisplayLocale,
+                                                              Integer.toString (aDeletedUserGroups.size ())),
                     getTabWithUserGroups (aWPEC, aDeletedUserGroups, getID () + "2"));
     aNodeList.addChild (aTabBox);
   }
