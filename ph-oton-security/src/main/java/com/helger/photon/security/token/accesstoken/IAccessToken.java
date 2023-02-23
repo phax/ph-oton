@@ -26,9 +26,10 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
 
 /**
- * This class represents a single token. It uniquely belongs to an application
- * token or a user token. It consists of a random string token, a not-before
- * date time, an optional not-after date time and a revocation status.
+ * This class represents a single token. It uniquely belongs to a user token but
+ * may also be used in other tokens. It consists of a random string token, a
+ * not-before date time, an optional not-after date time and a revocation
+ * status.
  *
  * @author Philip Helger
  */
