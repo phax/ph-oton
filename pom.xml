@@ -46,7 +46,7 @@
     <connection>scm:git:git@github.com:phax/ph-oton.git</connection>
     <developerConnection>scm:git:git@github.com:phax/ph-oton.git</developerConnection>
     <url>http://github.com/phax/ph-oton</url>
-    <tag>HEAD</tag>
+    <tag>8.4.x</tag>
   </scm>
 
   <organization>
