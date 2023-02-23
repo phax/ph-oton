@@ -25,6 +25,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 import com.helger.photon.security.object.StubObject;
@@ -42,18 +44,54 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
   public static final ObjectType OT = new ObjectType ("usertoken");
 
   private final IUser m_aUser;
+  private String m_sDescription;
 
-  public UserToken (@Nullable final String sTokenString, @Nullable final Map <String, String> aCustomAttrs, @Nonnull final IUser aUser)
+  /**
+   * Constructor for new object.
+   *
+   * @param sTokenString
+   *        The token string to be used. May be <code>null</code> in which case
+   *        a new one is created.
+   * @param aCustomAttrs
+   *        Custom attributes. May be <code>null</code>.
+   * @param aUser
+   *        Related user for which this token can be used. May not be
+   *        <code>null</code>.
+   * @param sDescription
+   *        Optional description of the User Token. May be <code>null</code>.
+   */
+  public UserToken (@Nullable final String sTokenString,
+                    @Nullable final Map <String, String> aCustomAttrs,
+                    @Nonnull final IUser aUser,
+                    @Nullable final String sDescription)
   {
     this (StubObject.createForCurrentUser (aCustomAttrs),
           new CommonsArrayList <> (AccessToken.createAccessTokenValidFromNow (sTokenString)),
-          aUser);
+          aUser,
+          sDescription);
   }
 
-  UserToken (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final List <AccessToken> aAccessTokens, @Nonnull final IUser aUser)
+  /**
+   * Constructor for deserialization.
+   *
+   * @param aStubObject
+   *        The base data. May not be <code>null</code>.
+   * @param aAccessTokens
+   *        Access tokens. May neither be <code>null</code> nor empty.
+   * @param aUser
+   *        Related user for which this token can be used. May not be
+   *        <code>null</code>.
+   * @param sDescription
+   *        Optional description of the User Token. May be <code>null</code>.
+   */
+  public UserToken (@Nonnull final StubObject aStubObject,
+                    @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
+                    @Nonnull final IUser aUser,
+                    @Nullable final String sDescription)
   {
     super (aStubObject, aAccessTokens);
     m_aUser = ValueEnforcer.notNull (aUser, "User");
+    m_sDescription = sDescription;
   }
 
   @Nonnull
@@ -75,6 +113,21 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
     return m_aUser;
   }
 
+  @Nullable
+  public String getDescription ()
+  {
+    return m_sDescription;
+  }
+
+  @Nonnull
+  public EChange setDescription (@Nullable final String sDescription)
+  {
+    if (EqualsHelper.equals (sDescription, m_sDescription))
+      return EChange.UNCHANGED;
+    m_sDescription = sDescription;
+    return EChange.CHANGED;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -92,6 +145,9 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("User", m_aUser).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("User", m_aUser)
+                            .appendIfNotNull ("Description", m_sDescription)
+                            .getToString ();
   }
 }
