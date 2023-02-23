@@ -47,10 +47,18 @@ public final class UserTokenAuthCredentialValidatorSPI implements IAuthCredentia
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
     final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();
-    if (aUserTokenMgr.getUserTokenOfTokenString (aATC.getTokenString ()) != null)
-      return ELoginResult.SUCCESS;
+    final IUserToken aUserToken = aUserTokenMgr.getUserTokenOfTokenString (aATC.getTokenString ());
+    if (aUserToken == null)
+    {
+      // Credential validation failed
+      return ELoginResult.TOKEN_NOT_EXISTING;
+    }
+    if (aUserToken.isDeleted ())
+    {
+      // Credential validation failed
+      return ELoginResult.TOKEN_NOT_EXISTING;
+    }
 
-    // Credential validation failed
-    return ELoginResult.TOKEN_NOT_EXISTING;
+    return ELoginResult.SUCCESS;
   }
 }
