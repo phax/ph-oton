@@ -129,12 +129,14 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
                                           @Nonnull IRoleManager aRoleMgr) throws Exception;
 
     /**
+     * @param aUserMgr
+     *        The user manager. Never <code>null</code>.
      * @return A new instance of {@link IUserTokenManager}
      * @throws Exception
      *         In case of error
      */
     @Nonnull
-    IUserTokenManager createUserTokenMgr () throws Exception;
+    IUserTokenManager createUserTokenMgr (@Nonnull final IUserManager aUserMgr) throws Exception;
   }
 
   /**
@@ -179,7 +181,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     }
 
     @Nonnull
-    public IUserTokenManager createUserTokenMgr () throws DAOException
+    public IUserTokenManager createUserTokenMgr (@Nonnull final IUserManager aUserMgr) throws DAOException
     {
       return new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
     }
@@ -278,8 +280,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       m_aUserMgr = s_aFactory.createUserMgr ();
       m_aRoleMgr = s_aFactory.createRoleMgr ();
       m_aUserGroupMgr = s_aFactory.createUserGroupMgr (m_aUserMgr, m_aRoleMgr);
-      // Must be after user manager
-      m_aUserTokenMgr = s_aFactory.createUserTokenMgr ();
+      m_aUserTokenMgr = s_aFactory.createUserTokenMgr (m_aUserMgr);
       INITED.set (true);
 
       // Init callbacks after all managers

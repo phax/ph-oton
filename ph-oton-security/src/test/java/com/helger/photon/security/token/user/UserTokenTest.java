@@ -63,7 +63,7 @@ public final class UserTokenTest
 
     final UserToken aUserToken = new UserToken (null, (Map <String, String>) null, aUser, "bla");
     assertTrue (aUserToken.attrs ().isEmpty ());
-    assertTrue (StringHelper.hasText (aUserToken.getActiveTokenString ()));
+    assertTrue (StringHelper.hasText (aUserToken.getAccessTokenList ().getActiveTokenString ()));
     assertEquals ("bla", aUserToken.getDescription ());
 
     XMLTestHelper.testMicroTypeConversion (aUserToken);
@@ -86,7 +86,7 @@ public final class UserTokenTest
     assertNotNull (aUser);
 
     final UserToken aUserToken = new UserToken (null, new StringMap ("key", "value"), aUser, "bla");
-    assertTrue (StringHelper.hasText (aUserToken.getActiveTokenString ()));
+    assertTrue (StringHelper.hasText (aUserToken.getAccessTokenList ().getActiveTokenString ()));
     assertEquals (1, aUserToken.attrs ().size ());
     assertEquals ("value", aUserToken.attrs ().getAsString ("key"));
 

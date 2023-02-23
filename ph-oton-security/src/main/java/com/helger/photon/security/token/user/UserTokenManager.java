@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -33,6 +34,7 @@ import com.helger.photon.app.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.token.accesstoken.AccessToken;
+import com.helger.photon.security.token.object.AccessTokenList;
 import com.helger.photon.security.user.IUser;
 
 /**
@@ -156,12 +158,13 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
       return EChange.UNCHANGED;
     }
 
-    AccessToken aAccessToken;
+    final AccessToken aAccessToken;
     m_aRWLock.writeLock ().lock ();
     try
     {
-      aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
-      aAccessToken = aUserToken.createNewAccessToken (sTokenString);
+      final AccessTokenList aAccessTokenList = aUserToken.getAccessTokenList ();
+      aAccessTokenList.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason);
+      aAccessToken = aAccessTokenList.createNewAccessToken (sTokenString);
       BusinessObjectHelper.setLastModificationNow (aUserToken);
       internalUpdateItem (aUserToken);
     }
@@ -178,7 +181,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
                                       sTokenString);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreateAccessToken (aUserToken, aAccessToken));
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenCreateAccessToken (sUserTokenID, aAccessToken));
 
     return EChange.CHANGED;
   }
@@ -199,7 +202,9 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (aUserToken.revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason).isUnchanged ())
+      if (aUserToken.getAccessTokenList ()
+                    .revokeActiveAccessToken (sRevocationUserID, aRevocationDT, sRevocationReason)
+                    .isUnchanged ())
       {
         AuditHelper.onAuditModifyFailure (UserToken.OT, "revoke-access-token", sUserTokenID, "already-revoked");
         return EChange.UNCHANGED;
@@ -213,26 +218,28 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     }
     AuditHelper.onAuditModifySuccess (UserToken.OT,
                                       "revoke-access-token",
-                                      aUserToken.getID (),
+                                      sUserTokenID,
                                       sRevocationUserID,
                                       aRevocationDT,
                                       sRevocationReason);
 
     // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserTokenRevokeAccessToken (aUserToken));
+    m_aCallbacks.forEach (aCB -> aCB.onUserTokenRevokeAccessToken (sUserTokenID));
 
     return EChange.CHANGED;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public ICommonsList <IUserToken> getAllActiveUserTokens ()
   {
     return getAll (x -> !x.isDeleted ());
   }
 
   @Nullable
-  public IUserToken getUserTokenOfID (@Nullable final String sID)
+  public IUserToken getUserTokenOfID (@Nullable final String sUserTokenID)
   {
-    return getOfID (sID);
+    return getOfID (sUserTokenID);
   }
 
   @Nullable
@@ -241,7 +248,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     if (StringHelper.hasNoText (sTokenString))
       return null;
 
-    return findFirst (x -> sTokenString.equals (x.getActiveTokenString ()));
+    return findFirst (x -> sTokenString.equals (x.getAccessTokenList ().getActiveTokenString ()));
   }
 
   public boolean isAccessTokenUsed (@Nullable final String sTokenString)
@@ -249,6 +256,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     if (StringHelper.hasNoText (sTokenString))
       return false;
 
-    return containsAny (x -> x.findFirstAccessToken (y -> y.getTokenString ().equals (sTokenString)) != null);
+    return containsAny (x -> x.getAccessTokenList ()
+                              .findFirstAccessToken (y -> y.getTokenString ().equals (sTokenString)) != null);
   }
 }

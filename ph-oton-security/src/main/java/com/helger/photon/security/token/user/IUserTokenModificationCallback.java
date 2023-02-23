@@ -59,24 +59,24 @@ public interface IUserTokenModificationCallback extends ICallback
   /**
    * Called after a new access token was created for a user token.
    *
-   * @param aUserToken
-   *        The changed user token. Never <code>null</code>.
+   * @param sUserTokenID
+   *        The changed user token ID. Never <code>null</code>.
    * @param aAccessToken
    *        The created new access token. Never <code>null</code>.
    */
-  default void onUserTokenCreateAccessToken (@Nonnull final IUserToken aUserToken,
+  default void onUserTokenCreateAccessToken (@Nonnull @Nonempty final String sUserTokenID,
                                              @Nonnull final AccessToken aAccessToken)
   {}
 
   /**
    * Called after the current access token of a user token got revoked and no
    * new access token was created. In case a new access token is directly
-   * created only {@link #onUserTokenCreateAccessToken(IUserToken, AccessToken)}
-   * is called.
+   * created only {@link #onUserTokenCreateAccessToken(String, AccessToken)} is
+   * called.
    *
-   * @param aUserToken
-   *        The changed user token. Never <code>null</code>.
+   * @param sUserTokenID
+   *        The changed user token ID. Never <code>null</code>.
    */
-  default void onUserTokenRevokeAccessToken (@Nonnull final IUserToken aUserToken)
+  default void onUserTokenRevokeAccessToken (@Nonnull @Nonempty final String sUserTokenID)
   {}
 }

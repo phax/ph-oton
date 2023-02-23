@@ -16,15 +16,8 @@
  */
 package com.helger.photon.security.token.object;
 
-import java.util.function.Predicate;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.security.authentication.subject.IAuthSubject;
 import com.helger.tenancy.IBusinessObject;
 
@@ -36,44 +29,8 @@ import com.helger.tenancy.IBusinessObject;
 public interface IObjectWithAccessToken extends IBusinessObject, IAuthSubject
 {
   /**
-   * @return A list of all tokens used by this user. The latest, active token is
-   *         always the last one. Neither <code>null</code> nor empty.
+   * @return The access token list. Never <code>null</code>.
    */
   @Nonnull
-  @Nonempty
-  @ReturnsMutableCopy
-  ICommonsList <? extends IAccessToken> getAllAccessTokens ();
-
-  /**
-   * Find the first access token matching the supplied filter.
-   *
-   * @param aFilter
-   *        The filter to use. May be <code>null</code>.
-   * @return The first access token (if filter is <code>null</code>) or the
-   *         first matching filter or <code>null</code> if no token is present,
-   *         or if no token matches the supplied filter.
-   */
-  @Nullable
-  IAccessToken findFirstAccessToken (@Nullable Predicate <? super IAccessToken> aFilter);
-
-  /**
-   * @return The main token to access this application from the outside. May be
-   *         <code>null</code> if all are revoked.
-   */
-  @Nullable
-  IAccessToken getActiveAccessToken ();
-
-  /**
-   * @return The token string of the active access token. May be
-   *         <code>null</code> if no active access token is present (which can
-   *         be the case if all access tokens were revoked or if no access token
-   *         is present).
-   * @see #getActiveAccessToken()
-   */
-  @Nullable
-  default String getActiveTokenString ()
-  {
-    final IAccessToken aActiveAccessToken = getActiveAccessToken ();
-    return aActiveAccessToken == null ? null : aActiveAccessToken.getTokenString ();
-  }
+  IAccessTokenList getAccessTokenList ();
 }

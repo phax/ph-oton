@@ -29,11 +29,11 @@ import com.helger.photon.jdbc.audit.AuditManagerJDBC;
 import com.helger.photon.jdbc.security.RoleManagerJDBC;
 import com.helger.photon.jdbc.security.UserGroupManagerJDBC;
 import com.helger.photon.jdbc.security.UserManagerJDBC;
+import com.helger.photon.jdbc.security.UserTokenManagerJDBC;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager.IFactory;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.token.user.IUserTokenManager;
-import com.helger.photon.security.token.user.UserTokenManager;
 import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroupManager;
 
@@ -82,10 +82,9 @@ public class PhotonSecurityManagerFactoryJDBC implements IFactory
   }
 
   @Nonnull
-  public IUserTokenManager createUserTokenMgr () throws DAOException
+  public IUserTokenManager createUserTokenMgr (@Nonnull final IUserManager aUserMgr) throws DAOException
   {
-    return new UserTokenManager (PhotonSecurityManager.FactoryXML.DIRECTORY_SECURITY +
-                                 PhotonSecurityManager.FactoryXML.FILENAME_USERTOKENS_XML);
+    return new UserTokenManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer, aUserMgr);
   }
 
   /**
