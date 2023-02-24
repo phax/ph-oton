@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.servlet;
 
-import java.util.Objects;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -29,6 +27,7 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -68,16 +67,13 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
     final HttpServletRequest aRequest = aRequestScope.getRequest ();
     final SimpleURL aURL = new SimpleURL (aRequestScope.getContextPath () + m_sServletPath);
     aURL.add (PARAM_HTTP_ERROR, true);
-    aURL.addIf (PARAM_HTTP_STATUS_CODE,
-                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.status_code")),
-                Objects::nonNull);
-    aURL.addIf (PARAM_HTTP_STATUS_MESSAGE,
-                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.message")),
-                Objects::nonNull);
-    aURL.addIf (PARAM_HTTP_REQUEST_URI,
-                StringHelper.getToString (aRequest.getAttribute ("javax.servlet.error.request_uri")),
-                Objects::nonNull);
-    aURL.addIf (PARAM_HTTP_REFERRER, aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER), Objects::nonNull);
+    aURL.addIfNotNull (PARAM_HTTP_STATUS_CODE,
+                       StringHelper.getToString (aRequest.getAttribute (RequestDispatcher.ERROR_STATUS_CODE)));
+    aURL.addIfNotNull (PARAM_HTTP_STATUS_MESSAGE,
+                       StringHelper.getToString (aRequest.getAttribute (RequestDispatcher.ERROR_MESSAGE)));
+    aURL.addIfNotNull (PARAM_HTTP_REQUEST_URI,
+                       StringHelper.getToString (aRequest.getAttribute (RequestDispatcher.ERROR_REQUEST_URI)));
+    aURL.addIfNotNull (PARAM_HTTP_REFERRER, aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER));
     aUnifiedResponse.setRedirect (aURL);
   }
 }
