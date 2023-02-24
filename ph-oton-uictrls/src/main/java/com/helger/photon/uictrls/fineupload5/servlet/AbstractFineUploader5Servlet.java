@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.mime.CMimeType;
@@ -34,6 +33,8 @@ import com.helger.photon.core.interror.InternalErrorBuilder;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * <p>

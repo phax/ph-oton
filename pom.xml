@@ -68,7 +68,7 @@
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.20.0</log4j.version>
-    <jetty.version>10.0.13</jetty.version>
+    <jetty.version>11.0.13</jetty.version>
     <ph-commons.version>11.0.1</ph-commons.version>
   </properties>
 
@@ -123,7 +123,7 @@
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>10.0.1</version>
+        <version>10.0.2-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -295,9 +295,16 @@
   </dependencyManagement>
   
   <dependencies>
+    <!--
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
 

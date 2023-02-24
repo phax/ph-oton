@@ -23,9 +23,6 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +46,10 @@ import com.helger.json.serialize.JsonReader;
 import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.handler.IXServletHandler;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Default Servlet handler for CSP reporting. Used in

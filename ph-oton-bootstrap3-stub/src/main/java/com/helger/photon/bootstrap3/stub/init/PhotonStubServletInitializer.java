@@ -21,9 +21,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +38,10 @@ import com.helger.photon.core.servlet.StreamServlet;
 import com.helger.photon.core.userdata.UserStreamServlet;
 import com.helger.photon.core.userdata.UserUploadServlet;
 import com.helger.servlet.filter.CharacterEncodingFilter;
+
+import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRegistration;
 
 /**
  * This class dynamically registers the ph-oton servlets into the

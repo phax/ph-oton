@@ -21,9 +21,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
@@ -49,6 +46,10 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.web.scope.mgr.WebScopeManager;
+
+import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRegistration;
 
 /**
  * Show servlet context information.

@@ -29,8 +29,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +75,9 @@ import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.util.thread.ThreadDescriptor;
 import com.helger.xml.util.thread.ThreadDescriptorList;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * A handler for internal errors

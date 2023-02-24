@@ -22,7 +22,6 @@ import java.nio.charset.StandardCharsets;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +34,8 @@ import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHttpHandler
 {

@@ -20,7 +20,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
 
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
@@ -29,6 +28,8 @@ import com.helger.commons.statistics.StatisticsManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
+
+import jakarta.servlet.ServletException;
 
 /**
  * A simple availability-check servlet that responds with a "pong" text message.

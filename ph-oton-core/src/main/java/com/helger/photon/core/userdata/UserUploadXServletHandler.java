@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +36,8 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
+
+import jakarta.servlet.ServletException;
 
 /**
  * A special upload servlet to be used with FineUploader.

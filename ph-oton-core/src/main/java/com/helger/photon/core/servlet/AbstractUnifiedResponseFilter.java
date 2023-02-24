@@ -19,9 +19,6 @@ package com.helger.photon.core.servlet;
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.state.EContinue;
@@ -31,6 +28,10 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlets.scope.AbstractScopeAwareFilter;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Abstract base class for a filter performing actions via

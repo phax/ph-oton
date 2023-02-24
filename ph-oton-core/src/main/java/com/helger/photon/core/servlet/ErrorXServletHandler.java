@@ -19,7 +19,6 @@ package com.helger.photon.core.servlet;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
-import javax.servlet.http.HttpServletRequest;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -29,6 +28,8 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * An error handler that redirects to a certain error path with some special URL

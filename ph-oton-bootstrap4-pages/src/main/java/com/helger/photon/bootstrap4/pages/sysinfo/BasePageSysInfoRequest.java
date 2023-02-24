@@ -21,8 +21,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
@@ -47,6 +45,9 @@ import com.helger.servlet.cookie.CookieHelper;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+
 /**
  * Page with information on the current request
  *
@@ -54,7 +55,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayText
@@ -93,7 +95,9 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
     super (sID, sName);
   }
 
-  public BasePageSysInfoRequest (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageSysInfoRequest (@Nonnull @Nonempty final String sID,
+                                 @Nonnull final String sName,
+                                 @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -121,7 +125,8 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
       aTable.setID (getID () + "http");
-      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+      aTable.addHeaderRow ()
+            .addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, ICommonsList <String>> aEntry : aRequestScope.headers ()
                                                                                  .getAllHeaders ()
                                                                                  .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
@@ -130,7 +135,9 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCExtHelper.list2divList (aEntry.getValue ()));
       }
       final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTabBox.addTab ("http", EText.MSG_HTTP_HEADERS.getDisplayText (aDisplayLocale), new HCNodeList ().addChildren (aTable, aDT));
+      aTabBox.addTab ("http",
+                      EText.MSG_HTTP_HEADERS.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Cookies
@@ -158,20 +165,25 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aCookie.getValue ()).addCell (sOther);
       }
       final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTabBox.addTab ("cookies", EText.MSG_COOKIES.getDisplayText (aDisplayLocale), new HCNodeList ().addChildren (aTable, aDT));
+      aTabBox.addTab ("cookies",
+                      EText.MSG_COOKIES.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Request parameters
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
       aTable.setID (getID () + "params");
-      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+      aTable.addHeaderRow ()
+            .addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest).entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aEntry.getValue ());
       }
       final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTabBox.addTab ("params", EText.MSG_PARAMETERS.getDisplayText (aDisplayLocale), new HCNodeList ().addChildren (aTable, aDT));
+      aTabBox.addTab ("params",
+                      EText.MSG_PARAMETERS.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Request attributes
@@ -192,20 +204,25 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
               .addCell (String.valueOf (aEntry.getValue ()));
       }
       final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTabBox.addTab ("attrs", EText.MSG_ATTRIBUTES.getDisplayText (aDisplayLocale), new HCNodeList ().addChildren (aTable, aDT));
+      aTabBox.addTab ("attrs",
+                      EText.MSG_ATTRIBUTES.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
 
     // Request properties
     {
       final BootstrapTable aTable = new BootstrapTable (new HCCol (nFirstColWidth), HCCol.star ());
       aTable.setID (getID () + "props");
-      aTable.addHeaderRow ().addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
+      aTable.addHeaderRow ()
+            .addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aEntry.getValue ());
       }
       final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
-      aTabBox.addTab ("props", EText.MSG_PROPERTIES.getDisplayText (aDisplayLocale), new HCNodeList ().addChildren (aTable, aDT));
+      aTabBox.addTab ("props",
+                      EText.MSG_PROPERTIES.getDisplayText (aDisplayLocale),
+                      new HCNodeList ().addChildren (aTable, aDT));
     }
     aNodeList.addChild (aTabBox);
   }

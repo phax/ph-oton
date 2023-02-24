@@ -17,7 +17,6 @@
 package com.helger.photon.bootstrap.demo.servlet;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletContext;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
@@ -49,6 +48,8 @@ import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables;
 import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginSearchHighlight;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.servlet.ServletContext;
 
 /**
  * This listener is invoked during the servlet initialization. This is basically

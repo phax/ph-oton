@@ -62,12 +62,6 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-icon</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
     
     <dependency>
       <groupId>com.helger.photon</groupId>

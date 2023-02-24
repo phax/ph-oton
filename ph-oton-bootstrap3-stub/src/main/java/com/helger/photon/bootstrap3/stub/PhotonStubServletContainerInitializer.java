@@ -19,20 +19,24 @@ package com.helger.photon.bootstrap3.stub;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
+import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.photon.bootstrap3.stub.init.PhotonStubServletInitializer;
+
+import jakarta.servlet.ServletContainerInitializer;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 
 /**
  * ph-oton SCI
  *
  * @author Philip Helger
  */
+@IsSPIImplementation
 public final class PhotonStubServletContainerInitializer implements ServletContainerInitializer
 {
-  public void onStartup (@Nonnull final Set <Class <?>> aClasses, @Nonnull final ServletContext aSC) throws ServletException
+  public void onStartup (@Nonnull final Set <Class <?>> aClasses,
+                         @Nonnull final ServletContext aSC) throws ServletException
   {
     PhotonStubServletInitializer.registerServlets (aSC);
   }

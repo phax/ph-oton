@@ -19,10 +19,11 @@ package com.helger.photon.bootstrap3.stub;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 
 import com.helger.photon.bootstrap3.stub.init.PhotonStubInitializer;
+
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 /**
  * This class triggers some default configuration to run ph-oton applications

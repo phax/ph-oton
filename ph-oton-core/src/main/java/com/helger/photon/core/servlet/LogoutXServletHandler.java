@@ -19,8 +19,6 @@ package com.helger.photon.core.servlet;
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpSession;
 
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.url.ISimpleURL;
@@ -28,6 +26,9 @@ import com.helger.photon.app.url.LinkHelper;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Handles the log-out of a user. Can be called with a user context and without.
