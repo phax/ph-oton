@@ -142,7 +142,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
                 !aUnifiedResponse.isRedirectDefined () &&
                 !aUnifiedResponse.hasContent ())
             {
-              // Set "No Content" response
+              // Set "No Content" response as default
               aUnifiedResponse.setStatus (CHttp.HTTP_NO_CONTENT);
             }
         }
