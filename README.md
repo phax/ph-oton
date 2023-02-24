@@ -98,8 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v9.1.0 - work in progress
-    * Using Servlet API 5.0.0 as the baseline: JakartaEE 9, Java 11+, Apache Tomcat v10.0.x, Jetty 11.x
+* v9.1.0 - 2023-02-24
+    * Using Servlet API 5.0.0 as the baseline: **JakartaEE 9, Java 11+, Apache Tomcat v10.0.x, Jetty 11.x**
     * Switched all namespaces from `javax.servlet` to `jakarta.servlet`
     * Updated to Log2J 2.20.0
     * Incorporated UserToken JDBC manager from v8.4.5
