@@ -32,7 +32,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
 {
   COOKIE_CONSENT ("uicore/cookieconsent/3.1.1/cookieconsent.js"),
   /** JQuery 3.x */
-  JQUERY_3 ("uicore/jquery/jquery-3.6.3.js"),
+  JQUERY_3 ("uicore/jquery/jquery-3.6.4.js"),
   JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
   JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
   JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.4.1.js"),

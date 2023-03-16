@@ -98,6 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.1.1 - work in progress
+    * Updated to jQuery 3.6.4
 * v9.1.0 - 2023-02-24
     * Using Servlet API 5.0.0 as the baseline: **JakartaEE 9, Java 11+, Apache Tomcat v10.0.x, Jetty 11.x**
     * Switched all namespaces from `javax.servlet` to `jakarta.servlet`
@@ -115,7 +117,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Fixed default caching option for non GET requests
     * Extended some API to adopt to the new UserToken requirements 
     * Added UserToken manager for JDBC
-* v8.4.4 - 2012-01-23
+* v8.4.4 - 2023-01-23
     * Updated to jQuery 3.6.3
     * Updated to DataTables 1.13.1 and latest plugin versions
     * Added methods `setAriaRequired`, `addToAriaDescribedBy` and `setAriaInvalid` to class `IHCAttrContainer`
