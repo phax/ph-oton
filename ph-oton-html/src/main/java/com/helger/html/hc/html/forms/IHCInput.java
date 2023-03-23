@@ -23,6 +23,7 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.url.ISimpleURL;
+import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
@@ -61,20 +62,50 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
   @Nonnull
   IMPLTYPE setAlt (@Nullable String sAlt);
 
-  boolean isAutoCompleteOn ();
+  @Deprecated (since = "9.1.1", forRemoval = true)
+  default boolean isAutoCompleteOn ()
+  {
+    return CHTMLAttributeValues.ON.equals (getAutoComplete ());
+  }
 
-  boolean isAutoCompleteOff ();
+  @Deprecated (since = "9.1.1", forRemoval = true)
+  default boolean isAutoCompleteOff ()
+  {
+    return CHTMLAttributeValues.OFF.equals (getAutoComplete ());
+  }
 
-  boolean isAutoCompleteUndefined ();
+  @Deprecated (since = "9.1.1", forRemoval = true)
+  default boolean isAutoCompleteUndefined ()
+  {
+    return getAutoComplete () == null;
+  }
+
+  @Nullable
+  String getAutoComplete ();
 
   @Nonnull
+  @Deprecated (since = "9.1.1", forRemoval = true)
   default IMPLTYPE setAutoComplete (final boolean bAutoComplete)
   {
-    return setAutoComplete (ETriState.valueOf (bAutoComplete));
+    return setAutoComplete (Boolean.toString (bAutoComplete));
   }
 
   @Nonnull
-  IMPLTYPE setAutoComplete (@Nonnull ETriState eAutoComplete);
+  @Deprecated (since = "9.1.1", forRemoval = true)
+  default IMPLTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
+  {
+    return setAutoComplete (eAutoComplete.isUndefined () ? null
+                                                         : Boolean.toString (eAutoComplete.getAsBooleanValue ()));
+  }
+
+  @Nonnull
+  default IMPLTYPE setAutoComplete (@Nullable final EHCAutoComplete eAutoComplete)
+  {
+    return setAutoComplete (eAutoComplete == null ? null : eAutoComplete.getAttrValue ());
+  }
+
+  @Nonnull
+  IMPLTYPE setAutoComplete (@Nullable String sAutoComplete);
 
   boolean isAutoFocus ();
 

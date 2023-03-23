@@ -22,7 +22,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
@@ -39,10 +38,12 @@ import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.xml.microdom.IMicroElement;
 
 @NotThreadSafe
-public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE> implements
+public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE>
+                                      implements
                                       IHCInput <IMPLTYPE>
 {
   /** By default no auto complete setting is active */
+  @Deprecated (since = "9.1.1", forRemoval = true)
   public static final ETriState DEFAULT_AUTO_COMPLETE = ETriState.UNDEFINED;
 
   /** Not checked by default */
@@ -57,7 +58,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
   private EHCInputType m_eType;
   private String m_sAccept;
   private String m_sAlt;
-  private ETriState m_eAutoComplete = DEFAULT_AUTO_COMPLETE;
+  private String m_sAutoComplete;
   private boolean m_bChecked = DEFAULT_CHECKED;
   private String m_sDirName;
   // disabled is inherited
@@ -151,25 +152,16 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return thisAsT ();
   }
 
-  public final boolean isAutoCompleteOn ()
+  @Nullable
+  public final String getAutoComplete ()
   {
-    return m_eAutoComplete.isTrue ();
-  }
-
-  public final boolean isAutoCompleteOff ()
-  {
-    return m_eAutoComplete.isFalse ();
-  }
-
-  public final boolean isAutoCompleteUndefined ()
-  {
-    return m_eAutoComplete.isUndefined ();
+    return m_sAutoComplete;
   }
 
   @Nonnull
-  public final IMPLTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
+  public final IMPLTYPE setAutoComplete (@Nullable final String sAutoComplete)
   {
-    m_eAutoComplete = ValueEnforcer.notNull (eAutoComplete, "AutoComplete");
+    m_sAutoComplete = sAutoComplete;
     return thisAsT ();
   }
 
@@ -484,8 +476,8 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
       aElement.setAttribute (CHTMLAttributes.ACCEPT, m_sAccept);
     if (StringHelper.hasText (m_sAlt))
       aElement.setAttribute (CHTMLAttributes.ALT, m_sAlt);
-    if (m_eAutoComplete.isDefined ())
-      aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE, m_eAutoComplete.isTrue () ? CHTMLAttributeValues.ON : CHTMLAttributeValues.OFF);
+    if (StringHelper.hasText (m_sAutoComplete))
+      aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE, m_sAutoComplete);
     if (m_bChecked)
       aElement.setAttribute (CHTMLAttributes.CHECKED, CHTMLAttributeValues.CHECKED);
     if (StringHelper.hasText (m_sDirName))
@@ -525,7 +517,8 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     if (m_nSize > 0)
       aElement.setAttribute (CHTMLAttributes.SIZE, m_nSize);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC,
+                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (StringHelper.hasText (m_sStep))
       aElement.setAttribute (CHTMLAttributes.STEP, m_sStep);
     if (m_sValue != null)
@@ -538,32 +531,32 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("type", m_eType)
-                            .appendIfNotNull ("accept", m_sAccept)
-                            .appendIfNotNull ("alt", m_sAlt)
-                            .append ("autoComplete", m_eAutoComplete)
-                            .append ("checked", m_bChecked)
-                            .appendIfNotNull ("dirname", m_sDirName)
-                            .appendIfNotNull ("form", m_sForm)
-                            .append ("formaction", m_aFormAction)
-                            .appendIfNotNull ("formenctype", m_aFormEncType)
-                            .appendIfNotNull ("formmethod", m_eFormMethod)
-                            .append ("formnovalidate", m_bFormNoValidate)
-                            .appendIfNotNull ("formtarget", m_aFormTarget)
-                            .append ("height", m_nHeight)
-                            .appendIfNotNull ("list", m_sList)
-                            .appendIfNotNull ("maxValue", m_sMaxValue)
-                            .append ("maxLength", m_nMaxLength)
-                            .appendIfNotNull ("minValue", m_sMinValue)
-                            .append ("minLength", m_nMinLength)
-                            .append ("multiple", m_bMultiple)
-                            .appendIfNotNull ("pattern", m_sPattern)
-                            .appendIfNotNull ("placeholder", m_sPlaceholder)
-                            .append ("size", m_nSize)
-                            .appendIfNotNull ("src", m_aSrc)
-                            .appendIfNotNull ("step", m_sStep)
-                            .appendIfNotNull ("value", m_sValue)
-                            .append ("width", m_nWidth)
+                            .appendIfNotNull ("Type", m_eType)
+                            .appendIfNotNull ("Accept", m_sAccept)
+                            .appendIfNotNull ("Alt", m_sAlt)
+                            .append ("AutoComplete", m_sAutoComplete)
+                            .append ("Checked", m_bChecked)
+                            .appendIfNotNull ("DirName", m_sDirName)
+                            .appendIfNotNull ("Form", m_sForm)
+                            .append ("FormAction", m_aFormAction)
+                            .appendIfNotNull ("FormEncType", m_aFormEncType)
+                            .appendIfNotNull ("FormMethod", m_eFormMethod)
+                            .append ("FormNoValidate", m_bFormNoValidate)
+                            .appendIfNotNull ("FormTarget", m_aFormTarget)
+                            .append ("Height", m_nHeight)
+                            .appendIfNotNull ("List", m_sList)
+                            .appendIfNotNull ("MaxValue", m_sMaxValue)
+                            .append ("MaxLength", m_nMaxLength)
+                            .appendIfNotNull ("MinValue", m_sMinValue)
+                            .append ("MinLength", m_nMinLength)
+                            .append ("Multiple", m_bMultiple)
+                            .appendIfNotNull ("Pattern", m_sPattern)
+                            .appendIfNotNull ("Placeholder", m_sPlaceholder)
+                            .append ("Size", m_nSize)
+                            .appendIfNotNull ("Src", m_aSrc)
+                            .appendIfNotNull ("Step", m_sStep)
+                            .appendIfNotNull ("Value", m_sValue)
+                            .append ("Width", m_nWidth)
                             .getToString ();
   }
 }

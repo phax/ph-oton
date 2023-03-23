@@ -16,27 +16,29 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nullable;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import com.helger.html.hc.config.HCSettings;
+import org.junit.Test;
+
+import com.helger.commons.string.StringHelper;
 
 /**
- * Represents an HTML &lt;input&gt; element with type "password"
+ * Test class for class {@link EHCAutoComplete}.
  *
  * @author Philip Helger
  */
-public class HCEditPassword extends AbstractHCInput <HCEditPassword>
+public final class EHCAutoCompleteTest
 {
-  public HCEditPassword ()
+  @Test
+  public void testBasic ()
   {
-    super (EHCInputType.PASSWORD);
-    if (HCSettings.isAutoCompleteOffForPasswordEdits ())
-      setAutoComplete (EHCAutoComplete.OFF);
-  }
-
-  public HCEditPassword (@Nullable final String sName)
-  {
-    this ();
-    setName (sName);
+    for (final EHCAutoComplete e : EHCAutoComplete.values ())
+    {
+      assertTrue (StringHelper.hasText (e.getAttrValue ()));
+      assertSame (e, EHCAutoComplete.getFromAttrValueOrNull (e.getAttrValue ()));
+    }
+    assertNull (EHCAutoComplete.getFromAttrValueOrNull (null));
   }
 }

@@ -29,6 +29,7 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.AbstractHCInput;
+import com.helger.html.hc.html.forms.EHCAutoComplete;
 import com.helger.html.hc.html.forms.EHCInputType;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.jquery.JQuery;
@@ -66,7 +67,7 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
 
     setName (aRFEdit.getFieldName ());
     setValue (aRFEdit.getRequestValue ());
-    setAutoComplete (false);
+    setAutoComplete (EHCAutoComplete.OFF);
     setPlaceholder (ETypeaheadText.ENTER_SEARCH_STRING.getDisplayText (aDisplayLocale));
 
     m_aRFHidden = aRFHidden;
