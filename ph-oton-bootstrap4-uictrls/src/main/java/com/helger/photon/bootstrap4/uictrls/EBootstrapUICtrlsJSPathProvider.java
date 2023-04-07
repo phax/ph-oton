@@ -26,9 +26,9 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
 {
-  DATETIMEPICKER ("bootstrap/datetimepicker/5.39.0/js/tempusdominus-bootstrap-4.js"),
+  DATETIMEPICKER ("external/bootstrap/datetimepicker/5.39.0/js/tempusdominus-bootstrap-4.js"),
   DATETIMEPICKER_FONTAWESOME5 ("ph-oton/datetimepicker-fa5.js"),
-  TREE_VIEW ("bootstrap/treeview/1.2.0/bootstrap-treeview.js");
+  TREE_VIEW ("external/bootstrap/treeview/1.2.0/bootstrap-treeview.js");
 
   private final ConstantJSPathProvider m_aPP;
 
@@ -58,7 +58,9 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (), "{0}", sLanguage),
+    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
+                                                                                         "{0}",
+                                                                                         sLanguage),
                                                                 m_aPP.getConditionalComment ());
   }
 }

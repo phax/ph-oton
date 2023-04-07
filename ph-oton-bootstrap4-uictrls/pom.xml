@@ -95,19 +95,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/bootstrap/**</exclude>
-            <exclude>**/NOTICE</exclude>
-            <exclude>**/LICENSE</exclude>
-            <exclude>**/*.min.css</exclude>
-            <exclude>**/*.min.js</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>com.helger.maven</groupId>
         <artifactId>ph-jscompress-maven-plugin</artifactId>
         <executions>

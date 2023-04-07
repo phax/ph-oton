@@ -26,9 +26,9 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
 {
-  DATETIMEPICKER ("bootstrap/datetimepicker/bootstrap-datetimepicker.js"),
-  DATETIMEPICKER_LOCALE ("bootstrap/datetimepicker/locales/bootstrap-datetimepicker.{0}.js", false),
-  TREE_VIEW ("bootstrap/treeview/1.2.0/bootstrap-treeview.js");
+  DATETIMEPICKER ("external/bootstrap/datetimepicker/bootstrap-datetimepicker.js"),
+  DATETIMEPICKER_LOCALE ("external/bootstrap/datetimepicker/locales/bootstrap-datetimepicker.{0}.js", false),
+  TREE_VIEW ("external/bootstrap/treeview/1.2.0/bootstrap-treeview.js");
 
   private final ConstantJSPathProvider m_aPP;
 
@@ -63,7 +63,9 @@ public enum EBootstrapUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (), "{0}", sLanguage),
+    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
+                                                                                         "{0}",
+                                                                                         sLanguage),
                                                                 m_aPP.getConditionalComment ());
   }
 }

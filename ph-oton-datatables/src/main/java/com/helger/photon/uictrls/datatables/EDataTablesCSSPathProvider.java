@@ -32,58 +32,80 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EDataTablesCSSPathProvider implements ICSSPathProvider
 {
-  DATATABLES_1_13 ("datatables/DataTables-" + DTVersion.DT + "/css/jquery.dataTables.css"),
-  DATATABLES_1_13_BOOTSTRAP3 ("datatables/DataTables-" + DTVersion.DT + "/css/dataTables.bootstrap.css"),
-  DATATABLES_1_13_BOOTSTRAP4 ("datatables/DataTables-" + DTVersion.DT + "/css/dataTables.bootstrap4.css"),
-  DATATABLES_AUTO_FILL ("datatables/AutoFill-" + DTVersion.AUTO_FILL + "/css/autoFill.dataTables.css"),
-  DATATABLES_AUTO_FILL_BOOTSTRAP3 ("datatables/AutoFill-" + DTVersion.AUTO_FILL + "/css/autoFill.bootstrap.css"),
-  DATATABLES_AUTO_FILL_BOOTSTRAP4 ("datatables/AutoFill-" + DTVersion.AUTO_FILL + "/css/autoFill.bootstrap4.css"),
-  DATATABLES_BUTTONS ("datatables/Buttons-" + DTVersion.BUTTONS + "/css/buttons.dataTables.css"),
-  DATATABLES_BUTTONS_BOOTSTRAP3 ("datatables/Buttons-" + DTVersion.BUTTONS + "/css/buttons.bootstrap.css"),
-  DATATABLES_BUTTONS_BOOTSTRAP4 ("datatables/Buttons-" + DTVersion.BUTTONS + "/css/buttons.bootstrap4.css"),
-  DATATABLES_COL_REORDER ("datatables/ColReorder-" + DTVersion.COL_REORDER + "/css/colReorder.dataTables.css"),
-  DATATABLES_COL_REORDER_BOOTSTRAP3 ("datatables/ColReorder-" +
+  DATATABLES_1_13 ("external/datatables/DataTables-" + DTVersion.DT + "/css/jquery.dataTables.css"),
+  DATATABLES_1_13_BOOTSTRAP3 ("external/datatables/DataTables-" + DTVersion.DT + "/css/dataTables.bootstrap.css"),
+  DATATABLES_1_13_BOOTSTRAP4 ("external/datatables/DataTables-" + DTVersion.DT + "/css/dataTables.bootstrap4.css"),
+  DATATABLES_AUTO_FILL ("external/datatables/AutoFill-" + DTVersion.AUTO_FILL + "/css/autoFill.dataTables.css"),
+  DATATABLES_AUTO_FILL_BOOTSTRAP3 ("external/datatables/AutoFill-" +
+                                   DTVersion.AUTO_FILL +
+                                   "/css/autoFill.bootstrap.css"),
+  DATATABLES_AUTO_FILL_BOOTSTRAP4 ("external/datatables/AutoFill-" +
+                                   DTVersion.AUTO_FILL +
+                                   "/css/autoFill.bootstrap4.css"),
+  DATATABLES_BUTTONS ("external/datatables/Buttons-" + DTVersion.BUTTONS + "/css/buttons.dataTables.css"),
+  DATATABLES_BUTTONS_BOOTSTRAP3 ("external/datatables/Buttons-" + DTVersion.BUTTONS + "/css/buttons.bootstrap.css"),
+  DATATABLES_BUTTONS_BOOTSTRAP4 ("external/datatables/Buttons-" + DTVersion.BUTTONS + "/css/buttons.bootstrap4.css"),
+  DATATABLES_COL_REORDER ("external/datatables/ColReorder-" + DTVersion.COL_REORDER + "/css/colReorder.dataTables.css"),
+  DATATABLES_COL_REORDER_BOOTSTRAP3 ("external/datatables/ColReorder-" +
                                      DTVersion.COL_REORDER +
                                      "/css/colReorder.bootstrap.css"),
-  DATATABLES_COL_REORDER_BOOTSTRAP4 ("datatables/ColReorder-" +
+  DATATABLES_COL_REORDER_BOOTSTRAP4 ("external/datatables/ColReorder-" +
                                      DTVersion.COL_REORDER +
                                      "/css/colReorder.bootstrap4.css"),
-  DATATABLES_FIXED_COLUMNS ("datatables/FixedColumns-" + DTVersion.FIXED_COLUMNS + "/css/fixedColumns.dataTables.css"),
-  DATATABLES_FIXED_COLUMNS_BOOTSTRAP3 ("datatables/FixedColumns-" +
+  DATATABLES_FIXED_COLUMNS ("external/datatables/FixedColumns-" +
+                            DTVersion.FIXED_COLUMNS +
+                            "/css/fixedColumns.dataTables.css"),
+  DATATABLES_FIXED_COLUMNS_BOOTSTRAP3 ("external/datatables/FixedColumns-" +
                                        DTVersion.FIXED_COLUMNS +
                                        "/css/fixedColumns.bootstrap.css"),
-  DATATABLES_FIXED_COLUMNS_BOOTSTRAP4 ("datatables/FixedColumns-" +
+  DATATABLES_FIXED_COLUMNS_BOOTSTRAP4 ("external/datatables/FixedColumns-" +
                                        DTVersion.FIXED_COLUMNS +
                                        "/css/fixedColumns.bootstrap4.css"),
-  DATATABLES_FIXED_HEADER ("datatables/FixedHeader-" + DTVersion.FIXED_HEADER + "/css/fixedHeader.dataTables.css"),
-  DATATABLES_FIXED_HEADER_BOOTSTRAP3 ("datatables/FixedHeader-" +
+  DATATABLES_FIXED_HEADER ("external/datatables/FixedHeader-" +
+                           DTVersion.FIXED_HEADER +
+                           "/css/fixedHeader.dataTables.css"),
+  DATATABLES_FIXED_HEADER_BOOTSTRAP3 ("external/datatables/FixedHeader-" +
                                       DTVersion.FIXED_HEADER +
                                       "/css/fixedHeader.bootstrap.css"),
-  DATATABLES_FIXED_HEADER_BOOTSTRAP4 ("datatables/FixedHeader-" +
+  DATATABLES_FIXED_HEADER_BOOTSTRAP4 ("external/datatables/FixedHeader-" +
                                       DTVersion.FIXED_HEADER +
                                       "/css/fixedHeader.bootstrap4.css"),
-  DATATABLES_KEY_TABLE ("datatables/KeyTable-" + DTVersion.KEY_TABLE + "/css/keyTable.dataTables.css"),
-  DATATABLES_KEY_TABLE_BOOTSTRAP3 ("datatables/KeyTable-" + DTVersion.KEY_TABLE + "/css/keyTable.bootstrap.css"),
-  DATATABLES_KEY_TABLE_BOOTSTRAP4 ("datatables/KeyTable-" + DTVersion.KEY_TABLE + "/css/keyTable.bootstrap4.css"),
-  DATATABLES_RESPONSIVE ("datatables/Responsive-" + DTVersion.RESPONSIVE + "/css/responsive.dataTables.css"),
-  DATATABLES_RESPONSIVE_BOOTSTRAP3 ("datatables/Responsive-" + DTVersion.RESPONSIVE + "/css/responsive.bootstrap.css"),
-  DATATABLES_RESPONSIVE_BOOTSTRAP4 ("datatables/Responsive-" + DTVersion.RESPONSIVE + "/css/responsive.bootstrap4.css"),
-  DATATABLES_ROW_GROUP ("datatables/RowGroup-" + DTVersion.ROW_GROUP + "/css/rowGroup.dataTables.css"),
-  DATATABLES_ROW_GROUP_BOOTSTRAP3 ("datatables/RowGroup-" + DTVersion.ROW_GROUP + "/css/rowGroup.bootstrap.css"),
-  DATATABLES_ROW_GROUP_BOOTSTRAP4 ("datatables/RowGroup-" + DTVersion.ROW_GROUP + "/css/rowGroup.bootstrap4.css"),
-  DATATABLES_ROW_REORDER ("datatables/RowReorder-" + DTVersion.ROW_REORDER + "/css/rowReorder.dataTables.css"),
-  DATATABLES_ROW_REORDER_BOOTSTRAP3 ("datatables/RowReorder-" +
+  DATATABLES_KEY_TABLE ("external/datatables/KeyTable-" + DTVersion.KEY_TABLE + "/css/keyTable.dataTables.css"),
+  DATATABLES_KEY_TABLE_BOOTSTRAP3 ("external/datatables/KeyTable-" +
+                                   DTVersion.KEY_TABLE +
+                                   "/css/keyTable.bootstrap.css"),
+  DATATABLES_KEY_TABLE_BOOTSTRAP4 ("external/datatables/KeyTable-" +
+                                   DTVersion.KEY_TABLE +
+                                   "/css/keyTable.bootstrap4.css"),
+  DATATABLES_RESPONSIVE ("external/datatables/Responsive-" + DTVersion.RESPONSIVE + "/css/responsive.dataTables.css"),
+  DATATABLES_RESPONSIVE_BOOTSTRAP3 ("external/datatables/Responsive-" +
+                                    DTVersion.RESPONSIVE +
+                                    "/css/responsive.bootstrap.css"),
+  DATATABLES_RESPONSIVE_BOOTSTRAP4 ("external/datatables/Responsive-" +
+                                    DTVersion.RESPONSIVE +
+                                    "/css/responsive.bootstrap4.css"),
+  DATATABLES_ROW_GROUP ("external/datatables/RowGroup-" + DTVersion.ROW_GROUP + "/css/rowGroup.dataTables.css"),
+  DATATABLES_ROW_GROUP_BOOTSTRAP3 ("external/datatables/RowGroup-" +
+                                   DTVersion.ROW_GROUP +
+                                   "/css/rowGroup.bootstrap.css"),
+  DATATABLES_ROW_GROUP_BOOTSTRAP4 ("external/datatables/RowGroup-" +
+                                   DTVersion.ROW_GROUP +
+                                   "/css/rowGroup.bootstrap4.css"),
+  DATATABLES_ROW_REORDER ("external/datatables/RowReorder-" + DTVersion.ROW_REORDER + "/css/rowReorder.dataTables.css"),
+  DATATABLES_ROW_REORDER_BOOTSTRAP3 ("external/datatables/RowReorder-" +
                                      DTVersion.ROW_REORDER +
                                      "/css/rowReorder.bootstrap.css"),
-  DATATABLES_ROW_REORDER_BOOTSTRAP4 ("datatables/RowReorder-" +
+  DATATABLES_ROW_REORDER_BOOTSTRAP4 ("external/datatables/RowReorder-" +
                                      DTVersion.ROW_REORDER +
                                      "/css/rowReorder.bootstrap4.css"),
-  DATATABLES_SCROLLER ("datatables/Scroller-" + DTVersion.SCROLLER + "/css/scroller.dataTables.css"),
-  DATATABLES_SCROLLER_BOOTSTRAP3 ("datatables/Scroller-" + DTVersion.SCROLLER + "/css/scroller.bootstrap.css"),
-  DATATABLES_SCROLLER_BOOTSTRAP4 ("datatables/Scroller-" + DTVersion.SCROLLER + "/css/scroller.bootstrap4.css"),
-  DATATABLES_SELECT ("datatables/Select-" + DTVersion.SELECT + "/css/select.dataTables.css"),
-  DATATABLES_SELECT_BOOTSTRAP3 ("datatables/Select-" + DTVersion.SELECT + "/css/select.bootstrap.css"),
-  DATATABLES_SELECT_BOOTSTRAP4 ("datatables/Select-" + DTVersion.SELECT + "/css/select.bootstrap4.css"),
+  DATATABLES_SCROLLER ("external/datatables/Scroller-" + DTVersion.SCROLLER + "/css/scroller.dataTables.css"),
+  DATATABLES_SCROLLER_BOOTSTRAP3 ("external/datatables/Scroller-" + DTVersion.SCROLLER + "/css/scroller.bootstrap.css"),
+  DATATABLES_SCROLLER_BOOTSTRAP4 ("external/datatables/Scroller-" +
+                                  DTVersion.SCROLLER +
+                                  "/css/scroller.bootstrap4.css"),
+  DATATABLES_SELECT ("external/datatables/Select-" + DTVersion.SELECT + "/css/select.dataTables.css"),
+  DATATABLES_SELECT_BOOTSTRAP3 ("external/datatables/Select-" + DTVersion.SELECT + "/css/select.bootstrap.css"),
+  DATATABLES_SELECT_BOOTSTRAP4 ("external/datatables/Select-" + DTVersion.SELECT + "/css/select.bootstrap4.css"),
   DATATABLES_SEARCH_HIGHLIGHT ("ph-oton/searchHighlight/dataTables.searchHighlight.css"),
   BOOTSTRAP3_DATATABLES_PH ("ph-oton/bootstrap3-datatables-ph.css"),
   BOOTSTRAP4_DATATABLES_PH ("ph-oton/bootstrap4-datatables-ph.css");
