@@ -48,7 +48,8 @@ public final class HTMLEntityResolver implements EntityResolver
   /** Maps public ID to the DTD content for performance reasons */
   private final ICommonsMap <String, byte []> m_aResolveMap = new CommonsHashMap <> ();
 
-  private void _addResolvablePublicId (@Nonnull @Nonempty final String sPublicID, @Nonnull @Nonempty final String sFilePath)
+  private void _addResolvablePublicId (@Nonnull @Nonempty final String sPublicID,
+                                       @Nonnull @Nonempty final String sFilePath)
   {
     if (m_aResolveMap.containsKey (sPublicID))
       throw new IllegalArgumentException ("Passed public id '" + sPublicID + "' is already contained!");
@@ -63,52 +64,53 @@ public final class HTMLEntityResolver implements EntityResolver
 
   private HTMLEntityResolver ()
   {
-    _addResolvablePublicId (CHTMLDocTypes.DOCTYPE_XHTML10_STRICT_QNAME, "html/xhtml1-strict.dtd");
-    _addResolvablePublicId (CHTMLDocTypes.DOCTYPE_XHTML10_TRANS_QNAME, "html/xhtml1-transitional.dtd");
-    _addResolvablePublicId (CHTMLDocTypes.DOCTYPE_XHTML11_QNAME, "html/xhtml11.dtd");
+    final String sPrefix = "external/html/";
+    _addResolvablePublicId (CHTMLDocTypes.DOCTYPE_XHTML10_STRICT_QNAME, sPrefix + "xhtml1-strict.dtd");
+    _addResolvablePublicId (CHTMLDocTypes.DOCTYPE_XHTML10_TRANS_QNAME, sPrefix + "xhtml1-transitional.dtd");
+    _addResolvablePublicId (CHTMLDocTypes.DOCTYPE_XHTML11_QNAME, sPrefix + "xhtml11.dtd");
     // XHTML 1.0
-    _addResolvablePublicId ("-//W3C//ENTITIES Latin 1 for XHTML//EN", "html/xhtml-lat1.ent");
-    _addResolvablePublicId ("-//W3C//ENTITIES Symbols for XHTML//EN", "html/xhtml-symbol.ent");
-    _addResolvablePublicId ("-//W3C//ENTITIES Special for XHTML//EN", "html/xhtml-special.ent");
+    _addResolvablePublicId ("-//W3C//ENTITIES Latin 1 for XHTML//EN", sPrefix + "xhtml-lat1.ent");
+    _addResolvablePublicId ("-//W3C//ENTITIES Symbols for XHTML//EN", sPrefix + "xhtml-symbol.ent");
+    _addResolvablePublicId ("-//W3C//ENTITIES Special for XHTML//EN", sPrefix + "xhtml-special.ent");
     // XHTML 1.1
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Style 1.0//EN", "html/xhtml-inlstyle-1.mod");
-    _addResolvablePublicId ("-//W3C//ENTITIES XHTML 1.1 Document Model 1.0//EN", "html/xhtml11-model-1.mod");
-    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Modular Framework 1.0//EN", "html/xhtml-framework-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Text 1.0//EN", "html/xhtml-text-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Hypertext 1.0//EN", "html/xhtml-hypertext-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Lists 1.0//EN", "html/xhtml-list-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Editing Elements 1.0//EN", "html/xhtml-edit-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML BIDI Override Element 1.0//EN", "html/xhtml-bdo-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Ruby 1.0//EN", "html/xhtml-ruby-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Presentation 1.0//EN", "html/xhtml-pres-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Link Element 1.0//EN", "html/xhtml-link-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Metainformation 1.0//EN", "html/xhtml-meta-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Base Element 1.0//EN", "html/xhtml-base-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Scripting 1.0//EN", "html/xhtml-script-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Style Sheets 1.0//EN", "html/xhtml-style-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Images 1.0//EN", "html/xhtml-image-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Client-side Image Maps 1.0//EN", "html/xhtml-csismap-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Server-side Image Maps 1.0//EN", "html/xhtml-ssismap-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Param Element 1.0//EN", "html/xhtml-param-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Embedded Object 1.0//EN", "html/xhtml-object-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Tables 1.0//EN", "html/xhtml-table-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Forms 1.0//EN", "html/xhtml-form-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Target 1.0//EN", "html/xhtml-target-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Legacy Markup 1.0//EN", "html/xhtml-legacy-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Document Structure 1.0//EN", "html/xhtml-struct-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Base Architecture 1.0//EN", "html/xhtml-arch-1.mod");
-    _addResolvablePublicId ("-//W3C//NOTATIONS XHTML Notations 1.0//EN", "html/xhtml-notations-1.mod");
-    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Datatypes 1.0//EN", "html/xhtml-datatypes-1.mod");
-    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Qualified Names 1.0//EN", "html/xhtml-qname-1.mod");
-    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Intrinsic Events 1.0//EN", "html/xhtml-events-1.mod");
-    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Common Attributes 1.0//EN", "html/xhtml-attribs-1.mod");
-    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Character Entities 1.0//EN", "html/xhtml-charent-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Structural 1.0//EN", "html/xhtml-inlstruct-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Phrasal 1.0//EN", "html/xhtml-inlphras-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Block Structural 1.0//EN", "html/xhtml-blkstruct-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Block Phrasal 1.0//EN", "html/xhtml-blkphras-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Presentation 1.0//EN", "html/xhtml-inlpres-1.mod");
-    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Block Presentation 1.0//EN", "html/xhtml-blkpres-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Style 1.0//EN", sPrefix + "xhtml-inlstyle-1.mod");
+    _addResolvablePublicId ("-//W3C//ENTITIES XHTML 1.1 Document Model 1.0//EN", sPrefix + "xhtml11-model-1.mod");
+    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Modular Framework 1.0//EN", sPrefix + "xhtml-framework-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Text 1.0//EN", sPrefix + "xhtml-text-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Hypertext 1.0//EN", sPrefix + "xhtml-hypertext-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Lists 1.0//EN", sPrefix + "xhtml-list-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Editing Elements 1.0//EN", sPrefix + "xhtml-edit-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML BIDI Override Element 1.0//EN", sPrefix + "xhtml-bdo-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Ruby 1.0//EN", sPrefix + "xhtml-ruby-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Presentation 1.0//EN", sPrefix + "xhtml-pres-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Link Element 1.0//EN", sPrefix + "xhtml-link-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Metainformation 1.0//EN", sPrefix + "xhtml-meta-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Base Element 1.0//EN", sPrefix + "xhtml-base-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Scripting 1.0//EN", sPrefix + "xhtml-script-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Style Sheets 1.0//EN", sPrefix + "xhtml-style-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Images 1.0//EN", sPrefix + "xhtml-image-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Client-side Image Maps 1.0//EN", sPrefix + "xhtml-csismap-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Server-side Image Maps 1.0//EN", sPrefix + "xhtml-ssismap-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Param Element 1.0//EN", sPrefix + "xhtml-param-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Embedded Object 1.0//EN", sPrefix + "xhtml-object-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Tables 1.0//EN", sPrefix + "xhtml-table-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Forms 1.0//EN", sPrefix + "xhtml-form-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Target 1.0//EN", sPrefix + "xhtml-target-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Legacy Markup 1.0//EN", sPrefix + "xhtml-legacy-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Document Structure 1.0//EN", sPrefix + "xhtml-struct-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Base Architecture 1.0//EN", sPrefix + "xhtml-arch-1.mod");
+    _addResolvablePublicId ("-//W3C//NOTATIONS XHTML Notations 1.0//EN", sPrefix + "xhtml-notations-1.mod");
+    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Datatypes 1.0//EN", sPrefix + "xhtml-datatypes-1.mod");
+    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Qualified Names 1.0//EN", sPrefix + "xhtml-qname-1.mod");
+    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Intrinsic Events 1.0//EN", sPrefix + "xhtml-events-1.mod");
+    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Common Attributes 1.0//EN", sPrefix + "xhtml-attribs-1.mod");
+    _addResolvablePublicId ("-//W3C//ENTITIES XHTML Character Entities 1.0//EN", sPrefix + "xhtml-charent-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Structural 1.0//EN", sPrefix + "xhtml-inlstruct-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Phrasal 1.0//EN", sPrefix + "xhtml-inlphras-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Block Structural 1.0//EN", sPrefix + "xhtml-blkstruct-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Block Phrasal 1.0//EN", sPrefix + "xhtml-blkphras-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Inline Presentation 1.0//EN", sPrefix + "xhtml-inlpres-1.mod");
+    _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Block Presentation 1.0//EN", sPrefix + "xhtml-blkpres-1.mod");
   }
 
   @Nonnull

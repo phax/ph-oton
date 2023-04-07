@@ -86,7 +86,10 @@ public final class MarkupFileFuncTest
   @Rule
   public final HCTestRuleOptimized m_aRule = new HCTestRuleOptimized ();
 
-  private final static String [] TEST_FILENAMES = new String [] { "dingus.txt", "paragraphs.txt", "snippets.txt", "lists.txt" };
+  private final static String [] TEST_FILENAMES = new String [] { "dingus.txt",
+                                                                  "paragraphs.txt",
+                                                                  "snippets.txt",
+                                                                  "lists.txt" };
 
   private static void _addTestResultPair (final List <String []> list,
                                           @Nonnull final String sFilename,
@@ -109,8 +112,9 @@ public final class MarkupFileFuncTest
   private static ICommonsList <String []> _getTestResultPairList (final String sFilename) throws IOException
   {
     final ICommonsList <String []> ret = new CommonsArrayList <> ();
-    try (final NonBlockingBufferedReader in = new NonBlockingBufferedReader (new InputStreamReader (ClassPathResource.getInputStream (sFilename),
-                                                                                                    StandardCharsets.ISO_8859_1)))
+    try (
+        final NonBlockingBufferedReader in = new NonBlockingBufferedReader (new InputStreamReader (ClassPathResource.getInputStream (sFilename),
+                                                                                                   StandardCharsets.ISO_8859_1)))
     {
       StringBuilder aTest = null;
       StringBuilder aResult = null;
@@ -150,7 +154,13 @@ public final class MarkupFileFuncTest
             final String resultNumber = mResult.group (1);
             if (!sTestNumber.equals (resultNumber))
             {
-              throw new IllegalStateException ("Result " + resultNumber + " test " + sTestNumber + " (line " + nLineNumber + ")");
+              throw new IllegalStateException ("Result " +
+                                               resultNumber +
+                                               " test " +
+                                               sTestNumber +
+                                               " (line " +
+                                               nLineNumber +
+                                               ")");
             }
 
             aCurbuf = aResult;
@@ -175,7 +185,7 @@ public final class MarkupFileFuncTest
   {
     final ICommonsCollection <Object []> testResultPairs = new CommonsArrayList <> ();
     for (final String filename : TEST_FILENAMES)
-      for (final String [] aTest : _getTestResultPairList ("MarkupFiles/" + filename))
+      for (final String [] aTest : _getTestResultPairList ("external/MarkupFiles/" + filename))
         testResultPairs.add (new Object [] { aTest[0], aTest[1], aTest[2] });
     return testResultPairs;
   }
@@ -193,7 +203,7 @@ public final class MarkupFileFuncTest
   public void testRunEm () throws IOException
   {
     final Builder aBuilder = MarkdownConfiguration.builder ();
-    if (m_sTestName.startsWith ("[MarkupFiles/dingus.txt]1("))
+    if (m_sTestName.startsWith ("[external/MarkupFiles/dingus.txt]1("))
       aBuilder.extendedProfile (true);
     assertEquals (m_sTestName,
                   m_sExpectedResult.trim (),

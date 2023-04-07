@@ -155,19 +155,6 @@
           </instructions>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/schemas/servlet/**</exclude>
-            <exclude>src/test/resources/res/**</exclude>
-            <exclude>**/NOTICE</exclude>
-            <exclude>**/LICENSE</exclude>
-            <exclude>**/*.dat</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 </project>

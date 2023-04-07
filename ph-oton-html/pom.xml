@@ -100,19 +100,6 @@ osgi.serviceloader; filter:="(osgi.serviceloader=com.helger.html.hc.config.IHCSe
           </instructions>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/LICENSE</exclude>
-            <exclude>**/NOTICE</exclude>
-            <exclude>src/main/resources/html/**</exclude>
-            <exclude>src/test/resources/MarkdownTest/**</exclude>
-            <exclude>src/test/resources/MarkupFiles/**</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 </project>

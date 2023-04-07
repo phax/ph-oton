@@ -33,9 +33,9 @@ import com.helger.html.resource.css.ICSSPathProvider;
 public enum EBootstrapCSSPathProvider implements ICSSPathProvider
 {
   /** Main Bootstrap CSS */
-  BOOTSTRAP ("bootstrap/3.4.1/css/bootstrap.css"),
+  BOOTSTRAP ("external/bootstrap/3.4.1/css/bootstrap.css"),
   /** Bootstrap theme CSS */
-  BOOTSTRAP_THEME ("bootstrap/3.4.1/css/bootstrap-theme.css"),
+  BOOTSTRAP_THEME ("external/bootstrap/3.4.1/css/bootstrap-theme.css"),
   /** A some of default Bootstrap CSS adoptions etc. */
   BOOTSTRAP_PH ("ph-oton/bootstrap3-ph.css");
 

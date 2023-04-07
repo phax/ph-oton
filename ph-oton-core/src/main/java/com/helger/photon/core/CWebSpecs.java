@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core;
 
+import javax.annotation.Nonnull;
+
 import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.io.resource.ClassPathResource;
 
@@ -26,21 +28,35 @@ import com.helger.commons.io.resource.ClassPathResource;
  */
 public final class CWebSpecs
 {
-  public static final ClassPathResource JSP_20_XSD = new ClassPathResource ("schemas/servlet/jsp_2_0.xsd");
-  public static final ClassPathResource JSP_21_XSD = new ClassPathResource ("schemas/servlet/jsp_2_1.xsd");
-  public static final ClassPathResource JSP_22_XSD = new ClassPathResource ("schemas/servlet/jsp_2_2.xsd");
-  public static final ClassPathResource JSP_23_XSD = new ClassPathResource ("schemas/servlet/jsp_2_3.xsd");
+  private static final String PREFIX = "external/schemas/servlet/";
 
-  public static final ClassPathResource JSP_TAG_LIBRARY_20_XSD = new ClassPathResource ("schemas/servlet/web-jsptaglibrary_2_0.xsd");
-  public static final ClassPathResource JSP_TAG_LIBRARY_21_XSD = new ClassPathResource ("schemas/servlet/web-jsptaglibrary_2_1.xsd");
+  @Nonnull
+  private static ClassLoader _getCL ()
+  {
+    return CWebSpecs.class.getClassLoader ();
+  }
 
-  public static final ClassPathResource WEB_APP_24_XSD = new ClassPathResource ("schemas/servlet/web-app_2_4.xsd");
-  public static final ClassPathResource WEB_APP_25_XSD = new ClassPathResource ("schemas/servlet/web-app_2_5.xsd");
-  public static final ClassPathResource WEB_APP_30_XSD = new ClassPathResource ("schemas/servlet/web-app_3_0.xsd");
-  public static final ClassPathResource WEB_APP_31_XSD = new ClassPathResource ("schemas/servlet/web-app_3_1.xsd");
+  public static final ClassPathResource JSP_20_XSD = new ClassPathResource (PREFIX + "jsp_2_0.xsd", _getCL ());
+  public static final ClassPathResource JSP_21_XSD = new ClassPathResource (PREFIX + "jsp_2_1.xsd", _getCL ());
+  public static final ClassPathResource JSP_22_XSD = new ClassPathResource (PREFIX + "jsp_2_2.xsd", _getCL ());
+  public static final ClassPathResource JSP_23_XSD = new ClassPathResource (PREFIX + "jsp_2_3.xsd", _getCL ());
 
-  public static final ClassPathResource WEB_FRAGMENT_30_XSD = new ClassPathResource ("schemas/servlet/web-fragment_3_0.xsd");
-  public static final ClassPathResource WEB_FRAGMENT_31_XSD = new ClassPathResource ("schemas/servlet/web-fragment_3_1.xsd");
+  public static final ClassPathResource JSP_TAG_LIBRARY_20_XSD = new ClassPathResource (PREFIX +
+                                                                                        "web-jsptaglibrary_2_0.xsd",
+                                                                                        _getCL ());
+  public static final ClassPathResource JSP_TAG_LIBRARY_21_XSD = new ClassPathResource (PREFIX +
+                                                                                        "web-jsptaglibrary_2_1.xsd",
+                                                                                        _getCL ());
+
+  public static final ClassPathResource WEB_APP_24_XSD = new ClassPathResource (PREFIX + "web-app_2_4.xsd", _getCL ());
+  public static final ClassPathResource WEB_APP_25_XSD = new ClassPathResource (PREFIX + "web-app_2_5.xsd", _getCL ());
+  public static final ClassPathResource WEB_APP_30_XSD = new ClassPathResource (PREFIX + "web-app_3_0.xsd", _getCL ());
+  public static final ClassPathResource WEB_APP_31_XSD = new ClassPathResource (PREFIX + "web-app_3_1.xsd", _getCL ());
+
+  public static final ClassPathResource WEB_FRAGMENT_30_XSD = new ClassPathResource (PREFIX + "web-fragment_3_0.xsd",
+                                                                                     _getCL ());
+  public static final ClassPathResource WEB_FRAGMENT_31_XSD = new ClassPathResource (PREFIX + "web-fragment_3_1.xsd",
+                                                                                     _getCL ());
 
   public static final String WEB_XML_PATH = "WEB-INF/web.xml";
   public static final String WEB_FRAGMENT_PATH = "META-INF/web-fragment.xml";

@@ -33,13 +33,13 @@ import com.helger.html.resource.css.ICSSPathProvider;
 public enum EIconCSSPathProvider implements ICSSPathProvider
 {
   /** http://fontawesome.io */
-  FONT_AWESOME4 ("fontawesome/4.7.0/css/font-awesome.css"),
-  FONT_AWESOME5 ("fontawesome/5.15.4/css/all.css"),
+  FONT_AWESOME4 ("external/fontawesome/4.7.0/css/font-awesome.css"),
+  FONT_AWESOME5 ("external/fontawesome/5.15.4/css/all.css"),
   /** https://material.io/icons/ */
-  MATERIAL_ICONS ("materialdesign/3.0.1/material-icons.css"),
-  MATERIAL_ICONS_LIST ("materialdesign/3.0.1/material-icons-list.css"),
+  MATERIAL_ICONS ("external/materialdesign/3.0.1/material-icons.css"),
+  MATERIAL_ICONS_LIST ("external/materialdesign/3.0.1/material-icons-list.css"),
   /** https://icons.getbootstrap.com/ */
-  BOOTSTRAP_ICONS ("bootstrap-icons/1.8.1/bootstrap-icons.css"),
+  BOOTSTRAP_ICONS ("external/bootstrap-icons/1.8.1/bootstrap-icons.css"),
   PH_OTON_MATERIAL_DESIGN ("ph-oton/ph-oton-material-icons.css");
 
   private final ConstantCSSPathProvider m_aPP;
