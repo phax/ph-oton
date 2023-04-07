@@ -62,7 +62,7 @@ abstract class AbstractCreateJQueryAPIList
   protected static final Logger LOGGER = LoggerFactory.getLogger (AbstractCreateJQueryAPIList.class);
   private static final String TYPE_ANY = "Anything";
 
-  protected static enum EAPIType implements IHasName
+  protected enum EAPIType implements IHasName
   {
     METHOD ("method"),
     PROPERTY ("property"),
@@ -134,7 +134,11 @@ abstract class AbstractCreateJQueryAPIList
       if (sType.equals ("Number"))
         return new String [] { "IJSExpression", "int", "long", "BigInteger", "double", "BigDecimal" };
       if (sType.equals ("Selector"))
-        return new String [] { "IJSExpression", "IJQuerySelector", "JQuerySelectorList", "EHTMLElement", "ICSSClassProvider" };
+        return new String [] { "IJSExpression",
+                               "IJQuerySelector",
+                               "JQuerySelectorList",
+                               "EHTMLElement",
+                               "ICSSClassProvider" };
       if (sType.equals ("Function"))
         return new String [] { "IJSExpression", "JSAnonymousFunction" };
       if (sType.equals ("Object"))
@@ -504,7 +508,10 @@ abstract class AbstractCreateJQueryAPIList
   @Nonnull
   protected static String _getAnnotation (@Nonnull final String sJavaType)
   {
-    if (sJavaType.equals ("boolean") || sJavaType.equals ("double") || sJavaType.equals ("int") || sJavaType.equals ("long"))
+    if (sJavaType.equals ("boolean") ||
+        sJavaType.equals ("double") ||
+        sJavaType.equals ("int") ||
+        sJavaType.equals ("long"))
       return "";
     return "@Nonnull ";
   }
@@ -581,7 +588,7 @@ abstract class AbstractCreateJQueryAPIList
     SystemProperties.setPropertyValue ("org.apache.xerces.xni.parser.XMLParserConfiguration",
                                        "org.apache.xerces.parsers.XIncludeParserConfiguration");
 
-    for (final File aFile : new FileSystemIterator ("src/test/resources/jquery/entries").withFilter (IFileFilter.filenameEndsWith (".xml")))
+    for (final File aFile : new FileSystemIterator ("src/test/resources/external/jquery/entries").withFilter (IFileFilter.filenameEndsWith (".xml")))
     {
       final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
       final IMicroElement eRoot = aDoc.getDocumentElement ();
