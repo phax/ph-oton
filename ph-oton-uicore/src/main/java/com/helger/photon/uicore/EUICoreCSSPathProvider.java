@@ -32,12 +32,12 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EUICoreCSSPathProvider implements ICSSPathProvider
 {
-  COOKIE_CONSENT_ANIMATION ("uicore/cookieconsent/3.1.1/styles/animation.css"),
-  COOKIE_CONSENT_BASE ("uicore/cookieconsent/3.1.1/styles/base.css"),
-  COOKIE_CONSENT_LAYOUT ("uicore/cookieconsent/3.1.1/styles/layout.css"),
-  COOKIE_CONSENT_MEDIA ("uicore/cookieconsent/3.1.1/styles/media.css"),
-  COOKIE_CONSENT_THEMES_CLASSIC ("uicore/cookieconsent/3.1.1/styles/themes/classic.css"),
-  COOKIE_CONSENT_THEMES_EDGELESS ("uicore/cookieconsent/3.1.1/styles/themes/edgeless.css"),
+  COOKIE_CONSENT_ANIMATION ("external/cookieconsent/3.1.1/styles/animation.css"),
+  COOKIE_CONSENT_BASE ("external/cookieconsent/3.1.1/styles/base.css"),
+  COOKIE_CONSENT_LAYOUT ("external/cookieconsent/3.1.1/styles/layout.css"),
+  COOKIE_CONSENT_MEDIA ("external/cookieconsent/3.1.1/styles/media.css"),
+  COOKIE_CONSENT_THEMES_CLASSIC ("external/cookieconsent/3.1.1/styles/themes/classic.css"),
+  COOKIE_CONSENT_THEMES_EDGELESS ("external/cookieconsent/3.1.1/styles/themes/edgeless.css"),
   /** Custom development */
   UICORE ("ph-oton/uicore.css");
 

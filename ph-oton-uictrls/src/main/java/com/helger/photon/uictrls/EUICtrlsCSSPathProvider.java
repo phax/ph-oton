@@ -33,24 +33,24 @@ import com.helger.html.resource.css.ICSSPathProvider;
 public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
 {
   /** https://github.com/daneden/animate.css */
-  ANIMATE ("uictrls/animate/animate.css"),
-  AUTONUMERIC ("uictrls/autonumeric/autonumeric.css"),
-  CHART_1 ("uictrls/chart/1.1.1/Chart.css"),
-  CHART_2 ("uictrls/chart/2.9.4/Chart.css"),
-  COLORBOX ("uictrls/colorbox/1.6.0/colorbox.css"),
-  FAMFAM_ICONS ("uictrls/famfam/013/famfam.css"),
-  FAMFAM_FLAGS ("uictrls/famfam/flags/flags.css"),
-  FINEUPLOADER_320 ("uictrls/fineupload/320/fineuploader.css"),
-  FINEUPLOADER_330 ("uictrls/fineupload/330/fineuploader.css"),
-  FINEUPLOADER_5 ("uictrls/fineupload/5.16.2/fine-uploader.css"),
-  JSCOLOR ("uictrls/jscolor/1.4.4ph/jscolor.css"),
-  PRISMJS ("uictrls/prismjs/1.2.1/prism.css"),
-  PRISMJS_BOOTSTRAP3 ("uictrls/prismjs/prism-bootstrap3.css"),
-  PRISMJS_BOOTSTRAP4 ("uictrls/prismjs/prism-bootstrap4.css"),
-  SELECT2 ("uictrls/select2/4.0.13/css/select2.css"),
-  SELECT2_BOOTSTRAP4 ("uictrls/select2-bootstrap4-theme/1.5.2/select2-bootstrap4.css"),
-  TYPEAHEAD_BOOTSTRAP3 ("uictrls/typeahead/typeahead.js-bootstrap3.css"),
-  TYPEAHEAD_BOOTSTRAP4 ("uictrls/typeahead/typeahead.js-bootstrap4.css");
+  ANIMATE ("external/animate/animate.css"),
+  AUTONUMERIC ("external/autonumeric/autonumeric.css"),
+  CHART_1 ("external/chart/1.1.1/Chart.css"),
+  CHART_2 ("external/chart/2.9.4/Chart.css"),
+  COLORBOX ("external/colorbox/1.6.0/colorbox.css"),
+  FAMFAM_ICONS ("external/famfam/013/famfam.css"),
+  FAMFAM_FLAGS ("external/famfam/flags/flags.css"),
+  FINEUPLOADER_320 ("external/fineupload/320/fineuploader.css"),
+  FINEUPLOADER_330 ("external/fineupload/330/fineuploader.css"),
+  FINEUPLOADER_5 ("external/fineupload/5.16.2/fine-uploader.css"),
+  JSCOLOR ("external/jscolor/1.4.4ph/jscolor.css"),
+  PRISMJS ("external/prismjs/1.2.1/prism.css"),
+  PRISMJS_BOOTSTRAP3 ("external/prismjs/prism-bootstrap3.css"),
+  PRISMJS_BOOTSTRAP4 ("external/prismjs/prism-bootstrap4.css"),
+  SELECT2 ("external/select2/4.0.13/css/select2.css"),
+  SELECT2_BOOTSTRAP4 ("external/select2-bootstrap4-theme/1.5.2/select2-bootstrap4.css"),
+  TYPEAHEAD_BOOTSTRAP3 ("external/typeahead/typeahead.js-bootstrap3.css"),
+  TYPEAHEAD_BOOTSTRAP4 ("external/typeahead/typeahead.js-bootstrap4.css");
 
   private final ConstantCSSPathProvider m_aPP;
 

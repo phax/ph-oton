@@ -30,23 +30,23 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EUICoreJSPathProvider implements IJSPathProvider
 {
-  COOKIE_CONSENT ("uicore/cookieconsent/3.1.1/cookieconsent.js"),
+  COOKIE_CONSENT ("external/cookieconsent/3.1.1/cookieconsent.js"),
   /** JQuery 3.x */
-  JQUERY_3 ("uicore/jquery/jquery-3.6.4.js"),
-  JQUERY_HIGHLIGHT ("uicore/jqueryplugins/jquery.highlight.js"),
-  JQUERY_HOTKEYS ("uicore/jqueryplugins/jquery.hotkeys.js"),
-  JQUERY_MIGRATE ("uicore/jqueryplugins/jquery-migrate-1.4.1.js"),
-  JQUERY_MIGRATE_3 ("uicore/jqueryplugins/jquery-migrate-3.4.0.js"),
-  JQUERY_MOUSEWHEEL ("uicore/jqueryplugins/jquery.mousewheel.js"),
-  JS_COOKIE ("uicore/jqueryplugins/js.cookie.js"),
-  JS_STORAGE ("uicore/jqueryplugins/js.storage.js"),
-  MOMENT ("uicore/moment/2.29.4/moment.js"),
-  MOMENT_WITH_LOCALES ("uicore/moment/2.29.4/moment-with-locales.js"),
-  POPPER ("uicore/popper/1.16.1-lts/popper.js"),
-  POPPER_UTILS ("uicore/popper/1.16.1-lts/popper-utils.js"),
+  JQUERY_3 ("external/jquery/jquery-3.6.4.js"),
+  JQUERY_HIGHLIGHT ("external/jqueryplugins/jquery.highlight.js"),
+  JQUERY_HOTKEYS ("external/jqueryplugins/jquery.hotkeys.js"),
+  JQUERY_MIGRATE ("external/jqueryplugins/jquery-migrate-1.4.1.js"),
+  JQUERY_MIGRATE_3 ("external/jqueryplugins/jquery-migrate-3.4.0.js"),
+  JQUERY_MOUSEWHEEL ("external/jqueryplugins/jquery.mousewheel.js"),
+  JS_COOKIE ("external/jqueryplugins/js.cookie.js"),
+  JS_STORAGE ("external/jqueryplugins/js.storage.js"),
+  MOMENT ("external/moment/2.29.4/moment.js"),
+  MOMENT_WITH_LOCALES ("external/moment/2.29.4/moment-with-locales.js"),
+  POPPER ("external/popper/1.16.1-lts/popper.js"),
+  POPPER_UTILS ("external/popper/1.16.1-lts/popper-utils.js"),
   SERVERLOG ("ph-oton/serverlog/serverlog.js"),
   /** https://github.com/stacktracejs/stacktrace.js/ */
-  STACKTRACE ("uicore/stacktrace/stacktrace.js"),
+  STACKTRACE ("external/stacktrace/stacktrace.js"),
   UICORE_FORM ("ph-oton/uicore-form.js"),
   UICORE_JQUERY ("ph-oton/uicore-jquery.js");
 

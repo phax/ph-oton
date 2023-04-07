@@ -49,8 +49,8 @@ public final class PhotonUnifiedResponseTest
       final HCHtml aHtml = new HCHtml ();
       aHtml.head ().addCSS (new HCStyle ("*{font-family:Helvetica;}"));
       aHtml.head ().addJS (new HCScriptInline (new UnparsedJSCodeProvider ("var x = 1;")));
-      aHtml.head ().addCSS (HCLink.createCSSLink (new SimpleURL ("res/animate.css")));
-      aHtml.head ().addJS (new HCScriptFile ().setSrc (new SimpleURL ("res/stacktrace.js")));
+      aHtml.head ().addCSS (HCLink.createCSSLink (new SimpleURL ("external/res/animate.css")));
+      aHtml.head ().addJS (new HCScriptFile ().setSrc (new SimpleURL ("external/res/stacktrace.js")));
       aHtml.body ().addChild (new HCH1 ().addChild ("Test H1"));
       aHtml.body ().addChild (new HCStyle ("h1{color:red;}"));
       aHtml.body ().addChild (new HCScriptInline (new UnparsedJSCodeProvider ("var y = x;")));

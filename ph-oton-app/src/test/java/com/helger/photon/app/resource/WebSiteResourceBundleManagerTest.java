@@ -44,8 +44,10 @@ public final class WebSiteResourceBundleManagerTest
   public void testBasicJS ()
   {
     final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
-    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("res/serverlog.js"), true));
-    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("res/stacktrace.js"), true));
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("external/res/serverlog.js"),
+                                                         true));
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.create ("external/res/stacktrace.js"),
+                                                         true));
     final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonAppManager.getWebSiteResourceBundleMgr ()
                                                                                     .getResourceBundles (aList, true);
     assertNotNull (aBundles);
@@ -56,8 +58,10 @@ public final class WebSiteResourceBundleManagerTest
   public void testBasicCSS ()
   {
     final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
-    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("res/animate.css"), true));
-    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("res/famfam.css"), true));
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("external/res/animate.css"),
+                                                          true));
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.create ("external/res/famfam.css"),
+                                                          true));
     final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonAppManager.getWebSiteResourceBundleMgr ()
                                                                                     .getResourceBundles (aList, true);
     assertNotNull (aBundles);

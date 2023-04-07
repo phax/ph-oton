@@ -25,7 +25,7 @@ import com.helger.html.resource.js.IJSPathProvider;
 
 public enum ETinyMCE4JSPathProvider implements IJSPathProvider
 {
-  TINYMCE_4 ("tinymce-dev/tinymce.js", "tinymce-min/tinymce.min.js", false);
+  TINYMCE_4 ("external/tinymce-dev/tinymce.js", "external/tinymce-min/tinymce.min.js", false);
 
   private final ConstantJSPathProvider m_aPP;
 
