@@ -236,7 +236,6 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         // Get the charset from the content type or the default charset
         aCharset = HttpClientHelper.getCharset (aContentType, m_aDefaultCharset);
       }
-
       m_aUsedStatusLine = new StatusLine (aHttpResponse);
       m_aUsedCharset = aCharset;
       m_aUsedHeaders.removeAll ();
@@ -310,20 +309,18 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
       else
         if (!sURI.startsWith ("http://") && !sURI.startsWith ("https://"))
           aFormErrors.addFieldError (FIELD_URI, "The URI must start with 'http://' or 'https://'");
-
       if (aFormErrors.isEmpty ())
       {
         String sResultContent;
         boolean bSuccess = false;
 
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("http client " +
-                       eHttpMethod.getName () +
-                       " query '" +
-                       sURI +
-                       "' using configuration '" +
-                       aConfig.getID () +
-                       "'");
+        LOGGER.info ("http client " +
+                     eHttpMethod.getName () +
+                     " query '" +
+                     sURI +
+                     "' using configuration '" +
+                     aConfig.getID () +
+                     "'");
 
         final StopWatch aSW = StopWatch.createdStarted ();
         final HttpClientSettings aHCS = aConfig.getHttpClientSettings (sURI);
@@ -339,13 +336,12 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         catch (final IOException ex)
         {
           sResultContent = BootstrapTechnicalUI.getTechnicalDetailsString (ex, aDisplayLocale);
-          if (LOGGER.isWarnEnabled ())
-            LOGGER.warn ("http client " +
-                         eHttpMethod.getName () +
-                         " query failed with " +
-                         ex.getClass ().getName () +
-                         " - " +
-                         ex.getMessage ());
+          LOGGER.warn ("http client " +
+                       eHttpMethod.getName () +
+                       " query failed with " +
+                       ex.getClass ().getName () +
+                       " - " +
+                       ex.getMessage ());
         }
         aSW.stop ();
 
@@ -353,8 +349,8 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
                                                        .addChild (" using ")
                                                        .addChild (em (aConfig.getDisplayName ()))
                                                        .addChild (": ")
-                                                       .addChild (bSuccess ? badgeSuccess ("success")
-                                                                           : badgeDanger ("error")));
+                                                       .addChild (bSuccess ? badgeSuccess ("success") : badgeDanger (
+                                                                                                                     "error")));
         aNodeList.addChild (div ("Querying took " + aSW.getMillis () + " milliseconds"));
         if (aResponseHdl.m_aUsedStatusLine != null)
         {
@@ -387,10 +383,8 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
                                                               .addClass (CBootstrapCSS.MB_2));
       }
     }
-
     final BootstrapForm aForm = aNodeList.addAndReturnChild (new BootstrapForm (aWPEC));
     aForm.setLeft (2);
-
     {
       final HCExtSelect aSelect = new HCExtSelect (new RequestField (FIELD_CONFIG,
                                                                      HttpClientConfigRegistry.DEFAULT_CONFIG_ID));

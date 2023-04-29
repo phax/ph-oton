@@ -72,8 +72,7 @@ public final class UserDataManager
 
     RW_LOCK.writeLocked ( () -> s_sUserDataPath = sUserDataPath);
 
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Changed global user data path to '" + sUserDataPath + "'");
+    LOGGER.info ("Changed global user data path to '" + sUserDataPath + "'");
   }
 
   /**
@@ -121,7 +120,8 @@ public final class UserDataManager
    */
   @Nonnull
   @Nonempty
-  public static String getURLPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final IUserDataObject aUDO)
+  public static String getURLPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                   @Nonnull final IUserDataObject aUDO)
   {
     ValueEnforcer.notNull (aUDO, "UDO");
 
@@ -143,7 +143,8 @@ public final class UserDataManager
    */
   @Nonnull
   @Nonempty
-  public static SimpleURL getURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final IUserDataObject aUDO)
+  public static SimpleURL getURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                  @Nonnull final IUserDataObject aUDO)
   {
     return new SimpleURL (getURLPath (aRequestScope, aUDO));
   }

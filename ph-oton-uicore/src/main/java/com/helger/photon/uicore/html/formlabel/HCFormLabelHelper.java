@@ -95,8 +95,7 @@ public final class HCFormLabelHelper
     final String sRealValue = StringHelper.getNotNull (sDefaultLabelEnd);
     s_sDefaultLabelEnd = sRealValue;
 
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("The UI default 'label end' was set to '" + sRealValue + "'");
+    LOGGER.info ("The UI default 'label end' was set to '" + sRealValue + "'");
   }
 
   @Nullable
@@ -129,8 +128,7 @@ public final class HCFormLabelHelper
     final String sRealValue = StringHelper.getNotNull (sValue);
     DEFAULT_SUFFIXES.put (eType, sRealValue);
 
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("The UI default suffix for type " + eType + " was set to '" + sRealValue + "'");
+    LOGGER.info ("The UI default suffix for type " + eType + " was set to '" + sRealValue + "'");
   }
 
   /**
@@ -167,7 +165,6 @@ public final class HCFormLabelHelper
   {
     final String sSuffixString = getSuffixString (eType);
     final String sLabelEnd = getDefaultLabelEnd ();
-
     if (StringHelper.hasText (sSuffixString) && StringHelper.endsWith (sPlainText, sSuffixString))
     {
       // Append only "label end"
@@ -175,7 +172,6 @@ public final class HCFormLabelHelper
       // string" and "label end" would be the same string
       return sLabelEnd;
     }
-
     if (StringHelper.hasText (sLabelEnd))
     {
       if (StringHelper.endsWith (sPlainText, sLabelEnd))
@@ -189,7 +185,6 @@ public final class HCFormLabelHelper
           // Append suffix only
           return sSuffixString;
         }
-
         // Append suffix and label end
         return sSuffixString + sLabelEnd;
       }
@@ -199,7 +194,6 @@ public final class HCFormLabelHelper
       // Append suffix only (which might be empty), as there is no "label end"
       return sSuffixString;
     }
-
     // Fallback - nothing to append
     return "";
   }
@@ -276,7 +270,6 @@ public final class HCFormLabelHelper
           break;
         }
       }
-
       if (!bChange)
       {
         // No more suffix found -> stop endless loop

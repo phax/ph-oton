@@ -116,8 +116,7 @@ public final class PhotonAppSettings
   {
     RW_LOCK.writeLocked ( () -> s_bMergeCSSResources = bMergeCSSResources);
     if (!HCSettings.isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info (bMergeCSSResources ? "Merging CSS resources" : "Using separate CSS resources");
+      LOGGER.info (bMergeCSSResources ? "Merging CSS resources" : "Using separate CSS resources");
   }
 
   /**
@@ -133,8 +132,7 @@ public final class PhotonAppSettings
   {
     RW_LOCK.writeLocked ( () -> s_bMergeJSResources = bMergeJSResources);
     if (!HCSettings.isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info (bMergeJSResources ? "Merging JS resources" : "Using separate JS resources");
+      LOGGER.info (bMergeJSResources ? "Merging JS resources" : "Using separate JS resources");
   }
 
   /**
@@ -153,7 +151,6 @@ public final class PhotonAppSettings
     ValueEnforcer.notEmpty (sResourceBundleServletName, "ResourceBundleServletName");
     RW_LOCK.writeLocked ( () -> s_sResourceBundleServletName = sResourceBundleServletName);
     if (!HCSettings.isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Using ResourceBundleServlet name '" + sResourceBundleServletName + "'");
+      LOGGER.info ("Using ResourceBundleServlet name '" + sResourceBundleServletName + "'");
   }
 }

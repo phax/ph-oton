@@ -197,9 +197,7 @@ public final class HCSettings
 
     if (!eHTMLVersion.equals (eOldVersion))
       if (!isSilentMode ())
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
-
+        LOGGER.info ("Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
       // No need to put anything in a comment
@@ -223,8 +221,8 @@ public final class HCSettings
   {
     RW_LOCK.writeLocked ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Default @autocomplete for <input type=password> set to " + (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
+      LOGGER.info ("Default @autocomplete for <input type=password> set to " +
+                   (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
   }
 
   public static int getTextAreaDefaultRows ()
@@ -236,8 +234,7 @@ public final class HCSettings
   {
     RW_LOCK.writeLocked ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Default <textarea> rows set to " + nTextAreaDefaultRows);
+      LOGGER.info ("Default <textarea> rows set to " + nTextAreaDefaultRows);
   }
 
   @Nonnull
@@ -252,8 +249,7 @@ public final class HCSettings
 
     RW_LOCK.writeLocked ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
+      LOGGER.info ("Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
   }
 
   /**
@@ -282,8 +278,7 @@ public final class HCSettings
     RW_LOCK.writeLocked ( () -> s_eScriptInlineMode = eMode);
     if (!eMode.equals (eOld))
       if (!isSilentMode ())
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Default <script> mode changed from " + eOld + " to " + eMode);
+        LOGGER.info ("Default <script> mode changed from " + eOld + " to " + eMode);
   }
 
   /**
@@ -311,8 +306,7 @@ public final class HCSettings
     RW_LOCK.writeLocked ( () -> s_eStyleInlineMode = eStyleInlineMode);
     if (!eStyleInlineMode.equals (eOld))
       if (!isSilentMode ())
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
+        LOGGER.info ("Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
   }
 
   @Nonnull
@@ -329,8 +323,7 @@ public final class HCSettings
     RW_LOCK.writeLocked ( () -> s_eNewLineMode = eNewLineMode);
     if (!eNewLineMode.equals (eOld))
       if (!isSilentMode ())
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Default new line mode changed from " + eOld + " to " + eNewLineMode);
+        LOGGER.info ("Default new line mode changed from " + eOld + " to " + eNewLineMode);
   }
 
   public static boolean isOutOfBandDebuggingEnabled ()
@@ -342,8 +335,7 @@ public final class HCSettings
   {
     RW_LOCK.writeLocked ( () -> s_bOOBDebugging = bEnabled);
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
+      LOGGER.info ("Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
   }
 
   /**
@@ -360,8 +352,7 @@ public final class HCSettings
   {
     RW_LOCK.writeLocked ( () -> s_bScriptsInBody = bEnabled);
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
+      LOGGER.info ("Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
   }
 
   /**
@@ -377,7 +368,6 @@ public final class HCSettings
   {
     RW_LOCK.writeLocked ( () -> s_bUseRegularResources = bUseRegularResources);
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
+      LOGGER.info ("Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
   }
 }

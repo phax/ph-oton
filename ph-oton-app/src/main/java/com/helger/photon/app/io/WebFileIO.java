@@ -88,14 +88,14 @@ public final class WebFileIO
 
       final boolean bLog = !isSilentMode ();
 
-      if (bLog && LOGGER.isInfoEnabled ())
+      if (bLog)
         LOGGER.info ("Using '" + aDataPath + "' as the data path");
 
       s_aDataPath = new FileRelativeIO (aDataPath);
       if (bCheckFileAccess)
         FileRelativeIO.internalCheckAccessRights (aDataPath);
 
-      if (bLog && LOGGER.isInfoEnabled ())
+      if (bLog)
         LOGGER.info ("Using '" + sServletContextPath + "' as the servlet context path");
 
       s_aServletContextPath = new PathRelativeIO (sServletContextPath);

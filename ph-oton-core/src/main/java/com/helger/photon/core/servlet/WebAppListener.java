@@ -237,7 +237,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       final String sValue = aSC.getInitParameter (sName);
       aParams.put (sName, sValue);
     }
-
     if (aParams.isEmpty ())
       LOGGER.info ("No servlet context init-parameters present");
     else
@@ -252,7 +251,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected static final void logThirdpartyModules ()
   {
     // List all third party modules for later evaluation
-    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ().getAllRegisteredThirdPartyModules ();
+    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
+                                                                             .getAllRegisteredThirdPartyModules ();
     if (!aModules.isEmpty ())
     {
       LOGGER.info ("Using the following third party modules:");
@@ -434,14 +434,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       sDataPath = aSC.getInitParameter ("storagePath");
       if (StringHelper.hasText (sDataPath))
       {
-        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" + INIT_PARAMETER_DATA_PATH + "' instead!");
+        LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" +
+                      INIT_PARAMETER_DATA_PATH +
+                      "' instead!");
       }
     }
     if (StringHelper.hasNoText (sDataPath))
     {
       // No storage path provided in web.xml
       sDataPath = getServletContextPath (aSC);
-      if (GlobalDebug.isDebugMode () && LOGGER.isInfoEnabled ())
+      if (GlobalDebug.isDebugMode ())
         LOGGER.info ("No servlet context init-parameter '" +
                      INIT_PARAMETER_DATA_PATH +
                      "' found! Defaulting to servlet context path '" +
@@ -635,7 +637,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         LOGGER.error ("WebAppListener was already instantiated!");
         throw new IllegalStateException ("WebAppListener was already instantiated!");
       }
-
     try
     {
       final StopWatch aSW = StopWatch.createdStarted ();
@@ -656,7 +657,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         // Requires the global debug things to be present
         logStartupInfo (aSC);
       }
-
       // StaticServerInfo
       {
         final String sInitParameter = getInitParameterServerURL (aSC, bProductionMode);
@@ -675,7 +675,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
                           "'");
         }
       }
-
       // Call callback
       beforeContextInitialized (aSC);
 
@@ -724,7 +723,6 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         // Init all jobs, AFTER managers
         initJobs ();
       }
-
       // Callback
       afterContextInitialized (aSC);
 
@@ -732,12 +730,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       m_aInitializationEndDT = PDTFactory.getCurrentLocalDateTime ();
 
       // Finally
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Servlet context '" +
-                     aSC.getServletContextName () +
-                     "' was initialized in " +
-                     aSW.stopAndGetMillis () +
-                     " milli seconds");
+      LOGGER.info ("Servlet context '" +
+                   aSC.getServletContextName () +
+                   "' was initialized in " +
+                   aSW.stopAndGetMillis () +
+                   " milli seconds");
     }
     catch (final RuntimeException ex)
     {
@@ -822,7 +819,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   @OverrideOnDemand
   protected String getStatisticsFilename ()
   {
-    return "statistics/" + PDTFactory.getCurrentYear () + "/statistics_" + PDTIOHelper.getCurrentLocalDateTimeForFilename () + ".xml";
+    return "statistics/" +
+           PDTFactory.getCurrentYear () +
+           "/statistics_" +
+           PDTIOHelper.getCurrentLocalDateTimeForFilename () +
+           ".xml";
   }
 
   /**
@@ -840,7 +841,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       {
         final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
         aDoc.getDocumentElement ().setAttribute ("location", "shutdown");
-        aDoc.getDocumentElement ().setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
+        aDoc.getDocumentElement ()
+            .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
 
         final File aDestPath = WebFileIO.getDataIO ().getFile (getStatisticsFilename ());
         MicroWriter.writeToFile (aDoc, aDestPath);
@@ -858,14 +860,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start contextDestroyed");
-
     try
     {
       final ServletContext aSC = aSCE.getServletContext ();
 
       final StopWatch aSW = StopWatch.createdStarted ();
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Servlet context '" + aSC.getServletContextName () + "' is being destroyed");
+      LOGGER.info ("Servlet context '" + aSC.getServletContextName () + "' is being destroyed");
 
       // Callback before global scope end
       beforeContextDestroyed (aSC);
@@ -882,19 +882,16 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
       // Clean commons stuff etc
       PhotonCoreInit.shutdown ();
-
       if (isOnlyOneInstanceAllowed ())
       {
         // De-init
         INITED.set (false);
       }
-
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Servlet context '" +
-                     aSC.getServletContextName () +
-                     "' was destroyed in " +
-                     aSW.stopAndGetMillis () +
-                     " milli seconds");
+      LOGGER.info ("Servlet context '" +
+                   aSC.getServletContextName () +
+                   "' was destroyed in " +
+                   aSW.stopAndGetMillis () +
+                   " milli seconds");
     }
     catch (final RuntimeException ex)
     {

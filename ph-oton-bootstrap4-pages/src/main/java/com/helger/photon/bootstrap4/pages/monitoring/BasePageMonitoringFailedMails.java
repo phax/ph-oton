@@ -113,7 +113,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     DELETE_SUCCESS ("Das E-Mail wurde erfolgreich gelöscht.", "The email was successfully deleted."),
     DELETE_ALL_SUCCESS_1 ("Es wurde 1 E-Mail erfolgreich gelöscht.", "1 email was successfully deleted."),
     DELETE_ALL_SUCCESS_N ("Es wurden {0} E-Mails erfolgreich gelöscht.", "{0} emails were successfully deleted."),
-    MSG_BUTTON_RESEND_DEFAULT_SETTINGS ("Erneut versenden (mit aktuellen SMTP-Einstellungen)", "Resend (with current SMTP settings)"),
+    MSG_BUTTON_RESEND_DEFAULT_SETTINGS ("Erneut versenden (mit aktuellen SMTP-Einstellungen)",
+                                        "Resend (with current SMTP settings)"),
     MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS ("Alle erneut versenden (mit aktuellen SMTP-Einstellungen)",
                                             "Resend all (with current SMTP settings)");
 
@@ -169,27 +170,30 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
         }
       }
     });
-    addCustomHandler (CPageParam.ACTION_DELETE_ALL, new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
-    {
-      @Nonnull
-      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)
-      {
-        ValueEnforcer.notNull (aSelectedObject, "SelectedObject");
-        final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+    addCustomHandler (CPageParam.ACTION_DELETE_ALL,
+                      new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
+                      {
+                        @Nonnull
+                        public EShowList handleAction (@Nonnull final WPECTYPE aWPEC,
+                                                       @Nullable final FailedMailData aSelectedObject)
+                        {
+                          ValueEnforcer.notNull (aSelectedObject, "SelectedObject");
+                          final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-        // Delete all failed mails
-        final ICommonsList <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
-        if (aFailedMails.isNotEmpty ())
-        {
-          LOGGER.info ("Deleted " + aFailedMails.size () + " failed mails!");
-          final String sSuccessMsg = aFailedMails.size () == 1 ? EText.DELETE_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
-                                                               : EText.DELETE_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
-                                                                                                                    Integer.toString (aFailedMails.size ()));
-          aWPEC.postRedirectGetInternal (success (sSuccessMsg));
-        }
-        return EShowList.SHOW_LIST;
-      }
-    });
+                          // Delete all failed mails
+                          final ICommonsList <FailedMailData> aFailedMails = m_aFailedMailQueue.removeAll ();
+                          if (aFailedMails.isNotEmpty ())
+                          {
+                            LOGGER.info ("Deleted " + aFailedMails.size () + " failed mails!");
+                            final String sSuccessMsg = aFailedMails.size () == 1 ? EText.DELETE_ALL_SUCCESS_1
+                                                                                                             .getDisplayText (aDisplayLocale)
+                                                                                 : EText.DELETE_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                                                      Integer.toString (aFailedMails.size ()));
+                            aWPEC.postRedirectGetInternal (success (sSuccessMsg));
+                          }
+                          return EShowList.SHOW_LIST;
+                        }
+                      });
     final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (true)
     {
       @Nonnull
@@ -205,14 +209,14 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                          .getDefaultSMTPSettings ()
                                                                                                       : null;
-          if (LOGGER.isInfoEnabled ())
-            LOGGER.info ("Trying to resend single failed mail with ID " +
-                         aFailedMailData.getID () +
-                         (aDefaultSMTPSettings != null ? " with default settings" : "") +
-                         "!");
+          LOGGER.info ("Trying to resend single failed mail with ID " +
+                       aFailedMailData.getID () +
+                       (aDefaultSMTPSettings != null ? " with default settings" : "") +
+                       "!");
 
           // Main resend
-          final ISMTPSettings aSMTPSettings = aDefaultSMTPSettings != null ? aDefaultSMTPSettings : aFailedMailData.getSMTPSettings ();
+          final ISMTPSettings aSMTPSettings = aDefaultSMTPSettings != null ? aDefaultSMTPSettings : aFailedMailData
+                                                                                                                   .getSMTPSettings ();
           ScopedMailAPI.getInstance ().queueMail (aSMTPSettings, aFailedMailData.getEmailData ());
 
           // Success message
@@ -237,23 +241,23 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           final ISMTPSettings aDefaultSMTPSettings = aWPEC.hasAction (ACTION_RESEND_ALL_DEFAULT_SETTINGS) ? PhotonCoreManager.getSMTPSettingsMgr ()
                                                                                                                              .getDefaultSMTPSettings ()
                                                                                                           : null;
-          if (LOGGER.isInfoEnabled ())
-            LOGGER.info ("Trying to resend " +
-                         aFailedMails.size () +
-                         " failed mails" +
-                         (aDefaultSMTPSettings != null ? " with default settings" : "") +
-                         "!");
+          LOGGER.info ("Trying to resend " +
+                       aFailedMails.size () +
+                       " failed mails" +
+                       (aDefaultSMTPSettings != null ? " with default settings" : "") +
+                       "!");
 
           // Main resend
           for (final FailedMailData aFailedMailData : aFailedMails)
           {
             ScopedMailAPI.getInstance ()
-                         .queueMail (aDefaultSMTPSettings != null ? aDefaultSMTPSettings : aFailedMailData.getSMTPSettings (),
+                         .queueMail (aDefaultSMTPSettings != null ? aDefaultSMTPSettings : aFailedMailData
+                                                                                                          .getSMTPSettings (),
                                      aFailedMailData.getEmailData ());
           }
-
           // Success message
-          final String sSuccessMsg = aFailedMails.size () == 1 ? EText.RESENT_ALL_SUCCESS_1.getDisplayText (aDisplayLocale)
+          final String sSuccessMsg = aFailedMails.size () == 1 ? EText.RESENT_ALL_SUCCESS_1.getDisplayText (
+                                                                                                            aDisplayLocale)
                                                                : EText.RESENT_ALL_SUCCESS_N.getDisplayTextWithArgs (aDisplayLocale,
                                                                                                                     Integer.toString (aFailedMails.size ()));
           aWPEC.postRedirectGetInternal (success (sSuccessMsg));
@@ -266,7 +270,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     setObjectLockingEnabled (true);
   }
 
-  public BasePageMonitoringFailedMails (@Nonnull @Nonempty final String sID, @Nonnull final FailedMailQueue aFailedMailQueue)
+  public BasePageMonitoringFailedMails (@Nonnull @Nonempty final String sID,
+                                        @Nonnull final FailedMailQueue aFailedMailQueue)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_FAILED_MAILS.getAsMLT ());
     m_aFailedMailQueue = ValueEnforcer.notNull (aFailedMailQueue, "FailedMailQueue");
@@ -368,7 +373,8 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ID.getDisplayText (aDisplayLocale))
                                                   .setCtrl (aSelectedObject.getID ()));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ERROR_DT.getDisplayText (aDisplayLocale))
-                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getErrorDateTime (), aDisplayLocale)));
+                                                  .setCtrl (PDTToString.getAsString (aSelectedObject.getErrorDateTime (),
+                                                                                     aDisplayLocale)));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SMTP_SETTINGS.getDisplayText (aDisplayLocale))
                                                   .setCtrl (aSelectedObject.getSMTPServerDisplayText ()));
     aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SENDING_DT.getDisplayText (aDisplayLocale))
@@ -384,18 +390,21 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
 
       final IHCNode aReplyTo = _getAsString (aEmailData.replyTo ());
       if (aReplyTo != null)
-        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_REPLY_TO.getDisplayText (aDisplayLocale)).setCtrl (aReplyTo));
+        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_REPLY_TO.getDisplayText (aDisplayLocale))
+                                                      .setCtrl (aReplyTo));
 
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_TO.getDisplayText (aDisplayLocale))
                                                     .setCtrl (_getAsString (aEmailData.to ())));
 
       final IHCNode aCc = _getAsString (aEmailData.cc ());
       if (aCc != null)
-        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CC.getDisplayText (aDisplayLocale)).setCtrl (aCc));
+        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_CC.getDisplayText (aDisplayLocale))
+                                                      .setCtrl (aCc));
 
       final IHCNode aBcc = _getAsString (aEmailData.bcc ());
       if (aBcc != null)
-        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BCC.getDisplayText (aDisplayLocale)).setCtrl (aBcc));
+        aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BCC.getDisplayText (aDisplayLocale))
+                                                      .setCtrl (aBcc));
 
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_SUBJECT.getDisplayText (aDisplayLocale))
                                                     .setCtrl (aEmailData.getSubject ()));
@@ -407,10 +416,12 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
           aBody = HCExtHelper.nl2divList (aEmailData.getBody ());
           break;
         case HTML:
-          aBody = true ? HCExtHelper.nl2divList (aEmailData.getBody ()) : new CommonsArrayList <> (new HCTextNode (aEmailData.getBody ()));
+          aBody = true ? HCExtHelper.nl2divList (aEmailData.getBody ()) : new CommonsArrayList <> (new HCTextNode (
+                                                                                                                   aEmailData.getBody ()));
           break;
       }
-      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BODY.getDisplayText (aDisplayLocale)).setCtrl (aBody));
+      aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_BODY.getDisplayText (aDisplayLocale))
+                                                    .setCtrl (aBody));
 
       // Show attachment details
       final IEmailAttachmentList aAttachments = aEmailData.getAttachments ();
@@ -438,18 +449,19 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
       {
         aDetailsTable = new BootstrapTable ();
         aDetailsTable.addHeaderRow ().addCells ("Empfänger Adresse", "Adresse gültig", "Fehlermeldung");
-
         for (final MailSendDetails aMailSendDetail : aError.getAllDetails ())
         {
           final HCRow aRow = aDetailsTable.addBodyRow ();
           aRow.addCell (HCA_MailTo.createLinkedEmail (aMailSendDetail.getAddress ()));
-          aRow.addCell ().addChild (aMailSendDetail.isAddressValid () ? EDefaultIcon.YES.getAsNode () : EDefaultIcon.NO.getAsNode ());
+          aRow.addCell ()
+              .addChild (aMailSendDetail.isAddressValid () ? EDefaultIcon.YES.getAsNode () : EDefaultIcon.NO
+                                                                                                            .getAsNode ());
           aRow.addCell (HCExtHelper.nl2divList (aMailSendDetail.getErrorMessage ()));
         }
       }
       aTable.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_ERROR.getDisplayText (aDisplayLocale))
-                                                    .setCtrl (error (aError.getThrowable ().getMessage ()), aDetailsTable));
-
+                                                    .setCtrl (error (aError.getThrowable ().getMessage ()),
+                                                              aDetailsTable));
     }
   }
 
@@ -482,21 +494,26 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     // Refresh button
     final boolean bDisabled = m_aFailedMailQueue.getAllFailedMails ().isEmpty ();
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+                        aWPEC.getSelfHref (),
+                        EDefaultIcon.REFRESH);
     aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_RESEND_ALL.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION, ACTION_RESEND_ALL))
+                                             .setOnClick (aWPEC.getSelfHref ()
+                                                               .add (CPageParam.PARAM_ACTION, ACTION_RESEND_ALL))
                                              .setIcon (EDefaultIcon.YES)
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EText.MSG_BUTTON_RESEND_ALL_DEFAULT_SETTINGS.getDisplayText (aDisplayLocale))
                                              .setOnClick (aWPEC.getSelfHref ()
-                                                               .add (CPageParam.PARAM_ACTION, ACTION_RESEND_ALL_DEFAULT_SETTINGS))
+                                                               .add (CPageParam.PARAM_ACTION,
+                                                                     ACTION_RESEND_ALL_DEFAULT_SETTINGS))
                                              .setIcon (EDefaultIcon.YES)
                                              .setDisabled (bDisabled));
     aToolbar.addChild (new BootstrapButton ().addChild (EPhotonCoreText.BUTTON_DELETE_ALL.getDisplayText (aDisplayLocale))
-                                             .setOnClick (aWPEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_DELETE_ALL))
+                                             .setOnClick (aWPEC.getSelfHref ()
+                                                               .add (CPageParam.PARAM_ACTION,
+                                                                     CPageParam.ACTION_DELETE_ALL))
                                              .setIcon (EDefaultIcon.DELETE)
                                              .setDisabled (bDisabled));
-
     if (aWPEC.getMenuTree ().containsItemWithID (BootstrapPagesMenuConfigurator.MENU_ADMIN_SETTINGS_SMTP))
     {
       aToolbar.addChild (new BootstrapButton ().addChild (EWebPageText.PAGE_NAME_SETTINGS_SMTP.getDisplayText (aDisplayLocale))
@@ -524,7 +541,6 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
       aRow.addCell (aEmailData == null ? null : aEmailData.getSubject ());
       aRow.addCell (aThrowable == null ? null : aThrowable.getMessage ());
     }
-
     aNodeList.addChild (aTable);
 
     final DataTables aDataTables = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);

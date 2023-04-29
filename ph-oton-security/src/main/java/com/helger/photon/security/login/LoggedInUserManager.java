@@ -120,7 +120,6 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
         if (m_aUser == null)
           throw new IllegalStateException ("Failed to resolve user with ID '" + m_sUserID + "'");
       }
-
       // Resolve manager
       m_aOwningMgr = LoggedInUserManager.getInstance ();
     }
@@ -375,14 +374,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-deleted");
       return _onLoginError (sUserID, ELoginResult.USER_IS_DELETED);
     }
-
     // Disabled user?
     if (aUser.isDisabled ())
     {
       AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-disabled");
       return _onLoginError (sUserID, ELoginResult.USER_IS_DISABLED);
     }
-
     // Check the password
     final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
     if (!aUserMgr.areUserIDAndPasswordValid (sUserID, sPlainTextPassword))
@@ -398,7 +395,6 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-is-missing-required-roles", aRequiredRoleIDs);
       return _onLoginError (sUserID, ELoginResult.USER_IS_MISSING_ROLE);
     }
-
     // Check if the password hash needs to be updated
     final String sExistingPasswordHashAlgorithmName = aUser.getPasswordHash ().getAlgorithmName ();
     final String sDefaultPasswordHashAlgorithmName = GlobalPasswordSettings.getPasswordHashCreatorManager ()
@@ -409,16 +405,14 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       // This automatically saves the file
       aUserMgr.setUserPassword (sUserID, sPlainTextPassword);
 
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Updated password hash of " +
-                     _getUserIDLogText (sUserID) +
-                     " from algorithm '" +
-                     sExistingPasswordHashAlgorithmName +
-                     "' to '" +
-                     sDefaultPasswordHashAlgorithmName +
-                     "'");
+      LOGGER.info ("Updated password hash of " +
+                   _getUserIDLogText (sUserID) +
+                   " from algorithm '" +
+                   sExistingPasswordHashAlgorithmName +
+                   "' to '" +
+                   sDefaultPasswordHashAlgorithmName +
+                   "'");
     }
-
     boolean bLoggedOutUser = false;
     LoginInfo aInfo;
     m_aRWLock.writeLock ().lock ();
@@ -446,22 +440,19 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
           return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
         }
       }
-
       // Update user in session
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstance ();
       if (aSUH._hasUser ())
       {
         // This session already has a user
-        if (LOGGER.isWarnEnabled ())
-          LOGGER.warn ("The session user holder already has the user ID '" +
-                       aSUH._getUserID () +
-                       "' so the new ID '" +
-                       sUserID +
-                       "' will not be set!");
+        LOGGER.warn ("The session user holder already has the user ID '" +
+                     aSUH._getUserID () +
+                     "' so the new ID '" +
+                     sUserID +
+                     "' will not be set!");
         AuditHelper.onAuditExecuteFailure ("login", sUserID, "session-already-has-user");
         return _onLoginError (sUserID, ELoginResult.SESSION_ALREADY_HAS_USER);
       }
-
       aInfo = new LoginInfo (aUser, ScopeManager.getSessionScope ());
       m_aLoggedInUsers.put (sUserID, aInfo);
       aSUH._setUser (this, aUser);
@@ -470,11 +461,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {
       m_aRWLock.writeLock ().unlock ();
     }
-
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Logged in " +
-                   _getUserIDLogText (sUserID) +
-                   (isAnonymousLogging () ? "" : " with login name '" + aUser.getLoginName () + "'"));
+    LOGGER.info ("Logged in " +
+                 _getUserIDLogText (sUserID) +
+                 (isAnonymousLogging () ? "" : " with login name '" + aUser.getLoginName () + "'"));
     AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
 
     // Execute callback as the very last action
@@ -503,7 +492,6 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
         AuditHelper.onAuditExecuteSuccess ("logout", sUserID, "user-not-logged-in");
         return EChange.UNCHANGED;
       }
-
       // Ensure that the SessionUser is empty. This is only relevant if user is
       // manually logged out without destructing the underlying session
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstanceIfInstantiatedInScope (aInfo.getSessionScope ());
@@ -518,12 +506,10 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {
       m_aRWLock.writeLock ().unlock ();
     }
-
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Logged out " +
-                   _getUserIDLogText (sUserID) +
-                   " after " +
-                   Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
+    LOGGER.info ("Logged out " +
+                 _getUserIDLogText (sUserID) +
+                 " after " +
+                 Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
     AuditHelper.onAuditExecuteSuccess ("logout", sUserID);
 
     // Execute callback as the very last action

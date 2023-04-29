@@ -117,7 +117,6 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
       // Simply all
       aDBResult = newExecutor ().queryAll (sSQL);
     }
-
     if (aDBResult != null)
       for (final DBResultRow aRow : aDBResult)
       {
@@ -177,7 +176,6 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
       final int nIDCount = aUniqueIDs.size ();
       if (nIDCount == 1)
         return containsWithID (aUniqueIDs.getFirst ());
-
       if (nIDCount > 0)
       {
         final StringBuilder aCond = new StringBuilder (nIDCount * 2);
@@ -187,7 +185,6 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
             aCond.append (',');
           aCond.append ('?');
         }
-
         final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " +
                                                        m_sTableName +
                                                        " WHERE id IN (" +
@@ -292,7 +289,6 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                         "database-error");
       return null;
     }
-
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       aUser.getLoginName (),
@@ -304,7 +300,6 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                       aUser.attrs (),
                                       Boolean.valueOf (aUser.isDisabled ()),
                                       bPredefined ? "predefined" : "custom");
-
     if (bRunCallback)
     {
       // Execute callback as the very last action
@@ -326,14 +321,12 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
-
     if (getUserOfLoginName (sLoginName) != null)
     {
       // Another user with this login name already exists
       AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName);
       return null;
     }
-
     // Create user
     final User aUser = new User (sLoginName,
                                  sEmailAddress,
@@ -362,14 +355,12 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
-
     if (getUserOfLoginName (sLoginName) != null)
     {
       // Another user with this login name already exists
       AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName, "predefined-user");
       return null;
     }
-
     // Create user
     final User aUser = User.createdPredefinedUser (sID,
                                                    sLoginName,
@@ -610,8 +601,9 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                          sNewFirstName,
                                                                                                          sNewLastName,
                                                                                                          sNewDescription,
-                                                                                                         aNewDesiredLocale == null ? null
-                                                                                                                                   : aNewDesiredLocale.toString (),
+                                                                                                         aNewDesiredLocale ==
+                                                                                                                          null ? null
+                                                                                                                               : aNewDesiredLocale.toString (),
                                                                                                          attrsToString (aNewCustomAttrs),
                                                                                                          Boolean.valueOf (bNewDisabled),
                                                                                                          DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
@@ -621,7 +613,6 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                                                            IUser.USER_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
@@ -639,14 +630,12 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                         "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditModifySuccess (User.OT,
                                       "set-all",
                                       sUserID,
@@ -693,25 +682,21 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                                                            IUser.USER_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
       AuditHelper.onAuditModifyFailure (User.OT, "set-password", sUserID, "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditModifyFailure (User.OT, "set-password", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditModifySuccess (User.OT, "set-password", sUserID);
 
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("The password of user '" + sUserID + "' was changed");
+    LOGGER.info ("The password of user '" + sUserID + "' was changed");
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserPasswordChanged (sUserID));
@@ -737,21 +722,18 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                          sUserID));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
       AuditHelper.onAuditModifyFailure (User.OT, "update-last-login", sUserID, "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditModifyFailure (User.OT, "update-last-login", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditModifySuccess (User.OT, "update-last-login", sUserID);
     return EChange.CHANGED;
   }
@@ -772,21 +754,18 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                               new ConstantPreparedStatementDataProvider (sUserID));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
       AuditHelper.onAuditModifyFailure (User.OT, "update-last-failed-login", sUserID, "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditModifyFailure (User.OT, "update-last-failed-login", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditModifySuccess (User.OT, "set-last-failed-login", sUserID);
 
     // Execute callback as the very last action
@@ -815,21 +794,18 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                                                            IUser.USER_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
       AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditDeleteFailure (User.OT, sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditDeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
@@ -858,21 +834,18 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                                                            IUser.USER_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
       AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditUndeleteFailure (User.OT, sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditUndeleteSuccess (User.OT, sUserID);
 
     // Execute callback as the very last action
@@ -902,21 +875,18 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                                                            IUser.USER_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
       AuditHelper.onAuditModifyFailure (User.OT, "disable", sUserID, "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditModifyFailure (User.OT, "disable", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditModifySuccess (User.OT, "disable", sUserID);
 
     // Execute callback as the very last action
@@ -946,21 +916,18 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                                                                                                            IUser.USER_ID_MAX_LENGTH)));
       aUpdated.set (nUpdated);
     });
-
     if (eSuccess.isFailure ())
     {
       // DB error
       AuditHelper.onAuditModifyFailure (User.OT, "enable", sUserID, "database-error");
       return EChange.UNCHANGED;
     }
-
     if (aUpdated.is0 ())
     {
       // No such user ID
       AuditHelper.onAuditModifyFailure (User.OT, "enable", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-
     AuditHelper.onAuditModifySuccess (User.OT, "enable", sUserID);
 
     // Execute callback as the very last action

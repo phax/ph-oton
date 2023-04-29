@@ -43,7 +43,8 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
   private final String m_sJobID;
   private final IMultilingualText m_aDesc;
 
-  public AbstractLongRunningJobRunnable (@Nonnull @Nonempty final String sJobID, @Nonnull final IMultilingualText aJobDesc)
+  public AbstractLongRunningJobRunnable (@Nonnull @Nonempty final String sJobID,
+                                         @Nonnull final IMultilingualText aJobDesc)
   {
     ValueEnforcer.notEmpty (sJobID, "JobID");
     ValueEnforcer.notNull (aJobDesc, "JobDesc");
@@ -91,9 +92,13 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
     // Remember that a long running job is starting
     final String sLongRunningJobID = getLongRunningJobManager ().onStartJob (this, sUserID);
 
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("Starting long running job '" + m_sJobID + "' as user '" + sUserID + "' with unique ID '" + sLongRunningJobID + "'");
-
+    LOGGER.info ("Starting long running job '" +
+                 m_sJobID +
+                 "' as user '" +
+                 sUserID +
+                 "' with unique ID '" +
+                 sLongRunningJobID +
+                 "'");
     try
     {
       // Create the main result
@@ -102,17 +107,19 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
       // Mark the long running job as finished
       getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.SUCCESS, aJobResult);
 
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Finished long running job '" + sLongRunningJobID + "' with success and result of type " + aJobResult.getType ());
-
+      LOGGER.info ("Finished long running job '" +
+                   sLongRunningJobID +
+                   "' with success and result of type " +
+                   aJobResult.getType ());
     }
     catch (final Exception ex)
     {
       // Mark the long running job as finished
-      getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.FAILURE, LongRunningJobResult.createExceptionText (ex));
+      getLongRunningJobManager ().onEndJob (sLongRunningJobID,
+                                            ESuccess.FAILURE,
+                                            LongRunningJobResult.createExceptionText (ex));
 
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Error executing long running job '" + sLongRunningJobID + "'", ex);
+      LOGGER.info ("Error executing long running job '" + sLongRunningJobID + "'", ex);
     }
   }
 }

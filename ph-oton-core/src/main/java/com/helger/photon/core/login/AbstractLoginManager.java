@@ -280,7 +280,6 @@ public abstract class AbstractLoginManager
     final LoggedInUserManager aLoggedInUserManager = LoggedInUserManager.getInstance ();
     String sSessionUserID = aLoggedInUserManager.getCurrentUserID ();
     boolean bLoggedInInThisRequest = false;
-
     if (sSessionUserID == null)
     {
       // No user currently logged in -> start login
@@ -311,13 +310,11 @@ public abstract class AbstractLoginManager
         {
           // Credentials are invalid
           if (GlobalDebug.isDebugMode ())
-            if (LOGGER.isWarnEnabled ())
-              LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+            LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
 
           // Anyway show the error message only if at least some credential
           // values are passed
           bShowLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
-
           if (aUser != null && m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
           {
             // Every failed login increases the time
@@ -331,7 +328,6 @@ public abstract class AbstractLoginManager
           }
         }
       }
-
       if (sSessionUserID == null)
       {
         // Show login screen as no user is in the session
@@ -339,7 +335,6 @@ public abstract class AbstractLoginManager
         PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aLoginScreenProvider);
       }
     }
-
     // Update details
     final LoginInfo aLoginInfo = aLoggedInUserManager.getLoginInfo (sSessionUserID);
     if (aLoginInfo != null)
@@ -354,23 +349,19 @@ public abstract class AbstractLoginManager
     {
       // Internal inconsistency
       if (sSessionUserID != null)
-        if (LOGGER.isErrorEnabled ())
-          LOGGER.error ("Failed to resolve LoginInfo of user ID '" + sSessionUserID + "'");
+        LOGGER.error ("Failed to resolve LoginInfo of user ID '" + sSessionUserID + "'");
     }
-
     if (bLoggedInInThisRequest)
     {
       // Avoid double submit by simply redirecting to the desired destination
       // URL without the login parameters
       final String sRedirectURL = getPostLoginRedirectURL (aRequestScope);
 
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Redirecting user after login to '" + sRedirectURL + "'");
+      LOGGER.info ("Redirecting user after login to '" + sRedirectURL + "'");
 
       aUnifiedResponse.setRedirect (sRedirectURL);
       return EContinue.BREAK;
     }
-
     // Continue only, if a valid user ID is present
     return EContinue.valueOf (sSessionUserID != null);
   }

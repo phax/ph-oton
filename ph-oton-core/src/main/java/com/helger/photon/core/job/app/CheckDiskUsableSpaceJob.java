@@ -69,8 +69,8 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
   {}
 
   @Override
-  protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
-                            @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@Nonnull final JobDataMap aJobDataMap, @Nonnull final IJobExecutionContext aContext)
+                                                                                                                 throws JobExecutionException
   {
     final long nThresholdBytes = aJobDataMap.getAsLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
     final Supplier <File> aPathSupplier = aJobDataMap.getCastedValue (JOB_DATA_ATTR_PATH_SUPPLIER);
@@ -91,13 +91,12 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
       final String sThresholdFormatted = aSH.getAsMatching (nThresholdBytes, 3);
       final String sUsableFormatted = aSH.getAsMatching (nUsableSpace, 3);
 
-      if (LOGGER.isWarnEnabled ())
-        LOGGER.warn ("File system of '" +
-                     sBasePath +
-                     "' has less or equal than " +
-                     sThresholdFormatted +
-                     " of usable space: " +
-                     sUsableFormatted);
+      LOGGER.warn ("File system of '" +
+                   sBasePath +
+                   "' has less or equal than " +
+                   sThresholdFormatted +
+                   " of usable space: " +
+                   sUsableFormatted);
 
       // Main error thread dump
       final String sMailBody = InternalErrorHandler.fillInternalErrorMetaData (null, "out-of-usable-disk-space", null)

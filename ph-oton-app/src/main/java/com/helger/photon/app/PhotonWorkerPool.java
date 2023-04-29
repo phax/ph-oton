@@ -82,8 +82,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("ph-oton worker pool about to be closed");
     ExecutorServiceHelper.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
-    if (LOGGER.isInfoEnabled ())
-      LOGGER.info ("ph-oton worker pool was closed!");
+    LOGGER.info ("ph-oton worker pool was closed!");
   }
 
   @Nonnull
@@ -91,8 +90,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.runAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting '" + sActionName + "'");
+      LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         aRunnable.run ();
@@ -104,8 +102,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       finally
       {
         aSW.stop ();
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -116,8 +113,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.runAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting '" + sActionName + "'");
+      LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         aRunnable.run ();
@@ -129,8 +125,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       finally
       {
         aSW.stop ();
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -140,8 +135,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.supplyAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting '" + sActionName + "'");
+      LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         return aSupplier.get ();
@@ -154,8 +148,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       finally
       {
         aSW.stop ();
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -166,8 +159,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.supplyAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("Starting '" + sActionName + "'");
+      LOGGER.info ("Starting '" + sActionName + "'");
       try
       {
         return aSupplier.get ();
@@ -180,8 +172,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       finally
       {
         aSW.stop ();
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }

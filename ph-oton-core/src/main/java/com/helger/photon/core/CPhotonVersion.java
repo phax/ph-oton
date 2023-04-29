@@ -54,15 +54,13 @@ public final class CPhotonVersion
     if (sProjectVersion == null)
     {
       sProjectVersion = "undefined";
-      if (LOGGER.isWarnEnabled ())
-        LOGGER.warn ("Failed to load version number from '" + sFilename + "'");
+      LOGGER.warn ("Failed to load ph-oton version number from '" + sFilename + "'");
     }
     BUILD_VERSION = sProjectVersion;
     if (sProjectTimestamp == null)
     {
       sProjectTimestamp = "undefined";
-      if (LOGGER.isWarnEnabled ())
-        LOGGER.warn ("Failed to load timestamp from '" + sFilename + "'");
+      LOGGER.warn ("Failed to load ph-oton timestamp from '" + sFilename + "'");
     }
     BUILD_TIMESTAMP = sProjectTimestamp;
   }

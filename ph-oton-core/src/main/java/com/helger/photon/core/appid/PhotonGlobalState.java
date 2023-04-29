@@ -89,8 +89,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
       if (!EqualsHelper.equals (m_sDefaultApplicationID, sDefaultApplicationID))
       {
         m_sDefaultApplicationID = sDefaultApplicationID;
-        if (LOGGER.isInfoEnabled ())
-          LOGGER.info ("Default application ID set to '" + sDefaultApplicationID + "'");
+        LOGGER.info ("Default application ID set to '" + sDefaultApplicationID + "'");
       }
     });
     return this;

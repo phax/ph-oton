@@ -148,7 +148,6 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
         // Unlock all except the object to be locked
         _unlockAllObjects (sUserID, new CommonsHashSet <> (aObjID), aUnlockedObjects);
       }
-
       final ILockInfo aCurrentLock = m_aLockedObjs.get (aObjID);
       if (aCurrentLock != null)
       {
@@ -168,16 +167,19 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     {
       m_aRWLock.writeLock ().unlock ();
     }
-
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-      {
-        if (CollectionHelper.isNotEmpty (aUnlockedObjects))
-          LOGGER.info ("Before locking, unlocked all objects of user '" + sUserID + "': " + aUnlockedObjects + " except '" + aObjID + "'");
-        if (bIsNewLock)
-          LOGGER.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
-      }
-
+    {
+      if (CollectionHelper.isNotEmpty (aUnlockedObjects))
+        LOGGER.info ("Before locking, unlocked all objects of user '" +
+                     sUserID +
+                     "': " +
+                     aUnlockedObjects +
+                     " except '" +
+                     aObjID +
+                     "'");
+      if (bIsNewLock)
+        LOGGER.info ("User '" + sUserID + "' locked object '" + aObjID + "'");
+    }
     return new LockResult <> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
   }
 
@@ -201,7 +203,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   }
 
   @Nonnull
-  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull final IDTYPE aObjID, @Nullable final String sUserID)
+  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull final IDTYPE aObjID,
+                                                                 @Nullable final String sUserID)
   {
     ValueEnforcer.notNull (aObjID, "ObjectID");
 
@@ -231,27 +234,23 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     {
       // Object is not locked at all
       if (!isSilentMode ())
-        if (LOGGER.isWarnEnabled ())
-          LOGGER.warn ("User '" + sUserID + "' could not unlock object '" + aObjID + "' because it is not locked");
+        LOGGER.warn ("User '" + sUserID + "' could not unlock object '" + aObjID + "' because it is not locked");
       return EChange.UNCHANGED;
     }
-
     // Not locked by current user?
     if (!aCurrentLock.getLockUserID ().equals (sUserID))
     {
       // This may happen if the user was manually unlocked!
       if (!isSilentMode ())
-        if (LOGGER.isWarnEnabled ())
-          LOGGER.warn ("User '" +
-                       sUserID +
-                       "' could not unlock object '" +
-                       aObjID +
-                       "' because it is locked by '" +
-                       aCurrentLock.getLockUserID () +
-                       "'");
+        LOGGER.warn ("User '" +
+                     sUserID +
+                     "' could not unlock object '" +
+                     aObjID +
+                     "' because it is locked by '" +
+                     aCurrentLock.getLockUserID () +
+                     "'");
       return EChange.UNCHANGED;
     }
-
     m_aRWLock.writeLocked ( () -> {
       // this user locked the object -> unlock it
       if (m_aLockedObjs.remove (aObjID) == null)
@@ -259,8 +258,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     });
 
     if (!isSilentMode ())
-      if (LOGGER.isInfoEnabled ())
-        LOGGER.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");
+      LOGGER.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");
     return EChange.CHANGED;
   }
 
@@ -303,7 +301,6 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
           aUnlockedObjects.add (aObjID);
       }
     }
-
     // remove locks
     for (final IDTYPE aObjID : aUnlockedObjects)
       if (m_aLockedObjs.remove (aObjID) == null)
@@ -327,12 +324,11 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
 
       if (aUnlockedObjects.isNotEmpty ())
         if (!isSilentMode ())
-          if (LOGGER.isInfoEnabled ())
-            LOGGER.info ("Unlocked all objects of user '" +
-                         sUserID +
-                         "': " +
-                         aUnlockedObjects +
-                         (CollectionHelper.isEmpty (aObjectsToKeepLocked) ? "" : " except " + aObjectsToKeepLocked));
+          LOGGER.info ("Unlocked all objects of user '" +
+                       sUserID +
+                       "': " +
+                       aUnlockedObjects +
+                       (CollectionHelper.isEmpty (aObjectsToKeepLocked) ? "" : " except " + aObjectsToKeepLocked));
     }
     return aUnlockedObjects;
   }
