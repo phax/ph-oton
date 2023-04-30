@@ -102,7 +102,8 @@ public final class AppRendererPublic
     final IUser aUser = aLEC.getLoggedInUser ();
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar ().setExpand (EBootstrapNavbarExpandType.EXPAND_MD);
-    aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()), aLinkToStartPage);
+    aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
+                      aLinkToStartPage);
 
     final BootstrapNavbarToggleable aToggleable = aNavbar.addAndReturnToggleable ();
     if (aUser != null)
@@ -137,7 +138,8 @@ public final class AppRendererPublic
   {
     // Main menu
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
-    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree, aLEC.getSelectedMenuItemID ())
+    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree,
+                                                                                     aLEC.getSelectedMenuItemID ())
     {
       @Override
       protected boolean isMenuItemValidToBeDisplayed (@Nonnull final IMenuObject aMenuObj)
@@ -170,7 +172,6 @@ public final class AppRendererPublic
       aBreadcrumbs.addClasses (CBootstrapCSS.D_NONE, CBootstrapCSS.D_SM_BLOCK);
       aOuterContainer.addChild (aBreadcrumbs);
     }
-
     // Content
     {
       final BootstrapRow aRow = aOuterContainer.addAndReturnChild (new BootstrapRow ());
@@ -185,7 +186,6 @@ public final class AppRendererPublic
       // content
       aCol2.addChild (BootstrapPageRenderer.getPageContent (aLEC));
     }
-
     // Footer
     {
       final BootstrapContainer aDiv = new BootstrapContainer ().setFluid (true).setID (CLayout.LAYOUT_AREAID_FOOTER);
@@ -193,7 +193,7 @@ public final class AppRendererPublic
       aDiv.addChild (new HCP ().addChild ("Demo web application for the ")
                                .addChild (new HCA (new SimpleURL ("https://github.com/phax/ph-oton")).addChild ("ph-oton"))
                                .addChild (" stack"));
-      aDiv.addChild (new HCP ().addChild ("Created by Philip Helger - Twitter: @philiphelger"));
+      aDiv.addChild (new HCP ().addChild ("Created by Philip Helger"));
 
       final BootstrapMenuItemRendererHorz aRenderer = new BootstrapMenuItemRendererHorz (aDisplayLocale);
       final HCUL aUL = aDiv.addAndReturnChild (new HCUL ().addClass (CSS_CLASS_FOOTER_LINKS));
@@ -213,7 +213,6 @@ public final class AppRendererPublic
       }
       aOuterContainer.addChild (aDiv);
     }
-
     return ret;
   }
 }

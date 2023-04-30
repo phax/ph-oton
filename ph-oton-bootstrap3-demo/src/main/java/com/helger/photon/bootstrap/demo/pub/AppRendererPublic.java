@@ -95,7 +95,8 @@ public final class AppRendererPublic
   private AppRendererPublic ()
   {}
 
-  private static void _addNavbarLoginLogout (@Nonnull final LayoutExecutionContext aLEC, @Nonnull final BootstrapNavbar aNavbar)
+  private static void _addNavbarLoginLogout (@Nonnull final LayoutExecutionContext aLEC,
+                                             @Nonnull final BootstrapNavbar aNavbar)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
     final IUser aUser = aLEC.getLoggedInUser ();
@@ -104,10 +105,11 @@ public final class AppRendererPublic
       final Locale aDisplayLocale = aLEC.getDisplayLocale ();
       final BootstrapNav aNav = new BootstrapNav ();
       aNav.addText (new HCSpan ().addChild ("Logged in as ")
-                                 .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser, aDisplayLocale))));
+                                 .addChild (new HCStrong ().addChild (SecurityHelper.getUserDisplayName (aUser,
+                                                                                                         aDisplayLocale))));
 
-      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope,
-                                                           LogoutServlet.SERVLET_DEFAULT_PATH)).addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
+      aNav.addItem (new HCA (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH))
+                                                                                                              .addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale)));
       aNavbar.addNav (EBootstrapNavbarPosition.COLLAPSIBLE_RIGHT, aNav);
     }
     else
@@ -133,7 +135,8 @@ public final class AppRendererPublic
 
     final BootstrapNavbar aNavbar = new BootstrapNavbar (EBootstrapNavbarType.STATIC_TOP, true, aDisplayLocale);
     aNavbar.getContainer ().setFluid (true);
-    aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()), aLinkToStartPage);
+    aNavbar.addBrand (new HCSpan ().addClass (AppCommonUI.CSS_CLASS_LOGO1).addChild (CApp.getApplicationTitle ()),
+                      aLinkToStartPage);
 
     _addNavbarLoginLogout (aLEC, aNavbar);
     return aNavbar;
@@ -144,7 +147,8 @@ public final class AppRendererPublic
   {
     // Main menu
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
-    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree, aLEC.getSelectedMenuItemID ())
+    final MenuItemDeterminatorCallback aCallback = new MenuItemDeterminatorCallback (aMenuTree,
+                                                                                     aLEC.getSelectedMenuItemID ())
     {
       @Override
       protected boolean isMenuItemValidToBeDisplayed (@Nonnull final IMenuObject aMenuObj)
@@ -195,7 +199,6 @@ public final class AppRendererPublic
       if (aWPEC.params ().containsKey (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE))
         aPageContainer.addChild ((IHCNode) ForcedRedirectManager.getLastForcedRedirectContent (aDisplayPage.getID ()));
     }
-
     // Add page header
     aPageContainer.addChild (aDisplayPage.getHeaderNode (aWPEC));
 
@@ -225,7 +228,6 @@ public final class AppRendererPublic
       aBreadcrumbs.addClass (CBootstrapCSS.HIDDEN_XS);
       aOuterContainer.addChild (aBreadcrumbs);
     }
-
     // Content
     {
       final BootstrapRow aRow = aOuterContainer.addAndReturnChild (new BootstrapRow ());
@@ -240,7 +242,6 @@ public final class AppRendererPublic
       // content
       aCol2.addChild (getPageContent (aLEC));
     }
-
     // Footer
     {
       final BootstrapContainer aDiv = new BootstrapContainer ().setFluid (true).setID (CLayout.LAYOUT_AREAID_FOOTER);
@@ -248,7 +249,7 @@ public final class AppRendererPublic
       aDiv.addChild (new HCP ().addChild ("Demo web application for the ")
                                .addChild (new HCA (new SimpleURL ("https://github.com/phax/ph-oton")).addChild ("ph-oton"))
                                .addChild (" stack"));
-      aDiv.addChild (new HCP ().addChild ("Created by Philip Helger - Twitter: @philiphelger"));
+      aDiv.addChild (new HCP ().addChild ("Created by Philip Helger"));
 
       final BootstrapMenuItemRendererHorz aRenderer = new BootstrapMenuItemRendererHorz (aDisplayLocale);
       final HCUL aUL = aDiv.addAndReturnChild (new HCUL ().addClass (CSS_CLASS_FOOTER_LINKS));
@@ -268,7 +269,6 @@ public final class AppRendererPublic
       }
       aOuterContainer.addChild (aDiv);
     }
-
     return ret;
   }
 }
