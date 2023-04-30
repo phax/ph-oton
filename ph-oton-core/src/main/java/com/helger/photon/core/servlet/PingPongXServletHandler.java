@@ -48,7 +48,7 @@ public class PingPongXServletHandler implements IXServletSimpleHandler
   /** The response MIME type */
   public static final IMimeType RESPONSE_MIMETYPE = CMimeType.TEXT_PLAIN;
 
-  private static final IMutableStatisticsHandlerCounter s_aStatsPingPong = StatisticsManager.getCounterHandler (PingPongXServletHandler.class);
+  private static final IMutableStatisticsHandlerCounter STATS_PING_PONG = StatisticsManager.getCounterHandler (PingPongXServletHandler.class);
 
   public PingPongXServletHandler ()
   {}
@@ -58,6 +58,6 @@ public class PingPongXServletHandler implements IXServletSimpleHandler
                              @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException
   {
     aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET).setMimeType (RESPONSE_MIMETYPE).disableCaching ();
-    s_aStatsPingPong.increment ();
+    STATS_PING_PONG.increment ();
   }
 }

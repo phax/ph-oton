@@ -39,14 +39,14 @@ import com.helger.commons.string.StringHelper;
  */
 public final class JSMarshallerTest
 {
-  private static final Random s_aRandom = new Random ();
+  private static final Random RANDOM = new Random ();
 
   private static String _buildRandomString (final int nLength)
   {
     final StringBuilder aSB = new StringBuilder (nLength);
     for (int i = 0; i < nLength; ++i)
     {
-      char c = (char) (256 * s_aRandom.nextInt ());
+      char c = (char) (256 * RANDOM.nextInt ());
       if (c == '\r')
         ++c;
       aSB.append (c);

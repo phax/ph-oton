@@ -68,8 +68,8 @@ import com.helger.html.resource.css.ICSSCodeProvider;
 public final class HCSpecialNodeHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (HCSpecialNodeHandler.class);
-  private static final AnnotationUsageCache s_aOOBNAnnotationCache = new AnnotationUsageCache (OutOfBandNode.class);
-  private static final AnnotationUsageCache s_aSNLMAnnotationCache = new AnnotationUsageCache (SpecialNodeListModifier.class);
+  private static final AnnotationUsageCache CACHE_OOBN = new AnnotationUsageCache (OutOfBandNode.class);
+  private static final AnnotationUsageCache CACHE_SNLM = new AnnotationUsageCache (SpecialNodeListModifier.class);
   private static final ICommonsMap <String, IHCSpecialNodeListModifier> s_aModifiers = new CommonsHashMap <> ();
 
   @PresentForCodeCoverage
@@ -91,7 +91,7 @@ public final class HCSpecialNodeHandler
     ValueEnforcer.notNull (aHCNode, "HCNode");
 
     // Is the @OutOfBandNode annotation present?
-    if (s_aOOBNAnnotationCache.hasAnnotation (aHCNode))
+    if (CACHE_OOBN.hasAnnotation (aHCNode))
       return true;
 
     // If it is a wrapped node, look into it
@@ -169,7 +169,7 @@ public final class HCSpecialNodeHandler
 
     final ICommonsOrderedSet <Class <? extends IHCSpecialNodeListModifier>> aModifiersToApply = new CommonsLinkedHashSet <> ();
     for (final IHCNode aNode : aNodes)
-      if (s_aSNLMAnnotationCache.hasAnnotation (aNode))
+      if (CACHE_SNLM.hasAnnotation (aNode))
         aModifiersToApply.add (aNode.getClass ().getAnnotation (SpecialNodeListModifier.class).value ());
 
     if (aModifiersToApply.isEmpty ())

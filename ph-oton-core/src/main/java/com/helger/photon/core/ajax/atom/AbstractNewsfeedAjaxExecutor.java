@@ -48,9 +48,9 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHasID <String>, IHasDisplayText
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlExecute = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
+  private static final IMutableStatisticsHandlerKeyedCounter STATS_HDL_EXECUTE = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
                                                                                                                             "$EXECUTE");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsHdlError = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
+  private static final IMutableStatisticsHandlerKeyedCounter STATS_HDL_ERROR = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
                                                                                                                           "$ERROR");
 
   private final IHasDisplayText m_aDisplayText;
@@ -91,7 +91,7 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
   {
     // Increment statistics counter
     final StopWatch aSW = StopWatch.createdStarted ();
-    s_aStatsHdlExecute.increment (m_sFeedID);
+    STATS_HDL_EXECUTE.increment (m_sFeedID);
 
     final Feed aFeed = new Feed ();
     aFeed.setID ("urn:ph-oton-core:newsfeed:" + m_sFeedID);
@@ -108,7 +108,7 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
     if (!aFeed.isValid ())
     {
       LOGGER.error ("Created newsfeed with ID '" + m_sFeedID + "' is invalid!");
-      s_aStatsHdlError.increment (m_sFeedID);
+      STATS_HDL_ERROR.increment (m_sFeedID);
     }
 
     // Performance improvement: set the Last-Modified HTTP header if available

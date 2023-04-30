@@ -41,12 +41,12 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class APIInvoker implements IAPIInvoker
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (APIInvoker.class);
-  private static final IMutableStatisticsHandlerCounter s_aStatsGlobalInvoke = StatisticsManager.getCounterHandler (APIInvoker.class.getName () +
-                                                                                                                    "$invocations");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsFunctionInvoke = StatisticsManager.getKeyedCounterHandler (APIInvoker.class.getName () +
-                                                                                                                                "$func");
-  private static final IMutableStatisticsHandlerKeyedTimer s_aStatsFunctionTimer = StatisticsManager.getKeyedTimerHandler (APIInvoker.class.getName () +
-                                                                                                                           "$timer");
+  private static final IMutableStatisticsHandlerCounter STATS_GLOBAL_INVOKE = StatisticsManager.getCounterHandler (APIInvoker.class.getName () +
+                                                                                                                   "$invocations");
+  private static final IMutableStatisticsHandlerKeyedCounter STATS_FUNCTION_INVOKE = StatisticsManager.getKeyedCounterHandler (APIInvoker.class.getName () +
+                                                                                                                               "$func");
+  private static final IMutableStatisticsHandlerKeyedTimer STATS_FUNCTION_TIMER = StatisticsManager.getKeyedTimerHandler (APIInvoker.class.getName () +
+                                                                                                                          "$timer");
 
   public void invoke (@Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -64,7 +64,7 @@ public class APIInvoker implements IAPIInvoker
     try
     {
       // Global increment before invocation
-      s_aStatsGlobalInvoke.increment ();
+      STATS_GLOBAL_INVOKE.increment ();
 
       // Invoke before handler
       APISettings.beforeExecutionCallbacks ()
@@ -78,7 +78,7 @@ public class APIInvoker implements IAPIInvoker
                  .forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
 
       // Increment statistics after successful call
-      s_aStatsFunctionInvoke.increment (sPath);
+      STATS_FUNCTION_INVOKE.increment (sPath);
     }
     catch (final Exception ex)
     {
@@ -90,7 +90,6 @@ public class APIInvoker implements IAPIInvoker
         bHandled = aExMapper.applyExceptionOnResponse (aInvokableDescriptor, aRequestScope, aUnifiedResponse, ex)
                             .isHandled ();
       }
-
       if (!bHandled)
       {
         APISettings.exceptionCallbacks ()
@@ -104,7 +103,7 @@ public class APIInvoker implements IAPIInvoker
     {
       // Long running API request?
       final long nExecutionMillis = aSW.stopAndGetMillis ();
-      s_aStatsFunctionTimer.addTime (sPath, nExecutionMillis);
+      STATS_FUNCTION_TIMER.addTime (sPath, nExecutionMillis);
       final long nLimitMS = APISettings.getLongRunningExecutionLimitTime ();
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {

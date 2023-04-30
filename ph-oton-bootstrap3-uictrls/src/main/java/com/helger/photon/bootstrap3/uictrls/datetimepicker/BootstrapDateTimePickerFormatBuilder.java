@@ -189,13 +189,13 @@ public class BootstrapDateTimePickerFormatBuilder implements IDateFormatBuilder
     }
   }
 
-  private static final PatternCache s_aCache = new PatternCache ();
+  private static final PatternCache CACHE = new PatternCache ();
 
   @Nonnull
   public static IDateFormatBuilder fromJavaPattern (@Nonnull final String sJavaPattern)
   {
     ValueEnforcer.notEmpty (sJavaPattern, "JavaPattern");
 
-    return s_aCache.getFromCache (sJavaPattern);
+    return CACHE.getFromCache (sJavaPattern);
   }
 }

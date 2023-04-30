@@ -49,10 +49,10 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 public class GoXServletHandler implements IXServletSimpleHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (GoXServletHandler.class);
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsError = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
-                                                                                                                       "$error");
-  private static final IMutableStatisticsHandlerKeyedCounter s_aStatsOK = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
-                                                                                                                    "$ok");
+  private static final IMutableStatisticsHandlerKeyedCounter STATS_ERROR = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
+                                                                                                                     "$error");
+  private static final IMutableStatisticsHandlerKeyedCounter STATS_OK = StatisticsManager.getKeyedCounterHandler (GoXServletHandler.class.getName () +
+                                                                                                                  "$ok");
   private final Function <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> m_aMenuTreeSupplier;
 
   public GoXServletHandler (@Nonnull final Function <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> aMenuTreeSupplier)
@@ -123,7 +123,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
       LOGGER.warn ("No such go-mapping item '" + sKey + "'");
       // Goto start page
       aTargetURL = getURLForNonExistingItem (aRequestScope, sKey);
-      s_aStatsError.increment (sKey);
+      STATS_ERROR.increment (sKey);
     }
     else
     {
@@ -152,13 +152,11 @@ public class GoXServletHandler implements IXServletSimpleHandler
         // Default case - use target link from go-mapping
         aTargetURL = aGoItem.getTargetURL ();
       }
-
       // Callback
       modifyResultURL (aRequestScope, sKey, aTargetURL);
 
-      s_aStatsOK.increment (sKey);
+      STATS_OK.increment (sKey);
     }
-
     // Append all request parameters of this request
     // FIXME crash with multipart request?
     for (final Map.Entry <String, Object> aEntry : aRequestScope.params ().entrySet ())
@@ -172,7 +170,6 @@ public class GoXServletHandler implements IXServletSimpleHandler
           for (final String sParamValue : (String []) aParamValue)
             aTargetURL.add (sParamName, sParamValue);
     }
-
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
     else

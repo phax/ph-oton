@@ -31,8 +31,8 @@ import com.helger.commons.datetime.PDTFactory;
  */
 public final class AuditDefaultSettings
 {
-  private static final ILongSupplier s_aAuditEventIDProvider = UUID.randomUUID ()::getMostSignificantBits;
-  private static final Supplier <LocalDateTime> s_aAuditEventDateTimeProvider = PDTFactory::getCurrentLocalDateTime;
+  private static final ILongSupplier ADUIT_EVENT_ID_PROVIDER = UUID.randomUUID ()::getMostSignificantBits;
+  private static final Supplier <LocalDateTime> AUDIT_EVENT_DT_PROVIDER = PDTFactory::getCurrentLocalDateTime;
 
   private AuditDefaultSettings ()
   {}
@@ -44,7 +44,7 @@ public final class AuditDefaultSettings
   @Nonnull
   public static ILongSupplier getDefaultAuditEventIDProvider ()
   {
-    return s_aAuditEventIDProvider;
+    return ADUIT_EVENT_ID_PROVIDER;
   }
 
   /**
@@ -54,6 +54,6 @@ public final class AuditDefaultSettings
   @Nonnull
   public static Supplier <LocalDateTime> getDefaultAuditEventDateTimeProvider ()
   {
-    return s_aAuditEventDateTimeProvider;
+    return AUDIT_EVENT_DT_PROVIDER;
   }
 }

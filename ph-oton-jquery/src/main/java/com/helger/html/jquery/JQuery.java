@@ -58,7 +58,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings ("NM_METHOD_NAMING_CONVENTION")
 public final class JQuery
 {
-  public static final AtomicBoolean s_aUseDollar = new AtomicBoolean (true);
+  private static final AtomicBoolean USE_DOLLAR = new AtomicBoolean (true);
 
   @PresentForCodeCoverage
   private static final JQuery INSTANCE = new JQuery ();
@@ -74,7 +74,7 @@ public final class JQuery
    */
   public static void setUseDollarForJQuery (final boolean bUseDollar)
   {
-    s_aUseDollar.set (bUseDollar);
+    USE_DOLLAR.set (bUseDollar);
   }
 
   /**
@@ -83,7 +83,7 @@ public final class JQuery
    */
   public static boolean isUseDollarForJQuery ()
   {
-    return s_aUseDollar.get ();
+    return USE_DOLLAR.get ();
   }
 
   /**

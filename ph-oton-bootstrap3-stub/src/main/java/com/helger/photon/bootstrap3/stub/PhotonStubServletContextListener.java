@@ -33,16 +33,16 @@ import jakarta.servlet.ServletContextListener;
  */
 public final class PhotonStubServletContextListener implements ServletContextListener
 {
-  private static final AtomicBoolean s_aInitialized = new AtomicBoolean (false);
+  private static final AtomicBoolean INITIALIZED = new AtomicBoolean (false);
 
   public static boolean isInitialized ()
   {
-    return s_aInitialized.get ();
+    return INITIALIZED.get ();
   }
 
   public void contextInitialized (@Nonnull final ServletContextEvent aSCE)
   {
-    if (s_aInitialized.compareAndSet (false, true))
+    if (INITIALIZED.compareAndSet (false, true))
     {
       PhotonStubInitializer.onContextInitialized ();
       PhotonStubInitializer.registerDefaultResources ();

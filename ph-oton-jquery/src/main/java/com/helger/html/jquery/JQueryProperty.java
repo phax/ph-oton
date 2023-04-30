@@ -34,7 +34,7 @@ import com.helger.html.jscode.JSRef;
 @Immutable
 public final class JQueryProperty
 {
-  public static final AtomicBoolean s_aUseDollar = new AtomicBoolean (true);
+  private static final AtomicBoolean USE_DOLLAR = new AtomicBoolean (true);
 
   @PresentForCodeCoverage
   private static final JQueryProperty INSTANCE = new JQueryProperty ();
@@ -50,7 +50,7 @@ public final class JQueryProperty
    */
   public static void setUseDollarForJQuery (final boolean bUseDollar)
   {
-    s_aUseDollar.set (bUseDollar);
+    USE_DOLLAR.set (bUseDollar);
   }
 
   /**
@@ -59,7 +59,7 @@ public final class JQueryProperty
    */
   public static boolean isUseDollarForJQuery ()
   {
-    return s_aUseDollar.get ();
+    return USE_DOLLAR.get ();
   }
 
   // Properties of the Global jQuery Object

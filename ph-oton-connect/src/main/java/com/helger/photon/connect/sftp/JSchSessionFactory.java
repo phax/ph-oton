@@ -44,10 +44,10 @@ import com.jcraft.jsch.Session;
 public final class JSchSessionFactory
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (JSchSessionFactory.class);
-  private static final IMutableStatisticsHandlerCounter s_aStatsCounterCreated = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
-                                                                                                                      "$created");
-  private static final IMutableStatisticsHandlerCounter s_aStatsCounterDestroyed = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
-                                                                                                                        "$destroyed");
+  private static final IMutableStatisticsHandlerCounter STATS_COUNTER_CREATED = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
+                                                                                                                     "$created");
+  private static final IMutableStatisticsHandlerCounter STATS_COUNTER_DESTROYED = StatisticsManager.getCounterHandler (JSchSessionFactory.class +
+                                                                                                                       "$destroyed");
 
   private JSchSessionFactory ()
   {}
@@ -66,7 +66,9 @@ public final class JSchSessionFactory
   private static Session _createSession (@Nonnull final JSch aJSch,
                                          @Nonnull final IBaseServerConnectionSettings aSettings) throws JSchException
   {
-    final Session aSession = aJSch.getSession (aSettings.getUserName (), aSettings.getServerAddress (), aSettings.getServerPort ());
+    final Session aSession = aJSch.getSession (aSettings.getUserName (),
+                                               aSettings.getServerAddress (),
+                                               aSettings.getServerPort ());
     // Set timeout in session
     if (aSettings.getConnectionTimeoutMillis () >= 0)
       aSession.setTimeout (aSettings.getConnectionTimeoutMillis ());
@@ -97,7 +99,7 @@ public final class JSchSessionFactory
     // Timeout already set directly on session!
     aSession.connect ();
 
-    s_aStatsCounterCreated.increment ();
+    STATS_COUNTER_CREATED.increment ();
     return aSession;
   }
 
@@ -109,7 +111,10 @@ public final class JSchSessionFactory
     final JSch aJSch = new JSch ();
 
     // key pair
-    aJSch.addIdentity (aSettings.getUserName (), aSettings.getPrivateKey (), aSettings.getPublicKey (), aSettings.getKeyPairPassphrase ());
+    aJSch.addIdentity (aSettings.getUserName (),
+                       aSettings.getPrivateKey (),
+                       aSettings.getPublicKey (),
+                       aSettings.getKeyPairPassphrase ());
 
     // Create session
     final Session aSession = _createSession (aJSch, aSettings);
@@ -120,7 +125,7 @@ public final class JSchSessionFactory
     // Timeout already set directly on session!
     aSession.connect ();
 
-    s_aStatsCounterCreated.increment ();
+    STATS_COUNTER_CREATED.increment ();
     return aSession;
   }
 
@@ -135,7 +140,7 @@ public final class JSchSessionFactory
     aSession.disconnect ();
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Closed session " + _debugSession (aSession));
-    s_aStatsCounterDestroyed.increment ();
+    STATS_COUNTER_DESTROYED.increment ();
     return EChange.CHANGED;
   }
 }
