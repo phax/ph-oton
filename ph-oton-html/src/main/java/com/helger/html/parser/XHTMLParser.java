@@ -51,16 +51,22 @@ public class XHTMLParser
 {
   private final EHTMLVersion m_eHTMLVersion;
 
-  // By default enable a little secured reader settings.
-  // * DOCTYPE must be allowed because it is common in HTML files
-  // * parameter entities must be allowed, because otherwise the HTML DTDs
-  // cannot be read correctly
-  // Note: SECURE_PROCESSING is not available in JDK parser 1.6.0_32 (most
-  // probably also not in the previous versions)
-  private SAXReaderSettings m_aAdditionalSAXReaderSettings = new SAXReaderSettings ().setFeatureValue (EXMLParserFeature.SECURE_PROCESSING,
-                                                                                                       true)
-                                                                                     .setFeatureValue (EXMLParserFeature.EXTERNAL_GENERAL_ENTITIES,
-                                                                                                       false);
+  private SAXReaderSettings m_aSAXReaderSettings = createDefaultSAXReaderSettings ();
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static SAXReaderSettings createDefaultSAXReaderSettings ()
+  {
+    // By default enable secured reader settings.
+    // * DOCTYPE must be allowed because it is common in HTML files
+    // * parameter entities must be allowed, because otherwise the HTML DTDs
+    // cannot be read correctly
+    return new SAXReaderSettings ().setFeatureValue (EXMLParserFeature.SECURE_PROCESSING, true)
+                                   .setFeatureValue (EXMLParserFeature.DISALLOW_DOCTYPE_DECL, false)
+                                   .setFeatureValue (EXMLParserFeature.EXTERNAL_GENERAL_ENTITIES, false)
+                                   .setFeatureValue (EXMLParserFeature.EXTERNAL_PARAMETER_ENTITIES, true)
+                                   .setEntityResolver (HTMLEntityResolver.getInstance ());
+  }
 
   public XHTMLParser (@Nonnull final EHTMLVersion eHTMLVersion)
   {
@@ -81,13 +87,28 @@ public class XHTMLParser
    * @return A copy of the additional SAX reader settings that are used for
    *         parsing. By default a secure processing is active, that disallows
    *         inline DTDs in HTML documents.
+   * @deprecated Use {@link #getSAXReaderSettings()} instead
    */
+  @Deprecated (forRemoval = true, since = "9.1.1")
   @Nonnull
   @ReturnsMutableCopy
   public SAXReaderSettings getAdditionalSAXReaderSettings ()
   {
+    return getSAXReaderSettings ();
+  }
+
+  /**
+   * @return A copy of the additional SAX reader settings that are used for
+   *         parsing. By default a secure processing is active, that disallows
+   *         inline DTDs in HTML documents.
+   * @since 9.1.1
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public SAXReaderSettings getSAXReaderSettings ()
+  {
     // Return a clone
-    return m_aAdditionalSAXReaderSettings.getClone ();
+    return m_aSAXReaderSettings.getClone ();
   }
 
   /**
@@ -97,10 +118,29 @@ public class XHTMLParser
    *
    * @param aAdditionalSaxReaderSettings
    *        The settings to be used. May be <code>null</code>.
+   * @deprecated Use {@link #setSAXReaderSettings(ISAXReaderSettings)} instead
    */
+  @Deprecated (forRemoval = true, since = "9.1.1")
   public void setAdditionalSAXReaderSettings (@Nullable final ISAXReaderSettings aAdditionalSaxReaderSettings)
   {
-    m_aAdditionalSAXReaderSettings = SAXReaderSettings.createCloneOnDemand (aAdditionalSaxReaderSettings);
+    setSAXReaderSettings (aAdditionalSaxReaderSettings);
+  }
+
+  /**
+   * Set additional SAX reader settings that are used when an XHTML fragment is
+   * read. All settings are reused when parsing except for the entity resolver
+   * which is always set to the default {@link HTMLEntityResolver}.
+   *
+   * @param aAdditionalSaxReaderSettings
+   *        The settings to be used. May be <code>null</code>.
+   * @return this for chaining
+   * @since 9.1.1
+   */
+  @Nonnull
+  public XHTMLParser setSAXReaderSettings (@Nullable final ISAXReaderSettings aAdditionalSaxReaderSettings)
+  {
+    m_aSAXReaderSettings = SAXReaderSettings.createCloneOnDemand (aAdditionalSaxReaderSettings);
+    return this;
   }
 
   /**
@@ -157,8 +197,7 @@ public class XHTMLParser
                                                        XMLConstants.XMLNS_ATTRIBUTE +
                                                        "=\"" +
                                                        sHTMLNamespaceURI +
-                                                       '"'
-                                                     : "") +
+                                                       '"' : "") +
                           "><head><title></title></head><body>" +
                           StringHelper.getNotNull (sXHTMLFragment) +
                           "</body></html>";
@@ -177,11 +216,7 @@ public class XHTMLParser
   @Nullable
   public IMicroDocument parseXHTMLDocument (@Nullable final String sXHTML)
   {
-    return MicroReader.readMicroXML (sXHTML,
-                                     m_aAdditionalSAXReaderSettings.getClone ()
-                                                                   .setEntityResolver (HTMLEntityResolver.getInstance ())
-                                                                   .setFeatureValue (EXMLParserFeature.DISALLOW_DOCTYPE_DECL,
-                                                                                     false));
+    return MicroReader.readMicroXML (sXHTML, m_aSAXReaderSettings);
   }
 
   /**

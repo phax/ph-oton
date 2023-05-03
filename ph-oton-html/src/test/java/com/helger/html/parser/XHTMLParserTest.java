@@ -30,6 +30,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.entity.HTMLEntityResolver;
 import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.MicroContainer;
+import com.helger.xml.microdom.MicroText;
 import com.helger.xml.microdom.serialize.MicroReader;
 import com.helger.xml.serialize.read.SAXReaderSettings;
 
@@ -324,9 +326,10 @@ public final class XHTMLParserTest
     assertNotNull (aParser.unescapeXHTMLFragment ("<b>Hallo</b>"));
     assertNotNull (aParser.unescapeXHTMLFragment ("<b>Hallo<br/>helger</b>"));
     assertNotNull (aParser.unescapeXHTMLFragment (""));
-    assertNotNull (aParser.unescapeXHTMLFragment ("&lt;"));
-    assertNotNull (aParser.unescapeXHTMLFragment ("&gt;"));
+    assertTrue (new MicroContainer (new MicroText ("<")).isEqualContent (aParser.unescapeXHTMLFragment ("&lt;")));
+    assertTrue (new MicroContainer (new MicroText (">")).isEqualContent (aParser.unescapeXHTMLFragment ("&gt;")));
     assertNotNull (aParser.unescapeXHTMLFragment ("<br/>"));
+    assertTrue (new MicroContainer (new MicroText ("From A → B if ≥ 0")).isEqualContent (aParser.unescapeXHTMLFragment ("From A &rarr; B if &ge; 0")));
     assertNull (aParser.unescapeXHTMLFragment ("<b>Hallo"));
     assertNull (aParser.unescapeXHTMLFragment ("Hallo</b>"));
     assertNull (aParser.unescapeXHTMLFragment ("&"));
@@ -336,7 +339,8 @@ public final class XHTMLParserTest
   public void testReadFromFile ()
   {
     final IReadableResource aRes = new ClassPathResource ("html-test/test1.htm");
-    IMicroDocument aDoc = MicroReader.readMicroXML (aRes, new SAXReaderSettings ().setEntityResolver (HTMLEntityResolver.getInstance ()));
+    IMicroDocument aDoc = MicroReader.readMicroXML (aRes,
+                                                    new SAXReaderSettings ().setEntityResolver (HTMLEntityResolver.getInstance ()));
     assertNotNull (aDoc);
     if (false)
     {
@@ -347,7 +351,7 @@ public final class XHTMLParserTest
   }
 
   @Test
-  @Ignore ("Depends heavily on used JDK version. Fails with 1.6.0_32")
+  @Ignore
   public void testEntityExpansionLimit ()
   {
     // The XML with too many entities problem

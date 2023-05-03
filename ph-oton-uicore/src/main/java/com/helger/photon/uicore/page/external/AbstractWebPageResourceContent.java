@@ -50,8 +50,8 @@ import com.helger.xml.serialize.read.SAXReaderSettings;
  *        Web page execution context type
  */
 @ThreadSafe
-public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
-                                                     implements
+public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageExecutionContext> extends
+                                                     AbstractWebPage <WPECTYPE> implements
                                                      IWebPageResourceContent
 {
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
@@ -63,7 +63,8 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   private boolean m_bReadEveryTime = GlobalDebug.isDebugMode ();
 
   @Nonnull
-  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource, final boolean bPeformStandardCleansing)
+  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
+                                                      final boolean bPeformStandardCleansing)
   {
     return readHTMLPageFragment (aResource,
                                  DEFAULT_CHARSET,
@@ -91,7 +92,8 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     // resolver is not called!
     final EHTMLVersion eParseHTMLVersion = eHTMLVersion.isAtLeastHTML5 () ? EHTMLVersion.XHTML11 : eHTMLVersion;
     final XHTMLParser aXHTMLParser = new XHTMLParser (eParseHTMLVersion);
-    aXHTMLParser.setAdditionalSAXReaderSettings (aAdditionalSaxReaderSettings);
+    if (aAdditionalSaxReaderSettings != null)
+      aXHTMLParser.setSAXReaderSettings (aAdditionalSaxReaderSettings);
     final IMicroContainer ret = aXHTMLParser.unescapeXHTMLFragment (sContent);
     if (ret == null)
       throw new IllegalStateException ("Failed to parse HTML code of resource " + aResource.toString ());
@@ -101,7 +103,6 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
       // Do standard cleansing with the provided HTML version!
       MicroVisitor.visit (ret, new PageViewExternalHTMLCleanser (eHTMLVersion));
     }
-
     return ret;
   }
 
