@@ -98,10 +98,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v9.1.1 - work in progress
+* v9.1.1 - 2023-05-03
     * Updated to Jetty 11.0.15
     * Updated to jQuery 3.6.4
-    * Updated to Jetty 11.0.14
     * Added new enumeration `EHCAutoComplete` and the possibility to use in the HC edits
     * Updated to DataTables 1.13.4 and latest plugin versions
 * v9.1.0 - 2023-02-24
