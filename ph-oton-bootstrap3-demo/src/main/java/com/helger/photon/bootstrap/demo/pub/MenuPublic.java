@@ -26,7 +26,6 @@ import com.helger.photon.bootstrap.demo.pub.page.icon.PagePublicIconMaterialDesi
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.menu.filter.MenuObjectFilterNoUserLoggedIn;
-import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uicore.page.external.BasePageViewExternal;
 import com.helger.photon.uicore.page.system.BasePageShowChildren;
 
@@ -39,26 +38,29 @@ public final class MenuPublic
   public static void init (@Nonnull final IMenuTree aMenuTree)
   {
     // Not logged in
-    aMenuTree.createRootItem (new PagePublicLogin (CMenuPublic.MENU_LOGIN)).setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
+    aMenuTree.createRootItem (new PagePublicLogin (CMenuPublic.MENU_LOGIN))
+             .setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
     aMenuTree.createRootSeparator ().setDisplayFilter (new MenuObjectFilterNoUserLoggedIn ());
 
     // Icons stuff
     {
-      final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren <> ("icon", "Icon sets", aMenuTree));
+      final IMenuItemPage aIcons = aMenuTree.createRootItem (new BasePageShowChildren <> ("icon",
+                                                                                          "Icon sets",
+                                                                                          aMenuTree));
       aMenuTree.createItem (aIcons, new PagePublicIconFontAwesome ("icon-fa"));
       aMenuTree.createItem (aIcons, new PagePublicIconMaterialDesign ("icon-md"));
     }
 
     // Common stuff
-    aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_SITENOTICE,
-                                                                                  "Site notice",
-                                                                                  new ClassPathResource ("viewpages/en/site-notice.xml"),
-                                                                                  null));
+    aMenuTree.createRootItem (new BasePageViewExternal <> (CMenuPublic.MENU_SITENOTICE,
+                                                           "Site notice",
+                                                           new ClassPathResource ("viewpages/en/site-notice.xml"),
+                                                           null));
 
-    aMenuTree.createRootItem (new BasePageViewExternal <WebPageExecutionContext> (CMenuPublic.MENU_GTC,
-                                                                                  "GTC",
-                                                                                  new ClassPathResource ("viewpages/en/gtc.xml"),
-                                                                                  null))
+    aMenuTree.createRootItem (new BasePageViewExternal <> (CMenuPublic.MENU_GTC,
+                                                           "GTC",
+                                                           new ClassPathResource ("viewpages/en/gtc.xml"),
+                                                           null))
              .attrs ()
              .putIn (CMenuPublic.FLAG_FOOTER, Boolean.TRUE);
 

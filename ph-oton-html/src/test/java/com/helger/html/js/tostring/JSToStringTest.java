@@ -139,11 +139,18 @@ public final class JSToStringTest
   @Test
   public void testFixedList ()
   {
-    assertEquals ("[]", JSToString.objectToJSString (new CommonsArrayList <String> (), new JSListType (JSType.STRING), false));
-    assertEquals ("['x']", JSToString.objectToJSString (CollectionHelper.newList ("x"), new JSListType (JSType.STRING), false));
-    assertEquals ("['x','y']", JSToString.objectToJSString (CollectionHelper.newList ("x", "y"), new JSListType (JSType.STRING), false));
+    assertEquals ("[]",
+                  JSToString.objectToJSString (new CommonsArrayList <> (), new JSListType (JSType.STRING), false));
+    assertEquals ("['x']",
+                  JSToString.objectToJSString (CollectionHelper.newList ("x"), new JSListType (JSType.STRING), false));
+    assertEquals ("['x','y']",
+                  JSToString.objectToJSString (CollectionHelper.newList ("x", "y"),
+                                               new JSListType (JSType.STRING),
+                                               false));
     assertEquals ("[1,9]",
-                  JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1, 9), new JSListType (JSType.INT), false));
+                  JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1, 9),
+                                               new JSListType (JSType.INT),
+                                               false));
     assertEquals ("[1.1,9.8]",
                   JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1.1, 9.8),
                                                new JSListType (JSType.DOUBLE),
@@ -174,11 +181,14 @@ public final class JSToStringTest
     assertEquals ("'a\\'bc'", JSToString.objectToJSString (new StringBuilder ("a'bc")));
 
     // Arrays
-    assertEquals ("[1,'xx','y']", JSToString.objectToJSString (new Object [] { Integer.valueOf (1), "xx", Character.valueOf ('y') }));
+    assertEquals ("[1,'xx','y']",
+                  JSToString.objectToJSString (new Object [] { Integer.valueOf (1), "xx", Character.valueOf ('y') }));
 
     // Collections
     assertEquals ("[1,'xx','y']",
-                  JSToString.objectToJSString (CollectionHelper.<Object> newList (Integer.valueOf (1), "xx", Character.valueOf ('y'))));
+                  JSToString.objectToJSString (CollectionHelper.<Object> newList (Integer.valueOf (1),
+                                                                                  "xx",
+                                                                                  Character.valueOf ('y'))));
     ICommonsOrderedMap <Object, Object> aMap = new CommonsLinkedHashMap <> ();
     aMap.put (Integer.valueOf (1), "xx");
     aMap.put (Integer.valueOf (2), Character.valueOf ('y'));
