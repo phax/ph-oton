@@ -69,7 +69,7 @@
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.20.0</log4j.version>
     <jetty.version>11.0.15</jetty.version>
-    <ph-commons.version>11.0.4</ph-commons.version>
+    <ph-commons.version>11.0.5</ph-commons.version>
   </properties>
 
   <repositories>
