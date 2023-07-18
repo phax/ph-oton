@@ -153,7 +153,7 @@ public final class BootstrapFormHelper
         if (!bSetLabelForForThisCtrl)
         {
           // Set "aria-labelledby"
-          aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
+          aCurCtrl.customAttrs ().addAriaLabeledBy (aLabel);
         }
       }
     }
