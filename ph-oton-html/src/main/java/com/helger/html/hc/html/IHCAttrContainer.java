@@ -175,9 +175,9 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   @Nonnull
   default EChange addToAriaDescribedBy (@Nonnull final String sDescribedBy)
   {
-    final String sOldDescribedBy = getValue (CHTMLAttributes.ARIA_DESCRIBEDBY);
-    return setAriaDescribedBy (StringHelper.hasText (sOldDescribedBy) ? sOldDescribedBy + ' ' + sDescribedBy
-                                                                      : sDescribedBy);
+    final String sOldValue = getValue (CHTMLAttributes.ARIA_DESCRIBEDBY);
+    final boolean bAppend = StringHelper.hasText (sOldValue) && !sOldValue.contains (sDescribedBy);
+    return setAriaDescribedBy (bAppend ? sOldValue + ' ' + sDescribedBy : sDescribedBy);
   }
 
   @Nonnull
@@ -204,10 +204,10 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   @Nonnull
   default EChange addToAriaDescribedBy (@Nonnull final Iterable <? extends IHCElement <?>> aDescribedByMultiple)
   {
-    return addToAriaDescribedBy (StringHelper.imploder ()
-                                             .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
-                                             .separator (' ')
-                                             .build ());
+    EChange eChange = EChange.UNCHANGED;
+    for (final IHCElement <?> aItem : aDescribedByMultiple)
+      eChange = eChange.or (addToAriaDescribedBy (aItem));
+    return eChange;
   }
 
   @Nonnull
@@ -222,10 +222,10 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   @Nonnull
   default EChange addToAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
   {
-    return addToAriaDescribedBy (StringHelper.imploder ()
-                                             .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
-                                             .separator (' ')
-                                             .build ());
+    EChange eChange = EChange.UNCHANGED;
+    for (final IHCElement <?> aItem : aDescribedByMultiple)
+      eChange = eChange.or (addToAriaDescribedBy (aItem));
+    return eChange;
   }
 
   @Nonnull
@@ -265,9 +265,23 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange addAriaLabeledBy (@Nonnull final String sLabeledBy)
+  {
+    final String sOldValue = getValue (CHTMLAttributes.ARIA_LABELLEDBY);
+    final boolean bAppend = StringHelper.hasText (sOldValue) && !sOldValue.contains (sLabeledBy);
+    return setAriaLabeledBy (bAppend ? sOldValue + ' ' + sLabeledBy : sLabeledBy);
+  }
+
+  @Nonnull
   default EChange setAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
   {
     return setAriaLabeledBy (aLabeledBy.ensureID ().getID ());
+  }
+
+  @Nonnull
+  default EChange addAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
+  {
+    return addAriaLabeledBy (aLabeledBy.ensureID ().getID ());
   }
 
   @Nonnull
@@ -280,12 +294,30 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  default EChange addAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
+  {
+    EChange eChange = EChange.UNCHANGED;
+    for (final IHCElement <?> aItem : aLabeledByMultiple)
+      eChange = eChange.or (addAriaLabeledBy (aItem));
+    return eChange;
+  }
+
+  @Nonnull
   default EChange setAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
   {
     return setAriaLabeledBy (StringHelper.imploder ()
                                          .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
                                          .separator (' ')
                                          .build ());
+  }
+
+  @Nonnull
+  default EChange addAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
+  {
+    EChange eChange = EChange.UNCHANGED;
+    for (final IHCElement <?> aItem : aLabeledByMultiple)
+      eChange = eChange.or (addAriaLabeledBy (aItem));
+    return eChange;
   }
 
   @Nonnull
