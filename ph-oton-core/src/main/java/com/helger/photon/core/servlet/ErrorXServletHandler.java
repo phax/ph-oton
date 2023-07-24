@@ -23,6 +23,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.http.CHttpHeader;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
+import com.helger.servlet.ServletHelper;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
@@ -68,11 +69,14 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
     final SimpleURL aURL = new SimpleURL (aRequestScope.getContextPath () + m_sServletPath);
     aURL.add (PARAM_HTTP_ERROR, true);
     aURL.addIfNotNull (PARAM_HTTP_STATUS_CODE,
-                       StringHelper.getToString (aRequest.getAttribute (RequestDispatcher.ERROR_STATUS_CODE)));
+                       StringHelper.getToString (ServletHelper.getRequestAttribute (aRequest,
+                                                                                    RequestDispatcher.ERROR_STATUS_CODE)));
     aURL.addIfNotNull (PARAM_HTTP_STATUS_MESSAGE,
-                       StringHelper.getToString (aRequest.getAttribute (RequestDispatcher.ERROR_MESSAGE)));
+                       StringHelper.getToString (ServletHelper.getRequestAttribute (aRequest,
+                                                                                    RequestDispatcher.ERROR_MESSAGE)));
     aURL.addIfNotNull (PARAM_HTTP_REQUEST_URI,
-                       StringHelper.getToString (aRequest.getAttribute (RequestDispatcher.ERROR_REQUEST_URI)));
+                       StringHelper.getToString (ServletHelper.getRequestAttribute (aRequest,
+                                                                                    RequestDispatcher.ERROR_REQUEST_URI)));
     aURL.addIfNotNull (PARAM_HTTP_REFERRER, aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER));
     aUnifiedResponse.setRedirect (aURL);
   }
