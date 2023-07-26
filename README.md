@@ -37,10 +37,10 @@ Contained subprojects are:
 
 # Requirements
 
-* Java 1.8+ is required for building 
+* Java 11+ is required for building 
 * Application server requirements:
-    * At least Tomcat 8.x
-    * Jetty 9.4.x with AnnotationConfiguration enabled
+    * At least Tomcat 10.x
+    * Jetty 11.x with AnnotationConfiguration enabled
       
 ## Maven usage
 
