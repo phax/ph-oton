@@ -98,6 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.1.3 - 2023-07-31
+    * Updated to ph-commons 11.1
 * v9.1.2 - 2023-07-24
     * Updated to DataTables 1.13.5 and latest plugin versions
     * Updated to jQuery 3.7.0

@@ -58,6 +58,13 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-bootstrap3-uictrls</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
