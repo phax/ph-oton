@@ -177,7 +177,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                         public EShowList handleAction (@Nonnull final WPECTYPE aWPEC,
                                                        @Nullable final FailedMailData aSelectedObject)
                         {
-                          ValueEnforcer.notNull (aSelectedObject, "SelectedObject");
+                          assert aSelectedObject == null;
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
                           // Delete all failed mails
@@ -230,7 +230,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendAllHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
     {
       @Nonnull
-      public EShowList handleAction (final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
+      public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, final FailedMailData aSelectedObject)
       {
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 

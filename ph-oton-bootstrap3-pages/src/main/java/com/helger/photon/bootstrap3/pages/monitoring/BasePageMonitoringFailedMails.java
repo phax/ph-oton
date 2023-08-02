@@ -162,6 +162,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
       @Override
       protected void performAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         // Delete a single failed mail without querying
@@ -179,6 +180,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                         public EShowList handleAction (@Nonnull final WPECTYPE aWPEC,
                                                        @Nullable final FailedMailData aSelectedObject)
                         {
+                          assert aSelectedObject == null;
                           final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
                           // Delete all failed mails
@@ -200,6 +202,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
       @Nonnull
       public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)
       {
+        assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
         // Resend a single failed mail
