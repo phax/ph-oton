@@ -98,6 +98,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.1.4 - work in progress
+    * Avoid Exception on "Delete all" in failed mail page with Bootstrap4 UI
 * v9.1.3 - 2023-07-31
     * Updated to ph-commons 11.1
 * v9.1.2 - 2023-07-24
