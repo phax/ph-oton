@@ -16,9 +16,17 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-final class DTVersion
+import javax.annotation.concurrent.Immutable;
+
+/**
+ * This class contains all the version numbers for the Datatables components.
+ *
+ * @author Philip Helger
+ */
+@Immutable
+final class CDataTablesComponentVersion
 {
-  static final String DT = "1.13.5";
+  static final String DT = "1.13.6";
   static final String AUTO_FILL = "2.6.0";
   static final String BUTTONS = "2.4.1";
   static final String COL_REORDER = "1.7.0";
@@ -29,10 +37,10 @@ final class DTVersion
   static final String PDF_MAKE = "0.2.7";
   static final String RESPONSIVE = "2.5.0";
   static final String ROW_GROUP = "1.4.0";
-  static final String ROW_REORDER = "1.4.0";
+  static final String ROW_REORDER = "1.4.1";
   static final String SCROLLER = "2.2.0";
   static final String SELECT = "1.7.0";
 
-  private DTVersion ()
+  private CDataTablesComponentVersion ()
   {}
 }

@@ -1,5 +1,5 @@
-/*! DataTables Bootstrap 4 integration
- * ©2011-2017 SpryMedia Ltd - datatables.net/license
+/*! DataTables Bootstrap 3 integration
+ * ©2011-2015 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
@@ -50,7 +50,7 @@ var DataTable = $.fn.dataTable;
 
 
 /**
- * DataTables integration for Bootstrap 4. This requires Bootstrap 4 and
+ * DataTables integration for Bootstrap 3. This requires Bootstrap 3 and
  * DataTables 1.10 or newer.
  *
  * This file sets the defaults and adds options to DataTables to style its
@@ -61,20 +61,19 @@ var DataTable = $.fn.dataTable;
 /* Set the defaults for DataTables initialisation */
 $.extend( true, DataTable.defaults, {
 	dom:
-		"<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+		"<'row'<'col-sm-6'l><'col-sm-6'f>>" +
 		"<'row'<'col-sm-12'tr>>" +
-		"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+		"<'row'<'col-sm-5'i><'col-sm-7'p>>",
 	renderer: 'bootstrap'
 } );
 
 
 /* Default class modification */
 $.extend( DataTable.ext.classes, {
-	sWrapper:      "dataTables_wrapper dt-bootstrap4",
-	sFilterInput:  "form-control form-control-sm",
-	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
-	sProcessing:   "dataTables_processing card",
-	sPageButton:   "paginate_button page-item"
+	sWrapper:      "dataTables_wrapper form-inline dt-bootstrap",
+	sFilterInput:  "form-control input-sm",
+	sLengthSelect: "form-control input-sm",
+	sProcessing:   "dataTables_processing panel panel-default"
 } );
 
 
@@ -159,10 +158,7 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 								'role': 'link',
 								'aria-current': btnClass === 'active' ? 'page' : null,
 								'data-dt-idx': button,
-								// [PH] changed
-                // 'tabindex': settings.iTabIndex,
-                'tabindex': disabled ? -1 : settings.iTabIndex,
-								'class': 'page-link'
+								'tabindex': disabled ? -1 : settings.iTabIndex
 							} )
 							.html( btnDisplay )
 						)
