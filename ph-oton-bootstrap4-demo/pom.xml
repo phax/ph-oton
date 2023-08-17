@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger.photon</groupId>
     <artifactId>ph-oton-parent-pom</artifactId>
-    <version>9.1.4</version>
+    <version>9.1.5-SNAPSHOT</version>
   </parent>
   <artifactId>ph-oton-bootstrap4-demo</artifactId>
   <packaging>war</packaging>
