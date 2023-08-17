@@ -40,7 +40,6 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
  * @author Philip Helger
  * @since 8.4.5
  */
-@Nonnull
 public class AccessTokenList implements IAccessTokenList
 {
   private final ICommonsList <AccessToken> m_aAccessTokens;

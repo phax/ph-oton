@@ -76,7 +76,6 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
    * @param aRegistry
    *        The registry to use. May not be <code>null</code>.
    */
-  @Nonnull
   public void setRegistry (@Nonnull final IAPIRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
@@ -100,7 +99,6 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
    * @param aInvoker
    *        The invoker to be used. May not be <code>null</code>.
    */
-  @Nonnull
   public void setInvoker (@Nonnull final IAPIInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");

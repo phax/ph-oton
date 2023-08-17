@@ -77,7 +77,6 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     return m_aCallbacks;
   }
 
-  @Nonnull
   private void _createNewRole (@Nonnull final Role aRole, final boolean bPredefined)
   {
     // Store

@@ -72,7 +72,6 @@ public class RevocationStatus implements IRevocationStatus
     m_sRevocationReason = sRevocationReason;
   }
 
-  @Nullable
   public final boolean isRevoked ()
   {
     return m_bRevoked;

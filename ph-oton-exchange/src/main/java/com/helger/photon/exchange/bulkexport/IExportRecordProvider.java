@@ -41,7 +41,6 @@ public interface IExportRecordProvider extends Serializable
    *        The consumer invoked for each body record. May not be
    *        <code>null</code>.
    */
-  @Nonnull
   default void forEachBodyRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
   {}
 
@@ -50,7 +49,6 @@ public interface IExportRecordProvider extends Serializable
    *        The consumer invoked for each footer record. May not be
    *        <code>null</code>.
    */
-  @Nonnull
   default void forEachFooterRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
   {}
 }

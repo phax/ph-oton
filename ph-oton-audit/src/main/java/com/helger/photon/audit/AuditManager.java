@@ -105,7 +105,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
 
   @Nonnull
   @Nonempty
-  public static String getRelativeAuditDirectoryYear (@Nonnull final int nYear)
+  public static String getRelativeAuditDirectoryYear (final int nYear)
   {
     return nYear + "/";
   }

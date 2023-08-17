@@ -79,7 +79,6 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
    * @param aRegistry
    *        The registry to use. May not be <code>null</code>.
    */
-  @Nonnull
   public void setRegistry (@Nonnull final IAjaxRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
@@ -103,7 +102,6 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
    * @param aInvoker
    *        The invoker to be used. May not be <code>null</code>.
    */
-  @Nonnull
   public void setInvoker (@Nonnull final IAjaxInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
