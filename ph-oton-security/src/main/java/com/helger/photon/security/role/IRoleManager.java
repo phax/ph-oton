@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.callback.CallbackList;
 import com.helger.commons.state.EChange;
-import com.helger.photon.app.mgr.IPhotonManager;
+import com.helger.photon.io.mgr.IPhotonManager;
 
 /**
  * Base interface to manage the available roles.

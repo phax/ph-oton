@@ -14,16 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.io;
+package com.helger.photon.mock;
 
 import java.io.File;
 
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.junit.rules.ExternalResource;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.dao.AbstractDAO;
+import com.helger.photon.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 
 /**
@@ -34,7 +37,9 @@ import com.helger.scope.mock.ScopeTestRule;
 public class PhotonIOTestRule extends ExternalResource
 {
   private final File m_aDataPath;
+  private final String m_sServletContextPath;
   private boolean m_bOldDAOSilentMode;
+  private boolean m_bOldWebFileIOSilentMode;
 
   /**
    * Ctor using the default storage path from {@link ScopeTestRule}
@@ -52,8 +57,23 @@ public class PhotonIOTestRule extends ExternalResource
    */
   public PhotonIOTestRule (@Nonnull final File aDataPath)
   {
+    this (aDataPath, aDataPath.getAbsolutePath ());
+  }
+
+  /**
+   * Ctor with an arbitrary path
+   *
+   * @param aDataPath
+   *        The data path to be used. May not be <code>null</code>.
+   * @param sServletContextPath
+   *        The servlet context path to be used. May not be <code>null</code>.
+   */
+  public PhotonIOTestRule (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
+  {
     ValueEnforcer.notNull (aDataPath, "DataPath");
+    ValueEnforcer.notNull (sServletContextPath, "ServletContextPath");
     m_aDataPath = aDataPath.getAbsoluteFile ();
+    m_sServletContextPath = sServletContextPath;
   }
 
   /**
@@ -65,17 +85,31 @@ public class PhotonIOTestRule extends ExternalResource
     return m_aDataPath;
   }
 
-  @Override
-  public void before ()
+  /**
+   * @return The used servlet context path. Never <code>null</code>.
+   */
+  @Nonnull
+  @Nonempty
+  public final String getServletContextPath ()
   {
-    m_bOldDAOSilentMode = AbstractDAO.setSilentMode (true);
-    WebFileIO.initPaths (m_aDataPath, m_aDataPath.getAbsolutePath (), false);
+    return m_sServletContextPath;
   }
 
   @Override
+  @OverridingMethodsMustInvokeSuper
+  public void before ()
+  {
+    m_bOldDAOSilentMode = AbstractDAO.setSilentMode (true);
+    m_bOldWebFileIOSilentMode = WebFileIO.setSilentMode (true);
+    WebFileIO.initPaths (m_aDataPath, m_sServletContextPath, false);
+  }
+
+  @Override
+  @OverridingMethodsMustInvokeSuper
   public void after ()
   {
     WebFileIO.resetPaths ();
+    WebFileIO.setSilentMode (m_bOldWebFileIOSilentMode);
     AbstractDAO.setSilentMode (m_bOldDAOSilentMode);
   }
 }

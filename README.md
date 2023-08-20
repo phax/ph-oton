@@ -99,6 +99,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.2.0 - work in progress
+    * Extracted submodule `ph-oton-io` for dependency minimized inclusion
 * v9.1.4 - 2023-08-17
     * Updated to DataTables 1.13.6 and latest plugin versions
     * Updated to ph-web 10.1.5

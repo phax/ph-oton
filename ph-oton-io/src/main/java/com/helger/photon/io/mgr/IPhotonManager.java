@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.mgr;
+package com.helger.photon.io.mgr;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

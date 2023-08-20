@@ -25,6 +25,7 @@ import org.junit.rules.TestRule;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.id.factory.IIntIDFactory;
+import com.helger.photon.mock.PhotonIOTestRule;
 
 /**
  * Test class for class {@link WebIOIntIDFactory}.

@@ -70,6 +70,12 @@
       <groupId>com.helger.commons</groupId>
       <artifactId>ph-dao</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <optional>true</optional>
+    </dependency>
 
     <dependency>
       <groupId>com.github.spotbugs</groupId>
