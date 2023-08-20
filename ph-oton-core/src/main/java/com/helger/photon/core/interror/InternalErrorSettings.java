@@ -36,8 +36,8 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.string.StringHelper;
 import com.helger.datetime.util.PDTIOHelper;
-import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.core.interror.callback.IInternalErrorCallback;
+import com.helger.photon.io.WebFileIO;
 import com.helger.smtp.settings.ISMTPSettings;
 
 /**

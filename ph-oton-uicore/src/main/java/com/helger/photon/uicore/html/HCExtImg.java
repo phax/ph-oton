@@ -24,7 +24,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.embedded.AbstractHCImg;
-import com.helger.photon.app.io.WebFileIO;
+import com.helger.photon.io.WebFileIO;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.request.RequestHelper;
 

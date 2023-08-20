@@ -41,8 +41,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.app.PhotonAppSettings;
-import com.helger.photon.app.io.WebFileIO;
 import com.helger.photon.app.url.LinkHelper;
+import com.helger.photon.io.WebFileIO;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**

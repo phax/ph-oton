@@ -10,6 +10,7 @@ Contained subprojects are:
   * ph-oton-jscode - a Java code model to build structured JS code
   * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
   * ph-oton-atom - ATOM newsfeed stuff
+  * ph-oton-io - basic IO stuff (since 9.2.0; previously in ph-oton-app)
   * ph-oton-app - basic application stuff
   * ph-oton-audit - basic auditing stuff
   * ph-oton-ajax - basic AJAX stuff

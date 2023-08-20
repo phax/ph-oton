@@ -25,7 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.NonBlockingStack;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.dao.AbstractDAO;
-import com.helger.photon.app.io.WebFileIO;
+import com.helger.photon.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.servlet.ServletContextPathHolder;
 

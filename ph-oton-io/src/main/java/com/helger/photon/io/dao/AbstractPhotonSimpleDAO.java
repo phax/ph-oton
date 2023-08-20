@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.dao;
+package com.helger.photon.io.dao;
 
 import java.util.function.Supplier;
 
@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.io.relative.FileRelativeIO;
 import com.helger.dao.simple.AbstractSimpleDAO;
-import com.helger.photon.app.io.WebFileIO;
+import com.helger.photon.io.WebFileIO;
 
 /**
  * Special {@link AbstractSimpleDAO} that uses the {@link WebFileIO#getDataIO()}

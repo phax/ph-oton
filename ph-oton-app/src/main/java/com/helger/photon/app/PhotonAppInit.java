@@ -19,7 +19,7 @@ package com.helger.photon.app;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.cleanup.CommonsCleanup;
-import com.helger.photon.app.io.WebFileIO;
+import com.helger.photon.io.WebFileIO;
 import com.helger.scope.ScopeCleanup;
 import com.helger.xml.util.XMLCleanup;
 

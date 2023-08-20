@@ -27,7 +27,7 @@
   </parent>
   <groupId>com.helger.photon</groupId>
   <artifactId>ph-oton-parent-pom</artifactId>
-  <version>9.1.5-SNAPSHOT</version>
+  <version>9.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ph-oton</name>
   <description>Base POM to build the ph-oton web stack</description>
@@ -146,6 +146,11 @@
       <dependency>
         <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-atom</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.photon</groupId>
+        <artifactId>ph-oton-io</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -313,6 +318,7 @@
     <module>ph-oton-jscode</module>
     <module>ph-oton-jquery</module>
     <module>ph-oton-atom</module>
+    <module>ph-oton-io</module>
     <module>ph-oton-app</module>
     <module>ph-oton-audit</module>
     <module>ph-oton-ajax</module>

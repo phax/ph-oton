@@ -49,8 +49,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.dao.DAOException;
 import com.helger.datetime.util.PDTIOHelper;
-import com.helger.photon.app.dao.AbstractPhotonSimpleDAO;
-import com.helger.photon.app.io.WebFileIO;
+import com.helger.photon.io.WebFileIO;
+import com.helger.photon.io.dao.AbstractPhotonSimpleDAO;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
@@ -138,8 +138,8 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
    *         In case reading failed
    */
   @ContainsSoftMigration
-  public AuditManager (@Nullable final String sBaseDir,
-                       @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
+  public AuditManager (@Nullable final String sBaseDir, @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+                                                                                                                      throws DAOException
   {
     super (new AuditHasFilename (sBaseDir));
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");

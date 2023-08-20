@@ -26,8 +26,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.NonBlockingStack;
 import com.helger.commons.id.factory.GlobalIDFactory;
 import com.helger.photon.app.PhotonAppInit;
-import com.helger.photon.app.io.WebFileIO;
-import com.helger.photon.app.io.WebIOIntIDFactory;
+import com.helger.photon.io.WebFileIO;
+import com.helger.photon.io.WebIOIntIDFactory;
 
 /**
  * Static test init and shutdown code for this project

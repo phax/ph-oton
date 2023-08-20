@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.io;
+package com.helger.photon.io;
 
 import static org.junit.Assert.assertTrue;
 
@@ -25,7 +25,6 @@ import org.junit.rules.TestRule;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.id.factory.IIntIDFactory;
-import com.helger.photon.app.mock.PhotonAppTestRule;
 
 /**
  * Test class for class {@link WebIOIntIDFactory}.
@@ -35,7 +34,7 @@ import com.helger.photon.app.mock.PhotonAppTestRule;
 public final class WebIOIntIDFactoryTest
 {
   @Rule
-  public final TestRule m_aRule = new PhotonAppTestRule ();
+  public final TestRule m_aRule = new PhotonIOTestRule ();
 
   @Test
   public void testFileBasedIDProvider ()

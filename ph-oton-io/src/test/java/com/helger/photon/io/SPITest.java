@@ -14,24 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.io;
+package com.helger.photon.io;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.ThreadSafe;
+import org.junit.Test;
 
-import com.helger.commons.id.factory.FileLongIDFactory;
+import com.helger.commons.mock.SPITestHelper;
 
 /**
- * A special {@link FileLongIDFactory} that uses {@link WebFileIO} to get the
- * filename.
+ * Test SPI definitions
  *
  * @author Philip Helger
  */
-@ThreadSafe
-public class WebIOLongIDFactory extends FileLongIDFactory
+public final class SPITest
 {
-  public WebIOLongIDFactory (@Nonnull final String sFilename)
+  @Test
+  public void testBasic () throws Exception
   {
-    super (WebFileIO.getDataIO ().getFile (sFilename));
+    SPITestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }

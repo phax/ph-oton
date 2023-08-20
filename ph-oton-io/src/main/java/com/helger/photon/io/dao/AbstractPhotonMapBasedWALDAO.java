@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.app.dao;
+package com.helger.photon.io.dao;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.id.IHasID;
 import com.helger.dao.DAOException;
 import com.helger.dao.wal.AbstractMapBasedWALDAO;
-import com.helger.photon.app.io.WebFileIO;
+import com.helger.photon.io.WebFileIO;
 
 /**
  * Special {@link AbstractMapBasedWALDAO} that uses the

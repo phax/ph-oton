@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.helger.photon.app.mock.MockCurrentUserIDProvider;
+import com.helger.photon.audit.mock.MockCurrentUserIDProvider;
 
 /**
  * Test class for class {@link DefaultLockManager}.
