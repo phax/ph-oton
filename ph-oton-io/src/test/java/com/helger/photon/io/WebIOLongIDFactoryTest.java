@@ -25,7 +25,7 @@ import org.junit.rules.TestRule;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.id.factory.ILongIDFactory;
-import com.helger.photon.mock.PhotonIOTestRule;
+import com.helger.photon.io.mock.PhotonIOTestRule;
 
 /**
  * Test class for class {@link WebIOLongIDFactory}.
