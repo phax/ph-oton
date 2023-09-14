@@ -99,6 +99,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.2.1 - work in progress
+    * Updated to Jetty 11.0.16
 * v9.2.0 - 2023-08-20
     * Extracted submodule `ph-oton-io` for dependency minimized inclusion
 * v9.1.4 - 2023-08-17
