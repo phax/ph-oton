@@ -603,8 +603,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
     if (false)
       aOptions.add ("debug", true);
 
-    if (StringHelper.hasText (m_aDisplayLocale.getLanguage ()))
-      aOptions.add ("locale", m_aDisplayLocale.getLanguage ());
+    // Internally falls back
+    aOptions.add ("locale", m_aDisplayLocale.toString ());
 
     if (m_eViewMode != null)
       aOptions.add ("viewMode", m_eViewMode.getJSValueString ());

@@ -51,7 +51,9 @@ public class PagePublicDateTimePicker extends AbstractAppWebPage
                                                                               PDTFactory.getCurrentLocalDate (),
                                                                               aDisplayLocale);
       aPicker.addChildSuffix ("Date");
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (HCFormLabel.createOptional ("Date selector")).setCtrl (aPicker));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (HCFormLabel.createOptional ("Date selector [" +
+                                                                                          aDisplayLocale +
+                                                                                          "]")).setCtrl (aPicker));
     }
     {
       final BootstrapDateTimePicker aPicker = BootstrapDateTimePicker.create ("timepicker",
@@ -71,13 +73,26 @@ public class PagePublicDateTimePicker extends AbstractAppWebPage
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel ("Date and time selector").setCtrl (aPicker));
     }
 
+    // Enforce US UI
+    {
+      final BootstrapDateTimePicker aPicker = BootstrapDateTimePicker.create ("datepicker",
+                                                                              PDTFactory.getCurrentLocalDate (),
+                                                                              Locale.US);
+      aPicker.addChildSuffix ("Datum");
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (HCFormLabel.createOptional ("Date selector [" +
+                                                                                          Locale.US +
+                                                                                          "]")).setCtrl (aPicker));
+    }
+
     // Enforce German UI
     {
       final BootstrapDateTimePicker aPicker = BootstrapDateTimePicker.create ("datepicker",
                                                                               PDTFactory.getCurrentLocalDate (),
                                                                               Locale.GERMANY);
       aPicker.addChildSuffix ("Datum");
-      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (HCFormLabel.createOptional ("Date selector in German")).setCtrl (aPicker));
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (HCFormLabel.createOptional ("Date selector [" +
+                                                                                          Locale.GERMANY +
+                                                                                          "]")).setCtrl (aPicker));
     }
   }
 }
