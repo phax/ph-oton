@@ -100,7 +100,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v9.2.2 - work in progress
-    * Updated to Jetty 11.0.18
+    * Updated to Jetty 11.0.19
+    * The default folder structure for internal errors was changed from `YYYY/MM` to `YYYY/MM/DD`
 * v9.2.1 - 2023-09-26
     * Updated to Jetty 11.0.16
     * Fixed DateTime picker error in September for en-gb locale [Java 17]
