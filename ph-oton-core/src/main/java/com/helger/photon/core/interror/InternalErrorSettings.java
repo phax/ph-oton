@@ -201,6 +201,16 @@ public final class InternalErrorSettings
   }
 
   /**
+   * @return The fallback locale to use. Never <code>null</code>.
+   * @since 7.0.4
+   */
+  @Nonnull
+  public static Locale getFallbackLocale ()
+  {
+    return RW_LOCK.readLockedGet ( () -> s_aFallbackLocale);
+  }
+
+  /**
    * Set the fallback locale in case none could be determined.
    *
    * @param aFallbackLocale
@@ -211,16 +221,6 @@ public final class InternalErrorSettings
   {
     ValueEnforcer.notNull (aFallbackLocale, "FallbackLocale");
     RW_LOCK.writeLocked ( () -> s_aFallbackLocale = aFallbackLocale);
-  }
-
-  /**
-   * @return The fallback locale to use. Never <code>null</code>.
-   * @since 7.0.4
-   */
-  @Nonnull
-  public static Locale getFallbackLocale ()
-  {
-    return RW_LOCK.readLockedGet ( () -> s_aFallbackLocale);
   }
 
   /**
@@ -241,7 +241,7 @@ public final class InternalErrorSettings
   @Nonnull
   public static Function <InternalErrorMetadata, File> getStorageFileProvider ()
   {
-    return s_aStorageFileProvider;
+    return RW_LOCK.readLockedGet ( () -> s_aStorageFileProvider);
   }
 
   /**
@@ -255,7 +255,7 @@ public final class InternalErrorSettings
   public static void setStorageFileProvider (@Nonnull final Function <InternalErrorMetadata, File> aStorageFileProvider)
   {
     ValueEnforcer.notNull (aStorageFileProvider, "StorageFileProvider");
-    s_aStorageFileProvider = aStorageFileProvider;
+    RW_LOCK.writeLocked ( () -> s_aStorageFileProvider = aStorageFileProvider);
   }
 
   /**
@@ -263,7 +263,7 @@ public final class InternalErrorSettings
    * to restore the default behavior.
    *
    * @see #setStorageFileProvider(Function)
-   * @since 8.0.3
+   * @since 9.2.2
    */
   public static void setDefaultStorageFileProvider ()
   {
@@ -271,8 +271,35 @@ public final class InternalErrorSettings
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) +
-                               ".xml";
+                                                                     aMetadata.getErrorID ()) + ".xml";
+      return WebFileIO.getDataIO ()
+                      .getFile ("internal-errors/" +
+                                aNow.getYear () +
+                                "/" +
+                                StringHelper.getLeadingZero (aNow.getMonthValue (), 2) +
+                                "/" +
+                                StringHelper.getLeadingZero (aNow.getDayOfMonth (), 2) +
+                                "/" +
+                                sFilename);
+    });
+  }
+
+  /**
+   * Set the storage file provider to the default before v9.2.2. The difference
+   * to {@link #setDefaultStorageFileProvider()} is, that this version does not
+   * contain a "day" subfolder.
+   *
+   * @see #setStorageFileProvider(Function)
+   * @since 8.0.3
+   */
+  @Deprecated
+  public static void setDefaultStorageFileProviderUpTo921 ()
+  {
+    setStorageFileProvider (aMetadata -> {
+      final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
+      final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
+                                                                     "-",
+                                                                     aMetadata.getErrorID ()) + ".xml";
       return WebFileIO.getDataIO ()
                       .getFile ("internal-errors/" +
                                 aNow.getYear () +
@@ -291,14 +318,14 @@ public final class InternalErrorSettings
    * @see #setStorageFileProvider(Function)
    * @since 8.0.3
    */
+  @Deprecated
   public static void setDefaultStorageFileProviderUpTo802 ()
   {
     setStorageFileProvider (aMetadata -> {
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) +
-                               ".xml";
+                                                                     aMetadata.getErrorID ()) + ".xml";
       return WebFileIO.getDataIO ().getFile ("internal-errors/" + aNow.getYear () + "/" + sFilename);
     });
   }
