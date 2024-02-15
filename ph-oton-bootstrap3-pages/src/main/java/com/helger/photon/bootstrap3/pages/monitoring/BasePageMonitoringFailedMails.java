@@ -197,7 +197,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
                           return EShowList.SHOW_LIST;
                         }
                       });
-    final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (true)
+    final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendHdl = new AbstractBootstrapWebPageActionHandler <> (true)
     {
       @Nonnull
       public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)
@@ -230,7 +230,7 @@ public class BasePageMonitoringFailedMails <WPECTYPE extends IWebPageExecutionCo
     };
     addCustomHandler (ACTION_RESEND, aResendHdl);
     addCustomHandler (ACTION_RESEND_DEFAULT_SETTINGS, aResendHdl);
-    final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendAllHdl = new AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> (false)
+    final AbstractBootstrapWebPageActionHandler <FailedMailData, WPECTYPE> aResendAllHdl = new AbstractBootstrapWebPageActionHandler <> (false)
     {
       @Nonnull
       public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final FailedMailData aSelectedObject)

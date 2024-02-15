@@ -80,6 +80,7 @@ public abstract class AbstractLoginManager
    * Attribute name for the LoginInfo attribute that holds the user-agent string
    * of the last request. Type: String.
    */
+  @Deprecated (forRemoval = true)
   public static final String LOGIN_INFO_USER_AGENT = "user-agent";
 
   /**
