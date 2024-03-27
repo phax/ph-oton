@@ -93,7 +93,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   @Nullable
   public TypeaheadDataset getFirstDataset ()
   {
-    return m_aDatasets.getFirst ();
+    return m_aDatasets.getFirstOrNull ();
   }
 
   @Nullable
@@ -246,7 +246,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
     if (m_aDatasets.size () == 1)
     {
       // Exactly one dataset
-      ret.arg (m_aDatasets.getFirst ().getAsJSObject ());
+      ret.arg (m_aDatasets.getFirstOrNull ().getAsJSObject ());
     }
     else
     {
