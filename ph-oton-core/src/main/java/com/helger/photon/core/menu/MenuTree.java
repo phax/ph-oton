@@ -61,7 +61,9 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
                                                                       @Nonnull final T aMenuObject)
   {
     if (aParentItem.createChildItem (aMenuObject.getID (), aMenuObject, false) == null)
-      throw new IllegalArgumentException ("Failed to add the menu object " + aMenuObject + " probably the ID is already contained!");
+      throw new IllegalArgumentException ("Failed to add the menu object " +
+                                          aMenuObject +
+                                          " probably the ID is already contained!");
     return aMenuObject;
   }
 
@@ -87,7 +89,9 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   }
 
   @Nonnull
-  public IMenuItemPage createItem (@Nonnull final String sParentID, @Nonnull final String sItemID, @Nonnull final IPage aPage)
+  public IMenuItemPage createItem (@Nonnull final String sParentID,
+                                   @Nonnull final String sItemID,
+                                   @Nonnull final IPage aPage)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
     if (aParentItem == null)
@@ -142,7 +146,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   @Nullable
   public String getDefaultMenuItemID ()
   {
-    return m_aDefaultMenuItemIDs.getFirst ();
+    return m_aDefaultMenuItemIDs.getFirstOrNull ();
   }
 
   @Nonnull

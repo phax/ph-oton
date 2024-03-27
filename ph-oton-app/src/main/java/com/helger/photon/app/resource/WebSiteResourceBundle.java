@@ -66,12 +66,13 @@ public class WebSiteResourceBundle
     m_sConditionalComment = sConditionalComment;
     m_bIsBundlable = bIsBundlable;
     m_aMediaList = aMediaList == null || aMediaList.hasNoMedia () ? null : new CSSMediaList (aMediaList);
-    m_eResourceType = m_aResources.getFirst ().getResourceType ();
+    m_eResourceType = m_aResources.getFirstOrNull ().getResourceType ();
 
     // Consistency check
     for (final WebSiteResourceWithCondition aResource : aResources)
       if (!aResource.getResource ().getResourceType ().equals (m_eResourceType))
-        throw new IllegalArgumentException ("The passed resources are mixed of different resource types: " + aResources);
+        throw new IllegalArgumentException ("The passed resources are mixed of different resource types: " +
+                                            aResources);
   }
 
   /**

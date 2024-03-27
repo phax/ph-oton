@@ -46,7 +46,7 @@ public final class HCSpecialNodeHandlerTest
       final ICommonsList <IHCNode> ret = CollectionHelper.newList (aNodes);
       // Remove all but the first
       if (ret.isNotEmpty ())
-        ret.removeFirst ();
+        ret.removeFirstOrNull ();
       return ret;
     }
   }

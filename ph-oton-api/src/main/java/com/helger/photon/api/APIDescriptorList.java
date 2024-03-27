@@ -74,7 +74,8 @@ public class APIDescriptorList implements Serializable
   }
 
   @Nullable
-  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath, @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
+  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath,
+                                             @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
     ValueEnforcer.notNull (aPath, "Path");
     ValueEnforcer.notNull (aAmbiguityResolver, "AmbiguityResolver");
@@ -101,7 +102,7 @@ public class APIDescriptorList implements Serializable
     if (nMatching == 1)
     {
       // 1 match - straight forward
-      return aMatching.getFirst ();
+      return aMatching.getFirstOrNull ();
     }
 
     // Use the resolver...

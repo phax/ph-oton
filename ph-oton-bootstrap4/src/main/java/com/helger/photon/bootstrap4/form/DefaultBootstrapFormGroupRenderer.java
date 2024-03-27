@@ -179,7 +179,7 @@ public class DefaultBootstrapFormGroupRenderer implements IBootstrapFormGroupRen
     final IHCControl <?> aFirstControl;
     if (aAllCtrls.isNotEmpty ())
     {
-      aFirstControl = aAllCtrls.getFirst ();
+      aFirstControl = aAllCtrls.getFirstOrNull ();
 
       // Set CSS class to all contained controls
       BootstrapFormHelper.markAsFormControls (aAllCtrls);

@@ -128,7 +128,7 @@ public class BasePageDataLanguages <WPECTYPE extends IWebPageExecutionContext> e
     {
       final HCRow aRow = aTable.addBodyRow ();
       aRow.addCell (aEntry.getKey ());
-      aRow.addCell (aEntry.getValue ().getFirst ().getDisplayLanguage (aDisplayLocale));
+      aRow.addCell (aEntry.getValue ().getFirstOrNull ().getDisplayLanguage (aDisplayLocale));
 
       final IHCCell <?> aCell = aRow.addCell ();
       for (final Locale aLocale : aEntry.getValue ().getSortedInline (Comparator.comparing (Locale::toString)))

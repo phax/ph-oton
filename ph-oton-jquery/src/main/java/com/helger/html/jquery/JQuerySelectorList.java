@@ -112,10 +112,10 @@ public class JQuerySelectorList implements IHasJSCodeWithSettings
       throw new IllegalStateException ("Empty jQuery selector is not allowed!");
 
     if (nSize == 1)
-      return m_aElements.getFirst ().getExpression ();
+      return m_aElements.getFirstOrNull ().getExpression ();
 
     // Concatenate with ' '
-    IJSExpression ret = m_aElements.getFirst ().getExpression ();
+    IJSExpression ret = m_aElements.getFirstOrNull ().getExpression ();
     for (int i = 1; i < nSize; ++i)
       ret = ret.plus (' ').plus (m_aElements.get (i).getExpression ());
     return ret;

@@ -73,8 +73,9 @@ public final class NetworkInterfaceHelper
     int nNotFound = 0;
     while (aNonRootNIs.isNotEmpty ())
     {
-      final NetworkInterface aNI = aNonRootNIs.removeFirst ();
-      final DefaultTreeItemWithID <String, NetworkInterface> aParentItem = ret.getItemWithID (aNI.getParent ().getName ());
+      final NetworkInterface aNI = aNonRootNIs.removeFirstOrNull ();
+      final DefaultTreeItemWithID <String, NetworkInterface> aParentItem = ret.getItemWithID (aNI.getParent ()
+                                                                                                 .getName ());
       if (aParentItem != null)
       {
         // We found the parent
@@ -94,7 +95,8 @@ public final class NetworkInterfaceHelper
         // We tried too many times without success - we iterated the whole
         // remaining list and found no parent tree item
         if (nNotFound > aNonRootNIs.size ())
-          throw new IllegalStateException ("Seems like we have a data structure inconsistency! Remaining are: " + aNonRootNIs);
+          throw new IllegalStateException ("Seems like we have a data structure inconsistency! Remaining are: " +
+                                           aNonRootNIs);
       }
     }
     return ret;

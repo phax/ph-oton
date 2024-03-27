@@ -50,7 +50,7 @@ public class Main_QueryInvocationFuncTest extends AbstractCreateJQueryAPIList
           break;
         }
 
-      final Entry aEntry = aEntries.getFirst ();
+      final Entry aEntry = aEntries.getFirstOrNull ();
 
       // Static methods are handled in class jQuery
       if (!aEntry.isStaticMethod ())

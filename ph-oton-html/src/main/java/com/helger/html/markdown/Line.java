@@ -239,7 +239,9 @@ final class Line
     if (bExtendedMode)
     {
       if (m_sValue.length () - m_nLeading - m_nTrailing > 2 &&
-          (m_sValue.charAt (m_nLeading) == '`' || m_sValue.charAt (m_nLeading) == '~' || m_sValue.charAt (m_nLeading) == '%'))
+          (m_sValue.charAt (m_nLeading) == '`' ||
+           m_sValue.charAt (m_nLeading) == '~' ||
+           m_sValue.charAt (m_nLeading) == '%'))
       {
         if (_countCharsStart ('`') >= 3)
           return ELineType.FENCED_CODE;
@@ -253,7 +255,9 @@ final class Line
     }
 
     if (m_sValue.length () - m_nLeading - m_nTrailing > 2 &&
-        (m_sValue.charAt (m_nLeading) == '*' || m_sValue.charAt (m_nLeading) == '-' || m_sValue.charAt (m_nLeading) == '_'))
+        (m_sValue.charAt (m_nLeading) == '*' ||
+         m_sValue.charAt (m_nLeading) == '-' ||
+         m_sValue.charAt (m_nLeading) == '_'))
     {
       if (_countConsecutiveChars (m_sValue.charAt (m_nLeading)) >= 3)
         return ELineType.HR;
@@ -484,9 +488,9 @@ final class Line
             {
               if (sElement.charAt (1) == '/')
               {
-                if (!aTags.getLast ().equals (sTag))
+                if (!aTags.getLastOrNull ().equals (sTag))
                   return EHTMLElementType.NONE;
-                aTags.removeLast ();
+                aTags.removeLastOrNull ();
               }
               else
               {

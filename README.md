@@ -100,7 +100,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v9.2.2 - work in progress
+    * Updated to ph-commons 11.1.5
     * Updated to Jetty 11.0.20
+    * Created Java 21 compatibility
     * The default folder structure for internal errors was changed from `YYYY/MM` to `YYYY/MM/DD`
 * v9.2.1 - 2023-09-26
     * Updated to Jetty 11.0.16

@@ -142,7 +142,7 @@ public class InlineCSSList
   public void addInlineCSS (@Nullable final ICSSMediaList aMediaList, @Nonnull final CharSequence aInlineCSS)
   {
     final Key aKey = new Key (aMediaList);
-    final Item aLastItem = m_aItems.getLast ();
+    final Item aLastItem = m_aItems.getLastOrNull ();
     final Key aLastKey = aLastItem == null ? null : aLastItem.getKey ();
     Item aItemToUse;
     if (aLastKey != null && aLastKey.equals (aKey))
@@ -176,7 +176,10 @@ public class InlineCSSList
   @ReturnsMutableCopy
   public ICommonsList <ICSSCodeProvider> getAll ()
   {
-    return m_aItems.getAllMapped (aItem -> new ConstantCSSCodeProvider (aItem.getCSS (), null, aItem.getMediaList (), true));
+    return m_aItems.getAllMapped (aItem -> new ConstantCSSCodeProvider (aItem.getCSS (),
+                                                                        null,
+                                                                        aItem.getMediaList (),
+                                                                        true));
   }
 
   @Override

@@ -61,7 +61,7 @@ public final class Bootstrap4DateTimePickerSpecialNodeListModifier implements IH
     final ICommonsList <Bootstrap4DateTimePickerJS> aRest = aDTPs.getClone ();
     while (aRest.isNotEmpty ())
     {
-      final Bootstrap4DateTimePickerJS aCurrent = aRest.removeFirst ();
+      final Bootstrap4DateTimePickerJS aCurrent = aRest.removeFirstOrNull ();
       final JSAssocArray aCurrentJSOptions = aCurrent.getDateTimePicker ().getJSOptions ();
 
       // Find all other date time pickers with the same options

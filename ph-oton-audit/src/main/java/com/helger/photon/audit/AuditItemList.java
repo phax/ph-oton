@@ -47,7 +47,7 @@ public final class AuditItemList
 
   void internalKeepOnlyLast ()
   {
-    final IAuditItem aLastItem = m_aItems.getLast ();
+    final IAuditItem aLastItem = m_aItems.getLastOrNull ();
     m_aItems.clear ();
     m_aItems.add (aLastItem);
   }

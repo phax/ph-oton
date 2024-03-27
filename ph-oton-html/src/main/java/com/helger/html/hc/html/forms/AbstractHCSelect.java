@@ -52,7 +52,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        the implementation type
  */
-public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE> implements
+public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLTYPE>> extends
+                                       AbstractHCControl <IMPLTYPE> implements
                                        IHCSelect <IMPLTYPE>
 {
   /** By default multi select is disabled */
@@ -293,7 +294,8 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_aOptions.containsAny (HCOptGroup.class::isInstance);
   }
 
-  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = x -> x instanceof HCOption && ((HCOption) x).isSelected ();
+  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = x -> x instanceof HCOption &&
+                                                                       ((HCOption) x).isSelected ();
 
   @Nonnull
   @ReturnsMutableCopy
@@ -353,14 +355,14 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   @Nullable
   public final IHCNode getFirstChild ()
   {
-    return m_aOptions.getFirst ();
+    return m_aOptions.getFirstOrNull ();
   }
 
   @Override
   @Nullable
   public final IHCNode getLastChild ()
   {
-    return m_aOptions.getLast ();
+    return m_aOptions.getLastOrNull ();
   }
 
   @Override
