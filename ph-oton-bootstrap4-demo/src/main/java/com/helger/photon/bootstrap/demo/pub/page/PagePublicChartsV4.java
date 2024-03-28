@@ -21,6 +21,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnull;
 
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uictrls.chart.v4.ChartBar;
@@ -67,9 +68,10 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
                                             .setTension (0));
       aChart.addDataSet (new ChartDataSet ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
                                             .setLabel ("Sequence 2")
-                                            .setBorderColor ("#c94")
                                             .setBorderColor ("red")
-                                            .setFill (true)
+                                            .setFill (new JSAssocArray ().add ("target", "origin")
+                                                                         .add ("above", "rgb(255, 128, 0)")
+                                                                         .add ("below", "rgb(0, 0, 255)"))
                                             .setTension (0.5));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 

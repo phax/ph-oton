@@ -33,7 +33,6 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSBlock;
 import com.helger.html.jscode.JSDefinedClass;
-import com.helger.html.jscode.JSDelete;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSRef;
@@ -168,10 +167,9 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
     final JSPackage aJSBody = new JSPackage ();
 
     // Add previous clean up code
-    if (false)
     {
       final JSRef aOldData = JSExpr.ref (getJSDataVar ());
-      aJSBody._if (aOldData, new JSDelete (aOldData));
+      aJSBody._if (aOldData)._then ().delete (aOldData);
 
       final JSRef aOldChart = JSExpr.ref (getJSChartVar ());
       final JSBlock aJSDelOld = aJSBody._if (aOldChart)._then ();

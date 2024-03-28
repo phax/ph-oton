@@ -22,6 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.mutable.MutableBigDecimal;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.jscode.IJSExpression;
@@ -43,6 +47,7 @@ public class ChartDataSet
   private String m_sBorderColor;
   private IJSExpression m_aFill;
   private String m_sTension;
+  private final ICommonsOrderedMap <String, IJSExpression> m_aCustomProps = new CommonsLinkedHashMap <> ();
 
   public ChartDataSet ()
   {}
@@ -140,6 +145,17 @@ public class ChartDataSet
   }
 
   @Nonnull
+  public ChartDataSet setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final IJSExpression aValue)
+  {
+    ValueEnforcer.notEmpty (sKey, "Key");
+    if (aValue == null)
+      m_aCustomProps.remove (sKey);
+    else
+      m_aCustomProps.put (sKey, aValue);
+    return this;
+  }
+
+  @Nonnull
   public JSAssocArray getJSData ()
   {
     final JSAssocArray ret = new JSAssocArray ();
@@ -155,6 +171,8 @@ public class ChartDataSet
       ret.add ("fill", m_aFill);
     if (StringHelper.hasText (m_sTension))
       ret.add ("tension", m_sTension);
+    if (m_aCustomProps.isNotEmpty ())
+      ret.addAll (m_aCustomProps);
     return ret;
   }
 }
