@@ -29,18 +29,18 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Bar Chart
+ * Line Chart
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ChartBar extends AbstractChartV4WithLabels <ChartBar>
+public class ChartLine extends AbstractChartV4WithLabels <ChartLine>
 {
   private final ICommonsList <ChartDataSet> m_aDataSets = new CommonsArrayList <> ();
 
-  public ChartBar ()
+  public ChartLine ()
   {
-    super ("bar");
+    super ("line");
   }
 
   public boolean hasDataSet ()
@@ -62,7 +62,7 @@ public class ChartBar extends AbstractChartV4WithLabels <ChartBar>
   }
 
   @Nonnull
-  public ChartBar addDataSet (@Nonnull final ChartDataSet aDataSet)
+  public ChartLine addDataSet (@Nonnull final ChartDataSet aDataSet)
   {
     ValueEnforcer.notNull (aDataSet, "DataSet");
     m_aDataSets.add (aDataSet);
@@ -96,9 +96,6 @@ public class ChartBar extends AbstractChartV4WithLabels <ChartBar>
   public JSAssocArray getJSOptions ()
   {
     final JSAssocArray ret = super.getJSOptions ();
-    final JSAssocArray aScales = (JSAssocArray) ret.computeIfAbsent ("scales", k -> new JSAssocArray ());
-    final JSAssocArray aY = (JSAssocArray) aScales.computeIfAbsent ("y", k -> new JSAssocArray ());
-    aY.add ("beginAtZero", true);
     return ret;
   }
 }

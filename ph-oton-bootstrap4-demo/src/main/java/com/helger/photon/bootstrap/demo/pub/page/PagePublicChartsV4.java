@@ -24,6 +24,8 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uictrls.chart.v4.ChartBar;
+import com.helger.photon.uictrls.chart.v4.ChartDataSet;
+import com.helger.photon.uictrls.chart.v4.ChartLine;
 import com.helger.photon.uictrls.chart.v4.HCChartV4;
 
 public class PagePublicChartsV4 extends AbstractAppWebPage
@@ -43,13 +45,32 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
       aNodeList.addChild (h3 ("Bar chart (v4)"));
       final ChartBar aChart = new ChartBar ();
       aChart.setUseAnimations (false);
-      aChart.addDataSet (new ChartBar.DataSet ().setData (10,
-                                                          15,
-                                                          10 + ThreadLocalRandom.current ().nextInt (10),
-                                                          20,
-                                                          15)
-                                                .setLabel ("Week days")
-                                                .setBorderWidth (2));
+      aChart.addDataSet (new ChartDataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
+                                            .setLabel ("Week days")
+                                            .setBorderWidth (2));
+      aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
+
+      final HCChartV4 aHCChart = new HCChartV4 (aChart);
+      aHCChart.setWidth (800).setHeight (300);
+      aNodeList.addChild (aHCChart);
+    }
+
+    // Line Chart
+    {
+      aNodeList.addChild (h3 ("Line chart (v4)"));
+      final ChartLine aChart = new ChartLine ();
+      aChart.setUseAnimations (false);
+      aChart.addDataSet (new ChartDataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
+                                            .setLabel ("Sequence 1")
+                                            .setBorderColor ("#4c9")
+                                            .setFill (false)
+                                            .setTension (0));
+      aChart.addDataSet (new ChartDataSet ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
+                                            .setLabel ("Sequence 2")
+                                            .setBorderColor ("#c94")
+                                            .setBorderColor ("red")
+                                            .setFill (true)
+                                            .setTension (0.5));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChartV4 aHCChart = new HCChartV4 (aChart);

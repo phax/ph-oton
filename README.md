@@ -104,6 +104,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to Jetty 11.0.20
     * Created Java 21 compatibility
     * The default folder structure for internal errors was changed from `YYYY/MM` to `YYYY/MM/DD`
+    * Added initial support for charts.js v4
 * v9.2.1 - 2023-09-26
     * Updated to Jetty 11.0.16
     * Fixed DateTime picker error in September for en-gb locale [Java 17]
