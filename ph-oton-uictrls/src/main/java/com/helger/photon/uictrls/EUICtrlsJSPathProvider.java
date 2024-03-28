@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.resource.IHTMLResourceProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 
@@ -37,12 +38,10 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   /** BigDecimal support for JS */
   BIG_DECIMAL ("external/js/big.js"),
   CHART_1 ("external/chart/1.1.1/Chart.js"),
-  CHART_2 ("external/chart/2.9.4/Chart.js"),
-  CHART_3 ("external/chart/3.7.1/chart.js"),
+  CHART_4 ("external/chart/4.4.2/chart.umd.js", IHTMLResourceProvider.DEFAULT_IS_BUNDLABLE, true),
   CLIPBOARD ("external/clipboardjs/2.0.6/clipboard.js"),
   COLORBOX ("external/colorbox/1.6.0/jquery.colorbox.js"),
   FINEUPLOADER_320 ("external/fineupload/320/fineuploader.js"),
-  FINEUPLOADER_330 ("external/fineupload/330/fineuploader.js"),
   FINEUPLOADER_5 ("external/fineupload/5.16.2/fine-uploader.js"),
   HANDLEBARS_4 ("external/handlebars/4.1.2/handlebars.runtime-v4.1.2.js"),
   JSCOLOR ("external/jscolor/1.4.4ph/jscolor.js"),
@@ -63,14 +62,19 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
     m_aPP = ConstantJSPathProvider.create (sPath);
   }
 
-  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
-  {
-    m_aPP = ConstantJSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
-  }
-
   EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
   {
     m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
+  }
+
+  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath,
+                          final boolean bCanBeBundled,
+                          final boolean bIsAlreadyMinified)
+  {
+    if (bIsAlreadyMinified)
+      m_aPP = new ConstantJSPathProvider (sPath, sPath, DEFAULT_CONDITIONAL_COMMENT, bCanBeBundled);
+    else
+      m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
   }
 
   @Nonnull

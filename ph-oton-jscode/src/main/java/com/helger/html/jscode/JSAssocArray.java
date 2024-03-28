@@ -321,6 +321,24 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return m_aExprs.get (aKey);
   }
 
+  @Nullable
+  public IJSExpression computeIfAbsent (@Nullable final String sKey,
+                                        @Nonnull final Function <IJSExpression, IJSExpression> aValueSupplier)
+  {
+    if (sKey == null)
+      return null;
+    return computeIfAbsent (getKey (sKey), aValueSupplier);
+  }
+
+  @Nullable
+  public IJSExpression computeIfAbsent (@Nullable final IJSExpression aKey,
+                                        @Nonnull final Function <IJSExpression, IJSExpression> aValueSupplier)
+  {
+    if (m_aExprs == null)
+      m_aExprs = new CommonsLinkedHashMap <> ();
+    return m_aExprs.computeIfAbsent (aKey, aValueSupplier);
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <IJSExpression, IJSExpression> getAll ()
@@ -368,6 +386,9 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("exprs", m_aExprs).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Exprs", m_aExprs)
+                            .append ("ForceQuotingNames", m_bForceQuotingNames)
+                            .getToString ();
   }
 }
