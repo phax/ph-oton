@@ -80,7 +80,7 @@ public abstract class AbstractLoginManager
    * Attribute name for the LoginInfo attribute that holds the user-agent string
    * of the last request. Type: String.
    */
-  @Deprecated (forRemoval = true)
+  @Deprecated (forRemoval = true, since = "9.2.1")
   public static final String LOGIN_INFO_USER_AGENT = "user-agent";
 
   /**
@@ -230,6 +230,7 @@ public abstract class AbstractLoginManager
    *        <code>true</code> if the user just logged in with this request.
    *        Added in 3.4.0.
    */
+  @SuppressWarnings ("removal")
   @OverrideOnDemand
   protected void modifyLoginInfo (@Nonnull final LoginInfo aLoginInfo,
                                   @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
