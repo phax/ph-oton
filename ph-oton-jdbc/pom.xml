@@ -53,24 +53,9 @@
     </developer>
   </developers>
   
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.helger.commons</groupId>
-        <artifactId>ph-commons-parent-pom</artifactId>
-        <version>${ph-commons.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-db-parent-pom</artifactId>
-        <version>7.0.4</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>  
-  </dependencyManagement>
+  <properties>
+    <ph-db.version>7.0.4</ph-db.version>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -84,6 +69,7 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-db-jdbc</artifactId>
+      <version>${ph-db.version}</version>
     </dependency>
 
     <dependency>
