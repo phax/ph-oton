@@ -25,11 +25,6 @@ Contained subprojects are:
   * ph-oton-datatables- Datatables.net wrapper
   * ph-oton-uictrls - misc web UI controls
   * ph-oton-jetty - wrapper for Jetty to simply use as main 
-  * ph-oton-bootstrap3 - Java Wrapper for the Bootstrap 3.x controls
-  * ph-oton-bootstrap3-uictrls - special UI controls for Bootstrap 3
-  * ph-oton-bootstrap3-pages - predefined UI pages with Bootstrap 3 styling
-  * ph-oton-bootstrap3-stub - Servlet stub for Bootstrap 3 web applications
-  * ph-oton-bootstrap3-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
   * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
   * ph-oton-bootstrap4-uictrls - special UI controls for Bootstrap 4
   * ph-oton-bootstrap4-pages - predefined UI pages with Bootstrap 4 styling
@@ -80,26 +75,9 @@ See the submodule `ph-oton-bootstrap4-demo` for a working example project with B
 
 Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
-### Bootstrap 3
-
-To use Bootstrap 3 front end use:
-
-```xml
-  <dependencies>
-    <dependency>
-      <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-bootstrap3-stub</artifactId>
-    </dependency>
-  </dependencies>
-```
-
-See the submodule `ph-oton-bootstrap3-demo` for a working example project with Bootstrap 3 UI.
-
-Note: prior to v8.2.5 the Maven groupId was `com.helger`.
-
 ## News and noteworthy
 
-* v9.2.3 - work in progress
+* v9.2.3 - 2024-04-18
     * Updated to Log4J 2.23.1
     * Updated to jQuery 3.7.1
     * Updated to moment.js 2.30.1
