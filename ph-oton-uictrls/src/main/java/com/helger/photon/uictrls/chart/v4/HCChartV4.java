@@ -47,8 +47,8 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   private final IChartV4 m_aChart;
   private final int m_nID;
   // Canvas initial width
-  private IJSExpression m_aWidth;
-  private IJSExpression m_aHeight;
+  private IJSExpression m_aInitialWidth;
+  private IJSExpression m_aInitialHeight;
 
   public HCChartV4 (@Nonnull final IChartV4 aChart)
   {
@@ -89,7 +89,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   @Nonnull
   public HCChartV4 setInitialWidth (@Nullable final IJSExpression aWidth)
   {
-    m_aWidth = aWidth;
+    m_aInitialWidth = aWidth;
     return this;
   }
 
@@ -102,7 +102,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   @Nonnull
   public HCChartV4 setInitialHeight (@Nullable final IJSExpression aHeight)
   {
-    m_aHeight = aHeight;
+    m_aInitialHeight = aHeight;
     return this;
   }
 
@@ -185,10 +185,10 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
     }
 
     final JSVar aJSCanvas = aJSBody.variable (getCanvasID (), JSHtml.documentGetElementById (this));
-    if (m_aWidth != null)
-      aJSBody.add (aJSCanvas.ref ("width").assign (m_aWidth));
-    if (m_aHeight != null)
-      aJSBody.add (aJSCanvas.ref ("height").assign (m_aHeight));
+    if (m_aInitialWidth != null)
+      aJSBody.add (aJSCanvas.ref ("width").assign (m_aInitialWidth));
+    if (m_aInitialHeight != null)
+      aJSBody.add (aJSCanvas.ref ("height").assign (m_aInitialHeight));
 
     // Init after width and height was of the canvas was set
 

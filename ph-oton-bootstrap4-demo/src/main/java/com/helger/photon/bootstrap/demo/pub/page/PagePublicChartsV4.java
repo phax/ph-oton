@@ -20,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnull;
 
+import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
@@ -83,7 +84,6 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChartV4 aHCChart = new HCChartV4 (aChart);
-      aHCChart.setWidth (800).setHeight (300);
       aNodeList.addChild (aHCChart);
     }
 
@@ -115,8 +115,7 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChartV4 aHCChart = new HCChartV4 (aChart);
-      aHCChart.setWidth (800).setHeight (300);
-      aNodeList.addChild (aHCChart);
+      aNodeList.addChild (div (aHCChart).addStyle (CCSSProperties.WIDTH.newValue ("40rem")));
     }
   }
 }
