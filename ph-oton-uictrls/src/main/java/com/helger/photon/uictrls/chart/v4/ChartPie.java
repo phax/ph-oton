@@ -28,7 +28,7 @@ import com.helger.html.jscode.JSAssocArray;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ChartPie extends AbstractChartV4WithLabels <ChartPie>
+public class ChartPie extends AbstractChartV4WithLabels <ChartPie, ChartDataSetPie>
 {
   public ChartPie ()
   {

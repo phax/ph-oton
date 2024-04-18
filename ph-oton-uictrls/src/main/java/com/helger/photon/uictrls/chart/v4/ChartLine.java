@@ -28,7 +28,7 @@ import com.helger.html.jscode.JSAssocArray;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ChartLine extends AbstractChartV4WithLabels <ChartLine>
+public class ChartLine extends AbstractChartV4WithLabels <ChartLine, ChartDataSetLine>
 {
   public ChartLine ()
   {

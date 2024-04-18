@@ -20,14 +20,17 @@ import java.math.BigDecimal;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.mutable.MutableBigDecimal;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
@@ -37,125 +40,85 @@ import com.helger.html.jscode.JSExpr;
  * Single data set for a complex chart.
  *
  * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Implementation type
  */
 @NotThreadSafe
-public class ChartDataSet
+public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTYPE>> implements
+                                  IGenericImplTrait <IMPLTYPE>
 {
   private String m_sLabel;
   private JSArray m_aData;
-  private String m_sBorderWidth;
-  private String m_sBorderColor;
-  private IJSExpression m_aFill;
-  private String m_sTension;
   private final ICommonsOrderedMap <String, IJSExpression> m_aCustomProps = new CommonsLinkedHashMap <> ();
 
-  public ChartDataSet ()
+  public AbstractChartDataSet ()
   {}
 
+  @Nullable
+  protected static final IJSExpression _toExpr (@Nullable final String s)
+  {
+    return StringHelper.hasText (s) ? JSExpr.lit (s) : null;
+  }
+
+  @Nullable
+  protected static final JSArray _toExpr (@Nullable final String... a)
+  {
+    return a == null ? null : new JSArray ().addAll (a);
+  }
+
   @Nonnull
-  public ChartDataSet setLabel (@Nullable final String sLabel)
+  public IMPLTYPE setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public ChartDataSet setData (@Nullable final int... aData)
+  public IMPLTYPE setData (@Nullable final int... aData)
   {
     m_aData = new JSArray ().addAll (aData);
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public ChartDataSet setData (@Nullable final double... aData)
+  public IMPLTYPE setData (@Nullable final double... aData)
   {
     m_aData = new JSArray ().addAll (aData);
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public ChartDataSet setData (@Nullable final BigDecimal... aData)
+  public IMPLTYPE setData (@Nullable final BigDecimal... aData)
   {
     m_aData = new JSArray ().addAll (aData);
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public ChartDataSet setData (@Nullable final MutableBigDecimal... aData)
+  public IMPLTYPE setData (@Nullable final MutableBigDecimal... aData)
   {
     final JSArray arr = new JSArray ();
     if (aData != null)
       for (final MutableBigDecimal aBD : aData)
         arr.add (aBD.getAsBigDecimal ());
     m_aData = arr;
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
-  public ChartDataSet setBorderWidth (final int nBorderWidth)
-  {
-    return setBorderWidth (Integer.toString (nBorderWidth));
-  }
-
-  @Nonnull
-  public ChartDataSet setBorderWidth (@Nullable final String sBorderWidth)
-  {
-    m_sBorderWidth = sBorderWidth;
-    return this;
-  }
-
-  @Nonnull
-  public ChartDataSet setBorderColor (@Nullable final String sBorderColor)
-  {
-    m_sBorderColor = sBorderColor;
-    return this;
-  }
-
-  @Nonnull
-  public ChartDataSet setFill (final boolean bFill)
-  {
-    m_aFill = JSExpr.lit (bFill);
-    return this;
-  }
-
-  @Nonnull
-  public ChartDataSet setFill (final IJSExpression aFill)
-  {
-    m_aFill = aFill;
-    return this;
-  }
-
-  @Nonnull
-  public ChartDataSet setTension (final int nBorderWidth)
-  {
-    return setTension (Integer.toString (nBorderWidth));
-  }
-
-  @Nonnull
-  public ChartDataSet setTension (final double dBorderWidth)
-  {
-    return setTension (Double.toString (dBorderWidth));
-  }
-
-  @Nonnull
-  public ChartDataSet setTension (@Nullable final String sTension)
-  {
-    m_sTension = sTension;
-    return this;
-  }
-
-  @Nonnull
-  public ChartDataSet setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final IJSExpression aValue)
+  public IMPLTYPE setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final IJSExpression aValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     if (aValue == null)
       m_aCustomProps.remove (sKey);
     else
       m_aCustomProps.put (sKey, aValue);
-    return this;
+    return thisAsT ();
   }
 
   @Nonnull
+  @OverrideOnDemand
+  @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSData ()
   {
     final JSAssocArray ret = new JSAssocArray ();
@@ -163,14 +126,6 @@ public class ChartDataSet
       ret.add ("label", m_sLabel);
     if (m_aData != null)
       ret.add ("data", m_aData);
-    if (StringHelper.hasText (m_sBorderWidth))
-      ret.add ("borderWidth", m_sBorderWidth);
-    if (StringHelper.hasText (m_sBorderColor))
-      ret.add ("borderColor", m_sBorderColor);
-    if (m_aFill != null)
-      ret.add ("fill", m_aFill);
-    if (StringHelper.hasText (m_sTension))
-      ret.add ("tension", m_sTension);
     if (m_aCustomProps.isNotEmpty ())
       ret.addAll (m_aCustomProps);
     return ret;

@@ -28,7 +28,7 @@ import com.helger.html.jscode.JSAssocArray;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ChartBar extends AbstractChartV4WithLabels <ChartBar>
+public class ChartBar extends AbstractChartV4WithLabels <ChartBar, ChartDataSetBar>
 {
   public ChartBar ()
   {

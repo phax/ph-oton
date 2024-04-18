@@ -25,7 +25,9 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uictrls.chart.v4.ChartBar;
-import com.helger.photon.uictrls.chart.v4.ChartDataSet;
+import com.helger.photon.uictrls.chart.v4.ChartDataSetBar;
+import com.helger.photon.uictrls.chart.v4.ChartDataSetLine;
+import com.helger.photon.uictrls.chart.v4.ChartDataSetPie;
 import com.helger.photon.uictrls.chart.v4.ChartLine;
 import com.helger.photon.uictrls.chart.v4.ChartPie;
 import com.helger.photon.uictrls.chart.v4.HCChartV4;
@@ -47,9 +49,9 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
       aNodeList.addChild (h3 ("Bar chart (v4)"));
       final ChartBar aChart = new ChartBar ();
       aChart.setUseAnimations (false);
-      aChart.addDataSet (new ChartDataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
-                                            .setLabel ("Week days")
-                                            .setBorderWidth (2));
+      aChart.addDataSet (new ChartDataSetBar ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
+                                               .setLabel ("Week days")
+                                               .setBorderWidth (2));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChartV4 aHCChart = new HCChartV4 (aChart);
@@ -62,18 +64,22 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
       aNodeList.addChild (h3 ("Line chart (v4)"));
       final ChartLine aChart = new ChartLine ();
       aChart.setUseAnimations (false);
-      aChart.addDataSet (new ChartDataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
-                                            .setLabel ("Sequence 1")
-                                            .setBorderColor ("#4c9")
-                                            .setFill (false)
-                                            .setTension (0));
-      aChart.addDataSet (new ChartDataSet ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
-                                            .setLabel ("Sequence 2")
-                                            .setBorderColor ("red")
-                                            .setFill (new JSAssocArray ().add ("target", "origin")
-                                                                         .add ("above", "rgb(255, 128, 0)")
-                                                                         .add ("below", "rgb(0, 0, 255)"))
-                                            .setTension (0.5));
+      aChart.addDataSet (new ChartDataSetLine ().setData (10,
+                                                          15,
+                                                          10 + ThreadLocalRandom.current ().nextInt (10),
+                                                          20,
+                                                          15)
+                                                .setLabel ("Sequence 1")
+                                                .setBorderColor ("#4c9")
+                                                .setFill ("start")
+                                                .setTension (0));
+      aChart.addDataSet (new ChartDataSetLine ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
+                                                .setLabel ("Sequence 2")
+                                                .setBorderColor ("red")
+                                                .setFill (new JSAssocArray ().add ("target", "origin")
+                                                                             .add ("above", "rgb(255, 128, 0)")
+                                                                             .add ("below", "rgb(0, 0, 255)"))
+                                                .setTension (0.5));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChartV4 aHCChart = new HCChartV4 (aChart);
@@ -84,20 +90,28 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
     // Pie Chart
     {
       aNodeList.addChild (h3 ("Pie chart (v4)"));
-      final ChartPie aChart = new ChartPie ();
+      final ChartPie aChart = new ChartPie ()
+      {
+        @Override
+        public JSAssocArray getJSOptions ()
+        {
+          final JSAssocArray ret = super.getJSOptions ();
+          final JSAssocArray aPlugins = (JSAssocArray) ret.computeIfAbsent ("plugins", j -> new JSAssocArray ());
+          aPlugins.add ("legend", new JSAssocArray ().add ("position", "top"));
+          aPlugins.add ("title", new JSAssocArray ().add ("display", "true").add ("text", "Legend title"));
+          return ret;
+        }
+      };
       aChart.setUseAnimations (false);
-      aChart.addDataSet (new ChartDataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
-                                            .setLabel ("Sequence 1")
-                                            .setBorderColor ("#4c9")
-                                            .setFill (false)
-                                            .setTension (0));
-      aChart.addDataSet (new ChartDataSet ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
-                                            .setLabel ("Sequence 2")
-                                            .setBorderColor ("red")
-                                            .setFill (new JSAssocArray ().add ("target", "origin")
-                                                                         .add ("above", "rgb(255, 128, 0)")
-                                                                         .add ("below", "rgb(0, 0, 255)"))
-                                            .setTension (0.5));
+      aChart.addDataSet (new ChartDataSetPie ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
+                                               .setLabel ("Dataset")
+                                               .setBackgroundColor ("rgb(255, 99, 132)",
+                                                                    "rgb(54, 162, 235)",
+                                                                    "rgb(255, 205, 86)"));
+      aChart.addDataSet (new ChartDataSetPie ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
+                                               .setLabel ("Datatset 2")
+                                               .setBorderColor ("blue", "red", "green")
+                                               .setBackgroundColor ("red", "green", "blue"));
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChartV4 aHCChart = new HCChartV4 (aChart);

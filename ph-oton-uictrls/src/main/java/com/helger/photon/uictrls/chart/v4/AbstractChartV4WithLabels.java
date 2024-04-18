@@ -37,13 +37,16 @@ import com.helger.html.jscode.JSAssocArray;
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Real implementation type
+ * @param <DSTYPE>
+ *        The dataset implementation type
  */
 @NotThreadSafe
-public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV4WithLabels <IMPLTYPE>> extends
+public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV4WithLabels <IMPLTYPE, DSTYPE>, DSTYPE extends AbstractChartDataSet <?>>
+                                                extends
                                                 AbstractChartV4 <IMPLTYPE>
 {
   private ICommonsList <String> m_aLabels;
-  private final ICommonsList <ChartDataSet> m_aDataSets = new CommonsArrayList <> ();
+  private final ICommonsList <DSTYPE> m_aDataSets = new CommonsArrayList <> ();
 
   public AbstractChartV4WithLabels (@Nonnull @Nonempty final String sType)
   {
@@ -98,13 +101,13 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <ChartDataSet> getAllDataSets ()
+  public ICommonsList <DSTYPE> getAllDataSets ()
   {
     return m_aDataSets.getClone ();
   }
 
   @Nonnull
-  public IMPLTYPE addDataSet (@Nonnull final ChartDataSet aDataSet)
+  public IMPLTYPE addDataSet (@Nonnull final DSTYPE aDataSet)
   {
     ValueEnforcer.notNull (aDataSet, "DataSet");
     m_aDataSets.add (aDataSet);
@@ -116,7 +119,7 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
   public final JSArray getDataDatasetsAsArray ()
   {
     final JSArray aJSDataSets = new JSArray ();
-    for (final ChartDataSet aDataSet : m_aDataSets)
+    for (final DSTYPE aDataSet : m_aDataSets)
       aJSDataSets.add (aDataSet.getJSData ());
     return aJSDataSets;
   }
