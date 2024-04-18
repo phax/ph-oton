@@ -137,11 +137,18 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   }
 
   @Nonnull
+  public JSAssocArray getJSData ()
+  {
+    // First take options from chart
+    final JSAssocArray aJSData = m_aChart.getJSData ();
+    return aJSData;
+  }
+
+  @Nonnull
   public JSAssocArray getJSOptions ()
   {
     // First take options from chart
     final JSAssocArray aJSOptions = m_aChart.getJSOptions ();
-
     return aJSOptions;
   }
 
@@ -186,7 +193,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
     // Init after width and height was of the canvas was set
 
     // Get the data to be displayed
-    final JSVar aJSData = aJSBody.variable (getJSDataVar (), m_aChart.getJSData ());
+    final JSVar aJSData = aJSBody.variable (getJSDataVar (), getJSData ());
 
     // First take options from chart
     final JSAssocArray aJSOptions = getJSOptions ();

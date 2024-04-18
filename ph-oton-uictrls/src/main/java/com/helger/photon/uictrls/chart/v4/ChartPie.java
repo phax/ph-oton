@@ -17,33 +17,40 @@
 package com.helger.photon.uictrls.chart.v4;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
- * Base class for all chartjs.org v4 charts.
+ * Pie Chart
  *
  * @author Philip Helger
  */
-public interface IChartV4
+@NotThreadSafe
+public class ChartPie extends AbstractChartV4WithLabels <ChartPie>
 {
-  @Nonnull
-  @Nonempty
-  String getType ();
+  public ChartPie ()
+  {
+    super ("pie");
+  }
 
-  /**
-   * @return The JS data array for invocation.
-   */
   @Nonnull
   @ReturnsMutableCopy
-  JSAssocArray getJSData ();
+  public final JSAssocArray getJSData ()
+  {
+    final JSAssocArray aData = new JSAssocArray ();
+    aData.add ("labels", getDataLabelsAsArray ());
+    aData.add ("datasets", getDataDatasetsAsArray ());
+    return aData;
+  }
 
-  /**
-   * @return The JS options of this chart.
-   */
+  @Override
   @Nonnull
   @ReturnsMutableCopy
-  JSAssocArray getJSOptions ();
+  public JSAssocArray getJSOptions ()
+  {
+    final JSAssocArray ret = super.getJSOptions ();
+    return ret;
+  }
 }

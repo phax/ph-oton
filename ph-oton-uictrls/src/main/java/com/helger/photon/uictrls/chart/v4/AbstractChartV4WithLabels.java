@@ -16,11 +16,13 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
@@ -41,6 +43,7 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
                                                 AbstractChartV4 <IMPLTYPE>
 {
   private ICommonsList <String> m_aLabels;
+  private final ICommonsList <ChartDataSet> m_aDataSets = new CommonsArrayList <> ();
 
   public AbstractChartV4WithLabels (@Nonnull @Nonempty final String sType)
   {
@@ -74,12 +77,48 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
   }
 
   @Nonnull
-  public JSArray getLabelsAsArray ()
+  public JSArray getDataLabelsAsArray ()
   {
     final JSArray ret = new JSArray ();
     if (m_aLabels != null)
       ret.addAll (m_aLabels);
     return ret;
+  }
+
+  public boolean hasDataSet ()
+  {
+    return m_aDataSets.isNotEmpty ();
+  }
+
+  @Nonnegative
+  public int getDataSetCount ()
+  {
+    return m_aDataSets.size ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <ChartDataSet> getAllDataSets ()
+  {
+    return m_aDataSets.getClone ();
+  }
+
+  @Nonnull
+  public IMPLTYPE addDataSet (@Nonnull final ChartDataSet aDataSet)
+  {
+    ValueEnforcer.notNull (aDataSet, "DataSet");
+    m_aDataSets.add (aDataSet);
+    return thisAsT ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final JSArray getDataDatasetsAsArray ()
+  {
+    final JSArray aJSDataSets = new JSArray ();
+    for (final ChartDataSet aDataSet : m_aDataSets)
+      aJSDataSets.add (aDataSet.getJSData ());
+    return aJSDataSets;
   }
 
   @Override

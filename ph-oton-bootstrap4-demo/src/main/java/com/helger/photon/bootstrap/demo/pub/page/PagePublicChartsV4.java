@@ -27,6 +27,7 @@ import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uictrls.chart.v4.ChartBar;
 import com.helger.photon.uictrls.chart.v4.ChartDataSet;
 import com.helger.photon.uictrls.chart.v4.ChartLine;
+import com.helger.photon.uictrls.chart.v4.ChartPie;
 import com.helger.photon.uictrls.chart.v4.HCChartV4;
 
 public class PagePublicChartsV4 extends AbstractAppWebPage
@@ -60,6 +61,30 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
     {
       aNodeList.addChild (h3 ("Line chart (v4)"));
       final ChartLine aChart = new ChartLine ();
+      aChart.setUseAnimations (false);
+      aChart.addDataSet (new ChartDataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
+                                            .setLabel ("Sequence 1")
+                                            .setBorderColor ("#4c9")
+                                            .setFill (false)
+                                            .setTension (0));
+      aChart.addDataSet (new ChartDataSet ().setData (20, 5, 10 - ThreadLocalRandom.current ().nextInt (10), 10, 25)
+                                            .setLabel ("Sequence 2")
+                                            .setBorderColor ("red")
+                                            .setFill (new JSAssocArray ().add ("target", "origin")
+                                                                         .add ("above", "rgb(255, 128, 0)")
+                                                                         .add ("below", "rgb(0, 0, 255)"))
+                                            .setTension (0.5));
+      aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
+
+      final HCChartV4 aHCChart = new HCChartV4 (aChart);
+      aHCChart.setWidth (800).setHeight (300);
+      aNodeList.addChild (aHCChart);
+    }
+
+    // Pie Chart
+    {
+      aNodeList.addChild (h3 ("Pie chart (v4)"));
+      final ChartPie aChart = new ChartPie ();
       aChart.setUseAnimations (false);
       aChart.addDataSet (new ChartDataSet ().setData (10, 15, 10 + ThreadLocalRandom.current ().nextInt (10), 20, 15)
                                             .setLabel ("Sequence 1")
