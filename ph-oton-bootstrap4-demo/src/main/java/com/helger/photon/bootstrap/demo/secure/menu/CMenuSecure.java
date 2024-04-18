@@ -22,9 +22,10 @@ import javax.annotation.concurrent.Immutable;
 public final class CMenuSecure
 {
   // Menu item IDs
-  public static final String MENU_ADMIN = "admin";
+  public static final String MENU_DEMO = "demo";
+  public static final String MENU_DEMO_DATATABLE = "demo-dt";
 
-  public static final String MENU_SAVED_STATES = "saved_states";
+  public static final String MENU_ADMIN = "admin";
 
   private CMenuSecure ()
   {}

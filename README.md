@@ -100,7 +100,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v9.2.3 - work in progress
-    * Updated to Log4J 2.23.1 
+    * Updated to Log4J 2.23.1
+    * Updated to jQuery 3.7.1
 * v9.2.2 - 2024-03-28
     * Updated to ph-commons 11.1.5
     * Updated to Jetty 11.0.20

@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.photon.bootstrap.demo.app.CApp;
+import com.helger.photon.bootstrap.demo.secure.page.PageSecureDataTables;
 import com.helger.photon.bootstrap4.pages.BootstrapPagesMenuConfigurator;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuTree;
@@ -35,6 +36,15 @@ public final class MenuSecure
   public static void init (@Nonnull final IMenuTree aMenuTree)
   {
     final MenuObjectFilterUserAssignedToUserGroup aFilterAdministrators = new MenuObjectFilterUserAssignedToUserGroup (CApp.USERGROUP_ADMINISTRATORS_ID);
+
+    {
+      final IMenuItemPage aDummy = aMenuTree.createRootItem (new BasePageShowChildren <> (CMenuSecure.MENU_DEMO,
+                                                                                          "Demo",
+                                                                                          aMenuTree));
+
+      aMenuTree.createItem (aDummy, new PageSecureDataTables (CMenuSecure.MENU_DEMO_DATATABLE))
+               .setDisplayFilter (aFilterAdministrators);
+    }
 
     // Administrator
     {
