@@ -97,7 +97,7 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
         {
           final JSAssocArray ret = super.getJSOptions ();
           final JSAssocArray aPlugins = (JSAssocArray) ret.computeIfAbsent ("plugins", j -> new JSAssocArray ());
-          aPlugins.add ("legend", new JSAssocArray ().add ("position", "top"));
+          aPlugins.add ("legend", new JSAssocArray ().add ("position", "bottom"));
           aPlugins.add ("title", new JSAssocArray ().add ("display", "true").add ("text", "Legend title"));
           return ret;
         }
