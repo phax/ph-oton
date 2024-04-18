@@ -231,27 +231,6 @@
 
       <dependency>
         <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3-uictrls</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3-pages</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3-stub</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap4</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -334,11 +313,7 @@
     <module>ph-oton-uictrls</module>
     <module>ph-oton-jetty</module>
     <module>ph-oton-jdbc</module>
-    <module>ph-oton-bootstrap3</module>
-    <module>ph-oton-bootstrap3-uictrls</module>
-    <module>ph-oton-bootstrap3-pages</module>
-    <module>ph-oton-bootstrap3-stub</module>
-    <module>ph-oton-bootstrap3-demo</module>
+
     <module>ph-oton-bootstrap4</module>
     <module>ph-oton-bootstrap4-uictrls</module>
     <module>ph-oton-bootstrap4-pages</module>

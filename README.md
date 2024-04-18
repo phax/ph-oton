@@ -104,6 +104,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Updated to jQuery 3.7.1
     * Updated to moment.js 2.30.1
     * Added more charts.js v4 support
+    * Moved the Bootstrap 3 binding to https://github.com/phax/ph-oton-bootstrap3
 * v9.2.2 - 2024-03-28
     * Updated to ph-commons 11.1.5
     * Updated to Jetty 11.0.20
