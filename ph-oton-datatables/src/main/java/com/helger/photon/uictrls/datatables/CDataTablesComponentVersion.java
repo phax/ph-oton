@@ -26,20 +26,24 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 final class CDataTablesComponentVersion
 {
-  static final String DT = "1.13.6";
-  static final String AUTO_FILL = "2.6.0";
-  static final String BUTTONS = "2.4.1";
-  static final String COL_REORDER = "1.7.0";
-  static final String FIXED_COLUMNS = "4.3.0";
-  static final String FIXED_HEADER = "3.4.0";
+  static final String DT = "2.0.5";
+  static final String AUTO_FILL = "2.7.0";
+  static final String BUTTONS = "3.0.2";
+  static final String COL_REORDER = "2.0.1";
+  static final String DATETIME = "1.5.2";
+  static final String FIXED_COLUMNS = "5.0.0";
+  static final String FIXED_HEADER = "4.0.1";
   static final String JS_ZIP = "3.10.1";
-  static final String KEY_TABLE = "2.10.0";
+  static final String KEY_TABLE = "2.12.0";
   static final String PDF_MAKE = "0.2.7";
-  static final String RESPONSIVE = "2.5.0";
-  static final String ROW_GROUP = "1.4.0";
-  static final String ROW_REORDER = "1.4.1";
-  static final String SCROLLER = "2.2.0";
-  static final String SELECT = "1.7.0";
+  static final String RESPONSIVE = "3.0.2";
+  static final String ROW_GROUP = "1.5.0";
+  static final String ROW_REORDER = "1.5.0";
+  static final String SCROLLER = "2.4.1";
+  static final String SEARCH_BUILDER = "1.7.1";
+  static final String SEARCH_PANES = "2.3.1";
+  static final String SELECT = "2.0.1";
+  static final String STATE_RESTORE = "1.4.1";
 
   private CDataTablesComponentVersion ()
   {}
