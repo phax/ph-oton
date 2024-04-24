@@ -117,6 +117,17 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   }
 
   /**
+   * @return The HTML ID of the legend used (if enabled).
+   * @see #setShowLegend(boolean)
+   */
+  @Nonnull
+  @Nonempty
+  public final String getLegendID ()
+  {
+    return "legend" + m_nID;
+  }
+
+  /**
    * @return The name of the global JS variable containing the data.
    */
   @Nonnull
