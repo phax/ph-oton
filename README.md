@@ -77,6 +77,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.2.4 - work in progress
+    * Updated to DataTables 2.0.5 and latest plugin versions
 * v9.2.3 - 2024-04-18
     * Updated to Log4J 2.23.1
     * Updated to jQuery 3.7.1

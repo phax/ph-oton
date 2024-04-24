@@ -19,8 +19,8 @@ package com.helger.photon.uictrls.datatables;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 
@@ -31,26 +31,36 @@ import com.helger.commons.string.StringHelper;
  */
 public enum EDataTablesOrderDirectionType implements IHasName
 {
+  /**
+   * Ascending order
+   */
   ASC ("asc", ESortOrder.ASCENDING),
-  DESC ("desc", ESortOrder.DESCENDING);
+  /**
+   * Descending order
+   */
+  DESC ("desc", ESortOrder.DESCENDING),
+  /**
+   * Data index order. Note that this option is available as of DataTables 2.0
+   * and newer.
+   */
+  NONE ("", null);
 
   private final String m_sName;
   private final ESortOrder m_eSortOrder;
 
-  EDataTablesOrderDirectionType (@Nonnull @Nonempty final String sName, @Nonnull final ESortOrder eSortOrder)
+  EDataTablesOrderDirectionType (@Nonnull final String sName, @Nullable final ESortOrder eSortOrder)
   {
     m_sName = sName;
     m_eSortOrder = eSortOrder;
   }
 
   @Nonnull
-  @Nonempty
   public String getName ()
   {
     return m_sName;
   }
 
-  @Nonnull
+  @Nullable
   public ESortOrder getSortOrder ()
   {
     return m_eSortOrder;
@@ -69,10 +79,9 @@ public enum EDataTablesOrderDirectionType implements IHasName
   @Nullable
   public static String getNameFromSortOrderOrNull (@Nullable final ESortOrder eSortOrder)
   {
-    if (eSortOrder != null)
-      for (final EDataTablesOrderDirectionType e : values ())
-        if (e.m_eSortOrder.equals (eSortOrder))
-          return e.m_sName;
+    for (final EDataTablesOrderDirectionType e : values ())
+      if (EqualsHelper.identityEqual (e.m_eSortOrder, eSortOrder))
+        return e.m_sName;
     return null;
   }
 }

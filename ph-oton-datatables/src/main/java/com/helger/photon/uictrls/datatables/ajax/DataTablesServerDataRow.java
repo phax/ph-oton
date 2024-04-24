@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.Serializable;
 import java.util.Map;
 
 import javax.annotation.Nonnegative;
@@ -46,7 +45,7 @@ import com.helger.xml.microdom.IMicroQName;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class DataTablesServerDataRow implements Serializable
+public final class DataTablesServerDataRow
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesServerDataRow.class);
 

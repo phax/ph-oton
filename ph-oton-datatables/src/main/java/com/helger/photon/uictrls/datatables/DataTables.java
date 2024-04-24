@@ -177,6 +177,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    * Define the table control elements to appear on the page and in what order.
    */
   private DataTablesDom m_aDom;
+  /**
+   * Define and position the table control elements to appear on the page. Since
+   * DT 2.0.0.
+   */
+  private DataTablesLayout m_aLayout;
   /** Change the options in the page length select list. */
   private IDataTablesLengthMenu m_aLengthMenu;
   /** Initial order (sort) to apply to the table. */
@@ -704,6 +709,27 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
+  @ReturnsMutableCopy
+  public DataTablesLayout getLayout ()
+  {
+    return CloneHelper.getCloneIfNotNull (m_aLayout);
+  }
+
+  @Nullable
+  @ReturnsMutableObject ("design")
+  public DataTablesLayout directGetLayout ()
+  {
+    return m_aLayout;
+  }
+
+  @Nonnull
+  public DataTables setLayout (@Nullable final DataTablesLayout aLayout)
+  {
+    m_aLayout = CloneHelper.getCloneIfNotNull (aLayout);
+    return this;
+  }
+
+  @Nullable
   public IDataTablesLengthMenu getLengthMenu ()
   {
     return m_aLengthMenu;
@@ -1129,7 +1155,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       if (aPlugin.canBeApplied (this))
         aRelevantPlugins.add (aPlugin);
       else
-        LOGGER.warn ("Plugin '" + aPlugin.getName () + "' cannot be applied to DataTable " + getTableID ());
+        LOGGER.warn ("Plugin '" + aPlugin.getName () + "' cannot be applied to DataTable '" + getTableID () + "'");
 
     // Finalize plugins
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
@@ -1223,6 +1249,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("displayStart", m_nDisplayStart);
     if (m_aDom != null)
       aParams.add ("dom", m_aDom.getAsString ());
+    if (m_aLayout != null)
+      aParams.add ("layout", m_aLayout.getAsJSAssocArray ());
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
     {
       final Locale aRealLocale = m_aDisplayLocale != null ? m_aDisplayLocale : Locale.US;
@@ -1328,8 +1356,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_1_13);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_13);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_2_0);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_2_0);
 
     for (final IDataTablesPlugin aPlugin : m_aPlugins.values ())
       if (aPlugin.canBeApplied (this))

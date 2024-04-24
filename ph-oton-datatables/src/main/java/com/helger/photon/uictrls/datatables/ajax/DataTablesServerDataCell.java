@@ -19,7 +19,6 @@ package com.helger.photon.uictrls.datatables.ajax;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.BitSet;
 import java.util.Locale;
 
@@ -52,7 +51,7 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  *
  * @author Philip Helger
  */
-public final class DataTablesServerDataCell implements Serializable
+public final class DataTablesServerDataCell
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesServerDataCell.class);
 
@@ -161,7 +160,8 @@ public final class DataTablesServerDataCell implements Serializable
         assert aMicroNode != null;
 
         // Create lazy
-        ret = MicroWriter.getNodeAsString (aMicroNode, DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
+        ret = MicroWriter.getNodeAsString (aMicroNode,
+                                           DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
 
         // Avoid multiple calls for non-cached version
         if (ret == null)

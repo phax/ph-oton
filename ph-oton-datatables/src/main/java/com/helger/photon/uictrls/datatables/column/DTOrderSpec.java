@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
-import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Function;
@@ -29,7 +28,7 @@ import com.helger.commons.compare.IComparator;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.string.ToStringGenerator;
 
-public class DTOrderSpec implements Serializable
+public class DTOrderSpec
 {
   public static final boolean DEFAULT_COLLATING = true;
 
@@ -80,7 +79,8 @@ public class DTOrderSpec implements Serializable
     else
     {
       // format, than extract
-      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null : aFormatter.apply (x));
+      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null
+                                                                                          : aFormatter.apply (x));
       m_aComparableExtractor = aRealCE;
     }
     // reset status vars

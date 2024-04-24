@@ -20,8 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
-
+@Deprecated (forRemoval = true, since = "9.2.4")
 public final class DataTablesDomTest
 {
   @Test
@@ -29,11 +28,9 @@ public final class DataTablesDomTest
   {
     DataTablesDom aDTD = new DataTablesDom ();
     assertEquals ("", aDTD.getAsString ());
-    CommonsTestHelper.testDefaultSerialization (aDTD);
 
     aDTD = new DataTablesDom ().addTable ();
     assertEquals ("t", aDTD.getAsString ());
-    CommonsTestHelper.testDefaultSerialization (aDTD);
 
     aDTD = new DataTablesDom ().openDiv ("row hidden-print")
                                .openDiv ("col-xs-6")
@@ -55,6 +52,5 @@ public final class DataTablesDomTest
                                .closeDiv ();
     assertEquals ("<'row hidden-print'<'col-xs-6'l><'col-xs-6'f>r>t<'row hidden-print'<'col-xs-12 col-sm-4'i><'col-xs-12 col-sm-8'p>>",
                   aDTD.getAsString ());
-    CommonsTestHelper.testDefaultSerialization (aDTD);
   }
 }

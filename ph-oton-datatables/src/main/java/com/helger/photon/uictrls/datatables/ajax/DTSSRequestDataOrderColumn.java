@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.Serializable;
 import java.util.Comparator;
 
 import javax.annotation.Nonnegative;
@@ -39,7 +38,7 @@ import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class DTSSRequestDataOrderColumn implements Serializable
+public final class DTSSRequestDataOrderColumn
 {
   private final int m_nColumnIndex;
   private final ESortOrder m_eSortOrder;
@@ -134,7 +133,7 @@ public final class DTSSRequestDataOrderColumn implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("SolumnIndex", m_nColumnIndex)
+    return new ToStringGenerator (this).append ("ColumnIndex", m_nColumnIndex)
                                        .append ("SortOrder", m_eSortOrder)
                                        .append ("OrderSpec", m_aOrderSpec)
                                        .getToString ();

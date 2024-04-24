@@ -38,7 +38,13 @@ public class BootstrapDataTables extends DataTables
   public BootstrapDataTables (@Nonnull final IHCTable <?> aTable)
   {
     super (aTable);
-    setDom (new BootstrapDataTablesDom ());
+
+    // Currently use DOM as default
+    // See https://datatables.net/forums/discussion/comment/231103
+    if (true)
+      setDom (new BootstrapDataTablesDom ());
+    else
+      setLayout (new BootstrapDataTablesLayout ());
   }
 
   @Override
@@ -46,10 +52,10 @@ public class BootstrapDataTables extends DataTables
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_1_13_BOOTSTRAP4);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_2_0_BOOTSTRAP4);
     // Original CSS not needed, when Bootstrap is used
-    PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_13);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_1_13_BOOTSTRAP4);
+    PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_2_0);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_2_0_BOOTSTRAP4);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.BOOTSTRAP4_DATATABLES_PH);
   }
 

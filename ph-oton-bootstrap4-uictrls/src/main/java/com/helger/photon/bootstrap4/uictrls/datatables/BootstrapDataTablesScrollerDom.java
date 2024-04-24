@@ -29,7 +29,7 @@ public class BootstrapDataTablesScrollerDom extends DataTablesDom
 {
   public BootstrapDataTablesScrollerDom ()
   {
-    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.D_PRINT_NONE);
+    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.JUSTIFY_CONTENT_MD_CENTER, CBootstrapCSS.D_PRINT_NONE);
     {
       openDiv (CBootstrapCSS.COL_12);
       addFiltering ();
@@ -38,7 +38,7 @@ public class BootstrapDataTablesScrollerDom extends DataTablesDom
     }
     closeDiv ();
     addTable ();
-    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.D_PRINT_NONE);
+    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.JUSTIFY_CONTENT_MD_CENTER, CBootstrapCSS.D_PRINT_NONE);
     {
       openDiv (CBootstrapCSS.COL_12);
       addInformationSummary ();
