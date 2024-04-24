@@ -38,6 +38,9 @@ public class BootstrapDataTables extends DataTables
   public BootstrapDataTables (@Nonnull final IHCTable <?> aTable)
   {
     super (aTable);
+
+    // Currently use DOM as default
+    // See https://datatables.net/forums/discussion/comment/231103
     if (true)
       setDom (new BootstrapDataTablesDom ());
     else
