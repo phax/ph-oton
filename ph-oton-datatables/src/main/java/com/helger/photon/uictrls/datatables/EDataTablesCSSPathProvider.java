@@ -104,7 +104,6 @@ public enum EDataTablesCSSPathProvider implements ICSSPathProvider
                                 "/css/select.bootstrap4.css"),
 
   DATATABLES_SEARCH_HIGHLIGHT ("ph-oton/searchHighlight/dataTables.searchHighlight.css"),
-  BOOTSTRAP3_DATATABLES_PH ("ph-oton/bootstrap3-datatables-ph.css"),
   BOOTSTRAP4_DATATABLES_PH ("ph-oton/bootstrap4-datatables-ph.css");
 
   private final ConstantCSSPathProvider m_aPP;
