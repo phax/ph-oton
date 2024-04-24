@@ -38,7 +38,10 @@ public class BootstrapDataTables extends DataTables
   public BootstrapDataTables (@Nonnull final IHCTable <?> aTable)
   {
     super (aTable);
-    setLayout (new BootstrapDataTablesLayout ());
+    if (true)
+      setDom (new BootstrapDataTablesDom ());
+    else
+      setLayout (new BootstrapDataTablesLayout ());
   }
 
   @Override

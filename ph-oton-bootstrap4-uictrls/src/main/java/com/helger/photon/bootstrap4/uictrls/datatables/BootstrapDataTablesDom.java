@@ -25,17 +25,16 @@ import com.helger.photon.uictrls.datatables.DataTablesDom;
  *
  * @author Philip Helger
  */
-@Deprecated (forRemoval = true, since = "9.2.4")
 public class BootstrapDataTablesDom extends DataTablesDom
 {
   public BootstrapDataTablesDom ()
   {
-    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.D_PRINT_NONE);
+    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.JUSTIFY_CONTENT_MD_CENTER, CBootstrapCSS.D_PRINT_NONE);
     {
-      openDiv (CBootstrapCSS.COL_SM_6);
+      openDiv (CBootstrapCSS.COL_MD_AUTO, CBootstrapCSS.MR_AUTO);
       addLengthMenu ();
       closeDiv ();
-      openDiv (CBootstrapCSS.COL_SM_6);
+      openDiv (CBootstrapCSS.COL_MD_AUTO, CBootstrapCSS.ML_AUTO);
       addFiltering ();
       closeDiv ();
       addProcessing ();
@@ -48,12 +47,12 @@ public class BootstrapDataTablesDom extends DataTablesDom
       closeDiv ();
     }
     closeDiv ();
-    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.D_PRINT_NONE);
+    openDiv (CBootstrapCSS.ROW, CBootstrapCSS.JUSTIFY_CONTENT_MD_CENTER, CBootstrapCSS.D_PRINT_NONE);
     {
-      openDiv (CBootstrapCSS.COL_SM_5);
+      openDiv (CBootstrapCSS.COL_MD_AUTO, CBootstrapCSS.MR_AUTO);
       addInformationSummary ();
       closeDiv ();
-      openDiv (CBootstrapCSS.COL_SM_7);
+      openDiv (CBootstrapCSS.COL_MD_AUTO, CBootstrapCSS.ML_AUTO);
       addPagination ();
       closeDiv ();
     }

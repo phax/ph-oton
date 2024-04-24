@@ -35,7 +35,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.ICSSClassProvider;
 
-@Deprecated (forRemoval = true, since = "9.2.4")
 public class DataTablesDom implements ICloneable <DataTablesDom>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesDom.class);

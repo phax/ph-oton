@@ -176,7 +176,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /**
    * Define the table control elements to appear on the page and in what order.
    */
-  @SuppressWarnings ("removal")
   private DataTablesDom m_aDom;
   /**
    * Define and position the table control elements to appear on the page. Since
@@ -688,7 +687,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @SuppressWarnings ("removal")
   @Nullable
   @ReturnsMutableCopy
   public DataTablesDom getDom ()
@@ -696,7 +694,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return CloneHelper.getCloneIfNotNull (m_aDom);
   }
 
-  @SuppressWarnings ("removal")
   @Nullable
   @ReturnsMutableObject ("design")
   public DataTablesDom directGetDom ()
@@ -704,7 +701,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aDom;
   }
 
-  @SuppressWarnings ("removal")
   @Nonnull
   public DataTables setDom (@Nullable final DataTablesDom aDom)
   {
@@ -1145,7 +1141,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     }
   }
 
-  @SuppressWarnings ("removal")
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -1160,7 +1155,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       if (aPlugin.canBeApplied (this))
         aRelevantPlugins.add (aPlugin);
       else
-        LOGGER.warn ("Plugin '" + aPlugin.getName () + "' cannot be applied to DataTable " + getTableID ());
+        LOGGER.warn ("Plugin '" + aPlugin.getName () + "' cannot be applied to DataTable '" + getTableID () + "'");
 
     // Finalize plugins
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
