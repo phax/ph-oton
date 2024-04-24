@@ -176,7 +176,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /**
    * Define the table control elements to appear on the page and in what order.
    */
+  @SuppressWarnings ("removal")
   private DataTablesDom m_aDom;
+  /**
+   * Define and position the table control elements to appear on the page. Since
+   * DT 2.0.0.
+   */
+  private DataTablesLayout m_aLayout;
   /** Change the options in the page length select list. */
   private IDataTablesLengthMenu m_aLengthMenu;
   /** Initial order (sort) to apply to the table. */
@@ -682,6 +688,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
+  @SuppressWarnings ("removal")
   @Nullable
   @ReturnsMutableCopy
   public DataTablesDom getDom ()
@@ -689,6 +696,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return CloneHelper.getCloneIfNotNull (m_aDom);
   }
 
+  @SuppressWarnings ("removal")
   @Nullable
   @ReturnsMutableObject ("design")
   public DataTablesDom directGetDom ()
@@ -696,10 +704,32 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aDom;
   }
 
+  @SuppressWarnings ("removal")
   @Nonnull
   public DataTables setDom (@Nullable final DataTablesDom aDom)
   {
     m_aDom = CloneHelper.getCloneIfNotNull (aDom);
+    return this;
+  }
+
+  @Nullable
+  @ReturnsMutableCopy
+  public DataTablesLayout getLayout ()
+  {
+    return CloneHelper.getCloneIfNotNull (m_aLayout);
+  }
+
+  @Nullable
+  @ReturnsMutableObject ("design")
+  public DataTablesLayout directGetLayout ()
+  {
+    return m_aLayout;
+  }
+
+  @Nonnull
+  public DataTables setLayout (@Nullable final DataTablesLayout aLayout)
+  {
+    m_aLayout = CloneHelper.getCloneIfNotNull (aLayout);
     return this;
   }
 
@@ -1115,6 +1145,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     }
   }
 
+  @SuppressWarnings ("removal")
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -1223,6 +1254,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aParams.add ("displayStart", m_nDisplayStart);
     if (m_aDom != null)
       aParams.add ("dom", m_aDom.getAsString ());
+    if (m_aLayout != null)
+      aParams.add ("layout", m_aLayout.getAsJSAssocArray ());
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
     {
       final Locale aRealLocale = m_aDisplayLocale != null ? m_aDisplayLocale : Locale.US;

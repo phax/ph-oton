@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -36,7 +35,7 @@ import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
  *
  * @author Philip Helger
  */
-final class DataTablesServerSortState implements Serializable
+final class DataTablesServerSortState
 {
   private final ICommonsList <DTSSRequestDataOrderColumn> m_aOrderColumns;
 

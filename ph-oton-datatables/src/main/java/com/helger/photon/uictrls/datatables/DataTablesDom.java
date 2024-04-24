@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import java.io.Serializable;
-
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,7 +35,8 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.css.ICSSClassProvider;
 
-public class DataTablesDom implements Serializable, ICloneable <DataTablesDom>
+@Deprecated (forRemoval = true, since = "9.2.4")
+public class DataTablesDom implements ICloneable <DataTablesDom>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesDom.class);
   private static final String OPEN_DIV = "<";

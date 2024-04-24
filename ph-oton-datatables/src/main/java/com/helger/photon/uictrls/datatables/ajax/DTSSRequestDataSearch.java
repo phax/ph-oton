@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.Serializable;
-
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -31,7 +29,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public final class DTSSRequestDataSearch implements Serializable
+public final class DTSSRequestDataSearch
 {
   private final String [] m_aSearchTexts;
   private final boolean m_bRegEx;
@@ -81,6 +79,8 @@ public final class DTSSRequestDataSearch implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("searchTexts", m_aSearchTexts).append ("regEx", m_bRegEx).getToString ();
+    return new ToStringGenerator (this).append ("searchTexts", m_aSearchTexts)
+                                       .append ("regEx", m_bRegEx)
+                                       .getToString ();
   }
 }

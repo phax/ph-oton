@@ -25,6 +25,7 @@ import com.helger.photon.uictrls.datatables.DataTablesDom;
  *
  * @author Philip Helger
  */
+@Deprecated (forRemoval = true, since = "9.2.4")
 public class BootstrapDataTablesDom extends DataTablesDom
 {
   public BootstrapDataTablesDom ()

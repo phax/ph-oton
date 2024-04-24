@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -37,7 +35,7 @@ import com.helger.json.JsonObject;
  * @author Philip Helger
  */
 @Immutable
-public final class DTSSResponseData implements IHasJson, Serializable
+public final class DTSSResponseData implements IHasJson
 {
   private final int m_nDraw;
   private final int m_nTotalRecords;

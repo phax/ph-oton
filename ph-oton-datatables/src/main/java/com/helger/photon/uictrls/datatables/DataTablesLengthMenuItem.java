@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.CheckForSigned;
@@ -29,7 +28,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.text.display.IHasDisplayText;
 
 @Immutable
-public class DataTablesLengthMenuItem implements IHasDisplayText, Serializable
+public class DataTablesLengthMenuItem implements IHasDisplayText
 {
   private final int m_nItemCount;
   private final IHasDisplayText m_aText;

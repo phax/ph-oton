@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.Serializable;
-
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
@@ -29,7 +27,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class DTSSRequestDataColumn implements Serializable
+public final class DTSSRequestDataColumn
 {
   private final String m_sData;
   private final String m_sName;
