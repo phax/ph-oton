@@ -151,8 +151,13 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   public JSAssocArray getJSData ()
   {
     // First take options from chart
-    final JSAssocArray aJSData = m_aChart.getJSData ();
-    return aJSData;
+    return m_aChart.getJSData ();
+  }
+
+  @Nonnull
+  public JSAssocArray getJSData (@Nullable final IJSExpression aDatasetData)
+  {
+    return m_aChart.getJSData (aDatasetData);
   }
 
   @Nonnull

@@ -35,16 +35,6 @@ public class ChartLine extends AbstractChartV4WithLabels <ChartLine, ChartDataSe
     super ("line");
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  public final JSAssocArray getJSData ()
-  {
-    final JSAssocArray aData = new JSAssocArray ();
-    aData.add ("labels", getDataLabelsAsArray ());
-    aData.add ("datasets", getDataDatasetsAsArray ());
-    return aData;
-  }
-
   @Override
   @Nonnull
   @ReturnsMutableCopy

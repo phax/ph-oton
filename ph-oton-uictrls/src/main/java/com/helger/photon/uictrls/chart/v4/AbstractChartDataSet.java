@@ -121,11 +121,19 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
   @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSData ()
   {
+    return getJSData (m_aData);
+  }
+
+  @Nonnull
+  @OverrideOnDemand
+  @OverridingMethodsMustInvokeSuper
+  public JSAssocArray getJSData (@Nullable final IJSExpression aDatasetData)
+  {
     final JSAssocArray ret = new JSAssocArray ();
     if (StringHelper.hasText (m_sLabel))
       ret.add ("label", m_sLabel);
-    if (m_aData != null)
-      ret.add ("data", m_aData);
+    if (aDatasetData != null)
+      ret.add ("data", aDatasetData);
     if (m_aCustomProps.isNotEmpty ())
       ret.addAll (m_aCustomProps);
     return ret;

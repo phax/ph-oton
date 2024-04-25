@@ -28,6 +28,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 
@@ -122,6 +123,23 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
     for (final DSTYPE aDataSet : m_aDataSets)
       aJSDataSets.add (aDataSet.getJSData ());
     return aJSDataSets;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final JSAssocArray getJSData ()
+  {
+    return getJSData (getDataDatasetsAsArray ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final JSAssocArray getJSData (@Nullable final IJSExpression aDatasetData)
+  {
+    final JSAssocArray aData = new JSAssocArray ();
+    aData.add ("labels", getDataLabelsAsArray ());
+    aData.add ("datasets", aDatasetData);
+    return aData;
   }
 
   @Override

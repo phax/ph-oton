@@ -35,16 +35,6 @@ public class ChartPie extends AbstractChartV4WithLabels <ChartPie, ChartDataSetP
     super ("pie");
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
-  public final JSAssocArray getJSData ()
-  {
-    final JSAssocArray aData = new JSAssocArray ();
-    aData.add ("labels", getDataLabelsAsArray ());
-    aData.add ("datasets", getDataDatasetsAsArray ());
-    return aData;
-  }
-
   @Override
   @Nonnull
   @ReturnsMutableCopy

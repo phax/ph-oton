@@ -90,7 +90,7 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
     {}
 
     @Nonnull
-    public Adder at (final EPlace ePlace)
+    public Adder at (@Nonnull final EPlace ePlace)
     {
       ValueEnforcer.notNull (ePlace, "Place");
       m_ePlace = ePlace;
@@ -98,7 +98,7 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
     }
 
     @Nonnull
-    public Adder at (final int nIndex)
+    public Adder at (@Nonnegative final int nIndex)
     {
       ValueEnforcer.isGE0 (nIndex, "Index");
       m_nIndex = nIndex;

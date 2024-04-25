@@ -17,9 +17,11 @@
 package com.helger.photon.uictrls.chart.v4;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 
 /**
@@ -39,6 +41,17 @@ public interface IChartV4
   @Nonnull
   @ReturnsMutableCopy
   JSAssocArray getJSData ();
+
+  /**
+   * Special overload required for dynamic replacement.
+   *
+   * @param aDatasetData
+   *        Dataset data object.
+   * @return The JS data array for invocation.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  JSAssocArray getJSData (@Nullable IJSExpression aDatasetData);
 
   /**
    * @return The JS options of this chart.
