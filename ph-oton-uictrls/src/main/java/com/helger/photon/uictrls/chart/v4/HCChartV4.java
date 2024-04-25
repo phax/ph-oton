@@ -29,6 +29,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.script.AbstractHCCanvas;
 import com.helger.html.hc.html.script.HCScriptInline;
+import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSBlock;
@@ -234,5 +235,28 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
                                               final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART_4);
+  }
+
+  /**
+   * Update the chart with new datasets. This destroys the old chart.
+   *
+   * @param aJSDataVar
+   *        The data parameter used to draw the graph.
+   * @return The JS code needed to do so.
+   */
+  @Nonnull
+  public IHasJSCode getJSUpdateCode (@Nonnull final IJSExpression aJSDataVar)
+  {
+    final JSPackage ret = new JSPackage ();
+    // Cleanup old chart
+    ret.invoke (JSExpr.ref (getJSChartVar ()), "destroy");
+    // Use new chart
+    ret.assign (JSExpr.ref (getJSChartVar ()),
+                new JSDefinedClass ("Chart")._new ()
+                                            .arg (JSExpr.ref (getCanvasID ()))
+                                            .arg (new JSAssocArray ().add ("type", m_aChart.getType ())
+                                                                     .add ("data", aJSDataVar)
+                                                                     .add ("options", getJSOptions ())));
+    return ret;
   }
 }
