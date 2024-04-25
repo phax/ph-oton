@@ -106,6 +106,18 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
   }
 
   @Nonnull
+  public IMPLTYPE setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  {
+    return setCustomProperty (sKey, _toExpr (sValue));
+  }
+
+  @Nonnull
+  public IMPLTYPE setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final String... aValues)
+  {
+    return setCustomProperty (sKey, _toExpr (aValues));
+  }
+
+  @Nonnull
   public IMPLTYPE setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final IJSExpression aValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
