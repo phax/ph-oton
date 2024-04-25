@@ -42,14 +42,18 @@ import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
+/**
+ * Canvas element containing a ChartJS v4 data. This should be wrapped in a
+ * respective "div" element to set max-width and max-height if needed.
+ *
+ * @author Philip Helger
+ * @since 9.2.3
+ */
 public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
 {
   // Main chart
   private final IChartV4 m_aChart;
   private final int m_nID;
-  // Canvas initial width
-  private IJSExpression m_aInitialWidth;
-  private IJSExpression m_aInitialHeight;
 
   public HCChartV4 (@Nonnull final IChartV4 aChart)
   {
@@ -81,32 +85,6 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
     return m_nID;
   }
 
-  @Nonnull
-  public HCChartV4 setInitialWidth (final int nWidth)
-  {
-    return setInitialWidth (JSExpr.lit (nWidth));
-  }
-
-  @Nonnull
-  public HCChartV4 setInitialWidth (@Nullable final IJSExpression aWidth)
-  {
-    m_aInitialWidth = aWidth;
-    return this;
-  }
-
-  @Nonnull
-  public HCChartV4 setInitialHeight (final int nHeight)
-  {
-    return setInitialHeight (JSExpr.lit (nHeight));
-  }
-
-  @Nonnull
-  public HCChartV4 setInitialHeight (@Nullable final IJSExpression aHeight)
-  {
-    m_aInitialHeight = aHeight;
-    return this;
-  }
-
   /**
    * @return The HTML ID of the canvas used.
    */
@@ -119,7 +97,6 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
 
   /**
    * @return The HTML ID of the legend used (if enabled).
-   * @see #setShowLegend(boolean)
    */
   @Nonnull
   @Nonempty
@@ -201,13 +178,8 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
       aJSDelOld.delete (aOldChart);
     }
 
+    // Get reference to this
     final JSVar aJSCanvas = aJSBody.variable (getCanvasID (), JSHtml.documentGetElementById (this));
-    if (m_aInitialWidth != null)
-      aJSBody.add (aJSCanvas.ref ("width").assign (m_aInitialWidth));
-    if (m_aInitialHeight != null)
-      aJSBody.add (aJSCanvas.ref ("height").assign (m_aInitialHeight));
-
-    // Init after width and height was of the canvas was set
 
     // Get the data to be displayed
     final JSVar aJSData = aJSBody.variable (getJSDataVar (), getJSData ());
