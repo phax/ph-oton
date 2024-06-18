@@ -77,6 +77,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.2.5 - work in progress
+    * Using `addAriaLabeledBy` in `connectFormControlWithLabel`. See [#18](https://github.com/phax/ph-oton/issues/18) - thx @NikovacsDev
 * v9.2.4 - 2024-04-25
     * Updated to DataTables 2.0.5 and latest plugin versions
     * Chart.js V4 API improvements 
