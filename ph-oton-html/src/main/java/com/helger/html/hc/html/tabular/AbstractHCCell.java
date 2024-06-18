@@ -103,8 +103,8 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("colspan", m_nColspan)
-                            .append ("rowSpan", m_nRowspan)
+                            .append ("Colspan", m_nColspan)
+                            .append ("RowSpan", m_nRowspan)
                             .getToString ();
   }
 }
