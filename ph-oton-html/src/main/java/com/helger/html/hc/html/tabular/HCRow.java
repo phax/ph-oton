@@ -35,7 +35,7 @@ import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
  */
 public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell <?>>
 {
-  private final boolean m_bHeader;
+  private final boolean m_bDefaultIsHeader;
 
   @DevelopersNote ("Works only for tbody rows!")
   public HCRow ()
@@ -43,15 +43,15 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
     this (false);
   }
 
-  public HCRow (final boolean bHeader)
+  public HCRow (final boolean bDefaultHeader)
   {
     super (EHTMLElement.TR);
-    m_bHeader = bHeader;
+    m_bDefaultIsHeader = bDefaultHeader;
   }
 
   public final boolean isHeader ()
   {
-    return m_bHeader;
+    return m_bDefaultIsHeader;
   }
 
   /**
@@ -62,7 +62,21 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Nonnull
   public final IHCCell <?> addCell ()
   {
-    final AbstractHCCell <?> ret = m_bHeader ? new HCTH () : new HCTD ();
+    return addCell (m_bDefaultIsHeader);
+  }
+
+  /**
+   * Add an empty cell.
+   *
+   * @param bHeader
+   *        <code>true</code> to create a <code>th</code> or a <code>td</code>
+   *        element.
+   * @return The created cell. Never <code>null</code>.
+   */
+  @Nonnull
+  public final IHCCell <?> addCell (final boolean bHeader)
+  {
+    final AbstractHCCell <?> ret = bHeader ? new HCTH () : new HCTD ();
     ret.internalSetParentRow (this);
     addChild (ret);
     return ret;
@@ -78,7 +92,23 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Nonnull
   public final IHCCell <?> addCellAt (@Nonnegative final int nIndex)
   {
-    final AbstractHCCell <?> ret = m_bHeader ? new HCTH () : new HCTD ();
+    return addCellAt (nIndex, m_bDefaultIsHeader);
+  }
+
+  /**
+   * Add an empty cell at the specified index.
+   *
+   * @param bHeader
+   *        <code>true</code> to create a <code>th</code> or a <code>td</code>
+   *        element.
+   * @param nIndex
+   *        The index where the cell should be added
+   * @return The created cell. Never <code>null</code>.
+   */
+  @Nonnull
+  public final IHCCell <?> addCellAt (@Nonnegative final int nIndex, final boolean bHeader)
+  {
+    final AbstractHCCell <?> ret = bHeader ? new HCTH () : new HCTD ();
     ret.internalSetParentRow (this);
     addChildAt (nIndex, ret);
     return ret;
@@ -563,6 +593,6 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("header", m_bHeader).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("DefaultIsHeader", m_bDefaultIsHeader).getToString ();
   }
 }
