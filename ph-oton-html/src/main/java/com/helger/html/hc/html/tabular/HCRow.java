@@ -72,11 +72,39 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        <code>true</code> to create a <code>th</code> or a <code>td</code>
    *        element.
    * @return The created cell. Never <code>null</code>.
+   * @since 9.2.5
    */
   @Nonnull
   public final IHCCell <?> addCell (final boolean bHeader)
   {
-    final AbstractHCCell <?> ret = bHeader ? new HCTH () : new HCTD ();
+    return bHeader ? addTH () : addTD ();
+  }
+
+  /**
+   * Add an empty TH.
+   *
+   * @return The created cell. Never <code>null</code>.
+   * @since 9.2.5
+   */
+  @Nonnull
+  public final HCTH addTH ()
+  {
+    final HCTH ret = new HCTH ();
+    ret.internalSetParentRow (this);
+    addChild (ret);
+    return ret;
+  }
+
+  /**
+   * Add an empty TD.
+   *
+   * @return The created cell. Never <code>null</code>.
+   * @since 9.2.5
+   */
+  @Nonnull
+  public final HCTD addTD ()
+  {
+    final HCTD ret = new HCTD ();
     ret.internalSetParentRow (this);
     addChild (ret);
     return ret;
@@ -108,7 +136,36 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Nonnull
   public final IHCCell <?> addCellAt (@Nonnegative final int nIndex, final boolean bHeader)
   {
-    final AbstractHCCell <?> ret = bHeader ? new HCTH () : new HCTD ();
+    return bHeader ? addTHAt (nIndex) : addTDAt (nIndex);
+  }
+
+  /**
+   * Add an empty TH at the specified index.
+   *
+   * @param nIndex
+   *        The index where the cell should be added
+   * @return The created cell. Never <code>null</code>.
+   */
+  @Nonnull
+  public final HCTH addTHAt (@Nonnegative final int nIndex)
+  {
+    final HCTH ret = new HCTH ();
+    ret.internalSetParentRow (this);
+    addChildAt (nIndex, ret);
+    return ret;
+  }
+
+  /**
+   * Add an empty TD at the specified index.
+   *
+   * @param nIndex
+   *        The index where the cell should be added
+   * @return The created cell. Never <code>null</code>.
+   */
+  @Nonnull
+  public final HCTD addTDAt (@Nonnegative final int nIndex)
+  {
+    final HCTD ret = new HCTD ();
     ret.internalSetParentRow (this);
     addChildAt (nIndex, ret);
     return ret;
@@ -593,6 +650,8 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("DefaultIsHeader", m_bDefaultIsHeader).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("DefaultIsHeader", m_bDefaultIsHeader)
+                            .getToString ();
   }
 }
