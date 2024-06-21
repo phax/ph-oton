@@ -87,6 +87,7 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
   protected void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
   {
     aLocaleMgr.registerLocale (CApp.DEFAULT_LOCALE);
+    aLocaleMgr.registerLocale (CApp.LOCALE_DE_AT);
     aLocaleMgr.setDefaultLocale (CApp.DEFAULT_LOCALE);
   }
 
@@ -136,7 +137,10 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
                                      CApp.ROLE_CONFIG_DESCRIPTION,
                                      CApp.ROLE_CONFIG_CUSTOMATTRS);
     if (!aRoleMgr.containsWithID (CApp.ROLE_VIEW_ID))
-      aRoleMgr.createPredefinedRole (CApp.ROLE_VIEW_ID, CApp.ROLE_VIEW_NAME, CApp.ROLE_VIEW_DESCRIPTION, CApp.ROLE_VIEW_CUSTOMATTRS);
+      aRoleMgr.createPredefinedRole (CApp.ROLE_VIEW_ID,
+                                     CApp.ROLE_VIEW_NAME,
+                                     CApp.ROLE_VIEW_DESCRIPTION,
+                                     CApp.ROLE_VIEW_CUSTOMATTRS);
 
     // User group Administrators
     if (!aUserGroupMgr.containsWithID (CApp.USERGROUP_ADMINISTRATORS_ID))
@@ -179,7 +183,8 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
                                                           .data (new JSAssocArray ().add (AjaxExecutorDataTables.OBJECT_ID,
                                                                                           aTable.getID ())))
                  .setServerFilterType (EDataTablesFilterType.ALL_TERMS_PER_ROW)
-                 .setTextLoadingURL (CAjax.DATATABLES_I18N.getInvocationURL (aRequestScope), AjaxExecutorDataTablesI18N.LANGUAGE_ID)
+                 .setTextLoadingURL (CAjax.DATATABLES_I18N.getInvocationURL (aRequestScope),
+                                     AjaxExecutorDataTablesI18N.LANGUAGE_ID)
                  .addPlugin (new DataTablesPluginSearchHighlight ());
     });
   }

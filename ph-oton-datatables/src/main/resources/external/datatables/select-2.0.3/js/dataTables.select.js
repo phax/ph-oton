@@ -1,4 +1,4 @@
-/*! Select for DataTables 2.0.1
+/*! Select for DataTables 2.0.3
  * © SpryMedia Ltd - datatables.net/license/mit
  */
 
@@ -52,7 +52,11 @@ var DataTable = $.fn.dataTable;
 // Version information for debugger
 DataTable.select = {};
 
-DataTable.select.version = '2.0.1';
+DataTable.select.classes = {
+	checkbox: 'dt-select-checkbox'
+};
+
+DataTable.select.version = '2.0.3';
 
 DataTable.select.init = function (dt) {
 	var ctx = dt.settings()[0];
@@ -196,11 +200,11 @@ DataTable.select.init = function (dt) {
 
 	// Insert a checkbox into the header if needed - might need to wait
 	// for init complete, or it might already be done
-	if (headerCheckbox) {
-		initCheckboxHeader(dt);
+	if (headerCheckbox || headerCheckbox === 'select-page' || headerCheckbox === 'select-all') {
+		initCheckboxHeader(dt, headerCheckbox);
 
 		dt.on('init', function () {
-			initCheckboxHeader(dt);
+			initCheckboxHeader(dt, headerCheckbox);
 		});
 	}
 };
@@ -364,6 +368,18 @@ function cellRange(dt, idx, last) {
 		// Deselect range
 		dt.cells(indexes).deselect();
 	}
+}
+
+/**
+ * Get the class
+ * @returns 
+ */
+function checkboxClass(selector) {
+	var name = DataTable.select.classes.checkbox;
+
+	return selector
+		? name.replace(/ /g, '.')
+		: name;
 }
 
 /**
@@ -584,8 +600,9 @@ function info(api, node) {
  * be selected, deselected or just to show the state.
  *
  * @param {*} dt API
+ * @param {*} headerCheckbox the header checkbox option
  */
-function initCheckboxHeader( dt ) {
+function initCheckboxHeader( dt, headerCheckbox ) {
 	// Find any checkbox column(s)
 	dt.columns('.dt-select').every(function () {
 		var header = this.header();
@@ -594,14 +611,18 @@ function initCheckboxHeader( dt ) {
 			// If no checkbox yet, insert one
 			var input = $('<input>')
 				.attr({
-					class: 'dt-select-checkbox',
+					class: checkboxClass(true),
 					type: 'checkbox',
 					'aria-label': dt.i18n('select.aria.headerCheckbox') || 'Select all rows'
 				})
 				.appendTo(header)
 				.on('change', function () {
 					if (this.checked) {
-						dt.rows({search: 'applied'}).select();
+						if (headerCheckbox == 'select-page') {
+							dt.rows({page: 'current'}).select()
+						} else {
+							dt.rows({search: 'applied'}).select();
+						}
 					}
 					else {
 						dt.rows({selected: true}).deselect();
@@ -617,7 +638,7 @@ function initCheckboxHeader( dt ) {
 				if (type === 'row' || ! type) {
 					var count = dt.rows({selected: true}).count();
 					var search = dt.rows({search: 'applied', selected: true}).count();
-					var available = dt.rows({search: 'applied'}).count();
+					var available = headerCheckbox == 'select-page' ? dt.rows({page: 'current'}).count() : dt.rows({search: 'applied'}).count();
 
 					if (search && search <= count && search === available) {
 						input
@@ -669,7 +690,7 @@ function init(ctx) {
 			if (d._select_selected) {
 				$(row)
 					.addClass(ctx._select.className)
-					.find('input.dt-select-checkbox').prop('checked', true);
+					.find('input.' + checkboxClass(true)).prop('checked', true);
 			}
 
 			// Cells and columns - if separated out, we would need to do two
@@ -1112,7 +1133,7 @@ apiRegisterPlural('rows().select()', 'row().select()', function (select) {
 
 				// Make sure the checkbox shows the right state
 				if (cells && cells[i]) {
-					$('input.dt-select-checkbox', cells[i]).prop('checked', true);
+					$('input.' + checkboxClass(true), cells[i]).prop('checked', true);
 				}
 
 				// Invalidate the sort data for this column, if not already done
@@ -1246,7 +1267,7 @@ apiRegisterPlural('rows().deselect()', 'row().deselect()', function () {
 
 				// Make sure the checkbox shows the right state
 				if (cells && cells[i]) {
-					$('input.dt-select-checkbox', dtData.anCells[i]).prop('checked', false);
+					$('input.' + checkboxClass(true), dtData.anCells[i]).prop('checked', false);
 				}
 
 				// Invalidate the sort data for this column, if not already done
@@ -1527,11 +1548,20 @@ DataTable.render.select = function (valueProp, nameProp) {
 			return $('<input>')
 				.attr({
 					'aria-label': ariaLabel,
-					class: 'dt-select-checkbox',
+					class: checkboxClass(),
 					name: nameFn ? nameFn(row) : null,
 					type: 'checkbox',
 					value: valueFn ? valueFn(row) : null,
 					checked: selected
+				})
+				.on('input', function (e) {
+					// Let Select 100% control the state of the checkbox
+					e.preventDefault();
+
+					// And make sure this checkbox matches it's row as it is possible
+					// to check out of sync if this was clicked on to deselect a range
+					// but remains selected itself
+					this.checked = $(this).closest('tr').hasClass('selected');
 				})[0];
 		}
 		else if (type === 'type') {

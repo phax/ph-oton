@@ -36,6 +36,7 @@ import com.helger.photon.security.CSecurity;
 @Immutable
 public final class CApp
 {
+  public static final Locale LOCALE_DE_AT = LocaleCache.getInstance ().getLocale ("de", "AT");
   public static final Locale DEFAULT_LOCALE = LocaleCache.getInstance ().getLocale ("en", "GB");
 
   private static final String APPLICATION_TITLE = "ph-oton-bootstrap4-demo";

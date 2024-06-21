@@ -1076,32 +1076,40 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static IJsonObject createLanguageJson (@Nonnull final Locale aDisplayLocale)
   {
     final IJsonObject aLanguage = new JsonObject ();
-    aLanguage.addJson ("aria",
-                       new JsonObject ().add ("sortAscending",
-                                              EDataTablesText.ARIA_SORT_ASCENDING.getDisplayText (aDisplayLocale))
-                                        .add ("sortDescending",
-                                              EDataTablesText.ARIA_SORT_DESCENDING.getDisplayText (aDisplayLocale)));
+    aLanguage.addJson ("oAria",
+                       new JsonObject ().add ("orderable",
+                                              EDataTablesText.ARIA_ORDERABLE.getDisplayText (aDisplayLocale))
+                                        .add ("orderableReverse",
+                                              EDataTablesText.ARIA_ORDERABLE_REVERSE.getDisplayText (aDisplayLocale))
+                                        .add ("orderableRemove",
+                                              EDataTablesText.ARIA_ORDERABLE_REMOVE.getDisplayText (aDisplayLocale))
+                                        .addJson ("paginate",
+                                                  new JsonObject ().add ("first",
+                                                                         EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
+                                                                   .add ("last",
+                                                                         EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
+                                                                   .add ("next",
+                                                                         EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
+                                                                   .add ("previous",
+                                                                         EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale))));
+    aLanguage.addJson ("entries",
+                       new JsonObject ().add ("_", EDataTablesText.ENTRIES_N.getDisplayText (aDisplayLocale))
+                                        .add ("1", EDataTablesText.ENTRIES_1.getDisplayText (aDisplayLocale)));
     // Translate??
-    aLanguage.add ("decimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
-    aLanguage.add ("emptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
-    aLanguage.add ("info", EDataTablesText.INFO.getDisplayText (aDisplayLocale));
-    aLanguage.add ("infoEmpty", EDataTablesText.INFO_EMPTY.getDisplayText (aDisplayLocale));
-    aLanguage.add ("infoFiltered", EDataTablesText.INFO_FILTERED.getDisplayText (aDisplayLocale));
-    aLanguage.add ("infoPostFix", EDataTablesText.INFO_POSTFIX.getDisplayText (aDisplayLocale));
-    aLanguage.add ("lengthMenu", EDataTablesText.LENGTH_MENU.getDisplayText (aDisplayLocale));
-    aLanguage.add ("loadingRecords", EDataTablesText.LOADING_RECORDS.getDisplayText (aDisplayLocale));
-    aLanguage.addJson ("paginate",
-                       new JsonObject ().add ("first", EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
-                                        .add ("last", EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
-                                        .add ("next", EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
-                                        .add ("previous",
-                                              EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale)));
-    aLanguage.add ("processing", EDataTablesText.PROCESSING.getDisplayText (aDisplayLocale));
-    aLanguage.add ("search", EDataTablesText.SEARCH.getDisplayText (aDisplayLocale));
-    aLanguage.add ("searchPlaceholder", EDataTablesText.SEARCH_PLACEHOLDER.getDisplayText (aDisplayLocale));
-    aLanguage.add ("thousands", EDataTablesText.THOUSANDS.getDisplayText (aDisplayLocale));
-    aLanguage.add ("url", "");
-    aLanguage.add ("zeroRecords", EDataTablesText.ZERO_RECORDS.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sEmptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sInfo", EDataTablesText.INFO.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sInfoEmpty", EDataTablesText.INFO_EMPTY.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sInfoFiltered", EDataTablesText.INFO_FILTERED.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sInfoPostFix", EDataTablesText.INFO_POSTFIX.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sDecimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
+    aLanguage.add ("sThousands", EDataTablesText.THOUSANDS.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sLengthMenu", EDataTablesText.LENGTH_MENU.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sLoadingRecords", EDataTablesText.LOADING_RECORDS.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sProcessing", EDataTablesText.PROCESSING.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sSearch", EDataTablesText.SEARCH.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sSearchPlaceholder", EDataTablesText.SEARCH_PLACEHOLDER.getDisplayText (aDisplayLocale));
+    aLanguage.add ("sUrl", "");
+    aLanguage.add ("sZeroRecords", EDataTablesText.ZERO_RECORDS.getDisplayText (aDisplayLocale));
     return aLanguage;
   }
 
@@ -1343,8 +1351,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     // Main HTML code for this element :)
     setJSCodeProvider (m_bGenerateOnDocumentReady ? HCSettings.getOnDocumentReadyProvider ()
-                                                              .createOnDocumentReady (aJSCode)
-                                                  : aJSCode);
+                                                              .createOnDocumentReady (aJSCode) : aJSCode);
 
     // Must be called AFTER we set the JS!
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);

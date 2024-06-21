@@ -36,25 +36,29 @@ import com.helger.commons.text.util.TextHelper;
 public enum EDataTablesText implements IHasDisplayText
 {
   // aria lables
-  ARIA_SORT_ASCENDING (": aktivieren, um Spalte aufsteigend zu sortieren", ": activate to sort column ascending"),
-  ARIA_SORT_DESCENDING (": aktivieren, um Spalte absteigend zu sortieren", ": activate to sort column descending"),
+  ARIA_ORDERABLE (": aktivieren, um zu sortieren", ": Activate to sort"),
+  ARIA_ORDERABLE_REVERSE (": aktivieren, um Sortierung zu invertieren", ": Activate to invert sorting"),
+  ARIA_ORDERABLE_REMOVE (": aktivieren, um Sortierung zu entfernen", ": Activate to remove sorting"),
   // paginate
   PAGINATE_FIRST ("Erste", "First"),
   PAGINATE_PREVIOUS ("Zurück", "Previous"),
   PAGINATE_NEXT ("Weiter", "Next"),
   PAGINATE_LAST ("Letzte", "Last"),
+  // entries
+  ENTRIES_N ("Einträge", "entries"),
+  ENTRIES_1 ("Eintrag", "entry"),
   // main
   EMPTY_TABLE ("Keine Einträge vorhanden", "No data available in table"),
-  INFO ("_START_ bis _END_ von _TOTAL_ Einträgen", "Showing _START_ to _END_ of _TOTAL_ entries"),
-  INFO_EMPTY ("0 bis 0 von 0 Einträgen", "Showing 0 to 0 of 0 entries"),
-  INFO_FILTERED ("(gefiltert von _MAX_ Einträgen)", "(filtered from _MAX_ total entries)"),
+  INFO ("_START_ bis _END_ von _TOTAL_ _ENTRIES-TOTAL_", "Showing _START_ to _END_ of _TOTAL_ _ENTRIES-TOTAL_"),
+  INFO_EMPTY ("0 bis 0 von 0 _ENTRIES-TOTAL_", "Showing 0 to 0 of 0 _ENTRIES-TOTAL_"),
+  INFO_FILTERED ("(gefiltert von _MAX_ _ENTRIES-MAX_)", "(filtered from _MAX_ total _ENTRIES-MAX_)"),
   INFO_POSTFIX ("", ""),
-  LENGTH_MENU ("_MENU_ Einträge anzeigen", "Show _MENU_ entries"),
+  THOUSANDS (" ", ","),
+  LENGTH_MENU ("_MENU_ _ENTRIES_ pro Seite", "_MENU_ _ENTRIES_ per page"),
   LOADING_RECORDS ("Wird geladen...", "Loading..."),
   PROCESSING ("Bitte warten...", "Processing..."),
   SEARCH ("Suchen:", "Search:"),
-  SEARCH_PLACEHOLDER ("Einträge suchen", "Search records"),
-  THOUSANDS ("", ""),
+  SEARCH_PLACEHOLDER ("Einträge suchen", "Search entries"),
   ZERO_RECORDS ("Keine passenden Einträge vorhanden.", "No matching records found."),
   // For length menu
   ALL ("Alle", "all");
