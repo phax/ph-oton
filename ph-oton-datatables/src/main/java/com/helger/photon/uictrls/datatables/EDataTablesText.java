@@ -35,10 +35,11 @@ import com.helger.commons.text.util.TextHelper;
 @Translatable
 public enum EDataTablesText implements IHasDisplayText
 {
-  // aria lables
+  // aria labels
   ARIA_ORDERABLE (": aktivieren, um zu sortieren", ": Activate to sort"),
   ARIA_ORDERABLE_REVERSE (": aktivieren, um Sortierung zu invertieren", ": Activate to invert sorting"),
   ARIA_ORDERABLE_REMOVE (": aktivieren, um Sortierung zu entfernen", ": Activate to remove sorting"),
+  ARIA_PAGINATE_PREFIX ("Gehe zu Seite ", "Go to page "),
   // paginate
   PAGINATE_FIRST ("Erste", "First"),
   PAGINATE_PREVIOUS ("Zurück", "Previous"),

@@ -192,7 +192,7 @@ public class BasePageSysInfoThreads <WPECTYPE extends IWebPageExecutionContext> 
     final DataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
     aDT.setLengthMenu (DataTablesLengthMenu.INSTANCE_ALL);
     aDT.setAjaxBuilder (null);
-    aDT.setTextLoadingURL (null, null);
+    aDT.setNoTextLoadingURL ();
     aNodeList.addChild (aDT);
   }
 }

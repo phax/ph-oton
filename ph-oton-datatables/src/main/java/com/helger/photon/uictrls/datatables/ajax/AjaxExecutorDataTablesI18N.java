@@ -18,6 +18,7 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Locale;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -39,7 +40,14 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
 {
   // This parameter must contain the locale - otherwise English is returned
-  public static final String LANGUAGE_ID = "language";
+  public static final String REQUEST_PARAM_LANGUAGE_ID = "language";
+  // This parameter must contain the locale - otherwise English is returned
+  /**
+   * @deprecated Use {@link #REQUEST_PARAM_LANGUAGE_ID} instead
+   */
+  @Deprecated (forRemoval = true, since = "9.2.5")
+  public static final String LANGUAGE_ID = REQUEST_PARAM_LANGUAGE_ID;
+  public static final String REQUEST_PARAM_MAX_PAGES = "maxpages";
 
   private final Locale m_aDefaultLocale;
 
@@ -57,16 +65,16 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
   }
 
   @OverrideOnDemand
-  protected IJsonObject getText (@Nonnull final Locale aLanguage)
+  protected IJsonObject getText (@Nonnull final Locale aLanguage, @Nonnegative final int nMaxPages)
   {
-    return DataTables.createLanguageJson (aLanguage);
+    return DataTables.createLanguageJson (aLanguage, nMaxPages);
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     // Resolve language
-    final String sLanguage = aRequestScope.params ().getAsString (LANGUAGE_ID);
+    final String sLanguage = aRequestScope.params ().getAsString (REQUEST_PARAM_LANGUAGE_ID);
     Locale aLanguage = LocaleCache.getInstance ().getLocale (sLanguage);
     if (aLanguage == null)
     {
@@ -74,8 +82,11 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
       aLanguage = m_aDefaultLocale;
     }
 
+    // Resolve max pages (default to 10)
+    final int nMaxPages = aRequestScope.params ().getAsInt (REQUEST_PARAM_MAX_PAGES, 10);
+
     // Main action
-    final IJsonObject aData = getText (aLanguage);
+    final IJsonObject aData = getText (aLanguage, nMaxPages);
     aAjaxResponse.json (aData);
     aAjaxResponse.enableCaching (ResponseHelperSettings.getExpirationSeconds ());
   }

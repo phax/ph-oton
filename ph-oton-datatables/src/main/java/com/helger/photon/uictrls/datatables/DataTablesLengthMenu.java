@@ -116,6 +116,17 @@ public class DataTablesLengthMenu implements IDataTablesLengthMenu
     return m_aList.getAtIndex (nIndex);
   }
 
+  @Nullable
+  public DataTablesLengthMenuItem getItemWithLeastItemCount ()
+  {
+    DataTablesLengthMenuItem ret = null;
+    for (final DataTablesLengthMenuItem aItem : m_aList)
+      if (!aItem.isAllItem ())
+        if (ret == null || aItem.getItemCount () < ret.getItemCount ())
+          ret = aItem;
+    return ret;
+  }
+
   @Nonnull
   public JSArray getAsJSArray (@Nonnull final Locale aDisplayLocale)
   {
@@ -136,6 +147,6 @@ public class DataTablesLengthMenu implements IDataTablesLengthMenu
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("list", m_aList).getToString ();
+    return new ToStringGenerator (this).append ("List", m_aList).getToString ();
   }
 }

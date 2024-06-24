@@ -64,6 +64,14 @@ public interface IDataTablesLengthMenu
   @Nullable
   DataTablesLengthMenuItem getItemAtIndex (@Nonnegative int nIndex);
 
+  /**
+   * Get the item with the shortest page size.
+   *
+   * @return <code>null</code> if no item is present.
+   */
+  @Nullable
+  DataTablesLengthMenuItem getItemWithLeastItemCount ();
+
   @Nonnull
   JSArray getAsJSArray (@Nonnull Locale aDisplayLocale);
 }

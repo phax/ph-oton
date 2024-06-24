@@ -39,6 +39,11 @@ public class DataTablesLengthMenuItem implements IHasDisplayText
     m_aText = ValueEnforcer.notNull (aText, "Text");
   }
 
+  public boolean isAllItem ()
+  {
+    return m_nItemCount == DataTablesLengthMenu.COUNT_ALL;
+  }
+
   @CheckForSigned
   public int getItemCount ()
   {
