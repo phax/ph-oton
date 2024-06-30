@@ -77,7 +77,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v9.2.5 - work in progress
+* v9.2.5 - 2024-06-30
     * Updated to Jetty 11.0.21
     * Updated to DataTables 2.0.8 and updated translations
     * Using `addAriaLabeledBy` in `connectFormControlWithLabel`. See [#18](https://github.com/phax/ph-oton/issues/18) - thx @NikovacsDev
