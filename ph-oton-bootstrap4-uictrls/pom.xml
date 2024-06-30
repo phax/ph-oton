@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger.photon</groupId>
     <artifactId>ph-oton-parent-pom</artifactId>
-    <version>9.2.5</version>
+    <version>9.2.6-SNAPSHOT</version>
   </parent>
   <artifactId>ph-oton-bootstrap4-uictrls</artifactId>
   <packaging>bundle</packaging>
