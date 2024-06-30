@@ -38,7 +38,7 @@ public final class ThirdPartyModuleProvider_ph_oton_jetty implements IThirdParty
   public static final IThirdPartyModule JETTY = new ThirdPartyModule ("Jetty",
                                                                       "Eclipse",
                                                                       ELicense.APACHE2,
-                                                                      new Version (11, 0, 20),
+                                                                      new Version (11, 0, 21),
                                                                       "https://eclipse.org/jetty/");
 
   @Nullable
