@@ -211,7 +211,8 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   @Nonnull
   public final BootstrapFormGroup setHelpText (@Nullable final String sHelpText)
   {
-    return setHelpText (new HCNodeList ().addChildren (HCExtHelper.nl2divList (sHelpText)));
+    // Use <br> to avoid <div> in parent <span>
+    return setHelpText (new HCNodeList ().addChildren (HCExtHelper.nl2brList (sHelpText)));
   }
 
   @Nonnull
@@ -225,7 +226,8 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   @Nonnull
   public final BootstrapFormGroup setHelpText (@Nullable final IHCNode aHelpText)
   {
-    return setHelpText (aHelpText instanceof HCNodeList ? (HCNodeList) aHelpText : new HCNodeList ().addChild (aHelpText));
+    return setHelpText (aHelpText instanceof HCNodeList ? (HCNodeList) aHelpText : new HCNodeList ().addChild (
+                                                                                                               aHelpText));
   }
 
   @Nonnull
