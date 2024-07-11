@@ -1342,9 +1342,20 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     {
       // The maximum number of pages is needed to be able to fill the
       // "aria-label" in the paging area of the datatables
-      final int nMaxPages = nBodyRows > 0 ? nBodyRows /
-                                            (m_aLengthMenu.isEmpty () ? 1 : m_aLengthMenu.getItemWithLeastItemCount ()
-                                                                                         .getItemCount ()) : 0;
+      final int nMaxPages;
+      if (nBodyRows == 0)
+        nMaxPages = 0;
+      else
+      {
+        final DataTablesLengthMenuItem aSmallest = m_aLengthMenu.getItemWithLeastItemCount ();
+        if (aSmallest == null)
+        {
+          // In case where only "all" entry is present in length menu
+          nMaxPages = m_aLengthMenu.isEmpty () ? nBodyRows : 1;
+        }
+        else
+          nMaxPages = nBodyRows / aSmallest.getItemCount ();
+      }
 
       // Must be an IJson because the language information is also retrieved via
       // AJAX!
