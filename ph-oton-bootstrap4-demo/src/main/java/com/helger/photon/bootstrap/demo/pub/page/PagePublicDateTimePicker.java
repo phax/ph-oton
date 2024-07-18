@@ -16,16 +16,20 @@
  */
 package com.helger.photon.bootstrap.demo.pub.page;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.html.hc.html.forms.EHCInputType;
+import com.helger.html.hc.html.forms.HCInput;
 import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
+import com.helger.photon.bootstrap4.inputgroup.BootstrapInputGroup;
 import com.helger.photon.bootstrap4.uictrls.datetimepicker.BootstrapDateTimePicker;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
@@ -93,6 +97,16 @@ public class PagePublicDateTimePicker extends AbstractAppWebPage
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (HCFormLabel.createOptional ("Date selector [" +
                                                                                           Locale.GERMANY +
                                                                                           "]")).setCtrl (aPicker));
+    }
+
+    // Browser Default
+    {
+      final BootstrapInputGroup aBIG = new BootstrapInputGroup ();
+      aBIG.addChild (new HCInput (EHCInputType.DATE).setName ("bla")
+                                                    .setValue (DateTimeFormatter.ISO_DATE.format (PDTFactory.getCurrentLocalDate ())));
+      aBIG.addChildSuffix ("Datum");
+      aForm.addFormGroup (new BootstrapFormGroup ().setLabel (HCFormLabel.createOptional ("Browser default"))
+                                                   .setCtrl (aBIG));
     }
   }
 }
