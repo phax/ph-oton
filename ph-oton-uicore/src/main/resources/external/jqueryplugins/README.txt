@@ -1,0 +1,9 @@
+jquery.highlight:
+  https://github.com/bartaz/sandbox.js/blob/master/jquery.highlight.js
+jquery-hotkeys: 
+  https://github.com/tzuryby/jquery.hotkeys
+  https://github.com/jeresig/jquery.hotkeys
+jquery-mousewheel:
+  https://github.com/jquery/jquery-mousewheel
+js-cookie:
+  https://github.com/js-cookie/js-cookie/releases
