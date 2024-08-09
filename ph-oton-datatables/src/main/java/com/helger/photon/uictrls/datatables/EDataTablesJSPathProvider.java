@@ -31,10 +31,10 @@ import com.helger.html.resource.js.IJSPathProvider;
  */
 public enum EDataTablesJSPathProvider implements IJSPathProvider
 {
-  DATATABLES_2_0 ("external/datatables/datatables-" + CDataTablesComponentVersion.DT + "/js/dataTables.js"),
-  DATATABLES_2_0_BOOTSTRAP4 ("external/datatables/datatables-" +
-                             CDataTablesComponentVersion.DT +
-                             "/js/dataTables.bootstrap4.js"),
+  DATATABLES ("external/datatables/datatables-" + CDataTablesComponentVersion.DT + "/js/dataTables.js"),
+  DATATABLES_BOOTSTRAP4 ("external/datatables/datatables-" +
+                         CDataTablesComponentVersion.DT +
+                         "/js/dataTables.bootstrap4.js"),
   DATATABLES_AUTO_FILL ("external/datatables/autofill-" +
                         CDataTablesComponentVersion.AUTO_FILL +
                         "/js/dataTables.autoFill.js"),
