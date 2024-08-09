@@ -27,8 +27,9 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
+import com.helger.photon.uictrls.datatables.EDataTablesB4CSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesB4JSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
-import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 @OutOfBandNode
 public class BootstrapDataTables extends DataTables
@@ -52,10 +53,10 @@ public class BootstrapDataTables extends DataTables
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_BOOTSTRAP4);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesB4JSPathProvider.DATATABLES_BOOTSTRAP4);
     // Original CSS not needed, when Bootstrap is used
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_BOOTSTRAP4);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesB4CSSPathProvider.DATATABLES_BOOTSTRAP4);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.BOOTSTRAP4_DATATABLES_PH);
   }
 

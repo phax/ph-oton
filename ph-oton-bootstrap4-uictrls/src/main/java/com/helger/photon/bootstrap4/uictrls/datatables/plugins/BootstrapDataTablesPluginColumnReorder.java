@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap4.uictrls.datatables.plugins;
 
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.uictrls.datatables.EDataTablesB4CSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginColumnReorder;
 
@@ -29,6 +30,6 @@ public class BootstrapDataTablesPluginColumnReorder extends DataTablesPluginColu
     super.registerExternalResources (aConversionSettings);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_COL_REORDER);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_COL_REORDER_BOOTSTRAP4);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesB4CSSPathProvider.DATATABLES_COL_REORDER_BOOTSTRAP4);
   }
 }

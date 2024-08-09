@@ -32,21 +32,12 @@ import com.helger.html.resource.js.IJSPathProvider;
 public enum EDataTablesJSPathProvider implements IJSPathProvider
 {
   DATATABLES ("external/datatables/datatables-" + CDataTablesComponentVersion.DT + "/js/dataTables.js"),
-  DATATABLES_BOOTSTRAP4 ("external/datatables/datatables-" +
-                         CDataTablesComponentVersion.DT +
-                         "/js/dataTables.bootstrap4.js"),
   DATATABLES_AUTO_FILL ("external/datatables/autofill-" +
                         CDataTablesComponentVersion.AUTO_FILL +
                         "/js/dataTables.autoFill.js"),
-  DATATABLES_AUTO_FILL_BOOTSTRAP4 ("external/datatables/autofill-" +
-                                   CDataTablesComponentVersion.AUTO_FILL +
-                                   "/js/autoFill.bootstrap4.js"),
   DATATABLES_BUTTONS ("external/datatables/buttons-" +
                       CDataTablesComponentVersion.BUTTONS +
                       "/js/dataTables.buttons.js"),
-  DATATABLES_BUTTONS_BOOTSTRAP4 ("external/datatables/buttons-" +
-                                 CDataTablesComponentVersion.BUTTONS +
-                                 "/js/buttons.bootstrap4.js"),
   DATATABLES_BUTTONS_COLVIS ("external/datatables/buttons-" +
                              CDataTablesComponentVersion.BUTTONS +
                              "/js/buttons.colVis.js"),
@@ -71,9 +62,6 @@ public enum EDataTablesJSPathProvider implements IJSPathProvider
   DATATABLES_RESPONSIVE ("external/datatables/responsive-" +
                          CDataTablesComponentVersion.RESPONSIVE +
                          "/js/dataTables.responsive.js"),
-  DATATABLES_RESPONSIVE_BOOTSTRAP4 ("external/datatables/responsive-" +
-                                    CDataTablesComponentVersion.RESPONSIVE +
-                                    "/js/responsive.bootstrap4.js"),
   DATATABLES_ROW_GROUP ("external/datatables/rowgroup-" +
                         CDataTablesComponentVersion.ROW_GROUP +
                         "/js/dataTables.rowGroup.js"),

@@ -32,76 +32,38 @@ import com.helger.html.resource.css.ICSSPathProvider;
  */
 public enum EDataTablesCSSPathProvider implements ICSSPathProvider
 {
-  DATATABLES ("external/datatables/datatables-" +
-                  CDataTablesComponentVersion.DT +
-                  "/css/dataTables.dataTables.css"),
-  DATATABLES_BOOTSTRAP4 ("external/datatables/datatables-" +
-                             CDataTablesComponentVersion.DT +
-                             "/css/dataTables.bootstrap4.css"),
+  DATATABLES ("external/datatables/datatables-" + CDataTablesComponentVersion.DT + "/css/dataTables.dataTables.css"),
   DATATABLES_AUTO_FILL ("external/datatables/autofill-" +
                         CDataTablesComponentVersion.AUTO_FILL +
                         "/css/autoFill.dataTables.css"),
-  DATATABLES_AUTO_FILL_BOOTSTRAP4 ("external/datatables/autofill-" +
-                                   CDataTablesComponentVersion.AUTO_FILL +
-                                   "/css/autoFill.bootstrap4.css"),
   DATATABLES_BUTTONS ("external/datatables/buttons-" +
                       CDataTablesComponentVersion.BUTTONS +
                       "/css/buttons.dataTables.css"),
-  DATATABLES_BUTTONS_BOOTSTRAP4 ("external/datatables/buttons-" +
-                                 CDataTablesComponentVersion.BUTTONS +
-                                 "/css/buttons.bootstrap4.css"),
   DATATABLES_COL_REORDER ("external/datatables/colreorder-" +
                           CDataTablesComponentVersion.COL_REORDER +
                           "/css/colReorder.dataTables.css"),
-  DATATABLES_COL_REORDER_BOOTSTRAP4 ("external/datatables/colreorder-" +
-                                     CDataTablesComponentVersion.COL_REORDER +
-                                     "/css/colReorder.bootstrap4.css"),
   DATATABLES_FIXED_COLUMNS ("external/datatables/fixedcolumns-" +
                             CDataTablesComponentVersion.FIXED_COLUMNS +
                             "/css/fixedColumns.dataTables.css"),
-  DATATABLES_FIXED_COLUMNS_BOOTSTRAP4 ("external/datatables/fixedcolumns-" +
-                                       CDataTablesComponentVersion.FIXED_COLUMNS +
-                                       "/css/fixedColumns.bootstrap4.css"),
   DATATABLES_FIXED_HEADER ("external/datatables/fixedheader-" +
                            CDataTablesComponentVersion.FIXED_HEADER +
                            "/css/fixedHeader.dataTables.css"),
-  DATATABLES_FIXED_HEADER_BOOTSTRAP4 ("external/datatables/fixedheader-" +
-                                      CDataTablesComponentVersion.FIXED_HEADER +
-                                      "/css/fixedHeader.bootstrap4.css"),
   DATATABLES_KEY_TABLE ("external/datatables/keytable-" +
                         CDataTablesComponentVersion.KEY_TABLE +
                         "/css/keyTable.dataTables.css"),
-  DATATABLES_KEY_TABLE_BOOTSTRAP4 ("external/datatables/keytable-" +
-                                   CDataTablesComponentVersion.KEY_TABLE +
-                                   "/css/keyTable.bootstrap4.css"),
   DATATABLES_RESPONSIVE ("external/datatables/responsive-" +
                          CDataTablesComponentVersion.RESPONSIVE +
                          "/css/responsive.dataTables.css"),
-  DATATABLES_RESPONSIVE_BOOTSTRAP4 ("external/datatables/responsive-" +
-                                    CDataTablesComponentVersion.RESPONSIVE +
-                                    "/css/responsive.bootstrap4.css"),
   DATATABLES_ROW_GROUP ("external/datatables/rowgroup-" +
                         CDataTablesComponentVersion.ROW_GROUP +
                         "/css/rowGroup.dataTables.css"),
-  DATATABLES_ROW_GROUP_BOOTSTRAP4 ("external/datatables/rowgroup-" +
-                                   CDataTablesComponentVersion.ROW_GROUP +
-                                   "/css/rowGroup.bootstrap4.css"),
   DATATABLES_ROW_REORDER ("external/datatables/rowreorder-" +
                           CDataTablesComponentVersion.ROW_REORDER +
                           "/css/rowReorder.dataTables.css"),
-  DATATABLES_ROW_REORDER_BOOTSTRAP4 ("external/datatables/rowreorder-" +
-                                     CDataTablesComponentVersion.ROW_REORDER +
-                                     "/css/rowReorder.bootstrap4.css"),
   DATATABLES_SCROLLER ("external/datatables/scroller-" +
                        CDataTablesComponentVersion.SCROLLER +
                        "/css/scroller.dataTables.css"),
-  DATATABLES_SCROLLER_BOOTSTRAP4 ("external/datatables/scroller-" +
-                                  CDataTablesComponentVersion.SCROLLER +
-                                  "/css/scroller.bootstrap4.css"),
   DATATABLES_SELECT ("external/datatables/select-" + CDataTablesComponentVersion.SELECT + "/css/select.dataTables.css"),
-  DATATABLES_SELECT_BOOTSTRAP4 ("external/datatables/select-" +
-                                CDataTablesComponentVersion.SELECT +
-                                "/css/select.bootstrap4.css"),
 
   DATATABLES_SEARCH_HIGHLIGHT ("ph-oton/searchHighlight/dataTables.searchHighlight.css"),
   BOOTSTRAP4_DATATABLES_PH ("ph-oton/bootstrap4-datatables-ph.css");

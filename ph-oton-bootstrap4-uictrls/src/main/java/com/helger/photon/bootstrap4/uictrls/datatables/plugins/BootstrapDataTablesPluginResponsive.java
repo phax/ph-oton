@@ -19,8 +19,9 @@ package com.helger.photon.bootstrap4.uictrls.datatables.plugins;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
+import com.helger.photon.uictrls.datatables.EDataTablesB4CSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesB4JSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
-import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginResponsive;
 
 public class BootstrapDataTablesPluginResponsive extends DataTablesPluginResponsive
@@ -29,9 +30,9 @@ public class BootstrapDataTablesPluginResponsive extends DataTablesPluginRespons
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
-    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_RESPONSIVE_BOOTSTRAP4);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesB4JSPathProvider.DATATABLES_RESPONSIVE_BOOTSTRAP4);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_RESPONSIVE);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_RESPONSIVE_BOOTSTRAP4);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesB4CSSPathProvider.DATATABLES_RESPONSIVE_BOOTSTRAP4);
   }
 }

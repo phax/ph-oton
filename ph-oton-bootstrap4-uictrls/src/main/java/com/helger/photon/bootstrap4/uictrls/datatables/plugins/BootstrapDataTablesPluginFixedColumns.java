@@ -18,6 +18,7 @@ package com.helger.photon.bootstrap4.uictrls.datatables.plugins;
 
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.app.html.PhotonCSS;
+import com.helger.photon.uictrls.datatables.EDataTablesB4CSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginFixedColumns;
 
@@ -29,6 +30,6 @@ public class BootstrapDataTablesPluginFixedColumns extends DataTablesPluginFixed
     super.registerExternalResources (aConversionSettings);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_COLUMNS);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_FIXED_COLUMNS_BOOTSTRAP4);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesB4CSSPathProvider.DATATABLES_FIXED_COLUMNS_BOOTSTRAP4);
   }
 }

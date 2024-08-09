@@ -19,8 +19,9 @@ package com.helger.photon.bootstrap4.uictrls.datatables.plugins;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
+import com.helger.photon.uictrls.datatables.EDataTablesB4CSSPathProvider;
+import com.helger.photon.uictrls.datatables.EDataTablesB4JSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
-import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginAutoFill;
 
 public class BootstrapDataTablesPluginAutoFill extends DataTablesPluginAutoFill
@@ -29,9 +30,9 @@ public class BootstrapDataTablesPluginAutoFill extends DataTablesPluginAutoFill
   public void registerExternalResources (final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
-    PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_AUTO_FILL_BOOTSTRAP4);
+    PhotonJS.registerJSIncludeForThisRequest (EDataTablesB4JSPathProvider.DATATABLES_AUTO_FILL_BOOTSTRAP4);
     // Change CSS
     PhotonCSS.unregisterCSSIncludeFromThisRequest (EDataTablesCSSPathProvider.DATATABLES_AUTO_FILL);
-    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_AUTO_FILL_BOOTSTRAP4);
+    PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesB4CSSPathProvider.DATATABLES_AUTO_FILL_BOOTSTRAP4);
   }
 }
