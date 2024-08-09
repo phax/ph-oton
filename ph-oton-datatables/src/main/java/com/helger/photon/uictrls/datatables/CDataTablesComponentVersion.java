@@ -26,11 +26,11 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 final class CDataTablesComponentVersion
 {
-  static final String DT = "2.0.8";
+  static final String DT = "2.1.3";
   static final String AUTO_FILL = "2.7.0";
-  static final String BUTTONS = "3.0.2";
+  static final String BUTTONS = "3.1.1";
   static final String COL_REORDER = "2.0.3";
-  static final String DATETIME = "1.5.2";
+  static final String DATETIME = "1.5.3";
   static final String FIXED_COLUMNS = "5.0.1";
   static final String FIXED_HEADER = "4.0.1";
   static final String JS_ZIP = "3.10.1";
@@ -42,7 +42,7 @@ final class CDataTablesComponentVersion
   static final String SCROLLER = "2.4.3";
   static final String SEARCH_BUILDER = "1.7.1";
   static final String SEARCH_PANES = "2.3.1";
-  static final String SELECT = "2.0.3";
+  static final String SELECT = "2.0.4";
   static final String STATE_RESTORE = "1.4.1";
 
   private CDataTablesComponentVersion ()

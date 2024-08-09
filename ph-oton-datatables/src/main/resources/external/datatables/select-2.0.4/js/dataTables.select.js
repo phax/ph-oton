@@ -1,4 +1,4 @@
-/*! Select for DataTables 2.0.3
+/*! Select for DataTables 2.0.4
  * © SpryMedia Ltd - datatables.net/license/mit
  */
 
@@ -56,7 +56,7 @@ DataTable.select.classes = {
 	checkbox: 'dt-select-checkbox'
 };
 
-DataTable.select.version = '2.0.3';
+DataTable.select.version = '2.0.4';
 
 DataTable.select.init = function (dt) {
 	var ctx = dt.settings()[0];
@@ -769,6 +769,8 @@ function init(ctx) {
 	api.on('destroy.dtSelect', function () {
 		// Remove class directly rather than calling deselect - which would trigger events
 		$(api.rows({ selected: true }).nodes()).removeClass(api.settings()[0]._select.className);
+
+		$('input.' + checkboxClass(true), api.table().header()).remove();
 
 		disableMouseSelection(api);
 		api.off('.dtSelect');
@@ -1514,12 +1516,26 @@ $.each(['Row', 'Column', 'Cell'], function (i, item) {
 	};
 });
 
+// Note that DataTables 2.1 has more robust type detection, but we retain
+// backwards compatbility with 2.0 for the moment.
 DataTable.type('select-checkbox', {
 	className: 'dt-select',
-	detect: function (data) {
-		// Rendering function will tell us if it is a checkbox type
-		return data === 'select-checkbox' ? data : false;
-	},
+	detect: DataTable.versionCheck('2.1')
+		? {
+			oneOf: function () {
+				return false; // no op
+			},
+			allOf: function () {
+				return false; // no op
+			},
+			init: function (settings, col, idx) {
+				return col.mRender && col.mRender.name === 'selectCheckbox';
+			}
+		}
+		: function (data) {
+			// Rendering function will tell us if it is a checkbox type
+			return data === 'select-checkbox' ? data : false;
+		},
 	order: {
 		pre: function (d) {
 			return d === 'X' ? -1 : 0;
@@ -1539,7 +1555,7 @@ DataTable.render.select = function (valueProp, nameProp) {
 	var valueFn = valueProp ? DataTable.util.get(valueProp) : null;
 	var nameFn = nameProp ? DataTable.util.get(nameProp) : null;
 
-	return function (data, type, row, meta) {
+	return function selectCheckbox(data, type, row, meta) {
 		var dtRow = meta.settings.aoData[meta.row];
 		var selected = dtRow._select_selected;
 		var ariaLabel = meta.settings.oLanguage.select.aria.rowCheckbox;
@@ -1582,10 +1598,10 @@ DataTable.ext.order['select-checkbox'] = function (settings, col) {
 		.nodes()
 		.map(function (td) {
 			if (settings._select.items === 'row') {
-				return $(td).parent().hasClass(settings._select.className);
+				return $(td).parent().hasClass(settings._select.className).toString();
 			}
 			else if (settings._select.items === 'cell') {
-				return $(td).hasClass(settings._select.className);
+				return $(td).hasClass(settings._select.className).toString();
 			}
 			return false;
 		});
