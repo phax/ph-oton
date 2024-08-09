@@ -39,12 +39,12 @@ public enum EDataTablesText implements IHasDisplayText
   ARIA_ORDERABLE (": aktivieren, um zu sortieren", ": Activate to sort"),
   ARIA_ORDERABLE_REVERSE (": aktivieren, um Sortierung zu invertieren", ": Activate to invert sorting"),
   ARIA_ORDERABLE_REMOVE (": aktivieren, um Sortierung zu entfernen", ": Activate to remove sorting"),
-  ARIA_PAGINATE_PREFIX ("Gehe zu Seite ", "Go to page "),
   // paginate
   PAGINATE_FIRST ("Erste", "First"),
   PAGINATE_PREVIOUS ("Zurück", "Previous"),
   PAGINATE_NEXT ("Weiter", "Next"),
   PAGINATE_LAST ("Letzte", "Last"),
+  PAGINATE_NUMBER ("Gehe zu Seite ", "Go to page "),
   // entries
   ENTRIES_N ("Einträge", "entries"),
   ENTRIES_1 ("Eintrag", "entry"),

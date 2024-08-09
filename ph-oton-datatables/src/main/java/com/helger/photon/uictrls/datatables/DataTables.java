@@ -75,7 +75,6 @@ import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.core.uistate.UIStateRegistry;
 import com.helger.photon.uicore.js.JSJQueryHelper;
-import com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesI18N;
 import com.helger.photon.uictrls.datatables.ajax.DataTablesServerData;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
@@ -247,7 +246,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private Locale m_aDisplayLocale;
   private ISimpleURL m_aTextLoadingURL;
   private String m_sTextLoadingURLLocaleParameterName;
-  private String m_sTextLoadingURLMaxPagesParameterName;
 
   //
   // DataTables - Plugins
@@ -972,12 +970,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_sTextLoadingURLLocaleParameterName;
   }
 
-  @Nullable
-  public String getextLoadingURLMaxPagesParameterName ()
-  {
-    return m_sTextLoadingURLMaxPagesParameterName;
-  }
-
   @Nonnull
   public DataTables setNoTextLoadingURL ()
   {
@@ -985,31 +977,28 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nonnull
-  @Deprecated (since = "9.2.5", forRemoval = true)
   public DataTables setTextLoadingURL (@Nullable final ISimpleURL aTextLoadingURL,
                                        @Nullable final String sTextLoadingURLLocaleParameterName)
-  {
-    return setTextLoadingURL (aTextLoadingURL,
-                              sTextLoadingURLLocaleParameterName,
-                              AjaxExecutorDataTablesI18N.REQUEST_PARAM_MAX_PAGES);
-  }
-
-  @Nonnull
-  public DataTables setTextLoadingURL (@Nullable final ISimpleURL aTextLoadingURL,
-                                       @Nullable final String sTextLoadingURLLocaleParameterName,
-                                       @Nullable final String sTextLoadingURLMaxPageParameterName)
   {
     if (aTextLoadingURL != null)
     {
       if (StringHelper.hasNoText (sTextLoadingURLLocaleParameterName))
         throw new IllegalArgumentException ("If a text loading URL is present, a text loading URL locale parameter name must also be present");
-      if (StringHelper.hasNoText (sTextLoadingURLMaxPageParameterName))
-        throw new IllegalArgumentException ("If a text loading URL is present, a text loading URL max page parameter name must also be present");
     }
     m_aTextLoadingURL = aTextLoadingURL;
     m_sTextLoadingURLLocaleParameterName = sTextLoadingURLLocaleParameterName;
-    m_sTextLoadingURLMaxPagesParameterName = sTextLoadingURLMaxPageParameterName;
     return this;
+  }
+
+  // Not needed anymore for DT 2.1
+  @SuppressWarnings ("unused")
+  @Nonnull
+  @Deprecated (since = "9.2.6", forRemoval = true)
+  public DataTables setTextLoadingURL (@Nullable final ISimpleURL aTextLoadingURL,
+                                       @Nullable final String sTextLoadingURLLocaleParameterName,
+                                       @Nullable final String sTextLoadingURLMaxPageParameterName)
+  {
+    return setTextLoadingURL (aTextLoadingURL, sTextLoadingURLLocaleParameterName);
   }
 
   //
@@ -1104,10 +1093,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {}
 
   @Nonnull
-  public static IJsonObject createLanguageJson (@Nonnull final Locale aDisplayLocale, @Nonnegative final int nMaxPages)
+  public static IJsonObject createLanguageJson (@Nonnull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
-    ValueEnforcer.isGE0 (nMaxPages, "MaxPages");
 
     final IJsonObject aLanguage = new JsonObject ();
     final IJsonObject aAria = new JsonObject ().add ("orderable",
@@ -1116,44 +1104,30 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
                                                      EDataTablesText.ARIA_ORDERABLE_REVERSE.getDisplayText (aDisplayLocale))
                                                .add ("orderableRemove",
                                                      EDataTablesText.ARIA_ORDERABLE_REMOVE.getDisplayText (aDisplayLocale));
-    {
-      final IJsonObject aPaginate = new JsonObject ().add ("first",
-                                                           EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
-                                                     .add ("last",
-                                                           EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
-                                                     .add ("next",
-                                                           EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
-                                                     .add ("previous",
-                                                           EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale));
-      if (nMaxPages > 0)
-      {
-        final String sPrefix = EDataTablesText.ARIA_PAGINATE_PREFIX.getDisplayText (aDisplayLocale);
-        // Limit aria labels to 999
-        final int nRealMaxPages = Math.min (nMaxPages, 999);
-        for (int i = 0; i < nRealMaxPages; ++i)
-          aPaginate.add (Integer.toString (i), sPrefix + (i + 1));
-      }
-      aAria.addJson ("paginate", aPaginate);
-    }
-    aLanguage.addJson ("oAria", aAria);
+    aAria.addJson ("paginate",
+                   new JsonObject ().add ("first", EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
+                                    .add ("last", EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
+                                    .add ("next", EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
+                                    .add ("previous", EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale))
+                                    .add ("number", EDataTablesText.PAGINATE_NUMBER.getDisplayText (aDisplayLocale)));
+    aLanguage.addJson ("aria", aAria);
     aLanguage.addJson ("entries",
                        new JsonObject ().add ("_", EDataTablesText.ENTRIES_N.getDisplayText (aDisplayLocale))
                                         .add ("1", EDataTablesText.ENTRIES_1.getDisplayText (aDisplayLocale)));
-    // Translate??
-    aLanguage.add ("sEmptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sInfo", EDataTablesText.INFO.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sInfoEmpty", EDataTablesText.INFO_EMPTY.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sInfoFiltered", EDataTablesText.INFO_FILTERED.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sInfoPostFix", EDataTablesText.INFO_POSTFIX.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sDecimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
-    aLanguage.add ("sThousands", EDataTablesText.THOUSANDS.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sLengthMenu", EDataTablesText.LENGTH_MENU.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sLoadingRecords", EDataTablesText.LOADING_RECORDS.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sProcessing", EDataTablesText.PROCESSING.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sSearch", EDataTablesText.SEARCH.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sSearchPlaceholder", EDataTablesText.SEARCH_PLACEHOLDER.getDisplayText (aDisplayLocale));
-    aLanguage.add ("sUrl", "");
-    aLanguage.add ("sZeroRecords", EDataTablesText.ZERO_RECORDS.getDisplayText (aDisplayLocale));
+    aLanguage.add ("emptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
+    aLanguage.add ("info", EDataTablesText.INFO.getDisplayText (aDisplayLocale));
+    aLanguage.add ("infoEmpty", EDataTablesText.INFO_EMPTY.getDisplayText (aDisplayLocale));
+    aLanguage.add ("infoFiltered", EDataTablesText.INFO_FILTERED.getDisplayText (aDisplayLocale));
+    aLanguage.add ("infoPostFix", EDataTablesText.INFO_POSTFIX.getDisplayText (aDisplayLocale));
+    aLanguage.add ("decimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
+    aLanguage.add ("thousands", EDataTablesText.THOUSANDS.getDisplayText (aDisplayLocale));
+    aLanguage.add ("lLengthMenu", EDataTablesText.LENGTH_MENU.getDisplayText (aDisplayLocale));
+    aLanguage.add ("loadingRecords", EDataTablesText.LOADING_RECORDS.getDisplayText (aDisplayLocale));
+    aLanguage.add ("processing", EDataTablesText.PROCESSING.getDisplayText (aDisplayLocale));
+    aLanguage.add ("search", EDataTablesText.SEARCH.getDisplayText (aDisplayLocale));
+    aLanguage.add ("searchPlaceholder", EDataTablesText.SEARCH_PLACEHOLDER.getDisplayText (aDisplayLocale));
+    aLanguage.add ("url", "");
+    aLanguage.add ("zeroRecords", EDataTablesText.ZERO_RECORDS.getDisplayText (aDisplayLocale));
     return aLanguage;
   }
 
@@ -1248,9 +1222,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // data
     //
 
-    // Remember before stripping
-    final int nBodyRows = m_aTable.getBodyRowCount ();
-
     // Server handling parameters
     if (isServerSide ())
     {
@@ -1340,23 +1311,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     if (m_aDisplayLocale != null)
     {
-      // The maximum number of pages is needed to be able to fill the
-      // "aria-label" in the paging area of the datatables
-      final int nMaxPages;
-      if (nBodyRows == 0)
-        nMaxPages = 0;
-      else
-      {
-        final DataTablesLengthMenuItem aSmallest = m_aLengthMenu.getItemWithLeastItemCount ();
-        if (aSmallest == null)
-        {
-          // In case where only "all" entry is present in length menu
-          nMaxPages = m_aLengthMenu.isEmpty () ? nBodyRows : 1;
-        }
-        else
-          nMaxPages = nBodyRows / aSmallest.getItemCount ();
-      }
-
       // Must be an IJson because the language information is also retrieved via
       // AJAX!
       final IJsonObject aLanguage;
@@ -1364,15 +1318,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       {
         // Load texts from there
         final SimpleURL aFinalURL = new SimpleURL (m_aTextLoadingURL).add (m_sTextLoadingURLLocaleParameterName,
-                                                                           m_aDisplayLocale.getLanguage ())
-                                                                     .add (m_sTextLoadingURLMaxPagesParameterName,
-                                                                           nMaxPages);
+                                                                           m_aDisplayLocale.getLanguage ());
         aLanguage = new JsonObject ().add ("url", aFinalURL.getAsStringWithEncodedParameters ());
       }
       else
       {
         // Inline texts
-        aLanguage = createLanguageJson (m_aDisplayLocale, nMaxPages);
+        aLanguage = createLanguageJson (m_aDisplayLocale);
       }
       aParams.add ("language", aLanguage);
     }
@@ -1417,7 +1369,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     // Main HTML code for this element :)
     setJSCodeProvider (m_bGenerateOnDocumentReady ? HCSettings.getOnDocumentReadyProvider ()
-                                                              .createOnDocumentReady (aJSCode) : aJSCode);
+                                                              .createOnDocumentReady (aJSCode)
+                                                  : aJSCode);
 
     // Must be called AFTER we set the JS!
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);

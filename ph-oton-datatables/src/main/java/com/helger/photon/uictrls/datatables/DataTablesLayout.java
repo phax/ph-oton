@@ -67,6 +67,7 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
   public static final String AREA_PAGE_LENGTH = "pageLength";
   public static final String AREA_PAGING = "paging";
   public static final String AREA_SEARCH = "search";
+  public static final String AREA_DIV = "div";
 
   private final ICommonsMap <String, IJSExpression> m_aMap;
 

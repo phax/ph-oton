@@ -18,7 +18,6 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -47,6 +46,8 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
    */
   @Deprecated (forRemoval = true, since = "9.2.5")
   public static final String LANGUAGE_ID = REQUEST_PARAM_LANGUAGE_ID;
+  // Not needed anymore for DT 2.1
+  @Deprecated (forRemoval = true, since = "9.2.6")
   public static final String REQUEST_PARAM_MAX_PAGES = "maxpages";
 
   private final Locale m_aDefaultLocale;
@@ -65,9 +66,9 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
   }
 
   @OverrideOnDemand
-  protected IJsonObject getText (@Nonnull final Locale aLanguage, @Nonnegative final int nMaxPages)
+  protected IJsonObject getText (@Nonnull final Locale aLanguage)
   {
-    return DataTables.createLanguageJson (aLanguage, nMaxPages);
+    return DataTables.createLanguageJson (aLanguage);
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -82,11 +83,8 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
       aLanguage = m_aDefaultLocale;
     }
 
-    // Resolve max pages (default to 10)
-    final int nMaxPages = aRequestScope.params ().getAsInt (REQUEST_PARAM_MAX_PAGES, 10);
-
     // Main action
-    final IJsonObject aData = getText (aLanguage, nMaxPages);
+    final IJsonObject aData = getText (aLanguage);
     aAjaxResponse.json (aData);
     aAjaxResponse.enableCaching (ResponseHelperSettings.getExpirationSeconds ());
   }
