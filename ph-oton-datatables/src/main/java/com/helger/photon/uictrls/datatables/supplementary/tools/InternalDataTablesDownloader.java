@@ -19,6 +19,7 @@ package com.helger.photon.uictrls.datatables.supplementary.tools;
 import java.io.File;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 
@@ -42,7 +43,8 @@ public final class InternalDataTablesDownloader
   private InternalDataTablesDownloader ()
   {}
 
-  public static void downloadDataTables (@Nonnull final String sHTML) throws Exception
+  public static void downloadDataTables (@Nonnull final String sHTML,
+                                         @Nullable final String sFilenameMustContain) throws Exception
   {
     try (HttpClientManager hcm = new HttpClientManager ())
     {
@@ -78,6 +80,12 @@ public final class InternalDataTablesDownloader
           sPlugin = parts.get (0);
           sVersion = parts.get (1);
           sFilename = parts.get (3);
+        }
+
+        if (sFilenameMustContain != null && !sFilename.contains (sFilenameMustContain))
+        {
+          System.out.println ("  Ignoring '" + sFilename + "'");
+          continue;
         }
 
         // Regular
