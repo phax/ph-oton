@@ -33,11 +33,11 @@ public final class JSFilenameHelperTest
   @Test
   public void testAll ()
   {
-    final String s1 = "dir/a.js";
-    final String s2 = "dir/a.min.js";
+    final String sJS1 = "dir/a.js";
+    final String sJS1Min = "dir/a.min.js";
 
-    assertTrue (JSFilenameHelper.isJSFilename (s1));
-    assertTrue (JSFilenameHelper.isJSFilename (s2));
+    assertTrue (JSFilenameHelper.isJSFilename (sJS1));
+    assertTrue (JSFilenameHelper.isJSFilename (sJS1Min));
     assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js"));
     assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js?"));
     assertTrue (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.js?x=y"));
@@ -47,8 +47,8 @@ public final class JSFilenameHelperTest
     assertFalse (JSFilenameHelper.isJSFilename ("anydir/otherfile.txt"));
     assertFalse (JSFilenameHelper.isJSFilename ("http://any.url.com/path/to.txt"));
 
-    assertFalse (JSFilenameHelper.isMinifiedJSFilename (s1));
-    assertTrue (JSFilenameHelper.isMinifiedJSFilename (s2));
+    assertFalse (JSFilenameHelper.isMinifiedJSFilename (sJS1));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename (sJS1Min));
     assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js"));
     assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js?"));
     assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js?x=y"));
@@ -57,19 +57,24 @@ public final class JSFilenameHelperTest
     assertTrue (JSFilenameHelper.isMinifiedJSFilename ("http://any.url.com/path/to.min.js#anchor"));
     assertFalse (JSFilenameHelper.isMinifiedJSFilename ("anydir/otherfile.txt"));
 
-    assertTrue (JSFilenameHelper.isRegularJSFilename (s1));
-    assertFalse (JSFilenameHelper.isRegularJSFilename (s2));
+    assertTrue (JSFilenameHelper.isRegularJSFilename (sJS1));
+    assertFalse (JSFilenameHelper.isRegularJSFilename (sJS1Min));
     assertFalse (JSFilenameHelper.isRegularJSFilename ("anydir/otherfile.txt"));
 
-    assertEquals (s2, JSFilenameHelper.getMinifiedJSFilename (s1));
-    assertEquals (s2, JSFilenameHelper.getMinifiedJSFilename (s2));
-    assertEquals ("http://any.url.com/path/to.min.js", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
-    assertEquals ("http://any.url.com/path/to.min.js", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
-    assertEquals ("http://any.url.com/path/to.min.js?", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?"));
-    assertEquals ("http://any.url.com/path/to.min.js?x=y", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y"));
+    assertEquals (sJS1Min, JSFilenameHelper.getMinifiedJSFilename (sJS1));
+    assertEquals (sJS1Min, JSFilenameHelper.getMinifiedJSFilename (sJS1Min));
+    assertEquals ("http://any.url.com/path/to.min.js",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
+    assertEquals ("http://any.url.com/path/to.min.js",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js"));
+    assertEquals ("http://any.url.com/path/to.min.js?",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?"));
+    assertEquals ("http://any.url.com/path/to.min.js?x=y",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y"));
     assertEquals ("http://any.url.com/path/to.min.js?x=y&a=b",
                   JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js?x=y&a=b"));
-    assertEquals ("http://any.url.com/path/to.min.js#", JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#"));
+    assertEquals ("http://any.url.com/path/to.min.js#",
+                  JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#"));
     assertEquals ("http://any.url.com/path/to.min.js#anchor",
                   JSFilenameHelper.getMinifiedJSFilename ("http://any.url.com/path/to.js#anchor"));
     try
@@ -79,5 +84,43 @@ public final class JSFilenameHelperTest
     }
     catch (final IllegalArgumentException ex)
     {}
+  }
+
+  @Test
+  public void testCJS ()
+  {
+    final String sJS1 = "dir/a.cjs";
+    final String sJS1Min = "dir/a.min.cjs";
+
+    assertTrue (JSFilenameHelper.isJSFilename (sJS1));
+    assertTrue (JSFilenameHelper.isJSFilename (sJS1Min));
+
+    assertFalse (JSFilenameHelper.isMinifiedJSFilename (sJS1));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename (sJS1Min));
+
+    assertTrue (JSFilenameHelper.isRegularJSFilename (sJS1));
+    assertFalse (JSFilenameHelper.isRegularJSFilename (sJS1Min));
+
+    assertEquals (sJS1Min, JSFilenameHelper.getMinifiedJSFilename (sJS1));
+    assertEquals (sJS1Min, JSFilenameHelper.getMinifiedJSFilename (sJS1Min));
+  }
+
+  @Test
+  public void testMJS ()
+  {
+    final String sJS1 = "dir/a.mjs";
+    final String sJS1Min = "dir/a.min.mjs";
+
+    assertTrue (JSFilenameHelper.isJSFilename (sJS1));
+    assertTrue (JSFilenameHelper.isJSFilename (sJS1Min));
+
+    assertFalse (JSFilenameHelper.isMinifiedJSFilename (sJS1));
+    assertTrue (JSFilenameHelper.isMinifiedJSFilename (sJS1Min));
+
+    assertTrue (JSFilenameHelper.isRegularJSFilename (sJS1));
+    assertFalse (JSFilenameHelper.isRegularJSFilename (sJS1Min));
+
+    assertEquals (sJS1Min, JSFilenameHelper.getMinifiedJSFilename (sJS1));
+    assertEquals (sJS1Min, JSFilenameHelper.getMinifiedJSFilename (sJS1Min));
   }
 }

@@ -38,9 +38,13 @@ public final class CJS
 
   /** Regular JS file extension */
   public static final String FILE_EXTENSION_JS = ".js";
+  public static final String FILE_EXTENSION_CJS = ".cjs";
+  public static final String FILE_EXTENSION_MJS = ".mjs";
 
   /** Minified JS file extension */
   public static final String FILE_EXTENSION_MIN_JS = ".min.js";
+  public static final String FILE_EXTENSION_MIN_CJS = ".min.cjs";
+  public static final String FILE_EXTENSION_MIN_MJS = ".min.mjs";
 
   @PresentForCodeCoverage
   private static final CJS INSTANCE = new CJS ();

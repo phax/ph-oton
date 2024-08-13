@@ -32,8 +32,17 @@ public final class JSFilenameHelper
 {
   private static final String JS_IN_URL = CJS.FILE_EXTENSION_JS + "?";
   private static final String JS_IN_URL2 = CJS.FILE_EXTENSION_JS + "#";
+  private static final String CJS_IN_URL = CJS.FILE_EXTENSION_CJS + "?";
+  private static final String CJS_IN_URL2 = CJS.FILE_EXTENSION_CJS + "#";
+  private static final String MJS_IN_URL = CJS.FILE_EXTENSION_MJS + "?";
+  private static final String MJS_IN_URL2 = CJS.FILE_EXTENSION_MJS + "#";
+
   private static final String MIN_JS_IN_URL = CJS.FILE_EXTENSION_MIN_JS + "?";
   private static final String MIN_JS_IN_URL2 = CJS.FILE_EXTENSION_MIN_JS + "#";
+  private static final String MIN_CJS_IN_URL = CJS.FILE_EXTENSION_MIN_CJS + "?";
+  private static final String MIN_CJS_IN_URL2 = CJS.FILE_EXTENSION_MIN_CJS + "#";
+  private static final String MIN_MJS_IN_URL = CJS.FILE_EXTENSION_MIN_MJS + "?";
+  private static final String MIN_MJS_IN_URL2 = CJS.FILE_EXTENSION_MIN_MJS + "#";
 
   private JSFilenameHelper ()
   {}
@@ -56,8 +65,14 @@ public final class JSFilenameHelper
 
     // Second check for URLs with parameters
     return sFilename.endsWith (CJS.FILE_EXTENSION_JS) ||
+           sFilename.endsWith (CJS.FILE_EXTENSION_CJS) ||
+           sFilename.endsWith (CJS.FILE_EXTENSION_MJS) ||
            sFilename.contains (JS_IN_URL) ||
+           sFilename.contains (CJS_IN_URL) ||
+           sFilename.contains (MJS_IN_URL) ||
            sFilename.contains (JS_IN_URL2) ||
+           sFilename.contains (CJS_IN_URL2) ||
+           sFilename.contains (MJS_IN_URL2) ||
            sFilename.startsWith ("https://www.googletagmanager.com/gtag/js");
   }
 
@@ -78,8 +93,14 @@ public final class JSFilenameHelper
 
     // Second check for URLs with parameters
     return sFilename.endsWith (CJS.FILE_EXTENSION_MIN_JS) ||
+           sFilename.endsWith (CJS.FILE_EXTENSION_MIN_CJS) ||
+           sFilename.endsWith (CJS.FILE_EXTENSION_MIN_MJS) ||
            sFilename.contains (MIN_JS_IN_URL) ||
-           sFilename.contains (MIN_JS_IN_URL2);
+           sFilename.contains (MIN_CJS_IN_URL) ||
+           sFilename.contains (MIN_MJS_IN_URL) ||
+           sFilename.contains (MIN_JS_IN_URL2) ||
+           sFilename.contains (MIN_CJS_IN_URL2) ||
+           sFilename.contains (MIN_MJS_IN_URL2);
   }
 
   /**
@@ -109,6 +130,8 @@ public final class JSFilenameHelper
 
     // Replace ".js" with ".min.js"
     // -> works static and in URLs!
-    return sJSFilename.replace (CJS.FILE_EXTENSION_JS, CJS.FILE_EXTENSION_MIN_JS);
+    return sJSFilename.replace (CJS.FILE_EXTENSION_JS, CJS.FILE_EXTENSION_MIN_JS)
+                      .replace (CJS.FILE_EXTENSION_CJS, CJS.FILE_EXTENSION_MIN_CJS)
+                      .replace (CJS.FILE_EXTENSION_MJS, CJS.FILE_EXTENSION_MIN_MJS);
   }
 }
