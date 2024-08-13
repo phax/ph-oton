@@ -34,6 +34,9 @@ import com.helger.html.hc.html.embedded.EHCCORSSettings;
  */
 public interface IHCScript <IMPLTYPE extends IHCScript <IMPLTYPE>> extends IHCElement <IMPLTYPE>
 {
+  String TYPE_IMPORT_MAP = "importmap";
+  String TYPE_MODULE = "module";
+
   @Nullable
   String getType ();
 
@@ -49,13 +52,13 @@ public interface IHCScript <IMPLTYPE extends IHCScript <IMPLTYPE>> extends IHCEl
   @Nonnull
   default IMPLTYPE setTypeImportMap ()
   {
-    return setType ("importmap");
+    return setType (TYPE_IMPORT_MAP);
   }
 
   @Nonnull
   default IMPLTYPE setTypeModule ()
   {
-    return setType ("module");
+    return setType (TYPE_MODULE);
   }
 
   @Nullable
