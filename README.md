@@ -79,6 +79,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v9.2.7 - work in progress
     * Allowed `.cjs` and `.mjs` as valid JavaScript file extensions
+    * `type` attribute of `script` element was changed from `IMimeType` to `String`
 * v9.2.6 - 2024-08-09
     * Updated to Jetty 11.0.22
     * Fixed an error in DataTables max page calculation if length menu with only "all" is present

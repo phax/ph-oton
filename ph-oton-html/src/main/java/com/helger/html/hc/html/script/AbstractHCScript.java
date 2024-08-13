@@ -19,7 +19,6 @@ package com.helger.html.hc.html.script;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
 import com.helger.commons.string.StringHelper;
@@ -47,7 +46,7 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
   /** Default MIME type: text/javascript */
   public static final IMimeType DEFAULT_TYPE = CMimeType.TEXT_JAVASCRIPT;
 
-  private IMimeType m_aType = DEFAULT_TYPE;
+  private String m_sType = DEFAULT_TYPE.getAsString ();
   private String m_sCharset;
   private EHCCORSSettings m_eCrossOrigin;
   private String m_sIntegrity;
@@ -57,16 +56,16 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
     super (EHTMLElement.SCRIPT);
   }
 
-  @Nonnull
-  public final IMimeType getType ()
+  @Nullable
+  public final String getType ()
   {
-    return m_aType;
+    return m_sType;
   }
 
   @Nonnull
-  public final IMPLTYPE setType (@Nonnull final IMimeType aType)
+  public final IMPLTYPE setType (@Nullable final String sType)
   {
-    m_aType = ValueEnforcer.notNull (aType, "Type");
+    m_sType = sType;
     return thisAsT ();
   }
 
@@ -113,7 +112,8 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
+    if (StringHelper.hasText (m_sType))
+      aElement.setAttribute (CHTMLAttributes.TYPE, m_sType);
     if (StringHelper.hasText (m_sCharset))
       aElement.setAttribute (CHTMLAttributes.CHARSET, m_sCharset);
     if (m_eCrossOrigin != null)
@@ -126,7 +126,7 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("Type", m_aType)
+                            .appendIfNotNull ("Type", m_sType)
                             .appendIfNotNull ("Charset", m_sCharset)
                             .appendIfNotNull ("CrossOrigin", m_eCrossOrigin)
                             .appendIfNotNull ("Integrity", m_sIntegrity)

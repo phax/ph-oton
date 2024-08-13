@@ -34,11 +34,29 @@ import com.helger.html.hc.html.embedded.EHCCORSSettings;
  */
 public interface IHCScript <IMPLTYPE extends IHCScript <IMPLTYPE>> extends IHCElement <IMPLTYPE>
 {
-  @Nonnull
-  IMimeType getType ();
+  @Nullable
+  String getType ();
 
   @Nonnull
-  IMPLTYPE setType (@Nonnull IMimeType aType);
+  IMPLTYPE setType (@Nullable String sType);
+
+  @Nonnull
+  default IMPLTYPE setType (@Nonnull final IMimeType aType)
+  {
+    return setType (aType.getAsString ());
+  }
+
+  @Nonnull
+  default IMPLTYPE setTypeImportMap ()
+  {
+    return setType ("importmap");
+  }
+
+  @Nonnull
+  default IMPLTYPE setTypeModule ()
+  {
+    return setType ("module");
+  }
 
   @Nullable
   String getCharset ();
