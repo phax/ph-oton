@@ -87,7 +87,17 @@ public final class HCJSNodeDetector
   public static boolean isDirectJSInlineNode (@Nullable final IHCNode aNode)
   {
     // Inline JS node?
-    return aNode instanceof IHCScriptInline <?>;
+    if (aNode instanceof IHCScriptInline <?>)
+    {
+      final IHCScriptInline <?> aScript = (IHCScriptInline <?>) aNode;
+      if (IHCScript.TYPE_MODULE.equals (aScript.getType ()))
+      {
+        // Modules may not be merged
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 
   /**

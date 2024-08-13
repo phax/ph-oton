@@ -127,7 +127,10 @@ public final class HCSpecialNodeHandler
           if (aParentElement instanceof IHCHasChildrenMutable <?, ?>)
             ((IHCHasChildrenMutable <?, ?>) aParentElement).removeChildAt (nNodeIndex);
           else
-            throw new IllegalStateException ("Cannot remove out-of-band node from " + aParentElement + " at index " + nNodeIndex);
+            throw new IllegalStateException ("Cannot remove out-of-band node from " +
+                                             aParentElement +
+                                             " at index " +
+                                             nNodeIndex);
         }
         else
         {
@@ -230,7 +233,8 @@ public final class HCSpecialNodeHandler
                                                                      final boolean bKeepOnDocumentReady)
   {
     // Default to the global "on document ready" provider
-    return getMergedInlineCSSAndJSNodes (aNodes, bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
+    return getMergedInlineCSSAndJSNodes (aNodes,
+                                         bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
   }
 
   /**
@@ -285,14 +289,15 @@ public final class HCSpecialNodeHandler
         {
           // Inline JS
           final HCScriptInlineOnDocumentReady aScript = (HCScriptInlineOnDocumentReady) aNode;
-          (aScript.isEmitAfterFiles () ? aJSOnDocumentReadyAfter
-                                       : aJSOnDocumentReadyBefore).appendFlattened (aScript.getOnDocumentReadyCode ());
+          (aScript.isEmitAfterFiles () ? aJSOnDocumentReadyAfter : aJSOnDocumentReadyBefore).appendFlattened (aScript
+                                                                                                                     .getOnDocumentReadyCode ());
         }
         else
         {
           // Inline JS
           final IHCScriptInline <?> aScript = (IHCScriptInline <?>) aNode;
-          (aScript.isEmitAfterFiles () ? aJSInlineAfter : aJSInlineBefore).appendFlattened (aScript.getJSCodeProvider ());
+          (aScript.isEmitAfterFiles () ? aJSInlineAfter : aJSInlineBefore).appendFlattened (aScript
+                                                                                                   .getJSCodeProvider ());
         }
       }
       else
@@ -300,19 +305,22 @@ public final class HCSpecialNodeHandler
         {
           // Inline CSS
           final HCStyle aStyle = (HCStyle) aNode;
-          (aStyle.isEmitAfterFiles () ? aCSSInlineAfter : aCSSInlineBefore).addInlineCSS (aStyle.getMedia (), aStyle.getStyleContent ());
+          (aStyle.isEmitAfterFiles () ? aCSSInlineAfter : aCSSInlineBefore).addInlineCSS (aStyle.getMedia (),
+                                                                                          aStyle.getStyleContent ());
         }
         else
         {
           // HCLink
           // HCScriptFile
           // HCConditionalCommentNode
-          if (!(aNode instanceof HCLink) && !(aNode instanceof HCScriptFile) && !(aNode instanceof IHCConditionalCommentNode))
+          if (!(aNode instanceof HCLink) &&
+              !(aNode instanceof HCScriptFile) &&
+              !(aNode instanceof IHCConditionalCommentNode))
             LOGGER.warn ("Found unexpected node to merge inline CSS/JS: " + aNode);
 
           // Add always!
-          // These nodes are either file based nodes ot conditional comment
-          // nodes
+          // These nodes are either file based nodes or conditional comment
+          // nodes, or JS modules
           ret.add (aNode);
         }
     }
@@ -354,7 +362,8 @@ public final class HCSpecialNodeHandler
       int nIndex = 0;
       for (final ICSSCodeProvider aEntry : aCSSInlineBefore.getAll ())
       {
-        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ()).setEmitAfterFiles (false);
+        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ())
+                                                                 .setEmitAfterFiles (false);
         aStyle.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
         ret.add (nIndex, aStyle);
         ++nIndex;
@@ -366,7 +375,8 @@ public final class HCSpecialNodeHandler
       // Add at the end
       for (final ICSSCodeProvider aEntry : aCSSInlineAfter.getAll ())
       {
-        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ()).setEmitAfterFiles (true);
+        final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ())
+                                                                 .setEmitAfterFiles (true);
         aStyle.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
         ret.add (aStyle);
       }
@@ -454,7 +464,9 @@ public final class HCSpecialNodeHandler
                                             @Nonnull final AbstractHCSpecialNodes <?> aSpecialNodes,
                                             final boolean bKeepOnDocumentReady)
   {
-    extractSpecialContent (aNode, aSpecialNodes, bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
+    extractSpecialContent (aNode,
+                           aSpecialNodes,
+                           bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
   }
 
   /**
@@ -495,6 +507,7 @@ public final class HCSpecialNodeHandler
     // Now the aExtractedOutOfBandNodes list must be empty - otherwise we have
     // an internal inconsistency
     if (aExtractedOutOfBandNodes.isNotEmpty ())
-      throw new IllegalStateException ("Out-of-band nodes are left after merging and extraction: " + aExtractedOutOfBandNodes);
+      throw new IllegalStateException ("Out-of-band nodes are left after merging and extraction: " +
+                                       aExtractedOutOfBandNodes);
   }
 }
