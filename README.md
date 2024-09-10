@@ -78,6 +78,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 * v9.2.7 - work in progress
+    * Updated to Jetty 11.0.24
+    * Updated to Log4J 2.4.0
     * Allowed `.cjs` and `.mjs` as valid JavaScript file extensions
     * `type` attribute of `script` element was changed from `IMimeType` to `String`
 * v9.2.6 - 2024-08-09
