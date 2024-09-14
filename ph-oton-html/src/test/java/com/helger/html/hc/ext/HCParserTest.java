@@ -46,13 +46,13 @@ public final class HCParserTest
     assertTrue (aNode instanceof HCDOMWrapper);
     IMicroNode aMicroNode = HCRenderer.getAsNode (aNode);
     assertTrue (aMicroNode instanceof IMicroContainer);
-    assertTrue (((IMicroContainer) aMicroNode).getChildAtIndex (0) instanceof IMicroElement);
+    assertTrue (aMicroNode.getChildAtIndex (0) instanceof IMicroElement);
 
     aNode = aParser.convertToXHTMLFragmentOnDemand ("<b>Hallo<br/>helger</b>");
     assertTrue (aNode instanceof HCDOMWrapper);
     aMicroNode = HCRenderer.getAsNode (aNode);
     assertTrue (aMicroNode instanceof IMicroContainer);
-    assertTrue (((IMicroContainer) aMicroNode).getChildAtIndex (0) instanceof IMicroElement);
+    assertTrue (aMicroNode.getChildAtIndex (0) instanceof IMicroElement);
 
     aNode = aParser.convertToXHTMLFragmentOnDemand ("<b>Hallo");
     assertTrue (aNode instanceof HCTextNode);

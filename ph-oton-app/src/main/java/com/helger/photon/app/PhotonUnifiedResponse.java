@@ -251,11 +251,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
       IHCNode aTargetNode = aNode;
 
       // Special handling for complete HCHtml objects needed
-      if (aNode instanceof IHCNodeList <?> &&
-          ((IHCNodeList <?>) aNode).getChildCount () == 1 &&
-          ((IHCNodeList <?>) aNode).getFirstChild () instanceof HCHtml)
+      if (aNode instanceof IHCNodeList <?> && aNode.getChildCount () == 1 && aNode.getFirstChild () instanceof HCHtml)
       {
-        final HCHtml aHtml = (HCHtml) ((IHCNodeList <?>) aNode).getFirstChild ();
+        final HCHtml aHtml = (HCHtml) aNode.getFirstChild ();
         aTargetNode = aHtml;
 
         // customize, finalize and extract resources
@@ -295,8 +293,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       // Serialize remaining node to HTML
       final IMicroNode aMicroNode = aTargetNode.convertToMicroNode (aConversionSettings);
-      return aMicroNode == null ? ""
-                                : MicroWriter.getNodeAsString (aMicroNode, aConversionSettings.getXMLWriterSettings ());
+      return aMicroNode == null ? "" : MicroWriter.getNodeAsString (aMicroNode,
+                                                                    aConversionSettings.getXMLWriterSettings ());
     }
 
     public static void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -367,9 +365,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @Nonnull
   public PhotonUnifiedResponse html (@Nullable final IHCNode aNode)
   {
-    return html (aNode == null ? null
-                               : aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
-                                                                               : new HCNodeList ().addChild (aNode),
+    return html (aNode == null ? null : aNode instanceof IHCHasChildrenMutable <?, ?>
+                                                                                      ? (IHCHasChildrenMutable <?, IHCNode>) aNode
+                                                                                      : new HCNodeList ().addChild (aNode),
                  null,
                  null);
   }
