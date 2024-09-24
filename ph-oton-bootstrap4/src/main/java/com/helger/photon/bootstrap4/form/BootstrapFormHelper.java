@@ -31,6 +31,7 @@ import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
+import com.helger.html.CHTMLAttributes;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -122,8 +123,12 @@ public final class BootstrapFormHelper
       // Set "for" in label
       aLabel.setFor (aCtrl);
 
-      // Set "aria-labelledby"
-      aCtrl.customAttrs ().addAriaLabeledBy (aLabel);
+      // Only add to labelledby if no explicit label is present
+      if (!aCtrl.customAttrs ().containsKey (CHTMLAttributes.ARIA_LABEL))
+      {
+        // Set "aria-labelledby"
+        aCtrl.customAttrs ().addAriaLabeledBy (aLabel);
+      }
     }
   }
 
@@ -152,8 +157,12 @@ public final class BootstrapFormHelper
         // Avoid having both, because that is redundant according to WAI
         if (!bSetLabelForForThisCtrl)
         {
-          // Set "aria-labelledby"
-          aCurCtrl.customAttrs ().addAriaLabeledBy (aLabel);
+          // Only add to labelledby if no explicit label is present
+          if (!aCurCtrl.customAttrs ().containsKey (CHTMLAttributes.ARIA_LABEL))
+          {
+            // Set "aria-labelledby"
+            aCurCtrl.customAttrs ().addAriaLabeledBy (aLabel);
+          }
         }
       }
     }
