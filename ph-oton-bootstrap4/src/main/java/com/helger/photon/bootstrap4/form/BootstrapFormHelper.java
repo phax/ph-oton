@@ -31,7 +31,6 @@ import com.helger.commons.collection.impl.ICommonsCollection;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.CHTMLAttributes;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -124,10 +123,10 @@ public final class BootstrapFormHelper
       aLabel.setFor (aCtrl);
 
       // Only add to labelledby if no explicit label is present
-      if (!aCtrl.customAttrs ().containsKey (CHTMLAttributes.ARIA_LABEL))
+      if (!aCtrl.customAttrs ().containsAriaLabel () && !aCtrl.customAttrs ().containsAriaLabeledBy ())
       {
         // Set "aria-labelledby"
-        aCtrl.customAttrs ().addAriaLabeledBy (aLabel);
+        aCtrl.customAttrs ().setAriaLabeledBy (aLabel);
       }
     }
   }
@@ -158,10 +157,10 @@ public final class BootstrapFormHelper
         if (!bSetLabelForForThisCtrl)
         {
           // Only add to labelledby if no explicit label is present
-          if (!aCurCtrl.customAttrs ().containsKey (CHTMLAttributes.ARIA_LABEL))
+          if (!aCurCtrl.customAttrs ().containsAriaLabel () && !aCurCtrl.customAttrs ().containsAriaLabeledBy ())
           {
             // Set "aria-labelledby"
-            aCurCtrl.customAttrs ().addAriaLabeledBy (aLabel);
+            aCurCtrl.customAttrs ().setAriaLabeledBy (aLabel);
           }
         }
       }
@@ -180,7 +179,9 @@ public final class BootstrapFormHelper
                                               .build ();
       if (StringHelper.hasText (sDescribedBy))
         for (final IHCElement <?> aCurCtrl : aCtrls)
-          aCurCtrl.customAttrs ().addToAriaDescribedBy (sDescribedBy);
+          if (!aCurCtrl.customAttrs ().containsAriaDescription () &&
+              !aCurCtrl.customAttrs ().containsAriaDescribedBy ())
+            aCurCtrl.customAttrs ().setAriaDescribedBy (sDescribedBy);
     }
   }
 
@@ -191,7 +192,8 @@ public final class BootstrapFormHelper
     {
       final String sDescribedBy = aHelpTextNode.ensureID ().getID ();
       for (final IHCElement <?> aCurCtrl : aCtrls)
-        aCurCtrl.customAttrs ().addToAriaDescribedBy (sDescribedBy);
+        if (!aCurCtrl.customAttrs ().containsAriaDescription () && !aCurCtrl.customAttrs ().containsAriaDescribedBy ())
+          aCurCtrl.customAttrs ().setAriaDescribedBy (sDescribedBy);
     }
   }
 

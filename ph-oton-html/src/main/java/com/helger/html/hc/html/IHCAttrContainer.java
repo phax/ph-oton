@@ -166,6 +166,22 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return putIn (CHTMLAttributes.ARIA_CONTROLS, sControls);
   }
 
+  default boolean containsAriaDescription ()
+  {
+    return containsKey (CHTMLAttributes.ARIA_DESCRIPTION);
+  }
+
+  @Nonnull
+  default EChange setAriaDescription (@Nonnull final String sDescription)
+  {
+    return putIn (CHTMLAttributes.ARIA_DESCRIPTION, sDescription);
+  }
+
+  default boolean containsAriaDescribedBy ()
+  {
+    return containsKey (CHTMLAttributes.ARIA_DESCRIBEDBY);
+  }
+
   @Nonnull
   default EChange setAriaDescribedBy (@Nonnull final String sDescribedBy)
   {
@@ -252,10 +268,20 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return putIn (CHTMLAttributes.ARIA_INVALID, Boolean.toString (bInvalid));
   }
 
+  default boolean containsAriaLabel ()
+  {
+    return containsKey (CHTMLAttributes.ARIA_LABEL);
+  }
+
   @Nonnull
   default EChange setAriaLabel (@Nonnull final String sLabel)
   {
     return putIn (CHTMLAttributes.ARIA_LABEL, sLabel);
+  }
+
+  default boolean containsAriaLabeledBy ()
+  {
+    return containsKey (CHTMLAttributes.ARIA_LABELLEDBY);
   }
 
   @Nonnull
@@ -264,8 +290,21 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
   }
 
+  /**
+   * @param sLabeledBy
+   *        labeled by
+   * @return {@link EChange}.
+   * @deprecated Use {@link #addToAriaLabeledBy(String)} instead
+   */
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.7")
   default EChange addAriaLabeledBy (@Nonnull final String sLabeledBy)
+  {
+    return addToAriaLabeledBy (sLabeledBy);
+  }
+
+  @Nonnull
+  default EChange addToAriaLabeledBy (@Nonnull final String sLabeledBy)
   {
     final String sOldValue = getValue (CHTMLAttributes.ARIA_LABELLEDBY);
     final boolean bAppend = StringHelper.hasText (sOldValue) && !sOldValue.contains (sLabeledBy);
@@ -279,9 +318,16 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.7")
   default EChange addAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
   {
-    return addAriaLabeledBy (aLabeledBy.ensureID ().getID ());
+    return addToAriaLabeledBy (aLabeledBy);
+  }
+
+  @Nonnull
+  default EChange addToAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
+  {
+    return addToAriaLabeledBy (aLabeledBy.ensureID ().getID ());
   }
 
   @Nonnull
@@ -294,11 +340,18 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.7")
   default EChange addAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
+  {
+    return addToAriaLabeledBy (aLabeledByMultiple);
+  }
+
+  @Nonnull
+  default EChange addToAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
   {
     EChange eChange = EChange.UNCHANGED;
     for (final IHCElement <?> aItem : aLabeledByMultiple)
-      eChange = eChange.or (addAriaLabeledBy (aItem));
+      eChange = eChange.or (addToAriaLabeledBy (aItem));
     return eChange;
   }
 
@@ -312,11 +365,18 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.7")
   default EChange addAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
+  {
+    return addToAriaLabeledBy (aLabeledByMultiple);
+  }
+
+  @Nonnull
+  default EChange addToAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
   {
     EChange eChange = EChange.UNCHANGED;
     for (final IHCElement <?> aItem : aLabeledByMultiple)
-      eChange = eChange.or (addAriaLabeledBy (aItem));
+      eChange = eChange.or (addToAriaLabeledBy (aItem));
     return eChange;
   }
 
