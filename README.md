@@ -77,9 +77,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v9.2.7 - 2024-09-27
+* v9.2.7 - 2024-10-03
     * Updated to Jetty 11.0.24
-    * Updated to Log4J 2.4.0
+    * Updated to Log4J 2.24.0
     * Allowed `.cjs` and `.mjs` as valid JavaScript file extensions
     * `type` attribute of `script` element was changed from `IMimeType` to `String`
     * Improved consistency of `aria-label`, `aria-labelledby`, `aria-description`, `aria-describedby`
