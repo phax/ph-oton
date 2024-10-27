@@ -22,11 +22,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.url.SimpleURL;
@@ -92,6 +95,9 @@ public final class ReCaptchaServerSideValidator
                                                                                                             .add ("response",
                                                                                                                   sReCaptchaResponse)
                                                                                                             .getAsURI ());
+      // Empty body - required to avoid HTTP 411
+      aPost.setEntity (new ByteArrayEntity (ArrayHelper.EMPTY_BYTE_ARRAY, ContentType.APPLICATION_JSON));
+
       final ResponseHandlerJson aRH = new ResponseHandlerJson ();
       final IJson aJson = aMgr.execute (aPost, aRH);
       if (aJson != null && aJson.isObject ())

@@ -77,6 +77,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.2.8 - work in progress
+    * Added support for Google ReCaptcha v3
 * v9.2.7 - 2024-10-03
     * Updated to Jetty 11.0.24
     * Updated to Log4J 2.24.0
