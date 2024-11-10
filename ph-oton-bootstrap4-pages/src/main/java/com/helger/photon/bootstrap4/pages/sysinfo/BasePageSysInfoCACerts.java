@@ -67,7 +67,8 @@ import com.helger.security.keystore.LoadedKeyStore;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> extends
+                                    AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayTextWithArgs
@@ -92,7 +93,8 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
     MSG_SYSTEM_SC_DIR ("WebApp-Verzeichnis", "WebApp directory"),
     MSG_SYSTEM_SC_DIR_TOTAL ("Speicherplatz im WebApp-Verzeichnis", "Total space in the WebApp directory"),
     MSG_SYSTEM_SC_DIR_FREE ("Freier Speicherplatz im WebApp-Verzeichnis", "Free space in the WebApp directory"),
-    MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis", "Usable space in the WebApp directory"),
+    MSG_SYSTEM_SC_DIR_USABLE ("Verwendbarer Speicherplatz im WebApp-Verzeichnis",
+                              "Usable space in the WebApp directory"),
     MSG_SYSTEM_SC_NO_DIR ("Kein Verzeichnis: {0}", "Not a directory: {0}"),
     MSG_STARTUP_DATE_TIME ("Startzeit der Anwendung", "Application startup time"),
     MSG_UPTIME ("Uptime", "Uptime"),
@@ -127,7 +129,9 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
     super (sID, sName);
   }
 
-  public BasePageSysInfoCACerts (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageSysInfoCACerts (@Nonnull @Nonempty final String sID,
+                                 @Nonnull final String sName,
+                                 @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -152,10 +156,12 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
       final HCTable aTable = new HCTable (new DTCol ("Alias"),
                                           new DTCol ("Subject").setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol ("Root cert?"),
-                                          new DTCol ("Valid from").setWidth (170).setDisplayType (EDTColType.DATETIME, aDisplayLocale),
-                                          new DTCol ("Valid to").setWidth (170).setDisplayType (EDTColType.DATETIME, aDisplayLocale))
-                                                                                                                                     .setID (getID () +
-                                                                                                                                             nFileIndex);
+                                          new DTCol ("Valid from").setWidth (170)
+                                                                  .setDisplayType (EDTColType.DATETIME, aDisplayLocale),
+                                          new DTCol ("Valid to").setWidth (170)
+                                                                .setDisplayType (EDTColType.DATETIME, aDisplayLocale))
+                                                                                                                      .setID (getID () +
+                                                                                                                              nFileIndex);
       for (final String sAlias : aAliases)
       {
         final HCRow aRow = aTable.addBodyRow ();
@@ -236,7 +242,9 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
         {
           if (aFile.canRead ())
           {
-            final LoadedKeyStore aLKS = KeyStoreHelper.loadKeyStore (EKeyStoreType.JKS, sPath, "changeit");
+            final LoadedKeyStore aLKS = KeyStoreHelper.loadKeyStore (EKeyStoreType.JKS,
+                                                                     sPath,
+                                                                     "changeit".toCharArray ());
             if (aLKS.isSuccess ())
             {
               final KeyStore aKS = aLKS.getKeyStore ();
