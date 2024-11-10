@@ -54,7 +54,7 @@
   </developers>
   
   <properties>
-    <ph-db.version>7.0.5</ph-db.version>
+    <ph-db.version>7.0.6</ph-db.version>
   </properties>
 
   <dependencies>
