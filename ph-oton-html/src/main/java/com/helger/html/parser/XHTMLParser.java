@@ -61,10 +61,12 @@ public class XHTMLParser
     // * DOCTYPE must be allowed because it is common in HTML files
     // * parameter entities must be allowed, because otherwise the HTML DTDs
     // cannot be read correctly
+    // * load external DTD must be enabled to read HTML entities
     return new SAXReaderSettings ().setFeatureValue (EXMLParserFeature.SECURE_PROCESSING, true)
                                    .setFeatureValue (EXMLParserFeature.DISALLOW_DOCTYPE_DECL, false)
                                    .setFeatureValue (EXMLParserFeature.EXTERNAL_GENERAL_ENTITIES, false)
                                    .setFeatureValue (EXMLParserFeature.EXTERNAL_PARAMETER_ENTITIES, true)
+                                   .setFeatureValue (EXMLParserFeature.LOAD_EXTERNAL_DTD, true)
                                    .setEntityResolver (HTMLEntityResolver.getInstance ());
   }
 
@@ -197,7 +199,8 @@ public class XHTMLParser
                                                        XMLConstants.XMLNS_ATTRIBUTE +
                                                        "=\"" +
                                                        sHTMLNamespaceURI +
-                                                       '"' : "") +
+                                                       '"'
+                                                     : "") +
                           "><head><title></title></head><body>" +
                           StringHelper.getNotNull (sXHTMLFragment) +
                           "</body></html>";
