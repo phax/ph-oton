@@ -69,7 +69,7 @@
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.24.3</log4j.version>
     <jetty.version>11.0.24</jetty.version>
-    <ph-commons.version>11.1.11</ph-commons.version>
+    <ph-commons.version>11.1.12</ph-commons.version>
   </properties>
 
   <repositories>
@@ -97,7 +97,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-poi</artifactId>
-        <version>6.0.3</version>
+        <version>6.0.4</version>
       </dependency>
       <dependency>
         <groupId>com.helger.schedule</groupId>
@@ -123,7 +123,7 @@
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>10.1.9</version>
+        <version>10.1.10-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
