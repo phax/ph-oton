@@ -31,51 +31,51 @@ public class MainDataTablesDownloaderB4
     // 3 runs:
     // 1. Run with default styling
     // 2. Run with Bootstrap4 styling
-    // 3. Run with Bootstrap3 styling
-    final String sHTML = "<link href=\"https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+    // 3. Run with Bootstrap3 styling (in other project)
+    final String sHTML = "<link href=\"https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
                          "<link href=\"https://cdn.datatables.net/autofill/2.7.0/css/autoFill.bootstrap4.min.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/buttons/3.1.1/css/buttons.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/colreorder/2.0.3/css/colReorder.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/datetime/1.5.3/css/dataTables.dateTime.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/fixedcolumns/5.0.1/css/fixedColumns.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/buttons/3.2.0/css/buttons.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/colreorder/2.0.4/css/colReorder.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/datetime/1.5.5/css/dataTables.dateTime.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/fixedcolumns/5.0.4/css/fixedColumns.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
                          "<link href=\"https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
                          "<link href=\"https://cdn.datatables.net/keytable/2.12.1/css/keyTable.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/rowgroup/1.5.0/css/rowGroup.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/rowgroup/1.5.1/css/rowGroup.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
                          "<link href=\"https://cdn.datatables.net/rowreorder/1.5.0/css/rowReorder.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
                          "<link href=\"https://cdn.datatables.net/scroller/2.4.3/css/scroller.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/searchbuilder/1.7.1/css/searchBuilder.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/searchpanes/2.3.1/css/searchPanes.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
-                         "<link href=\"https://cdn.datatables.net/select/2.0.4/css/select.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/searchbuilder/1.8.1/css/searchBuilder.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/searchpanes/2.3.3/css/searchPanes.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
+                         "<link href=\"https://cdn.datatables.net/select/3.0.0/css/select.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
                          "<link href=\"https://cdn.datatables.net/staterestore/1.4.1/css/stateRestore.bootstrap4.css\" rel=\"stylesheet\">\r\n" +
                          " \r\n" +
                          "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.js\"></script>\r\n" +
                          "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.js\"></script>\r\n" +
                          "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/2.1.3/js/dataTables.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap4.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/2.2.1/js/dataTables.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/2.2.1/js/dataTables.bootstrap4.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/autofill/2.7.0/js/dataTables.autoFill.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/autofill/2.7.0/js/autoFill.bootstrap4.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/buttons/3.1.1/js/buttons.bootstrap4.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/buttons/3.1.1/js/buttons.colVis.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/buttons/3.1.1/js/buttons.html5.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/colreorder/2.0.3/js/dataTables.colReorder.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/datetime/1.5.3/js/dataTables.dateTime.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/fixedcolumns/5.0.1/js/dataTables.fixedColumns.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/buttons/3.2.0/js/buttons.bootstrap4.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/buttons/3.2.0/js/buttons.colVis.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/colreorder/2.0.4/js/dataTables.colReorder.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/datetime/1.5.5/js/dataTables.dateTime.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/fixedcolumns/5.0.4/js/dataTables.fixedColumns.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap4.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/rowgroup/1.5.0/js/dataTables.rowGroup.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap4.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/rowgroup/1.5.1/js/dataTables.rowGroup.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/rowreorder/1.5.0/js/dataTables.rowReorder.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/scroller/2.4.3/js/dataTables.scroller.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/searchbuilder/1.7.1/js/dataTables.searchBuilder.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/searchbuilder/1.7.1/js/searchBuilder.bootstrap4.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/searchpanes/2.3.1/js/dataTables.searchPanes.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/searchpanes/2.3.1/js/searchPanes.bootstrap4.js\"></script>\r\n" +
-                         "<script src=\"https://cdn.datatables.net/select/2.0.4/js/dataTables.select.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/searchbuilder/1.8.1/js/dataTables.searchBuilder.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/searchbuilder/1.8.1/js/searchBuilder.bootstrap4.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/searchpanes/2.3.3/js/dataTables.searchPanes.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/searchpanes/2.3.3/js/searchPanes.bootstrap4.js\"></script>\r\n" +
+                         "<script src=\"https://cdn.datatables.net/select/3.0.0/js/dataTables.select.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/staterestore/1.4.1/js/dataTables.stateRestore.js\"></script>\r\n" +
                          "<script src=\"https://cdn.datatables.net/staterestore/1.4.1/js/stateRestore.bootstrap4.js\"></script>";
 

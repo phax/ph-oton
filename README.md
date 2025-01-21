@@ -35,7 +35,7 @@ Contained subprojects are:
 
 * Java 11+ is required for building 
 * Application server requirements:
-    * At least Tomcat 10.x
+    * At least Tomcat 10.1.x
     * Jetty 11.x with AnnotationConfiguration enabled
       
 ## Maven usage
@@ -77,9 +77,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v9.2.8 - work in progress
+* v9.2.8 - 2025-01-21
     * Added support for Google ReCaptcha v3
-    * Updated to Log4J 2.24.2
+    * Updated to Log4J 2.24.3
 * v9.2.7 - 2024-10-03
     * Updated to Jetty 11.0.24
     * Updated to Log4J 2.24.0

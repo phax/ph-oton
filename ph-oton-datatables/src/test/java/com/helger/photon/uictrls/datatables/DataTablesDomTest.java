@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-@Deprecated (forRemoval = true, since = "9.2.4")
 public final class DataTablesDomTest
 {
   @Test
