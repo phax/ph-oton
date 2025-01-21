@@ -80,6 +80,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 * v9.2.8 - 2025-01-21
     * Added support for Google ReCaptcha v3
     * Updated to Log4J 2.24.3
+    * Updated to DataTables 2.2.1
 * v9.2.7 - 2024-10-03
     * Updated to Jetty 11.0.24
     * Updated to Log4J 2.24.0
