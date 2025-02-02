@@ -59,6 +59,10 @@
       <artifactId>ph-security</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-config</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.helger.web</groupId>
       <artifactId>ph-network</artifactId>
     </dependency>
