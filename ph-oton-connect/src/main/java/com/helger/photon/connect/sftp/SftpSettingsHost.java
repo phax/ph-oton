@@ -25,10 +25,10 @@ public class SftpSettingsHost implements ISftpSettingsHost
   private final int m_nConnectionTimeoutMillis;
   private final String m_sServerUserName;
   private final String m_sServerPassword;
-  private final int m_nMaxParallelConnections;
   private final String m_sKeyPairPrivateKeyFile;
   private final String m_sKeyPairPublicKeyFile;
   private final String m_sKeyPairPassphrase;
+  private final int m_nMaxParallelConnections;
 
   // Status vars
   private String m_sDisplayName;
@@ -40,10 +40,10 @@ public class SftpSettingsHost implements ISftpSettingsHost
           aHost.getConnectionTimeoutMillis (),
           aHost.getServerUserName (),
           aHost.getServerPassword (),
-          aHost.getMaximumParallelConnections (),
           aHost.getKeyPairPrivateKeyFile (),
           aHost.getKeyPairPublicKeyFile (),
-          aHost.getKeyPairPassphrase ());
+          aHost.getKeyPairPassphrase (),
+          aHost.getMaximumParallelConnections ());
   }
 
   public SftpSettingsHost (@Nonnull @Nonempty final String sServerHost,
@@ -51,10 +51,10 @@ public class SftpSettingsHost implements ISftpSettingsHost
                            @Nonnegative final int nConnectionTimeoutMillis,
                            @Nullable final String sServerUserName,
                            @Nullable final String sServerPassword,
-                           @Nonnegative final int nMaxParallelConnections,
                            @Nullable final String sKeyPairPrivateKeyFile,
                            @Nullable final String sKeyPairPublicKeyFile,
-                           @Nullable final String sKeyPairPassphrase)
+                           @Nullable final String sKeyPairPassphrase,
+                           @Nonnegative final int nMaxParallelConnections)
   {
     ValueEnforcer.notEmpty (sServerHost, "ServerHost");
     ValueEnforcer.isGT0 (nServerPort, "ServerPort");
@@ -102,12 +102,6 @@ public class SftpSettingsHost implements ISftpSettingsHost
     return m_sServerPassword;
   }
 
-  @Nonnegative
-  public int getMaximumParallelConnections ()
-  {
-    return m_nMaxParallelConnections;
-  }
-
   @Nullable
   public String getKeyPairPrivateKeyFile ()
   {
@@ -124,6 +118,12 @@ public class SftpSettingsHost implements ISftpSettingsHost
   public String getKeyPairPassphrase ()
   {
     return m_sKeyPairPassphrase;
+  }
+
+  @Nonnegative
+  public int getMaximumParallelConnections ()
+  {
+    return m_nMaxParallelConnections;
   }
 
   @Nonnull
@@ -151,10 +151,10 @@ public class SftpSettingsHost implements ISftpSettingsHost
                                        .append ("ConnectionTimeoutMillis", m_nConnectionTimeoutMillis)
                                        .appendIfNotNull ("ServerUserName", m_sServerUserName)
                                        .appendPassword ("ServerPassword")
-                                       .append ("MaxParallelConnections", m_nMaxParallelConnections)
                                        .appendIfNotNull ("KeyPairPrivateKeyFile", m_sKeyPairPrivateKeyFile)
                                        .appendIfNotNull ("KeyPairPublicKeyFile", m_sKeyPairPublicKeyFile)
                                        .appendPassword ("KeyPairPassphrase")
+                                       .append ("MaxParallelConnections", m_nMaxParallelConnections)
                                        .getToString ();
   }
 
@@ -170,26 +170,27 @@ public class SftpSettingsHost implements ISftpSettingsHost
     if (StringHelper.hasNoText (sHost))
       return null;
 
-    final int nPort = aConfig.getAsInt (sConfigPrefix + ".port", -1);
+    final int nPort = aConfig.getAsInt (sConfigPrefix + ".port", ISftpSettingsHost.DEFAULT_PORT);
     final int nConnectionTimeoutMillis = aConfig.getAsInt (sConfigPrefix + ".connectiontimeoutms",
                                                            ISftpSettingsHost.DEFAULT_CONNECTION_TIMEOUT_MS);
     final String sUserName = aConfig.getAsString (sConfigPrefix + ".user");
     final String sPassword = aConfig.getAsString (sConfigPrefix + ".password");
-    final int nMaxParallelConnections = aConfig.getAsInt (sConfigPrefix + ".maxparallelconnections",
-                                                          ISftpSettingsHost.DEFAULT_MAX_CONNECTIONS);
 
-    final String sKeyPairPrivateKeyFile = aConfig.getAsString (sConfigPrefix + ".keypair.privatekeyfile");
-    final String sKeyPairPublicKeyFile = aConfig.getAsString (sConfigPrefix + ".keypair.publickeyfile");
+    final String sKeyPairPrivateKeyFile = aConfig.getAsString (sConfigPrefix + ".keypair.privatekeypath");
+    final String sKeyPairPublicKeyFile = aConfig.getAsString (sConfigPrefix + ".keypair.publickeypath");
     final String sKeyPairPassphrase = aConfig.getAsString (sConfigPrefix + ".keypair.passphrase");
+
+    final int nMaxParallelConnections = aConfig.getAsInt (sConfigPrefix + ".maxconnections",
+                                                          ISftpSettingsHost.DEFAULT_MAX_CONNECTIONS);
 
     return new SftpSettingsHost (sHost,
                                  nPort,
                                  nConnectionTimeoutMillis,
                                  sUserName,
                                  sPassword,
-                                 nMaxParallelConnections,
                                  sKeyPairPrivateKeyFile,
                                  sKeyPairPublicKeyFile,
-                                 sKeyPairPassphrase);
+                                 sKeyPairPassphrase,
+                                 nMaxParallelConnections);
   }
 }
