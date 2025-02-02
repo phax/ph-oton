@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014-2025 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.helger.photon.connect.sftp;
 
 import javax.annotation.Nonnegative;
@@ -28,18 +44,20 @@ public interface ISftpSettingsHost extends IHasDisplayName
    * @return The IP address of the sever to connect to.
    */
   @Nonnull
-  @Nonnegative
+  @Nonempty
   String getServerHost ();
 
   /**
    * @return The network port number to use. Must be &gt; 0. The default value
    *         should be {@link #DEFAULT_PORT}.
    */
+  @Nonnegative
   int getServerPort ();
 
   /**
    * @return Connection timeout milliseconds. All values &le; 0 means no timeout
    */
+  @Nonnegative
   int getConnectionTimeoutMillis ();
 
   /**
@@ -63,6 +81,15 @@ public interface ISftpSettingsHost extends IHasDisplayName
    */
   @Nullable
   String getServerPassword ();
+
+  /**
+   * @return <code>true</code> if a password is used, <code>false</code> if
+   *         key-pairs are used
+   */
+  default boolean hasServerPassword ()
+  {
+    return StringHelper.hasText (getServerPassword ());
+  }
 
   /**
    * @return The path to a PuttyGen PPK file (classpath relative)
