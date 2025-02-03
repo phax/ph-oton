@@ -77,6 +77,10 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.2.9 - 2025-02-03
+    * Updated to ph-web 10.3.0
+    * Added reusable SFTP helper classes to package `com.helger.photon.connect.sftp`
+    * `AbstractLoginManager` no longer stores the user agent by default
 * v9.2.8 - 2025-01-21
     * Added support for Google ReCaptcha v3
     * Updated to Log4J 2.24.3

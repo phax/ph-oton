@@ -77,13 +77,6 @@ public abstract class AbstractLoginManager
   public static final String LOGIN_INFO_QUERY_STRING = "query-string";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the user-agent string
-   * of the last request. Type: String.
-   */
-  @Deprecated (forRemoval = true, since = "9.2.1")
-  public static final String LOGIN_INFO_USER_AGENT = "user-agent";
-
-  /**
    * Attribute name for the LoginInfo attribute that holds the number of
    * requests in this session. Type: int.
    *
@@ -230,7 +223,6 @@ public abstract class AbstractLoginManager
    *        <code>true</code> if the user just logged in with this request.
    *        Added in 3.4.0.
    */
-  @SuppressWarnings ("removal")
   @OverrideOnDemand
   protected void modifyLoginInfo (@Nonnull final LoginInfo aLoginInfo,
                                   @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -241,7 +233,6 @@ public abstract class AbstractLoginManager
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REMOTE_HOST, aRequestScope.getRemoteHost ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_REQUEST_URI, aRequestScope.getRequestURIEncoded ());
     aLoginInfo.attrs ().putIn (LOGIN_INFO_QUERY_STRING, aRequestScope.getQueryString ());
-    aLoginInfo.attrs ().putIn (LOGIN_INFO_USER_AGENT, aRequestScope.getUserAgent ().getAsString ());
     aLoginInfo.attrs ()
               .putIn (LOGIN_INFO_REQUEST_COUNT,
                       Integer.toString (aLoginInfo.attrs ().getAsInt (LOGIN_INFO_REQUEST_COUNT, 0) + 1));
