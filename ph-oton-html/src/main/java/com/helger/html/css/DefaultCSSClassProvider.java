@@ -45,7 +45,7 @@ import com.helger.commons.string.ToStringGenerator;
 public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultCSSClassProvider.class);
-  private static final ICommonsMap <String, DefaultCSSClassProvider> s_aAll = new CommonsHashMap <> ();
+  private static final ICommonsMap <String, DefaultCSSClassProvider> KNOWN = new CommonsHashMap <> ();
 
   private final String m_sCSSClass;
   // Status vars
@@ -116,7 +116,7 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
   @Nonnull
   public static DefaultCSSClassProvider create (@Nonnull @Nonempty final String sCSSClass)
   {
-    return s_aAll.computeIfAbsent (sCSSClass, k -> new DefaultCSSClassProvider (sCSSClass));
+    return KNOWN.computeIfAbsent (sCSSClass, k -> new DefaultCSSClassProvider (sCSSClass));
   }
 
   /**
