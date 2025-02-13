@@ -215,6 +215,24 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setInert (boolean bInert);
 
   /**
+   * @return the inputmode. May be <code>null</code>.
+   * @since 9.2.10
+   */
+  @Nullable
+  EHCInputMode getInputMode ();
+
+  /**
+   * Set the inputmode state of this element
+   *
+   * @param eInputMode
+   *        Value to set. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
+   */
+  @Nonnull
+  IMPLTYPE setInputMode (@Nullable EHCInputMode eInputMode);
+
+  /**
    * @return The value of the HTML <code>lang</code> attribute. May be
    *         <code>null</code>.
    */

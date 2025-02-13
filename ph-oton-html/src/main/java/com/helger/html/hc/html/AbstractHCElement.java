@@ -124,7 +124,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   private boolean m_bHidden = DEFAULT_HIDDEN;
   private String m_sID;
   private boolean m_bInert = DEFAULT_INERT;
-  // TODO inputmode (Baseline Widely available)
+  private EHCInputMode m_eInputMode;
   // TODO is (Limited availability)
   // TODO itemid
   // TODO itemprop
@@ -595,6 +595,19 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   @Nullable
+  public final EHCInputMode getInputMode ()
+  {
+    return m_eInputMode;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setInputMode (final EHCInputMode eInputMode)
+  {
+    m_eInputMode = eInputMode;
+    return thisAsT ();
+  }
+
+  @Nullable
   public final String getLanguage ()
   {
     return m_sLanguage;
@@ -877,6 +890,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
         aElement.setAttribute (CHTMLAttributes.HIDDEN, CHTMLAttributeValues.HIDDEN);
       if (m_bInert)
         aElement.setAttribute (CHTMLAttributes.INERT, CHTMLAttributeValues.INERT);
+      if (m_eInputMode != null)
+        aElement.setAttribute (CHTMLAttributes.INPUTMODE, m_eInputMode);
       if (StringHelper.hasText (m_sNonce))
         aElement.setAttribute (CHTMLAttributes.NONCE, m_sNonce);
       if (StringHelper.hasText (m_sPart))
@@ -954,6 +969,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
                             .append ("Hidden", m_bHidden)
                             .appendIfNotNull ("ID", m_sID)
                             .append ("Inert", m_bInert)
+                            .appendIfNotNull ("InputMode", m_eInputMode)
                             .appendIfNotNull ("Language", m_sLanguage)
                             .appendIfNotNull ("Nonce", m_sNonce)
                             .appendIfNotNull ("Part", m_sPart)
