@@ -45,19 +45,15 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                       implements
+public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLTYPE>> extends
+                                       AbstractHCElementWithChildren <IMPLTYPE> implements
                                        IHCButton <IMPLTYPE>
 {
-  /** By default auto focus is disabled */
-  public static final boolean DEFAULT_AUTO_FOCUS = false;
-
   public static final boolean DEFAULT_DISABLED = false;
 
   /** Default value */
   public static final boolean DEFAULT_FORMNOVALIDATE = false;
 
-  private boolean m_bAutoFocus = DEFAULT_AUTO_FOCUS;
   private boolean m_bDisabled = DEFAULT_DISABLED;
   private String m_sForm;
   private final HC_Action m_aFormAction = new HC_Action ();
@@ -85,18 +81,6 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
   {
     this (sLabel);
     setOnClick (aOnClick);
-  }
-
-  public final boolean isAutoFocus ()
-  {
-    return m_bAutoFocus;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setAutoFocus (final boolean bAutoFocus)
-  {
-    m_bAutoFocus = bAutoFocus;
-    return thisAsT ();
   }
 
   public final boolean isDisabled ()
@@ -260,8 +244,6 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (m_bAutoFocus)
-      aElement.setAttribute (CHTMLAttributes.AUTOFOCUS, CHTMLAttributeValues.AUTOFOCUS);
     if (m_bDisabled)
       aElement.setAttribute (CHTMLAttributes.DISABLED, CHTMLAttributeValues.DISABLED);
     if (StringHelper.hasText (m_sForm))
@@ -289,17 +271,16 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("autoFocus", m_bAutoFocus)
-                            .append ("disabled", m_bDisabled)
-                            .appendIfNotNull ("form", m_sForm)
-                            .append ("formaction", m_aFormAction)
-                            .appendIfNotNull ("formenctype", m_aFormEncType)
-                            .appendIfNotNull ("formmethod", m_eFormMethod)
-                            .append ("formnovalidate", m_bFormNoValidate)
-                            .appendIfNotNull ("formtarget", m_aFormTarget)
-                            .appendIfNotNull ("name", m_sName)
-                            .append ("type", m_eType)
-                            .appendIfNotNull ("value", m_sValue)
+                            .append ("Disabled", m_bDisabled)
+                            .appendIfNotNull ("Form", m_sForm)
+                            .append ("FormAction", m_aFormAction)
+                            .appendIfNotNull ("FormEncType", m_aFormEncType)
+                            .appendIfNotNull ("FormMethod", m_eFormMethod)
+                            .append ("FormNoValidate", m_bFormNoValidate)
+                            .appendIfNotNull ("FormTarget", m_aFormTarget)
+                            .appendIfNotNull ("Name", m_sName)
+                            .append ("Type", m_eType)
+                            .appendIfNotNull ("Value", m_sValue)
                             .getToString ();
   }
 }

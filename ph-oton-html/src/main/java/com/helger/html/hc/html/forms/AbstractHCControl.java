@@ -33,12 +33,11 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElement;
-import com.helger.html.hc.html.FakeJS;
-import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.xml.microdom.IMicroElement;
 
 @NotThreadSafe
-public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE> implements
+public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMPLTYPE>> extends
+                                        AbstractHCElement <IMPLTYPE> implements
                                         IHCControl <IMPLTYPE>
 {
   public static final boolean DEFAULT_DISABLED = false;
@@ -47,16 +46,12 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
   /** By default required is disabled */
   public static final boolean DEFAULT_REQUIRED = false;
 
-  /** By default auto focus is disabled */
-  public static final boolean DEFAULT_AUTO_FOCUS = false;
-
   public static final ICSSClassProvider CSS_CLASS_READ_ONLY = DefaultCSSClassProvider.create ("read-only");
 
   private boolean m_bDisabled = DEFAULT_DISABLED;
   private String m_sName;
   private boolean m_bReadOnly = DEFAULT_READ_ONLY;
   private boolean m_bRequired = DEFAULT_REQUIRED;
-  private boolean m_bAutoFocus = DEFAULT_AUTO_FOCUS;
 
   public AbstractHCControl (@Nonnull @Nonempty final EHTMLElement aElement)
   {
@@ -111,18 +106,6 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
     return thisAsT ();
   }
 
-  public final boolean isAutoFocus ()
-  {
-    return m_bAutoFocus;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setAutoFocus (final boolean bAutoFocus)
-  {
-    m_bAutoFocus = bAutoFocus;
-    return thisAsT ();
-  }
-
   @Override
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -137,12 +120,6 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
 
       // Set explicit tab index -1 to avoid focusing
       setTabIndex (-1L);
-    }
-
-    if (m_bAutoFocus)
-    {
-      // Add a JS call that focuses this element (for non HTML5 browsers)
-      aTargetNode.addChild (new HCScriptInline (FakeJS.focus (this)));
     }
   }
 
@@ -160,19 +137,16 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
       aElement.setAttribute (CHTMLAttributes.READONLY, CHTMLAttributeValues.READONLY);
     if (m_bRequired)
       aElement.setAttribute (CHTMLAttributes.REQUIRED, CHTMLAttributeValues.REQUIRED);
-    if (m_bAutoFocus)
-      aElement.setAttribute (CHTMLAttributes.AUTOFOCUS, CHTMLAttributeValues.AUTOFOCUS);
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("disabled", m_bDisabled)
-                            .appendIfNotNull ("name", m_sName)
-                            .append ("readOnly", m_bReadOnly)
-                            .append ("required", m_bRequired)
-                            .append ("autoFocus", m_bAutoFocus)
+                            .append ("Disabled", m_bDisabled)
+                            .appendIfNotNull ("Name", m_sName)
+                            .append ("ReadOnly", m_bReadOnly)
+                            .append ("Required", m_bRequired)
                             .getToString ();
   }
 }

@@ -48,6 +48,7 @@ public final class CHTMLAttributeValues
   public static final String DRAGGABLE = CHTMLAttributes.DRAGGABLE.getName ();
   public static final String FORMNOVALIDATE = CHTMLAttributes.FORMNOVALIDATE.getName ();
   public static final String HIDDEN = CHTMLAttributes.HIDDEN.getName ();
+  public static final String INERT = CHTMLAttributes.INERT.getName ();
   public static final String MUTED = CHTMLAttributes.MUTED.getName ();
   public static final String NORESIZE = CHTMLAttributes.NORESIZE.getName ();
   public static final String NOSHADE = CHTMLAttributes.NOSHADE.getName ();

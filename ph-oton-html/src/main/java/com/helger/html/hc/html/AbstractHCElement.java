@@ -30,7 +30,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.AttributeContainer;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.CommonsLinkedHashSet;
@@ -76,69 +75,95 @@ import com.helger.xml.microdom.MicroQName;
  *        The implementation type.
  */
 @NotThreadSafe
-public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMPLTYPE>> extends AbstractHCNode implements
+public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMPLTYPE>> extends AbstractHCNode
+                                        implements
                                         IHCElement <IMPLTYPE>
 {
+  /** By default an element is not auto focused */
+  public static final boolean DEFAULT_AUTO_FOCUS = false;
+
+  /** By default an element is not hidden */
+  public static final boolean DEFAULT_HIDDEN = false;
+
+  /** By default an element is not inert */
+  public static final boolean DEFAULT_INERT = false;
+
+  /** By default an element is not spell checked */
+  public static final boolean DEFAULT_SPELLCHECK = false;
+
   /** Default translate mode */
   public static final ETriState DEFAULT_TRANSLATE = ETriState.UNDEFINED;
 
   /** By default an element is not unfocusable */
   public static final boolean DEFAULT_UNFOCUSABLE = false;
 
-  /** By default an element is not hidden */
-  public static final boolean DEFAULT_HIDDEN = false;
-
-  /** By default an element is not spell checked */
-  public static final boolean DEFAULT_SPELLCHECK = false;
-
   /** The HTML enum element */
   private final EHTMLElement m_eElement;
   /** The cached element name */
   private final String m_sElementName;
 
+  // Complex stuff
+  private ICommonsOrderedSet <ICSSClassProvider> m_aCSSClassProviders;
+  private ICommonsOrderedMap <ECSSProperty, ICSSValue> m_aStyles;
+  /*
+   * Use 1 pointer instead of many to save memory if no handler is used at all
+   * (which happens quite often)!
+   */
+  private JSEventMap m_aJSEvents;
+
+  // Simple attributes
   private String m_sAccessKey;
-  // TODO autocapitalize
-  // TODO autofocus
+  // TODO autocapitalize (Limited availability)
+  // TODO autocorrect (Limited availability)
+  private boolean m_bAutoFocus = DEFAULT_AUTO_FOCUS;
   private EHCContentEditable m_eContentEditable;
   private EHCTextDirection m_eDirection;
   private EHCDraggable m_eDraggable;
-  // TODO enterkeyhint
+  private String m_sEnterKeyHint;
+  private String m_sExportParts;
   private boolean m_bHidden = DEFAULT_HIDDEN;
-  // TODO inputmode
-  // TODO is
+  private String m_sID;
+  private boolean m_bInert = DEFAULT_INERT;
+  // TODO inputmode (Baseline Widely available)
+  // TODO is (Limited availability)
   // TODO itemid
   // TODO itemprop
   // TODO itemref
   // TODO itemscope
   // TODO itemtype
   private String m_sLanguage;
-  // TODO nonce
+  private String m_sNonce;
+  private String m_sPart;
+  // TODO popover (Baseline 2025)
+  private String m_sSlot;
   private boolean m_bSpellCheck = DEFAULT_SPELLCHECK;
-  private ICommonsOrderedMap <ECSSProperty, ICSSValue> m_aStyles;
   private long m_nTabIndex = DEFAULT_TABINDEX;
   private String m_sTitle;
-  private ETriState m_eTranslate = DEFAULT_TRANSLATE;
-
-  private ICommonsOrderedSet <ICSSClassProvider> m_aCSSClassProviders;
-  private String m_sID;
-  // TODO slot
-
-  /*
-   * Use 1 pointer instead of many to save memory if no handler is used at all
-   * (which happens quite often)!
-   */
-  private JSEventMap m_aJSHandler;
+  private ETriState m_eTranslate = DEFAULT_TRANSLATE; // (Baseline 2023)
+  // TODO writingsuggestions (Limited availability)
 
   // ARIA stuff
   private EHTMLRole m_eRole;
 
   // HC specific stuff
   private boolean m_bUnfocusable = DEFAULT_UNFOCUSABLE;
+  private final IHCAttrContainer m_aCustomAttrs = new HCAttrContainer ();
 
-  private static final class HCAttrCont extends AttributeContainer <IMicroQName, String> implements IHCAttrContainer
-  {}
+  public static boolean isValidID (@Nullable final String sID)
+  {
+    if (StringHelper.hasText (sID))
+    {
+      // RegEx check: !CXMLRegEx.PATTERN_NCNAME.matcher (sID).matches ()
+      // Happens to often, since "[" and "]" occur very often and are not
+      // allowed
 
-  private final HCAttrCont m_aCustomAttrs = new HCAttrCont ();
+      // Check if a whitespace is contained
+      if (RegExHelper.stringMatchesPattern (".*\\s.*", sID))
+        return false;
+    }
+
+    return true;
+  }
 
   protected AbstractHCElement (@Nonnull final EHTMLElement eElement)
   {
@@ -160,80 +185,15 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sElementName;
   }
 
-  @Nullable
-  public final String getID ()
-  {
-    return m_sID;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setID (@Nullable final String sID)
-  {
-    // Check for existing ID
-    return setID (sID, false);
-  }
-
-  public static boolean isValidID (@Nullable final String sID)
-  {
-    if (StringHelper.hasText (sID))
-    {
-      // RegEx check: !CXMLRegEx.PATTERN_NCNAME.matcher (sID).matches ()
-      // Happens to often, since "[" and "]" occur very often and are not
-      // allowed
-
-      // Check if a whitespace is contained
-      if (RegExHelper.stringMatchesPattern (".*\\s.*", sID))
-        return false;
-    }
-
-    return true;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
-  {
-    if (!isValidID (sID))
-    {
-      // If the ID is absolutely invalid, log an error and don't set it
-      HCConsistencyChecker.consistencyError ("HC object ID '" + sID + "' is invalid!");
-    }
-    else
-    {
-      if (!bImSureToOverwriteAnExistingID && m_sID != null)
-        if (StringHelper.hasText (sID))
-        {
-          if (!m_sID.equals (sID))
-            HCConsistencyChecker.consistencyError ("Overwriting HC object ID '" +
-                                                   m_sID +
-                                                   "' with '" +
-                                                   sID +
-                                                   "' - this may have side effects!");
-        }
-        else
-        {
-          HCConsistencyChecker.consistencyError ("The HC object ID '" + m_sID + "' will be removed - this may have side effects");
-        }
-      m_sID = sID;
-    }
-    return thisAsT ();
-  }
-
-  @Nullable
-  public final String getTitle ()
-  {
-    return m_sTitle;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setTitle (@Nullable final String sTitle)
-  {
-    m_sTitle = sTitle;
-    return thisAsT ();
-  }
+  // =================================
+  // Class stuff
+  // =================================
 
   public final boolean containsClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
-    return m_aCSSClassProviders != null && aCSSClassProvider != null && m_aCSSClassProviders.contains (aCSSClassProvider);
+    return m_aCSSClassProviders != null &&
+           aCSSClassProvider != null &&
+           m_aCSSClassProviders.contains (aCSSClassProvider);
   }
 
   @Nonnull
@@ -320,6 +280,10 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return aSB.toString ();
   }
 
+  // =================================
+  // Style stuff
+  // =================================
+
   @Nonnull
   @ReturnsMutableCopy
   public final ICommonsOrderedMap <ECSSProperty, ICSSValue> getAllStyles ()
@@ -399,6 +363,117 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return aSB.toString ();
   }
 
+  // =================================
+  // JS Event Handler
+  // =================================
+
+  @Nullable
+  @ReturnsMutableObject
+  public final JSEventMap getEventMap ()
+  {
+    return m_aJSEvents;
+  }
+
+  @Nullable
+  public final IHasJSCode getEventHandler (@Nullable final EJSEvent eJSEvent)
+  {
+    return m_aJSEvents == null ? null : m_aJSEvents.getHandler (eJSEvent);
+  }
+
+  public final boolean containsEventHandler (@Nullable final EJSEvent eJSEvent)
+  {
+    return m_aJSEvents != null && m_aJSEvents.containsHandler (eJSEvent);
+  }
+
+  @Nonnull
+  public final IMPLTYPE addEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  {
+    if (aJSCode != null)
+    {
+      if (m_aJSEvents == null)
+        m_aJSEvents = new JSEventMap ();
+      m_aJSEvents.addHandler (eJSEvent, aJSCode);
+    }
+    return thisAsT ();
+  }
+
+  @Nonnull
+  public final IMPLTYPE prependEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  {
+    if (aJSCode != null)
+    {
+      if (m_aJSEvents == null)
+        m_aJSEvents = new JSEventMap ();
+      m_aJSEvents.prependHandler (eJSEvent, aJSCode);
+    }
+    return thisAsT ();
+  }
+
+  @Nonnull
+  public final IMPLTYPE setEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  {
+    if (aJSCode != null)
+    {
+      if (m_aJSEvents == null)
+        m_aJSEvents = new JSEventMap ();
+      m_aJSEvents.setHandler (eJSEvent, aJSCode);
+    }
+    else
+      if (m_aJSEvents != null)
+        m_aJSEvents.removeHandler (eJSEvent);
+    return thisAsT ();
+  }
+
+  @Nonnull
+  public final IMPLTYPE removeAllEventHandler (@Nullable final EJSEvent eJSEvent)
+  {
+    if (m_aJSEvents != null)
+      m_aJSEvents.removeHandler (eJSEvent);
+    return thisAsT ();
+  }
+
+  // =================================
+  // Attributes
+  // =================================
+
+  @Nullable
+  public final String getAccessKey ()
+  {
+    return m_sAccessKey;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setAccessKey (@Nullable final String sAccessKey)
+  {
+    m_sAccessKey = sAccessKey;
+    return thisAsT ();
+  }
+
+  public final boolean isAutoFocus ()
+  {
+    return m_bAutoFocus;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setAutoFocus (final boolean bAutoFocus)
+  {
+    m_bAutoFocus = bAutoFocus;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final EHCContentEditable getContentEditable ()
+  {
+    return m_eContentEditable;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setContentEditable (@Nullable final EHCContentEditable eContentEditable)
+  {
+    m_eContentEditable = eContentEditable;
+    return thisAsT ();
+  }
+
   @Nullable
   public final EHCTextDirection getDirection ()
   {
@@ -409,6 +484,113 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   public final IMPLTYPE setDirection (@Nullable final EHCTextDirection eDirection)
   {
     m_eDirection = eDirection;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final EHCDraggable getDraggable ()
+  {
+    return m_eDraggable;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setDraggable (@Nullable final EHCDraggable eDraggable)
+  {
+    m_eDraggable = eDraggable;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final String getEnterKeyHint ()
+  {
+    return m_sEnterKeyHint;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setEnterKeyHint (@Nullable final String sEnterKeyHint)
+  {
+    m_sEnterKeyHint = sEnterKeyHint;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final String getExportParts ()
+  {
+    return m_sExportParts;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setExportParts (@Nullable final String sExportParts)
+  {
+    m_sExportParts = sExportParts;
+    return thisAsT ();
+  }
+
+  public final boolean isHidden ()
+  {
+    return m_bHidden;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setHidden (final boolean bHidden)
+  {
+    m_bHidden = bHidden;
+    return thisAsT ();
+  }
+
+  @Nullable
+  public final String getID ()
+  {
+    return m_sID;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setID (@Nullable final String sID)
+  {
+    // Check for existing ID
+    return setID (sID, false);
+  }
+
+  @Nonnull
+  public final IMPLTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
+  {
+    if (!isValidID (sID))
+    {
+      // If the ID is absolutely invalid, log an error and don't set it
+      HCConsistencyChecker.consistencyError ("HC object ID '" + sID + "' is invalid!");
+    }
+    else
+    {
+      if (!bImSureToOverwriteAnExistingID && m_sID != null)
+        if (StringHelper.hasText (sID))
+        {
+          if (!m_sID.equals (sID))
+            HCConsistencyChecker.consistencyError ("Overwriting HC object ID '" +
+                                                   m_sID +
+                                                   "' with '" +
+                                                   sID +
+                                                   "' - this may have side effects!");
+        }
+        else
+        {
+          HCConsistencyChecker.consistencyError ("The HC object ID '" +
+                                                 m_sID +
+                                                 "' will be removed - this may have side effects");
+        }
+      m_sID = sID;
+    }
+    return thisAsT ();
+  }
+
+  public final boolean isInert ()
+  {
+    return m_bInert;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setInert (final boolean bInert)
+  {
+    m_bInert = bInert;
     return thisAsT ();
   }
 
@@ -426,91 +608,53 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   @Nullable
-  @ReturnsMutableObject
-  public final JSEventMap getEventMap ()
+  public final String getNonce ()
   {
-    return m_aJSHandler;
+    return m_sNonce;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setNonce (@Nullable final String sNonce)
+  {
+    m_sNonce = sNonce;
+    return thisAsT ();
   }
 
   @Nullable
-  public final IHasJSCode getEventHandler (@Nullable final EJSEvent eJSEvent)
+  public final String getPart ()
   {
-    return m_aJSHandler == null ? null : m_aJSHandler.getHandler (eJSEvent);
-  }
-
-  public final boolean containsEventHandler (@Nullable final EJSEvent eJSEvent)
-  {
-    return m_aJSHandler != null && m_aJSHandler.containsHandler (eJSEvent);
+    return m_sPart;
   }
 
   @Nonnull
-  public final IMPLTYPE addEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  public final IMPLTYPE setPart (@Nullable final String sPart)
   {
-    if (aJSCode != null)
-    {
-      if (m_aJSHandler == null)
-        m_aJSHandler = new JSEventMap ();
-      m_aJSHandler.addHandler (eJSEvent, aJSCode);
-    }
+    m_sPart = sPart;
     return thisAsT ();
   }
 
-  @Nonnull
-  public final IMPLTYPE prependEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  @Nullable
+  public final String getSlot ()
   {
-    if (aJSCode != null)
-    {
-      if (m_aJSHandler == null)
-        m_aJSHandler = new JSEventMap ();
-      m_aJSHandler.prependHandler (eJSEvent, aJSCode);
-    }
+    return m_sSlot;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setSlot (@Nullable final String sSlot)
+  {
+    m_sSlot = sSlot;
     return thisAsT ();
   }
 
-  @Nonnull
-  public final IMPLTYPE setEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  public final boolean isSpellCheck ()
   {
-    if (aJSCode != null)
-    {
-      if (m_aJSHandler == null)
-        m_aJSHandler = new JSEventMap ();
-      m_aJSHandler.setHandler (eJSEvent, aJSCode);
-    }
-    else
-      if (m_aJSHandler != null)
-        m_aJSHandler.removeHandler (eJSEvent);
-    return thisAsT ();
+    return m_bSpellCheck;
   }
 
   @Nonnull
-  public final IMPLTYPE removeAllEventHandler (@Nullable final EJSEvent eJSEvent)
+  public final IMPLTYPE setSpellCheck (final boolean bSpellCheck)
   {
-    if (m_aJSHandler != null)
-      m_aJSHandler.removeHandler (eJSEvent);
-    return thisAsT ();
-  }
-
-  public final boolean isUnfocusable ()
-  {
-    return m_bUnfocusable;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setUnfocusable (final boolean bUnfocusable)
-  {
-    m_bUnfocusable = bUnfocusable;
-    return thisAsT ();
-  }
-
-  public final boolean isHidden ()
-  {
-    return m_bHidden;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setHidden (final boolean bHidden)
-  {
-    m_bHidden = bHidden;
+    m_bSpellCheck = bSpellCheck;
     return thisAsT ();
   }
 
@@ -528,15 +672,15 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   @Nullable
-  public final String getAccessKey ()
+  public final String getTitle ()
   {
-    return m_sAccessKey;
+    return m_sTitle;
   }
 
   @Nonnull
-  public final IMPLTYPE setAccessKey (@Nullable final String sAccessKey)
+  public final IMPLTYPE setTitle (@Nullable final String sTitle)
   {
-    m_sAccessKey = sAccessKey;
+    m_sTitle = sTitle;
     return thisAsT ();
   }
 
@@ -568,43 +712,9 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nullable
-  public final EHCContentEditable getContentEditable ()
-  {
-    return m_eContentEditable;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setContentEditable (@Nullable final EHCContentEditable eContentEditable)
-  {
-    m_eContentEditable = eContentEditable;
-    return thisAsT ();
-  }
-
-  @Nullable
-  public final EHCDraggable getDraggable ()
-  {
-    return m_eDraggable;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setDraggable (@Nullable final EHCDraggable eDraggable)
-  {
-    m_eDraggable = eDraggable;
-    return thisAsT ();
-  }
-
-  public final boolean isSpellCheck ()
-  {
-    return m_bSpellCheck;
-  }
-
-  @Nonnull
-  public final IMPLTYPE setSpellCheck (final boolean bSpellCheck)
-  {
-    m_bSpellCheck = bSpellCheck;
-    return thisAsT ();
-  }
+  // =================================
+  // HC stuff
+  // =================================
 
   @Nullable
   public final EHTMLRole getRole ()
@@ -616,6 +726,18 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   public final IMPLTYPE setRole (@Nullable final EHTMLRole eRole)
   {
     m_eRole = eRole;
+    return thisAsT ();
+  }
+
+  public final boolean isUnfocusable ()
+  {
+    return m_bUnfocusable;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setUnfocusable (final boolean bUnfocusable)
+  {
+    m_bUnfocusable = bUnfocusable;
     return thisAsT ();
   }
 
@@ -688,7 +810,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
+                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     final boolean bHTML5 = aConversionSettings.getHTMLVersion ().isAtLeastHTML5 ();
 
@@ -713,14 +836,14 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     aElement.setAttribute (CHTMLAttributes.STYLE, getAllStylesAsString (aConversionSettings.getCSSWriterSettings ()));
 
     // Emit all JS events
-    if (m_aJSHandler != null)
+    if (m_aJSEvents != null)
     {
       final IJSWriterSettings aJSWriterSettings = aConversionSettings.getJSWriterSettings ();
 
       // Loop over all events in the defined order for consistent results
       for (final EJSEvent eEvent : EJSEvent.values ())
       {
-        final CollectingJSCodeProvider aProvider = m_aJSHandler.getHandler (eEvent);
+        final CollectingJSCodeProvider aProvider = m_aJSEvents.getHandler (eEvent);
         if (aProvider != null)
         {
           final String sJSCode = aProvider.getJSCode (aJSWriterSettings);
@@ -740,16 +863,31 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     // Global HTML5 attributes
     if (bHTML5)
     {
-      if (m_eTranslate.isDefined ())
-        aElement.setAttribute (CHTMLAttributes.TRANSLATE, m_eTranslate.isTrue () ? CHTMLAttributeValues.YES : CHTMLAttributeValues.NO);
+      if (m_bAutoFocus)
+        aElement.setAttribute (CHTMLAttributes.AUTOFOCUS, CHTMLAttributeValues.AUTOFOCUS);
       if (m_eContentEditable != null)
         aElement.setAttribute (CHTMLAttributes.CONTENTEDITABLE, m_eContentEditable);
       if (m_eDraggable != null)
         aElement.setAttribute (CHTMLAttributes.DRAGGABLE, m_eDraggable);
+      if (StringHelper.hasText (m_sEnterKeyHint))
+        aElement.setAttribute (CHTMLAttributes.ENTERKEYHINT, m_sEnterKeyHint);
+      if (StringHelper.hasText (m_sExportParts))
+        aElement.setAttribute (CHTMLAttributes.EXPORTPARTS, m_sExportParts);
       if (m_bHidden)
         aElement.setAttribute (CHTMLAttributes.HIDDEN, CHTMLAttributeValues.HIDDEN);
+      if (m_bInert)
+        aElement.setAttribute (CHTMLAttributes.INERT, CHTMLAttributeValues.INERT);
+      if (StringHelper.hasText (m_sNonce))
+        aElement.setAttribute (CHTMLAttributes.NONCE, m_sNonce);
+      if (StringHelper.hasText (m_sPart))
+        aElement.setAttribute (CHTMLAttributes.PART, m_sPart);
+      if (StringHelper.hasText (m_sSlot))
+        aElement.setAttribute (CHTMLAttributes.SLOT, m_sSlot);
       if (m_bSpellCheck)
         aElement.setAttribute (CHTMLAttributes.SPELLCHECK, CHTMLAttributeValues.SPELLCHECK);
+      if (m_eTranslate.isDefined ())
+        aElement.setAttribute (CHTMLAttributes.TRANSLATE,
+                               m_eTranslate.isTrue () ? CHTMLAttributeValues.YES : CHTMLAttributeValues.NO);
     }
 
     if (m_eRole != null)
@@ -771,7 +909,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    *        The conversion settings to be used
    */
   @OverrideOnDemand
-  protected void finishMicroElement (@Nonnull final IMicroElement eElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void finishMicroElement (@Nonnull final IMicroElement eElement,
+                                     @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {}
 
   /*
@@ -800,25 +939,32 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("element", m_eElement)
-                            .append ("elementName", m_sElementName)
+                            .append ("Element", m_eElement)
+                            .append ("ElementName", m_sElementName)
+                            .appendIfNotNull ("Classes", m_aCSSClassProviders)
+                            .appendIfNotNull ("Styles", m_aStyles)
+                            .appendIfNotNull ("JSEvents", m_aJSEvents)
+                            .appendIfNotNull ("AccessKey", m_sAccessKey)
+                            .append ("AutoFocus", m_bAutoFocus)
+                            .appendIfNotNull ("ContentEditable", m_eContentEditable)
+                            .appendIfNotNull ("Direction", m_eDirection)
+                            .appendIfNotNull ("Draggable", m_eDraggable)
+                            .appendIfNotNull ("EnterKeyHint", m_sEnterKeyHint)
+                            .appendIfNotNull ("ExportParts", m_sExportParts)
+                            .append ("Hidden", m_bHidden)
                             .appendIfNotNull ("ID", m_sID)
-                            .appendIfNotNull ("title", m_sTitle)
-                            .appendIfNotNull ("language", m_sLanguage)
-                            .appendIfNotNull ("direction", m_eDirection)
-                            .appendIfNotNull ("classes", m_aCSSClassProviders)
-                            .appendIfNotNull ("styles", m_aStyles)
-                            .appendIfNotNull ("JSHandler", m_aJSHandler)
-                            .append ("unfocusable", m_bUnfocusable)
-                            .append ("tabIndex", m_nTabIndex)
-                            .appendIfNotNull ("accessKey", m_sAccessKey)
-                            .appendIfNotNull ("translate", m_eTranslate)
-                            .appendIfNotNull ("contentEditable", m_eContentEditable)
-                            .appendIfNotNull ("draggable", m_eDraggable)
-                            .append ("hidden", m_bHidden)
-                            .append ("spellcheck", m_bSpellCheck)
-                            .appendIfNotNull ("role", m_eRole)
-                            .appendIfNotNull ("customAttrs", m_aCustomAttrs)
+                            .append ("Inert", m_bInert)
+                            .appendIfNotNull ("Language", m_sLanguage)
+                            .appendIfNotNull ("Nonce", m_sNonce)
+                            .appendIfNotNull ("Part", m_sPart)
+                            .appendIfNotNull ("Slot", m_sSlot)
+                            .append ("SpellCheck", m_bSpellCheck)
+                            .append ("TabIndex", m_nTabIndex)
+                            .appendIfNotNull ("Title", m_sTitle)
+                            .appendIfNotNull ("Translate", m_eTranslate)
+                            .appendIfNotNull ("Role", m_eRole)
+                            .append ("Unfocusable", m_bUnfocusable)
+                            .appendIfNotNull ("CustomAttrs", m_aCustomAttrs)
                             .getToString ();
   }
 }

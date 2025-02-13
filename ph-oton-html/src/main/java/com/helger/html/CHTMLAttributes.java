@@ -47,6 +47,7 @@ public final class CHTMLAttributes
   public static final IMicroQName ALT = new MicroQName ("alt");
   public static final IMicroQName ARCHIVE = new MicroQName ("archive");
   public static final IMicroQName ASYNC = new MicroQName ("async");
+  public static final IMicroQName AUTOCORRECT = new MicroQName ("autocorrect");
   public static final IMicroQName AUTOFOCUS = new MicroQName ("autofocus");
   public static final IMicroQName AUTOPLAY = new MicroQName ("autoplay");
   public static final IMicroQName AUTOSTART = new MicroQName ("autostart");
@@ -91,6 +92,8 @@ public final class CHTMLAttributes
   public static final IMicroQName DRAGGABLE = new MicroQName ("draggable");
   public static final IMicroQName ENCTYPE = new MicroQName ("enctype");
   public static final IMicroQName ENDTIME = new MicroQName ("endtime");
+  public static final IMicroQName ENTERKEYHINT = new MicroQName ("enterkeyhint");
+  public static final IMicroQName EXPORTPARTS = new MicroQName ("exportparts");
   public static final IMicroQName FACE = new MicroQName ("face");
   public static final IMicroQName FOR = new MicroQName ("for");
   public static final IMicroQName FORM = new MicroQName ("form");
@@ -111,6 +114,7 @@ public final class CHTMLAttributes
   public static final IMicroQName HTTP_EQUIV = new MicroQName ("http-equiv");
   public static final IMicroQName ICON = new MicroQName ("icon");
   public static final IMicroQName ID = new MicroQName ("id");
+  public static final IMicroQName INERT = new MicroQName ("inert");
   public static final IMicroQName INPUTMODE = new MicroQName ("inputmode");
   public static final IMicroQName INTEGRITY = new MicroQName ("integrity");
   public static final IMicroQName ISMAP = new MicroQName ("ismap");
@@ -139,6 +143,7 @@ public final class CHTMLAttributes
   public static final IMicroQName MUTED = new MicroQName ("muted");
   public static final IMicroQName NAME = new MicroQName ("name");
   public static final IMicroQName NOHREF = new MicroQName ("nohref");
+  public static final IMicroQName NONCE = new MicroQName ("nonce");
   public static final IMicroQName NORESIZE = new MicroQName ("noresize");
   public static final IMicroQName NOSHADE = new MicroQName ("noshade");
   public static final IMicroQName NOVALIDATE = new MicroQName ("novalidate");
@@ -147,6 +152,7 @@ public final class CHTMLAttributes
   public static final IMicroQName OPEN = new MicroQName ("open");
   public static final IMicroQName OPTIMUM = new MicroQName ("optimum");
   public static final IMicroQName PALETTE = new MicroQName ("palette");
+  public static final IMicroQName PART = new MicroQName ("part");
   public static final IMicroQName PATTERN = new MicroQName ("pattern");
   public static final IMicroQName PING = new MicroQName ("ping");
   public static final IMicroQName PLACEHOLDER = new MicroQName ("placeholder");
@@ -176,6 +182,7 @@ public final class CHTMLAttributes
   public static final IMicroQName SHAPE = new MicroQName ("shape");
   public static final IMicroQName SIZE = new MicroQName ("size");
   public static final IMicroQName SIZES = new MicroQName ("sizes");
+  public static final IMicroQName SLOT = new MicroQName ("slot");
   public static final IMicroQName SPAN = new MicroQName ("span");
   public static final IMicroQName SPELLCHECK = new MicroQName ("spellcheck");
   public static final IMicroQName SRC = new MicroQName ("src");

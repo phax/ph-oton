@@ -29,9 +29,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.IHCNode;
-import com.helger.html.js.EJSEvent;
-import com.helger.html.js.IHasJSCode;
-import com.helger.html.js.JSEventMap;
 
 /**
  * Base interface for an HC element
@@ -44,7 +41,8 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
                             IHCNode,
                             IHCHasID <IMPLTYPE>,
                             IHCHasCSSStyles <IMPLTYPE>,
-                            IHCHasCSSClasses <IMPLTYPE>
+                            IHCHasCSSClasses <IMPLTYPE>,
+                            IHCHasJSEventHandler <IMPLTYPE>
 {
   /** The default value for an unset tab index, as -1 is used for "none" */
   long DEFAULT_TABINDEX = -5l;
@@ -63,21 +61,55 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   String getTagName ();
 
   /**
-   * @return The value of the HTML <code>title</code> attribute. May be
+   * @return The value of the HTML <code>accesskey</code> attribute. May be
    *         <code>null</code>.
    */
   @Nullable
-  String getTitle ();
+  String getAccessKey ();
 
   /**
-   * Set the value of the HTML <code>title</code> attribute.
+   * Set the value of the HTML <code>accesskey</code> attribute.
    *
-   * @param sTitle
-   *        The new title. May be <code>null</code>.
+   * @param sAccessKey
+   *        The new accesskey. May be <code>null</code>.
    * @return this
    */
   @Nonnull
-  IMPLTYPE setTitle (String sTitle);
+  IMPLTYPE setAccessKey (@Nullable String sAccessKey);
+
+  /**
+   * @return <code>true</code> if this element should be automatically focused,
+   *         <code>false</code> if not.
+   * @since 9.2.10
+   */
+  boolean isAutoFocus ();
+
+  /**
+   * Set the value of the HTML <code>autofocus</code> attribute.
+   *
+   * @param bAutoFocus
+   *        <code>true</code> to enable, <code>false</code> to disable.
+   * @return this
+   * @since 9.2.10
+   */
+  @Nonnull
+  IMPLTYPE setAutoFocus (boolean bAutoFocus);
+
+  /**
+   * @return The current state of content editable
+   */
+  @Nullable
+  EHCContentEditable getContentEditable ();
+
+  /**
+   * Change the content editable state
+   *
+   * @param eContentEditable
+   *        New value. May be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  IMPLTYPE setContentEditable (@Nullable EHCContentEditable eContentEditable);
 
   /**
    * @return The value of the HTML <code>dir</code> attribute. May be
@@ -97,6 +129,92 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setDirection (@Nullable EHCTextDirection eDirection);
 
   /**
+   * @return the draggable state. May be <code>null</code>.
+   */
+  @Nullable
+  EHCDraggable getDraggable ();
+
+  /**
+   * Set the draggable state of this element
+   *
+   * @param eDraggable
+   *        Value to set. May be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  IMPLTYPE setDraggable (@Nullable EHCDraggable eDraggable);
+
+  /**
+   * @return The value of the HTML <code>enterkeyhint</code> attribute. May be
+   *         <code>null</code>.
+   * @since 9.2.10
+   */
+  @Nullable
+  String getEnterKeyHint ();
+
+  /**
+   * Set the value of the HTML <code>enterkeyhint</code> attribute.
+   *
+   * @param sEnterKeyHint
+   *        The new enter key hint. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
+   */
+  @Nonnull
+  IMPLTYPE setEnterKeyHint (@Nullable String sEnterKeyHint);
+
+  /**
+   * @return The value of the HTML <code>exportparts</code> attribute. May be
+   *         <code>null</code>.
+   * @since 9.2.10
+   */
+  @Nullable
+  String getExportParts ();
+
+  /**
+   * Set the value of the HTML <code>exportparts</code> attribute.
+   *
+   * @param sExportParts
+   *        The new export parts. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
+   */
+  @Nonnull
+  IMPLTYPE setExportParts (@Nullable String sExportParts);
+
+  /**
+   * @return <code>true</code> if this is hidden
+   */
+  boolean isHidden ();
+
+  /**
+   * Set the hidden state of this element
+   *
+   * @param bHidden
+   *        <code>true</code> if it is hidden, <code>false</code> otherwise
+   * @return this
+   */
+  IMPLTYPE setHidden (boolean bHidden);
+
+  // getID and setID would be here
+
+  /**
+   * @return <code>true</code> if this is inert
+   * @since 9.2.10
+   */
+  boolean isInert ();
+
+  /**
+   * Set the inert state of this element
+   *
+   * @param bInert
+   *        <code>true</code> if it is inert, <code>false</code> otherwise
+   * @return this
+   * @since 9.2.10
+   */
+  IMPLTYPE setInert (boolean bInert);
+
+  /**
    * @return The value of the HTML <code>lang</code> attribute. May be
    *         <code>null</code>.
    */
@@ -113,110 +231,78 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   @Nonnull
   IMPLTYPE setLanguage (@Nullable String sLanguage);
 
-  @Nullable
-  @ReturnsMutableObject ("design")
-  JSEventMap getEventMap ();
-
   /**
-   * Get the event handler of the specified event.
-   *
-   * @param eJSEvent
-   *        The event to query. May be <code>null</code>.
-   * @return <code>null</code> if no such event handler is registered.
+   * @return The value of the HTML <code>nonce</code> attribute. May be
+   *         <code>null</code>.
+   * @since 9.2.10
    */
   @Nullable
-  IHasJSCode getEventHandler (@Nullable EJSEvent eJSEvent);
+  String getNonce ();
 
   /**
-   * Check if any event handler is registered for the specified event.
+   * Set the value of the HTML <code>nonce</code> attribute.
    *
-   * @param eJSEvent
-   *        The event to be queried. May be <code>null</code>.
-   * @return <code>true</code> of a non-<code>null</code> event is specified,
-   *         and if a handler is present.
-   */
-  boolean containsEventHandler (@Nullable EJSEvent eJSEvent);
-
-  /**
-   * Add a JS event handler at the end.
-   *
-   * @param eJSEvent
-   *        The event to use. May not be <code>null</code>.
-   * @param aJSHandler
-   *        The JSCode to be executed on the specified event. May be
-   *        <code>null</code> in which case nothing happens.
-   * @return this.
+   * @param sNonce
+   *        The new nonce. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
    */
   @Nonnull
-  IMPLTYPE addEventHandler (@Nonnull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
+  IMPLTYPE setNonce (@Nullable String sNonce);
 
   /**
-   * Add a JS event handler at the front.
+   * @return The value of the HTML <code>part</code> attribute. May be
+   *         <code>null</code>.
+   * @since 9.2.10
+   */
+  @Nullable
+  String getPart ();
+
+  /**
+   * Set the value of the HTML <code>part</code> attribute.
    *
-   * @param eJSEvent
-   *        The event to use. May not be <code>null</code>.
-   * @param aJSHandler
-   *        The JSCode to be executed on the specified event. May be
-   *        <code>null</code> in which case nothing happens.
-   * @return this.
+   * @param sPart
+   *        The new part. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
    */
   @Nonnull
-  IMPLTYPE prependEventHandler (@Nonnull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
+  IMPLTYPE setPart (@Nullable String sPart);
 
   /**
-   * Set a JS event handler. All eventually present event handlers are
-   * overwritten.
+   * @return The value of the HTML <code>slot</code> attribute. May be
+   *         <code>null</code>.
+   * @since 9.2.10
+   */
+  @Nullable
+  String getSlot ();
+
+  /**
+   * Set the value of the HTML <code>slot</code> attribute.
    *
-   * @param eJSEvent
-   *        The event to set. May not be <code>null</code>.
-   * @param aJSHandler
-   *        The JSCode to be executed on the specified event. May be
-   *        <code>null</code> in which case no event handler will be present
-   *        after the call.
-   * @return this.
+   * @param sSlot
+   *        The new slot. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
    */
   @Nonnull
-  IMPLTYPE setEventHandler (@Nonnull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
+  IMPLTYPE setSlot (@Nullable String sSlot);
 
   /**
-   * Remove all event handler for the specified JS event.
+   * @return <code>true</code> if spell check is enabled, <code>false</code>
+   *         otherwise.
+   */
+  boolean isSpellCheck ();
+
+  /**
+   * Set the value of the HTML <code>spellcheck</code> attribute.
    *
-   * @param eJSEvent
-   *        The JS event to remove the handler. May be <code>null</code>.
+   * @param bSpellCheck
+   *        <code>true</code> to enabled, <code>false</code> otherwise.
    * @return this
    */
   @Nonnull
-  IMPLTYPE removeAllEventHandler (@Nullable EJSEvent eJSEvent);
-
-  /**
-   * @return <code>true</code> if this element cannot be focused.
-   */
-  boolean isUnfocusable ();
-
-  /**
-   * Set the unfocusable state of this element.
-   *
-   * @param bUnfocusable
-   *        <code>true</code> to make it unfocusable, <code>false</code>
-   *        otherwise.
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE setUnfocusable (boolean bUnfocusable);
-
-  /**
-   * @return <code>true</code> if this is hidden
-   */
-  boolean isHidden ();
-
-  /**
-   * Set the hidden state of this element
-   *
-   * @param bHidden
-   *        <code>true</code> if it is hidden, <code>false</code> otherwise
-   * @return this
-   */
-  IMPLTYPE setHidden (boolean bHidden);
+  IMPLTYPE setSpellCheck (boolean bSpellCheck);
 
   /**
    * @return The tab index of this object. The semantics of negative values
@@ -241,37 +327,21 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setTabIndex (long nTabIndex);
 
   /**
-   * @return The value of the HTML <code>accesskey</code> attribute. May be
+   * @return The value of the HTML <code>title</code> attribute. May be
    *         <code>null</code>.
    */
   @Nullable
-  String getAccessKey ();
+  String getTitle ();
 
   /**
-   * Set the value of the HTML <code>accesskey</code> attribute.
+   * Set the value of the HTML <code>title</code> attribute.
    *
-   * @param sAccessKey
-   *        The new accesskey. May be <code>null</code>.
+   * @param sTitle
+   *        The new title. May be <code>null</code>.
    * @return this
    */
   @Nonnull
-  IMPLTYPE setAccessKey (@Nullable String sAccessKey);
-
-  /**
-   * @return the draggable state. May be <code>null</code>.
-   */
-  @Nullable
-  EHCDraggable getDraggable ();
-
-  /**
-   * Set the draggable state of this element
-   *
-   * @param eDraggable
-   *        Value to set. May be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE setDraggable (@Nullable EHCDraggable eDraggable);
+  IMPLTYPE setTitle (String sTitle);
 
   /**
    * @return <code>true</code> if HTML <code>translate</code> is
@@ -320,37 +390,23 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   @Nonnull
   IMPLTYPE setTranslate (@Nonnull ETriState eTranslate);
 
-  /**
-   * @return The current state of content editable
-   */
-  @Nullable
-  EHCContentEditable getContentEditable ();
+  //////////////////////////////////////////////////
 
   /**
-   * Change the content editable state
+   * @return <code>true</code> if this element cannot be focused.
+   */
+  boolean isUnfocusable ();
+
+  /**
+   * Set the unfocusable state of this element.
    *
-   * @param eContentEditable
-   *        New value. May be <code>null</code>.
+   * @param bUnfocusable
+   *        <code>true</code> to make it unfocusable, <code>false</code>
+   *        otherwise.
    * @return this
    */
   @Nonnull
-  IMPLTYPE setContentEditable (@Nullable EHCContentEditable eContentEditable);
-
-  /**
-   * @return <code>true</code> if spell check is enabled, <code>false</code>
-   *         otherwise.
-   */
-  boolean isSpellCheck ();
-
-  /**
-   * Set the value of the HTML <code>spellcheck</code> attribute.
-   *
-   * @param bSpellCheck
-   *        <code>true</code> to enabled, <code>false</code> otherwise.
-   * @return this
-   */
-  @Nonnull
-  IMPLTYPE setSpellCheck (boolean bSpellCheck);
+  IMPLTYPE setUnfocusable (boolean bUnfocusable);
 
   /**
    * @return The role of this element. May be <code>null</code>. By default an
