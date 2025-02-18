@@ -114,7 +114,7 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     aDoc.getDocumentElement ().setAttribute ("location", "user-interface");
     aDoc.getDocumentElement ()
         .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
-    aAjaxResponse.xml (aDoc).setDownloadFilename ("ph-oton-statistics.xml").disableCaching ();
+    aAjaxResponse.xml (aDoc).setContentDispositionFilename ("ph-oton-statistics.xml").disableCaching ();
   });
 
   public BasePageMonitoringStatistics (@Nonnull @Nonempty final String sID)
