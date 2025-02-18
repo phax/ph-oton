@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.state.ETriState;
+import com.helger.commons.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCHasID;
@@ -256,6 +257,16 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    */
   @Nullable
   String getNonce ();
+
+  /**
+   * @return <code>true</code> if the HTML <code>nonce</code> attribute is
+   *         present, <code>false</code> if not.
+   * @since 9.2.10
+   */
+  default boolean hasNonce ()
+  {
+    return StringHelper.hasText (getNonce ());
+  }
 
   /**
    * Set the value of the HTML <code>nonce</code> attribute.

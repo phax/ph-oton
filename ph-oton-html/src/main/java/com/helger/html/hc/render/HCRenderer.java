@@ -24,8 +24,8 @@ import javax.annotation.WillClose;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.VisibleForTesting;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.html.EHTMLVersion;
@@ -82,7 +82,8 @@ public final class HCRenderer
     return aNode;
   }
 
-  public static void prepareHtmlForConversion (@Nonnull final HCHtml aHtml, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public static void prepareHtmlForConversion (@Nonnull final HCHtml aHtml,
+                                               @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // customize, finalize and extract resources
     prepareForConversion (aHtml, aHtml.body (), aConversionSettings);
@@ -193,7 +194,8 @@ public final class HCRenderer
    */
   @SuppressWarnings ("unchecked")
   @Nullable
-  public static IMicroNode getAsNode (@Nonnull final IHCNode aSrcNode, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public static IMicroNode getAsNode (@Nonnull final IHCNode aSrcNode,
+                                      @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     IHCNode aConvertNode = aSrcNode;
 
@@ -239,6 +241,7 @@ public final class HCRenderer
    * @return The node as XML with or without indentation.
    */
   @Nonnull
+  @VisibleForTesting
   public static String getAsHTMLString (@Nonnull final IHCNode aHCNode)
   {
     return getAsHTMLString (aHCNode, HCSettings.getConversionSettings ());
@@ -256,7 +259,8 @@ public final class HCRenderer
    * @return The node as HTML string. Never <code>null</code>.
    */
   @Nonnull
-  public static String getAsHTMLString (@Nonnull final IHCNode aHCNode, @Nonnull final IHCConversionSettings aConversionSettings)
+  public static String getAsHTMLString (@Nonnull final IHCNode aHCNode,
+                                        @Nonnull final IHCConversionSettings aConversionSettings)
   {
     final IMicroNode aMicroNode = getAsNode (aHCNode, aConversionSettings);
     if (aMicroNode == null)
@@ -265,6 +269,21 @@ public final class HCRenderer
     return MicroWriter.getNodeAsString (aMicroNode, aConversionSettings.getXMLWriterSettings ());
   }
 
+  /**
+   * Convert the passed HC node to an HTML string without namespaces.
+   *
+   * @param aHCNode
+   *        The node to be converted. May not be <code>null</code>.
+   * @return The node as XML with or without indentation.
+   */
+  @Nonnull
+  public static String getAsHTMLStringWithoutNamespaces (@Nonnull final IHCNode aHCNode)
+  {
+    // Only works, if no nonce is needed
+    return getAsHTMLString (aHCNode, HCSettings.getConversionSettingsWithoutNamespaces ());
+  }
+
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static void writeHtmlTo (@Nonnull final IHCNode aHCNode, @Nonnull final OutputStream aOS)
   {
     writeHtmlTo (aHCNode, HCSettings.getConversionSettings (), aOS);
@@ -284,19 +303,5 @@ public final class HCRenderer
     {
       StreamHelper.close (aOS);
     }
-  }
-
-  /**
-   * Convert the passed HC node to an HTML string without namespaces. Indent and
-   * align status is determined from {@link GlobalDebug#isDebugMode()}
-   *
-   * @param aHCNode
-   *        The node to be converted. May not be <code>null</code>.
-   * @return The node as XML with or without indentation.
-   */
-  @Nonnull
-  public static String getAsHTMLStringWithoutNamespaces (@Nonnull final IHCNode aHCNode)
-  {
-    return getAsHTMLString (aHCNode, HCSettings.getConversionSettingsWithoutNamespaces ());
   }
 }

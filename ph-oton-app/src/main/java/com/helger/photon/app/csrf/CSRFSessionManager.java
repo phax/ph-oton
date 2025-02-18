@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.csrf;
+package com.helger.photon.app.csrf;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -107,6 +107,6 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("nonce", m_sNonce).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Nonce", m_sNonce).getToString ();
   }
 }

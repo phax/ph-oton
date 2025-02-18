@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.csrf;
+package com.helger.photon.app.csrf;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;

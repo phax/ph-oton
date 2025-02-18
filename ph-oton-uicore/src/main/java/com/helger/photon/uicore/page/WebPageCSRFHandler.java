@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
-import com.helger.photon.core.csrf.CSRFSessionManager;
+import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.uicore.css.CPageParam;
 
 /**

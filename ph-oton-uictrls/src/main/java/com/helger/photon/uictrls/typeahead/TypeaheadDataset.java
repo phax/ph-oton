@@ -243,6 +243,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setHeader (@Nullable final IHCNode aHeader)
   {
+    // No nonce needed
     return setHeader (aHeader != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aHeader) : null);
   }
 
@@ -296,6 +297,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setFooter (@Nullable final IHCNode aFooter)
   {
+    // No nonce needed
     return setFooter (aFooter != null ? HCRenderer.getAsHTMLStringWithoutNamespaces (aFooter) : null);
   }
 

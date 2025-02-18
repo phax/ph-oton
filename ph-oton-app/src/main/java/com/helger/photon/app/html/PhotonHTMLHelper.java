@@ -31,6 +31,7 @@ import com.helger.commons.mime.MimeType;
 import com.helger.commons.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCConditionalCommentNode;
 import com.helger.html.hc.html.metadata.HCCSSNodeDetector;
@@ -45,6 +46,7 @@ import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.app.PhotonAppSettings;
+import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.resource.IWebSiteResourceBundleProvider;
 import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.app.resource.WebSiteResourceWithCondition;
@@ -64,6 +66,30 @@ public final class PhotonHTMLHelper
   private PhotonHTMLHelper ()
   {}
 
+  private static void _applySessionNonce (@Nonnull final HCConversionSettings aCS)
+  {
+    // Get per session nonce
+    final String sNonce = CSRFSessionManager.getInstance ().getNonce ();
+    aCS.setNonceInlineStyle (sNonce);
+    aCS.setNonceInlineScript (sNonce);
+  }
+
+  @Nonnull
+  public static HCConversionSettings getHCConversionSettingsWithNonce ()
+  {
+    final HCConversionSettings aCS = HCSettings.getMutableConversionSettings ().getClone ();
+    _applySessionNonce (aCS);
+    return aCS;
+  }
+
+  @Nonnull
+  public static HCConversionSettings getHCConversionSettingsWithoutNamespacesWithNonce ()
+  {
+    final HCConversionSettings aCS = HCSettings.getConversionSettingsWithoutNamespaces ();
+    _applySessionNonce (aCS);
+    return aCS;
+  }
+
   /**
    * Get the HTML MIME type to use
    *
@@ -75,7 +101,8 @@ public final class PhotonHTMLHelper
   public static IMimeType getMimeType (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Add the charset to the MIME type
-    return new MimeType (CMimeType.TEXT_HTML).addParameter (CMimeType.PARAMETER_NAME_CHARSET, HCSettings.getHTMLCharset ().name ());
+    return new MimeType (CMimeType.TEXT_HTML).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
+                                                            HCSettings.getHTMLCharset ().name ());
   }
 
   @Nonnull
@@ -117,19 +144,23 @@ public final class PhotonHTMLHelper
     final HCHtml aHtml = aHTMLProvider.createHTML (aRequestScope);
 
     // Add some ad comment :)
-    aHtml.head ().metaElements ().add (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ()).setContent (META_GENERATOR_VALUE));
+    aHtml.head ()
+         .metaElements ()
+         .add (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ()).setContent (META_GENERATOR_VALUE));
 
     // Convert HTML to String, including namespaces
-    try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 * CGlobal.BYTES_PER_KILOBYTE))
+    try (
+        final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
+                                                                                             CGlobal.BYTES_PER_KILOBYTE))
     {
       final IMimeType aMimeType = getMimeType (aRequestScope);
-      final IHCConversionSettings aCS = HCSettings.getConversionSettings ();
+      final IHCConversionSettings aCS = PhotonHTMLHelper.getHCConversionSettingsWithNonce ();
       HCRenderer.writeHtmlTo (aHtml, aCS, aBAOS);
 
       // Write to response
       aUnifiedResponse.setMimeType (aMimeType)
                       .setCharset (aCS.getCharset ())
-                      .setContent (HasInputStream.multiple (aBAOS::getAsInputStream))
+                      .setContent (HasInputStream.create (aBAOS))
                       .disableCaching ();
     }
   }

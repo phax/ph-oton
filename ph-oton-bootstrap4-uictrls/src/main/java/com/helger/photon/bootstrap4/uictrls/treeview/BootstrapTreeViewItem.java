@@ -37,6 +37,7 @@ public class BootstrapTreeViewItem
 
   public BootstrapTreeViewItem (@Nonnull final IHCNode aText)
   {
+    // No nonce needed
     this (HCRenderer.getAsHTMLStringWithoutNamespaces (aText));
   }
 

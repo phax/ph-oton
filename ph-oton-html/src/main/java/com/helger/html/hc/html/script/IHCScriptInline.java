@@ -69,6 +69,11 @@ public interface IHCScriptInline <IMPLTYPE extends IHCScriptInline <IMPLTYPE>> e
 
   boolean isEmitAfterFiles ();
 
+  default boolean isEmitBeforeFiles ()
+  {
+    return !isEmitAfterFiles ();
+  }
+
   @Nonnull
   IMPLTYPE setEmitAfterFiles (boolean bEmitAfterFiles);
 }

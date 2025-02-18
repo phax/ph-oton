@@ -76,7 +76,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The HTML head object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addMetaElements (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHead aHead)
+  protected void addMetaElements (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                  @Nonnull final HCHead aHead)
   {
     final ICommonsList <IMetaElement> aMetaElements = new CommonsArrayList <> ();
     {
@@ -115,7 +116,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The current HTML object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addGlobalAndPerRequestCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final HCHtml aHtml)
+  protected void addGlobalAndPerRequestCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                 @Nonnull final HCHtml aHtml)
   {
     final boolean bRegular = HCSettings.isUseRegularResources ();
     final HCHead aHead = aHtml.head ();
@@ -155,7 +157,7 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
   {
     final Locale aDisplayLocale = RequestSettings.getDisplayLocale (aRequestScope);
-    final IHCConversionSettingsToNode aConversionSettings = HCSettings.getConversionSettings ();
+    final IHCConversionSettingsToNode aConversionSettings = PhotonHTMLHelper.getHCConversionSettingsWithNonce ();
 
     // Create the surrounding HTML element
     final HCHtml aHtml = createHCHtml (aDisplayLocale);

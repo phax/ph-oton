@@ -69,8 +69,8 @@ public final class HCSpecialNodeHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (HCSpecialNodeHandler.class);
   private static final AnnotationUsageCache CACHE_OOBN = new AnnotationUsageCache (OutOfBandNode.class);
-  private static final AnnotationUsageCache CACHE_SNLM = new AnnotationUsageCache (SpecialNodeListModifier.class);
-  private static final ICommonsMap <String, IHCSpecialNodeListModifier> s_aModifiers = new CommonsHashMap <> ();
+  private static final AnnotationUsageCache CACHE_SPECIAL_NODE_LIST_MODIFIER = new AnnotationUsageCache (SpecialNodeListModifier.class);
+  private static final ICommonsMap <String, IHCSpecialNodeListModifier> MODIFIERS = new CommonsHashMap <> ();
 
   @PresentForCodeCoverage
   private static final HCSpecialNodeHandler INSTANCE = new HCSpecialNodeHandler ();
@@ -172,7 +172,7 @@ public final class HCSpecialNodeHandler
 
     final ICommonsOrderedSet <Class <? extends IHCSpecialNodeListModifier>> aModifiersToApply = new CommonsLinkedHashSet <> ();
     for (final IHCNode aNode : aNodes)
-      if (CACHE_SNLM.hasAnnotation (aNode))
+      if (CACHE_SPECIAL_NODE_LIST_MODIFIER.hasAnnotation (aNode))
         aModifiersToApply.add (aNode.getClass ().getAnnotation (SpecialNodeListModifier.class).value ());
 
     if (aModifiersToApply.isEmpty ())
@@ -185,12 +185,13 @@ public final class HCSpecialNodeHandler
     for (final Class <? extends IHCSpecialNodeListModifier> aModifierClass : aModifiersToApply)
     {
       final String sClassName = aModifierClass.getName ();
-      if (!s_aModifiers.containsKey (sClassName))
+      if (!MODIFIERS.containsKey (sClassName))
       {
         final IHCSpecialNodeListModifier aModifier = GenericReflection.newInstance (aModifierClass);
         if (aModifier == null)
           LOGGER.error ("Failed to instantiate IHCSpecialNodeListModifier implementation " + aModifierClass);
-        s_aModifiers.put (sClassName, aModifier);
+        else
+          MODIFIERS.put (sClassName, aModifier);
       }
     }
 
@@ -198,7 +199,7 @@ public final class HCSpecialNodeHandler
     ICommonsList <? extends IHCNode> ret = new CommonsArrayList <> (aNodes);
     for (final Class <? extends IHCSpecialNodeListModifier> aModifierClass : aModifiersToApply)
     {
-      final IHCSpecialNodeListModifier aModifier = s_aModifiers.get (aModifierClass.getName ());
+      final IHCSpecialNodeListModifier aModifier = MODIFIERS.get (aModifierClass.getName ());
       if (aModifier != null)
       {
         // Invocation successful
@@ -212,8 +213,8 @@ public final class HCSpecialNodeHandler
    * Merge all inline CSS and JS elements contained in the source nodes into one
    * script elements
    *
-   * @param aNodes
-   *        Source list of nodes. May not be <code>null</code>.
+   * @param aOOBNodes
+   *        Source list of out-of-band nodes. May not be <code>null</code>.
    * @param bKeepOnDocumentReady
    *        if <code>true</code> than all combined document.ready() scripts are
    *        kept as document.ready() scripts. If <code>false</code> than all
@@ -229,11 +230,11 @@ public final class HCSpecialNodeHandler
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@Nonnull final Iterable <? extends IHCNode> aNodes,
+  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@Nonnull final Iterable <? extends IHCNode> aOOBNodes,
                                                                      final boolean bKeepOnDocumentReady)
   {
     // Default to the global "on document ready" provider
-    return getMergedInlineCSSAndJSNodes (aNodes,
+    return getMergedInlineCSSAndJSNodes (aOOBNodes,
                                          bKeepOnDocumentReady ? HCSettings.getOnDocumentReadyProvider () : null);
   }
 
@@ -241,8 +242,8 @@ public final class HCSpecialNodeHandler
    * Merge all inline CSS and JS elements contained in the source nodes into one
    * script elements
    *
-   * @param aNodes
-   *        Source list of nodes. May not be <code>null</code>.
+   * @param aOOBNodes
+   *        Source list of out-of-band nodes. May not be <code>null</code>.
    * @param aOnDocumentReadyProvider
    *        if not <code>null</code> than all combined document.ready() scripts
    *        are kept as document.ready() scripts using this provider. If
@@ -260,13 +261,13 @@ public final class HCSpecialNodeHandler
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@Nonnull final Iterable <? extends IHCNode> aNodes,
+  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@Nonnull final Iterable <? extends IHCNode> aOOBNodes,
                                                                      @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
-    ValueEnforcer.notNull (aNodes, "Nodes");
+    ValueEnforcer.notNull (aOOBNodes, "OOBNodes");
 
-    // Apply all modifiers
-    final Iterable <? extends IHCNode> aRealSpecialNodes = applyModifiers (aNodes);
+    // Apply all special node list modifiers
+    final Iterable <? extends IHCNode> aRealSpecialNodes = applyModifiers (aOOBNodes);
 
     // Do standard aggregations of CSS and JS
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
@@ -287,17 +288,17 @@ public final class HCSpecialNodeHandler
         // of IHCScriptInline
         if (aNode instanceof HCScriptInlineOnDocumentReady)
         {
-          // Inline JS
+          // Inline JS (on document ready)
           final HCScriptInlineOnDocumentReady aScript = (HCScriptInlineOnDocumentReady) aNode;
-          (aScript.isEmitAfterFiles () ? aJSOnDocumentReadyAfter : aJSOnDocumentReadyBefore).appendFlattened (aScript
-                                                                                                                     .getOnDocumentReadyCode ());
+          (aScript.isEmitAfterFiles () ? aJSOnDocumentReadyAfter
+                                       : aJSOnDocumentReadyBefore).appendFlattened (aScript.getOnDocumentReadyCode ());
         }
         else
         {
-          // Inline JS
+          // Inline JS (plain)
           final IHCScriptInline <?> aScript = (IHCScriptInline <?>) aNode;
-          (aScript.isEmitAfterFiles () ? aJSInlineAfter : aJSInlineBefore).appendFlattened (aScript
-                                                                                                   .getJSCodeProvider ());
+          (aScript.isEmitAfterFiles () ? aJSInlineAfter
+                                       : aJSInlineBefore).appendFlattened (aScript.getJSCodeProvider ());
         }
       }
       else

@@ -20,11 +20,14 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.EHCScriptInlineMode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.js.IHasJSCode;
@@ -112,7 +115,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
    * Set the masking mode.
    *
    * @param eMode
-   *        The mode to use. MAy not be <code>null</code>.
+   *        The mode to use. May not be <code>null</code>.
    * @return this
    */
   @Nonnull
@@ -172,6 +175,17 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   }
 
   @Override
+  @OverridingMethodsMustInvokeSuper
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
+    if (!hasNonce ())
+      setNonce (aConversionSettings.getNonceInlineScript ());
+  }
+
+  @Override
   public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     if (m_sCachedJSCode == null)
@@ -181,7 +195,8 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   }
 
   @Override
-  protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
+                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
 

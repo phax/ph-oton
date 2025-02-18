@@ -31,7 +31,8 @@ import com.helger.html.hc.html.embedded.EHCCORSSettings;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
- * Represents an HTML &lt;script&gt; element
+ * Represents an HTML &lt;script&gt; element. This is the base class for inline
+ * script and externally referenced script
  *
  * @author Philip Helger
  * @see HCScriptInline
@@ -109,7 +110,8 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
   }
 
   @Override
-  protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
+                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (StringHelper.hasText (m_sType))

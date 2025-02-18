@@ -34,7 +34,6 @@ import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.traits.IGenericImplTrait;
@@ -275,8 +274,8 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
       return false;
     final AbstractHCSpecialNodes <?> rhs = (AbstractHCSpecialNodes <?>) o;
     return m_aExternalCSSs.equals (rhs.m_aExternalCSSs) &&
-           EqualsHelper.equals (m_aInlineCSSBeforeExternal, rhs.m_aInlineCSSBeforeExternal) &&
-           EqualsHelper.equals (m_aInlineCSSAfterExternal, rhs.m_aInlineCSSAfterExternal) &&
+           m_aInlineCSSBeforeExternal.equals (rhs.m_aInlineCSSBeforeExternal) &&
+           m_aInlineCSSAfterExternal.equals (rhs.m_aInlineCSSAfterExternal) &&
            m_aExternalJSs.equals (rhs.m_aExternalJSs) &&
            m_aInlineJSBeforeExternal.equals (rhs.m_aInlineJSBeforeExternal) &&
            m_aInlineJSAfterExternal.equals (rhs.m_aInlineJSAfterExternal);

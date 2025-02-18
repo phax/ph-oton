@@ -41,11 +41,11 @@ import com.helger.commons.type.ObjectType;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCCustomizer;
 import com.helger.html.hc.config.HCConversionSettings;
-import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.html.hc.impl.HCCustomizerList;
+import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.uistate.IHasUIState;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
@@ -119,7 +119,11 @@ public final class DataTablesServerData implements IHasUIState
     }
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Having ServerSide DataTables with " + aTable.getBodyRowCount () + " rows and a total of " + nCells + " cells");
+      LOGGER.debug ("Having ServerSide DataTables with " +
+                    aTable.getBodyRowCount () +
+                    " rows and a total of " +
+                    nCells +
+                    " cells");
     m_aDisplayLocale = aDisplayLocale;
     m_aServerSortState = new DataTablesServerSortState (this, aDisplayLocale);
     m_eFilterType = eFilterType;
@@ -134,7 +138,7 @@ public final class DataTablesServerData implements IHasUIState
   public static IHCConversionSettings createConversionSettings ()
   {
     // Create HTML without namespaces
-    final HCConversionSettings aRealCS = HCSettings.getMutableConversionSettings ().getClone ();
+    final HCConversionSettings aRealCS = PhotonHTMLHelper.getHCConversionSettingsWithNonce ();
     aRealCS.getMutableXMLWriterSettings ().setEmitNamespaces (false);
 
     // Remove any "HCCustomizerAutoFocusFirstCtrl" customizer for AJAX calls on

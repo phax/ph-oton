@@ -16,110 +16,28 @@
  */
 package com.helger.html.hc;
 
-import java.nio.charset.Charset;
-
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.css.ICSSWriterSettings;
-import com.helger.css.writer.CSSWriterSettings;
-import com.helger.html.EHTMLVersion;
-import com.helger.html.js.IJSWriterSettings;
-import com.helger.html.js.JSWriterSettings;
-import com.helger.xml.serialize.write.IXMLWriterSettings;
-import com.helger.xml.serialize.write.XMLWriterSettings;
-
 /**
- * Settings interface that is used to convert HC* nodes to micro nodes.
+ * Special interface that adds dynamic elements to the conversion settings
  *
  * @author Philip Helger
  */
-public interface IHCConversionSettingsToNode
+public interface IHCConversionSettingsToNode extends IHCConversionSettingsGlobal
 {
   /**
-   * @return The HTML version to be used to transform HC nodes into micro nodes.
-   *         Never <code>null</code>.
-   */
-  @Nonnull
-  EHTMLVersion getHTMLVersion ();
-
-  /**
-   * @return The namespace URI of the HTML version. This should result in the
-   *         same as calling <code>getHTMLVersion().getNamespaceURI()</code>
+   * @return The value of 'nonce' attribute for inline script elements. May be
+   *         <code>null</code>.
+   * @since 9.2.10
    */
   @Nullable
-  String getHTMLNamespaceURI ();
+  String getNonceInlineScript ();
 
   /**
-   * @return The XML writer settings to be used. Never <code>null</code>.
-   */
-  @Nonnull
-  IXMLWriterSettings getXMLWriterSettings ();
-
-  /**
-   * @return A mutable copy of the XML writer settings to be used. Never
+   * @return The value of 'nonce' attribute for inline style elements. May be
    *         <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  XMLWriterSettings getMutableXMLWriterSettings ();
-
-  /**
-   * @return The CSS writer settings to be used. Never <code>null</code>.
-   */
-  @Nonnull
-  ICSSWriterSettings getCSSWriterSettings ();
-
-  /**
-   * @return A mutable copy of the CSS writer settings to be used. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  CSSWriterSettings getMutableCSSWriterSettings ();
-
-  /**
-   * @return The JS formatter settings to be used. Never <code>null</code>.
-   */
-  @Nonnull
-  IJSWriterSettings getJSWriterSettings ();
-
-  /**
-   * @return A mutable copy of the JS formatter settings to be used. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  JSWriterSettings getMutableJSWriterSettings ();
-
-  /**
-   * @return <code>true</code> if the consistency checks are enabled,
-   *         <code>false</code> otherwise.
-   */
-  boolean areConsistencyChecksEnabled ();
-
-  /**
-   * @return <code>true</code> if out-of-band nodes should be extracted,
-   *         <code>false</code> if not. By default <code>true</code> is
-   *         returned.
-   */
-  boolean isExtractOutOfBandNodes ();
-
-  /**
-   * @return The current customizer to be used. May be <code>null</code>. The
-   *         default is <code>null</code>.
+   * @since 9.2.10
    */
   @Nullable
-  IHCCustomizer getCustomizer ();
-
-  /**
-   * @return The charset to be used. This is a shortcut for
-   *         <code>getXMLWriterSettings ().getCharset()</code>.
-   */
-  @Nonnull
-  default Charset getCharset ()
-  {
-    return getXMLWriterSettings ().getCharset ();
-  }
+  String getNonceInlineStyle ();
 }

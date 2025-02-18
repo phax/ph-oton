@@ -20,6 +20,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.html.hc.IHCNode;
@@ -32,6 +33,8 @@ import com.helger.html.jscode.JSAssocArray;
 
 public final class Bootstrap4DateTimePickerSpecialNodeListModifier implements IHCSpecialNodeListModifier
 {
+  @Nonnull
+  @ReturnsMutableCopy
   public ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull final ICommonsList <? extends IHCNode> aNodes)
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();

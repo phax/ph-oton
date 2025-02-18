@@ -23,7 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marker annotation that a type is an out-of-band node.
+ * Marker annotation that a type is an out-of-band node. Typically all controls
+ * that are creating CSS and JS nodes should have this annotation.
  *
  * @author Philip Helger
  */

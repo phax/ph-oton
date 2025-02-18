@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.mime.CMimeType;
@@ -38,6 +39,8 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.EHCStyleInlineMode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.AbstractHCElement;
@@ -181,13 +184,15 @@ public class HCStyle extends AbstractHCElement <HCStyle>
   }
 
   @Nonnull
-  public final HCStyle setStyleContent (@Nonnull final CascadingStyleSheet aCSS, @Nonnull final CSSWriterSettings aSettings)
+  public final HCStyle setStyleContent (@Nonnull final CascadingStyleSheet aCSS,
+                                        @Nonnull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }
 
   @Nonnull
-  public final HCStyle setStyleContent (@Nonnull final CSSDeclarationList aCSS, @Nonnull final CSSWriterSettings aSettings)
+  public final HCStyle setStyleContent (@Nonnull final CSSDeclarationList aCSS,
+                                        @Nonnull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }
@@ -248,7 +253,20 @@ public class HCStyle extends AbstractHCElement <HCStyle>
             throw new IllegalArgumentException ("The script text contains a closing script tag!");
           aElement.appendChild (new MicroText (sContent).setEscape (false));
           break;
+        default:
+          throw new IllegalStateException ("Invalid style inline mode provided: " + eMode);
       }
+  }
+
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
+    if (!hasNonce ())
+      setNonce (aConversionSettings.getNonceInlineStyle ());
   }
 
   @Override

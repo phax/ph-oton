@@ -81,6 +81,11 @@ import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginClientSortingDate;
 
+/**
+ * This is the basic oh-oton DataTables wrapper.
+ *
+ * @author Philip Helger
+ */
 @OutOfBandNode
 public class DataTables extends AbstractHCScriptInline <DataTables>
 {

@@ -248,7 +248,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
 
-      IHCNode aTargetNode = aNode;
+      final IHCNode aTargetNode;
 
       // Special handling for complete HCHtml objects needed
       if (aNode instanceof IHCNodeList <?> && aNode.getChildCount () == 1 && aNode.getFirstChild () instanceof HCHtml)
@@ -258,8 +258,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
         // customize, finalize and extract resources
         // This must be done before the CSS and JS are included because
-        // per-request
-        // resource registration happens inside
+        // per-request resource registration happens inside
         HCRenderer.prepareForConversion (aHtml, aHtml.body (), aConversionSettings);
 
         // Extract and merge all inline out-of-band nodes
@@ -282,7 +281,10 @@ public class PhotonUnifiedResponse extends UnifiedResponse
       else
       {
         // customize, finalize and extract resources
-        // Non-HTML node
+
+        aTargetNode = aNode;
+
+        // Incomplete HTML node
         HCRenderer.prepareForConversion (aNode, aNode, aConversionSettings);
 
         if (aConversionSettings.isExtractOutOfBandNodes ())
@@ -407,7 +409,10 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     if (aNode == null)
       setContentAndCharset ("", HCSettings.getHTMLCharset ());
     else
+    {
+      // Assume no nonce needed
       setContentAndCharset (HCRenderer.getAsHTMLStringWithoutNamespaces (aNode), HCSettings.getHTMLCharset ());
+    }
     setMimeType (PhotonHTMLHelper.getMimeType (m_aRequestScope));
     return this;
   }

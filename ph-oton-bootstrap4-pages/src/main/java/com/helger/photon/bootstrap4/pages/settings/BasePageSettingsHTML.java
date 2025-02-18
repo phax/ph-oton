@@ -53,7 +53,8 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> extends
+                                  AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayText
@@ -64,7 +65,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     MSG_FORMAT_JS ("JS formatieren?", "Format JS?"),
     MSG_CONSISTENCY_CHECKS_ENABLED ("Konsistenzprüfungen aktiv?", "Consistency checks enabled?"),
     MSG_EXTRACT_OUT_OF_BAND_NODES ("Out-of-band Knoten extrahieren?", "Extract out-of-band nodes?"),
-    MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS ("Auto-Vervollständigung für Passwort-Felder?", "Auto complete for password fields?"),
+    MSG_AUTO_COMPLETE_FOR_PASSWORD_EDITS ("Auto-Vervollständigung für Passwort-Felder?",
+                                          "Auto complete for password fields?"),
     MSG_ON_DOCUMENT_READY_PROVIDER ("JavaScript document.ready Ersteller", "JavaScript document.ready provider"),
     MSG_SCRIPT_INLINE_MODE ("<script> Modus", "<script> mode"),
     MSG_STYLE_INLINE_MODE ("<style> Modus", "<style> mode"),
@@ -73,9 +75,12 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     MSG_SCRIPTS_IN_BODY ("<script>-Element in <body>?", "Put <script> elements in <body>?"),
     MSG_USE_REGULAR_RESOURCES ("Nicht-optimierte JS/CSS inkludieren?", "Include non-minified JS/CSS?"),
     MSG_NONE ("keines", "none"),
-    MSG_FORM_LABEL_SUFFIX_OPTIONAL ("Formular Label Suffix für optionale Felder", "Form label suffix for optional fields"),
-    MSG_FORM_LABEL_SUFFIX_ALTERNATIVE ("Formular Label Suffix für alternative Felder", "Form label suffix for alternative fields"),
-    MSG_FORM_LABEL_SUFFIX_MANDATORY ("Formular Label Suffix für Pflichtfelder", "Form label suffix for mandatory fields"),
+    MSG_FORM_LABEL_SUFFIX_OPTIONAL ("Formular Label Suffix für optionale Felder",
+                                    "Form label suffix for optional fields"),
+    MSG_FORM_LABEL_SUFFIX_ALTERNATIVE ("Formular Label Suffix für alternative Felder",
+                                       "Form label suffix for alternative fields"),
+    MSG_FORM_LABEL_SUFFIX_MANDATORY ("Formular Label Suffix für Pflichtfelder",
+                                     "Form label suffix for mandatory fields"),
     MSG_FORM_LABEL_END ("Formular Label Abschluss", "Form label end"),
     MSG_BUTTON_WEBRESBUNDLE ("ResourceBundle Einstellungen", "ResourceBundle settings"),
     MSG_CHANGE_SUCCESS ("Die Einstellungen wurden erfolgreich gespeichert.", "Changes were changed successfully.");
@@ -114,7 +119,9 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     super (sID, sName);
   }
 
-  public BasePageSettingsHTML (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public BasePageSettingsHTML (@Nonnull @Nonempty final String sID,
+                               @Nonnull final String sName,
+                               @Nullable final String sDescription)
   {
     super (sID, sName, sDescription);
   }
@@ -131,6 +138,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
+
+    // We don't care about the nonce here
     final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettings ();
 
     final boolean bFormSubmitted = aWPEC.hasAction (CPageParam.ACTION_SAVE);
@@ -139,12 +148,17 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       // Save changes
       final boolean bFormatHTML = aWPEC.params ()
                                        .isCheckBoxChecked (FIELD_FORMAT_HTML,
-                                                           aConversionSettings.getXMLWriterSettings ().getIndent ().isIndent ());
+                                                           aConversionSettings.getXMLWriterSettings ()
+                                                                              .getIndent ()
+                                                                              .isIndent ());
       final boolean bFormatCSS = aWPEC.params ()
                                       .isCheckBoxChecked (FIELD_FORMAT_CSS,
-                                                          !aConversionSettings.getCSSWriterSettings ().isOptimizedOutput ());
+                                                          !aConversionSettings.getCSSWriterSettings ()
+                                                                              .isOptimizedOutput ());
       final boolean bFormatJS = aWPEC.params ()
-                                     .isCheckBoxChecked (FIELD_FORMAT_JS, aConversionSettings.getJSWriterSettings ().isIndentAndAlign ());
+                                     .isCheckBoxChecked (FIELD_FORMAT_JS,
+                                                         aConversionSettings.getJSWriterSettings ()
+                                                                            .isIndentAndAlign ());
       final boolean bConsistencyChecksEnabled = aWPEC.params ()
                                                      .isCheckBoxChecked (FIELD_CONSISTENCY_CHECKS_ENABLED,
                                                                          aConversionSettings.areConsistencyChecksEnabled ());
@@ -154,10 +168,14 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       final boolean bAutoCompleteForPasswordEdits = aWPEC.params ()
                                                          .isCheckBoxChecked (FIELD_AUTO_COMPLETE_FOR_PASSWORD_EDITS,
                                                                              !HCSettings.isAutoCompleteOffForPasswordEdits ());
-      final boolean bOOBDebug = aWPEC.params ().isCheckBoxChecked (FIELD_OUT_OF_BAND_DEBUG, HCSettings.isOutOfBandDebuggingEnabled ());
-      final boolean bScriptsInBody = aWPEC.params ().isCheckBoxChecked (FIELD_SCRIPTS_IN_BODY, HCSettings.isScriptsInBody ());
+      final boolean bOOBDebug = aWPEC.params ()
+                                     .isCheckBoxChecked (FIELD_OUT_OF_BAND_DEBUG,
+                                                         HCSettings.isOutOfBandDebuggingEnabled ());
+      final boolean bScriptsInBody = aWPEC.params ()
+                                          .isCheckBoxChecked (FIELD_SCRIPTS_IN_BODY, HCSettings.isScriptsInBody ());
       final boolean bUseRegularResources = aWPEC.params ()
-                                                .isCheckBoxChecked (FIELD_USE_REGULAR_RESOURCES, HCSettings.isUseRegularResources ());
+                                                .isCheckBoxChecked (FIELD_USE_REGULAR_RESOURCES,
+                                                                    HCSettings.isUseRegularResources ());
 
       // Apply the settings
       HCSettings.getMutableConversionSettings ()

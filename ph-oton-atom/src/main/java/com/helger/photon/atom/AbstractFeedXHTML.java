@@ -35,6 +35,7 @@ import com.helger.xml.microdom.MicroElement;
 public abstract class AbstractFeedXHTML extends AbstractFeedElement
 {
   // Feed XML always as XHTML 1.1
+  // No nonce for inline script/style needed
   private static final HCConversionSettings HCCONV_SETTINGS = new HCConversionSettings (HCSettings.getConversionSettings (),
                                                                                         EHTMLVersion.XHTML11).setToOptimized ();
 

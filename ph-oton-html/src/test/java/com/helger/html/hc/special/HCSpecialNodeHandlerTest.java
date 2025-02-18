@@ -18,9 +18,12 @@ package com.helger.html.hc.special;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.annotation.Nonnull;
+
 import org.junit.Test;
 
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.system.ENewLineMode;
 import com.helger.css.media.CSSMediaList;
@@ -41,12 +44,14 @@ public final class HCSpecialNodeHandlerTest
 {
   public static final class MockSpecialNodeListHandler implements IHCSpecialNodeListModifier
   {
+    @Nonnull
+    @ReturnsMutableCopy
     public ICommonsList <? extends IHCNode> modifySpecialNodes (final ICommonsList <? extends IHCNode> aNodes)
     {
-      final ICommonsList <IHCNode> ret = CollectionHelper.newList (aNodes);
-      // Remove all but the first
+      final ICommonsList <IHCNode> ret = new CommonsArrayList <> (aNodes);
+      // Remove the first
       if (ret.isNotEmpty ())
-        ret.removeFirstOrNull ();
+        ret.remove (0);
       return ret;
     }
   }

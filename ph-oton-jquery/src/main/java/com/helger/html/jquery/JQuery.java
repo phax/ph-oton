@@ -128,6 +128,7 @@ public final class JQuery
   @Nonnull
   public static JQueryInvocation jQuery (@Nonnull final IHCNode aHCNode)
   {
+    // Eventually the nonce might make sense here
     return jQuery (HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
   }
 

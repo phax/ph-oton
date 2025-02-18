@@ -129,6 +129,15 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
     return this;
   }
 
+  /**
+   * This will append all the content from the given provider. If the provider
+   * itself is a {@link CollectingJSCodeProvider}, its contents will be
+   * appended.
+   *
+   * @param aProvider
+   *        The provider to add. May be <code>null</code>.
+   * @return this for chaining
+   */
   @Nonnull
   public CollectingJSCodeProvider appendFlattened (@Nullable final IHasJSCode aProvider)
   {

@@ -213,6 +213,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
   public BootstrapTooltip setTooltipTitle (@Nullable final IHCNode aTooltipTitle)
   {
     setHTML (true);
+    // No nonce needed
     m_sTooltipTitle = aTooltipTitle == null ? null : HCRenderer.getAsHTMLStringWithoutNamespaces (aTooltipTitle);
     m_aTooltipTitleFunc = null;
     return this;

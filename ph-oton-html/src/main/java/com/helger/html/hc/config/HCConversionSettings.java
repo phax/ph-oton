@@ -68,6 +68,8 @@ public class HCConversionSettings implements IHCConversionSettings
   private boolean m_bConsistencyChecksEnabled;
   private boolean m_bExtractOutOfBandNodes;
   private IHCCustomizer m_aCustomizer;
+  private String m_sNonceInlineScript;
+  private String m_sNonceInlineStyle;
 
   @Nonnull
   public static XMLWriterSettings createDefaultXMLWriterSettings (@Nonnull final EHTMLVersion eHTMLVersion)
@@ -75,7 +77,8 @@ public class HCConversionSettings implements IHCConversionSettings
     final XMLWriterSettings ret = eHTMLVersion.isAtLeastHTML5 () ? XMLWriterSettings.createForHTML5 ()
                                                                  : XMLWriterSettings.createForXHTML ();
     return ret.setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING)
-              .setIndent (DEFAULT_INDENT_AND_ALIGN_HTML ? EXMLSerializeIndent.INDENT_AND_ALIGN : EXMLSerializeIndent.NONE);
+              .setIndent (DEFAULT_INDENT_AND_ALIGN_HTML ? EXMLSerializeIndent.INDENT_AND_ALIGN
+                                                        : EXMLSerializeIndent.NONE);
   }
 
   @Nonnull
@@ -159,6 +162,8 @@ public class HCConversionSettings implements IHCConversionSettings
     m_bConsistencyChecksEnabled = aBase.areConsistencyChecksEnabled ();
     m_bExtractOutOfBandNodes = aBase.isExtractOutOfBandNodes ();
     m_aCustomizer = aBase.getCustomizer ();
+    m_sNonceInlineScript = aBase.getNonceInlineScript ();
+    m_sNonceInlineStyle = aBase.getNonceInlineStyle ();
   }
 
   /**
@@ -308,6 +313,11 @@ public class HCConversionSettings implements IHCConversionSettings
     return m_aJSWriterSettings.getClone ();
   }
 
+  public boolean areConsistencyChecksEnabled ()
+  {
+    return m_bConsistencyChecksEnabled;
+  }
+
   /**
    * Enable or disable the consistency checks. It is recommended that the
    * consistency checks are only run in debug mode!
@@ -323,9 +333,9 @@ public class HCConversionSettings implements IHCConversionSettings
     return this;
   }
 
-  public boolean areConsistencyChecksEnabled ()
+  public boolean isExtractOutOfBandNodes ()
   {
-    return m_bConsistencyChecksEnabled;
+    return m_bExtractOutOfBandNodes;
   }
 
   /**
@@ -342,9 +352,10 @@ public class HCConversionSettings implements IHCConversionSettings
     return this;
   }
 
-  public boolean isExtractOutOfBandNodes ()
+  @Nullable
+  public IHCCustomizer getCustomizer ()
   {
-    return m_bExtractOutOfBandNodes;
+    return m_aCustomizer;
   }
 
   /**
@@ -363,9 +374,45 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   @Nullable
-  public IHCCustomizer getCustomizer ()
+  public String getNonceInlineScript ()
   {
-    return m_aCustomizer;
+    return m_sNonceInlineScript;
+  }
+
+  /**
+   * Set the value of the HTML 'nonce' attribute for inline script elements.
+   *
+   * @param sNonceInlineScript
+   *        The value of the 'nonce' attribute. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
+   */
+  @Nonnull
+  public HCConversionSettings setNonceInlineScript (@Nullable final String sNonceInlineScript)
+  {
+    m_sNonceInlineScript = sNonceInlineScript;
+    return this;
+  }
+
+  @Nullable
+  public String getNonceInlineStyle ()
+  {
+    return m_sNonceInlineStyle;
+  }
+
+  /**
+   * Set the value of the HTML 'nonce' attribute for inline style elements.
+   *
+   * @param sNonceInlineStyle
+   *        The value of the 'nonce' attribute. May be <code>null</code>.
+   * @return this
+   * @since 9.2.10
+   */
+  @Nonnull
+  public HCConversionSettings setNonceInlineStyle (@Nullable final String sNonceInlineStyle)
+  {
+    m_sNonceInlineStyle = sNonceInlineStyle;
+    return this;
   }
 
   @OverridingMethodsMustInvokeSuper
@@ -379,6 +426,8 @@ public class HCConversionSettings implements IHCConversionSettings
     m_bConsistencyChecksEnabled = DEFAULT_CONSISTENCY_CHECKS;
     m_bExtractOutOfBandNodes = DEFAULT_EXTRACT_OUT_OF_BAND_NODES;
     m_aCustomizer = createDefaultCustomizer ();
+    m_sNonceInlineScript = null;
+    m_sNonceInlineStyle = null;
     return this;
   }
 
@@ -417,9 +466,11 @@ public class HCConversionSettings implements IHCConversionSettings
                                        .append ("XMLWriterSettings", m_aXMLWriterSettings)
                                        .append ("CSSWriterSettings", m_aCSSWriterSettings)
                                        .append ("JSWriterSettings", m_aJSWriterSettings)
-                                       .append ("consistencyChecksEnabled", m_bConsistencyChecksEnabled)
-                                       .append ("extractOutOfBandNodes", m_bExtractOutOfBandNodes)
-                                       .appendIfNotNull ("customizer", m_aCustomizer)
+                                       .append ("ConsistencyChecksEnabled", m_bConsistencyChecksEnabled)
+                                       .append ("ExtractOutOfBandNodes", m_bExtractOutOfBandNodes)
+                                       .appendIfNotNull ("Customizer", m_aCustomizer)
+                                       .appendIfNotNull ("NonceInlineScript", m_sNonceInlineScript)
+                                       .appendIfNotNull ("NonceInlineStyle", m_sNonceInlineStyle)
                                        .getToString ();
   }
 }

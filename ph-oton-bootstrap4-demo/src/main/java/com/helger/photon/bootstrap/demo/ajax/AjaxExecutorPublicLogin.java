@@ -29,6 +29,7 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.JsonObject;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
+import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.core.EPhotonCoreText;
@@ -58,7 +59,10 @@ public final class AjaxExecutorPublicLogin implements IAjaxExecutor
     final String sPassword = aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_PASSWORD);
 
     // Main login
-    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ().loginUser (sLoginName, sPassword, CApp.REQUIRED_ROLE_IDS_VIEW);
+    final ELoginResult eLoginResult = LoggedInUserManager.getInstance ()
+                                                         .loginUser (sLoginName,
+                                                                     sPassword,
+                                                                     CApp.REQUIRED_ROLE_IDS_VIEW);
     if (eLoginResult.isSuccess ())
       aAjaxResponse.json (new JsonObject ().add (JSON_LOGGEDIN, true));
     else
@@ -74,7 +78,9 @@ public final class AjaxExecutorPublicLogin implements IAjaxExecutor
 
       // Set as result property
       aAjaxResponse.json (new JsonObject ().add (JSON_LOGGEDIN, false)
-                                           .add (JSON_HTML, HCRenderer.getAsHTMLStringWithoutNamespaces (aRoot)));
+                                           .add (JSON_HTML,
+                                                 HCRenderer.getAsHTMLString (aRoot,
+                                                                             PhotonHTMLHelper.getHCConversionSettingsWithoutNamespacesWithNonce ())));
     }
   }
 }

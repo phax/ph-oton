@@ -148,7 +148,8 @@ public class HCHtml extends AbstractHCElement <HCHtml>
     // Note: we need to clone the doctype, because otherwise the object would
     // already have a parent assigned if "getAsNode" is called more than once!
     final IMicroDocument aDoc = new MicroDocument (eHTMLVersion.getDocType ().getClone ());
-    final IMicroElement aRoot = aDoc.appendElement (eHTMLVersion.getNamespaceURI (), eHTMLVersion.getDocType ().getQualifiedName ());
+    final IMicroElement aRoot = aDoc.appendElement (eHTMLVersion.getNamespaceURI (),
+                                                    eHTMLVersion.getDocType ().getQualifiedName ());
     fillMicroElement (aRoot, aConversionSettings);
 
     // Use the getter, to ensure the elements are not null
@@ -226,13 +227,14 @@ public class HCHtml extends AbstractHCElement <HCHtml>
     // Find index of first script in body
     int nFirstScriptIndex = 0;
     if (m_aBody.hasChildren ())
+    {
       for (final IHCNode aChild : m_aBody.getAllChildren ())
       {
         if (aChild instanceof IHCScript <?>)
         {
           // Check if this is a special inline script to be emitted before files
           final boolean bIsInlineBeforeFiles = (aChild instanceof IHCScriptInline <?>) &&
-                                               !((IHCScriptInline <?>) aChild).isEmitAfterFiles ();
+                                               ((IHCScriptInline <?>) aChild).isEmitBeforeFiles ();
           if (!bIsInlineBeforeFiles)
           {
             // Remember index to insert before
@@ -241,6 +243,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
         }
         nFirstScriptIndex++;
       }
+    }
 
     m_aBody.addChildrenAt (nFirstScriptIndex, aJSNodes);
   }
@@ -255,6 +258,9 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("head", m_aHead).append ("body", m_aBody).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("head", m_aHead)
+                            .append ("body", m_aBody)
+                            .getToString ();
   }
 }

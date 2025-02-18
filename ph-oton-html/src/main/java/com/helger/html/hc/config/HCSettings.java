@@ -56,6 +56,24 @@ public final class HCSettings
   /** By default plain text without escape is used */
   public static final EHCStyleInlineMode DEFAULT_STYLE_MODE = EHCStyleInlineMode.PLAIN_TEXT_NO_ESCAPE;
 
+  /** By default OOB node debugging is disabled */
+  public static final boolean DEFAULT_OUT_OF_BAND_NODE_DEBUGGING = false;
+
+  /** By default script tags are placed in the HTML body */
+  public static final boolean DEFAULT_SCRIPTS_IN_BODY = true;
+
+  /** By default nonce attributes in inline scripts are disabled */
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_SCRIPTS = false;
+
+  /** By default nonce attributes in inline styles are disabled */
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_STYLES = false;
+
+  /**
+   * By default in debug mode, regular resources are used, and in non-debug mode
+   * minified resources are used
+   */
+  public static final boolean DEFAULT_USE_REGULAR_RESOURCES = GlobalDebug.isDebugMode ();
+
   private static final Logger LOGGER = LoggerFactory.getLogger (HCSettings.class);
   private static final ConditionalLogger CONDLOG = new ConditionalLogger (LOGGER, !GlobalDebug.DEFAULT_SILENT_MODE);
 
@@ -89,14 +107,20 @@ public final class HCSettings
   private static ENewLineMode s_eNewLineMode = ENewLineMode.DEFAULT;
 
   @GuardedBy ("RW_LOCK")
-  private static boolean s_bOOBDebugging = false;
+  private static boolean s_bOOBDebugging = DEFAULT_OUT_OF_BAND_NODE_DEBUGGING;
 
   @GuardedBy ("RW_LOCK")
-  private static boolean s_bScriptsInBody = true;
+  private static boolean s_bScriptsInBody = DEFAULT_SCRIPTS_IN_BODY;
 
   /** Use regular or minified resources */
   @GuardedBy ("RW_LOCK")
-  private static boolean s_bUseRegularResources = GlobalDebug.isDebugMode ();
+  private static boolean s_bUseRegularResources = DEFAULT_USE_REGULAR_RESOURCES;
+
+  @GuardedBy ("RW_LOCK")
+  private static boolean s_bUseNonceInScript = DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_SCRIPTS;
+
+  @GuardedBy ("RW_LOCK")
+  private static boolean s_bUseNonceInStyle = DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_STYLES;
 
   static
   {
@@ -200,7 +224,7 @@ public final class HCSettings
     ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
 
     // Update the HCSettings
-    final EHTMLVersion eOldVersion = getMutableConversionSettings ().getHTMLVersion ();
+    final EHTMLVersion eOldVersion = getConversionSettings ().getHTMLVersion ();
     getMutableConversionSettings ().setHTMLVersion (eHTMLVersion);
 
     // Update the XMLWriterSettings
@@ -370,5 +394,37 @@ public final class HCSettings
   {
     RW_LOCK.writeLocked ( () -> s_bUseRegularResources = bUseRegularResources);
     CONDLOG.info ( () -> "Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
+  }
+
+  /**
+   * @return <code>true</code> if inline scripts should use the 'nonce'
+   *         attribute, <code>false</code> if not.
+   * @since 9.2.10
+   */
+  public static boolean isUseNonceInInlineScript ()
+  {
+    return RW_LOCK.readLockedBoolean ( () -> s_bUseNonceInScript);
+  }
+
+  public static void setUseNonceInInlineScript (final boolean b)
+  {
+    RW_LOCK.writeLocked ( () -> s_bUseNonceInScript = b);
+    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for inline <script> elements");
+  }
+
+  /**
+   * @return <code>true</code> if inline styles (CSS) should use the 'nonce'
+   *         attribute, <code>false</code> if not.
+   * @since 9.2.10
+   */
+  public static boolean isUseNonceInInlineStyle ()
+  {
+    return RW_LOCK.readLockedBoolean ( () -> s_bUseNonceInStyle);
+  }
+
+  public static void setUseNonceInInlineStyle (final boolean b)
+  {
+    RW_LOCK.writeLocked ( () -> s_bUseNonceInStyle = b);
+    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for inline <style> elements");
   }
 }
