@@ -32,7 +32,9 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.callback.IThrowingRunnable;
 import com.helger.commons.concurrent.BasicThreadFactory;
 import com.helger.commons.concurrent.ExecutorServiceHelper;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.functional.IThrowingSupplier;
+import com.helger.commons.log.ConditionalLogger;
 import com.helger.commons.timing.StopWatch;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
@@ -46,6 +48,7 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
 public class PhotonWorkerPool extends AbstractGlobalSingleton
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonWorkerPool.class);
+  private static final ConditionalLogger CONDLOG = new ConditionalLogger (LOGGER, !GlobalDebug.DEFAULT_SILENT_MODE);
 
   private final ExecutorService m_aES;
 
@@ -76,13 +79,36 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
     return getGlobalSingleton (PhotonWorkerPool.class);
   }
 
+  /**
+   * @return <code>true</code> if logging is disabled, <code>false</code> if it
+   *         is enabled.
+   * @since 9.2.10
+   */
+  public static boolean isSilentMode ()
+  {
+    return CONDLOG.isDisabled ();
+  }
+
+  /**
+   * Enable or disable certain regular log messages.
+   *
+   * @param bSilentMode
+   *        <code>true</code> to disable logging, <code>false</code> to enable
+   *        logging
+   * @return The previous value of the silent mode.
+   * @since 9.2.10
+   */
+  public static boolean setSilentMode (final boolean bSilentMode)
+  {
+    return !CONDLOG.setEnabled (!bSilentMode);
+  }
+
   @Override
   protected void onDestroy (@Nonnull final IScope aScopeInDestruction) throws Exception
   {
-    if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("ph-oton worker pool about to be closed");
+    CONDLOG.debug ( () -> "ph-oton worker pool about to be closed");
     ExecutorServiceHelper.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
-    LOGGER.info ("ph-oton worker pool was closed!");
+    CONDLOG.info ("ph-oton worker pool was closed!");
   }
 
   @Nonnull
@@ -90,19 +116,19 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.runAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      LOGGER.info ("Starting '" + sActionName + "'");
+      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
       try
       {
         aRunnable.run ();
       }
       catch (final RuntimeException ex)
       {
-        LOGGER.error ("Error running ph-oton runner " + aRunnable, ex);
+        CONDLOG.error ( () -> "Error running ph-oton runner " + aRunnable, ex);
       }
       finally
       {
         aSW.stop ();
-        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -113,19 +139,19 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.runAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      LOGGER.info ("Starting '" + sActionName + "'");
+      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
       try
       {
         aRunnable.run ();
       }
       catch (final Exception ex)
       {
-        LOGGER.error ("Error running ph-oton runner " + aRunnable, ex);
+        CONDLOG.error ( () -> "Error running ph-oton runner " + aRunnable, ex);
       }
       finally
       {
         aSW.stop ();
-        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -135,20 +161,20 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.supplyAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      LOGGER.info ("Starting '" + sActionName + "'");
+      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
       try
       {
         return aSupplier.get ();
       }
       catch (final RuntimeException ex)
       {
-        LOGGER.error ("Error running ph-oton supplier " + aSupplier, ex);
+        CONDLOG.error ( () -> "Error running ph-oton supplier " + aSupplier, ex);
         return null;
       }
       finally
       {
         aSW.stop ();
-        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }
@@ -159,20 +185,20 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return CompletableFuture.supplyAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      LOGGER.info ("Starting '" + sActionName + "'");
+      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
       try
       {
         return aSupplier.get ();
       }
       catch (final Exception ex)
       {
-        LOGGER.error ("Error running ph-oton supplier " + aSupplier, ex);
+        CONDLOG.error ( () -> "Error running ph-oton supplier " + aSupplier, ex);
         return null;
       }
       finally
       {
         aSW.stop ();
-        LOGGER.info ("Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
     }, m_aES);
   }

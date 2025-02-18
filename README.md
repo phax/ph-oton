@@ -79,6 +79,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v9.2.10 - work in progress
     * Updated list of global attributes in `IHCElement`
+    * `PhotonWorkerPool` now has a silent mode option
 * v9.2.9 - 2025-02-03
     * Updated to ph-web 10.3.0
     * Added reusable SFTP helper classes to package `com.helger.photon.connect.sftp`
