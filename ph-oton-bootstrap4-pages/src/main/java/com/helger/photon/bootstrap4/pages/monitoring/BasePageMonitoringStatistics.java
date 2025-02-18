@@ -21,9 +21,14 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
+import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.statistics.IStatisticsHandlerCache;
 import com.helger.commons.statistics.IStatisticsHandlerCounter;
 import com.helger.commons.statistics.IStatisticsHandlerKeyedCounter;
@@ -39,6 +44,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
@@ -50,6 +56,9 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.util.statistics.StatisticsExporter;
 
 /**
  * Page with all currently available in memory statistics.
@@ -58,7 +67,8 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
  * @param <WPECTYPE>
  *        Web Page Execution Context type
  */
-public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionContext> extends AbstractBootstrapWebPage <WPECTYPE>
+public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionContext> extends
+                                          AbstractBootstrapWebPage <WPECTYPE>
 {
   @Translatable
   protected enum EText implements IHasDisplayText
@@ -96,6 +106,17 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     }
   }
 
+  private static final Logger LOGGER = LoggerFactory.getLogger (BasePageMonitoringStatistics.class);
+
+  private static final AjaxFunctionDeclaration AJAX_SAVE_STATS = addAjax ( (aRequestScope, aAjaxResponse) -> {
+    LOGGER.info ("Downloading ph-oton statistics");
+    final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
+    aDoc.getDocumentElement ().setAttribute ("location", "user-interface");
+    aDoc.getDocumentElement ()
+        .setAttribute ("datetime", PDTWebDateHelper.getAsStringXSD (PDTFactory.getCurrentLocalDateTime ()));
+    aAjaxResponse.xml (aDoc).setDownloadFilename ("ph-oton-statistics.xml").disableCaching ();
+  });
+
   public BasePageMonitoringStatistics (@Nonnull @Nonempty final String sID)
   {
     super (sID, EWebPageText.PAGE_NAME_MONITORING_STATISTICS.getAsMLT ());
@@ -123,16 +144,23 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
   @Override
   protected void fillContent (@Nonnull final WPECTYPE aWPEC)
   {
+    final IRequestWebScopeWithoutResponse aRequestScope = aWPEC.getRequestScope ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
     // Refresh button
     final BootstrapButtonToolbar aToolbar = new BootstrapButtonToolbar (aWPEC);
-    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale), aWPEC.getSelfHref (), EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_REFRESH.getDisplayText (aDisplayLocale),
+                        aWPEC.getSelfHref (),
+                        EDefaultIcon.REFRESH);
+    aToolbar.addButton (EPhotonCoreText.BUTTON_DOWNLOAD.getDisplayText (aDisplayLocale),
+                        AJAX_SAVE_STATS.getInvocationURL (aRequestScope),
+                        EDefaultIcon.SAVE);
     aNodeList.addChild (aToolbar);
 
     // Table for timer
-    final HCTable aTableTimer = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
+    final HCTable aTableTimer = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                     1),
                                              new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
                                              new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                               aDisplayLocale),
@@ -148,7 +176,8 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                                                                                                                                                "timer");
 
     // Table for size
-    final HCTable aTableSize = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
+    final HCTable aTableSize = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                    1),
                                             new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
                                             new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale)
@@ -164,7 +193,8 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                                                                                                                               "size");
 
     // Table for counter
-    final HCTable aTableCounter = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0, 1),
+    final HCTable aTableCounter = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setDataSort (0,
+                                                                                                                       1),
                                                new DTCol (EText.MSG_KEY.getDisplayText (aDisplayLocale)),
                                                new DTCol (EText.MSG_INVOCATION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                                 aDisplayLocale)
@@ -220,7 +250,10 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       {
         if (aHandler.getInvocationCount () > 0)
           aTableCounter.addBodyRow ()
-                       .addCells (sName, "", Integer.toString (aHandler.getInvocationCount ()), Long.toString (aHandler.getCount ()));
+                       .addCells (sName,
+                                  "",
+                                  Integer.toString (aHandler.getInvocationCount ()),
+                                  Long.toString (aHandler.getCount ()));
       }
 
       @Override
@@ -278,7 +311,10 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
           final int nInvocationCount = aHandler.getInvocationCount (sKey);
           if (nInvocationCount > 0)
             aTableCounter.addBodyRow ()
-                         .addCells (sName, sKey, Integer.toString (nInvocationCount), Long.toString (aHandler.getCount (sKey)));
+                         .addCells (sName,
+                                    sKey,
+                                    Integer.toString (nInvocationCount),
+                                    Long.toString (aHandler.getCount (sKey)));
         }
       }
     });

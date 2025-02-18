@@ -38,7 +38,8 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   // Menu object filters
   MENU_OBJECT_FILTER_USER_LOGGED_IN ("ein Benutzer ist angemeldet", "a user is logged in"),
   MENU_OBJECT_FILTER_NO_USER_LOGGED_IN ("es ist kein Benutzer angemeldet", "no user is logged in"),
-  MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP ("ein Benutzer ist der Benutzergruppe {0} zugeordnet", "a user is assigned to user group {0}"),
+  MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP ("ein Benutzer ist der Benutzergruppe {0} zugeordnet",
+                                             "a user is assigned to user group {0}"),
   MENU_OBJECT_FILTER_USER_HAS_ROLE ("ein Benutzer hat die Rolle {0}", "a user has role {0}"),
 
   // System messages
@@ -135,6 +136,7 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   BUTTON_PRINT ("Drucken", "Print"),
   BUTTON_PRINT_PREVIEW ("Druckvorschau", "Print preview"),
   BUTTON_PRINT_VIEW ("Druckansicht", "Print view"),
+  BUTTON_DOWNLOAD ("Herunterladen", "Download"),
   TRUE ("Wahr", "True"),
   FALSE ("Falsch", "False");
 
