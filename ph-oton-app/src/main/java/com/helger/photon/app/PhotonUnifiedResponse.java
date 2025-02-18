@@ -175,7 +175,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @Nonnull
   public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
-    return xml (aNode == null ? null : MicroWriter.getNodeAsString (aNode, aSettings), aSettings.getCharset ());
+    return xml (aNode == null ? null : MicroWriter.getNodeAsBytes (aNode, aSettings), aSettings.getCharset ());
   }
 
   @Nonnull
@@ -187,7 +187,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @Nonnull
   public PhotonUnifiedResponse xml (@Nullable final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
-    return xml (aNode == null ? null : XMLWriter.getNodeAsString (aNode, aSettings), aSettings.getCharset ());
+    return xml (aNode == null ? null : XMLWriter.getNodeAsBytes (aNode, aSettings), aSettings.getCharset ());
   }
 
   @Nonnull
@@ -293,8 +293,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       // Serialize remaining node to HTML
       final IMicroNode aMicroNode = aTargetNode.convertToMicroNode (aConversionSettings);
-      return aMicroNode == null ? "" : MicroWriter.getNodeAsString (aMicroNode,
-                                                                    aConversionSettings.getXMLWriterSettings ());
+      return aMicroNode == null ? ""
+                                : MicroWriter.getNodeAsString (aMicroNode, aConversionSettings.getXMLWriterSettings ());
     }
 
     public static void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -365,9 +365,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @Nonnull
   public PhotonUnifiedResponse html (@Nullable final IHCNode aNode)
   {
-    return html (aNode == null ? null : aNode instanceof IHCHasChildrenMutable <?, ?>
-                                                                                      ? (IHCHasChildrenMutable <?, IHCNode>) aNode
-                                                                                      : new HCNodeList ().addChild (aNode),
+    return html (aNode == null ? null
+                               : aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
+                                                                               : new HCNodeList ().addChild (aNode),
                  null,
                  null);
   }
