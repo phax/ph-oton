@@ -131,6 +131,14 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     return FUN_COUNTER.incrementAndGet ();
   }
 
+  /**
+   * Define the function name to use. If the parameter is empty, a "random"
+   * function name, starting with <code>fun</code> is created.
+   *
+   * @param sFunctionName
+   *        The function name to use.
+   * @return A new {@link Builder} and never <code>null</code>.
+   */
   @Nonnull
   public static Builder builder (@Nullable final String sFunctionName)
   {

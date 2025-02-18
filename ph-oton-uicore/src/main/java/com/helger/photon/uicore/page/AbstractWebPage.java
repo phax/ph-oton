@@ -171,6 +171,14 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
     }
   }
 
+  /**
+   * Add a per-page AJAX executor, with an automatically generated name. It is
+   * automatically generated with the global AjaxInvoker.
+   *
+   * @param aExecutor
+   *        The executor to be executed. May not be <code>null</code>.
+   * @return The create {@link AjaxFunctionDeclaration} to be invoked.
+   */
   @Nonnull
   public static final AjaxFunctionDeclaration addAjax (@Nonnull final IAjaxExecutor aExecutor)
   {
@@ -192,7 +200,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   public static final AjaxFunctionDeclaration addAjax (@Nullable final String sPrefix,
                                                        @Nonnull final IAjaxExecutor aExecutor)
   {
-    // null means random name
+    // null means "random" name
     final String sFuncName = StringHelper.hasText (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID ()
                                                             : null;
     final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder (sFuncName).executor (aExecutor).build ();
