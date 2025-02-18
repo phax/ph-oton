@@ -89,6 +89,7 @@ public class InternalErrorBuilder
   protected boolean m_bInvokeCustomExceptionHandler = DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER;
   protected boolean m_bAddClassPath = DEFAULT_ADD_CLASS_PATH;
   protected int m_nDuplicateEliminiationCounter = DEFAULT_DUPLICATE_ELIMINIATION_COUNTER;
+  protected InternalErrorEmailSettings m_aCustomEmailSettings;
 
   public InternalErrorBuilder ()
   {
@@ -386,13 +387,28 @@ public class InternalErrorBuilder
    *
    * @param aSWEC
    *        The web execution context to use. May not be <code>null</code>.
-   * @return this
+   * @return this for chaining
    */
   @Nonnull
   public final InternalErrorBuilder setFromWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
   {
     setDisplayLocale (aSWEC.getDisplayLocale ());
     setRequestScope (aSWEC.getRequestScope ());
+    return this;
+  }
+
+  /**
+   * Define custom internal email settings to use.
+   *
+   * @param aCustomEmailSettings
+   *        The email settings to use. May be <code>null</code>.
+   * @return this for chaining
+   * @since 9.2.10
+   */
+  @Nonnull
+  public final InternalErrorBuilder setCustomEmailSettings (@Nullable final InternalErrorEmailSettings aCustomEmailSettings)
+  {
+    m_aCustomEmailSettings = aCustomEmailSettings;
     return this;
   }
 
@@ -415,6 +431,7 @@ public class InternalErrorBuilder
                                                      m_aDisplayLocale,
                                                      m_bInvokeCustomExceptionHandler,
                                                      m_bAddClassPath,
-                                                     m_nDuplicateEliminiationCounter);
+                                                     m_nDuplicateEliminiationCounter,
+                                                     m_aCustomEmailSettings);
   }
 }

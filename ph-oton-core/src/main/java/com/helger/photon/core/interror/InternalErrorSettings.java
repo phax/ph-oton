@@ -75,7 +75,8 @@ public final class InternalErrorSettings
   private static boolean s_bSaveAsXML = DEFAULT_SAVE_AS_XML;
   @GuardedBy ("RW_LOCK")
   private static Locale s_aFallbackLocale = Locale.US;
-  private static CallbackList <IInternalErrorCallback> s_aCallbacks = new CallbackList <> ();
+  private static final CallbackList <IInternalErrorCallback> CALLBACKS = new CallbackList <> ();
+  @GuardedBy ("RW_LOCK")
   private static Function <InternalErrorMetadata, File> s_aStorageFileProvider;
 
   static
@@ -231,7 +232,7 @@ public final class InternalErrorSettings
   @ReturnsMutableObject
   public static CallbackList <IInternalErrorCallback> callbacks ()
   {
-    return s_aCallbacks;
+    return CALLBACKS;
   }
 
   /**
@@ -271,7 +272,8 @@ public final class InternalErrorSettings
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) + ".xml";
+                                                                     aMetadata.getErrorID ()) +
+                               ".xml";
       return WebFileIO.getDataIO ()
                       .getFile ("internal-errors/" +
                                 aNow.getYear () +
@@ -292,14 +294,15 @@ public final class InternalErrorSettings
    * @see #setStorageFileProvider(Function)
    * @since 8.0.3
    */
-  @Deprecated
+  @Deprecated (forRemoval = false)
   public static void setDefaultStorageFileProviderUpTo921 ()
   {
     setStorageFileProvider (aMetadata -> {
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) + ".xml";
+                                                                     aMetadata.getErrorID ()) +
+                               ".xml";
       return WebFileIO.getDataIO ()
                       .getFile ("internal-errors/" +
                                 aNow.getYear () +
@@ -316,16 +319,16 @@ public final class InternalErrorSettings
    * contain a "month" subfolder.
    *
    * @see #setStorageFileProvider(Function)
-   * @since 8.0.3
    */
-  @Deprecated
+  @Deprecated (forRemoval = false)
   public static void setDefaultStorageFileProviderUpTo802 ()
   {
     setStorageFileProvider (aMetadata -> {
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) + ".xml";
+                                                                     aMetadata.getErrorID ()) +
+                               ".xml";
       return WebFileIO.getDataIO ().getFile ("internal-errors/" + aNow.getYear () + "/" + sFilename);
     });
   }

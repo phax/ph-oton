@@ -472,16 +472,16 @@ public final class InternalErrorHandler
     return aMetadata;
   }
 
-  private static void _notifyVendor (final boolean bSendEmail,
-                                     final boolean bSaveAsXML,
-                                     @Nullable final Throwable t,
-                                     @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nullable final String sErrorID,
-                                     @Nullable final Map <String, String> aCustomData,
-                                     @Nonnull final InternalErrorEmailSettings aEmailSettings,
-                                     @Nullable final IEmailAttachmentList aEmailAttachments,
-                                     final boolean bAddClassPath,
-                                     @Nonnegative final int nDuplicateEliminiationCount)
+  private static void _notifyVendorOnInternalError (final boolean bSendEmail,
+                                                    final boolean bSaveAsXML,
+                                                    @Nullable final Throwable t,
+                                                    @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
+                                                    @Nullable final String sErrorID,
+                                                    @Nullable final Map <String, String> aCustomData,
+                                                    @Nonnull final InternalErrorEmailSettings aEmailSettings,
+                                                    @Nullable final IEmailAttachmentList aEmailAttachments,
+                                                    final boolean bAddClassPath,
+                                                    @Nonnegative final int nDuplicateEliminiationCount)
   {
     // Create all metadata from the request
     final InternalErrorMetadata aMetadata = fillInternalErrorMetaData (aRequestScope, sErrorID, aCustomData);
@@ -560,7 +560,11 @@ public final class InternalErrorHandler
    *        occurs. So if the same exception occurs 2mio times, that an email is
    *        send out only every "2mio % value" times. Only values &gt; 1 are
    *        considered.
-   * @return The created unique error ID
+   * @param aCustomEmailSettings
+   *        Optional custom email settings to be used instead of the global ones
+   *        from {@link InternalErrorSettings}. If <code>null</code> the default
+   *        ones are used.
+   * @return The created unique error ID. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -574,7 +578,8 @@ public final class InternalErrorHandler
                                      @Nullable final Locale aDisplayLocale,
                                      final boolean bInvokeCustomExceptionHandler,
                                      final boolean bAddClassPath,
-                                     @Nonnegative final int nDuplicateEliminiationCounter)
+                                     @Nonnegative final int nDuplicateEliminiationCounter,
+                                     @Nullable final InternalErrorEmailSettings aCustomEmailSettings)
   {
     final Locale aRealDisplayLocale = aDisplayLocale != null ? aDisplayLocale : _getSafeDisplayLocale ();
 
@@ -601,16 +606,17 @@ public final class InternalErrorHandler
     else
     {
       // Send mail with attachments
-      _notifyVendor (bSendEmail,
-                     bSaveAsXML,
-                     t,
-                     aRequestScope,
-                     sErrorID,
-                     aCustomData,
-                     InternalErrorSettings.getCopyOfEmailSettings (),
-                     aEmailAttachments,
-                     bAddClassPath,
-                     nDuplicateEliminiationCounter);
+      _notifyVendorOnInternalError (bSendEmail,
+                                    bSaveAsXML,
+                                    t,
+                                    aRequestScope,
+                                    sErrorID,
+                                    aCustomData,
+                                    aCustomEmailSettings != null ? aCustomEmailSettings
+                                                                 : InternalErrorSettings.getCopyOfEmailSettings (),
+                                    aEmailAttachments,
+                                    bAddClassPath,
+                                    nDuplicateEliminiationCounter);
     }
 
     if (bInvokeCustomExceptionHandler)
