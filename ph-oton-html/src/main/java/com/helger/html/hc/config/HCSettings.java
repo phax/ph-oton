@@ -17,7 +17,6 @@
 package com.helger.html.hc.config;
 
 import java.nio.charset.Charset;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
@@ -32,6 +31,7 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.lang.ServiceLoaderHelper;
+import com.helger.commons.log.ConditionalLogger;
 import com.helger.commons.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCConversionSettings;
@@ -57,6 +57,7 @@ public final class HCSettings
   public static final EHCStyleInlineMode DEFAULT_STYLE_MODE = EHCStyleInlineMode.PLAIN_TEXT_NO_ESCAPE;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (HCSettings.class);
+  private static final ConditionalLogger CONDLOG = new ConditionalLogger (LOGGER, !GlobalDebug.DEFAULT_SILENT_MODE);
 
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
@@ -97,8 +98,6 @@ public final class HCSettings
   @GuardedBy ("RW_LOCK")
   private static boolean s_bUseRegularResources = GlobalDebug.isDebugMode ();
 
-  private static final AtomicBoolean SILENT_MODE = new AtomicBoolean (GlobalDebug.DEFAULT_SILENT_MODE);
-
   static
   {
     // Apply all SPI settings providers
@@ -109,14 +108,26 @@ public final class HCSettings
   private HCSettings ()
   {}
 
+  /**
+   * @return <code>true</code> if logging is disabled, <code>false</code> if it
+   *         is enabled.
+   */
   public static boolean isSilentMode ()
   {
-    return SILENT_MODE.get ();
+    return CONDLOG.isDisabled ();
   }
 
+  /**
+   * Enable or disable certain regular log messages.
+   *
+   * @param bSilentMode
+   *        <code>true</code> to disable logging, <code>false</code> to enable
+   *        logging
+   * @return The previous value of the silent mode.
+   */
   public static boolean setSilentMode (final boolean bSilentMode)
   {
-    return SILENT_MODE.getAndSet (bSilentMode);
+    return !CONDLOG.setEnabled (!bSilentMode);
   }
 
   /**
@@ -196,8 +207,7 @@ public final class HCSettings
     getMutableConversionSettings ().setXMLWriterSettings (HCConversionSettings.createDefaultXMLWriterSettings (eHTMLVersion));
 
     if (!eHTMLVersion.equals (eOldVersion))
-      if (!isSilentMode ())
-        LOGGER.info ("Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
+      CONDLOG.info ( () -> "Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
       // No need to put anything in a comment
@@ -220,9 +230,8 @@ public final class HCSettings
   public static void setAutoCompleteOffForPasswordEdits (final boolean bAutoCompleteOffForPasswordEdits)
   {
     RW_LOCK.writeLocked ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
-    if (!isSilentMode ())
-      LOGGER.info ("Default @autocomplete for <input type=password> set to " +
-                   (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
+    CONDLOG.info ( () -> "Default @autocomplete for <input type=password> set to " +
+                         (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
   }
 
   public static int getTextAreaDefaultRows ()
@@ -233,8 +242,7 @@ public final class HCSettings
   public static void setTextAreaDefaultRows (final int nTextAreaDefaultRows)
   {
     RW_LOCK.writeLocked ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
-    if (!isSilentMode ())
-      LOGGER.info ("Default <textarea> rows set to " + nTextAreaDefaultRows);
+    CONDLOG.info ( () -> "Default <textarea> rows set to " + nTextAreaDefaultRows);
   }
 
   @Nonnull
@@ -248,8 +256,7 @@ public final class HCSettings
     ValueEnforcer.notNull (aOnDocumentReadyProvider, "OnDocumentReadyProvider");
 
     RW_LOCK.writeLocked ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
-    if (!isSilentMode ())
-      LOGGER.info ("Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
+    CONDLOG.info ( () -> "Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
   }
 
   /**
@@ -277,8 +284,7 @@ public final class HCSettings
     final EHCScriptInlineMode eOld = getScriptInlineMode ();
     RW_LOCK.writeLocked ( () -> s_eScriptInlineMode = eMode);
     if (!eMode.equals (eOld))
-      if (!isSilentMode ())
-        LOGGER.info ("Default <script> mode changed from " + eOld + " to " + eMode);
+      CONDLOG.info ( () -> "Default <script> mode changed from " + eOld + " to " + eMode);
   }
 
   /**
@@ -305,8 +311,7 @@ public final class HCSettings
     final EHCStyleInlineMode eOld = getStyleInlineMode ();
     RW_LOCK.writeLocked ( () -> s_eStyleInlineMode = eStyleInlineMode);
     if (!eStyleInlineMode.equals (eOld))
-      if (!isSilentMode ())
-        LOGGER.info ("Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
+      CONDLOG.info ( () -> "Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
   }
 
   @Nonnull
@@ -322,8 +327,7 @@ public final class HCSettings
     final ENewLineMode eOld = getNewLineMode ();
     RW_LOCK.writeLocked ( () -> s_eNewLineMode = eNewLineMode);
     if (!eNewLineMode.equals (eOld))
-      if (!isSilentMode ())
-        LOGGER.info ("Default new line mode changed from " + eOld + " to " + eNewLineMode);
+      CONDLOG.info ( () -> "Default new line mode changed from " + eOld + " to " + eNewLineMode);
   }
 
   public static boolean isOutOfBandDebuggingEnabled ()
@@ -334,8 +338,7 @@ public final class HCSettings
   public static void setOutOfBandDebuggingEnabled (final boolean bEnabled)
   {
     RW_LOCK.writeLocked ( () -> s_bOOBDebugging = bEnabled);
-    if (!isSilentMode ())
-      LOGGER.info ("Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
+    CONDLOG.info ( () -> "Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
   }
 
   /**
@@ -351,8 +354,7 @@ public final class HCSettings
   public static void setScriptsInBody (final boolean bEnabled)
   {
     RW_LOCK.writeLocked ( () -> s_bScriptsInBody = bEnabled);
-    if (!isSilentMode ())
-      LOGGER.info ("Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
+    CONDLOG.info ( () -> "Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
   }
 
   /**
@@ -367,7 +369,6 @@ public final class HCSettings
   public static void setUseRegularResources (final boolean bUseRegularResources)
   {
     RW_LOCK.writeLocked ( () -> s_bUseRegularResources = bUseRegularResources);
-    if (!isSilentMode ())
-      LOGGER.info ("Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
+    CONDLOG.info ( () -> "Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
   }
 }

@@ -73,6 +73,7 @@ import com.helger.photon.core.PhotonCoreInit;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.locale.ILocaleManager;
 import com.helger.photon.core.smtp.AuditingEmailDataTransportListener;
+import com.helger.photon.io.PhotonWorkerPool;
 import com.helger.photon.io.WebFileIO;
 import com.helger.photon.io.WebIOLongIDFactory;
 import com.helger.photon.security.password.GlobalPasswordSettings;
@@ -963,6 +964,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // ph-oton
     HCSettings.setSilentMode (bSilentMode);
     WebSiteResourceCache.setSilentMode (bSilentMode);
+    PhotonWorkerPool.setSilentMode (bSilentMode);
     // DefaultLockManager instance
   }
 }
