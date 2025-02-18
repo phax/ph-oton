@@ -28,6 +28,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.email.IEmailAddress;
 import com.helger.commons.lang.ICloneable;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.smtp.settings.ISMTPSettings;
 
 /**
@@ -119,5 +120,14 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
   public InternalErrorEmailSettings getClone ()
   {
     return new InternalErrorEmailSettings (this);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("SMTPSettings", m_aSMTPSettings)
+                                       .append ("SenderAddress", m_aSenderAddress)
+                                       .append ("ReceiverAddresses", m_aReceiverAddresses)
+                                       .getToString ();
   }
 }
