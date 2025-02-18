@@ -16,12 +16,11 @@
  */
 package com.helger.html.hc.special;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -55,7 +54,8 @@ public class InlineCSSList
     return new CSSMediaList ();
   }
 
-  private static final class Key implements Serializable
+  @MustImplementEqualsAndHashcode
+  private static final class Key
   {
     private final ICSSMediaList m_aMediaList;
 
@@ -94,7 +94,7 @@ public class InlineCSSList
     }
   }
 
-  private static final class Item implements Serializable
+  private static final class Item
   {
     private final Key m_aKey;
     private final StringBuilder m_aCSS = new StringBuilder ();
@@ -143,17 +143,22 @@ public class InlineCSSList
   {
     final Key aKey = new Key (aMediaList);
     final Item aLastItem = m_aItems.getLastOrNull ();
+
     final Key aLastKey = aLastItem == null ? null : aLastItem.getKey ();
-    Item aItemToUse;
+    final Item aItemToUse;
     if (aLastKey != null && aLastKey.equals (aKey))
     {
+      // Reuse the previous item
       aItemToUse = aLastItem;
     }
     else
     {
+      // Create a new item
       aItemToUse = new Item (aKey);
       m_aItems.add (aItemToUse);
     }
+
+    // Append the CSS to the selected item
     aItemToUse.appendCSS (aInlineCSS);
   }
 
