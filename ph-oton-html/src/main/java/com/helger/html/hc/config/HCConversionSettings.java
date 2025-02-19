@@ -68,8 +68,8 @@ public class HCConversionSettings implements IHCConversionSettings
   private boolean m_bConsistencyChecksEnabled;
   private boolean m_bExtractOutOfBandNodes;
   private IHCCustomizer m_aCustomizer;
-  private String m_sNonceInlineScript;
-  private String m_sNonceInlineStyle;
+  private String m_sNonceScript;
+  private String m_sNonceStyle;
 
   @Nonnull
   public static XMLWriterSettings createDefaultXMLWriterSettings (@Nonnull final EHTMLVersion eHTMLVersion)
@@ -162,8 +162,8 @@ public class HCConversionSettings implements IHCConversionSettings
     m_bConsistencyChecksEnabled = aBase.areConsistencyChecksEnabled ();
     m_bExtractOutOfBandNodes = aBase.isExtractOutOfBandNodes ();
     m_aCustomizer = aBase.getCustomizer ();
-    m_sNonceInlineScript = aBase.getNonceInlineScript ();
-    m_sNonceInlineStyle = aBase.getNonceInlineStyle ();
+    m_sNonceScript = aBase.getNonceScript ();
+    m_sNonceStyle = aBase.getNonceStyle ();
   }
 
   /**
@@ -374,44 +374,44 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   @Nullable
-  public String getNonceInlineScript ()
+  public String getNonceScript ()
   {
-    return m_sNonceInlineScript;
+    return m_sNonceScript;
   }
 
   /**
-   * Set the value of the HTML 'nonce' attribute for inline script elements.
+   * Set the value of the HTML 'nonce' attribute for script elements.
    *
-   * @param sNonceInlineScript
+   * @param sNonceScript
    *        The value of the 'nonce' attribute. May be <code>null</code>.
    * @return this
    * @since 9.2.10
    */
   @Nonnull
-  public HCConversionSettings setNonceInlineScript (@Nullable final String sNonceInlineScript)
+  public HCConversionSettings setNonceScript (@Nullable final String sNonceScript)
   {
-    m_sNonceInlineScript = sNonceInlineScript;
+    m_sNonceScript = sNonceScript;
     return this;
   }
 
   @Nullable
-  public String getNonceInlineStyle ()
+  public String getNonceStyle ()
   {
-    return m_sNonceInlineStyle;
+    return m_sNonceStyle;
   }
 
   /**
-   * Set the value of the HTML 'nonce' attribute for inline style elements.
+   * Set the value of the HTML 'nonce' attribute for style elements.
    *
-   * @param sNonceInlineStyle
+   * @param sNonceStyle
    *        The value of the 'nonce' attribute. May be <code>null</code>.
    * @return this
    * @since 9.2.10
    */
   @Nonnull
-  public HCConversionSettings setNonceInlineStyle (@Nullable final String sNonceInlineStyle)
+  public HCConversionSettings setNonceStyle (@Nullable final String sNonceStyle)
   {
-    m_sNonceInlineStyle = sNonceInlineStyle;
+    m_sNonceStyle = sNonceStyle;
     return this;
   }
 
@@ -426,8 +426,8 @@ public class HCConversionSettings implements IHCConversionSettings
     m_bConsistencyChecksEnabled = DEFAULT_CONSISTENCY_CHECKS;
     m_bExtractOutOfBandNodes = DEFAULT_EXTRACT_OUT_OF_BAND_NODES;
     m_aCustomizer = createDefaultCustomizer ();
-    m_sNonceInlineScript = null;
-    m_sNonceInlineStyle = null;
+    m_sNonceScript = null;
+    m_sNonceStyle = null;
     return this;
   }
 
@@ -469,8 +469,8 @@ public class HCConversionSettings implements IHCConversionSettings
                                        .append ("ConsistencyChecksEnabled", m_bConsistencyChecksEnabled)
                                        .append ("ExtractOutOfBandNodes", m_bExtractOutOfBandNodes)
                                        .appendIfNotNull ("Customizer", m_aCustomizer)
-                                       .appendIfNotNull ("NonceInlineScript", m_sNonceInlineScript)
-                                       .appendIfNotNull ("NonceInlineStyle", m_sNonceInlineStyle)
+                                       .appendIfNotNull ("NonceScript", m_sNonceScript)
+                                       .appendIfNotNull ("NonceStyle", m_sNonceStyle)
                                        .getToString ();
   }
 }

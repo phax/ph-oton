@@ -266,7 +266,7 @@ public class HCStyle extends AbstractHCElement <HCStyle>
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
     if (!hasNonce ())
-      setNonce (aConversionSettings.getNonceInlineStyle ());
+      setNonce (aConversionSettings.getNonceStyle ());
   }
 
   @Override

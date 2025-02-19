@@ -18,6 +18,7 @@ package com.helger.html.hc.html.metadata;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.mime.CMimeType;
@@ -32,6 +33,8 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.embedded.EHCCORSSettings;
 import com.helger.html.resource.css.ICSSPathProvider;
@@ -264,6 +267,17 @@ public class HCLink extends AbstractHCElement <HCLink>
   {
     m_sIntegrity = sIntegrity;
     return this;
+  }
+
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
+    if (m_aRel == EHCLinkType.STYLESHEET && !hasNonce ())
+      setNonce (aConversionSettings.getNonceStyle ());
   }
 
   @Override

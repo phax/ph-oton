@@ -18,6 +18,7 @@ package com.helger.html.hc.html.script;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.IMimeType;
@@ -26,6 +27,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.embedded.EHCCORSSettings;
 import com.helger.xml.microdom.IMicroElement;
@@ -107,6 +110,17 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
   {
     m_sIntegrity = sIntegrity;
     return thisAsT ();
+  }
+
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
+    if (!hasNonce ())
+      setNonce (aConversionSettings.getNonceScript ());
   }
 
   @Override

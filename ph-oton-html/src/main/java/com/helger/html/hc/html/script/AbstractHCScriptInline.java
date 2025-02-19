@@ -20,14 +20,11 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
-import com.helger.html.hc.IHCHasChildrenMutable;
-import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.EHCScriptInlineMode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.js.IHasJSCode;
@@ -172,17 +169,6 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
         default:
           throw new IllegalArgumentException ("Illegal mode: " + eMode);
       }
-  }
-
-  @Override
-  @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
-  {
-    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-
-    if (!hasNonce ())
-      setNonce (aConversionSettings.getNonceInlineScript ());
   }
 
   @Override

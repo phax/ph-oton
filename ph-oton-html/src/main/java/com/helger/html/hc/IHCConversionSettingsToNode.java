@@ -26,18 +26,18 @@ import javax.annotation.Nullable;
 public interface IHCConversionSettingsToNode extends IHCConversionSettingsGlobal
 {
   /**
-   * @return The value of 'nonce' attribute for inline script elements. May be
+   * @return The value of 'nonce' attribute for script elements. May be
    *         <code>null</code>.
    * @since 9.2.10
    */
   @Nullable
-  String getNonceInlineScript ();
+  String getNonceScript ();
 
   /**
-   * @return The value of 'nonce' attribute for inline style elements. May be
+   * @return The value of 'nonce' attribute for style elements. May be
    *         <code>null</code>.
    * @since 9.2.10
    */
   @Nullable
-  String getNonceInlineStyle ();
+  String getNonceStyle ();
 }

@@ -68,16 +68,16 @@ public final class PhotonHTMLHelper
 
   private static void _applySessionNonce (@Nonnull final HCConversionSettings aCS)
   {
-    final boolean bOnScript = HCSettings.isUseNonceInInlineScript ();
-    final boolean bOnStyle = HCSettings.isUseNonceInInlineStyle ();
+    final boolean bOnScript = HCSettings.isUseNonceInScript ();
+    final boolean bOnStyle = HCSettings.isUseNonceInStyle ();
     // Get per session nonce
     if (bOnScript || bOnStyle)
     {
       final String sNonce = CSRFSessionManager.getInstance ().getNonce ();
       if (bOnScript)
-        aCS.setNonceInlineScript (sNonce);
+        aCS.setNonceScript (sNonce);
       if (bOnStyle)
-        aCS.setNonceInlineStyle (sNonce);
+        aCS.setNonceStyle (sNonce);
     }
   }
 

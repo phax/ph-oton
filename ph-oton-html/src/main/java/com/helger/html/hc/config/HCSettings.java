@@ -62,11 +62,11 @@ public final class HCSettings
   /** By default script tags are placed in the HTML body */
   public static final boolean DEFAULT_SCRIPTS_IN_BODY = true;
 
-  /** By default nonce attributes in inline scripts are disabled */
-  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_SCRIPTS = true;
+  /** By default nonce attributes in scripts are disabled */
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_SCRIPTS = true;
 
-  /** By default nonce attributes in inline styles are disabled */
-  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_STYLES = true;
+  /** By default nonce attributes in styles are disabled */
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_STYLES = true;
 
   /**
    * By default in debug mode, regular resources are used, and in non-debug mode
@@ -117,10 +117,10 @@ public final class HCSettings
   private static boolean s_bUseRegularResources = DEFAULT_USE_REGULAR_RESOURCES;
 
   @GuardedBy ("RW_LOCK")
-  private static boolean s_bUseNonceInScript = DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_SCRIPTS;
+  private static boolean s_bUseNonceInScript = DEFAULT_USE_NONCE_ATTRIBUTES_IN_SCRIPTS;
 
   @GuardedBy ("RW_LOCK")
-  private static boolean s_bUseNonceInStyle = DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_STYLES;
+  private static boolean s_bUseNonceInStyle = DEFAULT_USE_NONCE_ATTRIBUTES_IN_STYLES;
 
   static
   {
@@ -397,34 +397,34 @@ public final class HCSettings
   }
 
   /**
-   * @return <code>true</code> if inline scripts should use the 'nonce'
-   *         attribute, <code>false</code> if not.
+   * @return <code>true</code> if scripts should use the 'nonce' attribute,
+   *         <code>false</code> if not.
    * @since 9.2.10
    */
-  public static boolean isUseNonceInInlineScript ()
+  public static boolean isUseNonceInScript ()
   {
     return RW_LOCK.readLockedBoolean ( () -> s_bUseNonceInScript);
   }
 
-  public static void setUseNonceInInlineScript (final boolean b)
+  public static void setUseNonceInScript (final boolean b)
   {
     RW_LOCK.writeLocked ( () -> s_bUseNonceInScript = b);
-    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for inline <script> elements");
+    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for <script> elements");
   }
 
   /**
-   * @return <code>true</code> if inline styles (CSS) should use the 'nonce'
-   *         attribute, <code>false</code> if not.
+   * @return <code>true</code> if styles (CSS) should use the 'nonce' attribute,
+   *         <code>false</code> if not.
    * @since 9.2.10
    */
-  public static boolean isUseNonceInInlineStyle ()
+  public static boolean isUseNonceInStyle ()
   {
     return RW_LOCK.readLockedBoolean ( () -> s_bUseNonceInStyle);
   }
 
-  public static void setUseNonceInInlineStyle (final boolean b)
+  public static void setUseNonceInStyle (final boolean b)
   {
     RW_LOCK.writeLocked ( () -> s_bUseNonceInStyle = b);
-    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for inline <style> elements");
+    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for <style> elements");
   }
 }
