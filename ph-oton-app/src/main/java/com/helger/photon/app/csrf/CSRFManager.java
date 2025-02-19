@@ -32,20 +32,22 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.commons.base64.Base64;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.string.StringHelper;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
- * Global CSRF manager keeping track of the available nonces.
+ * Global CSRF manager keeping track of the available nonces. All nonces are
+ * provided as Base64 encoded strings.
  *
  * @author Philip Helger
  */
 @ThreadSafe
 public final class CSRFManager extends AbstractGlobalWebSingleton
 {
-  public static final int NONCE_BYTES = 64;
+  public static final int NONCE_BYTES = 32;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (CSRFManager.class);
 
@@ -82,7 +84,8 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
         // Ensure a unique nonce
         final byte [] aNonce = new byte [NONCE_BYTES];
         aRandom.nextBytes (aNonce);
-        sNonce = StringHelper.getHexEncoded (aNonce);
+        // Must be Base64 encoded for HTML
+        sNonce = Base64.encodeBytes (aNonce);
 
         // Avoid endless loop
         if (++nCount > 100)
