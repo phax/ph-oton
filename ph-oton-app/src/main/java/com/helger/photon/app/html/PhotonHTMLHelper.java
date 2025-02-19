@@ -120,6 +120,10 @@ public final class PhotonHTMLHelper
     final HCLink aLink = HCLink.createCSSLink (PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular))
                                .setMedia (aCSS.getMediaList ())
                                .setPathProvider (aCSS);
+    // Set explicitly, because the resulting node does ot go through all stages
+    // of preparation
+    if (HCSettings.isUseNonceInStyle ())
+      aLink.setNonce (CSRFSessionManager.getInstance ().getNonce ());
 
     final String sConditionalComment = aCSS.getConditionalComment ();
     if (StringHelper.hasText (sConditionalComment))
@@ -135,6 +139,11 @@ public final class PhotonHTMLHelper
   {
     final HCScriptFile aScript = new HCScriptFile ().setSrc (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular))
                                                     .setPathProvider (aJS);
+    // Set explicitly, because the resulting node does ot go through all stages
+    // of preparation
+    if (HCSettings.isUseNonceInScript ())
+      aScript.setNonce (CSRFSessionManager.getInstance ().getNonce ());
+    aJS.getScriptLoadingMode ().apply (aScript);
 
     final String sConditionalComment = aJS.getConditionalComment ();
     if (StringHelper.hasText (sConditionalComment))

@@ -246,7 +246,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
       if (aNode == null)
         return "";
 
-      final IHCConversionSettings aConversionSettings = HCSettings.getConversionSettingsWithoutNamespaces ();
+      final IHCConversionSettings aConversionSettings = PhotonHTMLHelper.getHCConversionSettingsWithoutNamespacesWithNonce ();
 
       final IHCNode aTargetNode;
 

@@ -48,11 +48,6 @@ public enum EUICoreCSSPathProvider implements ICSSPathProvider
     m_aPP = ConstantCSSPathProvider.builder ().path (sPath).minifiedPathFromPath ().build ();
   }
 
-  EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
-  {
-    m_aPP = ConstantCSSPathProvider.builder ().path (sPath).minifiedPathFromPath ().conditionalComment (sConditionalComment).build ();
-  }
-
   @Nonnull
   @Nonempty
   public String getCSSItemPath (final boolean bRegular)

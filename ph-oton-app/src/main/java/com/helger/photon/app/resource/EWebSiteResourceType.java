@@ -29,9 +29,11 @@ import com.helger.commons.url.ISimpleURL;
 import com.helger.css.CCSS;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCNode;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.metadata.HCLink;
 import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.js.CJS;
+import com.helger.photon.app.csrf.CSRFSessionManager;
 
 /**
  * Defines the available resource types.
@@ -46,7 +48,12 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
     @Nonnull
     public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
     {
-      return new HCScriptFile ().setSrc (aURL);
+      final HCScriptFile ret = new HCScriptFile ().setSrc (aURL);
+      // Set explicitly, because the resulting node does ot go through all
+      // stages of preparation
+      if (HCSettings.isUseNonceInScript ())
+        ret.setNonce (CSRFSessionManager.getInstance ().getNonce ());
+      return ret;
     }
   },
   CSS ("css", CMimeType.TEXT_CSS, CCSS.FILE_EXTENSION_CSS, "CSS")
@@ -55,7 +62,12 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
     @Nonnull
     public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
     {
-      return HCLink.createCSSLink (aURL).setMedia (aMediaList);
+      final HCLink ret = HCLink.createCSSLink (aURL).setMedia (aMediaList);
+      // Set explicitly, because the resulting node does ot go through all
+      // stages of preparation
+      if (HCSettings.isUseNonceInStyle ())
+        ret.setNonce (CSRFSessionManager.getInstance ().getNonce ());
+      return ret;
     }
   };
 

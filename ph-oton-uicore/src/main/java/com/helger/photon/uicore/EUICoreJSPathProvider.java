@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.html.hc.html.script.EHCScriptLoadingMode;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 
@@ -54,12 +55,11 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
 
   EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().build ();
-  }
-
-  EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
-  {
-    m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().conditionalComment (sConditionalComment).build ();
+    m_aPP = ConstantJSPathProvider.builder ()
+                                  .path (sPath)
+                                  .minifiedPathFromPath ()
+                                  .scriptLoadingMode (EHCScriptLoadingMode.ASYNC)
+                                  .build ();
   }
 
   @Nonnull
