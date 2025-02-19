@@ -33,7 +33,11 @@ public enum ETinyMCE4JSPathProvider implements IJSPathProvider
                            @Nonnull @Nonempty final String sMinPath,
                            final boolean bCanBeBundled)
   {
-    m_aPP = new ConstantJSPathProvider (sRegularPath, sMinPath, (String) null, bCanBeBundled);
+    m_aPP = ConstantJSPathProvider.builder ()
+                                  .path (sRegularPath)
+                                  .minifiedPath (sMinPath)
+                                  .bundlable (bCanBeBundled)
+                                  .build ();
   }
 
   @Nonnull

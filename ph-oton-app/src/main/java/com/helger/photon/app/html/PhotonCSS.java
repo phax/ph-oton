@@ -33,10 +33,8 @@ import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.css.CSSFilenameHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
-import com.helger.html.resource.IHTMLResourceProvider;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.app.PhotonAppSettings;
@@ -100,18 +98,25 @@ public final class PhotonCSS
             final ECSSMedium eMedium = ECSSMedium.getFromNameOrNull (sMedium);
             if (eMedium == null)
             {
-              LOGGER.warn ("CSS item '" + sPath + "' in " + aRes.getPath () + " has an invalid medium '" + sMedium + "' - ignoring");
+              LOGGER.warn ("CSS item '" +
+                           sPath +
+                           "' in " +
+                           aRes.getPath () +
+                           " has an invalid medium '" +
+                           sMedium +
+                           "' - ignoring");
               continue;
             }
             aMediaList.addMedium (eMedium);
           }
 
         // Add to target
-        aTarget.addItem (new ConstantCSSPathProvider (sPath,
-                                                      CSSFilenameHelper.getMinifiedCSSFilename (sPath),
-                                                      sConditionalComment,
-                                                      aMediaList,
-                                                      IHTMLResourceProvider.DEFAULT_IS_BUNDLABLE));
+        aTarget.addItem (ConstantCSSPathProvider.builder ()
+                                                .path (sPath)
+                                                .minifiedPathFromPath ()
+                                                .conditionalComment (sConditionalComment)
+                                                .cssMediaList (aMediaList)
+                                                .build ());
       }
   }
 

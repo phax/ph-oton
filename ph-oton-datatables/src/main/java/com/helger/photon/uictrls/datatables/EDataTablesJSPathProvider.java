@@ -80,7 +80,7 @@ public enum EDataTablesJSPathProvider implements IJSPathProvider
 
   EDataTablesJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    m_aPP = ConstantJSPathProvider.create (sPath);
+    m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().build ();
   }
 
   @Nonnull
@@ -104,9 +104,8 @@ public enum EDataTablesJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
-                                                                                         "{0}",
-                                                                                         sLanguage),
-                                                                m_aPP.getConditionalComment ());
+    return ConstantJSPathProvider.builder ().path (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
+     "{0}",
+     sLanguage)).minifiedPathFromPath ().conditionalComment (m_aPP.getConditionalComment ()).build ();
   }
 }

@@ -72,7 +72,7 @@ public class HCReCaptchaInvisible extends AbstractHCButton <HCReCaptchaInvisible
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.createExternal ("https://www.google.com/recaptcha/api.js"));
+    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path ("https://www.google.com/recaptcha/api.js").minifiedPath ("https://www.google.com/recaptcha/api.js").bundlable (false).build ());
   }
 
   @Nonnull

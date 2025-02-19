@@ -59,7 +59,7 @@ public class HCTweet extends AbstractHCA <HCTweet>
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.createExternal ("https://platform.twitter.com/widgets.js"));
+    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path ("https://platform.twitter.com/widgets.js").minifiedPath ("https://platform.twitter.com/widgets.js").bundlable (false).build ());
   }
 
   @Nonnull

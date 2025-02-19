@@ -20,10 +20,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ChangeNextMajorRelease;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.builder.IBuilder;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.html.hc.html.script.EHCScriptLoadingMode;
 import com.helger.html.js.JSFilenameHelper;
 
 /**
@@ -37,21 +40,27 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   private final String m_sMinifiedPath;
   private final String m_sConditionalComment;
   private final boolean m_bIsBundlable;
+  private final EHCScriptLoadingMode m_eScriptLoadingMode;
 
+  @Deprecated (forRemoval = false)
+  @ChangeNextMajorRelease ("Make protected")
   public ConstantJSPathProvider (@Nonnull @Nonempty final String sPath,
                                  @Nonnull @Nonempty final String sMinifiedPath,
                                  @Nullable final String sConditionalComment,
-                                 final boolean bIsBundlable)
+                                 final boolean bIsBundlable,
+                                 @Nonnull final EHCScriptLoadingMode eScriptLoadingMode)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
     ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sPath), () -> "'" + sPath + "' is not a valid JS filename");
     ValueEnforcer.notEmpty (sMinifiedPath, "MinifiedPath");
     ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sMinifiedPath),
                           () -> "'" + sMinifiedPath + "' is not a valid minified JS filename");
+    ValueEnforcer.notNull (eScriptLoadingMode, "ScriptLoadingMode");
     m_sPath = sPath;
     m_sMinifiedPath = sMinifiedPath;
     m_sConditionalComment = sConditionalComment;
     m_bIsBundlable = bIsBundlable;
+    m_eScriptLoadingMode = eScriptLoadingMode;
   }
 
   @Nonnull
@@ -86,6 +95,12 @@ public final class ConstantJSPathProvider implements IJSPathProvider
     return m_bIsBundlable;
   }
 
+  @Nonnull
+  public EHCScriptLoadingMode getScriptLoadingMode ()
+  {
+    return m_eScriptLoadingMode;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -97,7 +112,8 @@ public final class ConstantJSPathProvider implements IJSPathProvider
     return m_sPath.equals (rhs.m_sPath) &&
            m_sMinifiedPath.equals (rhs.m_sMinifiedPath) &&
            EqualsHelper.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
-           m_bIsBundlable == rhs.m_bIsBundlable;
+           m_bIsBundlable == rhs.m_bIsBundlable &&
+           m_eScriptLoadingMode == rhs.m_eScriptLoadingMode;
   }
 
   @Override
@@ -107,6 +123,7 @@ public final class ConstantJSPathProvider implements IJSPathProvider
                                        .append (m_sMinifiedPath)
                                        .append (m_sConditionalComment)
                                        .append (m_bIsBundlable)
+                                       .append (m_eScriptLoadingMode)
                                        .getHashCode ();
   }
 
@@ -117,48 +134,125 @@ public final class ConstantJSPathProvider implements IJSPathProvider
                                        .append ("minifiedPath", m_sMinifiedPath)
                                        .appendIfNotNull ("conditionalComment", m_sConditionalComment)
                                        .append ("isBundlable", m_bIsBundlable)
+                                       .append ("ScriptLoadingMode", m_eScriptLoadingMode)
                                        .getToString ();
   }
 
-  @Nonnull
-  public static ConstantJSPathProvider create (@Nonnull @Nonempty final String sPath)
+  public static final class Builder implements IBuilder <ConstantJSPathProvider>
   {
-    return new ConstantJSPathProvider (sPath,
-                                       JSFilenameHelper.getMinifiedJSFilename (sPath),
-                                       DEFAULT_CONDITIONAL_COMMENT,
-                                       DEFAULT_IS_BUNDLABLE);
+    private String m_sPath;
+    private String m_sMinifiedPath;
+    private String m_sConditionalComment = DEFAULT_CONDITIONAL_COMMENT;
+    private boolean m_bIsBundlable = DEFAULT_IS_BUNDLABLE;
+    private EHCScriptLoadingMode m_eScriptLoadingMode = EHCScriptLoadingMode.DEFAULT;
+
+    public Builder ()
+    {}
+
+    @Nonnull
+    public Builder path (@Nullable final String s)
+    {
+      m_sPath = s;
+      return this;
+    }
+
+    @Nonnull
+    public Builder minifiedPath (@Nullable final String s)
+    {
+      m_sMinifiedPath = s;
+      return this;
+    }
+
+    @Nonnull
+    public Builder minifiedPathFromPath ()
+    {
+      return minifiedPath (JSFilenameHelper.getMinifiedJSFilename (m_sPath));
+    }
+
+    @Nonnull
+    public Builder conditionalComment (@Nullable final String s)
+    {
+      m_sConditionalComment = s;
+      return this;
+    }
+
+    @Nonnull
+    public Builder bundlable (final boolean b)
+    {
+      m_bIsBundlable = b;
+      return this;
+    }
+
+    @Nonnull
+    public Builder scriptLoadingMode (@Nullable final EHCScriptLoadingMode e)
+    {
+      m_eScriptLoadingMode = e;
+      return this;
+    }
+
+    @Nonnull
+    public Builder scriptLoadingAsync ()
+    {
+      return scriptLoadingMode (EHCScriptLoadingMode.ASYNC);
+    }
+
+    @Nonnull
+    public ConstantJSPathProvider build ()
+    {
+      return new ConstantJSPathProvider (m_sPath,
+                                         m_sMinifiedPath,
+                                         m_sConditionalComment,
+                                         m_bIsBundlable,
+                                         m_eScriptLoadingMode);
+    }
   }
 
   @Nonnull
+  public static Builder builder ()
+  {
+    return new Builder ();
+  }
+
+  @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
+  public static ConstantJSPathProvider create (@Nonnull @Nonempty final String sPath)
+  {
+    return builder ().path (sPath).minifiedPathFromPath ().build ();
+  }
+
+  @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantJSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
                                                                      @Nullable final String sConditionalComment)
   {
-    return new ConstantJSPathProvider (sPath,
-                                       JSFilenameHelper.getMinifiedJSFilename (sPath),
-                                       sConditionalComment,
-                                       DEFAULT_IS_BUNDLABLE);
+    return builder ().path (sPath).minifiedPathFromPath ().conditionalComment (sConditionalComment).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantJSPathProvider createBundlable (@Nonnull @Nonempty final String sPath, final boolean bBundlable)
   {
-    return new ConstantJSPathProvider (sPath,
-                                       JSFilenameHelper.getMinifiedJSFilename (sPath),
-                                       DEFAULT_CONDITIONAL_COMMENT,
-                                       bBundlable);
+    return builder ().path (sPath).minifiedPathFromPath ().bundlable (bBundlable).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI)
   {
-    return createExternal (sURI, DEFAULT_CONDITIONAL_COMMENT);
+    // External JS are never bundlable
+    return builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                        @Nullable final String sConditionalComment)
   {
-    // External JS are never bundleable
-    return new ConstantJSPathProvider (sURI, sURI, sConditionalComment, false);
+    // External JS are never bundlable
+    return builder ().path (sURI)
+                     .minifiedPath (sURI)
+                     .conditionalComment (sConditionalComment)
+                     .bundlable (false)
+                     .build ();
   }
 }

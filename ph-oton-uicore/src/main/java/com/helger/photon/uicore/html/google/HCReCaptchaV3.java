@@ -99,6 +99,7 @@ public class HCReCaptchaV3 extends AbstractHCDiv <HCReCaptchaV3>
     final SimpleURL aURL = new SimpleURL ("https://www.google.com/recaptcha/api.js");
     if (m_sDisplayLanguage != null)
       aURL.add ("hl", m_sDisplayLanguage);
-    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.createExternal (aURL.getAsStringWithEncodedParameters ()));
+    final String sURI = aURL.getAsStringWithEncodedParameters ();
+    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ());
   }
 }

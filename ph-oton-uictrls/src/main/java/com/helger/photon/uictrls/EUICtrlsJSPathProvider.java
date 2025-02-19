@@ -59,12 +59,12 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
 
   EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    m_aPP = ConstantJSPathProvider.create (sPath);
+    m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().build ();
   }
 
   EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
   {
-    m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
+    m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().bundlable (bCanBeBundled).build ();
   }
 
   EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath,
@@ -72,9 +72,9 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
                           final boolean bIsAlreadyMinified)
   {
     if (bIsAlreadyMinified)
-      m_aPP = new ConstantJSPathProvider (sPath, sPath, DEFAULT_CONDITIONAL_COMMENT, bCanBeBundled);
+      m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPath (sPath).bundlable (bCanBeBundled).build ();
     else
-      m_aPP = ConstantJSPathProvider.createBundlable (sPath, bCanBeBundled);
+      m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().bundlable (bCanBeBundled).build ();
   }
 
   @Nonnull
@@ -98,9 +98,8 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.createWithConditionalComment (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
-                                                                                         "{0}",
-                                                                                         sLanguage),
-                                                                m_aPP.getConditionalComment ());
+    return ConstantJSPathProvider.builder ().path (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
+     "{0}",
+     sLanguage)).minifiedPathFromPath ().conditionalComment (m_aPP.getConditionalComment ()).build ();
   }
 }

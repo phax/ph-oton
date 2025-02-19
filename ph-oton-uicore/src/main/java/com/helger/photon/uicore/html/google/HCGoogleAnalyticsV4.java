@@ -93,8 +93,9 @@ public class HCGoogleAnalyticsV4 extends AbstractHCScriptInline <HCGoogleAnalyti
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.createExternal (new SimpleURL (URL_GTAG).add ("id",
+    final String sURI = new SimpleURL (URL_GTAG).add ("id",
                                                                                                                    m_sTagID)
-                                                                                                             .getAsStringWithEncodedParameters ()));
+                                                                                                             .getAsStringWithEncodedParameters ();
+    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ());
   }
 }

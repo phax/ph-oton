@@ -20,8 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ChangeNextMajorRelease;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.builder.IBuilder;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.css.CSSFilenameHelper;
@@ -41,6 +43,8 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   private final CSSMediaList m_aCSSMediaList;
   private final boolean m_bIsBundlable;
 
+  @Deprecated (forRemoval = false)
+  @ChangeNextMajorRelease ("Make protected")
   public ConstantCSSPathProvider (@Nonnull @Nonempty final String sPath,
                                   @Nonnull @Nonempty final String sMinifiedPath,
                                   @Nullable final String sConditionalComment,
@@ -117,80 +121,159 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
                                        .getToString ();
   }
 
-  @Nonnull
-  public static ConstantCSSPathProvider create (@Nonnull @Nonempty final String sPath)
+  public static final class Builder implements IBuilder <ConstantCSSPathProvider>
   {
-    return new ConstantCSSPathProvider (sPath,
-                                        CSSFilenameHelper.getMinifiedCSSFilename (sPath),
-                                        DEFAULT_CONDITIONAL_COMMENT,
-                                        DEFAULT_CSS_MEDIA_LIST,
-                                        DEFAULT_IS_BUNDLABLE);
+    private String m_sPath;
+    private String m_sMinifiedPath;
+    private String m_sConditionalComment = DEFAULT_CONDITIONAL_COMMENT;
+    private ICSSMediaList m_aCSSMediaList = DEFAULT_CSS_MEDIA_LIST;
+    private boolean m_bIsBundlable = DEFAULT_IS_BUNDLABLE;
+
+    public Builder ()
+    {}
+
+    @Nonnull
+    public Builder path (@Nullable final String s)
+    {
+      m_sPath = s;
+      return this;
+    }
+
+    @Nonnull
+    public Builder minifiedPath (@Nullable final String s)
+    {
+      m_sMinifiedPath = s;
+      return this;
+    }
+
+    @Nonnull
+    public Builder minifiedPathFromPath ()
+    {
+      return minifiedPath (CSSFilenameHelper.getMinifiedCSSFilename (m_sPath));
+    }
+
+    @Nonnull
+    public Builder conditionalComment (@Nullable final String s)
+    {
+      m_sConditionalComment = s;
+      return this;
+    }
+
+    @Nonnull
+    public Builder cssMediaList (@Nullable final ICSSMediaList a)
+    {
+      m_aCSSMediaList = a;
+      return this;
+    }
+
+    @Nonnull
+    public Builder bundlable (final boolean b)
+    {
+      m_bIsBundlable = b;
+      return this;
+    }
+
+    @Nonnull
+    public ConstantCSSPathProvider build ()
+    {
+      return new ConstantCSSPathProvider (m_sPath,
+                                          m_sMinifiedPath,
+                                          m_sConditionalComment,
+                                          m_aCSSMediaList,
+                                          m_bIsBundlable);
+    }
   }
 
   @Nonnull
+  public static Builder builder ()
+  {
+    return new Builder ();
+  }
+
+  @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
+  public static ConstantCSSPathProvider create (@Nonnull @Nonempty final String sPath)
+  {
+    return builder ().path (sPath).minifiedPathFromPath ().build ();
+  }
+
+  @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
                                                                       @Nullable final String sConditionalComment)
   {
-    return createWithConditionalComment (sPath, sConditionalComment, DEFAULT_CSS_MEDIA_LIST);
+    return builder ().path (sPath).minifiedPathFromPath ().conditionalComment (sConditionalComment).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
                                                                       @Nullable final String sConditionalComment,
                                                                       @Nullable final ICSSMediaList aMediaList)
   {
-    return new ConstantCSSPathProvider (sPath,
-                                        CSSFilenameHelper.getMinifiedCSSFilename (sPath),
-                                        sConditionalComment,
-                                        aMediaList,
-                                        DEFAULT_IS_BUNDLABLE);
+    return builder ().path (sPath)
+                     .minifiedPathFromPath ()
+                     .conditionalComment (sConditionalComment)
+                     .cssMediaList (aMediaList)
+                     .build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath,
                                                          final boolean bBundlable)
   {
-    return createBundlable (sPath, DEFAULT_CSS_MEDIA_LIST, bBundlable);
+    return builder ().path (sPath).minifiedPathFromPath ().bundlable (bBundlable).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath,
                                                          @Nullable final ICSSMediaList aMediaList,
                                                          final boolean bBundlable)
   {
-    return new ConstantCSSPathProvider (sPath,
-                                        CSSFilenameHelper.getMinifiedCSSFilename (sPath),
-                                        DEFAULT_CONDITIONAL_COMMENT,
-                                        aMediaList,
-                                        bBundlable);
+    return builder ().path (sPath).minifiedPathFromPath ().cssMediaList (aMediaList).bundlable (bBundlable).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI)
   {
-    return createExternal (sURI, DEFAULT_CONDITIONAL_COMMENT, DEFAULT_CSS_MEDIA_LIST);
+    return builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                         @Nullable final String sConditionalComment)
   {
-    return createExternal (sURI, sConditionalComment, DEFAULT_CSS_MEDIA_LIST);
+    return builder ().path (sURI)
+                     .minifiedPath (sURI)
+                     .conditionalComment (sConditionalComment)
+                     .bundlable (false)
+                     .build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                         @Nullable final ICSSMediaList aMediaList)
   {
-    return createExternal (sURI, DEFAULT_CONDITIONAL_COMMENT, aMediaList);
+    return builder ().path (sURI).minifiedPath (sURI).cssMediaList (aMediaList).bundlable (false).build ();
   }
 
   @Nonnull
+  @Deprecated (forRemoval = true, since = "9.2.10")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                         @Nullable final String sConditionalComment,
                                                         @Nullable final ICSSMediaList aMediaList)
   {
     // External CSS are never bundleable
-    return new ConstantCSSPathProvider (sURI, sURI, sConditionalComment, aMediaList, false);
+    return builder ().path (sURI)
+                     .minifiedPath (sURI)
+                     .conditionalComment (sConditionalComment)
+                     .cssMediaList (aMediaList)
+                     .bundlable (false)
+                     .build ();
   }
 }

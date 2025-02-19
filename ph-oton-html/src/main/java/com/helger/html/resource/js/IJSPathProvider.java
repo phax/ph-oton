@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.html.hc.html.script.EHCScriptLoadingMode;
 
 /**
  * Provides a path to an external JS object.
@@ -40,4 +41,14 @@ public interface IJSPathProvider extends IJSProvider
   @Nonnull
   @Nonempty
   String getJSItemPath (boolean bRegular);
+
+  /**
+   * @return The script loading mode to use. May not be <code>null</code>.
+   * @since 9.2.10
+   */
+  @Nonnull
+  default EHCScriptLoadingMode getScriptLoadingMode ()
+  {
+    return EHCScriptLoadingMode.DEFAULT;
+  }
 }

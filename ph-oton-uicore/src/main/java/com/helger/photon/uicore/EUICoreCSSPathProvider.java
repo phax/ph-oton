@@ -45,12 +45,12 @@ public enum EUICoreCSSPathProvider implements ICSSPathProvider
 
   EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath)
   {
-    m_aPP = ConstantCSSPathProvider.create (sPath);
+    m_aPP = ConstantCSSPathProvider.builder ().path (sPath).minifiedPathFromPath ().build ();
   }
 
   EUICoreCSSPathProvider (@Nonnull @Nonempty final String sPath, @Nullable final String sConditionalComment)
   {
-    m_aPP = ConstantCSSPathProvider.createWithConditionalComment (sPath, sConditionalComment);
+    m_aPP = ConstantCSSPathProvider.builder ().path (sPath).minifiedPathFromPath ().conditionalComment (sConditionalComment).build ();
   }
 
   @Nonnull

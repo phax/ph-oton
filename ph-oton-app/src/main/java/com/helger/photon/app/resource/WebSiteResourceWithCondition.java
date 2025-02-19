@@ -32,10 +32,8 @@ import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.css.CSSFilenameHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ICSSMediaList;
-import com.helger.html.js.JSFilenameHelper;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
@@ -81,7 +79,10 @@ public class WebSiteResourceWithCondition
                                        final boolean bIsBundlable,
                                        @Nullable final ICSSMediaList aMediaList)
   {
-    this (WebSiteResourceCache.getOrCreateResource (eType, sPath, aCharset), sConditionalComment, bIsBundlable, aMediaList);
+    this (WebSiteResourceCache.getOrCreateResource (eType, sPath, aCharset),
+          sConditionalComment,
+          bIsBundlable,
+          aMediaList);
   }
 
   protected WebSiteResourceWithCondition (@Nonnull final WebSiteResource aResource,
@@ -181,11 +182,13 @@ public class WebSiteResourceWithCondition
   {
     if (m_aResource.getResourceType () != EWebSiteResourceType.CSS)
       throw new IllegalStateException ("This can only be performed on a CSS resource!");
-    return new ConstantCSSPathProvider (m_aResource.getPath (),
-                                        CSSFilenameHelper.getMinifiedCSSFilename (m_aResource.getPath ()),
-                                        m_sConditionalComment,
-                                        m_aMediaList,
-                                        m_bIsBundlable);
+    return ConstantCSSPathProvider.builder ()
+                                  .path (m_aResource.getPath ())
+                                  .minifiedPathFromPath ()
+                                  .conditionalComment (m_sConditionalComment)
+                                  .cssMediaList (m_aMediaList)
+                                  .bundlable (m_bIsBundlable)
+                                  .build ();
   }
 
   @Nonnull
@@ -193,10 +196,12 @@ public class WebSiteResourceWithCondition
   {
     if (m_aResource.getResourceType () != EWebSiteResourceType.JS)
       throw new IllegalStateException ("This can only be performed on a JS resource!");
-    return new ConstantJSPathProvider (m_aResource.getPath (),
-                                       JSFilenameHelper.getMinifiedJSFilename (m_aResource.getPath ()),
-                                       m_sConditionalComment,
-                                       m_bIsBundlable);
+    return ConstantJSPathProvider.builder ()
+                                 .path (m_aResource.getPath ())
+                                 .minifiedPathFromPath ()
+                                 .conditionalComment (m_sConditionalComment)
+                                 .bundlable (m_bIsBundlable)
+                                 .build ();
   }
 
   @Override
@@ -277,7 +282,10 @@ public class WebSiteResourceWithCondition
   @Nonnull
   public static WebSiteResourceWithCondition createForCSS (@Nonnull final ICSSPathProvider aPP, final boolean bRegular)
   {
-    return createForCSS (aPP.getCSSItemPath (bRegular), aPP.getConditionalComment (), aPP.isBundlable (), aPP.getMediaList ());
+    return createForCSS (aPP.getCSSItemPath (bRegular),
+                         aPP.getConditionalComment (),
+                         aPP.isBundlable (),
+                         aPP.getMediaList ());
   }
 
   @Nonnull

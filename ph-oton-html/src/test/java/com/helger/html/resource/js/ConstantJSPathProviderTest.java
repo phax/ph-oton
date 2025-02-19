@@ -32,10 +32,10 @@ public final class ConstantJSPathProviderTest
   @Test
   public void testAll ()
   {
-    final ConstantJSPathProvider pp = ConstantJSPathProvider.create ("a.js");
+    final ConstantJSPathProvider pp = ConstantJSPathProvider.builder ().path ("a.js").minifiedPathFromPath ().build ();
     assertEquals ("a.js", pp.getJSItemPath (true));
     assertEquals ("a.min.js", pp.getJSItemPath (false));
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantJSPathProvider.create ("a.js"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantJSPathProvider.create ("b.js"));
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantJSPathProvider.builder ().path ("a.js").minifiedPathFromPath ().build ());
+    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantJSPathProvider.builder ().path ("b.js").minifiedPathFromPath ().build ());
   }
 }

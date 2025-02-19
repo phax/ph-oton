@@ -32,8 +32,6 @@ import com.helger.commons.collection.impl.ICommonsOrderedSet;
 import com.helger.commons.concurrent.SimpleLock;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
-import com.helger.html.js.JSFilenameHelper;
-import com.helger.html.resource.IHTMLResourceProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.app.PhotonAppSettings;
@@ -90,10 +88,11 @@ public final class PhotonJS
         final String sConditionalComment = eChild.getAttributeValue ("condcomment");
 
         // Add to target
-        aTarget.addItem (new ConstantJSPathProvider (sPath,
-                                                     JSFilenameHelper.getMinifiedJSFilename (sPath),
-                                                     sConditionalComment,
-                                                     IHTMLResourceProvider.DEFAULT_IS_BUNDLABLE));
+        aTarget.addItem (ConstantJSPathProvider.builder ()
+                                               .path (sPath)
+                                               .minifiedPathFromPath ()
+                                               .conditionalComment (sConditionalComment)
+                                               .build ());
       }
   }
 

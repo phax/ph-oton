@@ -32,10 +32,10 @@ public final class ConstantCSSPathProviderTest
   @Test
   public void testAll ()
   {
-    final ConstantCSSPathProvider pp = ConstantCSSPathProvider.create ("a.css");
+    final ConstantCSSPathProvider pp = ConstantCSSPathProvider.builder ().path ("a.css").minifiedPathFromPath ().build ();
     assertEquals ("a.css", pp.getCSSItemPath (true));
     assertEquals ("a.min.css", pp.getCSSItemPath (false));
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantCSSPathProvider.create ("a.css"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantCSSPathProvider.create ("b.css"));
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantCSSPathProvider.builder ().path ("a.css").minifiedPathFromPath ().build ());
+    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantCSSPathProvider.builder ().path ("b.css").minifiedPathFromPath ().build ());
   }
 }
