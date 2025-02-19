@@ -271,6 +271,8 @@ public final class HCSpecialNodeHandler
 
     // Do standard aggregations of CSS and JS
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
+    String sScriptNonce = null;
+    String sStyleNonce = null;
     final CollectingJSCodeProvider aJSOnDocumentReadyBefore = new CollectingJSCodeProvider ();
     final CollectingJSCodeProvider aJSOnDocumentReadyAfter = new CollectingJSCodeProvider ();
     final CollectingJSCodeProvider aJSInlineBefore = new CollectingJSCodeProvider ();
@@ -292,6 +294,10 @@ public final class HCSpecialNodeHandler
           final HCScriptInlineOnDocumentReady aScript = (HCScriptInlineOnDocumentReady) aNode;
           (aScript.isEmitAfterFiles () ? aJSOnDocumentReadyAfter
                                        : aJSOnDocumentReadyBefore).appendFlattened (aScript.getOnDocumentReadyCode ());
+
+          // Assume the same nonce for all
+          if (sScriptNonce == null)
+            sScriptNonce = aScript.getNonce ();
         }
         else
         {
@@ -299,6 +305,10 @@ public final class HCSpecialNodeHandler
           final IHCScriptInline <?> aScript = (IHCScriptInline <?>) aNode;
           (aScript.isEmitAfterFiles () ? aJSInlineAfter
                                        : aJSInlineBefore).appendFlattened (aScript.getJSCodeProvider ());
+
+          // Assume the same nonce for all
+          if (sScriptNonce == null)
+            sScriptNonce = aScript.getNonce ();
         }
       }
       else
@@ -308,6 +318,10 @@ public final class HCSpecialNodeHandler
           final HCStyle aStyle = (HCStyle) aNode;
           (aStyle.isEmitAfterFiles () ? aCSSInlineAfter : aCSSInlineBefore).addInlineCSS (aStyle.getMedia (),
                                                                                           aStyle.getStyleContent ());
+
+          // Assume the same nonce for all
+          if (sStyleNonce == null)
+            sStyleNonce = aStyle.getNonce ();
         }
         else
         {
@@ -343,7 +357,8 @@ public final class HCSpecialNodeHandler
     if (!aJSInlineBefore.isEmpty ())
     {
       // Add at the beginning
-      final HCScriptInline aScript = new HCScriptInline (aJSInlineBefore).setEmitAfterFiles (false);
+      final HCScriptInline aScript = new HCScriptInline (aJSInlineBefore).setEmitAfterFiles (false)
+                                                                         .setNonce (sScriptNonce);
       aScript.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
       ret.add (0, aScript);
     }
@@ -351,7 +366,8 @@ public final class HCSpecialNodeHandler
     if (!aJSInlineAfter.isEmpty ())
     {
       // Add at the end
-      final HCScriptInline aScript = new HCScriptInline (aJSInlineAfter).setEmitAfterFiles (true);
+      final HCScriptInline aScript = new HCScriptInline (aJSInlineAfter).setEmitAfterFiles (true)
+                                                                        .setNonce (sScriptNonce);
       aScript.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
       ret.add (aScript);
     }
@@ -364,7 +380,8 @@ public final class HCSpecialNodeHandler
       for (final ICSSCodeProvider aEntry : aCSSInlineBefore.getAll ())
       {
         final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ())
-                                                                 .setEmitAfterFiles (false);
+                                                                 .setEmitAfterFiles (false)
+                                                                 .setNonce (sStyleNonce);
         aStyle.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
         ret.add (nIndex, aStyle);
         ++nIndex;
@@ -377,7 +394,8 @@ public final class HCSpecialNodeHandler
       for (final ICSSCodeProvider aEntry : aCSSInlineAfter.getAll ())
       {
         final HCStyle aStyle = new HCStyle (aEntry.getCSSCode ()).setMedia (aEntry.getMediaList ())
-                                                                 .setEmitAfterFiles (true);
+                                                                 .setEmitAfterFiles (true)
+                                                                 .setNonce (sStyleNonce);
         aStyle.internalSetNodeState (EHCNodeState.RESOURCES_REGISTERED);
         ret.add (aStyle);
       }

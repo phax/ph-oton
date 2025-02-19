@@ -82,6 +82,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * `PhotonWorkerPool` now has a silent mode option
     * The `InternalErrorBuilder` can now deal with custom email settings. See [#21](https://github.com/phax/ph-oton/issues/21)
     * The default administration page `Statistics` got a "Download" buttons. See [#22](https://github.com/phax/ph-oton/issues/22)
+    * Moved classes `CSRFManager` and `CSRFSessionManager`  to submodule `ph-oton-app`
 * v9.2.9 - 2025-02-03
     * Updated to ph-web 10.3.0
     * Added reusable SFTP helper classes to package `com.helger.photon.connect.sftp`

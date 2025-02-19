@@ -63,10 +63,10 @@ public final class HCSettings
   public static final boolean DEFAULT_SCRIPTS_IN_BODY = true;
 
   /** By default nonce attributes in inline scripts are disabled */
-  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_SCRIPTS = false;
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_SCRIPTS = true;
 
   /** By default nonce attributes in inline styles are disabled */
-  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_STYLES = false;
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_INLINE_STYLES = true;
 
   /**
    * By default in debug mode, regular resources are used, and in non-debug mode

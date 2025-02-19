@@ -37,6 +37,7 @@ public final class Bootstrap4DateTimePickerSpecialNodeListModifier implements IH
   @ReturnsMutableCopy
   public ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull final ICommonsList <? extends IHCNode> aNodes)
   {
+    // Find all DateTimePickerJS objects
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     final ICommonsList <Bootstrap4DateTimePickerJS> aDTPs = new CommonsArrayList <> ();
     int nFirstIndex = -1;
@@ -60,6 +61,7 @@ public final class Bootstrap4DateTimePickerSpecialNodeListModifier implements IH
       return aNodes;
     }
 
+    final String sScriptNonce = aDTPs.getFirstOrNull ().getNonce ();
     final CollectingJSCodeProvider aMergedJS = new CollectingJSCodeProvider ();
     final ICommonsList <Bootstrap4DateTimePickerJS> aRest = aDTPs.getClone ();
     while (aRest.isNotEmpty ())
@@ -98,7 +100,7 @@ public final class Bootstrap4DateTimePickerSpecialNodeListModifier implements IH
     }
 
     // Add at the first index, where it was in the source list
-    ret.add (nFirstIndex, new HCScriptInlineOnDocumentReady (aMergedJS));
+    ret.add (nFirstIndex, new HCScriptInlineOnDocumentReady (aMergedJS).setNonce (sScriptNonce));
     return ret;
   }
 }

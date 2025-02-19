@@ -1173,11 +1173,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Override
+  @OverridingMethodsMustInvokeSuper
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
-    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
-
     _applyClientSideSortingSettings ();
 
     // Determine all applicable plugins

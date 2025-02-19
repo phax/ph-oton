@@ -74,6 +74,10 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
     MSG_OUT_OF_BAND_DEBUGGING ("Out-of-band Knoten debuggen?", "Debug out-of-band nodes?"),
     MSG_SCRIPTS_IN_BODY ("<script>-Element in <body>?", "Put <script> elements in <body>?"),
     MSG_USE_REGULAR_RESOURCES ("Nicht-optimierte JS/CSS inkludieren?", "Include non-minified JS/CSS?"),
+    MSG_USE_NONCE_INLINE_SCRIPT ("'nonce'-Attribut von Inline-Scripts setzen?",
+                                 "Set 'nonce' attributes of inline script elements?"),
+    MSG_USE_NONCE_INLINE_STYLE ("'nonce'-Attribut von Inline-Styles setzen?",
+                                "Set 'nonce' attributes of inline style elements?"),
     MSG_NONE ("keines", "none"),
     MSG_FORM_LABEL_SUFFIX_OPTIONAL ("Formular Label Suffix für optionale Felder",
                                     "Form label suffix for optional fields"),
@@ -108,6 +112,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
   private static final String FIELD_OUT_OF_BAND_DEBUG = "oobdebug";
   private static final String FIELD_SCRIPTS_IN_BODY = "scriptsinbody";
   private static final String FIELD_USE_REGULAR_RESOURCES = "useregular";
+  private static final String FIELD_USE_NONCE_INLINE_SCRIPT = "nonceinlinescript";
+  private static final String FIELD_USE_NONCE_INLINE_STYLE = "nonceinlinestyle";
 
   public BasePageSettingsHTML (@Nonnull @Nonempty final String sID)
   {
@@ -176,6 +182,12 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       final boolean bUseRegularResources = aWPEC.params ()
                                                 .isCheckBoxChecked (FIELD_USE_REGULAR_RESOURCES,
                                                                     HCSettings.isUseRegularResources ());
+      final boolean bUseNonceInlineScript = aWPEC.params ()
+                                                 .isCheckBoxChecked (FIELD_USE_NONCE_INLINE_SCRIPT,
+                                                                     HCSettings.isUseNonceInInlineScript ());
+      final boolean bUseNonceInlineStyle = aWPEC.params ()
+                                                .isCheckBoxChecked (FIELD_USE_NONCE_INLINE_STYLE,
+                                                                    HCSettings.isUseNonceInInlineStyle ());
 
       // Apply the settings
       HCSettings.getMutableConversionSettings ()
@@ -188,6 +200,8 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
       HCSettings.setOutOfBandDebuggingEnabled (bOOBDebug);
       HCSettings.setScriptsInBody (bScriptsInBody);
       HCSettings.setUseRegularResources (bUseRegularResources);
+      HCSettings.setUseNonceInInlineScript (bUseNonceInlineScript);
+      HCSettings.setUseNonceInInlineStyle (bUseNonceInlineStyle);
 
       aWPEC.postRedirectGetInternal (success (EText.MSG_CHANGE_SUCCESS.getDisplayText (aDisplayLocale)));
     }
@@ -238,6 +252,12 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
         aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_USE_REGULAR_RESOURCES.getDisplayText (aDisplayLocale))
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_USE_REGULAR_RESOURCES,
                                                                                                         HCSettings.isUseRegularResources ()))));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_USE_NONCE_INLINE_SCRIPT.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_USE_NONCE_INLINE_SCRIPT,
+                                                                                                        HCSettings.isUseNonceInInlineScript ()))));
+        aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_USE_NONCE_INLINE_STYLE.getDisplayText (aDisplayLocale))
+                                                     .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_USE_NONCE_INLINE_STYLE,
+                                                                                                        HCSettings.isUseNonceInInlineStyle ()))));
 
         final Function <String, IHCNode> aFormatter = s -> StringHelper.hasNoText (s) ? em (EText.MSG_NONE.getDisplayText (aDisplayLocale))
                                                                                       : code (s);

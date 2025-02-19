@@ -67,7 +67,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   }
 
   /**
-   * @return The nonce of this session.
+   * @return The nonce of this session. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty

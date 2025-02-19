@@ -232,7 +232,8 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
+                                    @Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     if (m_aChildren != null)
       m_aChildren.findAll (aFilter, aConsumer);
@@ -322,6 +323,7 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
   @OverrideOnDemand
   protected ICommonsList <? extends CHILDTYPE> getChildrenFormEmitting (@Nonnull @Nonempty final ICommonsList <CHILDTYPE> aChildren)
   {
+    // By default, no changes
     return aChildren;
   }
 
