@@ -18,6 +18,7 @@ package com.helger.photon.uicore.page.external;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -55,12 +56,37 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
                                                      IWebPageResourceContent
 {
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+  public static final boolean DEFAULT_READ_EVERY_TIME = GlobalDebug.isDebugMode ();
+
+  private static final AtomicBoolean READ_EVERY_TIME = new AtomicBoolean (DEFAULT_READ_EVERY_TIME);
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-
   private final Consumer <? super IMicroContainer> m_aContentCleanser;
   @GuardedBy ("m_aRWLock")
-  private boolean m_bReadEveryTime = GlobalDebug.isDebugMode ();
+  private boolean m_bReadEveryTime = isDefaultReadEveryTime ();
+
+  /**
+   * @return <code>true</code> if pages should be read every time (especially
+   *         for debug mode), <code>false</code> if the content should be read
+   *         only once.
+   * @since 9.2.10
+   */
+  public static boolean isDefaultReadEveryTime ()
+  {
+    return READ_EVERY_TIME.get ();
+  }
+
+  /**
+   * Change the default, if pages should be read every time or just one
+   *
+   * @param bReadEveryTime
+   *        <code>true</code> to enable reading every time
+   * @since 9.2.10
+   */
+  public static void setDefaultReadEveryTime (final boolean bReadEveryTime)
+  {
+    READ_EVERY_TIME.set (bReadEveryTime);
+  }
 
   @Nonnull
   public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
@@ -114,6 +140,17 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     m_aContentCleanser = aContentCleanser;
   }
 
+  @Nullable
+  public final Consumer <? super IMicroContainer> getContentCleanser ()
+  {
+    return m_aContentCleanser;
+  }
+
+  public final boolean hasContentCleanser ()
+  {
+    return m_aContentCleanser != null;
+  }
+
   public final boolean isReadEveryTime ()
   {
     return m_aRWLock.readLockedBoolean ( () -> m_bReadEveryTime);
@@ -124,17 +161,6 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   {
     m_aRWLock.writeLocked ( () -> m_bReadEveryTime = bReadEveryTime);
     return this;
-  }
-
-  @Nullable
-  public final Consumer <? super IMicroContainer> getContentCleanser ()
-  {
-    return m_aContentCleanser;
-  }
-
-  public final boolean hasContentCleanser ()
-  {
-    return m_aContentCleanser != null;
   }
 
   @Override
