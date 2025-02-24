@@ -283,7 +283,7 @@ public final class HCRenderer
     return getAsHTMLString (aHCNode, HCSettings.getConversionSettingsWithoutNamespaces ());
   }
 
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static void writeHtmlTo (@Nonnull final IHCNode aHCNode, @Nonnull final OutputStream aOS)
   {
     writeHtmlTo (aHCNode, HCSettings.getConversionSettings (), aOS);

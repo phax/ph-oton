@@ -41,7 +41,7 @@ import com.helger.xml.microdom.IMicroQName;
  * {@link AttributeContainer}
  *
  * @author Philip Helger
- * @since 9.2.10 public
+ * @since 9.3.0 public
  */
 public final class HCAttrContainer extends AttributeContainer <IMicroQName, String> implements IHCAttrContainer
 {

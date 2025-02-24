@@ -45,9 +45,10 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
   public static final boolean DEFAULT_ASYNC = false;
 
   private ISimpleURL m_aSrc;
+  // This member if for post processing purposes only
+  private IJSPathProvider m_aJSPathProvider;
   private boolean m_bDefer = DEFAULT_DEFER;
   private boolean m_bAsync = DEFAULT_ASYNC;
-  private IJSPathProvider m_aJSPathProvider;
 
   public HCScriptFile ()
   {}
@@ -63,6 +64,19 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
   {
     m_aSrc = aSrc;
     return this;
+  }
+
+  @Nullable
+  public final IJSPathProvider getPathProvider ()
+  {
+    return m_aJSPathProvider;
+  }
+
+  @Nonnull
+  public final HCScriptFile setPathProvider (@Nullable final IJSPathProvider aJSPathProvider)
+  {
+    m_aJSPathProvider = aJSPathProvider;
+    return thisAsT ();
   }
 
   public final boolean isDefer ()
@@ -89,25 +103,13 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
     return this;
   }
 
-  @Nullable
-  public final IJSPathProvider getPathProvider ()
-  {
-    return m_aJSPathProvider;
-  }
-
-  @Nonnull
-  public final HCScriptFile setPathProvider (@Nullable final IJSPathProvider aJSPathProvider)
-  {
-    m_aJSPathProvider = aJSPathProvider;
-    return thisAsT ();
-  }
-
   @Override
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC,
+                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (m_bDefer)
       aElement.setAttribute (CHTMLAttributes.DEFER, CHTMLAttributeValues.DEFER);
     if (m_bAsync)
@@ -121,10 +123,10 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("src", m_aSrc)
-                            .append ("defer", m_bDefer)
-                            .append ("async", m_bAsync)
+                            .appendIfNotNull ("Src", m_aSrc)
                             .appendIfNotNull ("JSPathProvider", m_aJSPathProvider)
+                            .append ("Defer", m_bDefer)
+                            .append ("Async", m_bAsync)
                             .getToString ();
   }
 }

@@ -31,7 +31,7 @@ import com.helger.html.js.JSEventMap;
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
- * @since 9.2.10 as an extra interface
+ * @since 9.3.0 as an extra interface
  */
 public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IMPLTYPE>> extends
                                       IGenericImplTrait <IMPLTYPE>

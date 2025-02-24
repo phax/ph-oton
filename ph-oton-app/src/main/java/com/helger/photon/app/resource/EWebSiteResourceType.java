@@ -49,7 +49,7 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
     public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
     {
       final HCScriptFile ret = new HCScriptFile ().setSrc (aURL);
-      // Set explicitly, because the resulting node does ot go through all
+      // Set explicitly, because the resulting node does not go through all
       // stages of preparation
       if (HCSettings.isUseNonceInScript ())
         ret.setNonce (CSRFSessionManager.getInstance ().getNonce ());

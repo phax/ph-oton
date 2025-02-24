@@ -81,7 +81,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return <code>true</code> if this element should be automatically focused,
    *         <code>false</code> if not.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   boolean isAutoFocus ();
 
@@ -91,7 +91,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param bAutoFocus
    *        <code>true</code> to enable, <code>false</code> to disable.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   IMPLTYPE setAutoFocus (boolean bAutoFocus);
@@ -148,7 +148,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return The value of the HTML <code>enterkeyhint</code> attribute. May be
    *         <code>null</code>.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nullable
   String getEnterKeyHint ();
@@ -159,7 +159,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param sEnterKeyHint
    *        The new enter key hint. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   IMPLTYPE setEnterKeyHint (@Nullable String sEnterKeyHint);
@@ -167,7 +167,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return The value of the HTML <code>exportparts</code> attribute. May be
    *         <code>null</code>.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nullable
   String getExportParts ();
@@ -178,7 +178,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param sExportParts
    *        The new export parts. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   IMPLTYPE setExportParts (@Nullable String sExportParts);
@@ -201,7 +201,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
 
   /**
    * @return <code>true</code> if this is inert
-   * @since 9.2.10
+   * @since 9.3.0
    */
   boolean isInert ();
 
@@ -211,13 +211,13 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param bInert
    *        <code>true</code> if it is inert, <code>false</code> otherwise
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   IMPLTYPE setInert (boolean bInert);
 
   /**
    * @return the inputmode. May be <code>null</code>.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nullable
   EHCInputMode getInputMode ();
@@ -228,7 +228,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param eInputMode
    *        Value to set. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   IMPLTYPE setInputMode (@Nullable EHCInputMode eInputMode);
@@ -253,7 +253,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return The value of the HTML <code>nonce</code> attribute. May be
    *         <code>null</code>.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nullable
   String getNonce ();
@@ -261,7 +261,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return <code>true</code> if the HTML <code>nonce</code> attribute is
    *         present, <code>false</code> if not.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   default boolean hasNonce ()
   {
@@ -274,7 +274,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param sNonce
    *        The new nonce. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   IMPLTYPE setNonce (@Nullable String sNonce);
@@ -282,7 +282,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return The value of the HTML <code>part</code> attribute. May be
    *         <code>null</code>.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nullable
   String getPart ();
@@ -293,7 +293,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param sPart
    *        The new part. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   IMPLTYPE setPart (@Nullable String sPart);
@@ -301,7 +301,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return The value of the HTML <code>slot</code> attribute. May be
    *         <code>null</code>.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nullable
   String getSlot ();
@@ -312,7 +312,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @param sSlot
    *        The new slot. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   IMPLTYPE setSlot (@Nullable String sSlot);

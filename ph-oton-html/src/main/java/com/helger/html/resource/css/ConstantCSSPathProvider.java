@@ -191,14 +191,14 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider create (@Nonnull @Nonempty final String sPath)
   {
     return builder ().path (sPath).minifiedPathFromPath ().build ();
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
                                                                       @Nullable final String sConditionalComment)
   {
@@ -206,7 +206,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
                                                                       @Nullable final String sConditionalComment,
                                                                       @Nullable final ICSSMediaList aMediaList)
@@ -219,7 +219,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath,
                                                          final boolean bBundlable)
   {
@@ -227,7 +227,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath,
                                                          @Nullable final ICSSMediaList aMediaList,
                                                          final boolean bBundlable)
@@ -236,14 +236,14 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI)
   {
     return builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ();
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                         @Nullable final String sConditionalComment)
   {
@@ -255,7 +255,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                         @Nullable final ICSSMediaList aMediaList)
   {
@@ -263,7 +263,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                         @Nullable final String sConditionalComment,
                                                         @Nullable final ICSSMediaList aMediaList)

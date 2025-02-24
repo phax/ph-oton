@@ -27,7 +27,7 @@ import com.helger.commons.string.StringHelper;
  * Defines the allowed values for the "inputmode" attribute
  *
  * @author Philip Helger
- * @since 9.2.10
+ * @since 9.3.0
  */
 public enum EHCInputMode implements IHCHasHTMLAttributeValue
 {

@@ -44,7 +44,7 @@ public interface IJSPathProvider extends IJSProvider
 
   /**
    * @return The script loading mode to use. May not be <code>null</code>.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   default EHCScriptLoadingMode getScriptLoadingMode ()

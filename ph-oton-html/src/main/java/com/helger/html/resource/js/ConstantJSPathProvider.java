@@ -214,14 +214,14 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantJSPathProvider create (@Nonnull @Nonempty final String sPath)
   {
     return builder ().path (sPath).minifiedPathFromPath ().build ();
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantJSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
                                                                      @Nullable final String sConditionalComment)
   {
@@ -229,14 +229,14 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantJSPathProvider createBundlable (@Nonnull @Nonempty final String sPath, final boolean bBundlable)
   {
     return builder ().path (sPath).minifiedPathFromPath ().bundlable (bBundlable).build ();
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI)
   {
     // External JS are never bundlable
@@ -244,7 +244,7 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.10")
+  @Deprecated (forRemoval = true, since = "9.3.0")
   public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
                                                        @Nullable final String sConditionalComment)
   {

@@ -399,7 +399,7 @@ public final class HCSettings
   /**
    * @return <code>true</code> if scripts should use the 'nonce' attribute,
    *         <code>false</code> if not.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   public static boolean isUseNonceInScript ()
   {
@@ -415,7 +415,7 @@ public final class HCSettings
   /**
    * @return <code>true</code> if styles (CSS) should use the 'nonce' attribute,
    *         <code>false</code> if not.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   public static boolean isUseNonceInStyle ()
   {

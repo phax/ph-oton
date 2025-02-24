@@ -385,7 +385,7 @@ public class HCConversionSettings implements IHCConversionSettings
    * @param sNonceScript
    *        The value of the 'nonce' attribute. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   public HCConversionSettings setNonceScript (@Nullable final String sNonceScript)
@@ -406,7 +406,7 @@ public class HCConversionSettings implements IHCConversionSettings
    * @param sNonceStyle
    *        The value of the 'nonce' attribute. May be <code>null</code>.
    * @return this
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   public HCConversionSettings setNonceStyle (@Nullable final String sNonceStyle)

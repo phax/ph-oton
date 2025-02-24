@@ -139,7 +139,7 @@ public final class PhotonHTMLHelper
   {
     final HCScriptFile aScript = new HCScriptFile ().setSrc (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular))
                                                     .setPathProvider (aJS);
-    // Set explicitly, because the resulting node does ot go through all stages
+    // Set explicitly, because the resulting node does not go through all stages
     // of preparation
     if (HCSettings.isUseNonceInScript ())
       aScript.setNonce (CSRFSessionManager.getInstance ().getNonce ());
@@ -165,9 +165,8 @@ public final class PhotonHTMLHelper
          .add (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ()).setContent (META_GENERATOR_VALUE));
 
     // Convert HTML to String, including namespaces
-    try (
-        final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
-                                                                                             CGlobal.BYTES_PER_KILOBYTE))
+    try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
+                                                                                              CGlobal.BYTES_PER_KILOBYTE))
     {
       final IMimeType aMimeType = getMimeType (aRequestScope);
       final IHCConversionSettings aCS = PhotonHTMLHelper.getHCConversionSettingsWithNonce ();

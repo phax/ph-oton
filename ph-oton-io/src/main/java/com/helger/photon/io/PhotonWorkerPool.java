@@ -82,7 +82,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   /**
    * @return <code>true</code> if logging is disabled, <code>false</code> if it
    *         is enabled.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   public static boolean isSilentMode ()
   {
@@ -96,7 +96,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
    *        <code>true</code> to disable logging, <code>false</code> to enable
    *        logging
    * @return The previous value of the silent mode.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   public static boolean setSilentMode (final boolean bSilentMode)
   {

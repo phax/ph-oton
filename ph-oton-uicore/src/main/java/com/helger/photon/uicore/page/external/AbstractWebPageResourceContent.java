@@ -69,7 +69,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
    * @return <code>true</code> if pages should be read every time (especially
    *         for debug mode), <code>false</code> if the content should be read
    *         only once.
-   * @since 9.2.10
+   * @since 9.3.0
    */
   public static boolean isDefaultReadEveryTime ()
   {
@@ -81,7 +81,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
    *
    * @param bReadEveryTime
    *        <code>true</code> to enable reading every time
-   * @since 9.2.10
+   * @since 9.3.0
    */
   public static void setDefaultReadEveryTime (final boolean bReadEveryTime)
   {

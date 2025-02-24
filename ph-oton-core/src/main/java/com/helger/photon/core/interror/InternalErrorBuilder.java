@@ -403,7 +403,7 @@ public class InternalErrorBuilder
    * @param aCustomEmailSettings
    *        The email settings to use. May be <code>null</code>.
    * @return this for chaining
-   * @since 9.2.10
+   * @since 9.3.0
    */
   @Nonnull
   public final InternalErrorBuilder setCustomEmailSettings (@Nullable final InternalErrorEmailSettings aCustomEmailSettings)
