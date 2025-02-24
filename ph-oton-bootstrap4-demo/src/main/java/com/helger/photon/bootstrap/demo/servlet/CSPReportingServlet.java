@@ -18,10 +18,6 @@ public class CSPReportingServlet extends AbstractXServlet
   {
     public ERBCSPReportingXServletHandler ()
     {
-      super (aJson -> {
-        // As done in super class
-        CSPReportingXServletHandler.logCSPReport (aJson);
-      });
       // Avoid spamming us?
       setFilterDuplicates (false);
     }

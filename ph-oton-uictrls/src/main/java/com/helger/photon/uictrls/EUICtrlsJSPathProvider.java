@@ -37,7 +37,6 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   AUTOSIZE3_ALL ("external/autosize/autosize3-all.js"),
   /** BigDecimal support for JS */
   BIG_DECIMAL ("external/js/big.js"),
-  CHART_1 ("external/chart/1.1.1/Chart.js"),
   CHART_4 ("external/chart/4.4.2/chart.umd.js", IHTMLResourceProvider.DEFAULT_IS_BUNDLABLE, true),
   CLIPBOARD ("external/clipboardjs/2.0.6/clipboard.js"),
   COLORBOX ("external/colorbox/1.6.0/jquery.colorbox.js"),
@@ -98,8 +97,10 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   @Nonnull
   public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
   {
-    return ConstantJSPathProvider.builder ().path (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (),
-     "{0}",
-     sLanguage)).minifiedPathFromPath ().conditionalComment (m_aPP.getConditionalComment ()).build ();
+    return ConstantJSPathProvider.builder ()
+                                 .path (StringHelper.replaceAll (m_aPP.getJSItemPathRegular (), "{0}", sLanguage))
+                                 .minifiedPathFromPath ()
+                                 .conditionalComment (m_aPP.getConditionalComment ())
+                                 .build ();
   }
 }

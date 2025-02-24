@@ -20,10 +20,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnull;
 
-import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uictrls.chart.v4.ChartBar;
 import com.helger.photon.uictrls.chart.v4.ChartDataSetBar;
@@ -115,7 +115,7 @@ public class PagePublicChartsV4 extends AbstractAppWebPage
       aChart.setLabels ("Mon", "Tue", "Wed", "Thu", "Fri");
 
       final HCChartV4 aHCChart = new HCChartV4 (aChart);
-      aNodeList.addChild (div (aHCChart).addStyle (CCSSProperties.WIDTH.newValue ("40rem")));
+      aNodeList.addChild (div (aHCChart).addClass (CBootstrapCSS.W_50));
     }
   }
 }

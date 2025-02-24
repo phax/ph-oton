@@ -20,7 +20,8 @@ import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 
-import com.helger.css.property.CCSSProperties;
+import com.helger.html.css.DefaultCSSClassProvider;
+import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.HCCheckBox;
 import com.helger.html.hc.html.forms.HCRadioButton;
@@ -36,6 +37,8 @@ import com.helger.photon.uicore.page.WebPageExecutionContext;
 
 public class PagePublicFormGroups extends AbstractAppWebPage
 {
+  private static final ICSSClassProvider CSS_CLASS_RED = DefaultCSSClassProvider.create ("red");
+
   public PagePublicFormGroups (final String sID)
   {
     super (sID, "Form Groups");
@@ -71,7 +74,7 @@ public class PagePublicFormGroups extends AbstractAppWebPage
                                                    .setCtrl (new HCRadioButton ()));
       final Function <String, IHCElementWithChildren <?>> sup = s -> new HCSpan ().addChild (s)
                                                                                   .addChild (new HCSup ().addChild (")")
-                                                                                                         .addStyle (CCSSProperties.COLOR.newValue ("red")));
+                                                                                                         .addClass (CSS_CLASS_RED));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sup.apply ("optional2")).setCtrl ("foo"));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelAlternative (sup.apply ("alternative2")).setCtrl ("foo"));
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sup.apply ("mandatory2")).setCtrl ("foo"));
