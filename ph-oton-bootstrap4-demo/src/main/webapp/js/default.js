@@ -14,8 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function AppClass(){}
-AppClass.prototype = {
-};
 
-var App = window.App = new AppClass();
+$(document).ready (function () {
+  /*
+   * Set the default click handler for the publoc login button 
+   */
+  $('#publogsubmit').click(function () {
+    $.ajax({
+      cache:false,
+      data:{
+        userid:$('#publoguser').val(),
+        password:$('#publogpw').val()
+      },
+      url:'\/ajax\/login',
+      success:function(data){
+        if(data.loggedin){
+          window.location.reload();
+        }else{
+          $('#publogerror').empty().append(data.html);
+        }
+      }
+    });
+    return false;
+  });
+});

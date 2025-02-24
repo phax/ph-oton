@@ -22,22 +22,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.css.property.CCSSProperties;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCEditPassword;
 import com.helger.html.hc.html.grouping.HCDiv;
-import com.helger.html.jquery.JQuery;
-import com.helger.html.jquery.JQueryAjaxBuilder;
-import com.helger.html.jscode.JSAnonymousFunction;
-import com.helger.html.jscode.JSAssocArray;
-import com.helger.html.jscode.JSPackage;
-import com.helger.html.jscode.JSVar;
-import com.helger.html.jscode.html.JSHtml;
-import com.helger.photon.bootstrap.demo.ajax.AjaxExecutorPublicLogin;
-import com.helger.photon.bootstrap.demo.ajax.CAjax;
+import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -46,7 +37,6 @@ import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.login.CLogin;
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 @Immutable
 public final class AppCommonUI
@@ -64,48 +54,28 @@ public final class AppCommonUI
                                                    @Nonnull final EBootstrapFormType eFormType)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
-    final IRequestWebScopeWithoutResponse aRequestScope = aLEC.getRequestScope ();
-
-    // Use new IDs for both fields, in case the login stuff is displayed more
-    // than once!
-    final String sIDUserName = GlobalIDFactory.getNewStringID ();
-    final String sIDPassword = GlobalIDFactory.getNewStringID ();
-    final String sIDErrorField = GlobalIDFactory.getNewStringID ();
 
     final BootstrapForm aForm = new BootstrapForm (aLEC).setAction (aLEC.getSelfHref ()).setFormType (eFormType);
-    aForm.setLeft (3);
+    aForm.setLeft (-1, -1, 3, 3, 2);
+
+    // Note: all the IDs are used in the default.js file
 
     // User name field
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EPhotonCoreText.EMAIL_ADDRESS.getDisplayText (aDisplayLocale))
                                                  .setCtrl (new HCEdit (new RequestField (CLogin.REQUEST_ATTR_USERID,
-                                                                                         sPreselectedUserName)).setID (sIDUserName)));
+                                                                                         sPreselectedUserName)).setID ("publoguser")));
 
     // Password field
     aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale))
-                                                 .setCtrl (new HCEditPassword (CLogin.REQUEST_ATTR_PASSWORD).setID (sIDPassword)));
+                                                 .setCtrl (new HCEditPassword (CLogin.REQUEST_ATTR_PASSWORD).setID ("publogpw")));
 
     // Placeholder for error message
-    aForm.addChild (new HCDiv ().setID (sIDErrorField).addStyle (CCSSProperties.MARGIN.newValue ("4px 0")));
+    aForm.addChild (new HCDiv ().setID ("publogerror").addClass (CBootstrapCSS.MY_2));
 
     // Login button
     final BootstrapButtonToolbar aToolbar = aForm.addAndReturnChild (new BootstrapButtonToolbar (aLEC));
-    final JSPackage aOnClick = new JSPackage ();
-    {
-      final JSAnonymousFunction aJSSuccess = new JSAnonymousFunction ();
-      final JSVar aJSData = aJSSuccess.param ("data");
-      aJSSuccess.body ()
-                ._if (aJSData.ref (AjaxExecutorPublicLogin.JSON_LOGGEDIN),
-                      JSHtml.windowLocationReload (),
-                      JQuery.idRef (sIDErrorField).empty ().append (aJSData.ref (AjaxExecutorPublicLogin.JSON_HTML)));
-      aOnClick.add (new JQueryAjaxBuilder ().url (CAjax.LOGIN.getInvocationURI (aRequestScope))
-                                            .data (new JSAssocArray ().add (CLogin.REQUEST_ATTR_USERID, JQuery.idRef (sIDUserName).val ())
-                                                                      .add (CLogin.REQUEST_ATTR_PASSWORD,
-                                                                            JQuery.idRef (sIDPassword).val ()))
-                                            .success (aJSSuccess)
-                                            .build ());
-      aOnClick._return (false);
-    }
-    aToolbar.addSubmitButton (EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale), aOnClick);
+    aToolbar.addChild (new BootstrapSubmitButton ().addChild (EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale))
+                                                   .setID ("publogsubmit"));
     return aForm;
   }
 }

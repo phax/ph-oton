@@ -24,7 +24,6 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.commons.url.SimpleURL;
-import com.helger.css.property.CCSSProperties;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -42,13 +41,10 @@ import com.helger.photon.bootstrap.demo.pub.menu.CMenuPublic;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumb;
 import com.helger.photon.bootstrap4.breadcrumb.BootstrapBreadcrumbProvider;
-import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
-import com.helger.photon.bootstrap4.form.EBootstrapFormType;
 import com.helger.photon.bootstrap4.grid.BootstrapCol;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.bootstrap4.layout.BootstrapContainer;
 import com.helger.photon.bootstrap4.navbar.BootstrapNavbar;
-import com.helger.photon.bootstrap4.navbar.BootstrapNavbarNav;
 import com.helger.photon.bootstrap4.navbar.BootstrapNavbarToggleable;
 import com.helger.photon.bootstrap4.navbar.EBootstrapNavbarExpandType;
 import com.helger.photon.bootstrap4.uictrls.ext.BootstrapMenuItemRenderer;
@@ -80,13 +76,13 @@ public final class AppRendererPublic
 {
   private static final ICSSClassProvider CSS_CLASS_FOOTER_LINKS = DefaultCSSClassProvider.create ("footer-links");
 
-  private static final ICommonsList <IMenuObject> s_aFooterObjects = new CommonsArrayList <> ();
+  private static final ICommonsList <IMenuObject> FOOTER_OBJS = new CommonsArrayList <> ();
 
   static
   {
     PhotonGlobalState.state (CApplicationID.APP_ID_PUBLIC).getMenuTree ().iterateAllMenuObjects (aCurrentObject -> {
       if (aCurrentObject.attrs ().containsKey (CMenuPublic.FLAG_FOOTER))
-        s_aFooterObjects.add (aCurrentObject);
+        FOOTER_OBJS.add (aCurrentObject);
     });
   }
 
@@ -117,19 +113,7 @@ public final class AppRendererPublic
                  .addNavLink (LinkHelper.getURLWithContext (aRequestScope, LogoutServlet.SERVLET_DEFAULT_PATH))
                  .addChild (EPhotonCoreText.LOGIN_LOGOUT.getDisplayText (aDisplayLocale));
     }
-    else
-    {
-      final BootstrapNavbarNav aNavbarNav = aToggleable.addAndReturnNav ();
-      final BootstrapDropdownMenu aDropDown = new BootstrapDropdownMenu ();
-      {
-        // 300px would lead to a messy layout - so 250px is fine
-        final HCDiv aDiv = new HCDiv ().addStyle (CCSSProperties.PADDING.newValue ("10px"))
-                                       .addStyle (CCSSProperties.WIDTH.newValue ("250px"));
-        aDiv.addChild (AppCommonUI.createViewLoginForm (aLEC, null, EBootstrapFormType.INLINE));
-        aDropDown.addChild (aDiv);
-      }
-      aNavbarNav.addItem ().addNavDropDown ("Login", aDropDown);
-    }
+
     return aNavbar;
   }
 
@@ -197,7 +181,7 @@ public final class AppRendererPublic
 
       final BootstrapMenuItemRendererHorz aRenderer = new BootstrapMenuItemRendererHorz (aDisplayLocale);
       final HCUL aUL = aDiv.addAndReturnChild (new HCUL ().addClass (CSS_CLASS_FOOTER_LINKS));
-      for (final IMenuObject aMenuObj : s_aFooterObjects)
+      for (final IMenuObject aMenuObj : FOOTER_OBJS)
       {
         if (aMenuObj instanceof IMenuSeparator)
           aUL.addItem (aRenderer.renderSeparator (aLEC, (IMenuSeparator) aMenuObj));

@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap.demo.servlet;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.bootstrap.demo.app.ui.AppLayoutHTMLProvider;
 import com.helger.photon.bootstrap.demo.pub.AppRendererPublic;
-import com.helger.photon.core.servlet.AbstractApplicationXServletHandler;
+import com.helger.photon.bootstrap.demo.servlet.AbstractApplicationXServletHandlerWithCSP.ECSPMode;
 import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -27,7 +27,7 @@ public class PublicApplicationServlet extends AbstractPublicApplicationServlet
 {
   public PublicApplicationServlet ()
   {
-    super (new AbstractApplicationXServletHandler ()
+    super (new AbstractApplicationXServletHandlerWithCSP (ECSPMode.CSP_ON)
     {
       @Override
       protected IHTMLProvider createHTMLProvider (final IRequestWebScopeWithoutResponse aRequestScope)

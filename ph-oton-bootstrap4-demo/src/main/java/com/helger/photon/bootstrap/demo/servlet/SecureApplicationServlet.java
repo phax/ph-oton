@@ -19,7 +19,7 @@ package com.helger.photon.bootstrap.demo.servlet;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.bootstrap.demo.app.ui.AppLayoutHTMLProvider;
 import com.helger.photon.bootstrap.demo.secure.AppRendererSecure;
-import com.helger.photon.core.servlet.AbstractApplicationXServletHandler;
+import com.helger.photon.bootstrap.demo.servlet.AbstractApplicationXServletHandlerWithCSP.ECSPMode;
 import com.helger.photon.core.servlet.AbstractSecureApplicationServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -32,7 +32,7 @@ public class SecureApplicationServlet extends AbstractSecureApplicationServlet
 {
   public SecureApplicationServlet ()
   {
-    super (new AbstractApplicationXServletHandler ()
+    super (new AbstractApplicationXServletHandlerWithCSP (ECSPMode.CSP_ON)
     {
       @Override
       protected IHTMLProvider createHTMLProvider (final IRequestWebScopeWithoutResponse aRequestScope)
