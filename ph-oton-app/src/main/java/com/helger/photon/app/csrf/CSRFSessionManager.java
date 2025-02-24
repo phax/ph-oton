@@ -21,6 +21,9 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.string.StringHelper;
@@ -36,6 +39,8 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 @ThreadSafe
 public final class CSRFSessionManager extends AbstractSessionWebSingleton
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (CSRFSessionManager.class);
+
   @GuardedBy ("m_aRWLock")
   private String m_sNonce;
 
@@ -45,6 +50,8 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   {
     // Create the nonce per session
     m_sNonce = CSRFManager.getInstance ().createNewNonce ();
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Created CSRF session nonce '" + m_sNonce + "'");
   }
 
   @Nonnull

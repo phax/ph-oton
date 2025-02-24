@@ -52,7 +52,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   private static final Logger LOGGER = LoggerFactory.getLogger (CSRFManager.class);
 
   @GuardedBy ("m_aRWLock")
-  private final ICommonsSet <String> m_aNonces = new CommonsHashSet <> ();
+  private final ICommonsSet <String> m_aNoncesBase64 = new CommonsHashSet <> ();
 
   @Deprecated (forRemoval = false)
   @UsedViaReflection
@@ -71,6 +71,12 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     return getGlobalSingletonIfInstantiated (CSRFManager.class);
   }
 
+  /**
+   * Create a new unique nonce with {@link #NONCE_BYTES} bytes and return the
+   * response as Base64 encoded String.
+   *
+   * @return A new Base64 encoded nonce string.
+   */
   @Nonnull
   @Nonempty
   public String createNewNonce ()
@@ -90,7 +96,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
         // Avoid endless loop
         if (++nCount > 100)
           throw new IllegalStateException ("Failed to create a unique nonce after " + nCount + " tries!");
-      } while (!m_aNonces.add (sNonce));
+      } while (!m_aNoncesBase64.add (sNonce));
       return sNonce;
     });
   }
@@ -100,7 +106,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     ValueEnforcer.notEmpty (sNonce, "Nonce");
 
     m_aRWLock.writeLocked ( () -> {
-      if (!m_aNonces.remove (sNonce))
+      if (!m_aNoncesBase64.remove (sNonce))
         LOGGER.error ("Failed to remove nonce '" + sNonce + "'");
     });
   }
@@ -110,19 +116,19 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     if (StringHelper.hasNoText (sNonce))
       return false;
 
-    return m_aRWLock.readLockedBoolean ( () -> m_aNonces.contains (sNonce));
+    return m_aRWLock.readLockedBoolean ( () -> m_aNoncesBase64.contains (sNonce));
   }
 
   @Nonnegative
   public int getNonceCount ()
   {
-    return m_aRWLock.readLockedInt (m_aNonces::size);
+    return m_aRWLock.readLockedInt (m_aNoncesBase64::size);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllNonces ()
   {
-    return m_aRWLock.readLockedGet (m_aNonces::getClone);
+    return m_aRWLock.readLockedGet (m_aNoncesBase64::getClone);
   }
 }
