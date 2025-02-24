@@ -60,11 +60,13 @@ import jakarta.servlet.http.HttpServletResponse;
 @ThreadSafe
 public class CSPReportingXServletHandler implements IXServletHandler
 {
+  public static final boolean DEFAULT_FILTER_DUPLICATES = true;
   private static final Logger LOGGER = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final Consumer <? super IJsonObject> m_aJsonHandler;
-  private boolean m_bFilterDuplicates = true;
+  @GuardedBy ("m_aRWLock")
+  private boolean m_bFilterDuplicates = DEFAULT_FILTER_DUPLICATES;
   @GuardedBy ("m_aRWLock")
   private final ICommonsSet <String> m_aBlockedURIs = new CommonsHashSet <> ();
 
@@ -94,7 +96,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
    */
   public final boolean isFilterDuplicates ()
   {
-    return m_bFilterDuplicates;
+    return m_aRWLock.readLockedBoolean ( () -> m_bFilterDuplicates);
   }
 
   /**
@@ -106,7 +108,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
    */
   public final void setFilterDuplicates (final boolean bFilterDuplicates)
   {
-    m_bFilterDuplicates = bFilterDuplicates;
+    m_aRWLock.writeLocked ( () -> m_bFilterDuplicates = bFilterDuplicates);
   }
 
   @IsLocked (ELockType.WRITE)
@@ -139,7 +141,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
         final IJsonObject aJsonObj = aJson.getAsObject ();
         final String sBlockedURI = aJsonObj.getAsString ("blocked-uri");
 
-        final boolean bIsDuplicate = m_bFilterDuplicates &&
+        final boolean bIsDuplicate = isFilterDuplicates () &&
                                      StringHelper.hasText (sBlockedURI) &&
                                      rememberBlockedURL (sBlockedURI);
 
