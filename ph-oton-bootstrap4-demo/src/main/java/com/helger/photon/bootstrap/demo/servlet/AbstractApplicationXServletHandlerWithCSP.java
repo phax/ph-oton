@@ -24,6 +24,7 @@ import com.helger.commons.http.CHttpHeader;
 import com.helger.http.csp.CSPDirective;
 import com.helger.http.csp.CSPPolicy;
 import com.helger.http.csp.CSPSourceList;
+import com.helger.http.csp.ECSPMode;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.core.servlet.AbstractApplicationXServletHandler;
 import com.helger.servlet.response.UnifiedResponse;
@@ -38,23 +39,6 @@ import jakarta.servlet.ServletException;
  */
 public abstract class AbstractApplicationXServletHandlerWithCSP extends AbstractApplicationXServletHandler
 {
-  public enum ECSPMode
-  {
-    CSP_OFF,
-    CSP_REPORTING_ONLY,
-    CSP_ON;
-
-    public boolean isReportingOnly ()
-    {
-      return this == CSP_REPORTING_ONLY;
-    }
-
-    public boolean isReporting ()
-    {
-      return this == CSP_REPORTING_ONLY || this == CSP_ON;
-    }
-  }
-
   private final ECSPMode m_eCSPMode;
 
   protected AbstractApplicationXServletHandlerWithCSP (@Nonnull final ECSPMode eCSPMode)
@@ -67,9 +51,18 @@ public abstract class AbstractApplicationXServletHandlerWithCSP extends Abstract
                              final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
   {
     final CSPSourceList aScriptSrcList = new CSPSourceList ().addKeywordSelf ()
-                                                             .addNonce (CSRFSessionManager.getInstance ().getNonce ());
+                                                             .addNonce (CSRFSessionManager.getInstance ().getNonce ())
+                                                             .addKeywordStrictDynamic ()
+                                                             .addKeywordReportSample ();
     final CSPSourceList aStyleSrcList = new CSPSourceList ().addKeywordSelf ()
-                                                            .addNonce (CSRFSessionManager.getInstance ().getNonce ());
+                                                            .addNonce (CSRFSessionManager.getInstance ().getNonce ())
+                                                            .addKeywordStrictDynamic ()
+                                                            .addKeywordReportSample ();
+    // Required for data tables
+    final CSPSourceList aStyleSrcAttrList = false ? null : new CSPSourceList ().addKeywordSelf ()
+                                                                               .addNonce (CSRFSessionManager.getInstance ()
+                                                                                                            .getNonce ())
+                                                                               .addKeywordUnsafeInline ();
     // Allow data images for Bootstrap 4
     final CSPSourceList aImgSrcList = new CSPSourceList ().addKeywordSelf ().addHost ("data:");
     final CSPSourceList aConnectSrcList = new CSPSourceList ().addKeywordSelf ();
@@ -79,6 +72,7 @@ public abstract class AbstractApplicationXServletHandlerWithCSP extends Abstract
     aPolicy.addDirective (CSPDirective.createDefaultSrc (new CSPSourceList ().addKeywordNone ()))
            .addDirective (CSPDirective.createScriptSrc (aScriptSrcList))
            .addDirective (CSPDirective.createStyleSrc (aStyleSrcList))
+           .addDirective (CSPDirective.createStyleSrcAttr (aStyleSrcAttrList))
            .addDirective (CSPDirective.createImgSrc (aImgSrcList))
            .addDirective (CSPDirective.createConnectSrc (aConnectSrcList))
            .addDirective (CSPDirective.createFontSrc (aFontSrcList));
