@@ -79,6 +79,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v9.3.0 - work in progress
     * Requires ph-web 10.4.0
+    * Updated to Bootstrap Icons 1.11.3
     * Updated list of global attributes in `IHCElement`
     * `PhotonWorkerPool` now has a silent mode option
     * The `InternalErrorBuilder` can now deal with custom email settings. See [#21](https://github.com/phax/ph-oton/issues/21)
