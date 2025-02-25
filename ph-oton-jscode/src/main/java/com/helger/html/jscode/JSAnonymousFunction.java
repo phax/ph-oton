@@ -208,8 +208,8 @@ public class JSAnonymousFunction extends AbstractJSExpression
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIf ("params", m_aParams, CollectionHelper::isNotEmpty)
-                            .append ("body", m_aBody)
+                            .appendIf ("Params", m_aParams, CollectionHelper::isNotEmpty)
+                            .append ("Body", m_aBody)
                             .getToString ();
   }
 }

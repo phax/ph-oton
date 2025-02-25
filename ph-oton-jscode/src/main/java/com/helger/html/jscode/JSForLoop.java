@@ -47,7 +47,7 @@ public class JSForLoop extends AbstractJSStatement
   @Nonnull
   public JSForLoop simpleLoop (@Nonnull @Nonempty final String sVarName, final int nStartIncl, final int nEndExcl)
   {
-    final JSVar aLoopVar = init (sVarName, nStartIncl);
+    final JSLet aLoopVar = init (sVarName, nStartIncl);
     if (nEndExcl >= nStartIncl)
     {
       test (aLoopVar.lt (nEndExcl));
@@ -62,28 +62,28 @@ public class JSForLoop extends AbstractJSStatement
   }
 
   @Nonnull
-  public JSVar init (@Nonnull @Nonempty final String sVarName, final int nValue)
+  public JSLet init (@Nonnull @Nonempty final String sVarName, final int nValue)
   {
     return init (sVarName, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public JSVar init (@Nonnull @Nonempty final String sVarName, final long nValue)
+  public JSLet init (@Nonnull @Nonempty final String sVarName, final long nValue)
   {
     return init (sVarName, JSExpr.lit (nValue));
   }
 
   @Nonnull
-  public JSVar init (@Nonnull @Nonempty final String sVarName, @Nonnull final IJSExpression aExpr)
+  public JSLet init (@Nonnull @Nonempty final String sVarName, @Nonnull final IJSExpression aExpr)
   {
     ValueEnforcer.notNull (aExpr, "InitExpression");
 
-    final JSVar aVar = new JSVar (sVarName, aExpr);
+    final JSLet aVar = new JSLet (sVarName, aExpr);
     m_aInits.add (aVar);
     return aVar;
   }
 
-  public void init (@Nonnull final JSVar aVar, @Nonnull final IJSExpression aExpr)
+  public void init (@Nonnull final JSLet aVar, @Nonnull final IJSExpression aExpr)
   {
     m_aInits.add (aVar.assign (aExpr));
   }
@@ -125,8 +125,11 @@ public class JSForLoop extends AbstractJSStatement
         bFirst = false;
       else
         aFormatter.plain (',');
-      if (aInit instanceof JSVar)
-        aFormatter.plain ("var ").variable ((JSVar) aInit);
+      if (aInit instanceof AbstractJSVariable <?>)
+      {
+        final AbstractJSVariable <?> aVar = (AbstractJSVariable <?>) aInit;
+        aFormatter.plain (aVar.getJSVarMode ().getCode ()).variable (aVar);
+      }
       else
         aFormatter.generatable (aInit);
     }

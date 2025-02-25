@@ -322,7 +322,7 @@ public class JSFormatter implements Closeable
    * @return this
    */
   @Nonnull
-  public JSFormatter variable (@Nonnull final JSVar aVar)
+  public JSFormatter variable (@Nonnull final AbstractJSVariable <?> aVar)
   {
     aVar.bind (this);
     return this;

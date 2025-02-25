@@ -879,7 +879,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
   }
 
   @Nonnull
-  public JSForIn forIn (@Nonnull final JSVar aVar, @Nonnull final IJSExpression aCollection)
+  public JSForIn forIn (@Nonnull final JSLet aVar, @Nonnull final IJSExpression aCollection)
   {
     return addStatement (new JSForIn (aVar, aCollection));
   }

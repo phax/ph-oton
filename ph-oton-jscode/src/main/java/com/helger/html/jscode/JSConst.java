@@ -22,11 +22,12 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 
 /**
- * Variables and fields.
+ * JS "const".
  *
  * @author Philip Helger
+ * @since 9.3.0
  */
-public class JSVar extends AbstractJSVariable <JSVar>
+public class JSConst extends AbstractJSVariable <JSConst>
 {
   /**
    * Constructor
@@ -34,7 +35,7 @@ public class JSVar extends AbstractJSVariable <JSVar>
    * @param sName
    *        name of the variable
    */
-  public JSVar (@Nonnull @Nonempty final String sName)
+  public JSConst (@Nonnull @Nonempty final String sName)
   {
     this (sName, (IJSExpression) null);
   }
@@ -47,8 +48,8 @@ public class JSVar extends AbstractJSVariable <JSVar>
    * @param aInit
    *        Value to initialize this variable to
    */
-  public JSVar (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInit)
+  public JSConst (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInit)
   {
-    super (EJSVarMode.VAR, sName, aInit);
+    super (EJSVarMode.CONST, sName, aInit);
   }
 }

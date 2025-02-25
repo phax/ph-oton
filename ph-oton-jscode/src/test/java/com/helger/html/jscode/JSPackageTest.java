@@ -71,7 +71,12 @@ public final class JSPackageTest
 
       // Dynamic function
       {
-        final JSVar aAdd2 = aFuncMain.body ().variable ("add2", JSPrimitiveTypes.FUNCTION._new ().arg ("x").arg ("y").arg ("return x+y"));
+        final JSVar aAdd2 = aFuncMain.body ()
+                                     .variable ("add2",
+                                                JSPrimitiveTypes.FUNCTION._new ()
+                                                                         .arg ("x")
+                                                                         .arg ("y")
+                                                                         .arg ("return x+y"));
         aFuncMain.body ().invoke (aAdd2.name ()).arg (1).arg (2);
       }
 
@@ -112,11 +117,12 @@ public final class JSPackageTest
       // Associative Array
       final JSVar aArray2 = aFuncMain.body ()
                                      .variable ("array2",
-                                           new JSAssocArray ().add ("num", 1)
-                                                              .add ("array", aArray1)
-                                                              .add ("assocarray",
-                                                                    new JSAssocArray ().add ("key", "value")
-                                                                                       .add ("key2", "anything else")));
+                                                new JSAssocArray ().add ("num", 1)
+                                                                   .add ("array", aArray1)
+                                                                   .add ("assocarray",
+                                                                         new JSAssocArray ().add ("key", "value")
+                                                                                            .add ("key2",
+                                                                                                  "anything else")));
       aFuncMain.body ().assign (aArray2.component ("num"), 6);
 
       // concatenate misc things
@@ -156,7 +162,10 @@ public final class JSPackageTest
       anonFunction.body ().assignPlus (sComments, sComment.plus ('\n'));
       anonFunction.body ()._return (JSExpr.lit (""));
       aFuncMain.body ()
-               .assign (sHTML, sHTML.invoke ("replace").arg (JSExpr.regex ("<!--([\\s\\S]*?)-->").global (true)).arg (anonFunction));
+               .assign (sHTML,
+                        sHTML.invoke ("replace")
+                             .arg (JSExpr.regex ("<!--([\\s\\S]*?)-->").global (true))
+                             .arg (anonFunction));
       aFuncMain.body ().comment ("Remaining HTML + comments content");
       aFuncMain.body ()._return (new JSAssocArray ().add ("html", sHTML).add ("comments", sComments));
 
@@ -165,7 +174,7 @@ public final class JSPackageTest
 
     // for-in-loop
     {
-      final JSVar aI = new JSVar ("i");
+      final JSLet aI = new JSLet ("i");
       final JSLabel aLabel = aPkg.label ("loop");
       final JSForIn aFI = aPkg.forIn (aI, new JSArray ().add (1).add (2).add (4));
       final JSConditional aIf = aFI.body ()._if (aI.eq (2));
@@ -176,7 +185,7 @@ public final class JSPackageTest
     // for-loop
     {
       final JSForLoop aFor = aPkg._for ();
-      final JSVar aI = aFor.init ("i", 0);
+      final JSLet aI = aFor.init ("i", 0);
       aFor.test (aI.lt (5));
       aFor.update (aI.incrPostfix ());
       aFor.body ()._continue ();
@@ -237,15 +246,15 @@ public final class JSPackageTest
                   "sHTML=sHTML.replace(/<!--([\\s\\S]*?)-->/g,function(all,sComment){sComments+=(sComment+'\\n');return '';});" +
                   "return {html:sHTML,comments:sComments};}" +
                   "sajax_extract_htmlcomments('<div>Test<\\/div>');" +
-                  "loop:for(var i in [1,2,4]){" +
+                  "loop:for(let i in [1,2,4]){" +
                   "if(i==2){break;}" +
                   "else{continue loop;}" +
                   "}" +
-                  "for(var i=0;(i<5);i++){" +
+                  "for(let i=0;(i<5);i++){" +
                   "continue;" +
                   "}" +
-                  "for(var i=5;(i>0);i--);" +
-                  "for(var i=0;(i<5);i++);" +
+                  "for(let i=5;(i>0);i--);" +
+                  "for(let i=0;(i<5);i++);" +
                   "do{" +
                   "i++;" +
                   "}while(i<1000);" +
@@ -253,7 +262,11 @@ public final class JSPackageTest
                   "i--;" +
                   "}",
                   sCompressedCode);
-    LOGGER.info ("Saved " + (sCode.length () - sCompressedCode.length ()) + " chars. " + sCompressedCode.length () + " chars are left");
+    LOGGER.info ("Saved " +
+                 (sCode.length () - sCompressedCode.length ()) +
+                 " chars. " +
+                 sCompressedCode.length () +
+                 " chars are left");
     LOGGER.info ("--------");
   }
 
@@ -283,7 +296,10 @@ public final class JSPackageTest
       final JSVar aDisabled = fED.param ("bDisabled");
       {
         final JSAnonymousFunction fEDEach = new JSAnonymousFunction ();
-        fEDEach.body ()._if (JSExpr.refThis ("disabled").isNotUndefined ())._then ().assign (JSExpr.refThis ("disabled"), aDisabled);
+        fEDEach.body ()
+               ._if (JSExpr.refThis ("disabled").isNotUndefined ())
+               ._then ()
+               .assign (JSExpr.refThis ("disabled"), aDisabled);
         fED.body ()._return (JSExpr.invokeThis ("each").arg (fEDEach));
       }
       f.body ().assign (JSExpr.ref (aDollar, "fn", "setDisabled"), fED);
