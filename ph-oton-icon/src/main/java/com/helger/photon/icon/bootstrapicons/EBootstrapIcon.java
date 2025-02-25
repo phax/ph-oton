@@ -2175,7 +2175,7 @@ public enum EBootstrapIcon implements IIcon
   @Nonnull
   public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
-    return new CommonsArrayList <> (EIconCSSPathProvider.BOOTSTRAP_ICONS, EIconCSSPathProvider.BOOTSTRAP_ICONS_PH);
+    return new CommonsArrayList <> (EIconCSSPathProvider.BOOTSTRAP_ICONS, EIconCSSPathProvider.PH_OTON_BOOTSTRAP_ICONS);
   }
 
   public static void registerResourcesForGlobal ()

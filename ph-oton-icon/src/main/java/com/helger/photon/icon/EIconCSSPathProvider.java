@@ -38,10 +38,10 @@ public enum EIconCSSPathProvider implements ICSSPathProvider
   /** https://material.io/icons/ */
   MATERIAL_ICONS ("external/materialdesign/3.0.1/material-icons.css"),
   MATERIAL_ICONS_LIST ("external/materialdesign/3.0.1/material-icons-list.css"),
+  PH_OTON_MATERIAL_DESIGN ("ph-oton/ph-oton-material-icons.css"),
   /** https://icons.getbootstrap.com/ */
   BOOTSTRAP_ICONS ("external/bootstrap-icons/1.11.3/font/bootstrap-icons.css"),
-  BOOTSTRAP_ICONS_PH ("external/bootstrap-icons/ph-bootstrap-icons.css"),
-  PH_OTON_MATERIAL_DESIGN ("ph-oton/ph-oton-material-icons.css");
+  PH_OTON_BOOTSTRAP_ICONS ("ph-oton/ph-oton-bootstrap-icons.css");
 
   private final ConstantCSSPathProvider m_aPP;
 
