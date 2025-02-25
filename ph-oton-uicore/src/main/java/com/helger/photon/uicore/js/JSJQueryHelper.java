@@ -23,7 +23,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSExpr;
-import com.helger.html.jscode.JSVar;
+import com.helger.html.jscode.JSParam;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
@@ -65,9 +65,9 @@ public final class JSJQueryHelper
                                                               @Nullable final IJSExpression aHandlerAfterInclude)
   {
     final JSAnonymousFunction ret = new JSAnonymousFunction ();
-    final JSVar aData = ret.param ("a");
-    final JSVar aTextStatus = ret.param ("b");
-    final JSVar aXHR = ret.param ("c");
+    final JSParam aData = ret.param ("a");
+    final JSParam aTextStatus = ret.param ("b");
+    final JSParam aXHR = ret.param ("c");
 
     ret.body ()
        .invoke ("jqph", "jqueryAjaxSuccessHandler")

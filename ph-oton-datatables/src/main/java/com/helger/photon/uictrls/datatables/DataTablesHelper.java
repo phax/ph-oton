@@ -30,8 +30,9 @@ import com.helger.html.jscode.JSBlock;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSGlobal;
 import com.helger.html.jscode.JSInvocation;
+import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSOp;
-import com.helger.html.jscode.JSVar;
+import com.helger.html.jscode.JSParam;
 
 /**
  * Some sanity functionality for {@link DataTables} objects.
@@ -59,7 +60,7 @@ public final class DataTablesHelper
   public static JSAnonymousFunction createFunctionIntVal (@Nullable final JSAnonymousFunction aValueCleanupFunc)
   {
     final JSAnonymousFunction aFuncIntVal = new JSAnonymousFunction ();
-    final JSVar aVal = aFuncIntVal.param ("v");
+    final JSParam aVal = aFuncIntVal.param ("v");
 
     // If string
     final JSBlock aIfString = aFuncIntVal.body ()._if (aVal.typeof ().eeq ("string"))._then ();
@@ -138,7 +139,7 @@ public final class DataTablesHelper
    * @return A JS function to be used as the dataTables footer callback.
    */
   @Nonnull
-  public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull FooterCallbackSumColumn... aColumns)
+  public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull final FooterCallbackSumColumn... aColumns)
   {
     ValueEnforcer.notEmpty (aColumns, "Columns");
 
@@ -148,26 +149,27 @@ public final class DataTablesHelper
     ret.param ("start");
     ret.param ("end");
     ret.param ("display");
-    final JSVar aAPI = ret.body ().variable ("api", JSExpr.THIS.invoke ("api"));
+    final JSLet aAPI = ret.body ().let ("api", JSExpr.THIS.invoke ("api"));
 
     for (final FooterCallbackSumColumn aColumn : aColumns)
     {
       final String sSuffix = Integer.toString (aColumn.getPrintColumn ());
-      final JSVar aIntVal = ret.body ().variable ("funcIntVal" + sSuffix, aColumn.getJSFuncIntVal ());
-      final JSVar aPrintSum = ret.body ().variable ("funcPrintSum" + sSuffix, aColumn.getJSFuncPrintSum ());
+      final JSLet aIntVal = ret.body ().let ("funcIntVal" + sSuffix, aColumn.getJSFuncIntVal ());
+      final JSLet aPrintSum = ret.body ().let ("funcPrintSum" + sSuffix, aColumn.getJSFuncPrintSum ());
 
       // The reduce function: plus
       final JSAnonymousFunction aFuncReduce = new JSAnonymousFunction ();
       {
-        final JSVar aParam1 = aFuncReduce.param ("a");
-        final JSVar aParam2 = aFuncReduce.param ("b");
-        aFuncReduce.body ()._return (JSExpr.invoke (aIntVal).arg (aParam1).plus (JSExpr.invoke (aIntVal).arg (aParam2)));
+        final JSParam aParam1 = aFuncReduce.param ("a");
+        final JSParam aParam2 = aFuncReduce.param ("b");
+        aFuncReduce.body ()
+                   ._return (JSExpr.invoke (aIntVal).arg (aParam1).plus (JSExpr.invoke (aIntVal).arg (aParam2)));
       }
-      final JSVar aReduce = ret.body ().variable ("funcReduce" + sSuffix, aFuncReduce);
+      final JSLet aReduce = ret.body ().let ("funcReduce" + sSuffix, aFuncReduce);
 
       // Calc overall total
-      final JSVar aTotal = ret.body ()
-                              .variable ("total" + sSuffix,
+      final JSLet aTotal = ret.body ()
+                              .let ("total" + sSuffix,
                                     aAPI.invoke ("column")
                                         .arg (aColumn.getCalcColumn ())
                                         .invoke ("data")
@@ -175,8 +177,8 @@ public final class DataTablesHelper
                                         .arg (aReduce)
                                         .arg (0));
       // Calc visible total
-      final JSVar aPageTotal = ret.body ()
-                                  .variable ("pagetotal" + sSuffix,
+      final JSLet aPageTotal = ret.body ()
+                                  .let ("pagetotal" + sSuffix,
                                         aAPI.invoke ("column")
                                             .arg (aColumn.getCalcColumn ())
                                             .arg (new JSAssocArray ().add ("page", "current"))
@@ -203,6 +205,12 @@ public final class DataTablesHelper
   @Nonnull
   public static JSInvocation createClearFilterCode (@Nonnull final IJSExpression aDTSelect)
   {
-    return aDTSelect.invoke ("DataTable").invoke ("search").arg ("").invoke ("columns").invoke ("search").arg ("").invoke ("draw");
+    return aDTSelect.invoke ("DataTable")
+                    .invoke ("search")
+                    .arg ("")
+                    .invoke ("columns")
+                    .invoke ("search")
+                    .arg ("")
+                    .invoke ("draw");
   }
 }

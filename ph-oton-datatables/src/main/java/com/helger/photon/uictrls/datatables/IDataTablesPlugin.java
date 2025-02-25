@@ -22,8 +22,8 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
+import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
-import com.helger.html.jscode.JSVar;
 
 /**
  * Base interface for DataTables plugins.
@@ -67,7 +67,7 @@ public interface IDataTablesPlugin
    * @param aJSTable
    *        The reference to the DataTables JS object
    */
-  void addInitJS (@Nonnull DataTables aDT, @Nonnull JSPackage aJSCode, @Nonnull JSVar aJSTable);
+  void addInitJS (@Nonnull DataTables aDT, @Nonnull JSPackage aJSCode, @Nonnull JSLet aJSTable);
 
   /**
    * Register custom resources required for this plugin.

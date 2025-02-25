@@ -89,6 +89,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
     * Class `CSRFManager` now creates nonces with 32 instead of 64 bytes and uses Base64 instead of Base16 encoding.
     * Added builders for `ConstantJSPathProvider` and `ConstantCSSPathProvider`
     * Added classes `JSLet` and `JSConst` and using `let` by default in JS `for` and `for in` loops
+    * Added class `JSParam` and using it for function params and catch clauses (instead of `JSVar`)
 * v9.2.9 - 2025-02-03
     * Updated to ph-web 10.3.0
     * Added reusable SFTP helper classes to package `com.helger.photon.connect.sftp`

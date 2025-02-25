@@ -33,7 +33,7 @@ public class JSCatchBlock implements IJSGeneratable
 {
   public static final String DEFAULT_VAR_NAME = "e";
 
-  private JSVar m_aVar;
+  private JSParam m_aVar;
   private final JSBlock m_aBody = new JSBlock ();
 
   public JSCatchBlock ()
@@ -41,21 +41,21 @@ public class JSCatchBlock implements IJSGeneratable
 
   public JSCatchBlock (@Nonnull @Nonempty final String sName)
   {
-    m_aVar = new JSVar (sName, null);
+    m_aVar = new JSParam (sName);
   }
 
   @Nullable
-  public JSVar param ()
+  public JSParam param ()
   {
     return m_aVar;
   }
 
   @Nonnull
-  public JSVar param (@Nonnull @Nonempty final String sName)
+  public JSParam param (@Nonnull @Nonempty final String sName)
   {
     if (m_aVar != null)
       throw new IllegalStateException ("Catch block already has a variable");
-    m_aVar = new JSVar (sName, null);
+    m_aVar = new JSParam (sName);
     return m_aVar;
   }
 
@@ -68,7 +68,8 @@ public class JSCatchBlock implements IJSGeneratable
   public void generate (@Nonnull final JSFormatter aFormatter)
   {
     if (m_aVar == null)
-      m_aVar = new JSVar (DEFAULT_VAR_NAME, null);
+      m_aVar = new JSParam (DEFAULT_VAR_NAME);
+    // Only the variable name is used
     aFormatter.plain ("catch (").variable (m_aVar).plain (')').generatable (m_aBody);
   }
 
@@ -98,6 +99,6 @@ public class JSCatchBlock implements IJSGeneratable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("var", m_aVar).append ("body", m_aBody).getToString ();
+    return new ToStringGenerator (this).append ("Variable", m_aVar).append ("Body", m_aBody).getToString ();
   }
 }

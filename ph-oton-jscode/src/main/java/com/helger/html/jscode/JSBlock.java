@@ -93,7 +93,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
   @Override
   protected void onAddDeclaration (@Nonnull final IJSDeclaration aDeclaration)
   {
-    if (aDeclaration instanceof JSVar)
+    if (aDeclaration instanceof AbstractJSVariable <?>)
     {
       m_bBracesRequired = true;
       m_bIndentRequired = true;

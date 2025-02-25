@@ -37,15 +37,15 @@ public final class JSDefinedClassTest
     final JSFieldVar jsDValue = aClass.field ("m_dValue", JSExpr.lit (0.0));
 
     JSMethod aMethod = aClass.method ("getElement");
-    final JSVar jsID = aMethod.param ("id");
+    final JSParam jsID = aMethod.param ("id");
     aMethod.body ()._return (JSHtml.documentGetElementById (jsID));
 
     aMethod = aClass.method ("getElement2");
-    final JSVar jsName = aMethod.param ("name");
+    final JSParam jsName = aMethod.param ("name");
     aMethod.body ()._return (JSHtml.documentGetElementsByTagName (jsName).ref ("value").plus (jsDValue));
 
     final JSConstructor aCtor = aClass.constructor ();
-    final JSVar jsParam = aCtor.param ("param");
+    final JSParam jsParam = aCtor.param ("param");
     aCtor.body ().invoke ("some_global_init").arg (jsParam);
 
     if (false)

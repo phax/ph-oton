@@ -51,7 +51,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   /**
    * List of parameters for this function's declaration
    */
-  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList <> ();
+  private final ICommonsList <JSParam> m_aParams = new CommonsArrayList <> ();
 
   /**
    * Block of statements that makes up the body this function
@@ -100,7 +100,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <JSVar> params ()
+  public ICommonsList <JSParam> params ()
   {
     return m_aParams.getClone ();
   }
@@ -114,9 +114,9 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    * @return New parameter variable
    */
   @Nonnull
-  public JSVar param (@Nonnull @Nonempty final String sName)
+  public JSParam param (@Nonnull @Nonempty final String sName)
   {
-    final JSVar aVar = new JSVar (sName, null);
+    final JSParam aVar = new JSParam (sName);
     m_aParams.add (aVar);
     return aVar;
   }
@@ -128,7 +128,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   }
 
   @Nullable
-  public JSVar getParamAtIndex (final int nIndex)
+  public JSParam getParamAtIndex (final int nIndex)
   {
     return m_aParams.getAtIndex (nIndex);
   }
@@ -187,7 +187,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
 
     aFormatter.plain ("function ").plain (m_sName).plain ('(');
     boolean bFirst = true;
-    for (final JSVar aParam : m_aParams)
+    for (final JSParam aParam : m_aParams)
     {
       if (bFirst)
         bFirst = false;
@@ -231,10 +231,10 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIfNotNull ("jsDoc", m_aJSDoc)
-                                       .append ("name", m_sName)
-                                       .appendIf ("params", m_aParams, CollectionHelper::isNotEmpty)
-                                       .appendIfNotNull ("body", m_aBody)
+    return new ToStringGenerator (this).appendIfNotNull ("JSDoc", m_aJSDoc)
+                                       .append ("Name", m_sName)
+                                       .appendIf ("Params", m_aParams, CollectionHelper::isNotEmpty)
+                                       .appendIfNotNull ("Body", m_aBody)
                                        .getToString ();
   }
 }

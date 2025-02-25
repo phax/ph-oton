@@ -470,6 +470,310 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return addDeclaration (aVar);
   }
 
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName)
+  {
+    return let (sName, (IJSExpression) null);
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param bInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, final boolean bInitValue)
+  {
+    return let (sName, JSExpr.lit (bInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param cInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, final char cInitValue)
+  {
+    return let (sName, JSExpr.lit (cInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param dInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, final double dInitValue)
+  {
+    return let (sName, JSExpr.lit (dInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param fInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, final float fInitValue)
+  {
+    return let (sName, JSExpr.lit (fInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param nInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, final int nInitValue)
+  {
+    return let (sName, JSExpr.lit (nInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param nInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, final long nInitValue)
+  {
+    return let (sName, JSExpr.lit (nInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param sInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
+  {
+    return let (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param aInitExpression
+   *        Initialization expression for this variable. May be null.
+   * @return Newly generated {@link JSLet}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSLet let (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
+  {
+    final JSLet aVar = new JSLet (sName, aInitExpression);
+    return addDeclaration (aVar);
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName)
+  {
+    return _const (sName, (IJSExpression) null);
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param bInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, final boolean bInitValue)
+  {
+    return _const (sName, JSExpr.lit (bInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param cInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, final char cInitValue)
+  {
+    return _const (sName, JSExpr.lit (cInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param dInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, final double dInitValue)
+  {
+    return _const (sName, JSExpr.lit (dInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param fInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, final float fInitValue)
+  {
+    return _const (sName, JSExpr.lit (fInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param nInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, final int nInitValue)
+  {
+    return _const (sName, JSExpr.lit (nInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param nInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, final long nInitValue)
+  {
+    return _const (sName, JSExpr.lit (nInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param sInitValue
+   *        Initialization value for this variable.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
+  {
+    return _const (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
+  }
+
+  /**
+   * Adds a local variable declaration to this block
+   *
+   * @param sName
+   *        Name of the variable
+   * @param aInitExpression
+   *        Initialization expression for this variable. May be null.
+   * @return Newly generated {@link JSConst}
+   * @throws JSNameAlreadyExistsException
+   *         if the name is not unique
+   */
+  @Nonnull
+  public JSConst _const (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
+  {
+    final JSConst aVar = new JSConst (sName, aInitExpression);
+    return addDeclaration (aVar);
+  }
+
   @Nonnull
   public JSInvocation invoke (@Nonnull final JSAnonymousFunction aAnonFunction)
   {

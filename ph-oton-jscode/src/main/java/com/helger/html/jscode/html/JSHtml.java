@@ -28,6 +28,7 @@ import com.helger.commons.annotation.PresentForCodeCoverage;
 import com.helger.commons.url.ISimpleURL;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCHasID;
+import com.helger.html.jscode.AbstractJSVariable;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssignment;
@@ -35,7 +36,6 @@ import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
-import com.helger.html.jscode.JSVar;
 
 /**
  * This class contains JS builder default constructs that are used very commonly
@@ -505,7 +505,7 @@ public final class JSHtml
   }
 
   @Nonnull
-  public static JSInvocation windowClearInterval (@Nonnull final JSVar aVar)
+  public static JSInvocation windowClearInterval (@Nonnull final AbstractJSVariable <?> aVar)
   {
     return windowClearInterval ().arg (aVar);
   }
@@ -520,7 +520,7 @@ public final class JSHtml
   }
 
   @Nonnull
-  public static JSInvocation windowClearTimeout (@Nonnull final JSVar aVar)
+  public static JSInvocation windowClearTimeout (@Nonnull final AbstractJSVariable <?> aVar)
   {
     return windowClearTimeout ().arg (aVar);
   }

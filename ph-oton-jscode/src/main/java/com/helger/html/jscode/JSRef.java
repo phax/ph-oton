@@ -41,7 +41,7 @@ public class JSRef extends AbstractJSAssignmentTarget
   /**
    * Variable to be accessed.
    */
-  private JSVar m_aVar;
+  private AbstractJSVariable <?> m_aVar;
 
   public JSRef (@Nonnull @Nonempty final String sName)
   {
@@ -50,7 +50,7 @@ public class JSRef extends AbstractJSAssignmentTarget
     m_sName = sName;
   }
 
-  public JSRef (@Nonnull final JSVar aVar)
+  public JSRef (@Nonnull final AbstractJSVariable <?> aVar)
   {
     m_aVar = ValueEnforcer.notNull (aVar, "Var");
   }
@@ -79,7 +79,7 @@ public class JSRef extends AbstractJSAssignmentTarget
   }
 
   @Nullable
-  public JSVar fixedVar ()
+  public AbstractJSVariable <?> fixedVar ()
   {
     return m_aVar;
   }
@@ -109,6 +109,9 @@ public class JSRef extends AbstractJSAssignmentTarget
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("name", m_sName).appendIfNotNull ("var", m_aVar).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Name", m_sName)
+                            .appendIfNotNull ("Variable", m_aVar)
+                            .getToString ();
   }
 }

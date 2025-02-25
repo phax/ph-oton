@@ -45,21 +45,21 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
   {
     VAR ("var "),
     LET ("let "),
-    CONST ("const ");
+    CONST ("const "),
+    PARAM ("");
 
     private final String m_sCode;
 
-    EJSVarMode (@Nonnull @Nonempty final String sCode)
+    EJSVarMode (@Nonnull final String sCode)
     {
       m_sCode = sCode;
     }
 
     /**
      * @return The code for usage with "formatter.plain", including a trailing
-     *         whitespace.
+     *         whitespace if it is non-empty.
      */
     @Nonnull
-    @Nonempty
     public String getCode ()
     {
       return m_sCode;

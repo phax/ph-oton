@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
-import com.helger.html.jscode.JSVar;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.IDataTablesPlugin;
 
@@ -62,7 +62,7 @@ public abstract class AbstractDataTablesPlugin implements IDataTablesPlugin
     // empty
   }
 
-  public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSVar aJSTable)
+  public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSLet aJSTable)
   {
     // empty
   }

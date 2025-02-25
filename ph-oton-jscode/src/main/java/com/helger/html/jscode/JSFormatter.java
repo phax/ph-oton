@@ -315,10 +315,10 @@ public class JSFormatter implements Closeable
   }
 
   /**
-   * Cause the {@link JSVar} to generate source for itself
+   * Cause the {@link AbstractJSVariable} to generate source for itself
    *
    * @param aVar
-   *        the {@link JSVar} object
+   *        the {@link AbstractJSVariable} object
    * @return this
    */
   @Nonnull

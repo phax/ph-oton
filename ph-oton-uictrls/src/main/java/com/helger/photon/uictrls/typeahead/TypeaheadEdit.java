@@ -35,7 +35,7 @@ import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
-import com.helger.html.jscode.JSVar;
+import com.helger.html.jscode.JSParam;
 import com.helger.html.request.IHCRequestField;
 
 /**
@@ -79,7 +79,7 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
     // 3. selected dataset
     m_aSelectionCallback = new JSAnonymousFunction ();
     m_aSelectionCallback.param ("evt");
-    final JSVar aJSDatum = m_aSelectionCallback.param ("datum");
+    final JSParam aJSDatum = m_aSelectionCallback.param ("datum");
     m_aSelectionCallback.param ("dsname");
     // Need to manually call the "change" handler, because otherwise onchange
     // event is not triggered for hidden fields!

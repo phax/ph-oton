@@ -40,7 +40,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
   /**
    * List of parameters for this function's declaration
    */
-  private final ICommonsList <JSVar> m_aParams = new CommonsArrayList <> ();
+  private final ICommonsList <JSParam> m_aParams = new CommonsArrayList <> ();
 
   /**
    * JBlock of statements that makes up the body this function
@@ -65,7 +65,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
       body ().add (aBody);
   }
 
-  public JSAnonymousFunction (@Nullable final JSVar aParam, @Nullable final IJSStatement aBody)
+  public JSAnonymousFunction (@Nullable final JSParam aParam, @Nullable final IJSStatement aBody)
   {
     if (aParam != null)
       m_aParams.add (aParam);
@@ -73,7 +73,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
       body ().add (aBody);
   }
 
-  public JSAnonymousFunction (@Nullable final Iterable <? extends JSVar> aParams, @Nullable final IJSStatement aBody)
+  public JSAnonymousFunction (@Nullable final Iterable <? extends JSParam> aParams, @Nullable final IJSStatement aBody)
   {
     m_aParams.addAll (aParams);
     if (aBody != null)
@@ -85,14 +85,14 @@ public class JSAnonymousFunction extends AbstractJSExpression
     m_aBody = aBody;
   }
 
-  public JSAnonymousFunction (@Nullable final JSVar aParam, @Nullable final JSBlock aBody)
+  public JSAnonymousFunction (@Nullable final JSParam aParam, @Nullable final JSBlock aBody)
   {
     if (aParam != null)
       m_aParams.add (aParam);
     m_aBody = aBody;
   }
 
-  public JSAnonymousFunction (@Nullable final Iterable <? extends JSVar> aParams, @Nullable final JSBlock aBody)
+  public JSAnonymousFunction (@Nullable final Iterable <? extends JSParam> aParams, @Nullable final JSBlock aBody)
   {
     if (aParams != null)
       m_aParams.addAll (aParams);
@@ -106,7 +106,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <JSVar> params ()
+  public ICommonsList <JSParam> params ()
   {
     return m_aParams.getClone ();
   }
@@ -120,9 +120,9 @@ public class JSAnonymousFunction extends AbstractJSExpression
    * @return New parameter variable
    */
   @Nonnull
-  public JSVar param (@Nonnull @Nonempty final String sName)
+  public JSParam param (@Nonnull @Nonempty final String sName)
   {
-    final JSVar aVar = new JSVar (sName, null);
+    final JSParam aVar = new JSParam (sName);
     m_aParams.add (aVar);
     return aVar;
   }
@@ -136,7 +136,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
    * @since 8.0.3
    */
   @Nonnull
-  public JSVar paramRandomName ()
+  public JSParam paramRandomName ()
   {
     return param ("v" + GlobalIDFactory.getNewIntID ());
   }
@@ -148,7 +148,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
   }
 
   @Nullable
-  public JSVar getParamAtIndex (final int nIndex)
+  public JSParam getParamAtIndex (final int nIndex)
   {
     return m_aParams.getAtIndex (nIndex);
   }
@@ -176,7 +176,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
   {
     aFormatter.plain ("function").plain ('(');
     boolean bFirst = true;
-    for (final JSVar aParam : m_aParams)
+    for (final JSParam aParam : m_aParams)
     {
       if (bFirst)
         bFirst = false;

@@ -67,8 +67,9 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
+import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
-import com.helger.html.jscode.JSVar;
+import com.helger.html.jscode.JSParam;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.app.html.PhotonCSS;
@@ -261,7 +262,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
   private transient Consumer <JSPackage> m_aJSBeforeModifier;
-  private transient BiConsumer <JSPackage, JSVar> m_aJSAfterModifier;
+  private transient BiConsumer <JSPackage, JSLet> m_aJSAfterModifier;
 
   /**
    * Apply to an existing table. If the table does not have an ID yet, a new one
@@ -1074,13 +1075,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
-  public BiConsumer <JSPackage, JSVar> getJSAfterModifier ()
+  public BiConsumer <JSPackage, JSLet> getJSAfterModifier ()
   {
     return m_aJSAfterModifier;
   }
 
   @Nonnull
-  public DataTables setJSAfterModifier (@Nullable final BiConsumer <JSPackage, JSVar> aJSAfterModifier)
+  public DataTables setJSAfterModifier (@Nullable final BiConsumer <JSPackage, JSLet> aJSAfterModifier)
   {
     // TODO this should be a list
     m_aJSAfterModifier = aJSAfterModifier;
@@ -1241,8 +1242,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       m_aTable.removeAllBodyRows ();
 
       final JSAnonymousFunction aAF = new JSAnonymousFunction ();
-      final JSVar aData = aAF.param ("data");
-      final JSVar aCallback = aAF.param ("callback");
+      final JSParam aData = aAF.param ("data");
+      final JSParam aCallback = aAF.param ("callback");
       aAF.param ("settings");
       aAF.body ()
          .add (m_aAjaxBuilder.getClone ()
@@ -1362,7 +1363,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     if (m_aJSBeforeModifier != null)
       m_aJSBeforeModifier.accept (aJSCode);
 
-    final JSVar aJSTable = aJSCode.variable (m_sJSVariableName, invokeDataTables ().arg (aParams));
+    final JSLet aJSTable = aJSCode.let (m_sJSVariableName, invokeDataTables ().arg (aParams));
 
     // Add plugin init JS
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
@@ -1373,8 +1374,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
     // Main HTML code for this element :)
     setJSCodeProvider (m_bGenerateOnDocumentReady ? HCSettings.getOnDocumentReadyProvider ()
-                                                              .createOnDocumentReady (aJSCode)
-                                                  : aJSCode);
+                                                              .createOnDocumentReady (aJSCode) : aJSCode);
 
     // Must be called AFTER we set the JS!
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);

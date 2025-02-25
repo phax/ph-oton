@@ -120,7 +120,7 @@ public abstract class AbstractJSClass extends AbstractJSType
    * @return The created {@link JSFieldRef}
    */
   @Nonnull
-  public final JSFieldRef staticRef (@Nonnull final JSVar aField)
+  public final JSFieldRef staticRef (@Nonnull final AbstractJSVariable <?> aField)
   {
     return new JSFieldRef (this, aField);
   }

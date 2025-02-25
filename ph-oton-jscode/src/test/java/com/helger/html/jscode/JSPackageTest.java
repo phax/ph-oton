@@ -51,7 +51,7 @@ public final class JSPackageTest
       final JSFunction aFuncMain = aPkg.function ("mainAdd");
       aFuncMain.jsDoc ().add ("This is a global function");
       aFuncMain.jsDoc ().add ("It does only crappy things");
-      final JSVar m1 = aFuncMain.param ("m1");
+      final JSParam m1 = aFuncMain.param ("m1");
       aFuncMain.jsDoc ().addParam (m1).add ("Any kind of value");
 
       // function variable
@@ -61,8 +61,8 @@ public final class JSPackageTest
       final JSFunction aFunc = aFuncMain.body ().function ("add");
       {
         aFunc.jsDoc ().add ("This is a nested function");
-        final JSVar s1 = aFunc.param ("s1");
-        final JSVar s2 = aFunc.param ("s2");
+        final JSParam s1 = aFunc.param ("s1");
+        final JSParam s2 = aFunc.param ("s2");
         aFunc.body ()._return (s1.plus (s2));
 
         // Call nested function
@@ -71,12 +71,9 @@ public final class JSPackageTest
 
       // Dynamic function
       {
-        final JSVar aAdd2 = aFuncMain.body ()
-                                     .variable ("add2",
-                                                JSPrimitiveTypes.FUNCTION._new ()
-                                                                         .arg ("x")
-                                                                         .arg ("y")
-                                                                         .arg ("return x+y"));
+        final JSLet aAdd2 = aFuncMain.body ()
+                                     .let ("add2",
+                                           JSPrimitiveTypes.FUNCTION._new ().arg ("x").arg ("y").arg ("return x+y"));
         aFuncMain.body ().invoke (aAdd2.name ()).arg (1).arg (2);
       }
 
@@ -101,13 +98,13 @@ public final class JSPackageTest
       // Anonymous function
       {
         final JSAnonymousFunction a = new JSAnonymousFunction ();
-        final JSVar av = a.param ("a");
+        final JSParam av = a.param ("a");
         a.body ()._return (av.plus (0.5));
         aFuncMain.body ().invoke (a).arg (7.5);
       }
 
       // Array
-      final JSVar aArray1 = aFuncMain.body ().variable ("array1", new JSArray ().add (5));
+      final JSLet aArray1 = aFuncMain.body ().let ("array1", new JSArray ().add (5));
       aFuncMain.body ().assign (aArray1.component (0), 6);
 
       final JSVar aArray1a = aFuncMain.body ().variable ("array1a", JSPrimitiveTypes.ARRAY._new ().arg (5));
@@ -153,12 +150,12 @@ public final class JSPackageTest
        * </pre>
        */
       final JSFunction aFuncMain = aPkg.function ("sajax_extract_htmlcomments");
-      final JSVar sHTML = aFuncMain.param ("sHTML");
-      final JSVar sComments = aFuncMain.body ().variable ("sComments", "");
+      final JSParam sHTML = aFuncMain.param ("sHTML");
+      final JSLet sComments = aFuncMain.body ().let ("sComments", "");
       aFuncMain.body ().comment ("Lazy quantifier \"*?\"");
       final JSAnonymousFunction anonFunction = new JSAnonymousFunction ();
       anonFunction.param ("all");
-      final JSVar sComment = anonFunction.param ("sComment");
+      final JSParam sComment = anonFunction.param ("sComment");
       anonFunction.body ().assignPlus (sComments, sComment.plus ('\n'));
       anonFunction.body ()._return (JSExpr.lit (""));
       aFuncMain.body ()
@@ -224,7 +221,7 @@ public final class JSPackageTest
                   "var root=5;" +
                   "function add(s1,s2){return (s1+s2);}" +
                   "add(32,-4);" +
-                  "var add2=new Function('x','y','return x+y');" +
+                  "let add2=new Function('x','y','return x+y');" +
                   "add2(1,2);" +
                   "if(typeof m1==='String')" +
                   "{try{return 5;}catch (ex){throw new Error(ex);}finally{root.substring(0,1);}}" +
@@ -233,7 +230,7 @@ public final class JSPackageTest
                   "'string'.search(/expression/);" +
                   "'string'.replace(/expression/,'replacement');" +
                   "(function(a){return (a+0.5);})(7.5);" +
-                  "var array1=[5];" +
+                  "let array1=[5];" +
                   "array1[0]=6;" +
                   "var array1a=new Array(5);" +
                   "array1a[0]=7;" +
@@ -242,7 +239,7 @@ public final class JSPackageTest
                   "array2['num']=6;" +
                   "return (((((m1+'abc'.length+root+add(2,4)+7)*1.5)+5)-3)/2);}" +
                   "function sajax_extract_htmlcomments(sHTML){" +
-                  "var sComments='';" +
+                  "let sComments='';" +
                   "sHTML=sHTML.replace(/<!--([\\s\\S]*?)-->/g,function(all,sComment){sComments+=(sComment+'\\n');return '';});" +
                   "return {html:sHTML,comments:sComments};}" +
                   "sajax_extract_htmlcomments('<div>Test<\\/div>');" +
@@ -289,11 +286,11 @@ public final class JSPackageTest
 
     final JSPackage aPkg = new JSPackage ();
     final JSAnonymousFunction f = new JSAnonymousFunction ();
-    final JSVar aDollar = f.param ("$");
+    final JSParam aDollar = f.param ("$");
     f.body ().comment ("Mark elements as enabled or disabled");
     {
       final JSAnonymousFunction fED = new JSAnonymousFunction ();
-      final JSVar aDisabled = fED.param ("bDisabled");
+      final JSParam aDisabled = fED.param ("bDisabled");
       {
         final JSAnonymousFunction fEDEach = new JSAnonymousFunction ();
         fEDEach.body ()

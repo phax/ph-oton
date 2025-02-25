@@ -32,8 +32,8 @@ import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.JSEventMap;
 import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSConst;
 import com.helger.html.jscode.JSPackage;
-import com.helger.html.jscode.JSVar;
 import com.helger.html.jscode.html.JSHtml;
 
 public class HCCustomizerExternalizeAttrJS extends AbstractHCCustomizer
@@ -71,7 +71,7 @@ public class HCCustomizerExternalizeAttrJS extends AbstractHCCustomizer
         else
         {
           // Remember element in variable
-          final JSVar jsElem = aJS.variable ("_elem" + GlobalIDFactory.getNewStringID (),
+          final JSConst jsElem = aJS._const ("_elem" + GlobalIDFactory.getNewStringID (),
                                              JSHtml.documentGetElementById (aElement));
 
           // Convert all inline JS to addEventListener calls

@@ -38,8 +38,8 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSFieldRef;
+import com.helger.html.jscode.JSParam;
 import com.helger.html.jscode.JSReturn;
-import com.helger.html.jscode.JSVar;
 
 @NotThreadSafe
 public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
@@ -104,7 +104,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
                                                        @Nonnull @Nonempty final String sDatumValueFieldName)
   {
     ValueEnforcer.notEmpty (sDatumValueFieldName, "DatumValueFieldName");
-    final JSVar aVarDatum = new JSVar ("d");
+    final JSParam aVarDatum = new JSParam ("d");
     return setDatumTokenizer (new JSAnonymousFunction (aVarDatum,
                                                        aFieldRef.invoke ().arg (aVarDatum.ref (sDatumValueFieldName))));
   }
@@ -131,7 +131,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   @Nonnull
   public BloodhoundOptions setDatumTokenizerPreTokenized ()
   {
-    final JSVar aVarDatum = new JSVar ("d");
+    final JSParam aVarDatum = new JSParam ("d");
     return setDatumTokenizer (new JSAnonymousFunction (aVarDatum,
                                                        new JSReturn (aVarDatum.ref (BloodhoundDatum.JSON_TOKENS))));
   }

@@ -134,7 +134,7 @@ public final class JSExpr
   }
 
   @Nonnull
-  public static JSInvocation invoke (@Nonnull final JSVar aVar)
+  public static JSInvocation invoke (@Nonnull final AbstractJSVariable <?> aVar)
   {
     return new JSInvocation ((IJSExpression) null, aVar.name ());
   }
@@ -188,7 +188,7 @@ public final class JSExpr
   }
 
   @Nonnull
-  public static JSFieldRef ref (@Nonnull final IJSExpression aLhs, @Nonnull final JSVar aField)
+  public static JSFieldRef ref (@Nonnull final IJSExpression aLhs, @Nonnull final AbstractJSVariable <?> aField)
   {
     return new JSFieldRef (aLhs, aField);
   }
@@ -217,7 +217,7 @@ public final class JSExpr
    * @return <code>this.<i>aField</i></code>
    */
   @Nonnull
-  public static JSFieldRef refThis (@Nonnull final JSVar aField)
+  public static JSFieldRef refThis (@Nonnull final AbstractJSVariable <?> aField)
   {
     return ref (THIS, aField);
   }

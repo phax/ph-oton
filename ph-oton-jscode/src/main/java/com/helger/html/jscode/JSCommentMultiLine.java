@@ -86,7 +86,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    * @return Comment part
    */
   @Nonnull
-  public JSCommentPart addParam (@Nonnull final JSVar aParam)
+  public JSCommentPart addParam (@Nonnull final AbstractJSVariable <?> aParam)
   {
     return addParam (aParam.name ());
   }
@@ -142,7 +142,8 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    * @return XDoclect to be filled
    */
   @Nonnull
-  public ICommonsMap <String, String> addXdoclet (@Nonnull final String sName, @Nonnull final Map <String, String> aAttributes)
+  public ICommonsMap <String, String> addXdoclet (@Nonnull final String sName,
+                                                  @Nonnull final Map <String, String> aAttributes)
   {
     final ICommonsMap <String, String> p = addXdoclet (sName);
     p.putAll (aAttributes);
@@ -235,7 +236,11 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aParams).append (m_aXDoclets).append (m_aReturn).append (m_aDeprecated).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aParams)
+                                       .append (m_aXDoclets)
+                                       .append (m_aReturn)
+                                       .append (m_aDeprecated)
+                                       .getHashCode ();
   }
 
   @Override

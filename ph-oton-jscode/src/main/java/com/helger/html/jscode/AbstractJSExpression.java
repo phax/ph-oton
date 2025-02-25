@@ -796,7 +796,6 @@ public abstract class AbstractJSExpression implements IJSExpression
   public final AbstractJSExpression ne (@Nonnull final String sValue)
   {
     return ne (JSExpr.lit (sValue));
-
   }
 
   @Nonnull
@@ -935,7 +934,7 @@ public abstract class AbstractJSExpression implements IJSExpression
   }
 
   @Nonnull
-  public final JSFieldRef ref (@Nonnull final JSVar aField)
+  public final JSFieldRef ref (@Nonnull final AbstractJSVariable <?> aField)
   {
     return JSExpr.ref (this, aField);
   }

@@ -1378,7 +1378,7 @@ public interface IJSExpression extends IJSGeneratable
    * @return "[this].[field]"
    */
   @Nonnull
-  JSFieldRef ref (@Nonnull JSVar aField);
+  JSFieldRef ref (@Nonnull AbstractJSVariable <?> aField);
 
   /**
    * @param sField

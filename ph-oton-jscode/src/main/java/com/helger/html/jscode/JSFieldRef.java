@@ -42,7 +42,7 @@ public class JSFieldRef extends JSRef
     m_aObject = ValueEnforcer.notNull (aObject, "Object");
   }
 
-  public JSFieldRef (@Nonnull final IJSGeneratable aObject, @Nonnull final JSVar aVar)
+  public JSFieldRef (@Nonnull final IJSGeneratable aObject, @Nonnull final AbstractJSVariable <?> aVar)
   {
     super (aVar);
     m_aObject = ValueEnforcer.notNull (aObject, "Object");
