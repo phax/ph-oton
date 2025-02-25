@@ -80,7 +80,11 @@ public class BootstrapDataTables extends DataTables
 
     final BootstrapDataTables ret = new BootstrapDataTables (aTable);
     ret.setDisplayLocale (aLEC.getDisplayLocale ());
-    ret.addAllColumns (aTable);
+
+    // The colgroup is now (2025-02) automatically added by DataTables
+    if (false)
+      ret.addAllColumns (aTable);
+
     if (s_aConfigurator != null)
       s_aConfigurator.configure (aLEC, aTable, ret);
     return ret;
