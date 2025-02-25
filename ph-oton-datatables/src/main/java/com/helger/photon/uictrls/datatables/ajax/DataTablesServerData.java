@@ -95,10 +95,12 @@ public final class DataTablesServerData implements IHasUIState
         if (nTarget < 0 || nTarget >= nColumnCount)
           throw new IllegalArgumentException ("DataTablesColumn is targeting illegal column index " +
                                               nTarget +
-                                              "; must be >= 0 and < " +
-                                              nColumnCount +
-                                              " in table " +
-                                              aTable.getID ());
+                                              "; " +
+                                              (nColumnCount > 0 ? "must be >= 0 and < " + nColumnCount
+                                                                : "no columns are present") +
+                                              " in table '" +
+                                              aTable.getID () +
+                                              "'");
         m_aColumns[nTarget] = aColumnData;
       }
     }
