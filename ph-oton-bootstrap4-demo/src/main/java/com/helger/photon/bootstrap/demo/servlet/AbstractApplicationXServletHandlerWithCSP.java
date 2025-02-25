@@ -57,8 +57,7 @@ public abstract class AbstractApplicationXServletHandlerWithCSP extends Abstract
                                                             .addNonce (CSRFSessionManager.getInstance ().getNonce ())
                                                             .addKeywordReportSample ();
     // Required for data tables
-    final CSPSourceList aStyleSrcAttrList = false ? null
-                                                  : new CSPSourceList ().addKeywordSelf ().addKeywordUnsafeInline ();
+    final CSPSourceList aStyleSrcAttrList = new CSPSourceList ().addKeywordSelf ().addKeywordUnsafeInline ();
     // Allow data images for Bootstrap 4
     final CSPSourceList aImgSrcList = new CSPSourceList ().addKeywordSelf ().addHost ("data:");
     final CSPSourceList aConnectSrcList = new CSPSourceList ().addKeywordSelf ();
