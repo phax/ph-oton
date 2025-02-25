@@ -95,7 +95,8 @@ public abstract class AbstractHCNode implements IHCNode
   }
 
   @Override
-  public void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
+                              @Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     // empty
   }
@@ -156,13 +157,16 @@ public abstract class AbstractHCNode implements IHCNode
   {
     ValueEnforcer.notNull (eNodeState, "NodeState");
     if (false)
-      if (!m_eNodeState.equals (eNodeState))
+    {
+      final EHCNodeState eMyNodeState = getNodeState ();
+      if (!eMyNodeState.equals (eNodeState))
         HCConsistencyChecker.consistencyError ("Expected node state " +
                                                eNodeState +
                                                " but having node state " +
-                                               m_eNodeState +
+                                               eMyNodeState +
                                                " in " +
                                                toString ());
+    }
   }
 
   /**
@@ -176,8 +180,12 @@ public abstract class AbstractHCNode implements IHCNode
     if (DEBUG_NODE_STATE)
     {
       ValueEnforcer.notNull (eNodeState, "NodeState");
-      if (m_eNodeState.isAfter (eNodeState))
-        HCConsistencyChecker.consistencyError ("The new node state is invalid. Got " + eNodeState + " but having " + m_eNodeState);
+      final EHCNodeState eMyNodeState = getNodeState ();
+      if (eMyNodeState.isAfter (eNodeState))
+        HCConsistencyChecker.consistencyError ("The new node state is invalid. Got " +
+                                               eNodeState +
+                                               " but having " +
+                                               eMyNodeState);
     }
     m_eNodeState = eNodeState;
   }
@@ -218,7 +226,9 @@ public abstract class AbstractHCNode implements IHCNode
   @OverridingMethodsMustInvokeSuper
   protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
-  {}
+  {
+    // empty
+  }
 
   public final void finalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
                                        @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
@@ -239,7 +249,9 @@ public abstract class AbstractHCNode implements IHCNode
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
   protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
-  {}
+  {
+    // empty
+  }
 
   public final void consistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {

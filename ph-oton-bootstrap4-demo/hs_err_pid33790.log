@@ -1,0 +1,21 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x000000010ab709be, pid=33790, tid=23555
+#
+# JRE version: OpenJDK Runtime Environment Temurin-11.0.13+8 (11.0.13+8) (build 11.0.13+8)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-11.0.13+8 (11.0.13+8, mixed mode, tiered, compressed oops, g1 gc, bsd-amd64)
+# Problematic frame:
+# C  [libjimage.dylib+0x19be]  ImageStrings::find(Endian*, char const*, int*, unsigned int)+0x52
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:57342 -javaagent:/Users/philip/eclipse/jee-2024-06/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.osgi/1468/0/.cp/lib/javaagent-shaded.jar -Dfile.encoding=utf-8 -Dstdout.encoding=utf-8 -Dstderr.encoding=utf-8 com.helger.webappdemo.jetty.RunInJettyPHOTONDEMO_BS4
+
+Host: MacBookPro17,1 x86_64 2400 MHz, 8 cores, 8G, Darwin 24.3.0

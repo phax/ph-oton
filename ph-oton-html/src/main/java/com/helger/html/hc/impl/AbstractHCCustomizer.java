@@ -18,6 +18,7 @@ package com.helger.html.hc.impl;
 
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.html.hc.IHCCustomizer;
 
@@ -29,8 +30,24 @@ import com.helger.html.hc.IHCCustomizer;
 @Immutable
 public abstract class AbstractHCCustomizer implements IHCCustomizer
 {
-  public AbstractHCCustomizer ()
+  protected AbstractHCCustomizer ()
   {}
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    return true;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).getHashCode ();
+  }
 
   @Override
   public String toString ()

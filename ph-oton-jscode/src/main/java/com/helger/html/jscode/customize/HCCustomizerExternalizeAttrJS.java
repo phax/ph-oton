@@ -31,7 +31,10 @@ import com.helger.html.hc.impl.AbstractHCCustomizer;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.JSEventMap;
-import com.helger.html.jscode.JSFunction;
+import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSPackage;
+import com.helger.html.jscode.JSVar;
+import com.helger.html.jscode.html.JSHtml;
 
 public class HCCustomizerExternalizeAttrJS extends AbstractHCCustomizer
 {
@@ -45,16 +48,30 @@ public class HCCustomizerExternalizeAttrJS extends AbstractHCCustomizer
   {
     if (aNode instanceof IHCElement && !(aNode instanceof IHCScript <?>))
     {
-      final JSEventMap aEventMap = ((IHCElement <?>) aNode).getEventMap ();
-      if (aEventMap != null)
+      final IHCElement <?> aElement = (IHCElement <?>) aNode;
+      final JSEventMap aEventMap = aElement.getEventMap ();
+      if (aEventMap != null && !aEventMap.isEmpty ())
+      {
+        // Make sure the element has an ID
+        aElement.ensureID ();
+
+        final JSPackage aJS = new JSPackage ();
+        // Remember element in variable
+        final JSVar jsElem = aJS.variable ("_elem" + GlobalIDFactory.getNewStringID (),
+                                           JSHtml.documentGetElementById (aElement));
+
+        // Convert all inline JS to addEventListener calls
         for (final Map.Entry <EJSEvent, CollectingJSCodeProvider> aEntry : aEventMap.getAllEventHandler ().entrySet ())
         {
-          // "ag" for "automatically generated"
-          final JSFunction aFunc = new JSFunction ("_photon_ag" + GlobalIDFactory.getNewIntID ());
-          aFunc.body ().add (aEntry.getValue ());
-          aTargetNode.addChild (new HCScriptInline (aFunc));
-          aEventMap.setHandler (aEntry.getKey (), aFunc.invoke ());
+          final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
+          aAnonFunction.body ().add (aEntry.getValue ());
+          aJS.add (jsElem.invoke ("addEventListener").arg (aEntry.getKey ().getJSEventName ()).arg (aAnonFunction));
         }
+        aEventMap.clear ();
+
+        // add inline script node
+        aTargetNode.addChild (new HCScriptInline (aJS));
+      }
     }
   }
 }

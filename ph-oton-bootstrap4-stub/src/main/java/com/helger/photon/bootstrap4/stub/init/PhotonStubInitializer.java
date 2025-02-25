@@ -28,6 +28,7 @@ import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.ext.HCCustomizerAutoFocusFirstCtrl;
 import com.helger.html.hc.impl.HCCustomizerList;
+import com.helger.html.jscode.customize.HCCustomizerExternalizeAttrJS;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
@@ -36,7 +37,6 @@ import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.app.html.PhotonMetaElements;
 import com.helger.photon.bootstrap4.BootstrapCustomConfig;
-import com.helger.photon.bootstrap4.servlet.BootstrapCustomizer;
 import com.helger.photon.core.appid.CApplicationID;
 import com.helger.photon.core.appid.PhotonGlobalState;
 import com.helger.photon.core.servlet.AbstractPublicApplicationServlet;
@@ -121,7 +121,8 @@ public final class PhotonStubInitializer
     {
       // Special Bootstrap customizer
       HCSettings.getMutableConversionSettings ()
-                .setCustomizer (new HCCustomizerList (new BootstrapCustomizer (), new HCCustomizerAutoFocusFirstCtrl ()));
+                .setCustomizer (new HCCustomizerList (new HCCustomizerAutoFocusFirstCtrl (),
+                                                      new HCCustomizerExternalizeAttrJS ()));
     }
 
     // Set default icon set if none is defined
@@ -135,8 +136,10 @@ public final class PhotonStubInitializer
     // Add default mapping from Application ID to path
     if (!PhotonGlobalState.containsAnyApplicationServletPathMapping ())
     {
-      PhotonGlobalState.state (CApplicationID.APP_ID_PUBLIC).setServletPath (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
-      PhotonGlobalState.state (CApplicationID.APP_ID_SECURE).setServletPath (AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonGlobalState.state (CApplicationID.APP_ID_PUBLIC)
+                       .setServletPath (AbstractPublicApplicationServlet.SERVLET_DEFAULT_PATH);
+      PhotonGlobalState.state (CApplicationID.APP_ID_SECURE)
+                       .setServletPath (AbstractSecureApplicationServlet.SERVLET_DEFAULT_PATH);
     }
     if (!PhotonGlobalState.getInstance ().hasDefaultApplicationID ())
       PhotonGlobalState.getInstance ().setDefaultApplicationID (CApplicationID.APP_ID_PUBLIC);

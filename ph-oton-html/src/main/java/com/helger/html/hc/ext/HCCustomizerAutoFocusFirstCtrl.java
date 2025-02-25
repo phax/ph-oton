@@ -18,7 +18,6 @@ package com.helger.html.hc.ext;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EContinue;
 import com.helger.commons.wrapper.Wrapper;
 import com.helger.html.EHTMLVersion;
@@ -89,21 +88,5 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
   {
     if (aNode instanceof IHCForm <?>)
       setAutoFocusOnFirstControl (aNode);
-  }
-
-  @Override
-  public boolean equals (final Object o)
-  {
-    if (o == this)
-      return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
-      return false;
-    return true;
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return new HashCodeGenerator (this).getHashCode ();
   }
 }

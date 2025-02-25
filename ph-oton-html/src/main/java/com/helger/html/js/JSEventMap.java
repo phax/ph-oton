@@ -113,11 +113,21 @@ public class JSEventMap implements Serializable
     return eJSEvent != null && m_aEvents.containsKey (eJSEvent);
   }
 
+  public boolean isEmpty ()
+  {
+    return m_aEvents.isEmpty ();
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsMap <EJSEvent, CollectingJSCodeProvider> getAllEventHandler ()
   {
     return m_aEvents.getClone ();
+  }
+
+  public void clear ()
+  {
+    m_aEvents.clear ();
   }
 
   @Override

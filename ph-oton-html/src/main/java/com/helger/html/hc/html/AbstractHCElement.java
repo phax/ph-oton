@@ -929,8 +929,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   {}
 
   /*
-   * Note: return type cannot by IMicroElement since the checkbox object
-   * delivers an IMicroNodeList!
+   * Note: return type cannot by IMicroElement since the HCHtml class delivers
+   * an IMicroDocument!
    */
   @Override
   @Nonnull
@@ -940,7 +940,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     // Create the element
     final IMicroElement ret = createMicroElement (aConversionSettings);
     if (ret == null)
-      throw new IllegalStateException ("Created a null element!");
+      throw new IllegalStateException ("Created a null Micro Element!");
 
     // Set all HTML attributes etc.
     fillMicroElement (ret, aConversionSettings);

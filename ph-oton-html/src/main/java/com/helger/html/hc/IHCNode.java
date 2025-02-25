@@ -42,7 +42,8 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
 
   /**
    * Customize the current node with the respective customizer.<br>
-   * This method is called at last once per {@link IHCNode}.
+   * This method is called at last once per {@link IHCNode}.<br>
+   * This is called first.
    *
    * @param aCustomizer
    *        The customizer to use. May be <code>null</code>.
@@ -59,7 +60,10 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
   /**
    * Finalize the node by applying any internal state that was not yet converted
    * to a HC element.<br>
-   * This method is called at last once per {@link IHCNode}.
+   * This method is called at last once per {@link IHCNode}.<br>
+   * This is called after
+   * {@link #customizeNode(IHCCustomizer, EHTMLVersion, IHCHasChildrenMutable)}
+   * as second.
    *
    * @param aConversionSettings
    *        The current conversion settings to be used. May not be
@@ -73,7 +77,10 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
 
   /**
    * Perform consistency checks on this node.<br>
-   * This method is called at last once per {@link IHCNode}.
+   * This method is called at last once per {@link IHCNode}.<br>
+   * This is called after
+   * {@link #finalizeNodeState(IHCConversionSettingsToNode, IHCHasChildrenMutable)}
+   * as third.
    *
    * @param aConversionSettings
    *        The current conversion settings to be used. May not be

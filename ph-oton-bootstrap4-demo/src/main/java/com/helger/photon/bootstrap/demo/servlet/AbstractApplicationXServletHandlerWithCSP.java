@@ -52,17 +52,13 @@ public abstract class AbstractApplicationXServletHandlerWithCSP extends Abstract
   {
     final CSPSourceList aScriptSrcList = new CSPSourceList ().addKeywordSelf ()
                                                              .addNonce (CSRFSessionManager.getInstance ().getNonce ())
-                                                             .addKeywordStrictDynamic ()
                                                              .addKeywordReportSample ();
     final CSPSourceList aStyleSrcList = new CSPSourceList ().addKeywordSelf ()
                                                             .addNonce (CSRFSessionManager.getInstance ().getNonce ())
-                                                            .addKeywordStrictDynamic ()
                                                             .addKeywordReportSample ();
     // Required for data tables
-    final CSPSourceList aStyleSrcAttrList = false ? null : new CSPSourceList ().addKeywordSelf ()
-                                                                               .addNonce (CSRFSessionManager.getInstance ()
-                                                                                                            .getNonce ())
-                                                                               .addKeywordUnsafeInline ();
+    final CSPSourceList aStyleSrcAttrList = false ? null
+                                                  : new CSPSourceList ().addKeywordSelf ().addKeywordUnsafeInline ();
     // Allow data images for Bootstrap 4
     final CSPSourceList aImgSrcList = new CSPSourceList ().addKeywordSelf ().addHost ("data:");
     final CSPSourceList aConnectSrcList = new CSPSourceList ().addKeywordSelf ();

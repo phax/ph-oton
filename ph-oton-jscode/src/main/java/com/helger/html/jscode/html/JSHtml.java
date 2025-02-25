@@ -136,6 +136,12 @@ public final class JSHtml
   }
 
   @Nonnull
+  public static JSInvocation documentAddEventListener ()
+  {
+    return document ().invoke ("addEventListener");
+  }
+
+  @Nonnull
   public static JSInvocation documentCreateAttribute ()
   {
     return document ().invoke ("createAttribute");
@@ -1005,7 +1011,8 @@ public final class JSHtml
   }
 
   @Nonnull
-  public static JSInvocation windowSetInterval (@Nonnull final JSAnonymousFunction aCallback, @Nonnegative final int nMillis)
+  public static JSInvocation windowSetInterval (@Nonnull final JSAnonymousFunction aCallback,
+                                                @Nonnegative final int nMillis)
   {
     return windowSetInterval ().arg (aCallback).arg (nMillis);
   }
@@ -1020,7 +1027,8 @@ public final class JSHtml
   }
 
   @Nonnull
-  public static JSInvocation windowSetTimeout (@Nonnull final JSAnonymousFunction aCallback, @Nonnegative final int nMillis)
+  public static JSInvocation windowSetTimeout (@Nonnull final JSAnonymousFunction aCallback,
+                                               @Nonnegative final int nMillis)
   {
     return windowSetTimeout ().arg (aCallback).arg (nMillis);
   }

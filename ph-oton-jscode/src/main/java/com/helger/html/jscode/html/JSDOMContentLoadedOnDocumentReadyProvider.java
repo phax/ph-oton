@@ -14,28 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.hc.config;
+package com.helger.html.jscode.html;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.js.IHasJSCode;
+import com.helger.html.jscode.JSAnonymousFunction;
 
 /**
- * Default implementation of {@link IHCOnDocumentReadyProvider} doing nothing!
+ * The default JS "DOMContentLoaded" event listener based "on document ready"
+ * provider.
  *
  * @author Philip Helger
  */
-public class DefaultHCOnDocumentReadyProvider implements IHCOnDocumentReadyProvider
+public class JSDOMContentLoadedOnDocumentReadyProvider implements IHCOnDocumentReadyProvider
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (DefaultHCOnDocumentReadyProvider.class);
-
   @Nonnull
-  public IHasJSCode createOnDocumentReady (@Nonnull final IHasJSCode aJSCodeProvider)
+  public IHasJSCode createOnDocumentReady (final IHasJSCode aJSCodeProvider)
   {
-    LOGGER.warn ("No 'OnDocumentReadyProvider' defined. Please call 'HCSettings.setOnDocumentReadyProvider' on application startup!");
-    return aJSCodeProvider;
+    final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
+    aAnonFunction.body ().add (aJSCodeProvider);
+    return JSHtml.documentAddEventListener ().arg ("DOMContentLoaded").arg (aAnonFunction);
   }
 }

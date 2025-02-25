@@ -8,3 +8,4 @@ zz
 .idea/
 .settings/ 
 target/
+generated/

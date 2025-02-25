@@ -66,7 +66,7 @@ public final class HCRenderer
                                                        @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode,
                                                        @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    // Run the global customizer
+    // Run the customizers
     aNode.customizeNode (aConversionSettings.getCustomizer (), aConversionSettings.getHTMLVersion (), aTargetNode);
 
     // finalize the node
