@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.html.tabular.AbstractHCTable;
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
@@ -81,12 +82,16 @@ public class BootstrapDataTables extends DataTables
     final BootstrapDataTables ret = new BootstrapDataTables (aTable);
     ret.setDisplayLocale (aLEC.getDisplayLocale ());
 
-    // The colgroup is now (2025-02) automatically added by DataTables
-    if (false)
-      ret.addAllColumns (aTable);
+    // Explicitly add all columns and apply the initial sorting
+    ret.addAllColumns (aTable);
 
     if (s_aConfigurator != null)
       s_aConfigurator.configure (aLEC, aTable, ret);
+
+    // Because DataTables renders its own "colgroup" element, we don't need ours
+    if (aTable instanceof AbstractHCTable <?>)
+      ((AbstractHCTable <?>) aTable).setRenderColGroupIfPresent (false);
+
     return ret;
   }
 }

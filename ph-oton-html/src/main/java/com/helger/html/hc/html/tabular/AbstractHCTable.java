@@ -35,9 +35,13 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        The implementing type
  */
-public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>> extends AbstractHCBaseTable <IMPLTYPE>
+public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYPE>> extends
+                                      AbstractHCBaseTable <IMPLTYPE>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractHCTable.class);
+
+  // This field is specific for Datatables handled tables only
+  private boolean m_bRenderColGroupIfPresent = false;
 
   public AbstractHCTable ()
   {
@@ -74,9 +78,15 @@ public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYP
     addColumns (aCols);
   }
 
+  public final void setRenderColGroupIfPresent (final boolean b)
+  {
+    m_bRenderColGroupIfPresent = b;
+  }
+
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
+                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
 
@@ -99,7 +109,7 @@ public abstract class AbstractHCTable <IMPLTYPE extends AbstractHCTable <IMPLTYP
     }
 
     // Append colgroup
-    if (getColGroup () != null && getColGroup ().hasColumns ())
+    if (getColGroup () != null && getColGroup ().hasColumns () && m_bRenderColGroupIfPresent)
       aElement.appendChild (getColGroup ().convertToMicroNode (aConversionSettings));
 
     // Table header
