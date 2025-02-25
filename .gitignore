@@ -3,6 +3,7 @@
 .pmd
 .project 
 *.iml
+hs_err_*.log
 zz
 
 .idea/
