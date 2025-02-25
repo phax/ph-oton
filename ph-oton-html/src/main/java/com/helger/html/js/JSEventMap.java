@@ -18,6 +18,7 @@ package com.helger.html.js;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -125,9 +126,16 @@ public class JSEventMap implements Serializable
     return m_aEvents.getClone ();
   }
 
-  public void clear ()
+  @Nonnegative
+  public int getCount ()
   {
-    m_aEvents.clear ();
+    return m_aEvents.size ();
+  }
+
+  @Nonnull
+  public EChange removeAll ()
+  {
+    return m_aEvents.removeAll ();
   }
 
   @Override

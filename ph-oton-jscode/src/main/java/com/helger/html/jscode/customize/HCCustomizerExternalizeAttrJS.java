@@ -56,18 +56,34 @@ public class HCCustomizerExternalizeAttrJS extends AbstractHCCustomizer
         aElement.ensureID ();
 
         final JSPackage aJS = new JSPackage ();
-        // Remember element in variable
-        final JSVar jsElem = aJS.variable ("_elem" + GlobalIDFactory.getNewStringID (),
-                                           JSHtml.documentGetElementById (aElement));
-
-        // Convert all inline JS to addEventListener calls
-        for (final Map.Entry <EJSEvent, CollectingJSCodeProvider> aEntry : aEventMap.getAllEventHandler ().entrySet ())
+        if (aEventMap.getCount () == 1)
         {
+          // Simpler code without explicit variable
+          final Map.Entry <EJSEvent, CollectingJSCodeProvider> aEntry = aEventMap.getAllEventHandler ()
+                                                                                 .getFirstEntry ();
           final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
           aAnonFunction.body ().add (aEntry.getValue ());
-          aJS.add (jsElem.invoke ("addEventListener").arg (aEntry.getKey ().getJSEventName ()).arg (aAnonFunction));
+          aJS.add (JSHtml.documentGetElementById (aElement)
+                         .invoke ("addEventListener")
+                         .arg (aEntry.getKey ().getJSEventName ())
+                         .arg (aAnonFunction));
         }
-        aEventMap.clear ();
+        else
+        {
+          // Remember element in variable
+          final JSVar jsElem = aJS.variable ("_elem" + GlobalIDFactory.getNewStringID (),
+                                             JSHtml.documentGetElementById (aElement));
+
+          // Convert all inline JS to addEventListener calls
+          for (final Map.Entry <EJSEvent, CollectingJSCodeProvider> aEntry : aEventMap.getAllEventHandler ()
+                                                                                      .entrySet ())
+          {
+            final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
+            aAnonFunction.body ().add (aEntry.getValue ());
+            aJS.add (jsElem.invoke ("addEventListener").arg (aEntry.getKey ().getJSEventName ()).arg (aAnonFunction));
+          }
+        }
+        aEventMap.removeAll ();
 
         // add inline script node
         aTargetNode.addChild (new HCScriptInline (aJS));
