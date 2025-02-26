@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.ajax.IAjaxRegistry;
@@ -52,8 +53,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import jakarta.servlet.ServletContext;
 
 /**
- * This listener is invoked during the servlet initialization. This is basically
- * a ServletContextListener.
+ * This listener is invoked during the servlet initialization. This is basically a
+ * ServletContextListener.
  *
  * @author Philip Helger
  */
@@ -195,6 +196,10 @@ public final class AppWebAppListener extends WebAppListenerBootstrap
     // JUL to SLF4J
     SLF4JBridgeHandler.removeHandlersForRootLogger ();
     SLF4JBridgeHandler.install ();
+
+    // This is required to match the CSP declarations
+    HCSettings.setUseNonceInScript (true);
+    HCSettings.setUseNonceInStyle (true);
   }
 
   @Override

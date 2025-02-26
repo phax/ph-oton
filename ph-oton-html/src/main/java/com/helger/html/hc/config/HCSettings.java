@@ -63,14 +63,14 @@ public final class HCSettings
   public static final boolean DEFAULT_SCRIPTS_IN_BODY = true;
 
   /** By default nonce attributes in scripts are disabled */
-  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_SCRIPTS = true;
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_SCRIPTS = false;
 
   /** By default nonce attributes in styles are disabled */
-  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_STYLES = true;
+  public static final boolean DEFAULT_USE_NONCE_ATTRIBUTES_IN_STYLES = false;
 
   /**
-   * By default in debug mode, regular resources are used, and in non-debug mode
-   * minified resources are used
+   * By default in debug mode, regular resources are used, and in non-debug mode minified resources
+   * are used
    */
   public static final boolean DEFAULT_USE_REGULAR_RESOURCES = GlobalDebug.isDebugMode ();
 
@@ -84,8 +84,8 @@ public final class HCSettings
   private static HCConversionSettings s_aConversionSettings = new HCConversionSettings (DEFAULT_HTML_VERSION);
 
   /**
-   * For security reasons, the password should not be auto-filled by the browser
-   * in the release-version
+   * For security reasons, the password should not be auto-filled by the browser in the
+   * release-version
    */
   @GuardedBy ("RW_LOCK")
   private static boolean s_bAutoCompleteOffForPasswordEdits = DEFAULT_AUTO_COMPLETE_OFF_FOR_PASSWORD_EDITS;
@@ -133,8 +133,7 @@ public final class HCSettings
   {}
 
   /**
-   * @return <code>true</code> if logging is disabled, <code>false</code> if it
-   *         is enabled.
+   * @return <code>true</code> if logging is disabled, <code>false</code> if it is enabled.
    */
   public static boolean isSilentMode ()
   {
@@ -145,8 +144,7 @@ public final class HCSettings
    * Enable or disable certain regular log messages.
    *
    * @param bSilentMode
-   *        <code>true</code> to disable logging, <code>false</code> to enable
-   *        logging
+   *        <code>true</code> to disable logging, <code>false</code> to enable logging
    * @return The previous value of the silent mode.
    */
   public static boolean setSilentMode (final boolean bSilentMode)
@@ -187,8 +185,8 @@ public final class HCSettings
   }
 
   /**
-   * @return The global read-only non-<code>null</code> conversion settings with
-   *         XML namespaces disabled
+   * @return The global read-only non-<code>null</code> conversion settings with XML namespaces
+   *         disabled
    */
   @Nonnull
   public static HCConversionSettings getConversionSettingsWithoutNamespaces ()
@@ -212,9 +210,8 @@ public final class HCSettings
   }
 
   /**
-   * Set the default HTML version to use. This sets the HTML version in the
-   * {@link HCSettings} class and performs some additional modifications
-   * depending on the chosen version.
+   * Set the default HTML version to use. This sets the HTML version in the {@link HCSettings} class
+   * and performs some additional modifications depending on the chosen version.
    *
    * @param eHTMLVersion
    *        The HTML version to use. May not be <code>null</code>.
@@ -284,8 +281,7 @@ public final class HCSettings
   }
 
   /**
-   * @return The default masking mode to emit script content. Never
-   *         <code>null</code>.
+   * @return The default masking mode to emit script content. Never <code>null</code>.
    */
   @Nonnull
   public static EHCScriptInlineMode getScriptInlineMode ()
@@ -294,9 +290,8 @@ public final class HCSettings
   }
 
   /**
-   * Set how the content of script elements should be emitted. This only affects
-   * new built objects, and does not alter existing objects! The default mode is
-   * {@link #DEFAULT_SCRIPT_INLINE_MODE}.
+   * Set how the content of script elements should be emitted. This only affects new built objects,
+   * and does not alter existing objects! The default mode is {@link #DEFAULT_SCRIPT_INLINE_MODE}.
    *
    * @param eMode
    *        The new masking mode to set. May not be <code>null</code>.
@@ -321,9 +316,8 @@ public final class HCSettings
   }
 
   /**
-   * Set how the content of style elements should be emitted. This only affects
-   * new built objects, and does not alter existing objects! The default mode is
-   * {@link #DEFAULT_STYLE_MODE}.
+   * Set how the content of style elements should be emitted. This only affects new built objects,
+   * and does not alter existing objects! The default mode is {@link #DEFAULT_STYLE_MODE}.
    *
    * @param eStyleInlineMode
    *        The new mode to set. May not be <code>null</code>.
@@ -366,9 +360,9 @@ public final class HCSettings
   }
 
   /**
-   * @return <code>true</code> if &lt;script&gt; elements should be placed in
-   *         the &lt;body&gt;, <code>false</code> if they should be placed in
-   *         the &lt;head&gt;. Default is <code>true</code>.
+   * @return <code>true</code> if &lt;script&gt; elements should be placed in the &lt;body&gt;,
+   *         <code>false</code> if they should be placed in the &lt;head&gt;. Default is
+   *         <code>true</code>.
    */
   public static boolean isScriptsInBody ()
   {
@@ -382,8 +376,8 @@ public final class HCSettings
   }
 
   /**
-   * @return <code>true</code> to include regular, non-minified resources or
-   *         <code>false</code> to include minified resources (JS + CSS).
+   * @return <code>true</code> to include regular, non-minified resources or <code>false</code> to
+   *         include minified resources (JS + CSS).
    */
   public static boolean isUseRegularResources ()
   {
@@ -397,8 +391,8 @@ public final class HCSettings
   }
 
   /**
-   * @return <code>true</code> if scripts should use the 'nonce' attribute,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if scripts should use the 'nonce' attribute, <code>false</code> if
+   *         not.
    * @since 9.3.0
    */
   public static boolean isUseNonceInScript ()
@@ -413,8 +407,8 @@ public final class HCSettings
   }
 
   /**
-   * @return <code>true</code> if styles (CSS) should use the 'nonce' attribute,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if styles (CSS) should use the 'nonce' attribute, <code>false</code>
+   *         if not.
    * @since 9.3.0
    */
   public static boolean isUseNonceInStyle ()
