@@ -232,11 +232,13 @@ jqphClass.prototype = {
     let head = document.head || document.getElementsByTagName('head')[0];
     let createStyle = function(media, content) {
       let cssNode = document.createElement('style');
-      cssNode.type = 'text\/css';
-      cssNode.title = 'dynamicallyLoadedCSS';
-      cssNode.media = media;
       if (data.styleNonce)
         cssNode.setAttribute("nonce", data.styleNonce);
+      cssNode.type = 'text\/css';
+      cssNode.title = 'dynamicallyLoadedCSS';
+      if (media)
+        cssNode.media = media;
+      // Apply content
       if (cssNode.styleSheet)
         cssNode.styleSheet.cssText = content;
       else
@@ -255,13 +257,14 @@ jqphClass.prototype = {
     if (data.externalcss) {
       for (let css in data.externalcss) {
         let cssNode = document.createElement('link');
-        cssNode.href = data.externalcss[css].href;
-        cssNode.type = 'text\/css';
-        cssNode.rel = 'stylesheet';
-        cssNode.title = 'dynamicallyLoadedCSS';
-        cssNode.media = data.externalcss[css].media;
         if (data.styleNonce)
           cssNode.setAttribute("nonce", data.styleNonce);
+        cssNode.rel = 'stylesheet';
+        cssNode.type = 'text\/css';
+        cssNode.href = data.externalcss[css].href;
+        cssNode.title = 'dynamicallyLoadedCSS';
+        if (data.externalcss[css].media)
+          cssNode.media = data.externalcss[css].media;
         head.appendChild(cssNode);
       }
     }
