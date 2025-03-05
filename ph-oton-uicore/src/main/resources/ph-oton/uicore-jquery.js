@@ -192,6 +192,9 @@ jqphClass.prototype = {
    * @param callbackFctEnd function Callback to be executed after the inclusions took place
    */
   jqueryAjaxSuccessHandler: function(data, textStatus, xhr, callbackFctStart, callbackFctEnd) {
+    const globalEvalOptions = data.scriptNonce ? { nonce: data.scriptNonce } : null;
+    const scriptLoadingOptions = data.scriptNonce ? { scriptAttrs: { nonce: data.scriptNonce } } : null;
+
     if (callbackFctStart) {
       // Invoke callback before the inclusions
       callbackFctStart(data.value, textStatus, xhr);
@@ -200,17 +203,15 @@ jqphClass.prototype = {
     // Do we have inline JS before external?
     if (data.inlinejsBeforeExternal) {
       // eval now
-      $.globalEval(data.inlinejsBeforeExternal);
+      $.globalEval(data.inlinejsBeforeExternal, globalEvalOptions);
     }
 
     // Do we have inline JS after external?
     let aInlineJSEval;
     if (data.inlinejsAfterExternal) {
       // Include inline JS
-      aInlineJSEval = function() { $.globalEval(data.inlinejsAfterExternal); }
+      aInlineJSEval = function() { $.globalEval(data.inlinejsAfterExternal, globalEvalOptions); }
     }
-
-    const scriptLoadingOptions = data.scriptNonce ? { scriptAttrs: { nonce: data.scriptNonce } } : null;
 
     if (data.externaljs) {
       // Include external JS elements
