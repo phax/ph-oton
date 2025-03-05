@@ -173,8 +173,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /** Delay the loading of server-side data until second draw. */
   private boolean m_bDeferLoading = DEFAULT_DEFER_LOADING;
   /**
-   * Destroy any existing table matching the selector and replace with the new
-   * options.
+   * Destroy any existing table matching the selector and replace with the new options.
    */
   private boolean m_bDestroy = DEFAULT_DESTROY;
   /** Initial paging start point. */
@@ -184,8 +183,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    */
   private DataTablesDom m_aDom;
   /**
-   * Define and position the table control elements to appear on the page. Since
-   * DT 2.0.0.
+   * Define and position the table control elements to appear on the page. Since DT 2.0.0.
    */
   private DataTablesLayout m_aLayout;
   /** Change the options in the page length select list. */
@@ -214,15 +212,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Since ("1.10.8")
   // missing rowId:string [DT_RowId]
   /**
-   * Allow the table to reduce in height when a limited number of rows are
-   * shown.
+   * Allow the table to reduce in height when a limited number of rows are shown.
    */
   private boolean m_bScrollCollapse = DEFAULT_SCROLL_COLLAPSE;
   /** Control case-sensitive filtering option. */
   // missing search.caseInsensitive:boolean [true]
   /**
-   * Enable / disable escaping of regular expression characters in the search
-   * term.
+   * Enable / disable escaping of regular expression characters in the search term.
    */
   // missing search.regex:boolean [false]
   /** Set an initial filtering condition on the table. */
@@ -265,12 +261,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private transient BiConsumer <JSPackage, JSLet> m_aJSAfterModifier;
 
   /**
-   * Apply to an existing table. If the table does not have an ID yet, a new one
-   * is created.
+   * Apply to an existing table. If the table does not have an ID yet, a new one is created.
    *
    * @param aTable
-   *        The table to apply the data table to. May not be <code>null</code>
-   *        and must have a valid ID!
+   *        The table to apply the data table to. May not be <code>null</code> and must have a valid
+   *        ID!
    */
   public DataTables (@Nonnull final IHCTable <?> aTable)
   {
@@ -324,8 +319,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * @return The unique int ID that is appended to the JS datatables object. Use
-   *         this ID for other DataTables related objects as well.
+   * @return The unique int ID that is appended to the JS datatables object. Use this ID for other
+   *         DataTables related objects as well.
    */
   public final int getGeneratedJSVariableSuffix ()
   {
@@ -333,9 +328,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * @return The name of the JS variable that contains the dataTable object. The
-   *         scope of the variable depends on the state of the
-   *         {@link #isGenerateOnDocumentReady()} method.
+   * @return The name of the JS variable that contains the dataTable object. The scope of the
+   *         variable depends on the state of the {@link #isGenerateOnDocumentReady()} method.
    */
   @Nonnull
   @Nonempty
@@ -412,12 +406,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * Feature control the end user's ability to change the paging display length
-   * of the table.
+   * Feature control the end user's ability to change the paging display length of the table.
    *
    * @param bLengthChange
-   *        <code>true</code> to enable it, <code>false</code> to disable it. If
-   *        <code>false</code> the selector on top disappears.
+   *        <code>true</code> to enable it, <code>false</code> to disable it. If <code>false</code>
+   *        the selector on top disappears.
    * @return this for chaining
    */
   @Nonnull
@@ -440,8 +433,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * @return <code>true</code> if the paging UI controls are displayed (bottom
-   *         right), <code>false</code> otheriwse.
+   * @return <code>true</code> if the paging UI controls are displayed (bottom right),
+   *         <code>false</code> otheriwse.
    */
   public boolean isPaging ()
   {
@@ -555,8 +548,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * @return <code>true</code> if DataTables server side processing is used,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if DataTables server side processing is used, <code>false</code>
+   *         otherwise.
    * @see #isClientSide()
    */
   public boolean isServerSide ()
@@ -565,8 +558,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * @return <code>true</code> if DataTables client side processing is used,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if DataTables client side processing is used, <code>false</code>
+   *         otherwise.
    * @see #isServerSide()
    */
   public boolean isClientSide ()
@@ -598,8 +591,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * Set footer callback - see
-   * https://datatables.net/examples/advanced_init/footer_callback.html
+   * Set footer callback - see https://datatables.net/examples/advanced_init/footer_callback.html
    *
    * @param aFooterCallback
    *        function footerCallback( tfoot, data, start, end, display )
@@ -619,8 +611,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * Set header callback - see
-   * https://datatables.net/reference/option/headerCallback
+   * Set header callback - see https://datatables.net/reference/option/headerCallback
    *
    * @param aHeaderCallback
    *        function headerCallback( thead, data, start, end, display )
@@ -815,12 +806,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * Retrieve the DataTables object for the given selector. Note that if the
-   * table has already been initialised, this parameter will cause DataTables to
-   * simply return the object that has already been set up - it will not take
-   * account of any changes you might have made to the initialisation object
-   * passed to DataTables (setting this parameter to true is an acknowledgement
-   * that you understand this!).
+   * Retrieve the DataTables object for the given selector. Note that if the table has already been
+   * initialised, this parameter will cause DataTables to simply return the object that has already
+   * been set up - it will not take account of any changes you might have made to the initialisation
+   * object passed to DataTables (setting this parameter to true is an acknowledgement that you
+   * understand this!).
    *
    * @param bRetrieve
    *        true to retrieve
@@ -1192,36 +1182,36 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
       aPlugin.finalizeDataTablesSettings (this);
 
-    final JSAssocArray aParams = new JSAssocArray ();
+    final JSAssocArray aJSParams = new JSAssocArray ();
 
     //
     // features
     //
 
     if (m_bAutoWidth != DEFAULT_AUTOWIDTH)
-      aParams.add ("autoWidth", m_bAutoWidth);
+      aJSParams.add ("autoWidth", m_bAutoWidth);
     if (m_bDeferRender != DEFAULT_DEFER_RENDER)
-      aParams.add ("deferRender", m_bDeferRender);
+      aJSParams.add ("deferRender", m_bDeferRender);
     if (m_bInfo != DEFAULT_INFO)
-      aParams.add ("info", m_bInfo);
+      aJSParams.add ("info", m_bInfo);
     if (m_bJQueryUI != DEFAULT_JQUERY_UI)
-      aParams.add ("jQueryUI", m_bJQueryUI);
+      aJSParams.add ("jQueryUI", m_bJQueryUI);
     if (m_bLengthChange != DEFAULT_LENGTH_CHANGE)
-      aParams.add ("lengthChange", m_bLengthChange);
+      aJSParams.add ("lengthChange", m_bLengthChange);
     if (m_bOrdering != DEFAULT_ORDERING)
-      aParams.add ("ordering", m_bOrdering);
+      aJSParams.add ("ordering", m_bOrdering);
     if (m_bPaging != DEFAULT_PAGING)
-      aParams.add ("paging", m_bPaging);
+      aJSParams.add ("paging", m_bPaging);
     if (m_bProcessing != DEFAULT_PROCESSING)
-      aParams.add ("processing", m_bProcessing);
+      aJSParams.add ("processing", m_bProcessing);
     if (m_eScrollX.isDefined ())
-      aParams.add ("scrollX", m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X));
+      aJSParams.add ("scrollX", m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X));
     if (m_aScrollY != null)
-      aParams.add ("scrollY", m_aScrollY);
+      aJSParams.add ("scrollY", m_aScrollY);
     if (m_bSearching != DEFAULT_SEARCHING)
-      aParams.add ("searching", m_bSearching);
+      aJSParams.add ("searching", m_bSearching);
     if (m_bStateSave != DEFAULT_STATE_SAVE)
-      aParams.add ("stateSave", m_bStateSave);
+      aJSParams.add ("stateSave", m_bStateSave);
 
     //
     // data
@@ -1230,74 +1220,77 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // Server handling parameters
     if (isServerSide ())
     {
-      aParams.add ("serverSide", true);
+      aJSParams.add ("serverSide", true);
       // This copies the content of the table
       final DataTablesServerData aServerData = new DataTablesServerData (m_aTable,
                                                                          m_aColumnDefs,
                                                                          m_aDisplayLocale,
                                                                          m_eServerFilterType);
       UIStateRegistry.getCurrent ().registerState (m_aTable.getID (), aServerData);
+
       // Remove all body rows to avoid initial double painting, as the most
       // reasonable state is retrieved from the server!
       m_aTable.removeAllBodyRows ();
 
-      final JSAnonymousFunction aAF = new JSAnonymousFunction ();
-      final JSParam aData = aAF.param ("data");
-      final JSParam aCallback = aAF.param ("callback");
-      aAF.param ("settings");
-      aAF.body ()
-         .add (m_aAjaxBuilder.getClone ()
-                             .data (JQuery.extend ().arg (aData).arg (m_aAjaxBuilder.data ()))
-                             .success (JSJQueryHelper.jqueryAjaxSuccessHandler (aCallback, null))
-                             .build ());
-      aParams.add ("ajax", aAF);
+      final JSAnonymousFunction aJSFun = new JSAnonymousFunction ();
+      final JSParam aJSData = aJSFun.param ("data");
+      final JSParam aJSSuccessCallback = aJSFun.param ("callback");
+      aJSFun.param ("settings");
+      aJSFun.body ()
+            .add (m_aAjaxBuilder.getClone ()
+                                .data (JQuery.extend ().arg (aJSData).arg (m_aAjaxBuilder.data ()))
+                                .success (JSJQueryHelper.jqueryAjaxSuccessHandler (aJSSuccessCallback, null))
+                                .build ());
+      aJSParams.add ("ajax", aJSFun);
+
+      // Register jQuery for request
       JSJQueryHelper.registerExternalResources ();
     }
     else
     {
-      aParams.add ("serverSide", false);
+      aJSParams.add ("serverSide", false);
     }
 
     //
     // callbacks
     //
     if (m_aFooterCallback != null)
-      aParams.add ("footerCallback", m_aFooterCallback);
+      aJSParams.add ("footerCallback", m_aFooterCallback);
     if (m_aHeaderCallback != null)
-      aParams.add ("headerCallback", m_aHeaderCallback);
+      aJSParams.add ("headerCallback", m_aHeaderCallback);
     if (m_aInitComplete != null)
-      aParams.add ("initComplete", m_aInitComplete);
+      aJSParams.add ("initComplete", m_aInitComplete);
 
     //
     // options
     //
 
     if (m_bDeferLoading != DEFAULT_DEFER_LOADING)
-      aParams.add ("deferLoading", m_bDeferLoading);
+      aJSParams.add ("deferLoading", m_bDeferLoading);
     if (m_bDestroy != DEFAULT_DESTROY)
-      aParams.add ("destroy", m_bDestroy);
+      aJSParams.add ("destroy", m_bDestroy);
     if (m_nDisplayStart != DEFAULT_DISPLAY_START)
-      aParams.add ("displayStart", m_nDisplayStart);
+      aJSParams.add ("displayStart", m_nDisplayStart);
     if (m_aDom != null)
-      aParams.add ("dom", m_aDom.getAsString ());
+      aJSParams.add ("dom", m_aDom.getAsString ());
     if (m_aLayout != null)
-      aParams.add ("layout", m_aLayout.getAsJSAssocArray ());
+      aJSParams.add ("layout", m_aLayout.getAsJSAssocArray ());
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
     {
       final Locale aRealLocale = m_aDisplayLocale != null ? m_aDisplayLocale : Locale.US;
-      aParams.add ("lengthMenu", m_aLengthMenu.getAsJSArray (aRealLocale));
+      aJSParams.add ("lengthMenu", m_aLengthMenu.getAsJSArray (aRealLocale));
     }
     // Provide any empty array if no sorting is defined, because otherwise an
     // implicit sorting of the first column, ascending is done
-    aParams.add ("order", m_aInitialOrder != null ? m_aInitialOrder.getAsJS () : new JSArray ());
+    aJSParams.add ("order", m_aInitialOrder != null ? m_aInitialOrder.getAsJS () : new JSArray ());
     if (m_nPageLength != DEFAULT_PAGE_LENGTH && m_bLengthChange)
-      aParams.add ("pageLength", m_nPageLength);
+      aJSParams.add ("pageLength", m_nPageLength);
     if (m_ePagingType != null && m_bPaging)
-      aParams.add ("pagingType", m_ePagingType.getName ());
+      aJSParams.add ("pagingType", m_ePagingType.getName ());
     if (m_bRetrieve != DEFAULT_RETRIEVE)
-      aParams.add ("retrieve", m_bRetrieve);
+      aJSParams.add ("retrieve", m_bRetrieve);
     if (m_bScrollCollapse != DEFAULT_SCROLL_COLLAPSE)
-      aParams.add ("scrollCollapse", m_bScrollCollapse);
+      aJSParams.add ("scrollCollapse", m_bScrollCollapse);
 
     //
     // DataTables - Columns
@@ -1307,7 +1300,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       final JSArray aArray = new JSArray ();
       for (final DataTablesColumnDef aColumnDef : m_aColumnDefs)
         aArray.add (aColumnDef.getAsJS ());
-      aParams.add ("columnDefs", aArray);
+      aJSParams.add ("columnDefs", aArray);
     }
 
     //
@@ -1331,7 +1324,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         // Inline texts
         aLanguage = createLanguageJson (m_aDisplayLocale);
       }
-      aParams.add ("language", aLanguage);
+      aJSParams.add ("language", aLanguage);
     }
 
     //
@@ -1341,7 +1334,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     {
       final IJSExpression aInitParams = aPlugin.getInitParams ();
       if (aInitParams != null)
-        aParams.add (aPlugin.getName (), aInitParams);
+        aJSParams.add (aPlugin.getName (), aInitParams);
     }
 
     //
@@ -1355,7 +1348,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       m_aTable.removeAllColumns ();
     }
 
-    modifyParams (aParams);
+    modifyParams (aJSParams);
 
     // main on document ready code
     final JSPackage aJSCode = new JSPackage ();
@@ -1363,7 +1356,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     if (m_aJSBeforeModifier != null)
       m_aJSBeforeModifier.accept (aJSCode);
 
-    final JSLet aJSTable = aJSCode.let (m_sJSVariableName, invokeDataTables ().arg (aParams));
+    final JSLet aJSTable = aJSCode.let (m_sJSVariableName, invokeDataTables ().arg (aJSParams));
 
     // Add plugin init JS
     for (final IDataTablesPlugin aPlugin : aRelevantPlugins)
