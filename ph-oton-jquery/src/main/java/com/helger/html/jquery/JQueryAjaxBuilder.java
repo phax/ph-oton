@@ -287,8 +287,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   }
 
   /**
-   * Set an anonymous beforeSend function. Type: Function( jqXHR jqXHR,
-   * PlainObject settings )
+   * Set an anonymous beforeSend function. Type: Function( jqXHR jqXHR, PlainObject settings )
    *
    * @param aBeforeSend
    *        May be <code>null</code>.
@@ -308,8 +307,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   }
 
   /**
-   * Set an anonymous complete function. Type: Function( jqXHR jqXHR, String
-   * textStatus )
+   * Set an anonymous complete function. Type: Function( jqXHR jqXHR, String textStatus )
    *
    * @param aComplete
    *        May be <code>null</code>.
@@ -329,8 +327,8 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   }
 
   /**
-   * Set an anonymous error function. Type: Function( jqXHR jqXHR, String
-   * textStatus, String errorThrown )
+   * Set an anonymous error function. Type: Function( jqXHR jqXHR, String textStatus, String
+   * errorThrown )
    *
    * @param aError
    *        May be <code>null</code>.
@@ -350,8 +348,8 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   }
 
   /**
-   * Set an anonymous success function. Type: Function( PlainObject data, String
-   * textStatus, jqXHR jqXHR )
+   * Set an anonymous success function. Type: Function( PlainObject data, String textStatus, jqXHR
+   * jqXHR )
    *
    * @param aSuccess
    *        May be <code>null</code>.
@@ -417,6 +415,20 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("url", m_aURL).getToString ();
+    return new ToStringGenerator (this).appendIfNotNull ("aAsync", m_aAsync)
+                                       .appendIfNotNull ("Cache", m_aCache)
+                                       .appendIfNotNull ("Data", m_aData)
+                                       .appendIfNotNull ("DataType", m_aDataType)
+                                       .appendIfNotNull ("GlobalEvents", m_aGlobalEvents)
+                                       .appendIfNotNull ("ProcessData", m_aProcessData)
+                                       .appendIfNotNull ("URL", m_aURL)
+                                       .appendIfNotNull ("Traditional", m_aTraditional)
+                                       .appendIfNotNull ("Method", m_aMethod)
+                                       .appendIfNotNull ("CallbackContext", m_aCallbackContext)
+                                       .appendIfNotNull ("BeforeSend", m_aBeforeSend)
+                                       .appendIfNotNull ("Complete", m_aComplete)
+                                       .appendIfNotNull ("Error", m_aError)
+                                       .appendIfNotNull ("Success", m_aSuccess)
+                                       .getToString ();
   }
 }
