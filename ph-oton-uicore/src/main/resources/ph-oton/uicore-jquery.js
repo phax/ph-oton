@@ -235,7 +235,7 @@ jqphClass.prototype = {
       cssNode.title = 'dynamicallyLoadedCSS';
       cssNode.media = media;
       if (data.styleNonce)
-        cssNode.nonce = data.styleNonce;
+        cssNode.setAttribute("nonce", data.styleNonce);
       if (cssNode.styleSheet)
         cssNode.styleSheet.cssText = content;
       else
@@ -260,7 +260,7 @@ jqphClass.prototype = {
         cssNode.title = 'dynamicallyLoadedCSS';
         cssNode.media = data.externalcss[css].media;
         if (data.styleNonce)
-          cssNode.nonce = data.styleNonce;
+          cssNode.setAttribute("nonce", data.styleNonce);
         head.appendChild(cssNode);
       }
     }
