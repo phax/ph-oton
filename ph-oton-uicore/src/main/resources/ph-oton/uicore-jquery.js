@@ -175,6 +175,7 @@ jqphClass.prototype = {
     var jthis = this;
     function _loadCurrent (){
       if (index < jsUrls.length) {
+        // More items to come
     	  jthis.cachedScriptWithJSCache (jsUrls[index], null, function() { 
           // Recursive load next item
           index++;
@@ -182,6 +183,7 @@ jqphClass.prototype = {
         });
       }
       else {
+        // Last item loaded
         if (finalCallback)
           finalCallback();
       }
