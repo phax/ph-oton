@@ -141,6 +141,7 @@ public class BasePageSettingsGlobal <WPECTYPE extends IWebPageExecutionContext> 
     // GlobalDebug
     {
       final BootstrapViewForm aForm = new BootstrapViewForm ();
+      aForm.setLeft (0);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelForCheckBox (EText.MSG_GLOBAL_DEBUG.getDisplayText (aDisplayLocale))
                                                    .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_GLOBAL_DEBUG,
                                                                                                       GlobalDebug.isDebugMode ()))));
