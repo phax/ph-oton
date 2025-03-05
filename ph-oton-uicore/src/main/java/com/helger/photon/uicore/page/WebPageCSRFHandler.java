@@ -26,7 +26,8 @@ import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.uicore.css.CPageParam;
 
 /**
- * Default implementation of {@link IWebPageCSRFHandler}.
+ * Default implementation of {@link IWebPageCSRFHandler}. Using the nonce from
+ * {@link CSRFSessionManager} internally.
  *
  * @author Philip Helger
  */
@@ -35,8 +36,8 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
   public static final boolean DEFAULT_CSRF_PREVENTION_ENABLED = true;
 
   /**
-   * The global instance of this class. This is used by default. All changes to
-   * this instance will effect all default occurrences.
+   * The global instance of this class. This is used by default. All changes to this instance will
+   * effect all default occurrences.
    */
   public static final WebPageCSRFHandler INSTANCE = new WebPageCSRFHandler ();
 
