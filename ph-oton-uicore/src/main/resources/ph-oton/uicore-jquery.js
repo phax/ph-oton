@@ -130,7 +130,7 @@ jqphClass.prototype = {
     });
 
     // Debug log
-    if (console.log)
+    if (false && console.log)
       console.log("Using Script loading options " + options)
 
     // Use $.ajax() since it is more flexible than $.getScript
