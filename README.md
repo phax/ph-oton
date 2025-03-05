@@ -77,8 +77,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-* v9.3.1 - work in progress
+* v9.3.1 - 2025-03-05
     * Re-added class `ChartPaletteDefault` in package `com.helger.photon.uictrls.chart`
+    * Made sure that dynamically loaded JS and CSS also get the `nonce` attributes, if applicable
 * v9.3.0 - 2025-02-26
     * Requires ph-web 10.4.0
     * Updated to Bootstrap Icons 1.11.3
