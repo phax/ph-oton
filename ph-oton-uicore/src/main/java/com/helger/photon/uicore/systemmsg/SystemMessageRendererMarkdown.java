@@ -32,8 +32,7 @@ import com.helger.photon.core.systemmsg.ISystemMessageRenderer;
 import com.helger.photon.uicore.UITextFormatter;
 
 /**
- * An implementation of {@link ISystemMessageRenderer} that renders the text
- * with Markdown.
+ * An implementation of {@link ISystemMessageRenderer} that renders the text with Markdown.
  *
  * @author Philip Helger
  * @since 8.4.3
@@ -43,7 +42,7 @@ public class SystemMessageRendererMarkdown implements ISystemMessageRenderer
   @Translatable
   protected enum EText implements IHasDisplayText
   {
-    DESCRIPTION ("Die Nachricht wird per Markdown formatiert", "The message will be rendered with Markdown (MD)");
+    DESCRIPTION ("Die Nachricht wird per Markdown (MD) formatiert", "The message will be rendered with Markdown (MD)");
 
     private final IMultilingualText m_aTP;
 
