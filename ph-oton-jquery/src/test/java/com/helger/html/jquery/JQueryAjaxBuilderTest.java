@@ -35,8 +35,10 @@ public final class JQueryAjaxBuilderTest
     final JSWriterSettings aSettings = new JSWriterSettings ().setIndentAndAlign (false);
 
     final JQueryAjaxBuilder aJAB = new JQueryAjaxBuilder ();
-    assertEquals ("$.ajax({cache:false});", aJAB.build ().getJSCode (aSettings));
+    assertEquals ("$.ajax(null,{cache:false});", aJAB.build ().getJSCode (aSettings));
     aJAB.async (false);
-    assertEquals ("$.ajax({async:false,cache:false});", aJAB.build ().getJSCode (aSettings));
+    assertEquals ("$.ajax(null,{async:false,cache:false});", aJAB.build ().getJSCode (aSettings));
+    aJAB.url ("http://here");
+    assertEquals ("$.ajax('http:\\/\\/here',{async:false,cache:false});", aJAB.build ().getJSCode (aSettings));
   }
 }

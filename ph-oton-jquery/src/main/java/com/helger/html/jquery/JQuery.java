@@ -19,6 +19,7 @@ package com.helger.html.jquery;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.w3c.dom.Node;
@@ -179,9 +180,12 @@ public final class JQuery
    * @since 9.3.1
    */
   @Nonnull
-  public static JQueryInvocation ajax (@Nonnull final IJSExpression aURL, @Nonnull final JSAssocArray aArgs)
+  public static JQueryInvocation ajax (@Nullable final IJSExpression aURL, @Nullable final JSAssocArray aArgs)
   {
-    return ajax ().arg (aURL).arg (aArgs);
+    final JQueryInvocation ret = ajax ().arg (aURL != null ? aURL : JSExpr.NULL);
+    if (aArgs != null)
+      ret.arg (aArgs);
+    return ret;
   }
 
   /**
