@@ -20,10 +20,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.html.hc.config.HCSettings;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
+import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSParam;
+import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 
@@ -44,20 +47,17 @@ public final class JSJQueryHelper
   }
 
   /**
-   * Create a JS anonymous function that can be used as a callback to the
-   * jQuery.ajax success callback. Note: this can only be used with extended
-   * HTML responses!
+   * Create a JS anonymous function that can be used as a callback to the jQuery.ajax success
+   * callback. Note: this can only be used with extended HTML responses!
    *
    * @param aHandlerBeforeInclude
-   *        The JS expression that must resolve to a JS function that takes 3
-   *        arguments. See jQuery.ajax success callback for details. Note: this
-   *        should not be in an invocation but an invokable! This handler is
-   *        invoked BEFORE the inclusions take place.
+   *        The JS expression that must resolve to a JS function that takes 3 arguments. See
+   *        jQuery.ajax success callback for details. Note: this should not be in an invocation but
+   *        an invokable! This handler is invoked BEFORE the inclusions take place.
    * @param aHandlerAfterInclude
-   *        The JS expression that must resolve to a JS function that takes 3
-   *        arguments. See jQuery.ajax success callback for details. Note: this
-   *        should not be in an invocation but an invokable! This handler is
-   *        invoked AFTER the inclusions take place.
+   *        The JS expression that must resolve to a JS function that takes 3 arguments. See
+   *        jQuery.ajax success callback for details. Note: this should not be in an invocation but
+   *        an invokable! This handler is invoked AFTER the inclusions take place.
    * @return Never <code>null</code>.
    */
   @Nonnull
@@ -68,6 +68,22 @@ public final class JSJQueryHelper
     final JSParam aData = ret.param ("a");
     final JSParam aTextStatus = ret.param ("b");
     final JSParam aXHR = ret.param ("c");
+
+    // Add special names to data
+    {
+      final boolean bScriptNonce = HCSettings.isUseNonceInScript ();
+      final boolean bStyleNonce = HCSettings.isUseNonceInStyle ();
+      if (bScriptNonce || bStyleNonce)
+      {
+        final String sNonce = CSRFSessionManager.getInstance ().getNonce ();
+        // Avoid null data
+        ret.body ().assign (aData, aData.cor (new JSAssocArray ()));
+        if (bScriptNonce)
+          ret.body ().assign (aData.ref ("scriptNonce"), sNonce);
+        if (bStyleNonce)
+          ret.body ().assign (aData.ref ("styleNonce"), sNonce);
+      }
+    }
 
     ret.body ()
        .invoke ("jqph", "jqueryAjaxSuccessHandler")

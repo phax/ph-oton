@@ -28,8 +28,8 @@ FormHelperClass.prototype =
    * @return a map where the key is prefix combined with the field name and the value is the field value 
    */
   getAllFormValues : function(formid,fieldPrefix) {
-    var vals={};
-    var elems=$('#'+formid).find('*');
+    let vals={};
+    let elems=$('#'+formid).find('*');
     // Checkbox and array need "prop"
     elems.filter ('input[type="checkbox"], input[type="radio"]').each(
       function(){ vals[fieldPrefix+this.name+'()']=$(this).prop('checked'); }
@@ -42,14 +42,13 @@ FormHelperClass.prototype =
     elems.filter ('input[type="text"], input[type="hidden"], select[multiple!="multiple"], textarea').each(
       function(){ vals[fieldPrefix+this.name]=$(this).val(); }
     );
-    // var i = 0; for (var x in vals) console.log(++i+" - "+x+"="+vals[x]);
+    // let i = 0; for (let x in vals) console.log(++i+" - "+x+"="+vals[x]);
     return vals;
   },
 
   setAllFormValues : function(formid,vals) {
-    var val;
-    for (var name in vals) {
-      val = vals[name];
+    for (let name in vals) {
+      const val = vals[name];
       if (this.patternProp.test (name))
         $('#'+formid+' [name="'+name.substring(0,name.length-2)+'"]').prop('checked', val);
       else
@@ -79,8 +78,8 @@ FormHelperClass.prototype =
   
   // array[map{id,url|html}]
   updateElements : function(updates) {
-    for (var i in updates) {
-      var update = updates[i];
+    for (let i in updates) {
+      const update = updates[i];
       if (update.url)
         FormHelper.updateElementViaAjax(update.id,update.url);
       else
@@ -90,7 +89,7 @@ FormHelperClass.prototype =
   
   // string,string,string,string,array[map{id,url|html}],array[map{id,url|html}]
   saveFormData : function(formid,fieldPrefix,pageID,ajaxUrl,successUpdates,errorUpdates) {
-    var vals=FormHelper.getAllFormValues(formid,fieldPrefix);
+    let vals=FormHelper.getAllFormValues(formid,fieldPrefix);
     vals.$pageID=pageID;
     $.ajax({
       url:ajaxUrl,

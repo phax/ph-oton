@@ -15,63 +15,48 @@
  * limitations under the License.
  */
 // Extend jQuery
-(function($)
-{
+(function($) {
   // Disable an element
-  $.fn.disable = function()
-  {
-    return $(this).each(function()
-    {
+  $.fn.disable = function() {
+    return $(this).each(function() {
       $(this).prop('disabled', true);
     });
   };
   // Enable an element
-  $.fn.enable = function()
-  {
-    return $(this).each(function()
-    {
+  $.fn.enable = function() {
+    return $(this).each(function() {
       $(this).prop('disabled', false);
     });
   };
   // Enable or disable an element
-  $.fn.setDisabled = function(bDisabled)
-  {
-    return $(this).each(function()
-    {
+  $.fn.setDisabled = function(bDisabled) {
+    return $(this).each(function() {
       $(this).prop('disabled', bDisabled);
     });
   };
-  
+
   // Check a checkbox
-  $.fn.check = function()
-  {
-    return $(this).each(function()
-    {
+  $.fn.check = function() {
+    return $(this).each(function() {
       $(this).prop('checked', true);
     });
   };
   // uncheck a checkbox
-  $.fn.uncheck = function()
-  {
-    return $(this).each(function()
-    {
+  $.fn.uncheck = function() {
+    return $(this).each(function() {
       $(this).prop('checked', false);
     });
   };
   // check or uncheck a checkbox
-  $.fn.setChecked = function(bChecked)
-  {
-    return $(this).each(function()
-    {
+  $.fn.setChecked = function(bChecked) {
+    return $(this).each(function() {
       $(this).prop('checked', bChecked);
     });
   };
-  
+
   // Enable or disable an element
-  $.fn.setReadOnly = function(bReadOnly)
-  {
-    return $(this).each(function()
-    {
+  $.fn.setReadOnly = function(bReadOnly) {
+    return $(this).each(function() {
       if (bReadOnly)
         $(this).attr("readonly", "readonly");
       else
@@ -82,8 +67,8 @@
   // Source: http://stackoverflow.com/questions/2830542/prevent-double-submission-of-forms-in-jquery
   // jQuery plugin to prevent double submission of forms
   $.fn.preventDoubleSubmission = function() {
-    $(this).on('submit',function(e){
-      var $form = $(this);
+    $(this).on('submit', function(e) {
+      let $form = $(this);
       if ($form.data('submitted') === true) {
         // Previously submitted - don't submit again
         e.preventDefault();
@@ -98,10 +83,10 @@
     // Keep chainability
     return this;
   };
-  
+
   // Undo changes from #preventDoubleSubmission
   $.fn.resetSubmitted = function() {
-    var $form = $(this);
+    let $form = $(this);
     // Mark it so that the next submit can occur
     $form.data('submitted', false);
     // Re-enable all reset and submit buttons within the form
@@ -112,13 +97,13 @@
 })(jQuery);
 
 // Set a default AJAX error handler
-$(document).ajaxError (function(event, jqXHR, ajaxSettings, thrownError) {
+$(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
   if (!window.ajaxSetupErrorShown) {
-    window.ajaxSetupErrorShown=true;
-    
-    alert('AJAX error invoking '+ajaxSettings.url+
-          '\nStatus=' + jqXHR.statusText+' ('+jqXHR.status+')'+
-          (thrownError ? '\nError thrown='+thrownError : ''));
+    window.ajaxSetupErrorShown = true;
+
+    alert('AJAX error invoking ' + ajaxSettings.url +
+      '\nStatus=' + jqXHR.statusText + ' (' + jqXHR.status + ')' +
+      (thrownError ? '\nError thrown=' + thrownError : ''));
   }
 });
 
@@ -128,58 +113,64 @@ jQuery.escapeRegExp = function(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
-function jqphClass(){}
+function jqphClass() { }
 jqphClass.prototype = {
-  scriptCache : [],
-  
-  cachedScript : function(url, options, success) {
+  scriptCache: [],
+
+  cachedScript: function(url, options, success) {
     if (console.log)
-      console.log ("Dynamically loading Script "+url);
+      console.log("Dynamically loading Script " + url);
 
     // allow user to set any option except for dataType, cache, and url
     options = jQuery.extend(options || {}, {
-      dataType : "script",
-      cache : true,
-      url : url,
-      success : success
+      dataType: "script",
+      cache: true,
+      url: url,
+      success: success
     });
+
+    // Debug log
+    if (console.log)
+      console.log("Using Script loading options " + options)
+
     // Use $.ajax() since it is more flexible than $.getScript
     // Return the jqXHR object so we can chain callbacks
     return jQuery.ajax(options);
   },
 
-  cachedScriptWithJSCache : function(url, options, fctSuccess) {
-    var jthis = this;
+  cachedScriptWithJSCache: function(url, options, fctSuccess) {
+    let jthis = this;
     if (jQuery.inArray(url, jthis.scriptCache) >= 0) {
       // No need to try again - already loaded
       if (false && console.log)
-        console.log ("Script "+url+ " was already loaded - not loading again");
+        console.log("Script " + url + " was already loaded - not loading again");
       fctSuccess();
     }
     else {
-      jthis.cachedScript (url, options, function () {
+      jthis.cachedScript(url, options, function() {
         fctSuccess();
         // Remember that it was already loaded
         jthis.scriptCache.push(url);
       });
     }
   },
-		
+
   /**
    * Load the provided JS URLs in the correct order
    * @param jsUrls Array of JavaScript resource URLs
+   * @param scriptLoadingOptions Map of custom options for script loading
    * @param finalCallback Function to be executed after the last script was loaded
-   */  
-  loadJSInOrder:function(jsUrls,finalCallback){
-    var index = 0;
-    var jthis = this;
-    function _loadCurrent (){
+   */
+  loadJSInOrder: function(jsUrls, scriptLoadingOptions, finalCallback) {
+    let index = 0;
+    let jthis = this;
+    function _loadCurrent() {
       if (index < jsUrls.length) {
         // More items to come
-    	  jthis.cachedScriptWithJSCache (jsUrls[index], null, function() { 
+        jthis.cachedScriptWithJSCache(jsUrls[index], scriptLoadingOptions, function() {
           // Recursive load next item
           index++;
-          _loadCurrent ();
+          _loadCurrent();
         });
       }
       else {
@@ -191,7 +182,7 @@ jqphClass.prototype = {
     // load first
     _loadCurrent();
   },
-    
+
   /**
    * Default jQuery AJAX success handler for ph AJAX server side components
    * @param data PlainObject The data returned from the server, formatted according to the dataType parameter
@@ -200,86 +191,90 @@ jqphClass.prototype = {
    * @param callbackFctStart function Callback to be included before the inclusions take place
    * @param callbackFctEnd function Callback to be executed after the inclusions took place
    */
-  jqueryAjaxSuccessHandler:function(data,textStatus,xhr,callbackFctStart,callbackFctEnd){
+  jqueryAjaxSuccessHandler: function(data, textStatus, xhr, callbackFctStart, callbackFctEnd) {
     if (callbackFctStart) {
       // Invoke callback before the inclusions
-      callbackFctStart(data.value,textStatus,xhr);
+      callbackFctStart(data.value, textStatus, xhr);
     }
-    
+
     // Do we have inline JS before external?
     if (data.inlinejsBeforeExternal) {
       // eval now
       $.globalEval(data.inlinejsBeforeExternal);
     }
-    
+
     // Do we have inline JS after external?
-    var aInlineJSEval;
-    if(data.inlinejsAfterExternal){
+    let aInlineJSEval;
+    if (data.inlinejsAfterExternal) {
       // Include inline JS
       aInlineJSEval = function() { $.globalEval(data.inlinejsAfterExternal); }
     }
 
-    if(data.externaljs){
+    const scriptLoadingOptions = data.scriptNonce ? { scriptAttrs: { nonce: data.scriptNonce } } : null;
+
+    if (data.externaljs) {
       // Include external JS elements
       if (aInlineJSEval) {
         // external JS and inline JS is present
-        this.loadJSInOrder (data.externaljs, aInlineJSEval);
+        this.loadJSInOrder(data.externaljs, scriptLoadingOptions, aInlineJSEval);
       } else {
         // Only external JS present
-        this.loadJSInOrder (data.externaljs);
-      }  
+        this.loadJSInOrder(data.externaljs, scriptLoadingOptions);
+      }
     }
-    else{
+    else {
       // No external JS - Maybe inline JS?
       if (aInlineJSEval)
         aInlineJSEval();
     }
-    
-    var head=document.head || document.getElementsByTagName('head')[0];
-    var createStyle = function(media,content) {
-      var cssNode=document.createElement('style');
-      cssNode.type='text\/css';
-      cssNode.title='dynamicallyLoadedCSS';
-      cssNode.media=media;
+
+    let head = document.head || document.getElementsByTagName('head')[0];
+    let createStyle = function(media, content) {
+      let cssNode = document.createElement('style');
+      cssNode.type = 'text\/css';
+      cssNode.title = 'dynamicallyLoadedCSS';
+      cssNode.media = media;
+      if (data.styleNonce)
+        cssNode.nonce = data.styleNonce;
       if (cssNode.styleSheet)
-        cssNode.styleSheet.cssText=content;
+        cssNode.styleSheet.cssText = content;
       else
         cssNode.appendChild(document.createTextNode(content));
       return cssNode;
     };
-    
+
     // Inline CSS before externals?
-    if(data.inlinecssBeforeExternal) {
-      for(var css in data.inlinecssBeforeExternal){
-        head.appendChild(createStyle (data.inlinecssBeforeExternal[css].media,
-                                      data.inlinecssBeforeExternal[css].content));
+    if (data.inlinecssBeforeExternal) {
+      for (let css in data.inlinecssBeforeExternal) {
+        head.appendChild(createStyle(data.inlinecssBeforeExternal[css].media, data.inlinecssBeforeExternal[css].content));
       }
     }
-    
+
     // External CSS elements present?
-    if(data.externalcss){
-      for(var css in data.externalcss){
-        var cssNode=document.createElement('link');
-        cssNode.href=data.externalcss[css].href;
-        cssNode.type='text\/css';
-        cssNode.rel='stylesheet';
-        cssNode.title='dynamicallyLoadedCSS';
-        cssNode.media=data.externalcss[css].media;
+    if (data.externalcss) {
+      for (let css in data.externalcss) {
+        let cssNode = document.createElement('link');
+        cssNode.href = data.externalcss[css].href;
+        cssNode.type = 'text\/css';
+        cssNode.rel = 'stylesheet';
+        cssNode.title = 'dynamicallyLoadedCSS';
+        cssNode.media = data.externalcss[css].media;
+        if (data.styleNonce)
+          cssNode.nonce = data.styleNonce;
         head.appendChild(cssNode);
       }
     }
 
     // Inline CSS after externals?
-    if(data.inlinecssAfterExternal) {
-      for(var css in data.inlinecssAfterExternal){
-        head.appendChild(createStyle (data.inlinecssAfterExternal[css].media,
-                                      data.inlinecssAfterExternal[css].content));
+    if (data.inlinecssAfterExternal) {
+      for (let css in data.inlinecssAfterExternal) {
+        head.appendChild(createStyle(data.inlinecssAfterExternal[css].media, data.inlinecssAfterExternal[css].content));
       }
     }
-    
+
     if (callbackFctEnd) {
       // Invoke callback after the inclusions
-      callbackFctEnd(data.value,textStatus,xhr);
+      callbackFctEnd(data.value, textStatus, xhr);
     }
   }
 };
