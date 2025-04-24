@@ -79,6 +79,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 * v9.3.2 - work in progress
     * Updated to Jetty 11.0.25
+    * Ensuring that BigDecimals with a negative scale are correctly formatted in JS. See [#23](https://github.com/phax/ph-oton/issues/23) - thx @domids
 * v9.3.1 - 2025-03-05
     * Re-added class `ChartPaletteDefault` in package `com.helger.photon.uictrls.chart`
     * Made sure that dynamically loaded JS and CSS also get the `nonce` attributes, if applicable
