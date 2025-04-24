@@ -77,7 +77,8 @@ public class JSAtomBigDecimal extends AbstractJSAtomNumeric
   @Nonnull
   private static BigDecimal _getParam (@Nonnull final AbstractJSAtomNumeric aRhs)
   {
-    return aRhs instanceof JSAtomBigDecimal ? ((JSAtomBigDecimal) aRhs).getContainedValue () : BigDecimal.valueOf (aRhs.doubleValue ());
+    return aRhs instanceof JSAtomBigDecimal ? ((JSAtomBigDecimal) aRhs).getContainedValue () : BigDecimal.valueOf (aRhs
+                                                                                                                       .doubleValue ());
   }
 
   @Override
@@ -128,7 +129,8 @@ public class JSAtomBigDecimal extends AbstractJSAtomNumeric
 
   public void generate (@Nonnull final JSFormatter aFormatter)
   {
-    aFormatter.plain (m_aValue.toString ());
+    // Avoid exponential notation
+    aFormatter.plain (m_aValue.toPlainString ());
   }
 
   @Override
