@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap4.pages.monitoring;
 
+import java.math.RoundingMode;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -24,11 +25,13 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.CGlobal;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.Translatable;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTWebDateHelper;
+import com.helger.commons.math.MathHelper;
 import com.helger.commons.statistics.IStatisticsHandlerCache;
 import com.helger.commons.statistics.IStatisticsHandlerCounter;
 import com.helger.commons.statistics.IStatisticsHandlerKeyedCounter;
@@ -90,7 +93,9 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
     MSG_SUM ("Summe", "Sum"),
     MSG_COUNT ("Anzahl", "Count"),
     MSG_CACHE_HIT ("Cache hit", "Cache hit"),
-    MSG_CACHE_MISS ("Cache miss", "Cache miss");
+    MSG_CACHE_HIT_PERC ("Cache hit %", "Cache hit %"),
+    MSG_CACHE_MISS ("Cache miss", "Cache miss"),
+    MSG_CACHE_MISS_PERC ("Cache miss %", "Cache miss %");
 
     private final IMultilingualText m_aTP;
 
@@ -209,10 +214,14 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                                                                                                               aDisplayLocale),
                                              new DTCol (EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale),
+                                             new DTCol (EText.MSG_CACHE_HIT_PERC.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
+                                                                                                                                  aDisplayLocale),
                                              new DTCol (EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                               aDisplayLocale)
-                                                                                                             .setInitialSorting (ESortOrder.DESCENDING)).setID (getID () +
-                                                                                                                                                                "cache");
+                                                                                                             .setInitialSorting (ESortOrder.DESCENDING),
+                                             new DTCol (EText.MSG_CACHE_MISS_PERC.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
+                                                                                                                                   aDisplayLocale)).setID (getID () +
+                                                                                                                                                           "cache");
 
     // Third party modules
     StatisticsVisitor.visitStatistics (new IStatisticsVisitorCallback ()
@@ -260,11 +269,27 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       public void onCache (@Nonnull final String sName, @Nonnull final IStatisticsHandlerCache aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
+        {
+          final int nScale = 4;
+          final int nTotal = aHandler.getInvocationCount ();
+          final int nHits = aHandler.getHits ();
+          final String sHitsPerc = MathHelper.getDividedBigDecimal (nHits, nTotal, nScale, RoundingMode.HALF_UP)
+                                             .multiply (CGlobal.BIGDEC_100)
+                                             .setScale (nScale - 2)
+                                             .toPlainString () + "%";
+          final int nMisses = aHandler.getMisses ();
+          final String sMissPerc = MathHelper.getDividedBigDecimal (nMisses, nTotal, nScale, RoundingMode.HALF_UP)
+                                             .multiply (CGlobal.BIGDEC_100)
+                                             .setScale (nScale - 2)
+                                             .toPlainString () + "%";
           aTableCache.addBodyRow ()
                      .addCells (sName,
-                                Integer.toString (aHandler.getInvocationCount ()),
-                                Integer.toString (aHandler.getHits ()),
-                                Integer.toString (aHandler.getMisses ()));
+                                Integer.toString (nTotal),
+                                Integer.toString (nHits),
+                                sHitsPerc,
+                                Integer.toString (nMisses),
+                                sMissPerc);
+        }
       }
 
       @Override
