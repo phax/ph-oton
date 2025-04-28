@@ -16,6 +16,7 @@
  */
 package com.helger.photon.bootstrap4.pages.monitoring;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
 
@@ -214,12 +215,12 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
                                                                                                                               aDisplayLocale),
                                              new DTCol (EText.MSG_CACHE_HIT.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                              aDisplayLocale),
-                                             new DTCol (EText.MSG_CACHE_HIT_PERC.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
+                                             new DTCol (EText.MSG_CACHE_HIT_PERC.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DOUBLE,
                                                                                                                                   aDisplayLocale),
                                              new DTCol (EText.MSG_CACHE_MISS.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
                                                                                                                               aDisplayLocale)
                                                                                                              .setInitialSorting (ESortOrder.DESCENDING),
-                                             new DTCol (EText.MSG_CACHE_MISS_PERC.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.INT,
+                                             new DTCol (EText.MSG_CACHE_MISS_PERC.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DOUBLE,
                                                                                                                                    aDisplayLocale)).setID (getID () +
                                                                                                                                                            "cache");
 
@@ -270,25 +271,21 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
       {
         if (aHandler.getInvocationCount () > 0)
         {
-          final int nScale = 4;
           final int nTotal = aHandler.getInvocationCount ();
           final int nHits = aHandler.getHits ();
-          final String sHitsPerc = MathHelper.getDividedBigDecimal (nHits, nTotal, nScale, RoundingMode.HALF_UP)
-                                             .multiply (CGlobal.BIGDEC_100)
-                                             .setScale (nScale - 2)
-                                             .toPlainString () + "%";
           final int nMisses = aHandler.getMisses ();
-          final String sMissPerc = MathHelper.getDividedBigDecimal (nMisses, nTotal, nScale, RoundingMode.HALF_UP)
-                                             .multiply (CGlobal.BIGDEC_100)
-                                             .setScale (nScale - 2)
-                                             .toPlainString () + "%";
+          final int nScale = 4;
+          final BigDecimal aHitsPerc = MathHelper.getDividedBigDecimal (nHits, nTotal, nScale, RoundingMode.HALF_UP)
+                                                 .multiply (CGlobal.BIGDEC_100)
+                                                 .setScale (nScale - 2);
+          final BigDecimal aMissPerc = CGlobal.BIGDEC_100.subtract (aHitsPerc);
           aTableCache.addBodyRow ()
                      .addCells (sName,
                                 Integer.toString (nTotal),
                                 Integer.toString (nHits),
-                                sHitsPerc,
+                                aHitsPerc.toPlainString () + "%",
                                 Integer.toString (nMisses),
-                                sMissPerc);
+                                aMissPerc.toPlainString () + "%");
         }
       }
 
