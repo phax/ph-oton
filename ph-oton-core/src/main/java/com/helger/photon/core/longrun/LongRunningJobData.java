@@ -115,16 +115,16 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
     return m_sStartingUserID;
   }
 
-  void onJobEnd (@Nonnull final ESuccess eExecSucess, @Nonnull final LongRunningJobResult aResult)
+  void onJobEnd (@Nonnull final ESuccess eExecSuccess, @Nonnull final LongRunningJobResult aResult)
   {
-    ValueEnforcer.notNull (eExecSucess, "ExecSuccess");
+    ValueEnforcer.notNull (eExecSuccess, "ExecSuccess");
     ValueEnforcer.notNull (aResult, "Result");
     if (isEnded ())
       throw new IllegalStateException ("Job was already ended");
 
     // Save the date
     m_aEndDateTime = PDTFactory.getCurrentLocalDateTime ();
-    m_eExecSuccess = ETriState.valueOf (eExecSucess.isSuccess ());
+    m_eExecSuccess = ETriState.valueOf (eExecSuccess.isSuccess ());
     // Build the main results
     m_aResult = aResult;
     if (m_aResult == null)

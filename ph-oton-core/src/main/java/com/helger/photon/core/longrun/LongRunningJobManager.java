@@ -78,16 +78,16 @@ public final class LongRunningJobManager
    * @param sJobID
    *        The internal long running job ID created from
    *        {@link #onStartJob(ILongRunningJob,String)}.
-   * @param eExecSucess
+   * @param eExecSuccess
    *        Was the job execution successful or not from a technical point of
    *        view? May not be <code>null</code>. If a JobExecutionException was
    *        thrown, this should be {@link ESuccess#FAILURE}.
    * @param aResult
    *        The main job results.
    */
-  public void onEndJob (@Nullable final String sJobID, @Nonnull final ESuccess eExecSucess, @Nonnull final LongRunningJobResult aResult)
+  public void onEndJob (@Nullable final String sJobID, @Nonnull final ESuccess eExecSuccess, @Nonnull final LongRunningJobResult aResult)
   {
-    ValueEnforcer.notNull (eExecSucess, "ExecSuccess");
+    ValueEnforcer.notNull (eExecSuccess, "ExecSuccess");
     ValueEnforcer.notNull (aResult, "Result");
 
     // Remove from running job list
@@ -97,7 +97,7 @@ public final class LongRunningJobManager
         throw new IllegalArgumentException ("Illegal job ID '" + sJobID + "' passed!");
 
       // End the job - inside the writeLock
-      ret.onJobEnd (eExecSucess, aResult);
+      ret.onJobEnd (eExecSuccess, aResult);
       return ret;
     });
 

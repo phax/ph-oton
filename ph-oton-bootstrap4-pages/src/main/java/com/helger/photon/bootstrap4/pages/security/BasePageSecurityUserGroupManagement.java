@@ -119,7 +119,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
                     "An error occurred while undeleting user group ''{0}''!"),
     ERROR_CREATE ("Die neue BenutzerGruppe konnte nicht angelegt werden!", "Failed to create the new user group!"),
     SUCCESS_CREATE ("Die neue BenutzerGruppe wurde erfolgreich angelegt!", "Successfully created the new user group!"),
-    SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Sucessfully edited the user group!");
+    SUCCESS_EDIT ("Die Benutzergruppe wurde erfolgreich bearbeitet!", "Successfully edited the user group!");
 
     private final IMultilingualText m_aTP;
 
@@ -451,7 +451,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final String sName = EText.LABEL_NAME.getDisplayText (aDisplayLocale);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabelMandatory (sName)
                                                    .setCtrl (new HCEdit (new RequestField (FIELD_NAME,
-                                                                                           aSelectedObject == null ? null
+                                                                                           aSelectedObject == null
+                                                                                                                   ? null
                                                                                                                    : aSelectedObject.getName ())).setPlaceholder (sName))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_NAME)));
     }
@@ -461,7 +462,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final String sDescription = EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale);
       aForm.addFormGroup (new BootstrapFormGroup ().setLabel (sDescription)
                                                    .setCtrl (new HCTextAreaAutosize (new RequestField (FIELD_DESCRIPTION,
-                                                                                                       aSelectedObject == null ? null
+                                                                                                       aSelectedObject ==
+                                                                                                                          null ? null
                                                                                                                                : aSelectedObject.getDescription ())).setPlaceholder (sDescription))
                                                    .setErrorList (aFormErrors.getListOfField (FIELD_DESCRIPTION)));
     }
