@@ -27,8 +27,7 @@ import com.helger.commons.version.Version;
 import com.helger.jsch.config.ThirdPartyModuleProvider_ph_jsch;
 
 /**
- * Implement this SPI interface if your JAR file contains external third party
- * modules.
+ * Implement this SPI interface if your JAR file contains external third party modules.
  *
  * @author Philip Helger
  */
@@ -38,7 +37,7 @@ public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPar
   public static final IThirdPartyModule COMMONS_NET = new ThirdPartyModule ("Apache Commons Net",
                                                                             "Apache",
                                                                             ELicense.APACHE2,
-                                                                            new Version (3, 8, 0),
+                                                                            new Version (3, 11, 1),
                                                                             "http://commons.apache.org/proper/commons-net/");
 
   @Nullable

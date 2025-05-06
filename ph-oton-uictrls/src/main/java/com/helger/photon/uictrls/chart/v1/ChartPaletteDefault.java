@@ -23,42 +23,40 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.css.decl.CSSRGB;
 import com.helger.css.decl.CSSRGBA;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 @Immutable
 public final class ChartPaletteDefault
 {
   // Source: http://download.oracle.com/tech/blaf/specs/colorpalette.html
-  private static final CSSRGB [] BASE_COLORS = new CSSRGB [] { new CSSRGB (51, 102, 204),
-                                                               new CSSRGB (153, 204, 255),
-                                                               new CSSRGB (153, 153, 51),
-                                                               new CSSRGB (102, 102, 153),
-                                                               new CSSRGB (204, 153, 51),
-                                                               new CSSRGB (0, 102, 102),
-                                                               new CSSRGB (51, 153, 255),
-                                                               new CSSRGB (153, 51, 0),
-                                                               new CSSRGB (204, 204, 153),
-                                                               new CSSRGB (102, 102, 102),
-                                                               new CSSRGB (255, 204, 102),
-                                                               new CSSRGB (102, 153, 204),
-                                                               new CSSRGB (102, 51, 102),
-                                                               new CSSRGB (153, 153, 204),
-                                                               new CSSRGB (204, 204, 204),
-                                                               new CSSRGB (102, 153, 153),
-                                                               new CSSRGB (204, 204, 102),
-                                                               new CSSRGB (204, 102, 0),
-                                                               new CSSRGB (153, 153, 255),
-                                                               new CSSRGB (0, 102, 204),
-                                                               new CSSRGB (153, 204, 204),
-                                                               new CSSRGB (153, 153, 153),
-                                                               new CSSRGB (255, 204, 0),
-                                                               new CSSRGB (0, 153, 153),
-                                                               new CSSRGB (153, 204, 51),
-                                                               new CSSRGB (255, 153, 0),
-                                                               new CSSRGB (153, 153, 102),
-                                                               new CSSRGB (102, 204, 204),
-                                                               new CSSRGB (51, 153, 102),
-                                                               new CSSRGB (204, 204, 51) };
+  private static final CSSRGB [] BASE_COLORS = { new CSSRGB (51, 102, 204),
+                                                 new CSSRGB (153, 204, 255),
+                                                 new CSSRGB (153, 153, 51),
+                                                 new CSSRGB (102, 102, 153),
+                                                 new CSSRGB (204, 153, 51),
+                                                 new CSSRGB (0, 102, 102),
+                                                 new CSSRGB (51, 153, 255),
+                                                 new CSSRGB (153, 51, 0),
+                                                 new CSSRGB (204, 204, 153),
+                                                 new CSSRGB (102, 102, 102),
+                                                 new CSSRGB (255, 204, 102),
+                                                 new CSSRGB (102, 153, 204),
+                                                 new CSSRGB (102, 51, 102),
+                                                 new CSSRGB (153, 153, 204),
+                                                 new CSSRGB (204, 204, 204),
+                                                 new CSSRGB (102, 153, 153),
+                                                 new CSSRGB (204, 204, 102),
+                                                 new CSSRGB (204, 102, 0),
+                                                 new CSSRGB (153, 153, 255),
+                                                 new CSSRGB (0, 102, 204),
+                                                 new CSSRGB (153, 204, 204),
+                                                 new CSSRGB (153, 153, 153),
+                                                 new CSSRGB (255, 204, 0),
+                                                 new CSSRGB (0, 153, 153),
+                                                 new CSSRGB (153, 204, 51),
+                                                 new CSSRGB (255, 153, 0),
+                                                 new CSSRGB (153, 153, 102),
+                                                 new CSSRGB (102, 204, 204),
+                                                 new CSSRGB (51, 153, 102),
+                                                 new CSSRGB (204, 204, 51) };
 
   private static final CSSRGBA [] COLORS = new CSSRGBA [BASE_COLORS.length];
   private static final CSSRGBA [] FILL_COLORS = new CSSRGBA [BASE_COLORS.length];
@@ -84,7 +82,6 @@ public final class ChartPaletteDefault
    */
   @Nonnull
   @Nonempty
-  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static String getColorString (final int nIndex)
   {
     return COLORS[nIndex % COLORS.length].getAsString ();
@@ -97,7 +94,6 @@ public final class ChartPaletteDefault
    */
   @Nonnull
   @Nonempty
-  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static String getFillColorString (final int nIndex)
   {
     return FILL_COLORS[nIndex % FILL_COLORS.length].getAsString ();
@@ -110,7 +106,6 @@ public final class ChartPaletteDefault
    */
   @Nonnull
   @Nonempty
-  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static String getHighlightColorString (final int nIndex)
   {
     return HIGHLIGHT_COLORS[nIndex % HIGHLIGHT_COLORS.length].getAsString ();

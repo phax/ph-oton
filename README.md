@@ -98,6 +98,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.0.1 - 2025-05-06 [backport]
+    * Updated to ph-commons 11.2.1
+    * Updated to ph-web 10.0.2
+    * Updated to Jetty 10.0.25
+    * Moved the Bootstrap 3 binding to https://github.com/phax/ph-oton-bootstrap3
 * v9.0.0 - 2023-02-14
     * Using Java 11 as the baseline
     * Updated to ph-commons 11

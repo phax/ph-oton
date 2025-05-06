@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file was generated automatically - do NOT modify!
+Written at Apr 28, 2025, 5:06:30 PM Z-->
+<root>
+  <item id="admin" creationldt="2025-02-26T10:02:13.879282" desiredlocale="en_GB" lastloginldt="2025-04-28T19:06:20.604119" logincount="5" consecutivefailedlogincount="0" disabled="false">
+    <loginname>admin@helger.com</loginname>
+    <emailaddress>admin@helger.com</emailaddress>
+    <passwordhash algorithm="PBKDF2_SHA256_1000_48" salt="d5904f66d96035254455e02bf962c933bbedb0efacc7e106a8aa6f933ebeb305">6c6585bdce87bf2e4ca3f2add6b566616639208cf6d46208b2e28f2b8bb75f83bd78e7d338d6c92dcc8ffa65b3cf9404</passwordhash>
+    <lastname>Administrator</lastname>
+  </item>
+</root>

@@ -26,8 +26,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Abstract base class for UL and OL elements.
  *
@@ -37,7 +35,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @param <ITEMTYPE>
  *        The item type
  */
-public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>> extends
+public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>>
+                                     extends
                                      AbstractHCElementWithInternalChildren <IMPLTYPE, ITEMTYPE> implements
                                      IHCList <IMPLTYPE, ITEMTYPE>
 {
@@ -50,8 +49,8 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
   }
 
   /**
-   * Callback method to be implemented in derived classes. Called every time
-   * after an item was added.
+   * Callback method to be implemented in derived classes. Called every time after an item was
+   * added.
    *
    * @param aItem
    *        The added item. Never <code>null</code>.
@@ -133,7 +132,6 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
   }
 
   @Nonnull
-  @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
   public final IMPLTYPE addItem (@Nullable final String sChild)
   {
     addAndReturnItem (sChild);
@@ -141,7 +139,6 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
   }
 
   @Nonnull
-  @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
   public final IMPLTYPE addItem (@Nullable final String... aChildren)
   {
     addAndReturnItem (aChildren);
@@ -149,7 +146,6 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
   }
 
   @Nonnull
-  @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
   public final IMPLTYPE addItem (@Nullable final IHCNode aChild)
   {
     addAndReturnItem (aChild);
@@ -157,7 +153,6 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
   }
 
   @Nonnull
-  @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
   public final IMPLTYPE addItem (@Nullable final IHCNode... aChildren)
   {
     addAndReturnItem (aChildren);
@@ -165,7 +160,6 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
   }
 
   @Nonnull
-  @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
   public final IMPLTYPE addItem (@Nullable final Iterable <? extends IHCNode> aChildren)
   {
     addAndReturnItem (aChildren);

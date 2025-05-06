@@ -47,10 +47,7 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 @Immutable
-@SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public final class BootstrapFormHelper
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_ERROR_TEXT = DefaultCSSClassProvider.create ("form-group-error-text");
@@ -220,19 +217,19 @@ public final class BootstrapFormHelper
                                                                  @Nonnull final Locale aContentLocale,
                                                                  final boolean bWithLocation)
   {
-    String sText = "";
+    StringBuilder sText = new StringBuilder ();
 
     if (bWithLocation)
     {
       final String sErrorLocation = aError.getErrorLocation ().getAsString ();
       if (StringHelper.hasText (sErrorLocation))
-        sText += sErrorLocation + " ";
+        sText.append (sErrorLocation).append (" ");
     }
 
     {
       final String sErrorID = aError.getErrorID ();
       if (StringHelper.hasText (sErrorID))
-        sText += "[" + sErrorID + "] ";
+        sText.append ("[").append (sErrorID).append ("] ");
     }
 
     {
@@ -240,12 +237,12 @@ public final class BootstrapFormHelper
       if (StringHelper.hasNoText (sErrorText))
         LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
       else
-        sText += sErrorText;
+        sText.append (sErrorText);
     }
 
     final BootstrapInvalidFeedback aErrorBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
     // Display it, even if it is empty (because of non-translation)
-    aErrorBlock.addChild (sText);
+    aErrorBlock.addChild (sText.toString ());
     return aErrorBlock;
   }
 

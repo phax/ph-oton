@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file was generated automatically - do NOT modify!
+Written at Apr 28, 2025, 5:42:12 PM Z-->
+<items>
+  <item ldt="2025-04-28T19:05:54.476511" user="$GUEST$" type="execute" success="true">{"audit-initialized":[]}</item>
+  <item ldt="2025-04-28T19:05:54.605417" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","config","already-assigned"]}</item>
+  <item ldt="2025-04-28T19:05:54.605469" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","view","already-assigned"]}</item>
+  <item ldt="2025-04-28T19:05:54.605501" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugconfig","config","already-assigned"]}</item>
+  <item ldt="2025-04-28T19:05:54.605530" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugview","view","already-assigned"]}</item>
+  <item ldt="2025-04-28T19:06:13.942717" user="$GUEST$" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:06:16.805520" user="$GUEST$" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:06:20.603988" user="admin" type="execute" success="true">{"login-user":["admin","admin@helger.com"]}</item>
+  <item ldt="2025-04-28T19:06:20.605855" user="admin" type="modify" success="true">{"user":["update-last-login","admin"]}</item>
+  <item ldt="2025-04-28T19:06:20.653857" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:06:26.161017" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:06:40.892406" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:07:00.311491" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:07:41.513679" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:38:17.928270" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:13.934441" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:26.177175" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:51.793307" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:54.454364" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:56.039666" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:56.671115" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:57.299491" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:57.799828" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:58.847834" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:39:59.458711" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:41:24.287392" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:41:24.870372" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:41:25.094587" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:41:25.371682" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:42:04.920207" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:42:06.280417" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:42:06.881376" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:42:08.226799" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:42:09.736957" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:42:11.210464" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+  <item ldt="2025-04-28T19:42:12.375798" user="admin" type="execute" success="false">{"login":[null,"no-such-loginname"]}</item>
+</items>

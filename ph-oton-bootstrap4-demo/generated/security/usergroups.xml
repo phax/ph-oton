@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file was generated automatically - do NOT modify!
+Written at Feb 26, 2025, 9:02:23 AM Z-->
+<root>
+  <item id="ugadmin" creationldt="2025-02-26T10:02:13.886285" lastmodldt="2025-02-26T10:02:13.887723" lastmoduserid="$GUEST$" name="Administrators">
+    <user id="admin" />
+    <role id="config" />
+    <role id="view" />
+  </item>
+  <item id="ugconfig" creationldt="2025-02-26T10:02:13.887973" lastmodldt="2025-02-26T10:02:13.888177" lastmoduserid="$GUEST$" name="Config user">
+    <role id="config" />
+  </item>
+  <item id="ugview" creationldt="2025-02-26T10:02:13.888439" lastmodldt="2025-02-26T10:02:13.888624" lastmoduserid="$GUEST$" name="View user">
+    <role id="view" />
+  </item>
+</root>

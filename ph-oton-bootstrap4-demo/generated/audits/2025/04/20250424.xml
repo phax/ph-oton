@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file was generated automatically - do NOT modify!
+Written at Apr 24, 2025, 12:55:55 PM Z-->
+<items>
+  <item ldt="2025-04-24T14:51:59.301130" user="$GUEST$" type="execute" success="true">{"audit-initialized":[]}</item>
+  <item ldt="2025-04-24T14:51:59.431804" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","config","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:51:59.431866" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","view","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:51:59.431900" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugconfig","config","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:51:59.431930" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugview","view","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:52:23.341957" user="admin" type="execute" success="true">{"login-user":["admin","admin@helger.com"]}</item>
+  <item ldt="2025-04-24T14:52:23.345429" user="admin" type="modify" success="true">{"user":["update-last-login","admin"]}</item>
+  <item ldt="2025-04-24T14:55:35.086623" user="$GUEST$" type="execute" success="true">{"audit-initialized":[]}</item>
+  <item ldt="2025-04-24T14:55:35.199046" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","config","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:55:35.199099" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","view","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:55:35.199133" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugconfig","config","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:55:35.199165" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugview","view","already-assigned"]}</item>
+  <item ldt="2025-04-24T14:55:55.632322" user="admin" type="execute" success="true">{"login-user":["admin","admin@helger.com"]}</item>
+  <item ldt="2025-04-24T14:55:55.636514" user="admin" type="modify" success="true">{"user":["update-last-login","admin"]}</item>
+</items>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file was generated automatically - do NOT modify!
+Written at Feb 26, 2025, 9:06:12 AM Z-->
+<items>
+  <item ldt="2025-02-26T10:02:13.638528" user="$GUEST$" type="execute" success="true">{"audit-initialized":[]}</item>
+  <item ldt="2025-02-26T10:02:13.884952" user="$GUEST$" type="create" success="true">{"user":["admin","predefined-user","admin@helger.com","admin@helger.com",null,"Administrator",null,"en_GB",null,false]}</item>
+  <item ldt="2025-02-26T10:02:13.885798" user="$GUEST$" type="create" success="true">{"role":["config","Config user",null,"predefined"]}</item>
+  <item ldt="2025-02-26T10:02:13.886196" user="$GUEST$" type="create" success="true">{"role":["view","View user",null,"predefined"]}</item>
+  <item ldt="2025-02-26T10:02:13.886656" user="$GUEST$" type="create" success="true">{"usergroup":["ugadmin","predefined-usergroup","Administrators",null,null]}</item>
+  <item ldt="2025-02-26T10:02:13.887347" user="$GUEST$" type="modify" success="true">{"usergroup":["assign-user","ugadmin","admin"]}</item>
+  <item ldt="2025-02-26T10:02:13.887671" user="$GUEST$" type="modify" success="true">{"usergroup":["assign-role","ugadmin","config"]}</item>
+  <item ldt="2025-02-26T10:02:13.887955" user="$GUEST$" type="modify" success="true">{"usergroup":["assign-role","ugadmin","view"]}</item>
+  <item ldt="2025-02-26T10:02:13.888167" user="$GUEST$" type="create" success="true">{"usergroup":["ugconfig","predefined-usergroup","Config user",null,null]}</item>
+  <item ldt="2025-02-26T10:02:13.888418" user="$GUEST$" type="modify" success="true">{"usergroup":["assign-role","ugconfig","config"]}</item>
+  <item ldt="2025-02-26T10:02:13.888614" user="$GUEST$" type="create" success="true">{"usergroup":["ugview","predefined-usergroup","View user",null,null]}</item>
+  <item ldt="2025-02-26T10:02:13.888833" user="$GUEST$" type="modify" success="true">{"usergroup":["assign-role","ugview","view"]}</item>
+  <item ldt="2025-02-26T10:04:08.217530" user="admin" type="execute" success="true">{"login-user":["admin","admin@helger.com"]}</item>
+  <item ldt="2025-02-26T10:04:08.222616" user="admin" type="modify" success="true">{"user":["update-last-login","admin"]}</item>
+  <item ldt="2025-02-26T10:05:57.626581" user="$GUEST$" type="execute" success="true">{"audit-initialized":[]}</item>
+  <item ldt="2025-02-26T10:05:57.719709" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","config","already-assigned"]}</item>
+  <item ldt="2025-02-26T10:05:57.719762" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugadmin","view","already-assigned"]}</item>
+  <item ldt="2025-02-26T10:05:57.719790" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugconfig","config","already-assigned"]}</item>
+  <item ldt="2025-02-26T10:05:57.719819" user="$GUEST$" type="modify" success="false">{"usergroup":["assign-role","ugview","view","already-assigned"]}</item>
+  <item ldt="2025-02-26T10:06:12.533666" user="admin" type="execute" success="true">{"login-user":["admin","admin@helger.com"]}</item>
+  <item ldt="2025-02-26T10:06:12.537122" user="admin" type="modify" success="true">{"user":["update-last-login","admin"]}</item>
+</items>

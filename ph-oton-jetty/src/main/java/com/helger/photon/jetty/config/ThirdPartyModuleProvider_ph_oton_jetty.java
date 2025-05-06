@@ -26,8 +26,7 @@ import com.helger.commons.thirdparty.ThirdPartyModule;
 import com.helger.commons.version.Version;
 
 /**
- * Implement this SPI interface if your JAR file contains external third party
- * modules.
+ * Implement this SPI interface if your JAR file contains external third party modules.
  *
  * @author Philip Helger
  */
@@ -38,7 +37,7 @@ public final class ThirdPartyModuleProvider_ph_oton_jetty implements IThirdParty
   public static final IThirdPartyModule JETTY = new ThirdPartyModule ("Jetty",
                                                                       "Eclipse",
                                                                       ELicense.APACHE2,
-                                                                      new Version (10, 0, 13),
+                                                                      new Version (10, 0, 25),
                                                                       "https://eclipse.org/jetty/");
 
   @Nullable

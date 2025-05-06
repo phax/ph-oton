@@ -22,8 +22,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.annotation.CodingStyleguideUnaware;
 import com.helger.commons.annotation.PresentForCodeCoverage;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * This contains global JS function wrappers.<br>
  * Source: http://www.w3schools.com/jsref/jsref_obj_global.asp
@@ -32,7 +30,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @Immutable
 @CodingStyleguideUnaware
-@SuppressFBWarnings ("NM_METHOD_NAMING_CONVENTION")
 public final class JSGlobal
 {
   @PresentForCodeCoverage

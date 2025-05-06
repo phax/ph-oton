@@ -22,12 +22,12 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.2</version>
     <relativePath />
   </parent>
   <groupId>com.helger.photon</groupId>
   <artifactId>ph-oton-parent-pom</artifactId>
-  <version>9.0.0</version>
+  <version>9.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ph-oton</name>
   <description>Base POM to build the ph-oton web stack</description>
@@ -37,21 +37,21 @@
   <licenses>
     <license>
       <name>Apache 2</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
   
   <scm>
-    <connection>scm:git:git@github.com:phax/ph-oton.git</connection>
-    <developerConnection>scm:git:git@github.com:phax/ph-oton.git</developerConnection>
-    <url>http://github.com/phax/ph-oton</url>
-    <tag>ph-oton-parent-pom-9.0.0</tag>
+    <connection>scm:git:https://github.com/phax/ph-oton.git</connection>
+    <developerConnection>scm:git:https://github.com/phax/ph-oton.git</developerConnection>
+    <url>https://github.com/phax/ph-oton</url>
+    <tag>9.0.x</tag>
   </scm>
 
   <organization>
     <name>Philip Helger</name>
-    <url>http://www.helger.com</url>
+    <url>https://www.helger.com</url>
   </organization>
 
   <developers>
@@ -59,7 +59,7 @@
       <id>philip</id>
       <name>Philip Helger</name>
       <email>ph(at)helger.com</email>
-      <url>http://www.helger.com</url>
+      <url>https://www.helger.com</url>
     </developer>
   </developers>
   
@@ -67,9 +67,9 @@
     <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
-    <log4j.version>2.19.0</log4j.version>
-    <jetty.version>10.0.13</jetty.version>
-    <ph-commons.version>11.0.1</ph-commons.version>
+    <log4j.version>2.24.3</log4j.version>
+    <jetty.version>10.0.25</jetty.version>
+    <ph-commons.version>11.2.1</ph-commons.version>
   </properties>
 
   <repositories>
@@ -103,33 +103,33 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-poi</artifactId>
-        <version>6.0.0</version>
+        <version>6.0.4</version>
       </dependency>
       <dependency>
         <groupId>com.helger.schedule</groupId>
         <artifactId>ph-schedule-parent-pom</artifactId>
-        <version>5.0.0</version>
+        <version>5.0.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.masterdata</groupId>
         <artifactId>ph-masterdata-parent-pom</artifactId>
-        <version>7.0.0</version>
+        <version>7.0.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-css-parent-pom</artifactId>
-        <version>7.0.0</version>
+        <version>7.0.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>10.0.1</version>
+        <version>10.0.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -232,27 +232,6 @@
 
       <dependency>
         <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3-uictrls</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3-pages</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-bootstrap3-stub</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-bootstrap4</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -280,7 +259,7 @@
       <dependency>
         <groupId>commons-net</groupId>
         <artifactId>commons-net</artifactId>
-        <version>3.9.0</version>
+        <version>3.11.1</version>
       </dependency>       
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
@@ -334,11 +313,6 @@
     <module>ph-oton-uictrls</module>
     <module>ph-oton-jetty</module>
     <module>ph-oton-jdbc</module>
-    <module>ph-oton-bootstrap3</module>
-    <module>ph-oton-bootstrap3-uictrls</module>
-    <module>ph-oton-bootstrap3-pages</module>
-    <module>ph-oton-bootstrap3-stub</module>
-    <module>ph-oton-bootstrap3-demo</module>
     <module>ph-oton-bootstrap4</module>
     <module>ph-oton-bootstrap4-uictrls</module>
     <module>ph-oton-bootstrap4-pages</module>
@@ -352,12 +326,12 @@
         <plugin>
           <groupId>com.helger.maven</groupId>
           <artifactId>ph-jscompress-maven-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.0.2</version>
         </plugin>
         <plugin>
           <groupId>com.helger.maven</groupId>
           <artifactId>ph-csscompress-maven-plugin</artifactId>
-          <version>7.0.0</version>
+          <version>7.0.4</version>
         </plugin>
       </plugins>
     </pluginManagement>
