@@ -118,8 +118,12 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
       // Add read-only class
       addClass (CSS_CLASS_READ_ONLY);
 
-      // Set explicit tab index -1 to avoid focusing
-      setTabIndex (-1L);
+      // It should be focusable
+      if (false)
+      {
+        // Set explicit tab index -1 to avoid focusing
+        setTabIndex (-1L);
+      }
     }
   }
 
