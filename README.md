@@ -77,6 +77,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+* v9.3.3 - work in progress
+    * Made two constructors of `Tenant` and `AccountingArea` public
 * v9.3.2 - 2025-05-31
     * Updated to Jetty 11.0.25
     * Ensuring that BigDecimals with a negative scale are correctly formatted in JS. See [#23](https://github.com/phax/ph-oton/issues/23) - thx @domids
