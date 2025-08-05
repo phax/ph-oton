@@ -55,7 +55,7 @@ public class Tenant extends AbstractBusinessObject implements ITenant
     this (StubObject.createForCurrentUserAndID (sID), sDisplayName);
   }
 
-  Tenant (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sDisplayName)
+  public Tenant (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sDisplayName)
   {
     super (aStubObject);
     setDisplayName (sDisplayName);
