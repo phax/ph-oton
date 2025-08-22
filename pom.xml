@@ -27,7 +27,7 @@
   </parent>
   <groupId>com.helger.photon</groupId>
   <artifactId>ph-oton-parent-pom</artifactId>
-  <version>9.3.3-SNAPSHOT</version>
+  <version>10.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ph-oton</name>
   <description>Base POM to build the ph-oton web stack</description>
