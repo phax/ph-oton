@@ -30,7 +30,6 @@
   <description>Web application stub with Bootstrap4 for the ph-oton stack</description>
   <url>https://github.com/phax/ph-oton/ph-oton-bootstrap4-stub</url>
   <inceptionYear>2017</inceptionYear>
-  
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -38,12 +37,10 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
   <organization>
     <name>Philip Helger</name>
     <url>https://www.helger.com</url>
   </organization>
-  
   <developers>
     <developer>
       <id>philip</id>
@@ -52,7 +49,6 @@
       <url>https://www.helger.com</url>
     </developer>
   </developers>
-  
   <dependencies>
     <dependency>
       <groupId>com.helger.photon</groupId>
@@ -75,7 +71,6 @@
       <artifactId>jul-to-slf4j</artifactId>
     </dependency>
   </dependencies>
-  
   <build>
     <plugins>
       <plugin>
@@ -88,7 +83,7 @@
             <Export-Package>com.helger.photon.bootstrap4.stub.*</Export-Package>
             <Import-Package>!jakarta.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.commons.thirdparty.IThirdPartyModuleProviderSPI,
+            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.base.thirdparty.IThirdPartyModuleProviderSPI,
 osgi.serviceloader; osgi.serviceloader=jakarta.servlet.ServletContainerInitializer</Provide-Capability>
           </instructions>
         </configuration>
