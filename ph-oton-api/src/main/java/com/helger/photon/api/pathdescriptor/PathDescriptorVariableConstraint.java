@@ -127,7 +127,7 @@ public final class PathDescriptorVariableConstraint implements Serializable
   public static PathDescriptorVariableConstraint createOrNull (@Nonnull final String sConstraint)
   {
     final String sRealValue = StringHelper.trim (sConstraint);
-    if (StringHelper.hasNoText (sRealValue))
+    if (StringHelper.isEmpty (sRealValue))
     {
       LOGGER.warn ("Empty path descriptor variable constraint is ignored!");
       return null;
@@ -147,7 +147,7 @@ public final class PathDescriptorVariableConstraint implements Serializable
 
     // Optional value
     final String sConstraintValue = aParts.size () > 1 ? aParts.get (1) : null;
-    if (eConstraintType.isRequiresValue () && StringHelper.hasNoText (sConstraintValue))
+    if (eConstraintType.isRequiresValue () && StringHelper.isEmpty (sConstraintValue))
     {
       LOGGER.error ("Variable constraint type '" +
                     sConstraintType +

@@ -131,7 +131,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
                                                           @Nullable final String sUserID,
                                                           final boolean bUnlockOtherObjects)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return LockResult.createFailure (aObjID);
 
     ELocked eLocked;
@@ -216,7 +216,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   public final EChange unlockObject (@Nonnull final IDTYPE aObjID)
   {
     final String sCurrentUserID = _getCurrentUserID ();
-    if (StringHelper.hasNoText (sCurrentUserID))
+    if (StringHelper.isEmpty (sCurrentUserID))
       return EChange.UNCHANGED;
 
     return unlockObject (sCurrentUserID, aObjID);
@@ -318,7 +318,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
                                                                    @Nullable final Set <IDTYPE> aObjectsToKeepLocked)
   {
     final ICommonsList <IDTYPE> aUnlockedObjects = new CommonsArrayList <> ();
-    if (StringHelper.hasText (sUserID))
+    if (StringHelper.isNotEmpty (sUserID))
     {
       m_aRWLock.writeLocked ( () -> _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects));
 
@@ -389,7 +389,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   public ICommonsSet <IDTYPE> getAllLockedObjectsOfUser (@Nullable final String sUserID)
   {
     final ICommonsSet <IDTYPE> ret = new CommonsHashSet <> ();
-    if (StringHelper.hasText (sUserID))
+    if (StringHelper.isNotEmpty (sUserID))
     {
       m_aRWLock.readLocked ( () -> {
         for (final Map.Entry <IDTYPE, ILockInfo> aEntry : m_aLockedObjs.entrySet ())

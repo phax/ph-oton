@@ -246,7 +246,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_bDisabled)
       aElement.setAttribute (CHTMLAttributes.DISABLED, CHTMLAttributeValues.DISABLED);
-    if (StringHelper.hasText (m_sForm))
+    if (StringHelper.isNotEmpty (m_sForm))
       aElement.setAttribute (CHTMLAttributes.FORM, m_sForm);
     m_aFormAction.applyProperties (CHTMLAttributes.FORMACTION,
                                    aElement,
@@ -260,10 +260,10 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
       aElement.setAttribute (CHTMLAttributes.FORMNOVALIDATE, CHTMLAttributeValues.FORMNOVALIDATE);
     if (m_aFormTarget != null)
       aElement.setAttribute (CHTMLAttributes.FORMTARGET, m_aFormTarget);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
     aElement.setAttribute (CHTMLAttributes.TYPE, m_eType);
-    if (StringHelper.hasText (m_sValue))
+    if (StringHelper.isNotEmpty (m_sValue))
       aElement.setAttribute (CHTMLAttributes.VALUE, m_sValue);
   }
 

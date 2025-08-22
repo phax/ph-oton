@@ -116,7 +116,7 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
       aElement.setAttribute (CHTMLAttributes.ASYNC, CHTMLAttributeValues.ASYNC);
 
     // Tag may not be self closed
-    aElement.appendText ("");
+    aElement.addText ("");
   }
 
   @Override

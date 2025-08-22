@@ -69,7 +69,7 @@ public enum EDataTablesOrderDirectionType implements IHasName
   @Nullable
   public static ESortOrder getSortOrderFromNameOrNull (@Nullable final String sName)
   {
-    if (StringHelper.hasText (sName))
+    if (StringHelper.isNotEmpty (sName))
       for (final EDataTablesOrderDirectionType e : values ())
         if (e.m_sName.equals (sName))
           return e.m_eSortOrder;

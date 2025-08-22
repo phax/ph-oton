@@ -204,7 +204,7 @@ public final class DataTablesServerData implements IHasUIState
   @Nullable
   public DataTablesServerDataRow getRowOfID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (StringHelper.isEmpty (sID))
       return null;
     return m_aRWLock.readLockedGet ( () -> m_aRows.findFirst (x -> sID.equals (x.getRowID ())));
   }

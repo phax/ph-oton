@@ -97,9 +97,9 @@ public class TypeaheadEditSelection
 
     String sEditValue = aWPEC.params ().getAsString (sEditFieldName);
     String sHiddenFieldValue = aWPEC.params ().getAsString (sHiddenFieldName);
-    if (StringHelper.hasText (sHiddenFieldValue))
+    if (StringHelper.isNotEmpty (sHiddenFieldValue))
     {
-      if (StringHelper.hasNoText (sEditValue))
+      if (StringHelper.isEmpty (sEditValue))
       {
         // The content of the edit field was deleted after a valid item was once
         // selected
@@ -108,7 +108,7 @@ public class TypeaheadEditSelection
     }
     else
     {
-      if (StringHelper.hasText (sEditValue))
+      if (StringHelper.isNotEmpty (sEditValue))
       {
         // No ID but a text -> no object selected but only a string typed
         sEditValue = null;

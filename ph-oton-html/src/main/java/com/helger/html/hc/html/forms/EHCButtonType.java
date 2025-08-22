@@ -52,7 +52,7 @@ public enum EHCButtonType implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCButtonType getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCButtonType.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

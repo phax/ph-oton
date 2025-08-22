@@ -97,9 +97,9 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     protected IMicroDocument createWriteData ()
     {
       final IMicroDocument aDoc = new MicroDocument ();
-      final IMicroElement eRoot = aDoc.appendElement (ELEMENT_FAILEDMAILS);
+      final IMicroElement eRoot = aDoc.addElement (ELEMENT_FAILEDMAILS);
       for (final FailedMailData aFMD : FailedMailQueueWithDAO.this.getAllFailedMails ())
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aFMD, ELEMENT_FAILEDMAILDATA));
+        eRoot.addChild (MicroTypeConverter.convertToMicroElement (aFMD, ELEMENT_FAILEDMAILDATA));
       return aDoc;
     }
   }

@@ -90,7 +90,8 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aPreElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aPreElement,
+                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Apply plugin on pre element
     {
@@ -117,7 +118,8 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
     else
     {
       // Create nested code tag
-      final IMicroElement eCode = aPreElement.appendElement (aPreElement.getNamespaceURI (), EHTMLElement.CODE.getElementName ());
+      final IMicroElement eCode = aPreElement.addElementNS (aPreElement.getNamespaceURI (),
+                                                            EHTMLElement.CODE.getElementName ());
 
       super.fillMicroElement (eCode, aConversionSettings);
 

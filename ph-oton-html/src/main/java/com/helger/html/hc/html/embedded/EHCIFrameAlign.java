@@ -54,7 +54,7 @@ public enum EHCIFrameAlign implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCIFrameAlign getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCIFrameAlign.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

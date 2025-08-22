@@ -72,7 +72,7 @@ public interface ISftpSettingsHost extends IHasDisplayName
    */
   default boolean hasServerUserName ()
   {
-    return StringHelper.hasText (getServerUserName ());
+    return StringHelper.isNotEmpty (getServerUserName ());
   }
 
   /**
@@ -88,7 +88,7 @@ public interface ISftpSettingsHost extends IHasDisplayName
    */
   default boolean hasServerPassword ()
   {
-    return StringHelper.hasText (getServerPassword ());
+    return StringHelper.isNotEmpty (getServerPassword ());
   }
 
   /**

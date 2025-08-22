@@ -201,7 +201,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                                        @Nonnull final IAjaxExecutor aExecutor)
   {
     // null means "random" name
-    final String sFuncName = StringHelper.hasText (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID ()
+    final String sFuncName = StringHelper.isNotEmpty (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID ()
                                                             : null;
     final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder (sFuncName).executor (aExecutor).build ();
     GlobalAjaxInvoker.getInstance ().getRegistry ().registerFunction (aFunction);

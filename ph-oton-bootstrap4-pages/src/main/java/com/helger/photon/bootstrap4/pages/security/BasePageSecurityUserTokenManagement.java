@@ -213,12 +213,12 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                             if (bRevokedOld)
                             {
                               // Check only if something can be revoked...
-                              if (StringHelper.hasNoText (sRevocationReason))
+                              if (StringHelper.isEmpty (sRevocationReason))
                                 aFormErrors.addFieldError (FIELD_REVOCATION_REASON,
                                                            EBaseText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
                             }
 
-                            if (StringHelper.hasText (sTokenString))
+                            if (StringHelper.isNotEmpty (sTokenString))
                             {
                               // Check uniqueness
                               if (sTokenString.length () < TOKEN_STRING_MIN_LENGTH)
@@ -309,7 +309,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
                           if (aWPEC.hasSubAction (CPageParam.ACTION_PERFORM))
                           {
                             final String sRevocationReason = aWPEC.params ().getAsString (FIELD_REVOCATION_REASON);
-                            if (StringHelper.hasNoText (sRevocationReason))
+                            if (StringHelper.isEmpty (sRevocationReason))
                               aFormErrors.addFieldError (FIELD_REVOCATION_REASON,
                                                          EBaseText.ERR_REASON_EMPTY.getDisplayText (aDisplayLocale));
 
@@ -539,7 +539,7 @@ public class BasePageSecurityUserTokenManagement <WPECTYPE extends IWebPageExecu
     if (aUser == null)
       aFormErrors.addFieldError (FIELD_USER, EText.ERR_USER_EMPTY.getDisplayText (aDisplayLocale));
 
-    if (StringHelper.hasText (sTokenString))
+    if (StringHelper.isNotEmpty (sTokenString))
     {
       // Check uniqueness
       if (sTokenString.length () < TOKEN_STRING_MIN_LENGTH)

@@ -219,25 +219,25 @@ public class FeedLink extends AbstractFeedElement
   public IMicroElement getAsElement (@Nonnull final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
-    if (StringHelper.hasText (m_sHref))
+    if (StringHelper.isNotEmpty (m_sHref))
       aElement.setAttribute ("href", m_sHref);
-    if (StringHelper.hasText (m_sRel))
+    if (StringHelper.isNotEmpty (m_sRel))
       aElement.setAttribute ("rel", m_sRel);
-    if (StringHelper.hasText (m_sType))
+    if (StringHelper.isNotEmpty (m_sType))
       aElement.setAttribute ("type", m_sType);
     if (m_aHrefLang != null)
       aElement.setAttribute ("hreflang", m_aHrefLang.toString ());
-    if (StringHelper.hasText (m_sTitle))
+    if (StringHelper.isNotEmpty (m_sTitle))
       aElement.setAttribute ("title", m_sTitle);
     if (m_nLength > 0)
       aElement.setAttribute ("length", Integer.toString (m_nLength));
-    if (StringHelper.hasText (getLanguage ()))
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 
   public boolean isValid ()
   {
-    return StringHelper.hasText (m_sHref);
+    return StringHelper.isNotEmpty (m_sHref);
   }
 }

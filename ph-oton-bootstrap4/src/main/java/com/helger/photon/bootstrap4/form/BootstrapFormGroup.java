@@ -137,7 +137,7 @@ public class BootstrapFormGroup extends AbstractBootstrapObject <BootstrapFormGr
   @Nonnull
   public final BootstrapFormGroup setCtrl (@Nullable final String sValue)
   {
-    if (StringHelper.hasNoText (sValue))
+    if (StringHelper.isEmpty (sValue))
       return this;
 
     return setCtrl (new HCDiv ().addChild (sValue));

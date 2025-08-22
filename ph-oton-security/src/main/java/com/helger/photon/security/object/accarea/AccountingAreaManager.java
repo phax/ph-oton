@@ -268,7 +268,7 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
   @Nullable
   public IAccountingArea getAccountingAreaOfName (@Nullable final String sName, @Nullable final ITenant aTenant)
   {
-    if (StringHelper.hasNoText (sName) || aTenant == null)
+    if (StringHelper.isEmpty (sName) || aTenant == null)
       return null;
     return findFirst (a -> a.hasSameTenant (aTenant) && a.getDisplayName ().equals (sName));
   }

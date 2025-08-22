@@ -68,7 +68,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
                                     @Nonnegative final int nConnectTimeoutMilliSeconds,
                                     final boolean bEnterLocalPassiveMode)
   {
-    if (StringHelper.hasNoText (sHostname))
+    if (StringHelper.isEmpty (sHostname))
       throw new IllegalArgumentException ("hostname");
     if (nPort <= 0 || nPort > 65535)
       throw new IllegalArgumentException ("port");

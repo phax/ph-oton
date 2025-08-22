@@ -102,7 +102,7 @@ final class MarkdownHCStack
 
   public void append (@Nullable final String s)
   {
-    if (StringHelper.hasText (s))
+    if (StringHelper.isNotEmpty (s))
       append (new HCTextNode (s));
   }
 
@@ -163,7 +163,7 @@ final class MarkdownHCStack
                           if (aNode instanceof HCTextNode && aRealParent.getLastChild () instanceof HCTextNode)
                           {
                             // Append
-                            ((HCTextNode) aRealParent.getLastChild ()).appendText (((HCTextNode) aNode).getText ());
+                            ((HCTextNode) aRealParent.getLastChild ()).addText (((HCTextNode) aNode).getText ());
                           }
                           else
                           {

@@ -57,7 +57,7 @@ public enum EBloodhoundRemoteRateLimitBy
   public static EBloodhoundRemoteRateLimitBy getFromValueOrDefault (@Nullable final String sValue,
                                                                     @Nullable final EBloodhoundRemoteRateLimitBy eDefault)
   {
-    if (StringHelper.hasText (sValue))
+    if (StringHelper.isNotEmpty (sValue))
       for (final EBloodhoundRemoteRateLimitBy e : values ())
         if (sValue.equals (e.m_sValue))
           return e;

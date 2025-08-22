@@ -107,10 +107,10 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("root");
+    final IMicroElement eRoot = aDoc.addElement ("root");
     // Is sorted internally!
     for (final IAuditItem aAuditItem : m_aItems.getAllItems ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAuditItem, AuditManager.ELEMENT_ITEM));
+      eRoot.addChild (MicroTypeConverter.convertToMicroElement (aAuditItem, AuditManager.ELEMENT_ITEM));
     return aDoc;
   }
 

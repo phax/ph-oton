@@ -243,7 +243,7 @@ public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement
     final IMicroContainer ret = new MicroContainer ();
     for (final Map.Entry <Locale, String> aMetaEntry : m_aContents.entrySet ())
     {
-      final IMicroElement aMeta = ret.appendElement (sNamespaceURI, EHTMLElement.META.getElementName ());
+      final IMicroElement aMeta = ret.addElementNS (sNamespaceURI, EHTMLElement.META.getElementName ());
       final String sValue = aMetaEntry.getValue ();
 
       switch (m_eType)
@@ -285,7 +285,7 @@ public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement
       }
       else
       {
-        if (StringHelper.hasText (m_sScheme))
+        if (StringHelper.isNotEmpty (m_sScheme))
           aMeta.setAttribute (CHTMLAttributes.SCHEME, m_sScheme);
       }
     }
@@ -316,7 +316,11 @@ public class MetaElement implements IMutableMetaElement, ICloneable <MetaElement
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eType).append (m_sName).append (m_sScheme).append (m_aContents).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eType)
+                                       .append (m_sName)
+                                       .append (m_sScheme)
+                                       .append (m_aContents)
+                                       .getHashCode ();
   }
 
   @Override

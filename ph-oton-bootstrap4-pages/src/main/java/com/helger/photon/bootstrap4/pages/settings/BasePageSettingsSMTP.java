@@ -241,9 +241,9 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
             aFormErrors.addFieldError (FIELD_TEST_SENDER, EText.ERR_SENDER_INVALID.getDisplayText (aDisplayLocale));
           if (!EmailAddressHelper.isValid (sReceiver))
             aFormErrors.addFieldError (FIELD_TEST_RECEIVER, EText.ERR_RECEIVER_INVALID.getDisplayText (aDisplayLocale));
-          if (StringHelper.hasNoText (sSubject))
+          if (StringHelper.isEmpty (sSubject))
             aFormErrors.addFieldError (FIELD_TEST_SUBJECT, EText.ERR_SUBJECT_INVALID.getDisplayText (aDisplayLocale));
-          if (StringHelper.hasNoText (sBody))
+          if (StringHelper.isEmpty (sBody))
             aFormErrors.addFieldError (FIELD_TEST_BODY, EText.ERR_BODY_INVALID.getDisplayText (aDisplayLocale));
 
           if (aFormErrors.isEmpty ())
@@ -439,10 +439,10 @@ public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> ex
     final long nSocketTimeoutMS = aWPEC.params ().getAsLong (FIELD_SOCKET_TIMEOUT, CGlobal.ILLEGAL_ULONG);
     final boolean bDebugSMTP = aWPEC.params ().isCheckBoxChecked (FIELD_DEBUG_SMTP, EmailGlobalSettings.isDebugSMTP ());
 
-    if (StringHelper.hasNoText (sName))
+    if (StringHelper.isEmpty (sName))
       aFormErrors.addFieldError (FIELD_NAME, EText.ERROR_NAME_EMPTY.getDisplayText (aDisplayLocale));
 
-    if (StringHelper.hasNoText (sHostName))
+    if (StringHelper.isEmpty (sHostName))
       aFormErrors.addFieldError (FIELD_HOSTNAME, EText.ERROR_HOSTNAME_EMPTY.getDisplayText (aDisplayLocale));
 
     if (nPort < CNetworkPort.MINIMUM_PORT_NUMBER || nPort > CNetworkPort.MAXIMUM_PORT_NUMBER)

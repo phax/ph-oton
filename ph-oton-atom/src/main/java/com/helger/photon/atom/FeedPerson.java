@@ -103,23 +103,23 @@ public class FeedPerson extends AbstractFeedElement
   public IMicroElement getAsElement (final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
-    if (StringHelper.hasText (m_sName))
-      aElement.appendElement (CFeed.XMLNS_ATOM, "name").appendText (m_sName);
-    if (StringHelper.hasText (m_sURI))
-      aElement.appendElement (CFeed.XMLNS_ATOM, "uri").appendText (m_sURI);
-    if (StringHelper.hasText (m_sEmail))
-      aElement.appendElement (CFeed.XMLNS_ATOM, "email").appendText (m_sEmail);
-    if (StringHelper.hasText (getLanguage ()))
+    if (StringHelper.isNotEmpty (m_sName))
+      aElement.addElementNS (CFeed.XMLNS_ATOM, "name").addText (m_sName);
+    if (StringHelper.isNotEmpty (m_sURI))
+      aElement.addElementNS (CFeed.XMLNS_ATOM, "uri").addText (m_sURI);
+    if (StringHelper.isNotEmpty (m_sEmail))
+      aElement.addElementNS (CFeed.XMLNS_ATOM, "email").addText (m_sEmail);
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 
   public boolean isValid ()
   {
-    if (StringHelper.hasNoText (m_sName))
+    if (StringHelper.isEmpty (m_sName))
       return false;
 
-    if (StringHelper.hasText (m_sEmail) && !EmailAddressHelper.isValid (m_sEmail))
+    if (StringHelper.isNotEmpty (m_sEmail) && !EmailAddressHelper.isValid (m_sEmail))
     {
       LOGGER.warn ("Email address is invalid!");
       return false;

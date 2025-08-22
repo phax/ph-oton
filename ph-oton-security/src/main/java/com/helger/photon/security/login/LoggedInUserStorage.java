@@ -100,7 +100,7 @@ public final class LoggedInUserStorage
 
     // Ensure user ID is valid as a filename!
     final String sRealUserID = FilenameHelper.getAsSecureValidASCIIFilename (sUserID);
-    if (StringHelper.hasNoText (sRealUserID))
+    if (StringHelper.isEmpty (sRealUserID))
       throw new IllegalStateException ("Passed user ID '" + sUserID + "' is an empty filename!");
     if (!sRealUserID.equals (sUserID))
       LOGGER.warn ("User ID '" + sUserID + "' was modified to '" + sRealUserID + "' to be used as a file system name!");

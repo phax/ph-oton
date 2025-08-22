@@ -177,7 +177,7 @@ final class InternalLog4J2Handler implements IHCBootstrap4Trait
       final String sNewLevel = aWPEC.params ().getAsStringTrimmed (FIELD_NEW_LEVEL);
       final ELevel eNewLevel = ELevel.getFromIDOrNull (sNewLevel);
 
-      if (StringHelper.hasNoText (sNewLevel))
+      if (StringHelper.isEmpty (sNewLevel))
         aFormErrors.addFieldError (FIELD_NEW_LEVEL, EText.MSG_ERR_NO_LEVEL.getDisplayText (aDisplayLocale));
       else
         if (eNewLevel == null)

@@ -51,7 +51,7 @@ public enum EHCDraggable implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCDraggable getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCDraggable.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

@@ -245,7 +245,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
   @Nullable
   public IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
   {
-    if (StringHelper.hasNoText (sTokenString))
+    if (StringHelper.isEmpty (sTokenString))
       return null;
 
     return findFirst (x -> sTokenString.equals (x.getAccessTokenList ().getActiveTokenString ()));
@@ -253,7 +253,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
 
   public boolean isAccessTokenUsed (@Nullable final String sTokenString)
   {
-    if (StringHelper.hasNoText (sTokenString))
+    if (StringHelper.isEmpty (sTokenString))
       return false;
 
     return containsAny (x -> x.getAccessTokenList ()

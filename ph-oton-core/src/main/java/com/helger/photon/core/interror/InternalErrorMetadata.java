@@ -74,7 +74,7 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
     {
       final IMicroElement eEntry = new MicroElement ("entry");
       eEntry.setAttribute ("key", m_sKey);
-      eEntry.appendText (m_sValue);
+      eEntry.addText (m_sValue);
       return eEntry;
     }
   }
@@ -119,7 +119,7 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
   public String getFieldValue (@Nullable final String sKey, @Nullable final String sDefaultValue)
   {
     // Linear effort
-    final Entry aEntry = StringHelper.hasNoText (sKey) ? null : m_aFields.findFirst (x -> x.getKey ().equals (sKey));
+    final Entry aEntry = StringHelper.isEmpty (sKey) ? null : m_aFields.findFirst (x -> x.getKey ().equals (sKey));
     return aEntry != null ? aEntry.getValue () : sDefaultValue;
   }
 
@@ -252,44 +252,44 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
     eMetadata.setAttribute ("errorid", m_sErrorID);
 
     {
-      final IMicroElement eFields = eMetadata.appendElement ("fields");
+      final IMicroElement eFields = eMetadata.addElement ("fields");
       for (final Entry aEntry : m_aFields)
-        eFields.appendChild (aEntry.getAsMicroNode ());
+        eFields.addChild (aEntry.getAsMicroNode ());
     }
 
     if (!m_aRequestFields.isEmpty ())
     {
-      final IMicroElement eRequestFields = eMetadata.appendElement ("requestfields");
+      final IMicroElement eRequestFields = eMetadata.addElement ("requestfields");
       for (final Entry aEntry : m_aRequestFields)
-        eRequestFields.appendChild (aEntry.getAsMicroNode ());
+        eRequestFields.addChild (aEntry.getAsMicroNode ());
     }
 
     if (!m_aRequestHeaders.isEmpty ())
     {
-      final IMicroElement eRequestHeaders = eMetadata.appendElement ("requestheaders");
+      final IMicroElement eRequestHeaders = eMetadata.addElement ("requestheaders");
       for (final Entry aEntry : m_aRequestHeaders)
-        eRequestHeaders.appendChild (aEntry.getAsMicroNode ());
+        eRequestHeaders.addChild (aEntry.getAsMicroNode ());
     }
 
     if (!m_aRequestParameters.isEmpty ())
     {
-      final IMicroElement eRequestParameters = eMetadata.appendElement ("requestparameters");
+      final IMicroElement eRequestParameters = eMetadata.addElement ("requestparameters");
       for (final Entry aEntry : m_aRequestParameters)
-        eRequestParameters.appendChild (aEntry.getAsMicroNode ());
+        eRequestParameters.addChild (aEntry.getAsMicroNode ());
     }
 
     if (!m_aRequestCookies.isEmpty ())
     {
-      final IMicroElement eRequestCookies = eMetadata.appendElement ("requestcookies");
+      final IMicroElement eRequestCookies = eMetadata.addElement ("requestcookies");
       for (final Entry aEntry : m_aRequestCookies)
-        eRequestCookies.appendChild (aEntry.getAsMicroNode ());
+        eRequestCookies.addChild (aEntry.getAsMicroNode ());
     }
 
     if (!m_aSessionFields.isEmpty ())
     {
-      final IMicroElement eSessionFields = eMetadata.appendElement ("sessionfields");
+      final IMicroElement eSessionFields = eMetadata.addElement ("sessionfields");
       for (final Entry aEntry : m_aSessionFields)
-        eSessionFields.appendChild (aEntry.getAsMicroNode ());
+        eSessionFields.addChild (aEntry.getAsMicroNode ());
     }
     return eMetadata;
   }

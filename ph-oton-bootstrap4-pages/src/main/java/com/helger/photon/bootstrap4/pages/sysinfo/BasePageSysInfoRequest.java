@@ -153,9 +153,9 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
       {
         final Cookie aCookie = aEntry.getValue ();
         final StringBuilder sOther = new StringBuilder ();
-        if (StringHelper.hasText (aCookie.getPath ()))
+        if (StringHelper.isNotEmpty (aCookie.getPath ()))
           sOther.append ("[path: ").append (aCookie.getPath ()).append ("]");
-        if (StringHelper.hasText (aCookie.getDomain ()))
+        if (StringHelper.isNotEmpty (aCookie.getDomain ()))
           sOther.append ("[domain: ").append (aCookie.getDomain ()).append ("]");
         if (aCookie.getSecure ())
           sOther.append ("[secure]");

@@ -58,15 +58,15 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   @Nonnull
   public final IMPLTYPE prependText (@Nullable final String sText)
   {
-    if (StringHelper.hasText (sText))
+    if (StringHelper.isNotEmpty (sText))
       m_sText = sText + m_sText;
     return thisAsT ();
   }
 
   @Nonnull
-  public final IMPLTYPE appendText (@Nullable final String sText)
+  public final IMPLTYPE addText (@Nullable final String sText)
   {
-    if (StringHelper.hasText (sText))
+    if (StringHelper.isNotEmpty (sText))
       m_sText = m_sText + sText;
     return thisAsT ();
   }

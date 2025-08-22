@@ -111,7 +111,7 @@ public final class BootstrapPageRenderer
                                                        " (" +
                                                        sHttpStatusMessage +
                                                        ")" +
-                                                       (StringHelper.hasText (sHttpRequestURI) ? " for request URI " + sHttpRequestURI
+                                                       (StringHelper.isNotEmpty (sHttpRequestURI) ? " for request URI " + sHttpRequestURI
                                                                                                : "")));
     }
     else

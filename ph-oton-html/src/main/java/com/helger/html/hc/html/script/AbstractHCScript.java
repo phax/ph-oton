@@ -128,13 +128,13 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
                                    @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sType))
+    if (StringHelper.isNotEmpty (m_sType))
       aElement.setAttribute (CHTMLAttributes.TYPE, m_sType);
-    if (StringHelper.hasText (m_sCharset))
+    if (StringHelper.isNotEmpty (m_sCharset))
       aElement.setAttribute (CHTMLAttributes.CHARSET, m_sCharset);
     if (m_eCrossOrigin != null)
       aElement.setAttribute (CHTMLAttributes.CROSSORIGIN, m_eCrossOrigin);
-    if (StringHelper.hasText (m_sIntegrity))
+    if (StringHelper.isNotEmpty (m_sIntegrity))
       aElement.setAttribute (CHTMLAttributes.INTEGRITY, m_sIntegrity);
   }
 

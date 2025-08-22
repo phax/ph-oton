@@ -235,15 +235,15 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
       aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE, m_eAutoComplete.isTrue () ? CHTMLAttributeValues.ON : CHTMLAttributeValues.OFF);
     if (m_nCols > 0)
       aElement.setAttribute (CHTMLAttributes.COLS, m_nCols);
-    if (StringHelper.hasText (m_sDirName))
+    if (StringHelper.isNotEmpty (m_sDirName))
       aElement.setAttribute (CHTMLAttributes.DIRNAME, m_sDirName);
-    if (StringHelper.hasText (m_sForm))
+    if (StringHelper.isNotEmpty (m_sForm))
       aElement.setAttribute (CHTMLAttributes.FORM, m_sForm);
     if (m_nMaxLength > 0)
       aElement.setAttribute (CHTMLAttributes.MAXLENGTH, m_nMaxLength);
     if (m_nMinLength > 0)
       aElement.setAttribute (CHTMLAttributes.MINLENGTH, m_nMinLength);
-    if (StringHelper.hasText (m_sPlaceholder))
+    if (StringHelper.isNotEmpty (m_sPlaceholder))
       aElement.setAttribute (CHTMLAttributes.PLACEHOLDER, m_sPlaceholder);
     if (m_nRows > 0)
       aElement.setAttribute (CHTMLAttributes.ROWS, m_nRows);
@@ -252,7 +252,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
 
     // If no children are present, add an empty text node so that an opening
     // and a closing tag are written separately
-    aElement.appendText (getPlainText ());
+    aElement.addText (getPlainText ());
   }
 
   @Override

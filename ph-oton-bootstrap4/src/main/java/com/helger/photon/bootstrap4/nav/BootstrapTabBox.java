@@ -105,7 +105,7 @@ public class BootstrapTabBox extends AbstractTabBox <BootstrapTabBox>
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
     String sActiveTabID = getActiveTabID ();
-    if (StringHelper.hasNoText (sActiveTabID))
+    if (StringHelper.isEmpty (sActiveTabID))
     {
       // Activate first tab by default
       sActiveTabID = m_aTabs.getFirstKey ();

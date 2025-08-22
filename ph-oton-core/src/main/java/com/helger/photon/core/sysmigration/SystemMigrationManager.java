@@ -77,12 +77,12 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_SYSTEM_MIGRATION_RESULTS);
+    final IMicroElement eRoot = aDoc.addElement (ELEMENT_SYSTEM_MIGRATION_RESULTS);
     for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ())
                                                                       .values ())
     {
       for (final SystemMigrationResult aMigrationResult : aMigrationResults)
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
+        eRoot.addChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
                                                                      ELEMENT_SYSTEM_MIGRATION_RESULT));
     }
     return aDoc;

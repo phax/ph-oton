@@ -108,16 +108,16 @@ public class HCParam extends AbstractHCElement <HCParam>
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
-    if (StringHelper.hasText (m_sValue))
+    if (StringHelper.isNotEmpty (m_sValue))
       aElement.setAttribute (CHTMLAttributes.VALUE, m_sValue);
     if (m_eValueType != null)
       aElement.setAttribute (CHTMLAttributes.VALUETYPE, m_eValueType);
     if (m_aType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
     // Should not be self closed!
-    aElement.appendText ("");
+    aElement.addText ("");
   }
 
   @Override

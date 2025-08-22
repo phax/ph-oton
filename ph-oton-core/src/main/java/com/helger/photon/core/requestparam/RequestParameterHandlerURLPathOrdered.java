@@ -100,7 +100,7 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
     final StringBuilder aFullPath = new StringBuilder (sBasePath);
     if (aDisplayLocale != null)
       aFullPath.append ('/').append (aDisplayLocale.toString ());
-    if (StringHelper.hasText (sMenuItemID))
+    if (StringHelper.isNotEmpty (sMenuItemID))
       aFullPath.append ('/').append (sMenuItemID);
     final String sFullPath = aFullPath.toString ();
 

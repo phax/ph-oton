@@ -69,7 +69,7 @@ public final class PhotonJS
       for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("js"))
       {
         final String sPath = eChild.getAttributeValue ("path");
-        if (StringHelper.hasNoText (sPath))
+        if (StringHelper.isEmpty (sPath))
         {
           LOGGER.error ("Found JS item without a path in " + aRes.getPath ());
           continue;

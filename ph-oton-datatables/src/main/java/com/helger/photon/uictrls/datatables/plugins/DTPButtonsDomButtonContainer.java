@@ -74,7 +74,7 @@ public class DTPButtonsDomButtonContainer
     if (m_eTag != null)
       ret.add ("tag", m_eTag.getElementName ());
     final String sClassName = m_aClassNames.getAllClassesAsString ();
-    if (StringHelper.hasText (sClassName))
+    if (StringHelper.isNotEmpty (sClassName))
       ret.add ("className", sClassName);
     return ret;
   }

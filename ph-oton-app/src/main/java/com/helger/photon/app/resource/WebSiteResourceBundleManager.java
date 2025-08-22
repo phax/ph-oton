@@ -221,11 +221,11 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_RESOURCE_BUNDLES);
+    final IMicroElement eRoot = aDoc.addElement (ELEMENT_RESOURCE_BUNDLES);
     for (final WebSiteResourceBundleSerialized aResourceBundle : m_aMapToBundle.getSortedByKey (Comparator.naturalOrder ())
                                                                                .values ())
     {
-      final IMicroElement eBundle = eRoot.appendElement (ELEMENT_RESOURCE_BUNDLE);
+      final IMicroElement eBundle = eRoot.addElement (ELEMENT_RESOURCE_BUNDLE);
       eBundle.setAttribute (ATTR_ID, aResourceBundle.getBundleID ());
       eBundle.setAttributeWithConversion (ATTR_CREATIONDT, aResourceBundle.getCreationDT ());
 
@@ -234,10 +234,10 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
       eBundle.setAttribute (ATTR_IS_BUNDLABLE, Boolean.toString (aBundle.isBundlable ()));
       if (aBundle.hasMediaList ())
         for (final ECSSMedium eMedium : aBundle.getMediaList ().getAllMedia ())
-          eBundle.appendElement (ELEMENT_MEDIUM).appendText (eMedium.getName ());
+          eBundle.addElement (ELEMENT_MEDIUM).addText (eMedium.getName ());
       for (final WebSiteResource aResource : aBundle.getAllResources ())
       {
-        final IMicroElement eResource = eBundle.appendElement (ELEMENT_RESOURCE);
+        final IMicroElement eResource = eBundle.addElement (ELEMENT_RESOURCE);
         eResource.setAttribute (ATTR_RESOURCE_TYPE, aResource.getResourceType ().getID ());
         eResource.setAttribute (ATTR_PATH, aResource.getPath ());
         eResource.setAttribute (ATTR_URL, aResource.getAsURLString ());
@@ -272,7 +272,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
   @Nullable
   public WebSiteResourceBundleSerialized getResourceBundleOfID (@Nullable final String sBundleID)
   {
-    if (StringHelper.hasNoText (sBundleID))
+    if (StringHelper.isEmpty (sBundleID))
       return null;
 
     return m_aRWLock.readLockedGet ( () -> m_aMapToBundle.get (sBundleID));
@@ -287,7 +287,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
    */
   public boolean containsResourceBundleOfID (@Nullable final String sBundleID)
   {
-    if (StringHelper.hasNoText (sBundleID))
+    if (StringHelper.isEmpty (sBundleID))
       return false;
 
     return m_aRWLock.readLockedBoolean ( () -> m_aMapToBundle.containsKey (sBundleID));

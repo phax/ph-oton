@@ -97,7 +97,7 @@ public abstract class AbstractErrorCallback implements
                                         @Nonnull final Exception ex)
   {
     final String sErrorCode = "ajax-error-" +
-                              (StringHelper.hasText (sAjaxFunctionName) ? sAjaxFunctionName + "-" : "") +
+                              (StringHelper.isNotEmpty (sAjaxFunctionName) ? sAjaxFunctionName + "-" : "") +
                               InternalErrorHandler.createNewErrorID ();
     onError (ex, aRequestScope, sErrorCode, new StringMap ().add ("ajax-function-name", sAjaxFunctionName));
   }

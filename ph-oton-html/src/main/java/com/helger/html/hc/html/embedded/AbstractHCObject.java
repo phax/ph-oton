@@ -289,17 +289,17 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
       aElement.setAttribute (CHTMLAttributes.WIDTH, m_nWidth);
     if (m_nHeight > 0)
       aElement.setAttribute (CHTMLAttributes.HEIGHT, m_nHeight);
-    if (StringHelper.hasText (m_sHSpace))
+    if (StringHelper.isNotEmpty (m_sHSpace))
       aElement.setAttribute (CHTMLAttributes.HSPACE, m_sHSpace);
-    if (StringHelper.hasText (m_sVSpace))
+    if (StringHelper.isNotEmpty (m_sVSpace))
       aElement.setAttribute (CHTMLAttributes.VSPACE, m_sVSpace);
     if (m_eAlign != null)
       aElement.setAttribute (CHTMLAttributes.ALIGN, m_eAlign);
-    if (StringHelper.hasText (m_sArchive))
+    if (StringHelper.isNotEmpty (m_sArchive))
       aElement.setAttribute (CHTMLAttributes.ARCHIVE, m_sArchive);
-    if (StringHelper.hasText (m_sBorder))
+    if (StringHelper.isNotEmpty (m_sBorder))
       aElement.setAttribute (CHTMLAttributes.BORDER, m_sBorder);
-    if (StringHelper.hasText (m_sClassID))
+    if (StringHelper.isNotEmpty (m_sClassID))
       aElement.setAttribute (CHTMLAttributes.CLASSID, m_sClassID);
     if (m_aCodeBase != null)
       aElement.setAttribute (CHTMLAttributes.CODEBASE, m_aCodeBase.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
@@ -309,13 +309,13 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
       aElement.setAttribute (CHTMLAttributes.DATA, m_aData.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (m_bDeclare)
       aElement.setAttribute (CHTMLAttributes.DECLARE, CHTMLAttributeValues.DECLARE);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
-    if (StringHelper.hasText (m_sStandBy))
+    if (StringHelper.isNotEmpty (m_sStandBy))
       aElement.setAttribute (CHTMLAttributes.STANDBY, m_sStandBy);
     if (m_aType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
-    if (StringHelper.hasText (m_sUseMap))
+    if (StringHelper.isNotEmpty (m_sUseMap))
       aElement.setAttribute (CHTMLAttributes.USEMAP, m_sUseMap);
   }
 

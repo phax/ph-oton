@@ -940,7 +940,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
           final String sLockUserID = aOLM.getLockUserID (sObjectID);
           final IUser aLockUser = PhotonSecurityManager.getUserMgr ().getUserOfID (sLockUserID);
           final String sObjectName = getObjectDisplayName (aWPEC, aSelectedObject);
-          final String sDisplayObjectName = StringHelper.hasText (sObjectName) ? " '" + sObjectName + "'" : "";
+          final String sDisplayObjectName = StringHelper.isNotEmpty (sObjectName) ? " '" + sObjectName + "'" : "";
           final String sDisplayUserName = aLockUser != null ? "'" + aLockUser.getDisplayName () + "'"
                                                             : EWebPageText.LOCKING_OTHER_USER.getDisplayText (aDisplayLocale);
           aNodeList.addChild (getUIHandler ().createErrorBox (aWPEC,
@@ -1147,7 +1147,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     // Default value is show list
     EWebPageFormAction eFormAction = EWebPageFormAction.DEFAULT;
     IWebPageActionHandler <DATATYPE, WPECTYPE> aCustomHandler = null;
-    if (StringHelper.hasText (sAction))
+    if (StringHelper.isNotEmpty (sAction))
     {
       if (CPageParam.ACTION_VIEW.equals (sAction))
       {

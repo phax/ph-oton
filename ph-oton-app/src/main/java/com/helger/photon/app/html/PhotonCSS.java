@@ -73,7 +73,7 @@ public final class PhotonCSS
       for (final IMicroElement eChild : aDoc.getDocumentElement ().getAllChildElements ("css"))
       {
         final String sPath = eChild.getAttributeValue ("path");
-        if (StringHelper.hasNoText (sPath))
+        if (StringHelper.isEmpty (sPath))
         {
           LOGGER.error ("Found CSS item without a path in " + aRes.getPath ());
           continue;

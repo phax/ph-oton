@@ -54,7 +54,7 @@ public enum EHCTHScope implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCTHScope getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCTHScope.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

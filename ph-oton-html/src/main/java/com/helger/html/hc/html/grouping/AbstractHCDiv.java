@@ -63,7 +63,7 @@ public abstract class AbstractHCDiv <IMPLTYPE extends AbstractHCDiv <IMPLTYPE>> 
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
   }
 

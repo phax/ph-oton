@@ -92,7 +92,7 @@ public final class SecurityUIHelper
   @Nullable
   public static IHCNode createAccessTokenNode (@Nullable final String sTokenString)
   {
-    if (StringHelper.hasNoText (sTokenString))
+    if (StringHelper.isEmpty (sTokenString))
       return null;
     return new HCCode ().addClass (CUICoreCSS.CSS_CLASS_NOWRAP).addChild (sTokenString);
   }

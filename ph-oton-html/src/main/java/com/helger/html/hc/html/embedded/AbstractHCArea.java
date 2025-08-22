@@ -187,11 +187,11 @@ public abstract class AbstractHCArea <IMPLTYPE extends AbstractHCArea <IMPLTYPE>
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sAlt))
+    if (StringHelper.isNotEmpty (m_sAlt))
       aElement.setAttribute (CHTMLAttributes.ALT, m_sAlt);
-    if (StringHelper.hasText (m_sCoords))
+    if (StringHelper.isNotEmpty (m_sCoords))
       aElement.setAttribute (CHTMLAttributes.COORDS, m_sCoords);
-    if (StringHelper.hasText (m_sShape))
+    if (StringHelper.isNotEmpty (m_sShape))
       aElement.setAttribute (CHTMLAttributes.SHAPE, m_sShape);
     if (m_aHref != null)
     {
@@ -204,14 +204,14 @@ public abstract class AbstractHCArea <IMPLTYPE extends AbstractHCArea <IMPLTYPE>
       // 1.1)
       aElement.setAttribute (CHTMLAttributes.TARGET, m_aTarget);
     }
-    if (StringHelper.hasText (m_sDownload))
+    if (StringHelper.isNotEmpty (m_sDownload))
       aElement.setAttribute (CHTMLAttributes.DOWNLOAD, m_sDownload);
     if (m_aPing != null)
     {
       final String sPing = m_aPing.getAsStringWithEncodedParameters (aConversionSettings.getCharset ());
       aElement.setAttribute (CHTMLAttributes.PING, sPing);
     }
-    if (StringHelper.hasText (m_sRel))
+    if (StringHelper.isNotEmpty (m_sRel))
       aElement.setAttribute (CHTMLAttributes.REL, m_sRel);
     if (m_eReferrerPolicy != null)
       aElement.setAttribute (CHTMLAttributes.REFERRERPOLICY, m_eReferrerPolicy);

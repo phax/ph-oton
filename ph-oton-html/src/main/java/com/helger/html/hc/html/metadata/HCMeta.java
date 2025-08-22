@@ -108,13 +108,13 @@ public class HCMeta extends AbstractHCElement <HCMeta>
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
-    if (StringHelper.hasText (m_sHttpEquiv))
+    if (StringHelper.isNotEmpty (m_sHttpEquiv))
       aElement.setAttribute (CHTMLAttributes.HTTP_EQUIV, m_sHttpEquiv);
-    if (StringHelper.hasText (m_sContent))
+    if (StringHelper.isNotEmpty (m_sContent))
       aElement.setAttribute (CHTMLAttributes.CONTENT, m_sContent);
-    if (StringHelper.hasText (m_sCharset))
+    if (StringHelper.isNotEmpty (m_sCharset))
       aElement.setAttribute (CHTMLAttributes.CHARSET, m_sCharset);
   }
 

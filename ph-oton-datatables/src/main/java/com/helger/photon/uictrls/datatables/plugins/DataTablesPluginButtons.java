@@ -129,7 +129,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
     }
     if (m_aDom != null)
       ret.add ("dom", m_aDom.getAsJS ());
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       ret.add ("name", m_sName);
 
     if (ret.size () == 1)

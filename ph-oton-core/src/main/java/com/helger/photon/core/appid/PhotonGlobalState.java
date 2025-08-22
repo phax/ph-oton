@@ -72,7 +72,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
    */
   public boolean hasDefaultApplicationID ()
   {
-    return StringHelper.hasText (getDefaultApplicationID ());
+    return StringHelper.isNotEmpty (getDefaultApplicationID ());
   }
 
   /**

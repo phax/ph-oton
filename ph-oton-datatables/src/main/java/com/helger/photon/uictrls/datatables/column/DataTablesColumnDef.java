@@ -455,9 +455,9 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     if (!m_sCellType.equals (DEFAULT_CELLTYPE))
       ret.add ("cellType", m_sCellType);
     final String sClasses = getAllClassesAsString ();
-    if (StringHelper.hasText (sClasses))
+    if (StringHelper.isNotEmpty (sClasses))
       ret.add ("className", sClasses);
-    if (StringHelper.hasText (m_sContentPadding))
+    if (StringHelper.isNotEmpty (m_sContentPadding))
       ret.add ("contentPadding", m_sContentPadding);
     if (m_aCreatedCell != null)
       ret.add ("createdCell", m_aCreatedCell);
@@ -465,13 +465,13 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
       ret.add ("data", m_aData);
     if (m_sDefaultContent != null)
       ret.add ("defaultContent", m_sDefaultContent);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       ret.add ("name", m_sName);
     if (m_bOrderable != DEFAULT_ORDERABLE)
       ret.add ("orderable", m_bOrderable);
     if (ArrayHelper.isNotEmpty (m_aOrderData))
       ret.add ("orderData", new JSArray ().addAll (m_aOrderData));
-    if (StringHelper.hasText (m_sOrderDataType))
+    if (StringHelper.isNotEmpty (m_sOrderDataType))
       ret.add ("orderDataType", m_sOrderDataType);
     if (m_aOrderSequence != null && !m_aOrderSequence.isEmpty ())
     {
@@ -490,7 +490,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
       ret.add ("type", m_eType.getName ());
     if (m_bVisible != DEFAULT_VISIBLE)
       ret.add ("visible", m_bVisible);
-    if (StringHelper.hasText (m_sWidth))
+    if (StringHelper.isNotEmpty (m_sWidth))
       ret.add ("width", m_sWidth);
     return ret;
   }

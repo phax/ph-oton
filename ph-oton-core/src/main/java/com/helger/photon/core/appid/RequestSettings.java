@@ -48,7 +48,7 @@ public final class RequestSettings
   private static String _getApplicationIDOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     String sAppID = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_APP_ID);
-    if (StringHelper.hasNoText (sAppID))
+    if (StringHelper.isEmpty (sAppID))
     {
       // Fallback to last saved state from session
       final PhotonSessionState aPSS = PhotonSessionState.getInstanceIfInstantiated ();
@@ -56,7 +56,7 @@ public final class RequestSettings
         sAppID = aPSS.getLastApplicationID ();
 
       // None in request nor session -> fall back to default
-      if (StringHelper.hasNoText (sAppID))
+      if (StringHelper.isEmpty (sAppID))
         sAppID = PhotonGlobalState.getInstance ().getDefaultApplicationID ();
     }
     return sAppID;
@@ -67,7 +67,7 @@ public final class RequestSettings
   public static String getApplicationID (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final String sAppID = _getApplicationIDOrNull (aRequestScope);
-    if (StringHelper.hasNoText (sAppID))
+    if (StringHelper.isEmpty (sAppID))
       throw new IllegalStateException ("No app ID is present!");
     return sAppID;
   }
@@ -80,7 +80,7 @@ public final class RequestSettings
     {
       // Fallback to last saved state from session
       final String sAppID = _getApplicationIDOrNull (aRequestScope);
-      if (StringHelper.hasText (sAppID))
+      if (StringHelper.isNotEmpty (sAppID))
       {
         final PhotonSessionState aSessionState = PhotonSessionState.getInstanceIfInstantiated ();
         if (aSessionState != null)

@@ -146,7 +146,7 @@ public final class InternalErrorHandler
       aSubject.append ("[PRODUCTION] ");
     aSubject.append ("Internal error");
     final String sErrorMsg = aMetadata.getFieldValue (InternalErrorBuilder.KEY_ERROR_MSG, null);
-    if (StringHelper.hasText (sErrorMsg))
+    if (StringHelper.isNotEmpty (sErrorMsg))
       aSubject.append (": ").append (sErrorMsg);
     aSubject.append (" [").append (aMetadata.getErrorID ()).append (']');
     return aSubject.toString ();
@@ -162,7 +162,7 @@ public final class InternalErrorHandler
   {
     int nOccurranceCount = 1;
     final String sThrowableStackTrace = aCurrentThreadDescriptor.getStackTrace ();
-    if (StringHelper.hasText (sThrowableStackTrace) && nDuplicateEliminiationCount > 1)
+    if (StringHelper.isNotEmpty (sThrowableStackTrace) && nDuplicateEliminiationCount > 1)
     {
       // Check if an internal error was already sent for this stack trace
       // Init with -1 so that it gets send the first time
@@ -260,26 +260,26 @@ public final class InternalErrorHandler
                                                    @Nullable final IEmailAttachmentList aEmailAttachments)
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("internalerror");
-    eRoot.appendChild (aMetadata.getAsMicroNode ());
-    eRoot.appendChild (aCurrentDescriptor.getAsMicroNode ());
+    final IMicroElement eRoot = aDoc.addElement ("internalerror");
+    eRoot.addChild (aMetadata.getAsMicroNode ());
+    eRoot.addChild (aCurrentDescriptor.getAsMicroNode ());
     if (aAllThreads != null)
-      eRoot.appendChild (aAllThreads.getAsMicroNode ());
+      eRoot.addChild (aAllThreads.getAsMicroNode ());
 
     if (aEmailAttachments != null)
     {
       final ICommonsList <IEmailAttachmentDataSource> aAttachments = aEmailAttachments.getAsDataSourceList ();
       if (aAttachments.isNotEmpty ())
       {
-        final IMicroElement eAttachments = eRoot.appendElement ("attachments");
+        final IMicroElement eAttachments = eRoot.addElement ("attachments");
         for (final IEmailAttachmentDataSource aDS : aAttachments)
         {
-          final IMicroElement eAttachment = eAttachments.appendElement ("attachment");
+          final IMicroElement eAttachment = eAttachments.addElement ("attachment");
           eAttachment.setAttribute ("name", aDS.getName ());
           eAttachment.setAttribute ("contenttype", aDS.getContentType ());
           try
           {
-            eAttachment.appendText (Base64.encodeBytes (StreamHelper.getAllBytes (aDS.getInputStream ())));
+            eAttachment.addText (Base64.encodeBytes (StreamHelper.getAllBytes (aDS.getInputStream ())));
           }
           catch (final Exception ex)
           {

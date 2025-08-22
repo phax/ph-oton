@@ -93,7 +93,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   public boolean isExpectedNonce (@Nullable final String sNonceToCheck)
   {
     final String sThisNonce = getNonce ();
-    return StringHelper.hasText (sThisNonce) &&
+    return StringHelper.isNotEmpty (sThisNonce) &&
            sThisNonce.equals (sNonceToCheck) &&
            CSRFManager.getInstance ().isValidNonce (sNonceToCheck);
   }

@@ -37,8 +37,8 @@ public final class EHTMLEntityTest
   {
     for (final EHTMLEntity e : EHTMLEntity.values ())
     {
-      assertTrue (StringHelper.hasText (e.getEntityName ()));
-      assertTrue (StringHelper.hasText (e.getEntityReference ()));
+      assertTrue (StringHelper.isNotEmpty (e.getEntityName ()));
+      assertTrue (StringHelper.isNotEmpty (e.getEntityReference ()));
       assertSame (e, EHTMLEntity.getFromEntityReferenceOrNull (e.getEntityReference ()));
       assertSame (e, EHTMLEntity.getFromCharOrNull (e.getChar ()));
     }

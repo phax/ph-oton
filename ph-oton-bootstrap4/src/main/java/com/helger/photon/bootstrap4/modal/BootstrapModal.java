@@ -329,7 +329,7 @@ public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
       aOptions.add ("show", aShow.booleanValue ());
     ret.add (jsModal ().arg (aOptions));
 
-    if (StringHelper.hasText (sRemotePath))
+    if (StringHelper.isNotEmpty (sRemotePath))
     {
       // Load content into modal
       ret.add (JQuery.idRef (_getContentID ()).load (sRemotePath));

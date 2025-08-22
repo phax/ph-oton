@@ -116,11 +116,11 @@ public class HCSource extends AbstractHCMediaElementChild <HCSource> implements 
       aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
     if (m_aType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
-    if (StringHelper.hasText (m_sSrcSet))
+    if (StringHelper.isNotEmpty (m_sSrcSet))
       aElement.setAttribute (CHTMLAttributes.SRCSET, m_sSrcSet);
-    if (StringHelper.hasText (m_sSizes))
+    if (StringHelper.isNotEmpty (m_sSizes))
       aElement.setAttribute (CHTMLAttributes.SIZES, m_sSizes);
-    if (StringHelper.hasText (m_sMediaQuery))
+    if (StringHelper.isNotEmpty (m_sMediaQuery))
       aElement.setAttribute (CHTMLAttributes.MEDIA, m_sMediaQuery);
   }
 }

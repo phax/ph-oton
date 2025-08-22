@@ -183,21 +183,21 @@ public class DTPButtonsButton
     if (m_aAvailable != null)
       ret.add ("available", m_aAvailable);
     final String sClasses = m_aClassNames.getAllClassesAsString ();
-    if (StringHelper.hasText (sClasses))
+    if (StringHelper.isNotEmpty (sClasses))
       ret.add ("className", sClasses);
     if (m_aDestroy != null)
       ret.add ("destroy", m_aDestroy);
     if (m_eEnabled.isDefined ())
       ret.add ("enabled", m_eEnabled.getAsBooleanValue (DEFAULT_ENABLED));
-    if (StringHelper.hasText (m_sExtend))
+    if (StringHelper.isNotEmpty (m_sExtend))
       ret.add ("extend", m_sExtend);
     if (m_aInit != null)
       ret.add ("init", m_aInit);
     if (m_aKey != null)
       ret.add ("key", m_aKey.getAsJS ());
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       ret.add ("name", m_sName);
-    if (StringHelper.hasText (m_sNamespace))
+    if (StringHelper.isNotEmpty (m_sNamespace))
       ret.add ("namespace", m_sNamespace);
     if (m_aText != null)
       ret.add ("text", m_aText);

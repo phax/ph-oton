@@ -50,8 +50,8 @@ public final class RevocationStatusMicroTypeConverter implements IMicroTypeConve
     aElement.setAttribute (ATTR_IS_REVOKED, aValue.isRevoked ());
     aElement.setAttribute (ATTR_USER_ID, aValue.getRevocationUserID ());
     aElement.setAttributeWithConversion (ATTR_DT, aValue.getRevocationDateTime ());
-    if (StringHelper.hasText (aValue.getRevocationReason ()))
-      aElement.appendElement (sNamespaceURI, ELEMENT_REASON).appendText (aValue.getRevocationReason ());
+    if (StringHelper.isNotEmpty (aValue.getRevocationReason ()))
+      aElement.addElementNS (sNamespaceURI, ELEMENT_REASON).addText (aValue.getRevocationReason ());
     return aElement;
   }
 

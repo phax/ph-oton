@@ -69,10 +69,10 @@ public class FeedOtherContent extends AbstractFeedElement implements IFeedConten
     aElement.setAttribute ("type", m_sType);
     for (final Object aChild : m_aChildren)
       if (aChild instanceof String)
-        aElement.appendText ((String) aChild);
+        aElement.addText ((String) aChild);
       else
-        aElement.appendChild ((IMicroNode) aChild);
-    if (StringHelper.hasText (getLanguage ()))
+        aElement.addChild ((IMicroNode) aChild);
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }

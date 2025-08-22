@@ -16,8 +16,6 @@
  */
 package com.helger.photon.bootstrap4;
 
-import javax.swing.text.html.CSS;
-
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.base.concurrent.SimpleReadWriteLock;
@@ -31,8 +29,8 @@ import com.helger.photon.uicore.EUICoreJSPathProvider;
 import jakarta.annotation.Nonnull;
 
 /**
- * Customize the global Bootstrap JS and CSS to be used. This is helpful when
- * using a custom Bootstrap build.
+ * Customize the global Bootstrap JS and CSS to be used. This is helpful when using a custom
+ * Bootstrap build.
  *
  * @author Philip Helger
  */

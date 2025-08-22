@@ -307,7 +307,7 @@ public abstract class AbstractLoginManager
 
           // Anyway show the error message only if at least some credential
           // values are passed
-          bShowLoginError = StringHelper.hasText (sLoginName) || StringHelper.hasText (sPassword);
+          bShowLoginError = StringHelper.isNotEmpty (sLoginName) || StringHelper.isNotEmpty (sPassword);
           if (aUser != null && m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
           {
             // Every failed login increases the time

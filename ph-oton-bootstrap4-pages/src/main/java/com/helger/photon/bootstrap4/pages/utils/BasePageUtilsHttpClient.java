@@ -171,7 +171,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     @Nonnull
     public static EChange unregister (@Nullable final String sID)
     {
-      if (StringHelper.hasNoText (sID))
+      if (StringHelper.isEmpty (sID))
         return EChange.UNCHANGED;
       return s_aMap.removeObject (sID);
     }
@@ -179,7 +179,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
     @Nullable
     public static IHttpClientConfig getFromID (@Nullable final String sID)
     {
-      if (StringHelper.hasNoText (sID))
+      if (StringHelper.isEmpty (sID))
         return null;
       return s_aMap.get (sID);
     }
@@ -291,19 +291,19 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
       final EHttpMethod eHttpMethod = EHttpMethod.getFromNameOrNull (sHttpMethod);
       final String sURI = aWPEC.params ().getAsStringTrimmed (FIELD_URI);
 
-      if (StringHelper.hasNoText (sConfigID))
+      if (StringHelper.isEmpty (sConfigID))
         aFormErrors.addFieldError (FIELD_CONFIG, "A configuration must be selected.");
       else
         if (aConfig == null)
           aFormErrors.addFieldError (FIELD_CONFIG, "Please select a valid configuration.");
 
-      if (StringHelper.hasNoText (sHttpMethod))
+      if (StringHelper.isEmpty (sHttpMethod))
         aFormErrors.addFieldError (FIELD_HTTP_METHOD, "A HTTP method must be selected.");
       else
         if (eHttpMethod == null)
           aFormErrors.addFieldError (FIELD_HTTP_METHOD, "Please select a valid HTTP method.");
 
-      if (StringHelper.hasNoText (sURI))
+      if (StringHelper.isEmpty (sURI))
         aFormErrors.addFieldError (FIELD_URI, "A URI must be provided.");
       else
         if (!sURI.startsWith ("http://") && !sURI.startsWith ("https://"))

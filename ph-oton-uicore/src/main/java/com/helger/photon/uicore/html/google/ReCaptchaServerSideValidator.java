@@ -52,25 +52,6 @@ public final class ReCaptchaServerSideValidator
    *        Server side ReCaptcha key for verification
    * @param sReCaptchaResponse
    *        The value of the <code>g-recaptcha-response</code> request parameter.
-   * @return {@link ESuccess}
-   * @deprecated Use {@link #check(String, String, HttpClientSettings)} instead
-   */
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.0.0")
-  public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey,
-                                @Nullable final String sReCaptchaResponse)
-  {
-    final HttpClientSettings aSettings = new HttpClientSettings ();
-    return check (sServerSideKey, sReCaptchaResponse, aSettings);
-  }
-
-  /**
-   * Check if the response of a ReCaptcha is valid or not.
-   *
-   * @param sServerSideKey
-   *        Server side ReCaptcha key for verification
-   * @param sReCaptchaResponse
-   *        The value of the <code>g-recaptcha-response</code> request parameter.
    * @param aHCS
    *        The HTTP client settings. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -83,7 +64,7 @@ public final class ReCaptchaServerSideValidator
     ValueEnforcer.notEmpty (sServerSideKey, "ServerSideKey");
     ValueEnforcer.notNull (aHCS, "HttpClientSettings");
 
-    if (StringHelper.hasNoText (sReCaptchaResponse))
+    if (StringHelper.isEmpty (sReCaptchaResponse))
       return ESuccess.SUCCESS;
 
     try (HttpClientManager aMgr = HttpClientManager.create (aHCS))

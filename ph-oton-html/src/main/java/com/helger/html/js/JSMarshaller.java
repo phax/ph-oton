@@ -119,7 +119,7 @@ public final class JSMarshaller
   @Nullable
   public static String javaScriptEscape (@Nullable final String sInput)
   {
-    if (StringHelper.hasNoText (sInput))
+    if (StringHelper.isEmpty (sInput))
       return sInput;
 
     final char [] aInput = sInput.toCharArray ();
@@ -191,7 +191,7 @@ public final class JSMarshaller
   @Nullable
   public static String javaScriptEscapeForRegEx (@Nullable final String sInput)
   {
-    if (StringHelper.hasNoText (sInput))
+    if (StringHelper.isEmpty (sInput))
       return sInput;
 
     final char [] aInput = sInput.toCharArray ();
@@ -226,7 +226,7 @@ public final class JSMarshaller
   @Nullable
   public static String javaScriptUnescape (@Nullable final String sInput)
   {
-    if (StringHelper.hasNoText (sInput))
+    if (StringHelper.isEmpty (sInput))
       return sInput;
 
     final char [] aInput = sInput.toCharArray ();
@@ -302,7 +302,7 @@ public final class JSMarshaller
 
   public static boolean isJSIdentifier (@Nullable final String s)
   {
-    if (StringHelper.hasNoText (s))
+    if (StringHelper.isEmpty (s))
       return false;
 
     // Reserved word?

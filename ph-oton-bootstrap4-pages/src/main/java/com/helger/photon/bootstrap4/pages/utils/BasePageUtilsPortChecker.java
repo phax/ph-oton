@@ -143,7 +143,7 @@ public class BasePageUtilsPortChecker <WPECTYPE extends IWebPageExecutionContext
             aPorts.add (Integer.valueOf (n));
         }
 
-      if (StringHelper.hasNoText (sHost))
+      if (StringHelper.isEmpty (sHost))
         aFormErrors.addFieldError (FIELD_HOST, EText.MSG_ERROR_HOSTNAME_MISSING.getDisplayText (aDisplayLocale));
 
       if (aPorts.isEmpty ())

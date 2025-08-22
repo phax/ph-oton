@@ -51,7 +51,7 @@ public class HCA extends AbstractHCA <HCA>
   @Nullable
   public static IHCNode createLinkedWebsite (@Nullable final String sWebsite, @Nullable final HC_Target aTarget)
   {
-    if (StringHelper.hasNoText (sWebsite))
+    if (StringHelper.isEmpty (sWebsite))
       return null;
 
     if (!URLValidator.isValid (sWebsite))
@@ -69,7 +69,7 @@ public class HCA extends AbstractHCA <HCA>
   @Nonnull
   public static HCA of (@Nullable final String sHref)
   {
-    if (StringHelper.hasNoText (sHref))
+    if (StringHelper.isEmpty (sHref))
       return new HCA ();
     return new HCA (new SimpleURL (sHref));
   }

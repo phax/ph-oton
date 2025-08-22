@@ -969,7 +969,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Nonnull
   public DataTables setNoTextLoadingURL ()
   {
-    return setTextLoadingURL (null, null, null);
+    return setTextLoadingURL (null, null);
   }
 
   @Nonnull
@@ -978,23 +978,12 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   {
     if (aTextLoadingURL != null)
     {
-      if (StringHelper.hasNoText (sTextLoadingURLLocaleParameterName))
+      if (StringHelper.isEmpty (sTextLoadingURLLocaleParameterName))
         throw new IllegalArgumentException ("If a text loading URL is present, a text loading URL locale parameter name must also be present");
     }
     m_aTextLoadingURL = aTextLoadingURL;
     m_sTextLoadingURLLocaleParameterName = sTextLoadingURLLocaleParameterName;
     return this;
-  }
-
-  // Not needed anymore for DT 2.1
-  @SuppressWarnings ("unused")
-  @Nonnull
-  @Deprecated (since = "9.2.6", forRemoval = true)
-  public DataTables setTextLoadingURL (@Nullable final ISimpleURL aTextLoadingURL,
-                                       @Nullable final String sTextLoadingURLLocaleParameterName,
-                                       @Nullable final String sTextLoadingURLMaxPageParameterName)
-  {
-    return setTextLoadingURL (aTextLoadingURL, sTextLoadingURLLocaleParameterName);
   }
 
   //
@@ -1016,7 +1005,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Nonnull
   public EChange removePlugin (@Nonnull final String sPluginName)
   {
-    if (StringHelper.hasNoText (sPluginName))
+    if (StringHelper.isEmpty (sPluginName))
       return EChange.UNCHANGED;
     return EChange.valueOf (m_aPlugins.remove (sPluginName) != null);
   }
@@ -1024,7 +1013,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   @Nullable
   public IDataTablesPlugin getPluginOfName (@Nullable final String sName)
   {
-    if (StringHelper.hasNoText (sName))
+    if (StringHelper.isEmpty (sName))
       return null;
     return m_aPlugins.get (sName);
   }

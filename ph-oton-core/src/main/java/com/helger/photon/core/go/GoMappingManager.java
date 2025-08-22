@@ -143,19 +143,19 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   {
     final String sContextPath = ServletContextPathHolder.getContextPath ();
     final IMicroDocument ret = new MicroDocument ();
-    final IMicroElement eRoot = ret.appendElement (ELEMENT_ROOT);
+    final IMicroElement eRoot = ret.addElement (ELEMENT_ROOT);
     for (final GoMappingItem aItem : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
     {
       if (aItem.isInternal ())
       {
-        final IMicroElement eItem = eRoot.appendElement (ELEMENT_INTERNAL);
+        final IMicroElement eItem = eRoot.addElement (ELEMENT_INTERNAL);
         eItem.setAttribute (ATTR_KEY, aItem.getKey ());
         // Remove the context path, when deserializing stuff
         eItem.setAttribute (ATTR_HREF, StringHelper.trimStart (aItem.getTargetURLAsString (), sContextPath));
       }
       else
       {
-        final IMicroElement eItem = eRoot.appendElement (ELEMENT_EXTERNAL);
+        final IMicroElement eItem = eRoot.addElement (ELEMENT_EXTERNAL);
         eItem.setAttribute (ATTR_KEY, aItem.getKey ());
         eItem.setAttribute (ATTR_HREF, aItem.getTargetURLAsString ());
       }
@@ -231,7 +231,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   @Nonnull
   public EChange removeItem (@Nullable final String sKey)
   {
-    if (StringHelper.hasNoText (sKey))
+    if (StringHelper.isEmpty (sKey))
       return EChange.UNCHANGED;
 
     final String sRealKey = _unifyKey (sKey);
@@ -257,7 +257,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
 
   public boolean containsItemWithKey (@Nullable final String sKey)
   {
-    if (StringHelper.hasNoText (sKey))
+    if (StringHelper.isEmpty (sKey))
       return false;
 
     final String sRealKey = _unifyKey (sKey);
@@ -267,7 +267,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   @Nullable
   public GoMappingItem getItemOfKey (@Nullable final String sKey)
   {
-    if (StringHelper.hasNoText (sKey))
+    if (StringHelper.isEmpty (sKey))
       return null;
 
     final String sRealKey = _unifyKey (sKey);

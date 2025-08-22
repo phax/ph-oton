@@ -109,7 +109,7 @@ public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTim
 
   public boolean hasActor ()
   {
-    return StringHelper.hasText (m_sActor);
+    return StringHelper.isNotEmpty (m_sActor);
   }
 
   @Nullable
@@ -120,7 +120,7 @@ public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTim
 
   public boolean hasOrigin ()
   {
-    return StringHelper.hasText (m_sOrigin);
+    return StringHelper.isNotEmpty (m_sOrigin);
   }
 
   @Nullable

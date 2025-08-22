@@ -66,7 +66,7 @@ public class AuditEventMicroTypeConverter implements IMicroTypeConverter <AuditE
     if (aObject.hasSuccess ())
       aElement.setAttribute (ATTR_SUCCESS, aObject.getSuccess ().isSuccess ());
     for (final AuditField aField : aObject.fields ())
-      aElement.appendElement (sNamespaceURI, ELEMENT_FIELD)
+      aElement.addElementNS (sNamespaceURI, ELEMENT_FIELD)
               .setAttribute (ATTR_NAME, aField.getName ())
               .setAttribute (ATTR_VALUE, aField.getValue ());
     return aElement;
@@ -83,12 +83,12 @@ public class AuditEventMicroTypeConverter implements IMicroTypeConverter <AuditE
 
     final String sActionID = aElement.getAttributeValue (ATTR_ACTION);
     final EAuditActionType eAction = EAuditActionType.getFromIDOrNull (sActionID);
-    if (eAction == null && StringHelper.hasText (sActionID))
+    if (eAction == null && StringHelper.isNotEmpty (sActionID))
       throw new IllegalStateException ("Failed to parse action type '" + sActionID + "'");
 
     final String sSuccess = aElement.getAttributeValue (ATTR_SUCCESS);
-    final ESuccess eSuccess = StringHelper.hasNoText (sSuccess) ? null : ESuccess.valueOf (StringParser.parseBool (
-                                                                                                                   sSuccess));
+    final ESuccess eSuccess = StringHelper.isEmpty (sSuccess) ? null : ESuccess.valueOf (StringParser.parseBool (
+                                                                                                                 sSuccess));
 
     final ICommonsList <AuditField> aFields = new CommonsArrayList <> ();
     for (final IMicroElement eField : aElement.getAllChildElements (ELEMENT_FIELD))

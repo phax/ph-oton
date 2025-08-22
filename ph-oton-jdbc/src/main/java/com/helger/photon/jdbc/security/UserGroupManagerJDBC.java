@@ -115,7 +115,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                   " name, description, userids, roleids" +
                   " FROM " +
                   m_sTableName;
-    if (StringHelper.hasText (sCondition))
+    if (StringHelper.isNotEmpty (sCondition))
     {
       // Condition present
       sSQL += " WHERE " + sCondition;
@@ -158,7 +158,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
   public boolean containsWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (StringHelper.isEmpty (sID))
       return false;
 
     final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
@@ -336,7 +336,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange deleteUserGroup (@Nullable final String sUserGroupID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -379,7 +379,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange undeleteUserGroup (@Nullable final String sUserGroupID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -422,7 +422,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nullable
   public UserGroup getUserGroupOfID (@Nullable final String sUserGroupID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return null;
 
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
@@ -468,7 +468,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange renameUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sNewName)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -514,7 +514,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                    @Nullable final String sNewDescription,
                                    @Nullable final Map <String, String> aNewCustomAttrs)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -572,7 +572,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
   {
     ValueEnforcer.notEmpty (sUserID, "UserID");
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     final MutableBoolean aWasAdded = new MutableBoolean (false);
@@ -637,9 +637,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableBoolean aWasRemoved = new MutableBoolean (false);
@@ -703,7 +703,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange unassignUserFromAllUserGroups (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final ICommonsList <String> aAffectedUserGroups = new CommonsArrayList <> ();
@@ -762,7 +762,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return new CommonsArrayList <> ();
 
     // Limit from the SQL point as much as possible and filter the results here
@@ -774,7 +774,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return new CommonsArrayList <> ();
 
     return getAllUserGroupsWithAssignedUser (sUserID).getAllMapped (IUserGroup::getID);
@@ -784,7 +784,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
   {
     ValueEnforcer.notEmpty (sRoleID, "RoleID");
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     final MutableBoolean aWasAdded = new MutableBoolean (false);
@@ -849,9 +849,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
 
     final MutableBoolean aWasRemoved = new MutableBoolean (false);
@@ -915,7 +915,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange unassignRoleFromAllUserGroups (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
 
     final ICommonsList <String> aAffectedUserGroups = new CommonsArrayList <> ();
@@ -974,7 +974,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return getNone ();
 
     // Limit from the SQL point as much as possible and filter the results here
@@ -986,7 +986,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return getNone ();
 
     return getAllUserGroupsWithAssignedRole (sRoleID).getAllMapped (IUserGroup::getID);
@@ -1002,9 +1002,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,
                                                               @Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return false;
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return false;
 
     // Limit from the SQL point as much as possible and filter the results here

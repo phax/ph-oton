@@ -125,7 +125,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     if (!aSet.isEmpty ())
       throw new IllegalArgumentException ("The provided set must be empty, but it is not: " + aSet);
 
-    if (StringHelper.hasText (sItemList))
+    if (StringHelper.isNotEmpty (sItemList))
     {
       // Perform some default replacements to avoid updating all references at
       // once before splitting
@@ -140,7 +140,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
           sRealItem = getUnifiedItem (sRealItem);
 
         // Add only non-empty items
-        if (StringHelper.hasText (sRealItem))
+        if (StringHelper.isNotEmpty (sRealItem))
           aSet.add (sRealItem);
       }
     }
@@ -261,7 +261,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     // Avoid directory listings, because when an existing directory is passed
     // the URLResource of that directory will return a directory listing, which
     // is surely out of scope for a delivery servlet!
-    if (StringHelper.endsWith (sRelativeFilename, "/") || StringHelper.hasNoText (sFilename))
+    if (StringHelper.endsWith (sRelativeFilename, "/") || StringHelper.isEmpty (sFilename))
     {
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Denied object with name '" + sRelativeFilename + "' because it is empty");
@@ -344,7 +344,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     // cut the leading "/"
     final String sFilename = URLCoder.urlDecodeOrNull (aRequestScope.getPathWithinServlet ());
 
-    if (StringHelper.hasNoText (sFilename) ||
+    if (StringHelper.isEmpty (sFilename) ||
         !isValidFilenameAccordingToTheRules (sFilename) ||
         isPossibleDirectoryTraversalRequest (sFilename))
     {

@@ -70,7 +70,7 @@ public abstract class AbstractJDBCEnabledSecurityManager extends AbstractJDBCEna
   @Nullable
   protected static final ICommonsOrderedMap <String, String> attrsToMap (@Nullable final String sAttrs)
   {
-    if (StringHelper.hasNoText (sAttrs))
+    if (StringHelper.isEmpty (sAttrs))
       return null;
 
     final IJsonObject aJson = JsonReader.builder ().source (sAttrs).readAsObject ();
@@ -93,7 +93,7 @@ public abstract class AbstractJDBCEnabledSecurityManager extends AbstractJDBCEna
   @Nullable
   protected static final ICommonsSet <String> idsToSet (@Nullable final String sIDs)
   {
-    if (StringHelper.hasNoText (sIDs))
+    if (StringHelper.isEmpty (sIDs))
       return null;
 
     final IJsonArray aJson = JsonReader.builder ().source (sIDs).readAsArray ();

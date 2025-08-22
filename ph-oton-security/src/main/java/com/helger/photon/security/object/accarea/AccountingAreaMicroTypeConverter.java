@@ -72,7 +72,7 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
     aElement.setAttribute (ATTR_COMPANY_VATIN, aValue.getCompanyVATIN ());
     aElement.setAttribute (ATTR_COMPANY_NUMBER, aValue.getCompanyNumber ());
     aElement.setAttribute (ATTR_CUSTOMER_NUMBER, aValue.getCustomerNumber ());
-    aElement.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getAddress (), sNamespaceURI, ELEMENT_ADDRESS));
+    aElement.addChild (MicroTypeConverter.convertToMicroElement (aValue.getAddress (), sNamespaceURI, ELEMENT_ADDRESS));
     aElement.setAttribute (ATTR_TELEPHONE, aValue.getTelephone ());
     aElement.setAttribute (ATTR_FAX, aValue.getFax ());
     aElement.setAttribute (ATTR_EMAILADDRESS, aValue.getEmailAddress ());

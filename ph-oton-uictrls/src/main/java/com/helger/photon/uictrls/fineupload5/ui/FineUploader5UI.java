@@ -200,9 +200,9 @@ public class FineUploader5UI extends FineUploader5Core
   @Override
   protected void extendJSON (@Nonnull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
   {
-    if (StringHelper.hasNoText (m_sElementID))
+    if (StringHelper.isEmpty (m_sElementID))
       aRoot.add ("element", JSHtml.documentGetElementById (m_sElementID));
-    if (StringHelper.hasNoText (m_sListElementID))
+    if (StringHelper.isEmpty (m_sListElementID))
       aRoot.add ("listElement", JSHtml.documentGetElementById (m_sListElementID));
     if (m_aShowMessage != null)
       aRoot.add ("showMessage", m_aShowMessage);

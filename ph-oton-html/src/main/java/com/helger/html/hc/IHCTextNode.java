@@ -73,20 +73,20 @@ public interface IHCTextNode <IMPLTYPE extends IHCTextNode <IMPLTYPE>> extends I
   }
 
   @Nonnull
-  IMPLTYPE appendText (@Nullable String sText);
+  IMPLTYPE addText (@Nullable String sText);
 
   @Nonnull
-  default IMPLTYPE appendText (@Nonnull final char [] aChars)
+  default IMPLTYPE addText (@Nonnull final char [] aChars)
   {
     ValueEnforcer.notNull (aChars, "Chars");
-    return appendText (new String (aChars));
+    return addText (new String (aChars));
   }
 
   @Nonnull
-  default IMPLTYPE appendText (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  default IMPLTYPE addText (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (aChars, "Chars");
-    return appendText (new String (aChars, nOfs, nLen));
+    return addText (new String (aChars, nOfs, nLen));
   }
 
   /**

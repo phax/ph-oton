@@ -443,7 +443,7 @@ abstract class AbstractCreateJQueryAPIList
 
     public boolean hasReturn ()
     {
-      return StringHelper.hasText (m_sReturn);
+      return StringHelper.isNotEmpty (m_sReturn);
     }
 
     @Nullable
@@ -612,7 +612,7 @@ abstract class AbstractCreateJQueryAPIList
         final Entry aEntry = new Entry (eAPIType, sName, sReturn, aDeprecated, aRemoved);
 
         // Return is only relevant for type "method"
-        if (StringHelper.hasText (sReturn))
+        if (StringHelper.isNotEmpty (sReturn))
           aAllReturnTypes.add (sReturn);
 
         for (final IMicroElement eSignature : eEntry.getAllChildElements ("signature"))

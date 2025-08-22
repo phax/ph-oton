@@ -129,7 +129,7 @@ public enum ETinyMCE4Language
   @Nullable
   public static ETinyMCE4Language getFromValueOrDefault (@Nullable final String sValue, @Nullable final ETinyMCE4Language eDefault)
   {
-    if (StringHelper.hasText (sValue))
+    if (StringHelper.isNotEmpty (sValue))
       for (final ETinyMCE4Language e : values ())
         if (sValue.equals (e.m_sValue))
           return e;
@@ -175,7 +175,7 @@ public enum ETinyMCE4Language
         if (sLocaleStr.equals (e.m_sValue))
           return e;
 
-      if (StringHelper.hasText (aLocale.getCountry ()))
+      if (StringHelper.isNotEmpty (aLocale.getCountry ()))
       {
         // Not found so far - extract language and country
         final Locale aLocale2 = LocaleCache.getInstance ().getLocale (aLocale.getLanguage (), aLocale.getCountry ());
@@ -188,7 +188,7 @@ public enum ETinyMCE4Language
         }
       }
 
-      if (StringHelper.hasText (aLocale.getLanguage ()))
+      if (StringHelper.isNotEmpty (aLocale.getLanguage ()))
       {
         // Not found so far - extract language only
         sLocaleStr = aLocale.getLanguage ();

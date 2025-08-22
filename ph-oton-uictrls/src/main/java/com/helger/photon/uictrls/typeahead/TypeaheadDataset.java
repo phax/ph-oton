@@ -169,7 +169,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setTemplate (@Nullable final String sTemplate)
   {
-    return setTemplate (StringHelper.hasText (sTemplate) ? JSExpr.lit (sTemplate) : null);
+    return setTemplate (StringHelper.isNotEmpty (sTemplate) ? JSExpr.lit (sTemplate) : null);
   }
 
   /**
@@ -258,7 +258,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setHeader (@Nullable final String sHeaderHTML)
   {
-    return setHeader (StringHelper.hasText (sHeaderHTML) ? JSExpr.lit (sHeaderHTML) : null);
+    return setHeader (StringHelper.isNotEmpty (sHeaderHTML) ? JSExpr.lit (sHeaderHTML) : null);
   }
 
   /**
@@ -312,7 +312,7 @@ public class TypeaheadDataset
   @Nonnull
   public TypeaheadDataset setFooter (@Nullable final String sFooterHTML)
   {
-    return setFooter (StringHelper.hasText (sFooterHTML) ? JSExpr.lit (sFooterHTML) : null);
+    return setFooter (StringHelper.isNotEmpty (sFooterHTML) ? JSExpr.lit (sFooterHTML) : null);
   }
 
   /**
@@ -439,7 +439,7 @@ public class TypeaheadDataset
   public JSAssocArray getAsJSObject ()
   {
     // Consistency checks
-    if (m_aTemplate instanceof JSStringLiteral && StringHelper.hasNoText (m_sEngine))
+    if (m_aTemplate instanceof JSStringLiteral && StringHelper.isEmpty (m_sEngine))
       LOGGER.warn ("If template is a String, engine must be set!");
     if (m_aLocal == null && m_aPrefetch == null && m_aRemote == null)
       LOGGER.warn ("Either local, prefetch or remote must be set!");
@@ -458,7 +458,7 @@ public class TypeaheadDataset
       ret.add (JSON_LIMIT, m_nLimit);
     if (m_aTemplate != null)
       ret.add (JSON_TEMPLATE, m_aTemplate);
-    if (StringHelper.hasText (m_sEngine))
+    if (StringHelper.isNotEmpty (m_sEngine))
       ret.add (JSON_ENGINE, m_sEngine);
     if (m_aHeader != null)
       ret.add (JSON_HEADER, m_aHeader);

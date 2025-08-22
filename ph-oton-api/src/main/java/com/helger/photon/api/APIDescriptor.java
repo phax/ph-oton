@@ -125,7 +125,7 @@ public class APIDescriptor implements IAPIDescriptor
   @Nonnull
   public final APIDescriptor addRequiredHeader (@Nullable final String sHeaderName)
   {
-    if (StringHelper.hasText (sHeaderName))
+    if (StringHelper.isNotEmpty (sHeaderName))
       m_aRequiredHeaders.add (sHeaderName);
     return this;
   }
@@ -169,7 +169,7 @@ public class APIDescriptor implements IAPIDescriptor
   @Nonnull
   public final APIDescriptor addRequiredParam (@Nullable final String sParamName)
   {
-    if (StringHelper.hasText (sParamName))
+    if (StringHelper.isNotEmpty (sParamName))
       m_aRequiredParams.add (sParamName);
     return this;
   }

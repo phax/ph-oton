@@ -105,7 +105,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
 
   default boolean hasFirstName ()
   {
-    return StringHelper.hasText (getFirstName ());
+    return StringHelper.isNotEmpty (getFirstName ());
   }
 
   /**
@@ -116,7 +116,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
 
   default boolean hasLastName ()
   {
-    return StringHelper.hasText (getLastName ());
+    return StringHelper.isNotEmpty (getLastName ());
   }
 
   /**

@@ -40,15 +40,6 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
 {
   // This parameter must contain the locale - otherwise English is returned
   public static final String REQUEST_PARAM_LANGUAGE_ID = "language";
-  // This parameter must contain the locale - otherwise English is returned
-  /**
-   * @deprecated Use {@link #REQUEST_PARAM_LANGUAGE_ID} instead
-   */
-  @Deprecated (forRemoval = true, since = "9.2.5")
-  public static final String LANGUAGE_ID = REQUEST_PARAM_LANGUAGE_ID;
-  // Not needed anymore for DT 2.1
-  @Deprecated (forRemoval = true, since = "9.2.6")
-  public static final String REQUEST_PARAM_MAX_PAGES = "maxpages";
 
   private final Locale m_aDefaultLocale;
 
@@ -60,7 +51,7 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
   public AjaxExecutorDataTablesI18N (@Nonnull final Locale aDefaultLocale)
   {
     ValueEnforcer.notNull (aDefaultLocale, "DefaultLocale");
-    if (StringHelper.hasNoText (aDefaultLocale.getLanguage ()))
+    if (StringHelper.isEmpty (aDefaultLocale.getLanguage ()))
       throw new IllegalArgumentException ("defaultLocale muts have a language: " + aDefaultLocale);
     m_aDefaultLocale = aDefaultLocale;
   }

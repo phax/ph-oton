@@ -145,7 +145,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
                .append (getRequestParamNameLocale ())
                .append (m_sSeparator)
                .append (aDisplayLocale.toString ());
-    if (StringHelper.hasText (sMenuItemID))
+    if (StringHelper.isNotEmpty (sMenuItemID))
       aFullPath.append ('/').append (getRequestParamNameMenuItem ()).append (m_sSeparator).append (sMenuItemID);
 
     final String sFullPath = aFullPath.toString ();

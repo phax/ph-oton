@@ -35,7 +35,7 @@ public final class EWebPageFormActionTest
   {
     for (final EWebPageFormAction e : EWebPageFormAction.values ())
     {
-      assertTrue (StringHelper.hasText (e.getID ()));
+      assertTrue (StringHelper.isNotEmpty (e.getID ()));
       assertSame (e, EWebPageFormAction.getFromIDOrNull (e.getID ()));
     }
   }

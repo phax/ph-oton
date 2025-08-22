@@ -60,7 +60,7 @@ public final class JSFilenameHelper
    */
   public static boolean isJSFilename (@Nullable final String sFilename)
   {
-    if (StringHelper.hasNoText (sFilename))
+    if (StringHelper.isEmpty (sFilename))
       return false;
 
     // Second check for URLs with parameters
@@ -88,7 +88,7 @@ public final class JSFilenameHelper
    */
   public static boolean isMinifiedJSFilename (@Nullable final String sFilename)
   {
-    if (StringHelper.hasNoText (sFilename))
+    if (StringHelper.isEmpty (sFilename))
       return false;
 
     // Second check for URLs with parameters

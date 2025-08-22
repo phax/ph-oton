@@ -206,30 +206,30 @@ public class FeedEntry extends AbstractFeedElement
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     for (final IFeedElement aAuthor : m_aAuthors)
-      aElement.appendChild (aAuthor.getAsElement ("author"));
+      aElement.addChild (aAuthor.getAsElement ("author"));
     for (final IFeedElement aCategory : m_aCategories)
-      aElement.appendChild (aCategory.getAsElement ("category"));
+      aElement.addChild (aCategory.getAsElement ("category"));
     if (m_aContent != null)
-      aElement.appendChild (m_aContent.getAsElement ("content"));
+      aElement.addChild (m_aContent.getAsElement ("content"));
     for (final IFeedElement aContributor : m_aContributors)
-      aElement.appendChild (aContributor.getAsElement ("contributor"));
+      aElement.addChild (aContributor.getAsElement ("contributor"));
     if (m_aID != null)
-      aElement.appendElement (CFeed.XMLNS_ATOM, "id").appendText (m_aID.getAsStringWithEncodedParameters ());
+      aElement.addElementNS (CFeed.XMLNS_ATOM, "id").addText (m_aID.getAsStringWithEncodedParameters ());
     for (final IFeedElement aLink : m_aLinks)
-      aElement.appendChild (aLink.getAsElement ("link"));
+      aElement.addChild (aLink.getAsElement ("link"));
     if (m_aPublished != null)
-      aElement.appendChild (m_aPublished.getAsElement ("published"));
+      aElement.addChild (m_aPublished.getAsElement ("published"));
     if (m_aRights != null)
-      aElement.appendChild (m_aRights.getAsElement ("rights"));
+      aElement.addChild (m_aRights.getAsElement ("rights"));
     if (m_aSource != null)
-      aElement.appendChild (m_aSource.getAsElement ("source"));
+      aElement.addChild (m_aSource.getAsElement ("source"));
     if (m_aSummary != null)
-      aElement.appendChild (m_aSummary.getAsElement ("summary"));
+      aElement.addChild (m_aSummary.getAsElement ("summary"));
     if (m_aTitle != null)
-      aElement.appendChild (m_aTitle.getAsElement ("title"));
+      aElement.addChild (m_aTitle.getAsElement ("title"));
     if (m_aUpdated != null)
-      aElement.appendChild (m_aUpdated.getAsElement ("updated"));
-    if (StringHelper.hasText (getLanguage ()))
+      aElement.addChild (m_aUpdated.getAsElement ("updated"));
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }

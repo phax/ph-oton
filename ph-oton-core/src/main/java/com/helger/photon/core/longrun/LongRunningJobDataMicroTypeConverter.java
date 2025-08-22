@@ -58,7 +58,9 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
     eJobData.setAttribute (ATTR_ID, aValue.getID ());
 
     // Description
-    eJobData.appendChild (MicroTypeConverter.convertToMicroElement (aValue.getJobDescription (), sNamespaceURI, ELEMENT_DESCRIPTION));
+    eJobData.addChild (MicroTypeConverter.convertToMicroElement (aValue.getJobDescription (),
+                                                                    sNamespaceURI,
+                                                                    ELEMENT_DESCRIPTION));
 
     eJobData.setAttributeWithConversion (ATTR_STARTDT, aValue.getStartDateTime ());
     eJobData.setAttribute (ATTR_STARTINGUSERID, aValue.getStartingUserID ());
@@ -67,9 +69,9 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
     eJobData.setAttribute (ATTR_EXECSUCCESS, aValue.getExecutionSuccess ().getID ());
 
     // Result
-    final IMicroElement eResult = eJobData.appendElement (sNamespaceURI, ELEMENT_RESULT);
+    final IMicroElement eResult = eJobData.addElementNS (sNamespaceURI, ELEMENT_RESULT);
     eResult.setAttribute (ATTR_TYPE, aValue.getResult ().getType ().getID ());
-    eResult.appendText (aValue.getResult ().getAsString ());
+    eResult.addText (aValue.getResult ().getAsString ());
     return eJobData;
   }
 
@@ -110,6 +112,12 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
         throw new IllegalStateException ("Unknown type: " + eResultType);
     }
 
-    return new LongRunningJobData (sID, aStartDateTime, aEndDateTime, eExecSuccess, sStartingUserID, aJobDescription, aResult);
+    return new LongRunningJobData (sID,
+                                   aStartDateTime,
+                                   aEndDateTime,
+                                   eExecSuccess,
+                                   sStartingUserID,
+                                   aJobDescription,
+                                   aResult);
   }
 }

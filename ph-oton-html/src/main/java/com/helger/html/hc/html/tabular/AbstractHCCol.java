@@ -86,7 +86,7 @@ public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> 
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sWidth))
+    if (StringHelper.isNotEmpty (m_sWidth))
       aElement.setAttribute (CHTMLAttributes.WIDTH, m_sWidth);
     if (m_nSpan > 0)
       aElement.setAttribute (CHTMLAttributes.SPAN, m_nSpan);

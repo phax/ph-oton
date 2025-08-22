@@ -46,7 +46,7 @@ public class HCArea extends AbstractHCArea <HCArea>
   @Nonnull
   public static HCArea of (@Nullable final String sHref)
   {
-    if (StringHelper.hasNoText (sHref))
+    if (StringHelper.isEmpty (sHref))
       return new HCArea ();
     return new HCArea (new SimpleURL (sHref));
   }

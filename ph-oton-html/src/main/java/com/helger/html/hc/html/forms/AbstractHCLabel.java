@@ -83,9 +83,9 @@ public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYP
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sFor))
+    if (StringHelper.isNotEmpty (m_sFor))
       aElement.setAttribute (CHTMLAttributes.FOR, m_sFor);
-    if (StringHelper.hasText (m_sForm))
+    if (StringHelper.isNotEmpty (m_sForm))
       aElement.setAttribute (CHTMLAttributes.FORM, m_sForm);
   }
 

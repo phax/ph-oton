@@ -55,7 +55,7 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
       {
         final IHCHasID <?> aElement = (IHCHasID <?>) aChildNode;
         final String sID = aElement.getID ();
-        if (StringHelper.hasText (sID) && !aUsedIDs.add (sID))
+        if (StringHelper.isNotEmpty (sID) && !aUsedIDs.add (sID))
         {
           HCConsistencyChecker.consistencyError ("The ID '" +
                                                  sID +

@@ -56,7 +56,6 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
 
   protected AbstractHCScriptInline ()
   {
-    super ();
   }
 
   protected AbstractHCScriptInline (@Nonnull final IHasJSCode aProvider)
@@ -83,10 +82,9 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
 
   /**
    * @param aSettings
-   *        The settings to be used. May be <code>null</code> to use the
-   *        default.
-   * @return The text representation of the JS code passed in the constructor.
-   *         May be <code>null</code>.
+   *        The settings to be used. May be <code>null</code> to use the default.
+   * @return The text representation of the JS code passed in the constructor. May be
+   *         <code>null</code>.
    */
   @Nullable
   public final String getJSCode (@Nonnull final IJSWriterSettings aSettings)
@@ -139,32 +137,32 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
                                       @Nonnull final EHCScriptInlineMode eMode,
                                       @Nonnull final String sLineSeparator)
   {
-    if (StringHelper.hasText (sContent))
+    if (StringHelper.isNotEmpty (sContent))
       switch (eMode)
       {
         case PLAIN_TEXT:
-          aElement.appendText (sContent);
+          aElement.addText (sContent);
           break;
         case PLAIN_TEXT_NO_ESCAPE:
           if (StringHelper.containsIgnoreCase (sContent, "</script>", Locale.US))
             throw new IllegalArgumentException ("The script text contains a closing script tag: " + sContent);
-          aElement.appendChild (new MicroText (sContent).setEscape (false));
+          aElement.addChild (new MicroText (sContent).setEscape (false));
           break;
         case PLAIN_TEXT_WRAPPED_IN_COMMENT:
           if (StringHelper.getLastChar (sContent) == '\n')
-            aElement.appendComment (sLineSeparator + sContent + "//");
+            aElement.addComment (sLineSeparator + sContent + "//");
           else
-            aElement.appendComment (sLineSeparator + sContent + sLineSeparator + "//");
+            aElement.addComment (sLineSeparator + sContent + sLineSeparator + "//");
           break;
         case CDATA:
-          aElement.appendCDATA (sContent);
+          aElement.addCDATA (sContent);
           break;
         case CDATA_IN_COMMENT:
-          aElement.appendText ("//");
+          aElement.addText ("//");
           if (StringHelper.getLastChar (sContent) == '\n')
-            aElement.appendCDATA (sLineSeparator + sContent + "//");
+            aElement.addCDATA (sLineSeparator + sContent + "//");
           else
-            aElement.appendCDATA (sLineSeparator + sContent + sLineSeparator + "//");
+            aElement.addCDATA (sLineSeparator + sContent + sLineSeparator + "//");
           break;
         default:
           throw new IllegalArgumentException ("Illegal mode: " + eMode);
@@ -177,7 +175,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
     if (m_sCachedJSCode == null)
       m_sCachedJSCode = StringHelper.trim (getJSCode (aConversionSettings.getJSWriterSettings ()));
     // Don't create script elements with empty content....
-    return StringHelper.hasText (m_sCachedJSCode);
+    return StringHelper.isNotEmpty (m_sCachedJSCode);
   }
 
   @Override

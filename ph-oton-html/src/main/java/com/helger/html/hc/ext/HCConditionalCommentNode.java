@@ -407,7 +407,7 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   public static HCConditionalCommentNode getFromStringOrNull (@Nullable final String sCondition,
                                                               @Nonnull final IHCNode aNode)
   {
-    if (StringHelper.hasNoText (sCondition))
+    if (StringHelper.isEmpty (sCondition))
       return null;
     return getAsConditionalCommentNode (sCondition, aNode);
   }

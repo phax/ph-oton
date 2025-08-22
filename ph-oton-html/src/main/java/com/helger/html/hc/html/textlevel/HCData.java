@@ -52,7 +52,7 @@ public class HCData extends AbstractHCElementWithChildren <HCData>
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sValue))
+    if (StringHelper.isNotEmpty (m_sValue))
       aElement.setAttribute (CHTMLAttributes.VALUE, m_sValue);
   }
 }

@@ -49,7 +49,7 @@ public class TemporaryUserDataObject extends AbstractUserDataObject
   @Nullable
   public static TemporaryUserDataObject createConditional (@Nullable final String sPath)
   {
-    if (StringHelper.hasNoText (sPath))
+    if (StringHelper.isEmpty (sPath))
       return null;
     return new TemporaryUserDataObject (sPath);
   }

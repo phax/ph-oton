@@ -64,7 +64,7 @@ public class HCA_MailTo extends AbstractHCA <HCA_MailTo>
   @Nullable
   public static HCA_MailTo createLinkedEmail (@Nullable final String sAddress, @Nullable final String sPersonal)
   {
-    if (StringHelper.hasNoText (sAddress))
+    if (StringHelper.isEmpty (sAddress))
       return null;
 
     final HCA_MailTo ret = new HCA_MailTo (sAddress);

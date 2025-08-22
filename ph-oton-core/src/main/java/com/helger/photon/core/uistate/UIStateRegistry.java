@@ -86,7 +86,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
   {
     if (aOT == null)
       return null;
-    if (StringHelper.hasNoText (sStateID))
+    if (StringHelper.isEmpty (sStateID))
       return null;
 
     return m_aRWLock.readLockedGet ( () -> {

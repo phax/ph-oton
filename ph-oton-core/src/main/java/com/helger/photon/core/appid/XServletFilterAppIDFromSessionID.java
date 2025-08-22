@@ -48,10 +48,10 @@ public final class XServletFilterAppIDFromSessionID implements IXServletHighLeve
     String sAppID = null;
     if (aSessionState != null)
       sAppID = aSessionState.getLastApplicationID ();
-    if (StringHelper.hasNoText (sAppID))
+    if (StringHelper.isEmpty (sAppID))
       sAppID = PhotonGlobalState.getInstance ().getDefaultApplicationID ();
 
-    if (StringHelper.hasText (sAppID))
+    if (StringHelper.isNotEmpty (sAppID))
     {
       PhotonRequestState aRequestState = null;
       if (aSessionState != null)

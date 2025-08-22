@@ -17,7 +17,6 @@
 package com.helger.html.resource.css;
 
 import com.helger.annotation.Nonempty;
-import com.helger.annotation.misc.ChangeNextMajorRelease;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
@@ -43,13 +42,11 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   private final CSSMediaList m_aCSSMediaList;
   private final boolean m_bIsBundlable;
 
-  @Deprecated (forRemoval = false)
-  @ChangeNextMajorRelease ("Make protected")
-  public ConstantCSSPathProvider (@Nonnull @Nonempty final String sPath,
-                                  @Nonnull @Nonempty final String sMinifiedPath,
-                                  @Nullable final String sConditionalComment,
-                                  @Nullable final ICSSMediaList aMediaList,
-                                  final boolean bIsBundlable)
+  protected ConstantCSSPathProvider (@Nonnull @Nonempty final String sPath,
+                                     @Nonnull @Nonempty final String sMinifiedPath,
+                                     @Nullable final String sConditionalComment,
+                                     @Nullable final ICSSMediaList aMediaList,
+                                     final boolean bIsBundlable)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
     ValueEnforcer.isTrue (CSSFilenameHelper.isCSSFilename (sPath), () -> "'" + sPath + "' is not a valid CSS filename");
@@ -188,92 +185,5 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   public static Builder builder ()
   {
     return new Builder ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider create (@Nonnull @Nonempty final String sPath)
-  {
-    return builder ().path (sPath).minifiedPathFromPath ().build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
-                                                                      @Nullable final String sConditionalComment)
-  {
-    return builder ().path (sPath).minifiedPathFromPath ().conditionalComment (sConditionalComment).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
-                                                                      @Nullable final String sConditionalComment,
-                                                                      @Nullable final ICSSMediaList aMediaList)
-  {
-    return builder ().path (sPath)
-                     .minifiedPathFromPath ()
-                     .conditionalComment (sConditionalComment)
-                     .cssMediaList (aMediaList)
-                     .build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath,
-                                                         final boolean bBundlable)
-  {
-    return builder ().path (sPath).minifiedPathFromPath ().bundlable (bBundlable).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createBundlable (@Nonnull @Nonempty final String sPath,
-                                                         @Nullable final ICSSMediaList aMediaList,
-                                                         final boolean bBundlable)
-  {
-    return builder ().path (sPath).minifiedPathFromPath ().cssMediaList (aMediaList).bundlable (bBundlable).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI)
-  {
-    return builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
-                                                        @Nullable final String sConditionalComment)
-  {
-    return builder ().path (sURI)
-                     .minifiedPath (sURI)
-                     .conditionalComment (sConditionalComment)
-                     .bundlable (false)
-                     .build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
-                                                        @Nullable final ICSSMediaList aMediaList)
-  {
-    return builder ().path (sURI).minifiedPath (sURI).cssMediaList (aMediaList).bundlable (false).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantCSSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
-                                                        @Nullable final String sConditionalComment,
-                                                        @Nullable final ICSSMediaList aMediaList)
-  {
-    // External CSS are never bundleable
-    return builder ().path (sURI)
-                     .minifiedPath (sURI)
-                     .conditionalComment (sConditionalComment)
-                     .cssMediaList (aMediaList)
-                     .bundlable (false)
-                     .build ();
   }
 }

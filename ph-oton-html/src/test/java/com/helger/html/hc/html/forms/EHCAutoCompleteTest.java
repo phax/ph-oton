@@ -36,7 +36,7 @@ public final class EHCAutoCompleteTest
   {
     for (final EHCAutoComplete e : EHCAutoComplete.values ())
     {
-      assertTrue (StringHelper.hasText (e.getAttrValue ()));
+      assertTrue (StringHelper.isNotEmpty (e.getAttrValue ()));
       assertSame (e, EHCAutoComplete.getFromAttrValueOrNull (e.getAttrValue ()));
     }
     assertNull (EHCAutoComplete.getFromAttrValueOrNull (null));

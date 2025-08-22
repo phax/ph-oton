@@ -667,7 +667,7 @@ public class FineUploaderBasic
     final JSAssocArray ret = new JSAssocArray ();
     if (m_bDebug != DEFAULT_DEBUG)
       ret.add ("debug", m_bDebug);
-    if (StringHelper.hasText (m_sButtonElementID))
+    if (StringHelper.isNotEmpty (m_sButtonElementID))
       ret.add ("button", JSHtml.documentGetElementById (m_sButtonElementID));
     if (m_bMultiple != DEFAULT_MULTIPLE)
       ret.add ("multiple", m_bMultiple);

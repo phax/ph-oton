@@ -319,7 +319,7 @@ public enum EHCAutoComplete implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCAutoComplete getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCAutoComplete.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

@@ -42,6 +42,7 @@ import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.visit.AbstractModifyingCSSUrlVisitor;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.reader.CSSReaderSettings;
 import com.helger.css.writer.CSSWriter;
 import com.helger.http.url.ISimpleURL;
 import com.helger.io.file.FilenameHelper;
@@ -158,7 +159,8 @@ public class WebSiteResource
                                    @Nonnull @Nonempty final String sBasePath,
                                    final boolean bRegular)
   {
-    final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP, m_aCharset);
+    final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP,
+                                                               new CSSReaderSettings ().setFallbackCharset (m_aCharset));
     if (aCSS == null)
     {
       LOGGER.error ("Failed to parse CSS. Returning 'as-is'");
@@ -247,7 +249,7 @@ public class WebSiteResource
     final String sVersion = m_sContentHash.length () >= 16 ? m_sContentHash.substring (0, 16) : "";
     return PhotonAppSettings.getURIToURLConverter ()
                             .getAsURL (aRequestScope, m_sPath)
-                            .addIf ("version", sVersion, StringHelper::hasText);
+                            .addIf ("version", sVersion, StringHelper::isNotEmpty);
   }
 
   @Override

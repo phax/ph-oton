@@ -343,7 +343,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
     final IMicroContainer ret = new MicroContainer ();
     if (hasChildren ())
       for (final CHILDTYPE aNode : getChildrenFormEmitting (m_aChildren))
-        ret.appendChild (aNode.convertToMicroNode (aConversionSettings));
+        ret.addChild (aNode.convertToMicroNode (aConversionSettings));
     return ret;
   }
 
@@ -358,7 +358,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
     for (final CHILDTYPE aChild : getChildrenFormEmitting (m_aChildren))
     {
       final String sPlainText = aChild.getPlainText ();
-      if (StringHelper.hasText (sPlainText))
+      if (StringHelper.isNotEmpty (sPlainText))
       {
         if (ret.length () > 0)
           ret.append (' ');

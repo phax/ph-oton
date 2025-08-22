@@ -263,18 +263,18 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aSrc != null)
       aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
-    if (StringHelper.hasText (m_sLongDesc))
+    if (StringHelper.isNotEmpty (m_sLongDesc))
       aElement.setAttribute (CHTMLAttributes.LONGDESC, m_sLongDesc);
     if (m_eScrolling != null)
       aElement.setAttribute (CHTMLAttributes.SCROLLING, m_eScrolling);
     if (m_eAlign != null)
       aElement.setAttribute (CHTMLAttributes.ALIGN, m_eAlign);
     aElement.setAttribute (CHTMLAttributes.FRAMEBORDER, m_bFrameBorder ? "1" : "0");
-    if (StringHelper.hasText (m_sWidth))
+    if (StringHelper.isNotEmpty (m_sWidth))
       aElement.setAttribute (CHTMLAttributes.WIDTH, m_sWidth);
-    if (StringHelper.hasText (m_sHeight))
+    if (StringHelper.isNotEmpty (m_sHeight))
       aElement.setAttribute (CHTMLAttributes.HEIGHT, m_sHeight);
     if (m_nMarginWidth >= 0)
       aElement.setAttribute (CHTMLAttributes.MARGINWIDTH, m_nMarginWidth);

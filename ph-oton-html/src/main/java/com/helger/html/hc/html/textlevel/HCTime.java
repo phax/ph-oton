@@ -189,7 +189,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sDatetime))
+    if (StringHelper.isNotEmpty (m_sDatetime))
       aElement.setAttribute (CHTMLAttributes.DATETIME, m_sDatetime);
   }
 }

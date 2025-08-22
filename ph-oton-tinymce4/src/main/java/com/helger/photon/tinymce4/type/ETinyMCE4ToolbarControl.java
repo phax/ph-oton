@@ -122,7 +122,7 @@ public enum ETinyMCE4ToolbarControl
   public static ETinyMCE4ToolbarControl getFromValueOrDefault (@Nullable final String sValue,
                                                                @Nullable final ETinyMCE4ToolbarControl eDefault)
   {
-    if (StringHelper.hasText (sValue))
+    if (StringHelper.isNotEmpty (sValue))
       for (final ETinyMCE4ToolbarControl e : values ())
         if (sValue.equals (e.m_sValue))
           return e;

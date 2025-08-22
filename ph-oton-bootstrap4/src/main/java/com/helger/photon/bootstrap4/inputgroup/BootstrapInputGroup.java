@@ -149,7 +149,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   @Nonnull
   public final BootstrapInputGroup addChildPrefix (@Nullable final String sText)
   {
-    if (StringHelper.hasText (sText))
+    if (StringHelper.isNotEmpty (sText))
       getOrCreateGroupPrepend ().addChild (getWrapped (sText));
     return this;
   }
@@ -183,7 +183,7 @@ public class BootstrapInputGroup extends AbstractHCDiv <BootstrapInputGroup>
   @Nonnull
   public final BootstrapInputGroup addChildSuffix (@Nullable final String sText)
   {
-    if (StringHelper.hasText (sText))
+    if (StringHelper.isNotEmpty (sText))
       getOrCreateGroupAppend ().addChild (getWrapped (sText));
     return this;
   }

@@ -554,7 +554,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
                      @Nonnull final EBootstrap4DateTimePickerTexts eText)
   {
     final String sValue = eText.getDisplayText (m_aDisplayLocale);
-    if (StringHelper.hasText (sValue))
+    if (StringHelper.isNotEmpty (sValue))
       ret.add (sKey, sValue);
   }
 
@@ -629,7 +629,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
       aOptions.add ("sideBySide", m_eSideBySide.getAsBooleanValue ());
 
     // Explicit format present?
-    aOptions.add ("format", StringHelper.hasText (m_sFormat) ? m_sFormat : m_eMode.getJSFormat (m_aDisplayLocale));
+    aOptions.add ("format", StringHelper.isNotEmpty (m_sFormat) ? m_sFormat : m_eMode.getJSFormat (m_aDisplayLocale));
 
     // Set before min, max and initial!
     if (m_eUseCurrent.isDefined ())

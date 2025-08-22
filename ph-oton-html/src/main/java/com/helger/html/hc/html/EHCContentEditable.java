@@ -51,7 +51,7 @@ public enum EHCContentEditable implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCContentEditable getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCContentEditable.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

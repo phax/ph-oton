@@ -107,7 +107,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
 
   public boolean containsWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (StringHelper.isEmpty (sID))
       return false;
 
     final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
@@ -247,7 +247,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange deleteRole (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -290,7 +290,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nullable
   public IRole getRoleOfID (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return null;
 
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
@@ -320,7 +320,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange renameRole (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -367,7 +367,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                               @Nullable final String sNewDescription,
                               @Nullable final Map <String, String> aNewCustomAttrs)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);

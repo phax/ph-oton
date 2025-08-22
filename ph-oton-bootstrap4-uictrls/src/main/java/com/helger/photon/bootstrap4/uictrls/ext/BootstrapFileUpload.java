@@ -167,14 +167,14 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
     addChild (m_aEditFile);
 
     String sPlaceholder = m_sCustomPlaceholder;
-    if (StringHelper.hasNoText (sPlaceholder))
+    if (StringHelper.isEmpty (sPlaceholder))
       sPlaceholder = EText.BROWSE_LABEL.getDisplayText (m_aDisplayLocale);
 
     final IHCElement <?> aPlaceholder = createPlaceholderNode (sPlaceholder);
     addChild (aPlaceholder);
 
     String sButtonText = m_sCustomButtonText;
-    if (StringHelper.hasNoText (sButtonText))
+    if (StringHelper.isEmpty (sButtonText))
       sButtonText = EText.BUTTON_BROWSE.getDisplayText (m_aDisplayLocale);
 
     if (false)

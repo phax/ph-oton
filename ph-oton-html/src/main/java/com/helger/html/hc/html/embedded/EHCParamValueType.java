@@ -57,7 +57,7 @@ public enum EHCParamValueType implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCParamValueType getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCParamValueType.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

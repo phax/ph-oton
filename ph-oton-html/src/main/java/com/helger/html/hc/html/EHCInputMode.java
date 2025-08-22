@@ -98,7 +98,7 @@ public enum EHCInputMode implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCInputMode getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCInputMode.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

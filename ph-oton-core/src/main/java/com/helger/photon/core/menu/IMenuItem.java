@@ -41,7 +41,7 @@ public interface IMenuItem extends IMenuObject, IHasDisplayText
    */
   default boolean hasTarget ()
   {
-    return StringHelper.hasText (getTarget ());
+    return StringHelper.isNotEmpty (getTarget ());
   }
 
   /**

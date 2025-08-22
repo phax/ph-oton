@@ -132,7 +132,7 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   public final String getHiddenFieldName ()
   {
     final String sFieldName = getName ();
-    if (StringHelper.hasNoText (sFieldName))
+    if (StringHelper.isEmpty (sFieldName))
       return null;
 
     return HIDDEN_FIELD_PREFIX + sFieldName;
@@ -146,7 +146,7 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
     if (m_bEmitHiddenField)
     {
       final String sHiddenFieldName = getHiddenFieldName ();
-      if (StringHelper.hasText (sHiddenFieldName))
+      if (StringHelper.isNotEmpty (sHiddenFieldName))
         aTargetNode.addChild (new HCHiddenField (sHiddenFieldName, getValue ()));
     }
   }

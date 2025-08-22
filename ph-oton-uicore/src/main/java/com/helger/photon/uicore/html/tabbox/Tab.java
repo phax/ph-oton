@@ -45,7 +45,7 @@ public class Tab implements IHasID <String>, Serializable
 
   public Tab (@Nullable final String sID, @Nullable final IHCNode aLabel, @Nullable final IHCNode aContent, final boolean bDisabled)
   {
-    if (StringHelper.hasText (sID))
+    if (StringHelper.isNotEmpty (sID))
     {
       m_sID = sID;
       m_bHasGeneratedID = false;

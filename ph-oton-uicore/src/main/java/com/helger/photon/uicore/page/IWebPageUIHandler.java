@@ -37,7 +37,7 @@ public interface IWebPageUIHandler extends Serializable
   @Nullable
   default IHCElementWithChildren <?> createActionHeader (@Nullable final String sText)
   {
-    if (StringHelper.hasNoText (sText))
+    if (StringHelper.isEmpty (sText))
       return null;
     return createActionHeader ().addChild (sText);
   }
@@ -51,7 +51,7 @@ public interface IWebPageUIHandler extends Serializable
   @Nullable
   default IHCElementWithChildren <?> createDataGroupHeader (@Nullable final String sText)
   {
-    if (StringHelper.hasNoText (sText))
+    if (StringHelper.isEmpty (sText))
       return null;
     return createDataGroupHeader ().addChild (sText);
   }

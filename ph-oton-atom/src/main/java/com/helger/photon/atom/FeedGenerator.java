@@ -95,14 +95,14 @@ public class FeedGenerator extends AbstractFeedElement implements IHasDescriptio
   public IMicroElement getAsElement (final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
-    if (StringHelper.hasText (m_sURI))
+    if (StringHelper.isNotEmpty (m_sURI))
       aElement.setAttribute ("uri", m_sURI);
-    if (StringHelper.hasText (m_sVersion))
+    if (StringHelper.isNotEmpty (m_sVersion))
       aElement.setAttribute ("version", m_sVersion);
-    if (StringHelper.hasText (getLanguage ()))
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
-    if (StringHelper.hasText (m_sDescription))
-      aElement.appendText (m_sDescription);
+    if (StringHelper.isNotEmpty (m_sDescription))
+      aElement.addText (m_sDescription);
     return aElement;
   }
 

@@ -152,7 +152,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
 
   public static boolean isValidID (@Nullable final String sID)
   {
-    if (StringHelper.hasText (sID))
+    if (StringHelper.isNotEmpty (sID))
     {
       // RegEx check: !CXMLRegEx.PATTERN_NCNAME.matcher (sID).matches ()
       // Happens to often, since "[" and "]" occur very often and are not
@@ -241,7 +241,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
       for (final ICSSClassProvider aCSSClassProvider : m_aCSSClassProviders)
       {
         final String sCSSClass = aCSSClassProvider.getCSSClass ();
-        if (StringHelper.hasText (sCSSClass))
+        if (StringHelper.isNotEmpty (sCSSClass))
           ret.add (sCSSClass);
       }
     return ret;
@@ -271,7 +271,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     for (final ICSSClassProvider aCSSClassProvider : aCSSClassProviders)
     {
       final String sCSSClass = aCSSClassProvider.getCSSClass ();
-      if (StringHelper.hasText (sCSSClass))
+      if (StringHelper.isNotEmpty (sCSSClass))
       {
         if (aSB.length () > 0)
           aSB.append (' ');
@@ -563,7 +563,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     else
     {
       if (!bImSureToOverwriteAnExistingID && m_sID != null)
-        if (StringHelper.hasText (sID))
+        if (StringHelper.isNotEmpty (sID))
         {
           if (!m_sID.equals (sID))
             HCConsistencyChecker.consistencyError ("Overwriting HC object ID '" +
@@ -829,13 +829,13 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   {
     final boolean bHTML5 = aConversionSettings.getHTMLVersion ().isAtLeastHTML5 ();
 
-    if (StringHelper.hasText (m_sID))
+    if (StringHelper.isNotEmpty (m_sID))
       aElement.setAttribute (CHTMLAttributes.ID, m_sID);
 
-    if (StringHelper.hasText (m_sTitle))
+    if (StringHelper.isNotEmpty (m_sTitle))
       aElement.setAttribute (CHTMLAttributes.TITLE, m_sTitle);
 
-    if (StringHelper.hasText (m_sLanguage))
+    if (StringHelper.isNotEmpty (m_sLanguage))
     {
       // Both "xml:lang" and "lang"
       aElement.setAttribute (new MicroQName (XMLConstants.XML_NS_URI, CHTMLAttributes.LANG.getName ()), m_sLanguage);
@@ -871,7 +871,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     // Global attributes
     if (m_nTabIndex != DEFAULT_TABINDEX)
       aElement.setAttribute (CHTMLAttributes.TABINDEX, m_nTabIndex);
-    if (StringHelper.hasText (m_sAccessKey))
+    if (StringHelper.isNotEmpty (m_sAccessKey))
       aElement.setAttribute (CHTMLAttributes.ACCESSKEY, m_sAccessKey);
 
     // Global HTML5 attributes
@@ -883,9 +883,9 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
         aElement.setAttribute (CHTMLAttributes.CONTENTEDITABLE, m_eContentEditable);
       if (m_eDraggable != null)
         aElement.setAttribute (CHTMLAttributes.DRAGGABLE, m_eDraggable);
-      if (StringHelper.hasText (m_sEnterKeyHint))
+      if (StringHelper.isNotEmpty (m_sEnterKeyHint))
         aElement.setAttribute (CHTMLAttributes.ENTERKEYHINT, m_sEnterKeyHint);
-      if (StringHelper.hasText (m_sExportParts))
+      if (StringHelper.isNotEmpty (m_sExportParts))
         aElement.setAttribute (CHTMLAttributes.EXPORTPARTS, m_sExportParts);
       if (m_bHidden)
         aElement.setAttribute (CHTMLAttributes.HIDDEN, CHTMLAttributeValues.HIDDEN);
@@ -893,11 +893,11 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
         aElement.setAttribute (CHTMLAttributes.INERT, CHTMLAttributeValues.INERT);
       if (m_eInputMode != null)
         aElement.setAttribute (CHTMLAttributes.INPUTMODE, m_eInputMode);
-      if (StringHelper.hasText (m_sNonce))
+      if (StringHelper.isNotEmpty (m_sNonce))
         aElement.setAttribute (CHTMLAttributes.NONCE, m_sNonce);
-      if (StringHelper.hasText (m_sPart))
+      if (StringHelper.isNotEmpty (m_sPart))
         aElement.setAttribute (CHTMLAttributes.PART, m_sPart);
-      if (StringHelper.hasText (m_sSlot))
+      if (StringHelper.isNotEmpty (m_sSlot))
         aElement.setAttribute (CHTMLAttributes.SLOT, m_sSlot);
       if (m_bSpellCheck)
         aElement.setAttribute (CHTMLAttributes.SPELLCHECK, CHTMLAttributeValues.SPELLCHECK);

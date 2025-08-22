@@ -57,7 +57,7 @@ public enum ETypeaheadRemoteRateLimitFunction
   public static ETypeaheadRemoteRateLimitFunction getFromValueOrDefault (@Nullable final String sValue,
                                                                          @Nullable final ETypeaheadRemoteRateLimitFunction eDefault)
   {
-    if (StringHelper.hasText (sValue))
+    if (StringHelper.isNotEmpty (sValue))
       for (final ETypeaheadRemoteRateLimitFunction e : values ())
         if (sValue.equals (e.m_sValue))
           return e;

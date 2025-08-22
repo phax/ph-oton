@@ -58,7 +58,7 @@ public class UserDataObject extends AbstractUserDataObject
   @Nullable
   public static UserDataObject createConditional (@Nullable final String sPath)
   {
-    if (StringHelper.hasNoText (sPath))
+    if (StringHelper.isEmpty (sPath))
       return null;
     return new UserDataObject (sPath);
   }

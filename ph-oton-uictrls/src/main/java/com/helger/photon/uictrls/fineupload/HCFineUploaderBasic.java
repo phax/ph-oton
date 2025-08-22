@@ -99,7 +99,7 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
       m_aUploader.setButtonElementID (m_aButton.ensureID ().getID ());
     }
     else
-      if (StringHelper.hasText (m_sButtonID))
+      if (StringHelper.isNotEmpty (m_sButtonID))
         m_aUploader.setButtonElementID (m_sButtonID);
 
     // Start building JS

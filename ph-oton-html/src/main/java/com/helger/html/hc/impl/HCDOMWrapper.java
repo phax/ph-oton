@@ -91,7 +91,7 @@ public class HCDOMWrapper extends AbstractHCNode
           final IMicroCDATA aCDATANode = (IMicroCDATA) aNode;
           sPlainText = aCDATANode.getData ();
         }
-      if (StringHelper.hasText (sPlainText))
+      if (StringHelper.isNotEmpty (sPlainText))
       {
         if (ret.length () > 0)
           ret.append (' ');

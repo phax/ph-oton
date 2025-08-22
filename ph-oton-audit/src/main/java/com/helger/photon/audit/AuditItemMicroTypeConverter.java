@@ -57,7 +57,7 @@ public class AuditItemMicroTypeConverter implements IMicroTypeConverter <AuditIt
     eItem.setAttribute (ATTR_USER, aAuditItem.getUserID ());
     eItem.setAttribute (ATTR_TYPE, aAuditItem.getTypeID ());
     eItem.setAttribute (ATTR_SUCCESS, aAuditItem.isSuccess ());
-    eItem.appendText (aAuditItem.getAction ());
+    eItem.addText (aAuditItem.getAction ());
     return eItem;
   }
 
@@ -75,7 +75,7 @@ public class AuditItemMicroTypeConverter implements IMicroTypeConverter <AuditIt
     }
 
     final String sUserID = eItem.getAttributeValue (ATTR_USER);
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       throw new IllegalStateException ("Failed to find user ID");
 
     final String sAuditActionType = eItem.getAttributeValue (ATTR_TYPE);

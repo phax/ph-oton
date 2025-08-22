@@ -39,8 +39,8 @@ public final class EJSEventTest
   {
     for (final EJSEvent e : EJSEvent.values ())
     {
-      assertTrue (StringHelper.hasText (e.getHTMLEventName ()));
-      assertTrue (StringHelper.hasText (e.getJSEventName ()));
+      assertTrue (StringHelper.isNotEmpty (e.getHTMLEventName ()));
+      assertTrue (StringHelper.isNotEmpty (e.getJSEventName ()));
       assertNotNull (e.getAllTypes ());
       assertFalse (CollectionHelper.isEmpty (e.getAllTypes ()));
       for (final EJSEventType eType : e.getAllTypes ())

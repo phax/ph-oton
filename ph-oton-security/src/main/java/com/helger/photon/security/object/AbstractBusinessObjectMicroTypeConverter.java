@@ -67,9 +67,9 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusin
     aElement.setAttribute (ATTR_DELETIONUSERID, aValue.getDeletionUserID ());
     for (final Map.Entry <String, String> aEntry : CollectionSort.getSortedByKey (aValue.attrs ()).entrySet ())
     {
-      final IMicroElement eCustom = aElement.appendElement (aElement.getNamespaceURI (), ELEMENT_CUSTOM);
+      final IMicroElement eCustom = aElement.addElementNS (aElement.getNamespaceURI (), ELEMENT_CUSTOM);
       eCustom.setAttribute (ATTR_ID, aEntry.getKey ());
-      eCustom.appendText (aEntry.getValue ());
+      eCustom.addText (aEntry.getValue ());
     }
   }
 

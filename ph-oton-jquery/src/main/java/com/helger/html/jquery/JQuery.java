@@ -157,18 +157,6 @@ public final class JQuery
   // Special cases
 
   /**
-   * @param aArgs
-   *        The array with the AJAX arguments
-   * @return <code>$.ajax</code>
-   */
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.1")
-  public static JQueryInvocation ajax (@Nonnull final JSAssocArray aArgs)
-  {
-    return ajax ().arg (aArgs);
-  }
-
-  /**
    * @param aURL
    *        The AJAX target URL. May not be <code>null</code>.
    * @param aArgs

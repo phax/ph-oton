@@ -54,7 +54,7 @@ public abstract class AbstractAPIExceptionMapper implements IAPIExceptionMapper
                                                @Nullable final String sContent)
   {
     aUnifiedResponse.setStatus (nStatusCode);
-    if (StringHelper.hasText (sContent))
+    if (StringHelper.isNotEmpty (sContent))
     {
       aUnifiedResponse.setAllowContentOnStatusCode (true)
                       .setContentAndCharset (sContent, StandardCharsets.UTF_8)

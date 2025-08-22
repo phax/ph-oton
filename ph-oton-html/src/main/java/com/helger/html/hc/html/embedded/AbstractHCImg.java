@@ -211,9 +211,9 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     if (m_aSrc != null)
       aElement.setAttribute (CHTMLAttributes.SRC,
                              m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
-    if (StringHelper.hasText (m_sSrcSet))
+    if (StringHelper.isNotEmpty (m_sSrcSet))
       aElement.setAttribute (CHTMLAttributes.SRCSET, m_sSrcSet);
-    if (StringHelper.hasText (m_sSizes))
+    if (StringHelper.isNotEmpty (m_sSizes))
       aElement.setAttribute (CHTMLAttributes.SIZES, m_sSizes);
     if (m_aExtent != null)
     {
@@ -223,7 +223,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
 
     // Ensure that the alt attribute is present
     // For WAI conformity, only alt but not title should be present
-    if (StringHelper.hasText (m_sAlt))
+    if (StringHelper.isNotEmpty (m_sAlt))
     {
       aElement.setAttribute (CHTMLAttributes.ALT, m_sAlt);
       aElement.removeAttribute (CHTMLAttributes.TITLE);

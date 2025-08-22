@@ -68,9 +68,9 @@ public abstract class AbstractFeedXHTML extends AbstractFeedElement
     {
       final IMicroNode aDivNode = HCRenderer.getAsNode (m_aDiv, HCCONV_SETTINGS);
       ((IMicroElement) aDivNode).setNamespaceURI (CHTMLDocTypes.DOCTYPE_XHTML_URI);
-      aElement.appendChild (aDivNode);
+      aElement.addChild (aDivNode);
     }
-    if (StringHelper.hasText (getLanguage ()))
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }

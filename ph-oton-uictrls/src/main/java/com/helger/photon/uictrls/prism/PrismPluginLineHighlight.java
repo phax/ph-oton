@@ -42,7 +42,7 @@ public class PrismPluginLineHighlight implements IPrismPlugin
                           @Nonnull final HCHasCSSClasses aPreClasses,
                           @Nonnull final HCHasCSSStyles aPreStyles)
   {
-    if (StringHelper.hasText (m_sLine))
+    if (StringHelper.isNotEmpty (m_sLine))
       aPreElement.setAttribute ("data-line", m_sLine);
   }
 }

@@ -257,7 +257,7 @@ public class BasePageSettingsHTML <WPECTYPE extends IWebPageExecutionContext> ex
                                                      .setCtrl (new HCCheckBox (new RequestFieldBoolean (FIELD_USE_NONCE_STYLE,
                                                                                                         HCSettings.isUseNonceInStyle ()))));
 
-        final Function <String, IHCNode> aFormatter = s -> StringHelper.hasNoText (s) ? em (EText.MSG_NONE.getDisplayText (aDisplayLocale))
+        final Function <String, IHCNode> aFormatter = s -> StringHelper.isEmpty (s) ? em (EText.MSG_NONE.getDisplayText (aDisplayLocale))
                                                                                       : code (s);
         aForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.MSG_FORM_LABEL_SUFFIX_OPTIONAL.getDisplayText (aDisplayLocale))
                                                      .setCtrl (aFormatter.apply (HCFormLabelHelper.getSuffixString (ELabelType.OPTIONAL))));

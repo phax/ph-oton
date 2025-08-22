@@ -190,7 +190,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   default EChange addToAriaDescribedBy (@Nonnull final String sDescribedBy)
   {
     final String sOldValue = getValue (CHTMLAttributes.ARIA_DESCRIBEDBY);
-    final boolean bAppend = StringHelper.hasText (sOldValue) && !sOldValue.contains (sDescribedBy);
+    final boolean bAppend = StringHelper.isNotEmpty (sOldValue) && !sOldValue.contains (sDescribedBy);
     return setAriaDescribedBy (bAppend ? sOldValue + ' ' + sDescribedBy : sDescribedBy);
   }
 
@@ -288,24 +288,11 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
   }
 
-  /**
-   * @param sLabeledBy
-   *        labeled by
-   * @return {@link EChange}.
-   * @deprecated Use {@link #addToAriaLabeledBy(String)} instead
-   */
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.7")
-  default EChange addAriaLabeledBy (@Nonnull final String sLabeledBy)
-  {
-    return addToAriaLabeledBy (sLabeledBy);
-  }
-
   @Nonnull
   default EChange addToAriaLabeledBy (@Nonnull final String sLabeledBy)
   {
     final String sOldValue = getValue (CHTMLAttributes.ARIA_LABELLEDBY);
-    final boolean bAppend = StringHelper.hasText (sOldValue) && !sOldValue.contains (sLabeledBy);
+    final boolean bAppend = StringHelper.isNotEmpty (sOldValue) && !sOldValue.contains (sLabeledBy);
     return setAriaLabeledBy (bAppend ? sOldValue + ' ' + sLabeledBy : sLabeledBy);
   }
 
@@ -313,13 +300,6 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   default EChange setAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
   {
     return setAriaLabeledBy (aLabeledBy.ensureID ().getID ());
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.7")
-  default EChange addAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
-  {
-    return addToAriaLabeledBy (aLabeledBy);
   }
 
   @Nonnull
@@ -353,13 +333,6 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
                                           .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
                                           .separator (' ')
                                           .build ());
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.7")
-  default EChange addAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
-  {
-    return addToAriaLabeledBy (aLabeledByMultiple);
   }
 
   @Nonnull

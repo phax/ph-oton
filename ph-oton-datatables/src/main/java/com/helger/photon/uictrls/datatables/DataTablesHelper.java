@@ -105,26 +105,26 @@ public final class DataTablesHelper
 
     IJSExpression aTotal = aFuncPrintSum.param ("t");
     IJSExpression aPageTotal = aFuncPrintSum.param ("pt");
-    if (StringHelper.hasText (sPrefix))
+    if (StringHelper.isNotEmpty (sPrefix))
     {
       aTotal = JSExpr.lit (sPrefix).plus (aTotal);
       aPageTotal = JSExpr.lit (sPrefix).plus (aPageTotal);
     }
-    if (StringHelper.hasText (sSuffix))
+    if (StringHelper.isNotEmpty (sSuffix))
     {
       aTotal = aTotal.plus (sSuffix);
       aPageTotal = aPageTotal.plus (sSuffix);
     }
 
     IJSExpression aBoth;
-    if (StringHelper.hasText (sBothPrefix))
+    if (StringHelper.isNotEmpty (sBothPrefix))
       aBoth = JSExpr.lit (sBothPrefix).plus (aPageTotal);
     else
       aBoth = aPageTotal;
-    if (StringHelper.hasText (sBothSep))
+    if (StringHelper.isNotEmpty (sBothSep))
       aBoth = aBoth.plus (sBothSep);
     aBoth = aBoth.plus (aTotal);
-    if (StringHelper.hasText (sBothSuffix))
+    if (StringHelper.isNotEmpty (sBothSuffix))
       aBoth = aBoth.plus (sBothSuffix);
 
     aFuncPrintSum.body ()._return (JSOp.cond (aTotal.eq (aPageTotal), aTotal, aBoth));

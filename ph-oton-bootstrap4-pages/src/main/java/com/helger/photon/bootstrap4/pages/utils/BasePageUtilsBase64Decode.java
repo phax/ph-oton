@@ -166,7 +166,7 @@ public class BasePageUtilsBase64Decode <WPECTYPE extends IWebPageExecutionContex
       if (aCharset == null && bShowAsString)
         aFormErrors.addFieldError (FIELD_CHARSET, "To show result as String, a Charset must be selected!");
 
-      if (StringHelper.hasNoText (sDecode))
+      if (StringHelper.isEmpty (sDecode))
         aFormErrors.addFieldError (FIELD_DECODE, "Please provide a String to decode!");
 
       byte [] aDecoded = null;

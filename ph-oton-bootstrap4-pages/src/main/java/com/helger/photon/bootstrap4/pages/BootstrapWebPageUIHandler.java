@@ -42,7 +42,7 @@ public class BootstrapWebPageUIHandler implements IWebPageFormUIHandler <Bootstr
   @Nullable
   public BootstrapPageHeader createPageHeader (@Nullable final String sHeaderText)
   {
-    if (StringHelper.hasNoText (sHeaderText))
+    if (StringHelper.isEmpty (sHeaderText))
       return null;
     return new BootstrapPageHeader ().addChild (sHeaderText);
   }

@@ -68,6 +68,6 @@ public interface ISystemMessageData extends Serializable
    */
   default boolean hasMessage ()
   {
-    return StringHelper.hasText (getMessage ());
+    return StringHelper.isNotEmpty (getMessage ());
   }
 }

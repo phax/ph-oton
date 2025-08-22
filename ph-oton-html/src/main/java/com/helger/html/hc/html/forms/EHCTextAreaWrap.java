@@ -51,7 +51,7 @@ public enum EHCTextAreaWrap implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCTextAreaWrap getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCTextAreaWrap.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

@@ -67,7 +67,7 @@ public class AuditField implements Serializable
    */
   public boolean hasName ()
   {
-    return StringHelper.hasText (m_sName);
+    return StringHelper.isNotEmpty (m_sName);
   }
 
   /**
@@ -84,7 +84,7 @@ public class AuditField implements Serializable
    */
   public boolean hasValue ()
   {
-    return StringHelper.hasText (m_sValue);
+    return StringHelper.isNotEmpty (m_sValue);
   }
 
   @Override

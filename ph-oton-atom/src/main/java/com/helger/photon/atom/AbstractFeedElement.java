@@ -48,6 +48,6 @@ public abstract class AbstractFeedElement implements IFeedElement
 
   public final void setLanguage (@Nullable final String sContentLanguage)
   {
-    m_sContentLanguage = StringHelper.hasNoText (sContentLanguage) ? null : sContentLanguage;
+    m_sContentLanguage = StringHelper.isEmpty (sContentLanguage) ? null : sContentLanguage;
   }
 }

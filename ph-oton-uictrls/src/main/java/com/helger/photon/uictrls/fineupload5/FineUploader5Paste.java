@@ -88,7 +88,7 @@ public class FineUploader5Paste implements IFineUploader5Part
     final JSAssocArray aSub = new JSAssocArray ();
     if (!m_sPasteDefaultName.equals (DEFAULT_PASTE_DEFAULT_NAME))
       aSub.add ("defaultName", m_sPasteDefaultName);
-    if (StringHelper.hasText (m_sPasteTargetElementID))
+    if (StringHelper.isNotEmpty (m_sPasteTargetElementID))
       aSub.add ("targetElement", JSHtml.documentGetElementById (m_sPasteTargetElementID));
     return aSub;
   }

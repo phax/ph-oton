@@ -30,6 +30,7 @@ import com.helger.css.decl.ICSSSelectorMember;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.reader.CSSReaderSettings;
 import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.icon.EIconCSSPathProvider;
 
@@ -40,7 +41,7 @@ public class MainExtractFontAwesome4CSSClasses
   public static void main (final String [] args)
   {
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
-                                                               StandardCharsets.UTF_8);
+                                                               new CSSReaderSettings ().setFallbackCharset (StandardCharsets.UTF_8));
     final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
     final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()

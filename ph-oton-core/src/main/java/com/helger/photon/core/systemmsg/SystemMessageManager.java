@@ -93,10 +93,10 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument ret = new MicroDocument ();
-    final IMicroElement eRoot = ret.appendElement (ELEMENT_SYSTEM_MESSAGE);
+    final IMicroElement eRoot = ret.addElement (ELEMENT_SYSTEM_MESSAGE);
     eRoot.setAttributeWithConversion (ATTR_LAST_UPDATE, m_aData.getLastUpdateDT ());
     eRoot.setAttribute (ATTR_MESSAGE_TYPE, m_aData.getMessageTypeID ());
-    eRoot.appendElement (ELEMENT_MESSAGE).appendText (m_aData.getMessage ());
+    eRoot.addElement (ELEMENT_MESSAGE).addText (m_aData.getMessage ());
     return ret;
   }
 

@@ -103,7 +103,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                   " loginname, email, pwalgo, pwsalt, pwhash, firstname, lastname, description, locale, lastlogindt, logincount, failedlogins, disabled" +
                   " FROM " +
                   m_sTableName;
-    if (StringHelper.hasText (sCondition))
+    if (StringHelper.isNotEmpty (sCondition))
     {
       // Condition present
       sSQL += " WHERE " + sCondition;
@@ -159,7 +159,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
 
   public boolean containsWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (StringHelper.isEmpty (sID))
       return false;
 
     final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
@@ -379,7 +379,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nullable
   public IUser getUserOfID (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return null;
 
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
@@ -425,7 +425,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nullable
   public IUser getUserOfLoginName (@Nullable final String sLoginName)
   {
-    if (StringHelper.hasNoText (sLoginName))
+    if (StringHelper.isEmpty (sLoginName))
       return null;
 
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
@@ -517,7 +517,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nullable
   public IUser getUserOfEmailAddress (@Nullable final String sEmailAddress)
   {
-    if (StringHelper.hasNoText (sEmailAddress))
+    if (StringHelper.isEmpty (sEmailAddress))
       return null;
 
     return _getUserOfEmailAddress (sEmailAddress, false);
@@ -526,7 +526,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nullable
   public IUser getUserOfEmailAddressIgnoreCase (@Nullable final String sEmailAddress)
   {
-    if (StringHelper.hasNoText (sEmailAddress))
+    if (StringHelper.isEmpty (sEmailAddress))
       return null;
 
     return _getUserOfEmailAddress (sEmailAddress, true);
@@ -583,7 +583,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                               @Nullable final Map <String, String> aNewCustomAttrs,
                               final boolean bNewDisabled)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -657,7 +657,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange setUserPassword (@Nullable final String sUserID, @Nonnull final String sNewPlainTextPassword)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     // Create a new password salt upon password change
@@ -707,7 +707,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange updateUserLastLogin (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -741,7 +741,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange updateUserLastFailedLogin (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -777,7 +777,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange deleteUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -817,7 +817,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange undeleteUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -857,7 +857,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange disableUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -898,7 +898,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   @Nonnull
   public EChange enableUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);

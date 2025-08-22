@@ -405,7 +405,7 @@ public final class HCExtHelper
 
   public static void forEachLine (@Nullable final String sText, @Nonnull final ILineConsumer aTarget)
   {
-    if (StringHelper.hasText (sText))
+    if (StringHelper.isNotEmpty (sText))
     {
       // Remove all "\r" chars
       final String sRealText = StringRemove.removeAll (sText, '\r');

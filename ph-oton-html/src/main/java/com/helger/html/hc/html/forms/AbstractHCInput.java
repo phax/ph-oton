@@ -19,7 +19,6 @@ package com.helger.html.hc.html.forms;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.CGlobal;
-import com.helger.base.state.ETriState;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
@@ -42,10 +41,6 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
                                       implements
                                       IHCInput <IMPLTYPE>
 {
-  /** By default no auto complete setting is active */
-  @Deprecated (since = "9.1.1", forRemoval = true)
-  public static final ETriState DEFAULT_AUTO_COMPLETE = ETriState.UNDEFINED;
-
   /** Not checked by default */
   public static final boolean DEFAULT_CHECKED = false;
 
@@ -472,17 +467,17 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_eType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_eType);
-    if (StringHelper.hasText (m_sAccept))
+    if (StringHelper.isNotEmpty (m_sAccept))
       aElement.setAttribute (CHTMLAttributes.ACCEPT, m_sAccept);
-    if (StringHelper.hasText (m_sAlt))
+    if (StringHelper.isNotEmpty (m_sAlt))
       aElement.setAttribute (CHTMLAttributes.ALT, m_sAlt);
-    if (StringHelper.hasText (m_sAutoComplete))
+    if (StringHelper.isNotEmpty (m_sAutoComplete))
       aElement.setAttribute (CHTMLAttributes.AUTOCOMPLETE, m_sAutoComplete);
     if (m_bChecked)
       aElement.setAttribute (CHTMLAttributes.CHECKED, CHTMLAttributeValues.CHECKED);
-    if (StringHelper.hasText (m_sDirName))
+    if (StringHelper.isNotEmpty (m_sDirName))
       aElement.setAttribute (CHTMLAttributes.DIRNAME, m_sDirName);
-    if (StringHelper.hasText (m_sForm))
+    if (StringHelper.isNotEmpty (m_sForm))
       aElement.setAttribute (CHTMLAttributes.FORM, m_sForm);
     m_aFormAction.applyProperties (CHTMLAttributes.FORMACTION,
                                    aElement,
@@ -498,28 +493,28 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
       aElement.setAttribute (CHTMLAttributes.FORMTARGET, m_aFormTarget);
     if (m_nHeight > 0)
       aElement.setAttribute (CHTMLAttributes.HEIGHT, m_nHeight);
-    if (StringHelper.hasText (m_sList))
+    if (StringHelper.isNotEmpty (m_sList))
       aElement.setAttribute (CHTMLAttributes.LIST, m_sList);
-    if (StringHelper.hasText (m_sMaxValue))
+    if (StringHelper.isNotEmpty (m_sMaxValue))
       aElement.setAttribute (CHTMLAttributes.MAX, m_sMaxValue);
     if (m_nMaxLength > 0)
       aElement.setAttribute (CHTMLAttributes.MAXLENGTH, m_nMaxLength);
-    if (StringHelper.hasText (m_sMinValue))
+    if (StringHelper.isNotEmpty (m_sMinValue))
       aElement.setAttribute (CHTMLAttributes.MIN, m_sMinValue);
     if (m_nMinLength > 0)
       aElement.setAttribute (CHTMLAttributes.MINLENGTH, m_nMinLength);
     if (m_bMultiple)
       aElement.setAttribute (CHTMLAttributes.MULTIPLE, CHTMLAttributeValues.MULTIPLE);
-    if (StringHelper.hasText (m_sPattern))
+    if (StringHelper.isNotEmpty (m_sPattern))
       aElement.setAttribute (CHTMLAttributes.PATTERN, m_sPattern);
-    if (StringHelper.hasText (m_sPlaceholder))
+    if (StringHelper.isNotEmpty (m_sPlaceholder))
       aElement.setAttribute (CHTMLAttributes.PLACEHOLDER, m_sPlaceholder);
     if (m_nSize > 0)
       aElement.setAttribute (CHTMLAttributes.SIZE, m_nSize);
     if (m_aSrc != null)
       aElement.setAttribute (CHTMLAttributes.SRC,
                              m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
-    if (StringHelper.hasText (m_sStep))
+    if (StringHelper.isNotEmpty (m_sStep))
       aElement.setAttribute (CHTMLAttributes.STEP, m_sStep);
     if (m_sValue != null)
       aElement.setAttribute (CHTMLAttributes.VALUE, m_sValue);

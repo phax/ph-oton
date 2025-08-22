@@ -391,7 +391,7 @@ public class FineUploader5Core implements IFineUploader5Part
     // Core
     if (m_bCoreAutoUpload != DEFAULT_CORE_AUTO_UPLOAD)
       ret.add ("autoUpload", m_bCoreAutoUpload);
-    if (StringHelper.hasText (m_sCoreButtonElementID))
+    if (StringHelper.isNotEmpty (m_sCoreButtonElementID))
       ret.add ("button", JSHtml.documentGetElementById (m_sCoreButtonElementID));
     if (m_bCoreDebug != DEFAULT_CORE_DEBUG)
       ret.add ("debug", m_bCoreDebug);

@@ -17,7 +17,6 @@
 package com.helger.html.resource.js;
 
 import com.helger.annotation.Nonempty;
-import com.helger.annotation.misc.ChangeNextMajorRelease;
 import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
@@ -42,13 +41,11 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   private final boolean m_bIsBundlable;
   private final EHCScriptLoadingMode m_eScriptLoadingMode;
 
-  @Deprecated (forRemoval = false)
-  @ChangeNextMajorRelease ("Make protected")
-  public ConstantJSPathProvider (@Nonnull @Nonempty final String sPath,
-                                 @Nonnull @Nonempty final String sMinifiedPath,
-                                 @Nullable final String sConditionalComment,
-                                 final boolean bIsBundlable,
-                                 @Nonnull final EHCScriptLoadingMode eScriptLoadingMode)
+  protected ConstantJSPathProvider (@Nonnull @Nonempty final String sPath,
+                                    @Nonnull @Nonempty final String sMinifiedPath,
+                                    @Nullable final String sConditionalComment,
+                                    final boolean bIsBundlable,
+                                    @Nonnull final EHCScriptLoadingMode eScriptLoadingMode)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
     ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sPath), () -> "'" + sPath + "' is not a valid JS filename");
@@ -211,48 +208,5 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   public static Builder builder ()
   {
     return new Builder ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantJSPathProvider create (@Nonnull @Nonempty final String sPath)
-  {
-    return builder ().path (sPath).minifiedPathFromPath ().build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantJSPathProvider createWithConditionalComment (@Nonnull @Nonempty final String sPath,
-                                                                     @Nullable final String sConditionalComment)
-  {
-    return builder ().path (sPath).minifiedPathFromPath ().conditionalComment (sConditionalComment).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantJSPathProvider createBundlable (@Nonnull @Nonempty final String sPath, final boolean bBundlable)
-  {
-    return builder ().path (sPath).minifiedPathFromPath ().bundlable (bBundlable).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI)
-  {
-    // External JS are never bundlable
-    return builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ();
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static ConstantJSPathProvider createExternal (@Nonnull @Nonempty final String sURI,
-                                                       @Nullable final String sConditionalComment)
-  {
-    // External JS are never bundlable
-    return builder ().path (sURI)
-                     .minifiedPath (sURI)
-                     .conditionalComment (sConditionalComment)
-                     .bundlable (false)
-                     .build ();
   }
 }

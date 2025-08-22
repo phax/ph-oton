@@ -61,14 +61,14 @@ public class JschSessionProvider implements IJSchSessionProvider
 
     // key pair
     final String sKeyPairPrivateKeyFile = m_aSFTPSettings.getKeyPairPrivateKeyFile ();
-    if (StringHelper.hasNoText (sKeyPairPrivateKeyFile))
+    if (StringHelper.isEmpty (sKeyPairPrivateKeyFile))
       throw new JSchException ("Private key file path is not contained in settings!");
     final byte [] aPrivateKey = StreamHelper.getAllBytes (new ClassPathResource (sKeyPairPrivateKeyFile));
     if (aPrivateKey == null)
       throw new JSchException ("Failed to read private key from '" + sKeyPairPrivateKeyFile + "'");
 
     final String sKeyPairPublicKeyFile = m_aSFTPSettings.getKeyPairPublicKeyFile ();
-    if (StringHelper.hasNoText (sKeyPairPublicKeyFile))
+    if (StringHelper.isEmpty (sKeyPairPublicKeyFile))
       throw new JSchException ("Public key file path is not contained in settings!");
     final byte [] aPublicKey = StreamHelper.getAllBytes (new ClassPathResource (sKeyPairPublicKeyFile));
     if (aPublicKey == null)

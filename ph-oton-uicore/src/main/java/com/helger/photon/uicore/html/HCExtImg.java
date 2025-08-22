@@ -46,7 +46,7 @@ public class HCExtImg extends AbstractHCImg <HCExtImg>
 
     // Remove the context path (if any)
     final String sContextPath = ServletContextPathHolder.getContextPath ();
-    if (StringHelper.hasText (sContextPath) && sCleanPath.startsWith (sContextPath))
+    if (StringHelper.isNotEmpty (sContextPath) && sCleanPath.startsWith (sContextPath))
     {
       // URI contains context path
       final String sPath = sCleanPath.substring (sContextPath.length ());

@@ -69,7 +69,7 @@ public class PasswordHashCreatorManager
     ValueEnforcer.notNull (aPasswordHashCreator, "PasswordHashCreator");
 
     final String sAlgorithmName = aPasswordHashCreator.getAlgorithmName ();
-    if (StringHelper.hasNoText (sAlgorithmName))
+    if (StringHelper.isEmpty (sAlgorithmName))
       throw new IllegalArgumentException ("PasswordHashCreator algorithm '" + aPasswordHashCreator + "' is empty!");
 
     m_aRWLock.writeLocked ( () -> {
@@ -89,7 +89,7 @@ public class PasswordHashCreatorManager
     if (aPasswordHashCreator != null)
     {
       final String sAlgorithmName = aPasswordHashCreator.getAlgorithmName ();
-      if (StringHelper.hasText (sAlgorithmName))
+      if (StringHelper.isNotEmpty (sAlgorithmName))
       {
         m_aRWLock.writeLocked ( () -> {
           if (m_aPasswordHashCreators.remove (sAlgorithmName) != null)

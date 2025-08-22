@@ -111,7 +111,7 @@ final class MarkdownHTML
    */
   public static boolean isHtmlBlockElement (@Nullable final String sValue)
   {
-    if (StringHelper.hasNoText (sValue))
+    if (StringHelper.isEmpty (sValue))
       return false;
     return HTML_BLOCK_ELEMENTS.contains (EHTMLElement.getUnifiedHTMLElementName (sValue));
   }
@@ -124,7 +124,7 @@ final class MarkdownHTML
    */
   public static boolean isUnsafeHtmlElement (@Nullable final String sValue)
   {
-    if (StringHelper.hasNoText (sValue))
+    if (StringHelper.isEmpty (sValue))
       return false;
     return HTML_UNSAFE.contains (EHTMLElement.getUnifiedHTMLElementName (sValue));
   }

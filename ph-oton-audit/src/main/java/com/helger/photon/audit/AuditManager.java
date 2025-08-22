@@ -73,7 +73,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
 
     AuditHasFilename (@Nullable final String sBaseDir)
     {
-      ValueEnforcer.isTrue (StringHelper.hasNoText (sBaseDir) || FilenameHelper.endsWithPathSeparatorChar (sBaseDir),
+      ValueEnforcer.isTrue (StringHelper.isEmpty (sBaseDir) || FilenameHelper.endsWithPathSeparatorChar (sBaseDir),
                             () -> "BaseDir '" + sBaseDir + "' must end with path separator!");
       m_sBaseDir = sBaseDir;
     }
@@ -82,7 +82,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     public String get ()
     {
       // No base dir -> in memory only
-      if (StringHelper.hasNoText (m_sBaseDir))
+      if (StringHelper.isEmpty (m_sBaseDir))
         return null;
       return m_sBaseDir + getRelativeAuditFilename (PDTFactory.getCurrentLocalDate ());
     }
@@ -145,7 +145,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
 
     // Ensure base path is present (if provided)
     m_sBaseDir = sBaseDir;
-    if (StringHelper.hasText (sBaseDir))
+    if (StringHelper.isNotEmpty (sBaseDir))
     {
       final IFileRelativeIO aIO = getIO ();
       aIO.createDirectory (sBaseDir, true);
@@ -231,10 +231,10 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ITEMS);
+    final IMicroElement eRoot = aDoc.addElement (ELEMENT_ITEMS);
     // Is sorted internally!
     for (final IAuditItem aAuditItem : m_aItems.getAllItems ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aAuditItem, ELEMENT_ITEM));
+      eRoot.addChild (MicroTypeConverter.convertToMicroElement (aAuditItem, ELEMENT_ITEM));
     return aDoc;
   }
 

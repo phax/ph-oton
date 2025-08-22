@@ -234,7 +234,7 @@ public class BasePageSysInfoCACerts <WPECTYPE extends IWebPageExecutionContext> 
     final HCOL aOL = new HCOL ();
     int nFileIndex = 0;
     for (final String sPath : aPossiblePaths)
-      if (StringHelper.hasText (sPath))
+      if (StringHelper.isNotEmpty (sPath))
       {
         final File aFile = new File (sPath);
         final IHCLI <?> aLI = aOL.addAndReturnItem (div ("Checking file ").addChild (code (aFile.getAbsolutePath ())));

@@ -64,7 +64,7 @@ public abstract class AbstractBootstrapObject <IMPLTYPE extends AbstractBootstra
   public final IMPLTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
   {
     if (!bImSureToOverwriteAnExistingID && m_sID != null)
-      if (StringHelper.hasText (sID))
+      if (StringHelper.isNotEmpty (sID))
       {
         if (!m_sID.equals (sID))
           HCConsistencyChecker.consistencyError ("Overwriting HC object ID '" +

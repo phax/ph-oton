@@ -180,15 +180,15 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
       aElement.setAttribute (CHTMLAttributes.WIDTH, m_nWidth);
     if (m_nHeight > 0)
       aElement.setAttribute (CHTMLAttributes.HEIGHT, m_nHeight);
-    if (StringHelper.hasText (m_sPluginURL))
+    if (StringHelper.isNotEmpty (m_sPluginURL))
       aElement.setAttribute (CHTMLAttributes.PLUGINURL, m_sPluginURL);
-    if (StringHelper.hasText (m_sPluginsPage))
+    if (StringHelper.isNotEmpty (m_sPluginsPage))
       aElement.setAttribute (CHTMLAttributes.PLUGINSPAGE, m_sPluginsPage);
     if (m_bAutoStart)
       aElement.setAttribute (CHTMLAttributes.AUTOSTART, Boolean.toString (m_bAutoStart));
     if (m_bLoop)
       aElement.setAttribute (CHTMLAttributes.LOOP, Boolean.toString (m_bLoop));
-    if (StringHelper.hasText (m_sPalette))
+    if (StringHelper.isNotEmpty (m_sPalette))
       aElement.setAttribute (CHTMLAttributes.PALETTE, m_sPalette);
     if (m_aType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());

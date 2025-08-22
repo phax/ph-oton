@@ -257,7 +257,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
         if (EHTMLElement.isTagThatMayNotBeSelfClosed (aElement.getTagName ()) && aElement.getChildCount () == 0)
         {
           // Avoid self-closed tag (e.g. <a> or <span>)
-          aElement.appendText ("");
+          aElement.addText ("");
         }
       }
       else
@@ -267,7 +267,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
           {
             final IMicroText aText = (IMicroText) aItem;
             final String sTextNode = aText.getNodeValue ();
-            if (StringHelper.hasText (sTextNode))
+            if (StringHelper.isNotEmpty (sTextNode))
             {
               // Remove unnecessary whitespaces
               String sTextNodeNew = sTextNode;

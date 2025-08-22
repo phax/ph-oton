@@ -60,20 +60,20 @@ public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTyp
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aUser, aElement);
-    aElement.appendElement (ELEMENT_LOGINNAME).appendText (aUser.getLoginName ());
+    aElement.addElementNS (sNamespaceURI, ELEMENT_LOGINNAME).addText (aUser.getLoginName ());
     if (aUser.getEmailAddress () != null)
-      aElement.appendElement (ELEMENT_EMAILADDRESS).appendText (aUser.getEmailAddress ());
-    final IMicroElement ePasswordHash = aElement.appendElement (ELEMENT_PASSWORDHASH);
+      aElement.addElementNS (sNamespaceURI, ELEMENT_EMAILADDRESS).addText (aUser.getEmailAddress ());
+    final IMicroElement ePasswordHash = aElement.addElementNS (sNamespaceURI, ELEMENT_PASSWORDHASH);
     ePasswordHash.setAttribute (ATTR_ALGORITHM, aUser.getPasswordHash ().getAlgorithmName ());
     if (aUser.getPasswordHash ().hasSalt ())
       ePasswordHash.setAttribute (ATTR_SALT, aUser.getPasswordHash ().getSaltAsString ());
-    ePasswordHash.appendText (aUser.getPasswordHash ().getPasswordHashValue ());
+    ePasswordHash.addText (aUser.getPasswordHash ().getPasswordHashValue ());
     if (aUser.getFirstName () != null)
-      aElement.appendElement (ELEMENT_FIRSTNAME).appendText (aUser.getFirstName ());
+      aElement.addElementNS (sNamespaceURI, ELEMENT_FIRSTNAME).addText (aUser.getFirstName ());
     if (aUser.getLastName () != null)
-      aElement.appendElement (ELEMENT_LASTNAME).appendText (aUser.getLastName ());
-    if (StringHelper.hasText (aUser.getDescription ()))
-      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUser.getDescription ());
+      aElement.addElementNS (sNamespaceURI, ELEMENT_LASTNAME).addText (aUser.getLastName ());
+    if (StringHelper.isNotEmpty (aUser.getDescription ()))
+      aElement.addElementNS (sNamespaceURI, ELEMENT_DESCRIPTION).addText (aUser.getDescription ());
     if (aUser.getDesiredLocale () != null)
       aElement.setAttribute (ATTR_DESIREDLOCALE, aUser.getDesiredLocale ().toString ());
     if (aUser.getLastLoginDateTime () != null)

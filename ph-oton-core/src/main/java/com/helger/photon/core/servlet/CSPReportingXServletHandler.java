@@ -138,7 +138,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
         final String sBlockedURI = aJsonObj.getAsString ("blocked-uri");
 
         final boolean bIsDuplicate = isFilterDuplicates () &&
-                                     StringHelper.hasText (sBlockedURI) &&
+                                     StringHelper.isNotEmpty (sBlockedURI) &&
                                      rememberBlockedURL (sBlockedURI);
 
         if (bIsDuplicate)

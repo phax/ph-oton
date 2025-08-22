@@ -44,12 +44,12 @@ public final class UserGroupMicroTypeConverter extends AbstractBusinessObjectMic
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aUserGroup, aElement);
     aElement.setAttribute (ATTR_NAME, aUserGroup.getName ());
-    if (StringHelper.hasText (aUserGroup.getDescription ()))
-      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aUserGroup.getDescription ());
+    if (StringHelper.isNotEmpty (aUserGroup.getDescription ()))
+      aElement.addElementNS (sNamespaceURI, ELEMENT_DESCRIPTION).addText (aUserGroup.getDescription ());
     for (final String sUserID : aUserGroup.getAllContainedUserIDs ().getSorted (Comparator.naturalOrder ()))
-      aElement.appendElement (sNamespaceURI, ELEMENT_USER).setAttribute (ATTR_ID, sUserID);
+      aElement.addElementNS (sNamespaceURI, ELEMENT_USER).setAttribute (ATTR_ID, sUserID);
     for (final String sRoleID : aUserGroup.getAllContainedRoleIDs ().getSorted (Comparator.naturalOrder ()))
-      aElement.appendElement (sNamespaceURI, ELEMENT_ROLE).setAttribute (ATTR_ID, sRoleID);
+      aElement.addElementNS (sNamespaceURI, ELEMENT_ROLE).setAttribute (ATTR_ID, sRoleID);
     return aElement;
   }
 

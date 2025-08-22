@@ -100,7 +100,7 @@ public enum EHCLinkType implements IHCLinkType
   @Nullable
   public static EHCLinkType getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCLinkType.class, x -> x.hasAttrValue (sAttrValue));
   }

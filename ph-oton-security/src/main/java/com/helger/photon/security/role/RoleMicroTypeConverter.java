@@ -45,8 +45,8 @@ public final class RoleMicroTypeConverter extends AbstractBusinessObjectMicroTyp
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
     aElement.setAttribute (ATTR_NAME, aValue.getName ());
-    if (StringHelper.hasText (aValue.getDescription ()))
-      aElement.appendElement (sNamespaceURI, ELEMENT_DESCRIPTION).appendText (aValue.getDescription ());
+    if (StringHelper.isNotEmpty (aValue.getDescription ()))
+      aElement.addElementNS (sNamespaceURI, ELEMENT_DESCRIPTION).addText (aValue.getDescription ());
     return aElement;
   }
 

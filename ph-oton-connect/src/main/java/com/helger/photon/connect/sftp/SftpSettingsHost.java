@@ -183,7 +183,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
     ValueEnforcer.isFalse (sConfigPrefix.endsWith ("."), "ConfigPrefix must end with a dot");
 
     final String sHost = aConfig.getAsString (sConfigPrefix + ".host");
-    if (StringHelper.hasNoText (sHost))
+    if (StringHelper.isEmpty (sHost))
       return null;
 
     final int nPort = aConfig.getAsInt (sConfigPrefix + ".port", ISftpSettingsHost.DEFAULT_PORT);

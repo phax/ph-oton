@@ -135,7 +135,7 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
     if (m_bDisabled)
       aElement.setAttribute (CHTMLAttributes.DISABLED, CHTMLAttributeValues.DISABLED);
     // focus handling is performed in HCDefaultCustomizer!
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
     if (m_bReadOnly)
       aElement.setAttribute (CHTMLAttributes.READONLY, CHTMLAttributeValues.READONLY);

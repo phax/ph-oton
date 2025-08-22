@@ -111,13 +111,13 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sKind))
+    if (StringHelper.isNotEmpty (m_sKind))
       aElement.setAttribute (CHTMLAttributes.KIND, m_sKind);
     if (m_aSrc != null)
       aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
-    if (StringHelper.hasText (m_sSrcLang))
+    if (StringHelper.isNotEmpty (m_sSrcLang))
       aElement.setAttribute (CHTMLAttributes.SRCLANG, m_sSrcLang);
-    if (StringHelper.hasText (m_sLabel))
+    if (StringHelper.isNotEmpty (m_sLabel))
       aElement.setAttribute (CHTMLAttributes.LABEL, m_sLabel);
     if (m_bDefault)
       aElement.setAttribute (CHTMLAttributes.DEFAULT, CHTMLAttributeValues.DEFAULT);

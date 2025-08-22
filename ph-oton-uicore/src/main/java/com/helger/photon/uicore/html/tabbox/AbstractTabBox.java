@@ -62,7 +62,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
   public IMPLTYPE setActiveTabID (@Nullable final String sID)
   {
     m_sActiveTabID = sID;
-    if (StringHelper.hasText (sID) && !m_aTabs.containsKey (sID))
+    if (StringHelper.isNotEmpty (sID) && !m_aTabs.containsKey (sID))
       LOGGER.warn ("No tab with ID '" + sID + "' to be set active!");
     return thisAsT ();
   }

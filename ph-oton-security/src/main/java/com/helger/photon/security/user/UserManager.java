@@ -244,7 +244,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   @Nullable
   public IUser getUserOfLoginName (@Nullable final String sLoginName)
   {
-    if (StringHelper.hasNoText (sLoginName))
+    if (StringHelper.isEmpty (sLoginName))
       return null;
 
     return findFirst (x -> x.getLoginName ().equals (sLoginName));
@@ -253,7 +253,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   @Nullable
   public IUser getUserOfEmailAddress (@Nullable final String sEmailAddress)
   {
-    if (StringHelper.hasNoText (sEmailAddress))
+    if (StringHelper.isEmpty (sEmailAddress))
       return null;
 
     return findFirst (x -> sEmailAddress.equals (x.getEmailAddress ()));
@@ -262,7 +262,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   @Nullable
   public IUser getUserOfEmailAddressIgnoreCase (@Nullable final String sEmailAddress)
   {
-    if (StringHelper.hasNoText (sEmailAddress))
+    if (StringHelper.isEmpty (sEmailAddress))
       return null;
 
     return findFirst (x -> sEmailAddress.equalsIgnoreCase (x.getEmailAddress ()));

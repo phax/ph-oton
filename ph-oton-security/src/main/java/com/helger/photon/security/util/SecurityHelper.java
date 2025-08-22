@@ -163,7 +163,7 @@ public final class SecurityHelper
   @Nullable
   public static String getUserDisplayName (@Nullable final String sUserID, @Nonnull final Locale aDisplayLocale)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return getGuestUserDisplayName (aDisplayLocale);
 
     final IUser aUser = PhotonSecurityManager.getUserMgr ().getUserOfID (sUserID);
@@ -190,7 +190,7 @@ public final class SecurityHelper
       return getGuestUserDisplayName (aDisplayLocale);
 
     String ret = aUser.getDisplayName ();
-    if (StringHelper.hasNoText (ret))
+    if (StringHelper.isEmpty (ret))
       ret = aUser.getLoginName ();
     return ret;
   }

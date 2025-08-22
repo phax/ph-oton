@@ -58,8 +58,8 @@ public class FeedDate extends AbstractFeedElement
   public IMicroElement getAsElement (final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
-    aElement.appendText (PDTWebDateHelper.getAsStringW3C (m_aDT));
-    if (StringHelper.hasText (getLanguage ()))
+    aElement.addText (PDTWebDateHelper.getAsStringW3C (m_aDT));
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }

@@ -54,7 +54,7 @@ public enum EHCTrackType implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCTrackType getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCTrackType.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

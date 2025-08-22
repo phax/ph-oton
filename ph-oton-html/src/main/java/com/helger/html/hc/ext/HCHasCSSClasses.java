@@ -87,7 +87,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
       for (final ICSSClassProvider aCSSClassProvider : m_aCSSClassProviders)
       {
         final String sCSSClass = aCSSClassProvider.getCSSClass ();
-        if (StringHelper.hasText (sCSSClass))
+        if (StringHelper.isNotEmpty (sCSSClass))
           ret.add (sCSSClass);
       }
     return ret;
@@ -103,7 +103,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
     for (final ICSSClassProvider aCSSClassProvider : m_aCSSClassProviders)
     {
       final String sCSSClass = aCSSClassProvider.getCSSClass ();
-      if (StringHelper.hasText (sCSSClass))
+      if (StringHelper.isNotEmpty (sCSSClass))
       {
         if (aSB.length () > 0)
           aSB.append (' ');

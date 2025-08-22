@@ -44,7 +44,7 @@ public final class BusinessObjectHelper
   public static String getUserIDOrFallback ()
   {
     String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
-    if (StringHelper.hasNoText (sCurrentUserID))
+    if (StringHelper.isEmpty (sCurrentUserID))
     {
       // No user is logged in- use the internal guest user ID
       sCurrentUserID = CUserID.USER_ID_GUEST;

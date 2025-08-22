@@ -61,13 +61,13 @@ public class HCTitle extends AbstractHCElement <HCTitle>
   @Override
   public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
-    return StringHelper.hasText (m_sContent);
+    return StringHelper.isNotEmpty (m_sContent);
   }
 
   @Override
   protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    aElement.appendText (m_sContent);
+    aElement.addText (m_sContent);
   }
 }

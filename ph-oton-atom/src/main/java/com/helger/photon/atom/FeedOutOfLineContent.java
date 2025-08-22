@@ -58,7 +58,7 @@ public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedCo
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     aElement.setAttribute ("type", m_sType);
     aElement.setAttribute ("src", m_sSrc);
-    if (StringHelper.hasText (getLanguage ()))
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }

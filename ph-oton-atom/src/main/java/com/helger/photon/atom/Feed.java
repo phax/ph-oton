@@ -69,10 +69,10 @@ public class Feed extends FeedSource
   public IMicroDocument getAsDocument ()
   {
     final IMicroDocument aDocument = new MicroDocument ();
-    final IMicroElement aElement = aDocument.appendElement (CFeed.XMLNS_ATOM, "feed");
+    final IMicroElement aElement = aDocument.addElementNS (CFeed.XMLNS_ATOM, "feed");
     super.fillElement (aElement);
     for (final IFeedElement aEntry : m_aEntries)
-      aElement.appendChild (aEntry.getAsElement ("entry"));
+      aElement.addChild (aEntry.getAsElement ("entry"));
     return aDocument;
   }
 
@@ -81,7 +81,7 @@ public class Feed extends FeedSource
   {
     final IMicroElement aElement = super.getAsElement (sElementName);
     for (final IFeedElement aEntry : m_aEntries)
-      aElement.appendChild (aEntry.getAsElement ("entry"));
+      aElement.addChild (aEntry.getAsElement ("entry"));
     return aElement;
   }
 

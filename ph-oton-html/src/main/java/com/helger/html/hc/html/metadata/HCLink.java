@@ -293,23 +293,23 @@ public class HCLink extends AbstractHCElement <HCLink>
     if (m_aHref != null)
       aElement.setAttribute (CHTMLAttributes.HREF,
                              m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
-    if (StringHelper.hasText (m_sHrefLang))
+    if (StringHelper.isNotEmpty (m_sHrefLang))
       aElement.setAttribute (CHTMLAttributes.HREFLANG, m_sHrefLang);
-    if (StringHelper.hasText (m_sCharset))
+    if (StringHelper.isNotEmpty (m_sCharset))
       aElement.setAttribute (CHTMLAttributes.CHARSET, m_sCharset);
     if (m_aMediaList != null && m_aMediaList.hasAnyMedia ())
       aElement.setAttribute (CHTMLAttributes.MEDIA, m_aMediaList.getMediaString ());
-    if (StringHelper.hasText (m_sSizes))
+    if (StringHelper.isNotEmpty (m_sSizes))
       aElement.setAttribute (CHTMLAttributes.SIZES, m_sSizes);
     if (m_eCrossOrigin != null)
       aElement.setAttribute (CHTMLAttributes.CROSSORIGIN, m_eCrossOrigin);
-    if (StringHelper.hasText (m_sIntegrity))
+    if (StringHelper.isNotEmpty (m_sIntegrity))
       aElement.setAttribute (CHTMLAttributes.INTEGRITY, m_sIntegrity);
 
     if (aConversionSettings.getHTMLVersion ().isPriorToHTML5 ())
     {
       // May not be self-closed for IE
-      aElement.appendText ("");
+      aElement.addText ("");
     }
   }
 

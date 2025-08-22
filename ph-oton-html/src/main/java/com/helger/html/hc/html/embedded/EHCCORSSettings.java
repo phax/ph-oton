@@ -55,7 +55,7 @@ public enum EHCCORSSettings implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCCORSSettings getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCCORSSettings.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

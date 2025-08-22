@@ -116,7 +116,7 @@ public class WebSiteResourceBundle
    */
   public boolean hasConditionalComment ()
   {
-    return StringHelper.hasText (m_sConditionalComment);
+    return StringHelper.isNotEmpty (m_sConditionalComment);
   }
 
   /**

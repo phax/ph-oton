@@ -16,8 +16,6 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.base.state.ETriState;
-import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
@@ -38,8 +36,7 @@ import jakarta.annotation.Nullable;
 public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCControl <IMPLTYPE>
 {
   /**
-   * @return The type used for this <code>input</code> element. May be
-   *         <code>null</code>.
+   * @return The type used for this <code>input</code> element. May be <code>null</code>.
    */
   @Nullable
   EHCInputType getType ();
@@ -62,41 +59,8 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
   @Nonnull
   IMPLTYPE setAlt (@Nullable String sAlt);
 
-  @Deprecated (since = "9.1.1", forRemoval = true)
-  default boolean isAutoCompleteOn ()
-  {
-    return CHTMLAttributeValues.ON.equals (getAutoComplete ());
-  }
-
-  @Deprecated (since = "9.1.1", forRemoval = true)
-  default boolean isAutoCompleteOff ()
-  {
-    return CHTMLAttributeValues.OFF.equals (getAutoComplete ());
-  }
-
-  @Deprecated (since = "9.1.1", forRemoval = true)
-  default boolean isAutoCompleteUndefined ()
-  {
-    return getAutoComplete () == null;
-  }
-
   @Nullable
   String getAutoComplete ();
-
-  @Nonnull
-  @Deprecated (since = "9.1.1", forRemoval = true)
-  default IMPLTYPE setAutoComplete (final boolean bAutoComplete)
-  {
-    return setAutoComplete (Boolean.toString (bAutoComplete));
-  }
-
-  @Nonnull
-  @Deprecated (since = "9.1.1", forRemoval = true)
-  default IMPLTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
-  {
-    return setAutoComplete (eAutoComplete.isUndefined () ? null
-                                                         : Boolean.toString (eAutoComplete.getAsBooleanValue ()));
-  }
 
   @Nonnull
   default IMPLTYPE setAutoComplete (@Nullable final EHCAutoComplete eAutoComplete)
@@ -267,15 +231,14 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
   IMPLTYPE setPattern (@Nullable String sPattern);
 
   /**
-   * @return The current value of the HTML <code>placeholder</code> attribute.
-   *         May be <code>null</code>.
+   * @return The current value of the HTML <code>placeholder</code> attribute. May be
+   *         <code>null</code>.
    */
   @Nullable
   String getPlaceholder ();
 
   /**
-   * @return <code>true</code> if a placeholder is present, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if a placeholder is present, <code>false</code> otherwise.
    */
   default boolean hasPlaceholder ()
   {
@@ -300,9 +263,9 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
   int getSize ();
 
   /**
-   * Sets the visible size of the edit. Should not be necessary in most cases,
-   * as styling via CSS is the preferred way. If you want to limit the number of
-   * available characters use {@link #setMaxLength(int)} instead.
+   * Sets the visible size of the edit. Should not be necessary in most cases, as styling via CSS is
+   * the preferred way. If you want to limit the number of available characters use
+   * {@link #setMaxLength(int)} instead.
    *
    * @param nSize
    *        The width of the edit in characters.

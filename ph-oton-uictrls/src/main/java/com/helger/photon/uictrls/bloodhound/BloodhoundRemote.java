@@ -254,7 +254,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   {
     final JSAssocArray ret = new JSAssocArray ();
     ret.add (JSON_URL, m_aURL.getAsStringWithEncodedParameters ());
-    if (StringHelper.hasText (m_sWildcard))
+    if (StringHelper.isNotEmpty (m_sWildcard))
       ret.add (JSON_WILDCARD, m_sWildcard);
     if (m_aReplace != null)
       ret.add (JSON_REPLACE, m_aReplace);

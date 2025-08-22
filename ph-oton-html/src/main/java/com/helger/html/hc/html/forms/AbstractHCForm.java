@@ -264,7 +264,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
   {
     super.fillMicroElement (aElement, aConversionSettings);
 
-    if (StringHelper.hasText (m_sAcceptCharset))
+    if (StringHelper.isNotEmpty (m_sAcceptCharset))
       aElement.setAttribute (CHTMLAttributes.ACCEPTCHARSET, m_sAcceptCharset);
     m_aAction.applyProperties (CHTMLAttributes.ACTION,
                                aElement,
@@ -276,7 +276,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
       aElement.setAttribute (CHTMLAttributes.ENCTYPE, m_aEncType.getAsString ());
     if (m_eMethod != null)
       aElement.setAttribute (CHTMLAttributes.METHOD, m_eMethod);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
     if (m_aTarget != null)
       aElement.setAttribute (CHTMLAttributes.TARGET, m_aTarget);

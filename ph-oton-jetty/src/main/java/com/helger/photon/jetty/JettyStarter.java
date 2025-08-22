@@ -31,7 +31,6 @@ import org.eclipse.jetty.ee10.webapp.WebAppConfiguration;
 import org.eclipse.jetty.ee10.webapp.WebAppContext;
 import org.eclipse.jetty.ee10.webapp.WebInfConfiguration;
 import org.eclipse.jetty.ee10.webapp.WebXmlConfiguration;
-import org.eclipse.jetty.http.HttpCookie;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
@@ -119,7 +118,7 @@ public class JettyStarter
     ValueEnforcer.notEmpty (sAppName, "AppName");
     m_sAppName = sAppName;
     m_sDirBaseName = FilenameHelper.getAsSecureValidFilename (sAppName);
-    if (StringHelper.hasNoText (m_sDirBaseName))
+    if (StringHelper.isEmpty (m_sDirBaseName))
       throw new IllegalStateException ("FolderName for application name '" + sAppName + "' is empty.");
 
     // Use recommended thread pool
@@ -602,9 +601,8 @@ public class JettyStarter
     }
 
     // Hack to circumvent API limits - ensure SameSite for Session cookie
-    aWebAppCtx.getSessionHandler ().getSessionCookieConfig ().setComment (HttpCookie.SAME_SITE_ATTRIBUTE);
     aWebAppCtx.getSessionHandler ().getSessionCookieConfig ().setHttpOnly (true);
-    if (StringHelper.hasText (m_sSessionCookieName))
+    if (StringHelper.isNotEmpty (m_sSessionCookieName))
       aWebAppCtx.getSessionHandler ().setSessionCookie (m_sSessionCookieName);
 
     // Customize call

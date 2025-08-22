@@ -76,7 +76,7 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
     final SimpleURL ret = new SimpleURL (aRequestScope != null ? aRequestScope.encodeURL (sBasePath) : sBasePath);
     if (aDisplayLocale != null)
       ret.add (getRequestParamNameLocale (), aDisplayLocale.toString ());
-    if (StringHelper.hasText (sMenuItemID))
+    if (StringHelper.isNotEmpty (sMenuItemID))
       ret.add (getRequestParamNameMenuItem (), sMenuItemID);
     return ret;
   }

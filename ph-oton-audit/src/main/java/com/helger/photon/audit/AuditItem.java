@@ -50,7 +50,7 @@ public final class AuditItem implements IAuditItem
                     @Nonnull final String sAction)
   {
     this (PDTFactory.getCurrentLocalDateTime (),
-          StringHelper.hasText (sUserID) ? sUserID : CUserID.USER_ID_GUEST,
+          StringHelper.isNotEmpty (sUserID) ? sUserID : CUserID.USER_ID_GUEST,
           eType,
           eSuccess,
           sAction);

@@ -61,7 +61,7 @@ public enum ETinyMCE4MenuItem
   @Nullable
   public static ETinyMCE4MenuItem getFromValueOrDefault (@Nullable final String sValue, @Nullable final ETinyMCE4MenuItem eDefault)
   {
-    if (StringHelper.hasText (sValue))
+    if (StringHelper.isNotEmpty (sValue))
       for (final ETinyMCE4MenuItem e : values ())
         if (sValue.equals (e.m_sValue))
           return e;

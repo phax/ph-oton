@@ -124,7 +124,7 @@ public class AuditEventBuilder
   public String getRealActorID ()
   {
     // Explicitly provided has precedence
-    if (StringHelper.hasText (m_sActor))
+    if (StringHelper.isNotEmpty (m_sActor))
       return m_sActor;
 
     // Provider for user ID in current context

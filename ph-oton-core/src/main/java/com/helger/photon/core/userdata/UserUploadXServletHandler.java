@@ -80,13 +80,13 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
     {
       final IFileItem aFileItem = (IFileItem) aFile;
       final String sDirectory = aRequestScope.params ().getAsString (PARAM_DIRECTORY);
-      final boolean bDirectoryPresent = StringHelper.hasText (sDirectory);
+      final boolean bDirectoryPresent = StringHelper.isNotEmpty (sDirectory);
       if (bDirectoryPresent && !FilenameHelper.isValidFilenameWithPaths (sDirectory))
         ret = createError ("The passed directory name '" + sDirectory + "' is invalid!");
       else
       {
         final String sID = aRequestScope.params ().getAsString (PARAM_ID);
-        if (StringHelper.hasNoText (sID))
+        if (StringHelper.isEmpty (sID))
           ret = createError ("No file ID passed!");
         else
         {
@@ -99,7 +99,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
 
           // Add extension (if present)
           final String sExt = FilenameHelper.getExtension (aFileItem.getNameSecure ());
-          if (StringHelper.hasText (sExt))
+          if (StringHelper.isNotEmpty (sExt))
             sPath += "." + sExt;
 
           // Lower case complete name - for later handling relevant

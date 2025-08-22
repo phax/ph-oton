@@ -227,7 +227,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    */
   default boolean isUserAssignedToUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return false;
 
     final IUserGroup aUserGroup = getUserGroupOfID (sUserGroupID);

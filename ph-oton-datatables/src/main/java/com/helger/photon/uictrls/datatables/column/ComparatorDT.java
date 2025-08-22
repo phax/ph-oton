@@ -52,25 +52,25 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorBigDecimal (@Nonnull final Locale aDisplayLocale)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null : LocaleParser.parseBigDecimal (sCellText, aDisplayLocale, null);
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null : LocaleParser.parseBigDecimal (sCellText, aDisplayLocale, null);
   }
 
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyFormat (@Nonnull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null : CurrencyHelper.parseCurrencyFormat (eCurrency, sCellText, null);
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null : CurrencyHelper.parseCurrencyFormat (eCurrency, sCellText, null);
   }
 
   @Nonnull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyValueFormat (@Nonnull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null : CurrencyHelper.parseValueFormat (eCurrency, sCellText, null);
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null : CurrencyHelper.parseValueFormat (eCurrency, sCellText, null);
   }
 
   @Nonnull
   public static IComparableExtractor <BigInteger> getExtractorBigInteger (@Nonnull final Locale aDisplayLocale)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
                                                            : LocaleParser.parseBigDecimal (sCellText, aDisplayLocale, BigDecimal.ZERO)
                                                                          .toBigIntegerExact ();
   }
@@ -84,7 +84,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalDate> getExtractorDate (@Nonnull final DateTimeFormatter aDTFormatter)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
                                                            : ValueEnforcer.notNull (PDTFromString.getLocalDateFromString (sCellText,
                                                                                                                           aDTFormatter),
                                                                                     () -> "Failed to parse date '" +
@@ -102,7 +102,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalTime> getExtractorTime (@Nonnull final DateTimeFormatter aDTFormatter)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
                                                            : ValueEnforcer.notNull (PDTFromString.getLocalTimeFromString (sCellText,
                                                                                                                           aDTFormatter),
                                                                                     () -> "Failed to parse time '" +
@@ -120,7 +120,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <LocalDateTime> getExtractorDateTime (@Nonnull final DateTimeFormatter aDTFormatter)
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
                                                            : ValueEnforcer.notNull (PDTFromString.getLocalDateTimeFromString (sCellText,
                                                                                                                               aDTFormatter),
                                                                                     () -> "Failed to parse datetime '" +
@@ -132,7 +132,7 @@ public final class ComparatorDT
   @Nonnull
   public static IComparableExtractor <Duration> getExtractorDuration ()
   {
-    return sCellText -> StringHelper.hasNoText (sCellText) ? null
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
                                                            : ValueEnforcer.notNull (PDTFromString.getDurationFromString (sCellText),
                                                                                     () -> "Failed to parse duration '" + sCellText + "'");
   }

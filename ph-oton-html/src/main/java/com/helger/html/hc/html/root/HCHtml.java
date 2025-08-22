@@ -148,13 +148,13 @@ public class HCHtml extends AbstractHCElement <HCHtml>
     // Note: we need to clone the doctype, because otherwise the object would
     // already have a parent assigned if "getAsNode" is called more than once!
     final IMicroDocument aDoc = new MicroDocument (eHTMLVersion.getDocType ().getClone ());
-    final IMicroElement aRoot = aDoc.appendElement (eHTMLVersion.getNamespaceURI (),
-                                                    eHTMLVersion.getDocType ().getQualifiedName ());
+    final IMicroElement aRoot = aDoc.addElementNS (eHTMLVersion.getNamespaceURI (),
+                                                   eHTMLVersion.getDocType ().getQualifiedName ());
     fillMicroElement (aRoot, aConversionSettings);
 
     // Use the getter, to ensure the elements are not null
     final IMicroNode eBody = m_aBody.convertToMicroNode (aConversionSettings);
-    aRoot.appendChild (eBody);
+    aRoot.addChild (eBody);
 
     // Create head after body but insert it before the body
     final IMicroNode eHead = m_aHead.convertToMicroNode (aConversionSettings);
@@ -165,8 +165,8 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   }
 
   /**
-   * Extract all out-of-band (OOB) nodes from head and body. Afterwards merge
-   * all inline CSS and JS nodes.
+   * Extract all out-of-band (OOB) nodes from head and body. Afterwards merge all inline CSS and JS
+   * nodes.
    *
    * @return An ordered list of all OOB nodes in the correct order.
    */
@@ -193,8 +193,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
    *
    * @param aAllOOBNodes
    *        The out-of-band node list. Usually retrieved from
-   *        {@link #getAllOutOfBandNodesWithMergedInlineNodes()}. May not be
-   *        <code>null</code>.
+   *        {@link #getAllOutOfBandNodesWithMergedInlineNodes()}. May not be <code>null</code>.
    */
   public void addAllOutOfBandNodesToHead (@Nonnull final List <IHCNode> aAllOOBNodes)
   {

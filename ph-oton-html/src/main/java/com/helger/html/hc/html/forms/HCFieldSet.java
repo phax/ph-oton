@@ -99,9 +99,9 @@ public class HCFieldSet extends AbstractHCElementWithChildren <HCFieldSet>
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_bDisabled)
       aElement.setAttribute (CHTMLAttributes.DISABLED, CHTMLAttributeValues.DISABLED);
-    if (StringHelper.hasText (m_sForm))
+    if (StringHelper.isNotEmpty (m_sForm))
       aElement.setAttribute (CHTMLAttributes.FORM, m_sForm);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
   }
 

@@ -55,7 +55,7 @@ public enum EHCLoadingType implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCLoadingType getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCLoadingType.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

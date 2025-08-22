@@ -113,7 +113,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
 
   public boolean isValidNonce (@Nullable final String sNonce)
   {
-    if (StringHelper.hasNoText (sNonce))
+    if (StringHelper.isEmpty (sNonce))
       return false;
 
     return m_aRWLock.readLockedBoolean ( () -> m_aNoncesBase64.contains (sNonce));

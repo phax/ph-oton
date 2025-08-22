@@ -373,7 +373,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
       nCols = m_aFoot.getFirstChild ().getEffectiveCellCount ();
 
     String sPrefix = "Table";
-    if (StringHelper.hasText (getID ()))
+    if (StringHelper.isNotEmpty (getID ()))
       sPrefix += " with ID " + getID ();
     _checkConsistency (sPrefix + " header", m_aHead, nCols);
     _checkConsistency (sPrefix + " body", m_aBody, nCols);

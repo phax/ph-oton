@@ -107,11 +107,10 @@ public final class HCRenderer
    * Customize the passed base node and all child nodes recursively.
    *
    * @param aStartNode
-   *        Base node to start customizing (incl.). May not be <code>null</code>
-   *        .
+   *        Base node to start customizing (incl.). May not be <code>null</code> .
    * @param aGlobalTargetNode
-   *        The target node where new nodes should be appended to in case the
-   *        direct parent node is not suitable. May not be <code>null</code>.
+   *        The target node where new nodes should be appended to in case the direct parent node is
+   *        not suitable. May not be <code>null</code>.
    * @param aConversionSettings
    *        The conversion settings to use. May not be <code>null</code>.
    */
@@ -169,8 +168,7 @@ public final class HCRenderer
   }
 
   /**
-   * Convert the passed HC node to a micro node using the default conversion
-   * settings.
+   * Convert the passed HC node to a micro node using the default conversion settings.
    *
    * @param aHCNode
    *        The node to be converted. May not be <code>null</code>.
@@ -183,8 +181,7 @@ public final class HCRenderer
   }
 
   /**
-   * Convert the passed HC node to a micro node using the provided conversion
-   * settings.
+   * Convert the passed HC node to a micro node using the provided conversion settings.
    *
    * @param aSrcNode
    *        The node to be converted. May not be <code>null</code>.
@@ -233,8 +230,7 @@ public final class HCRenderer
   }
 
   /**
-   * Convert the passed HC node to an HTML string using the default conversion
-   * settings.
+   * Convert the passed HC node to an HTML string using the default conversion settings.
    *
    * @param aHCNode
    *        The node to be converted. May not be <code>null</code>.
@@ -248,12 +244,11 @@ public final class HCRenderer
   }
 
   /**
-   * Convert the passed node to it's HTML representation. First this HC-node is
-   * converted to a micro node, which is than
+   * Convert the passed node to it's HTML representation. First this HC-node is converted to a micro
+   * node, which is than
    *
    * @param aHCNode
-   *        The HC node to be converted to an HTML string. May not be
-   *        <code>null</code>.
+   *        The HC node to be converted to an HTML string. May not be <code>null</code>.
    * @param aConversionSettings
    *        The conversion settings to be used. May not be <code>null</code>.
    * @return The node as HTML string. Never <code>null</code>.
@@ -281,12 +276,6 @@ public final class HCRenderer
   {
     // Only works, if no nonce is needed
     return getAsHTMLString (aHCNode, HCSettings.getConversionSettingsWithoutNamespaces ());
-  }
-
-  @Deprecated (forRemoval = true, since = "9.3.0")
-  public static void writeHtmlTo (@Nonnull final IHCNode aHCNode, @Nonnull final OutputStream aOS)
-  {
-    writeHtmlTo (aHCNode, HCSettings.getConversionSettings (), aOS);
   }
 
   public static void writeHtmlTo (@Nonnull final IHCNode aHCNode,

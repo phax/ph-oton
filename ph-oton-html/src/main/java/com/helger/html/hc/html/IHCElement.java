@@ -265,7 +265,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    */
   default boolean hasNonce ()
   {
-    return StringHelper.hasText (getNonce ());
+    return StringHelper.isNotEmpty (getNonce ());
   }
 
   /**

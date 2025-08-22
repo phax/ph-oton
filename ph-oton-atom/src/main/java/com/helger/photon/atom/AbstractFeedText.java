@@ -56,8 +56,8 @@ public abstract class AbstractFeedText extends AbstractFeedElement
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     aElement.setAttribute ("type", getType ());
-    aElement.appendText (m_sText == null ? "" : m_sText);
-    if (StringHelper.hasText (getLanguage ()))
+    aElement.addText (m_sText == null ? "" : m_sText);
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }

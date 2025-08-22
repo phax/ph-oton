@@ -56,7 +56,7 @@ public enum EHCCommandType implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCCommandType getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCCommandType.class, x -> x.hasAttrValue (sAttrValue));
   }

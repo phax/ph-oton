@@ -122,9 +122,9 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
+    final IMicroElement eRoot = aDoc.addElement (ELEMENT_ROOT);
     for (final NamedSMTPSettings aNamedSMTPSettings : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
-      eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aNamedSMTPSettings, ELEMENT_ITEM));
+      eRoot.addChild (MicroTypeConverter.convertToMicroElement (aNamedSMTPSettings, ELEMENT_ITEM));
     return aDoc;
   }
 
@@ -167,7 +167,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
    */
   public boolean containsSettings (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (StringHelper.isEmpty (sID))
       return false;
 
     return m_aRWLock.readLockedBoolean ( () -> m_aMap.containsKey (sID));
@@ -183,7 +183,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   @Nullable
   public NamedSMTPSettings getSettings (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (StringHelper.isEmpty (sID))
       return null;
 
     return m_aRWLock.readLockedGet ( () -> m_aMap.get (sID));
@@ -222,7 +222,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   @Nullable
   public NamedSMTPSettings getSettingsOfName (@Nullable final String sName)
   {
-    if (StringHelper.hasNoText (sName))
+    if (StringHelper.isEmpty (sName))
       return null;
 
     return m_aRWLock.readLockedGet ( () -> CollectionFind.findFirst (m_aMap.values (),

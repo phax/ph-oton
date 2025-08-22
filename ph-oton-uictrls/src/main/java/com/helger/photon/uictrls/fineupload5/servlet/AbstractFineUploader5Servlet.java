@@ -123,13 +123,13 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
     {
       final JsonObject ret = new JsonObject ();
       ret.add (JSON_SUCCESS, m_eSuccess.isSuccess ());
-      if (StringHelper.hasText (m_sErrorMsg))
+      if (StringHelper.isNotEmpty (m_sErrorMsg))
         ret.add (JSON_ERROR, m_sErrorMsg);
       if (m_ePreventRetry.isDefined ())
         ret.add (JSON_PREVENT_RETRY, m_ePreventRetry.getAsBooleanValue ());
       if (m_eReset.isDefined ())
         ret.add (JSON_RESET, m_eReset.getAsBooleanValue ());
-      if (StringHelper.hasText (m_sNewUUID))
+      if (StringHelper.isNotEmpty (m_sNewUUID))
         ret.add (JSON_NEW_UUID, m_sNewUUID);
       return ret;
     }

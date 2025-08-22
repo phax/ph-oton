@@ -77,8 +77,7 @@ public class XHTMLParser
   }
 
   /**
-   * @return The HTML version as specified in the constructor. Never
-   *         <code>null</code>.
+   * @return The HTML version as specified in the constructor. Never <code>null</code>.
    */
   @Nonnull
   public EHTMLVersion getHTMLVersion ()
@@ -87,23 +86,8 @@ public class XHTMLParser
   }
 
   /**
-   * @return A copy of the additional SAX reader settings that are used for
-   *         parsing. By default a secure processing is active, that disallows
-   *         inline DTDs in HTML documents.
-   * @deprecated Use {@link #getSAXReaderSettings()} instead
-   */
-  @Deprecated (forRemoval = true, since = "9.1.1")
-  @Nonnull
-  @ReturnsMutableCopy
-  public SAXReaderSettings getAdditionalSAXReaderSettings ()
-  {
-    return getSAXReaderSettings ();
-  }
-
-  /**
-   * @return A copy of the additional SAX reader settings that are used for
-   *         parsing. By default a secure processing is active, that disallows
-   *         inline DTDs in HTML documents.
+   * @return A copy of the additional SAX reader settings that are used for parsing. By default a
+   *         secure processing is active, that disallows inline DTDs in HTML documents.
    * @since 9.1.1
    */
   @Nonnull
@@ -115,24 +99,9 @@ public class XHTMLParser
   }
 
   /**
-   * Set additional SAX reader settings that are used when an XHTML fragment is
-   * read. All settings are reused when parsing except for the entity resolver
-   * which is always set to the default {@link HTMLEntityResolver}.
-   *
-   * @param aAdditionalSaxReaderSettings
-   *        The settings to be used. May be <code>null</code>.
-   * @deprecated Use {@link #setSAXReaderSettings(ISAXReaderSettings)} instead
-   */
-  @Deprecated (forRemoval = true, since = "9.1.1")
-  public void setAdditionalSAXReaderSettings (@Nullable final ISAXReaderSettings aAdditionalSaxReaderSettings)
-  {
-    setSAXReaderSettings (aAdditionalSaxReaderSettings);
-  }
-
-  /**
-   * Set additional SAX reader settings that are used when an XHTML fragment is
-   * read. All settings are reused when parsing except for the entity resolver
-   * which is always set to the default {@link HTMLEntityResolver}.
+   * Set additional SAX reader settings that are used when an XHTML fragment is read. All settings
+   * are reused when parsing except for the entity resolver which is always set to the default
+   * {@link HTMLEntityResolver}.
    *
    * @param aAdditionalSaxReaderSettings
    *        The settings to be used. May be <code>null</code>.
@@ -147,8 +116,8 @@ public class XHTMLParser
   }
 
   /**
-   * Check whether the passed text looks like it contains XHTML code. This is a
-   * heuristic check only and does not perform actual parsing!
+   * Check whether the passed text looks like it contains XHTML code. This is a heuristic check only
+   * and does not perform actual parsing!
    *
    * @param sText
    *        The text to check.
@@ -159,28 +128,26 @@ public class XHTMLParser
     // If the text contains an open angle bracket followed by a character that
     // we think of it as HTML
     // (?s) enables the "dotall" mode - see Pattern.DOTALL
-    return StringHelper.hasText (sText) && RegExHelper.stringMatchesPattern ("(?s).*<[a-zA-Z].+", sText);
+    return StringHelper.isNotEmpty (sText) && RegExHelper.stringMatchesPattern ("(?s).*<[a-zA-Z].+", sText);
   }
 
   /**
-   * Check if the given fragment is valid XHTML 1.1 mark-up. This method tries
-   * to parse the XHTML fragment, so it is potentially slow!
+   * Check if the given fragment is valid XHTML 1.1 mark-up. This method tries to parse the XHTML
+   * fragment, so it is potentially slow!
    *
    * @param sXHTMLFragment
-   *        The XHTML fragment to parse. It is not checked, whether the value
-   *        looks like HTML or not.
-   * @return <code>true</code> if the fragment is valid, <code>false</code>
-   *         otherwise.
+   *        The XHTML fragment to parse. It is not checked, whether the value looks like HTML or
+   *        not.
+   * @return <code>true</code> if the fragment is valid, <code>false</code> otherwise.
    */
   public boolean isValidXHTMLFragment (@Nullable final String sXHTMLFragment)
   {
-    return StringHelper.hasNoText (sXHTMLFragment) || parseXHTMLFragment (sXHTMLFragment) != null;
+    return StringHelper.isEmpty (sXHTMLFragment) || parseXHTMLFragment (sXHTMLFragment) != null;
   }
 
   /**
    * Parse the given fragment as XHTML 1.1. This is a sanity method for
-   * {@link #parseXHTMLFragment(String)} with the predefined XHTML 1.1 document
-   * type.
+   * {@link #parseXHTMLFragment(String)} with the predefined XHTML 1.1 document type.
    *
    * @param sXHTMLFragment
    *        The XHTML fragment to parse. May be <code>null</code>.
@@ -200,8 +167,7 @@ public class XHTMLParser
                                                        XMLConstants.XMLNS_ATTRIBUTE +
                                                        "=\"" +
                                                        sHTMLNamespaceURI +
-                                                       '"'
-                                                     : "") +
+                                                       '"' : "") +
                           "><head><title></title></head><body>" +
                           StringHelper.getNotNull (sXHTMLFragment) +
                           "</body></html>";
@@ -209,9 +175,8 @@ public class XHTMLParser
   }
 
   /**
-   * This method parses a full HTML document into a {@link IMicroDocument} using
-   * the additional SAX reader settings and always the
-   * {@link HTMLEntityResolver} as an entity resolver.
+   * This method parses a full HTML document into a {@link IMicroDocument} using the additional SAX
+   * reader settings and always the {@link HTMLEntityResolver} as an entity resolver.
    *
    * @param sXHTML
    *        The complete XHTML document as a string. May be <code>null</code>.
@@ -224,15 +189,14 @@ public class XHTMLParser
   }
 
   /**
-   * Interpret the passed XHTML fragment as HTML and retrieve a result container
-   * with all body elements.
+   * Interpret the passed XHTML fragment as HTML and retrieve a result container with all body
+   * elements.
    *
    * @param sXHTML
-   *        The XHTML text fragment. This fragment is parsed as an HTML body and
-   *        may therefore not contain the &lt;body&gt; tag.
-   * @return <code>null</code> if the passed text could not be interpreted as
-   *         XHTML or if no body element was found, an {@link IMicroContainer}
-   *         with all body children otherwise.
+   *        The XHTML text fragment. This fragment is parsed as an HTML body and may therefore not
+   *        contain the &lt;body&gt; tag.
+   * @return <code>null</code> if the passed text could not be interpreted as XHTML or if no body
+   *         element was found, an {@link IMicroContainer} with all body children otherwise.
    */
   @Nullable
   public IMicroContainer unescapeXHTMLFragment (@Nullable final String sXHTML)
@@ -250,7 +214,7 @@ public class XHTMLParser
         {
           // We need a copy because detachFromParent is modifying
           for (final IMicroNode aChildNode : eBody.getAllChildren ())
-            ret.appendChild (aChildNode.detachFromParent ());
+            ret.addChild (aChildNode.detachFromParent ());
         }
         return ret;
       }

@@ -138,7 +138,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   @Nonnull
   public final EChange removeMetaElement (@Nullable final String sName)
   {
-    if (StringHelper.hasText (sName))
+    if (StringHelper.isNotEmpty (sName))
       return EChange.valueOf (m_aMetaElements.removeIf (x -> sName.equals (x.getName ()) ||
                                                              sName.equals (x.getHttpEquiv ())));
     return EChange.UNCHANGED;
@@ -341,7 +341,7 @@ public class HCHead extends AbstractHCElement <HCHead>
                             @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     for (final HCLink aLink : m_aLinks)
-      eHead.appendChild (aLink.convertToMicroNode (aConversionSettings));
+      eHead.addChild (aLink.convertToMicroNode (aConversionSettings));
   }
 
   @OverrideOnDemand
@@ -353,7 +353,7 @@ public class HCHead extends AbstractHCElement <HCHead>
     {
       if (aCSS instanceof HCLink)
         ++nCSSExternals;
-      eHead.appendChild (aCSS.convertToMicroNode (aConversionSettings));
+      eHead.addChild (aCSS.convertToMicroNode (aConversionSettings));
     }
 
     if (aConversionSettings.areConsistencyChecksEnabled ())
@@ -369,7 +369,7 @@ public class HCHead extends AbstractHCElement <HCHead>
                          @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     for (final IHCNode aJS : m_aJS)
-      eHead.appendChild (aJS.convertToMicroNode (aConversionSettings));
+      eHead.addChild (aJS.convertToMicroNode (aConversionSettings));
   }
 
   @Override
@@ -378,18 +378,18 @@ public class HCHead extends AbstractHCElement <HCHead>
   {
     super.fillMicroElement (eHead, aConversionSettings);
 
-    if (StringHelper.hasText (m_sProfile))
+    if (StringHelper.isNotEmpty (m_sProfile))
       eHead.setAttribute (CHTMLAttributes.PROFILE, m_sProfile);
 
     // Append meta element first for charset encoding!
     for (final HCMeta aMetaElement : m_aMetaElements)
-      eHead.appendChild (aMetaElement.convertToMicroNode (aConversionSettings));
+      eHead.addChild (aMetaElement.convertToMicroNode (aConversionSettings));
 
     // page title
-    eHead.appendChild (m_aPageTitle.convertToMicroNode (aConversionSettings));
+    eHead.addChild (m_aPageTitle.convertToMicroNode (aConversionSettings));
 
     // base
-    eHead.appendChild (m_aBase.convertToMicroNode (aConversionSettings));
+    eHead.addChild (m_aBase.convertToMicroNode (aConversionSettings));
 
     // links
     emitLinks (eHead, aConversionSettings);
@@ -402,7 +402,7 @@ public class HCHead extends AbstractHCElement <HCHead>
 
     // Ensure tag is not self-closed
     if (!eHead.hasChildren () && EHTMLElement.HEAD.mayNotBeSelfClosed ())
-      eHead.appendText ("");
+      eHead.addText ("");
   }
 
   @Override

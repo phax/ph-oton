@@ -126,13 +126,13 @@ public class DTPButtonsDomButton
     if (m_eTag != null)
       ret.add ("tag", m_eTag.getElementName ());
     final String sClassName = m_aClassNames.getAllClassesAsString ();
-    if (StringHelper.hasText (sClassName))
+    if (StringHelper.isNotEmpty (sClassName))
       ret.add ("className", sClassName);
     final String sDisabled = m_aDisabled.getAllClassesAsString ();
-    if (StringHelper.hasText (sDisabled))
+    if (StringHelper.isNotEmpty (sDisabled))
       ret.add ("disabled", sDisabled);
     final String sActive = m_aActive.getAllClassesAsString ();
-    if (StringHelper.hasText (sActive))
+    if (StringHelper.isNotEmpty (sActive))
       ret.add ("active", sActive);
     return ret;
   }

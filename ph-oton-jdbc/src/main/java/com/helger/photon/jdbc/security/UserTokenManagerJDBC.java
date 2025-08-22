@@ -146,7 +146,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nullable
   private static ICommonsList <AccessToken> _parseAccessTokens (@Nullable final String sAccessTokens)
   {
-    if (StringHelper.hasNoText (sAccessTokens))
+    if (StringHelper.isEmpty (sAccessTokens))
       return null;
 
     final IJsonArray aJson = JsonReader.builder ().source (sAccessTokens).readAsArray ();
@@ -167,7 +167,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                   " accesstokens, userid, description" +
                   " FROM " +
                   m_sTableName;
-    if (StringHelper.hasText (sCondition))
+    if (StringHelper.isNotEmpty (sCondition))
     {
       // Condition present
       sSQL += " WHERE " + sCondition;
@@ -215,7 +215,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
   public boolean containsWithID (@Nullable final String sID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (StringHelper.isEmpty (sID))
       return false;
 
     final long nCount = newExecutor ().queryCount ("SELECT COUNT(*) FROM " + m_sTableName + " WHERE id=?",
@@ -340,7 +340,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                   @Nullable final Map <String, String> aNewCustomAttrs,
                                   @Nullable final String sNewDescription)
   {
-    if (StringHelper.hasNoText (sUserTokenID))
+    if (StringHelper.isEmpty (sUserTokenID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -390,7 +390,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nonnull
   public EChange deleteUserToken (@Nullable final String sUserTokenID)
   {
-    if (StringHelper.hasNoText (sUserTokenID))
+    if (StringHelper.isEmpty (sUserTokenID))
       return EChange.UNCHANGED;
 
     final MutableLong aUpdated = new MutableLong (-1);
@@ -437,7 +437,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                        @Nonnull @Nonempty final String sRevocationReason,
                                        @Nullable final String sTokenString)
   {
-    if (StringHelper.hasNoText (sUserTokenID))
+    if (StringHelper.isEmpty (sUserTokenID))
       return EChange.UNCHANGED;
 
     // Read existing access tokens from DB
@@ -510,7 +510,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                     @Nonnull final LocalDateTime aRevocationDT,
                                     @Nonnull @Nonempty final String sRevocationReason)
   {
-    if (StringHelper.hasNoText (sUserTokenID))
+    if (StringHelper.isEmpty (sUserTokenID))
       return EChange.UNCHANGED;
 
     // Read existing access tokens from DB
@@ -589,7 +589,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nullable
   public IUserToken getUserTokenOfID (@Nullable final String sUserTokenID)
   {
-    if (StringHelper.hasNoText (sUserTokenID))
+    if (StringHelper.isEmpty (sUserTokenID))
       return null;
 
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
@@ -628,7 +628,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nullable
   public IUserToken getUserTokenOfTokenString (@Nullable final String sTokenString)
   {
-    if (StringHelper.hasNoText (sTokenString))
+    if (StringHelper.isEmpty (sTokenString))
       return null;
 
     final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT id, accesstokens" +
@@ -651,7 +651,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
   public boolean isAccessTokenUsed (@Nullable final String sTokenString)
   {
-    if (StringHelper.hasNoText (sTokenString))
+    if (StringHelper.isEmpty (sTokenString))
       return false;
 
     final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT accesstokens" +

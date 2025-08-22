@@ -104,7 +104,7 @@ public final class LinkHelper
    */
   public static boolean hasKnownProtocol (@Nullable final String sURI)
   {
-    if (StringHelper.hasNoText (sURI))
+    if (StringHelper.isEmpty (sURI))
       return false;
     return URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI) || sURI.startsWith ("//");
   }
@@ -112,7 +112,7 @@ public final class LinkHelper
   @Nonnull
   private static String _getURIWithContext (@Nonnull final String sContextPath, @Nonnull final String sHRef)
   {
-    if (StringHelper.hasText (sContextPath) && sHRef.startsWith (sContextPath))
+    if (StringHelper.isNotEmpty (sContextPath) && sHRef.startsWith (sContextPath))
     {
       LOGGER.warn ("The passed href '" + sHRef + "' already contains the context path '" + sContextPath + "'!");
       return sHRef;

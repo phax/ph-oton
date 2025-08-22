@@ -66,7 +66,7 @@ public enum EHCTextDirection implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCTextDirection getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCTextDirection.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

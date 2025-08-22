@@ -93,7 +93,7 @@ public class PhotonRequestParameters implements Serializable
   public Locale setLocaleFromString (@Nonnull final ILocaleManager aLocaleMgr, @Nullable final String sDisplayLocale)
   {
     Locale ret = null;
-    if (StringHelper.hasText (sDisplayLocale))
+    if (StringHelper.isNotEmpty (sDisplayLocale))
     {
       // Is the locale globally valid?
       final Locale aDisplayLocale = LocaleCache.getInstance ().getLocale (sDisplayLocale);
@@ -129,7 +129,7 @@ public class PhotonRequestParameters implements Serializable
   public IMenuItemPage setMenuItemFromString (@Nonnull final IMenuOperations aTree, @Nullable final String sMenuItemID)
   {
     IMenuItemPage ret = null;
-    if (StringHelper.hasText (sMenuItemID))
+    if (StringHelper.isNotEmpty (sMenuItemID))
     {
       // Check if the menu item exists in the current application menu tree
       final IMenuObject aMenuObject = aTree.getMenuObjectOfID (sMenuItemID);

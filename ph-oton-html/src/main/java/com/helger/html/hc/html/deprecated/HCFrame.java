@@ -168,19 +168,19 @@ public class HCFrame extends AbstractHCElement <HCFrame>
   {
     super.fillMicroElement (aElement, aConversionSettings);
     aElement.setAttribute (CHTMLAttributes.FRAMEBORDER, m_bFrameBorder ? "1" : "0");
-    if (StringHelper.hasText (m_sLongDesc))
+    if (StringHelper.isNotEmpty (m_sLongDesc))
       aElement.setAttribute (CHTMLAttributes.LONGDESC, m_sLongDesc);
     if (m_nMarginWidth >= 0)
       aElement.setAttribute (CHTMLAttributes.MARGINWIDTH, m_nMarginWidth);
     if (m_nMarginHeight >= 0)
       aElement.setAttribute (CHTMLAttributes.MARGINHEIGHT, m_nMarginHeight);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
     if (m_bNoResize)
       aElement.setAttribute (CHTMLAttributes.NORESIZE, CHTMLAttributeValues.NORESIZE);
     if (m_eScrolling != null)
       aElement.setAttribute (CHTMLAttributes.SCROLLING, m_eScrolling);
-    if (StringHelper.hasText (m_sSrc))
+    if (StringHelper.isNotEmpty (m_sSrc))
       aElement.setAttribute (CHTMLAttributes.SRC, m_sSrc);
   }
 

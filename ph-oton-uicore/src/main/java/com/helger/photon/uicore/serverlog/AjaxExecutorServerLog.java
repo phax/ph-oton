@@ -41,7 +41,7 @@ public class AjaxExecutorServerLog implements IAjaxExecutor
   @Nonnull
   public static IErrorLevel getErrorLevelFromString (@Nullable final String sSeverity)
   {
-    if (StringHelper.hasText (sSeverity))
+    if (StringHelper.isNotEmpty (sSeverity))
     {
       if ("fatal".equalsIgnoreCase (sSeverity))
         return EErrorLevel.FATAL_ERROR;
@@ -64,7 +64,7 @@ public class AjaxExecutorServerLog implements IAjaxExecutor
     final String sMessage = aRequestScope.params ().getAsString (PARAM_MESSAGE);
     final String sKey = aRequestScope.params ().getAsString (PARAM_KEY);
     final String sExpectedKey = ServerLogSessionKey.getGeneratedSessionKey ();
-    if (StringHelper.hasNoText (sMessage) || sExpectedKey == null || !sExpectedKey.equals (sKey))
+    if (StringHelper.isEmpty (sMessage) || sExpectedKey == null || !sExpectedKey.equals (sKey))
     {
       LOGGER.error ("Missing required parameter");
       aAjaxResponse.createBadRequest ();

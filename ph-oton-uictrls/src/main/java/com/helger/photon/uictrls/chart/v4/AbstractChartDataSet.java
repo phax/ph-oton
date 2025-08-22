@@ -57,7 +57,7 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
   @Nullable
   protected static final IJSExpression _toExpr (@Nullable final String s)
   {
-    return StringHelper.hasText (s) ? JSExpr.lit (s) : null;
+    return StringHelper.isNotEmpty (s) ? JSExpr.lit (s) : null;
   }
 
   @Nullable
@@ -142,7 +142,7 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
   public JSAssocArray getJSData (@Nullable final IJSExpression aDatasetData)
   {
     final JSAssocArray ret = new JSAssocArray ();
-    if (StringHelper.hasText (m_sLabel))
+    if (StringHelper.isNotEmpty (m_sLabel))
       ret.add ("label", m_sLabel);
     if (aDatasetData != null)
       ret.add ("data", aDatasetData);

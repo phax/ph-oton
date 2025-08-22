@@ -62,7 +62,7 @@ public final class FavoriteMicroTypeConverter implements IMicroTypeConverter <Fa
                                                              .getSortedByKey (Comparator.naturalOrder ())
                                                              .entrySet ())
     {
-      final IMicroElement eParam = eFavourite.appendElement (ELEMENT_ADDITIONAL_PARAM);
+      final IMicroElement eParam = eFavourite.addElement (ELEMENT_ADDITIONAL_PARAM);
       eParam.setAttribute (ATTR_NAME, aEntry.getKey ());
       eParam.setAttribute (ATTR_VALUE, aEntry.getValue ());
     }

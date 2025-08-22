@@ -381,7 +381,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sForm))
+    if (StringHelper.isNotEmpty (m_sForm))
       aElement.setAttribute (CHTMLAttributes.FORM, m_sForm);
     if (m_bMultiple)
       aElement.setAttribute (CHTMLAttributes.MULTIPLE, CHTMLAttributeValues.MULTIPLE);
@@ -391,14 +391,14 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     if (m_aOptions.isNotEmpty ())
     {
       for (final IHCNode aOption : m_aOptions)
-        aElement.appendChild (aOption.convertToMicroNode (aConversionSettings));
+        aElement.addChild (aOption.convertToMicroNode (aConversionSettings));
     }
     else
     {
       // Special check, as this is not derived from
       // AbstractHCElementWithChildren
       if (!getElement ().mayBeSelfClosed ())
-        aElement.appendText ("");
+        aElement.addText ("");
     }
   }
 

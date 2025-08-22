@@ -143,7 +143,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   public static Builder builder (@Nullable final String sFunctionName)
   {
     // Create dynamic name on demand
-    final String sRealFunctionName = StringHelper.hasText (sFunctionName) ? sFunctionName
+    final String sRealFunctionName = StringHelper.isNotEmpty (sFunctionName) ? sFunctionName
                                                                           : "fun" + getUniqueFunctionID ();
     return new Builder (sRealFunctionName);
   }

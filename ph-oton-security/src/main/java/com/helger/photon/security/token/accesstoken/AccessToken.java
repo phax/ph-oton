@@ -169,7 +169,7 @@ public final class AccessToken implements IAccessToken
   {
     // Length 66 so that the Base64 encoding does not add the "==" signs
     // Length must be dividable by 3
-    final String sRealTokenString = StringHelper.hasText (sTokenString) ? sTokenString : createNewTokenString (66);
+    final String sRealTokenString = StringHelper.isNotEmpty (sTokenString) ? sTokenString : createNewTokenString (66);
     return new AccessToken (sRealTokenString,
                             PDTFactory.getCurrentLocalDateTime (),
                             null,

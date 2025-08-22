@@ -91,19 +91,19 @@ public class FeedCategory extends AbstractFeedElement
   public IMicroElement getAsElement (final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
-    if (StringHelper.hasText (m_sTerm))
+    if (StringHelper.isNotEmpty (m_sTerm))
       aElement.setAttribute ("term", m_sTerm);
-    if (StringHelper.hasText (m_sScheme))
+    if (StringHelper.isNotEmpty (m_sScheme))
       aElement.setAttribute ("scheme", m_sScheme);
-    if (StringHelper.hasText (m_sLabel))
+    if (StringHelper.isNotEmpty (m_sLabel))
       aElement.setAttribute ("label", m_sLabel);
-    if (StringHelper.hasText (getLanguage ()))
+    if (StringHelper.isNotEmpty (getLanguage ()))
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 
   public boolean isValid ()
   {
-    return StringHelper.hasText (m_sTerm);
+    return StringHelper.isNotEmpty (m_sTerm);
   }
 }

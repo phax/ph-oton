@@ -55,7 +55,7 @@ public enum EHCSandboxAllow implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCSandboxAllow getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCSandboxAllow.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

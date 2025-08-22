@@ -112,15 +112,15 @@ public class ExporterXML implements IExporterFile
 
   private void _emitRecord (@Nonnull final IMicroElement eParentRow, @Nonnull final IExportRecord aRecord)
   {
-    final IMicroElement eRecord = eParentRow.appendElement (ELEMENT_RECORD);
+    final IMicroElement eRecord = eParentRow.addElement (ELEMENT_RECORD);
     for (final IExportRecordField aField : aRecord.getAllFields ())
     {
       final Object aFieldValue = aField.getFieldValue ();
-      final IMicroElement eField = eRecord.appendElement (ELEMENT_FIELD);
+      final IMicroElement eField = eRecord.addElement (ELEMENT_FIELD);
       if (m_bEmitTypeAttr)
         eField.setAttribute (ATTR_TYPE, aField.getFieldType ().getID ());
       if (aFieldValue != null)
-        eField.appendTextWithConversion (aFieldValue);
+        eField.addTextWithConversion (aFieldValue);
     }
   }
 
@@ -130,18 +130,18 @@ public class ExporterXML implements IExporterFile
     ValueEnforcer.notNull (aProvider, "Provider");
 
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
+    final IMicroElement eRoot = aDoc.addElement (ELEMENT_ROOT);
 
     // Header
-    final IMicroElement eHeader = eRoot.appendElement (ELEMENT_HEADER);
+    final IMicroElement eHeader = eRoot.addElement (ELEMENT_HEADER);
     aProvider.forEachHeaderRecord (x -> _emitRecord (eHeader, x));
 
     // Body
-    final IMicroElement eBody = eRoot.appendElement (ELEMENT_BODY);
+    final IMicroElement eBody = eRoot.addElement (ELEMENT_BODY);
     aProvider.forEachBodyRecord (x -> _emitRecord (eBody, x));
 
     // Footer
-    final IMicroElement eFooter = eRoot.appendElement (ELEMENT_FOOTER);
+    final IMicroElement eFooter = eRoot.addElement (ELEMENT_FOOTER);
     aProvider.forEachFooterRecord (x -> _emitRecord (eFooter, x));
 
     // The body element is always present

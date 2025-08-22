@@ -89,7 +89,7 @@ public final class DataTablesServerDataRow
 
   public boolean hasRowID ()
   {
-    return StringHelper.hasText (m_sRowID);
+    return StringHelper.isNotEmpty (m_sRowID);
   }
 
   @Nullable
@@ -100,7 +100,7 @@ public final class DataTablesServerDataRow
 
   public boolean hasRowClass ()
   {
-    return StringHelper.hasText (m_sRowClass);
+    return StringHelper.isNotEmpty (m_sRowClass);
   }
 
   /**

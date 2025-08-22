@@ -175,7 +175,7 @@ public final class BootstrapFormHelper
                                                .source (aErrorNodes, x -> x.ensureID ().getID ())
                                                .separator (' ')
                                                .build ();
-      if (StringHelper.hasText (sDescribedBy))
+      if (StringHelper.isNotEmpty (sDescribedBy))
         for (final IHCElement <?> aCurCtrl : aCtrls)
           if (!aCurCtrl.customAttrs ().containsAriaDescription () &&
               !aCurCtrl.customAttrs ().containsAriaDescribedBy ())
@@ -239,19 +239,19 @@ public final class BootstrapFormHelper
     if (bWithLocation)
     {
       final String sErrorLocation = aError.getErrorLocation ().getAsString ();
-      if (StringHelper.hasText (sErrorLocation))
+      if (StringHelper.isNotEmpty (sErrorLocation))
         sText.append (sErrorLocation).append (" ");
     }
 
     {
       final String sErrorID = aError.getErrorID ();
-      if (StringHelper.hasText (sErrorID))
+      if (StringHelper.isNotEmpty (sErrorID))
         sText.append ("[").append (sErrorID).append ("] ");
     }
 
     {
       final String sErrorText = StringHelper.getNotNull (aError.getErrorText (aContentLocale));
-      if (StringHelper.hasNoText (sErrorText))
+      if (StringHelper.isEmpty (sErrorText))
         LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
       else
         sText.append (sErrorText);

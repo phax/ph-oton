@@ -46,7 +46,7 @@ public enum EHCScrolling implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCScrolling getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCScrolling.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

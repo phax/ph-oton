@@ -53,7 +53,7 @@ public final class FamFamFlags
     if (aFlagLocale != null)
     {
       final String sCountry = aFlagLocale.getCountry ();
-      if (StringHelper.hasText (sCountry))
+      if (StringHelper.isNotEmpty (sCountry))
         return EFamFamFlagIcon.getFromIDOrNull (sCountry);
     }
     return null;

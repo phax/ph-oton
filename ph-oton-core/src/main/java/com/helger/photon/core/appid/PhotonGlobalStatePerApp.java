@@ -59,7 +59,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
   public String getServletPath () throws IllegalStateException
   {
     final String ret = internalGetServletPath ();
-    if (StringHelper.hasNoText (ret))
+    if (StringHelper.isEmpty (ret))
       throw new IllegalStateException ("No servlet path specified!");
     return ret;
   }

@@ -335,7 +335,7 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
     super.fillMicroElement (aElement, aConversionSettings);
     if (hasChildren ())
       for (final CHILDTYPE aChild : getChildrenFormEmitting (m_aChildren))
-        aElement.appendChild (aChild.convertToMicroNode (aConversionSettings));
+        aElement.addChild (aChild.convertToMicroNode (aConversionSettings));
 
     if (!aElement.hasChildren ())
     {
@@ -344,7 +344,7 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
       // Note: just using "hasChildren" is not enough, in case a child is
       // present, that is not rendered!
       if (!getElement ().mayBeSelfClosed ())
-        aElement.appendText ("");
+        aElement.addText ("");
     }
   }
 
@@ -359,7 +359,7 @@ public abstract class AbstractHCElementWithInternalChildren <IMPLTYPE extends Ab
     for (final CHILDTYPE aChild : getChildrenFormEmitting (m_aChildren))
     {
       final String sPlainText = aChild.getPlainText ();
-      if (StringHelper.hasText (sPlainText))
+      if (StringHelper.isNotEmpty (sPlainText))
       {
         if (ret.length () > 0)
           ret.append (' ');

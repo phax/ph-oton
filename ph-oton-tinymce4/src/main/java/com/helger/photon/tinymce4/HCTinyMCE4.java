@@ -1212,7 +1212,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     final JSAssocArray aOptions = new JSAssocArray ();
 
     // General options
-    if (StringHelper.hasText (m_sAutoFocus))
+    if (StringHelper.isNotEmpty (m_sAutoFocus))
       aOptions.add ("auto_focus", m_sAutoFocus);
     if (m_eBrowserSpellcheck.isDefined ())
       aOptions.add ("browser_spellcheck", isBrowserSpellcheck ());

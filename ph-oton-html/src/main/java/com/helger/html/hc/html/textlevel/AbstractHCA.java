@@ -200,7 +200,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
-    if (StringHelper.hasText (m_sName))
+    if (StringHelper.isNotEmpty (m_sName))
       aElement.setAttribute (CHTMLAttributes.NAME, m_sName);
     if (m_aHref != null)
     {
@@ -216,21 +216,21 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
       // 1.1)
       aElement.setAttribute (CHTMLAttributes.TARGET, m_aTarget);
     }
-    if (StringHelper.hasText (m_sDownload))
+    if (StringHelper.isNotEmpty (m_sDownload))
       aElement.setAttribute (CHTMLAttributes.DOWNLOAD, m_sDownload);
     if (m_aPing != null)
     {
       final String sPing = m_aPing.getAsStringWithEncodedParameters (aConversionSettings.getCharset ());
       aElement.setAttribute (CHTMLAttributes.PING, sPing);
     }
-    if (StringHelper.hasText (m_sRel))
+    if (StringHelper.isNotEmpty (m_sRel))
       aElement.setAttribute (CHTMLAttributes.REL, m_sRel);
     if (m_aType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
     if (m_eReferrerPolicy != null)
       aElement.setAttribute (CHTMLAttributes.REFERRERPOLICY, m_eReferrerPolicy);
     // HTML5 only:
-    if (StringHelper.hasText (m_sMediaQuery))
+    if (StringHelper.isNotEmpty (m_sMediaQuery))
       aElement.setAttribute (CHTMLAttributes.MEDIA, m_sMediaQuery);
   }
 

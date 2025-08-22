@@ -235,23 +235,23 @@ public class HCStyle extends AbstractHCElement <HCStyle>
   public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Don't create style elements with empty content....
-    return StringHelper.hasText (m_sContent);
+    return StringHelper.isNotEmpty (m_sContent);
   }
 
   public static void setInlineStyle (@Nonnull final IMicroNodeWithChildren aElement,
                                      @Nullable final String sContent,
                                      @Nonnull final EHCStyleInlineMode eMode)
   {
-    if (StringHelper.hasText (sContent))
+    if (StringHelper.isNotEmpty (sContent))
       switch (eMode)
       {
         case PLAIN_TEXT:
-          aElement.appendText (sContent);
+          aElement.addText (sContent);
           break;
         case PLAIN_TEXT_NO_ESCAPE:
           if (StringHelper.containsIgnoreCase (sContent, "</script>", Locale.US))
             throw new IllegalArgumentException ("The script text contains a closing script tag!");
-          aElement.appendChild (new MicroText (sContent).setEscape (false));
+          aElement.addChild (new MicroText (sContent).setEscape (false));
           break;
         default:
           throw new IllegalStateException ("Invalid style inline mode provided: " + eMode);

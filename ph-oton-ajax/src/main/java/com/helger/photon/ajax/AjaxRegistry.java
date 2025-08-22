@@ -55,7 +55,7 @@ public class AjaxRegistry implements IAjaxRegistry
   public static boolean isValidFunctionName (@Nullable final String sFunctionName)
   {
     // All characters allowed should be valid in URLs without masking
-    return StringHelper.hasText (sFunctionName) && RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
+    return StringHelper.isNotEmpty (sFunctionName) && RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
   }
 
   @Nonnull
@@ -68,7 +68,7 @@ public class AjaxRegistry implements IAjaxRegistry
   @Nullable
   public IAjaxFunctionDeclaration getRegisteredFunction (@Nullable final String sFunctionName)
   {
-    if (StringHelper.hasNoText (sFunctionName))
+    if (StringHelper.isEmpty (sFunctionName))
       return null;
 
     return m_aRWLock.readLockedGet ( () -> m_aFuncDecls.get (sFunctionName));
@@ -76,7 +76,7 @@ public class AjaxRegistry implements IAjaxRegistry
 
   public boolean isRegisteredFunction (@Nullable final String sFunctionName)
   {
-    if (StringHelper.hasNoText (sFunctionName))
+    if (StringHelper.isEmpty (sFunctionName))
       return false;
 
     return m_aRWLock.readLockedBoolean ( () -> m_aFuncDecls.containsKey (sFunctionName));

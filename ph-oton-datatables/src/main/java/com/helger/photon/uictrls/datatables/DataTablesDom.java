@@ -79,7 +79,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
   @CheckForSigned
   public int indexOf (@Nullable final String s)
   {
-    if (StringHelper.hasNoText (s))
+    if (StringHelper.isEmpty (s))
       return -1;
     return m_aElements.indexOf (s);
   }
@@ -148,7 +148,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
   public static String getDivString (@Nullable final ICSSClassProvider aCSSClass)
   {
     final String sCSSClass = aCSSClass == null ? null : aCSSClass.getCSSClass ();
-    return StringHelper.hasNoText (sCSSClass) ? OPEN_DIV : OPEN_DIV + "'" + sCSSClass + "'";
+    return StringHelper.isEmpty (sCSSClass) ? OPEN_DIV : OPEN_DIV + "'" + sCSSClass + "'";
   }
 
   @Nonnull
@@ -166,7 +166,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
       for (final ICSSClassProvider aCSSClass : aCSSClasses)
       {
         final String sCSSClass = aCSSClass.getCSSClass ();
-        if (StringHelper.hasText (sCSSClass))
+        if (StringHelper.isNotEmpty (sCSSClass))
         {
           if (aClassesSB.length () > 0)
             aClassesSB.append (' ');
@@ -188,7 +188,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
   @Nonnull
   public DataTablesDom openDiv (@Nullable final String sCSSClasses)
   {
-    if (StringHelper.hasText (sCSSClasses))
+    if (StringHelper.isNotEmpty (sCSSClasses))
       return _internalOpenDiv (OPEN_DIV + "'" + sCSSClasses + "'");
     return _internalOpenDiv (OPEN_DIV);
   }
@@ -196,7 +196,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
   @Nullable
   public static String getDivStringWithID (@Nullable final String sID)
   {
-    return StringHelper.hasNoText (sID) ? OPEN_DIV : OPEN_DIV + "'#" + sID + "'";
+    return StringHelper.isEmpty (sID) ? OPEN_DIV : OPEN_DIV + "'#" + sID + "'";
   }
 
   @Nonnull

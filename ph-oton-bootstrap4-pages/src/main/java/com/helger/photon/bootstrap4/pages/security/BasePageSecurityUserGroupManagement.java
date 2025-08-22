@@ -373,7 +373,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
     final IRoleManager aRoleMgr = PhotonSecurityManager.getRoleMgr ();
     final IUserGroupManager aUserGroupMgr = PhotonSecurityManager.getUserGroupMgr ();
 
-    if (StringHelper.hasNoText (sName))
+    if (StringHelper.isEmpty (sName))
       aFormErrors.addFieldError (FIELD_NAME, EText.ERROR_NAME_REQUIRED.getDisplayText (aDisplayLocale));
 
     if (CollectionHelper.isEmpty (aRoleIDs))

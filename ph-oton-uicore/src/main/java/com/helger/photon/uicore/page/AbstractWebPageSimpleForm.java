@@ -457,7 +457,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
           final String sLockUserID = aOLM.getLockUserID (sObjectID);
           final IUser aLockUser = PhotonSecurityManager.getUserMgr ().getUserOfID (sLockUserID);
           final String sObjectName = getObjectDisplayName (aWPEC, aObject);
-          final String sDisplayObjectName = StringHelper.hasText (sObjectName) ? " '" + sObjectName + "'" : "";
+          final String sDisplayObjectName = StringHelper.isNotEmpty (sObjectName) ? " '" + sObjectName + "'" : "";
           final String sDisplayUserName = aLockUser != null ? "'" + aLockUser.getDisplayName () + "'"
                                                             : EWebPageText.LOCKING_OTHER_USER.getDisplayText (aDisplayLocale);
           aNodeList.addChild (getUIHandler ().createErrorBox (aWPEC,
@@ -638,7 +638,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     if (CPageParam.ACTION_EDIT.equals (sAction))
       eSimpleFormAction = EWebPageSimpleFormAction.EDIT;
     else
-      if (CPageParam.ACTION_VIEW.equals (sAction) || StringHelper.hasNoText (sAction))
+      if (CPageParam.ACTION_VIEW.equals (sAction) || StringHelper.isEmpty (sAction))
         eSimpleFormAction = EWebPageSimpleFormAction.VIEW;
       else
       {

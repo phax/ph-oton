@@ -181,7 +181,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange deleteUserGroup (@Nullable final String sUserGroupID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     final UserGroup aDeletedUserGroup = getOfID (sUserGroupID);
@@ -344,7 +344,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
   {
     ValueEnforcer.notEmpty (sUserID, "UserID");
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     // Resolve user group
@@ -382,9 +382,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     // Resolve user group
@@ -422,7 +422,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange unassignUserFromAllUserGroups (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
     final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
@@ -458,7 +458,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return new CommonsArrayList <> ();
 
     return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
@@ -468,7 +468,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return new CommonsArrayList <> ();
 
     return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), IUserGroup::getID);
@@ -478,7 +478,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
   {
     ValueEnforcer.notEmpty (sRoleID, "RoleID");
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
 
     // Resolve user group
@@ -516,9 +516,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sUserGroupID))
+    if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
 
     // Resolve user group
@@ -555,7 +555,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @Nonnull
   public EChange unassignRoleFromAllUserGroups (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
 
     final ICommonsList <IUserGroup> aAffectedUserGroups = new CommonsArrayList <> ();
@@ -591,7 +591,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return getNone ();
 
     return getAll (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
@@ -601,7 +601,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return getNone ();
 
     return getAllMapped (aUserGroup -> aUserGroup.containsRoleID (sRoleID), IUserGroup::getID);
@@ -615,9 +615,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
   public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,
                                                               @Nullable final String sRoleID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return false;
-    if (StringHelper.hasNoText (sRoleID))
+    if (StringHelper.isEmpty (sRoleID))
       return false;
 
     return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));

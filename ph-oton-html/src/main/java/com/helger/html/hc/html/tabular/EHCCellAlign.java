@@ -55,7 +55,7 @@ public enum EHCCellAlign implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCCellAlign getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCCellAlign.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

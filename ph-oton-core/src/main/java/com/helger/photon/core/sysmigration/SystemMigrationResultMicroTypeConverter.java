@@ -47,7 +47,7 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
     aElement.setAttributeWithConversion (ATTR_EXECUTION_LDT, aValue.getExecutionDateTime ());
     aElement.setAttribute (ATTR_SUCCESS, aValue.isSuccess ());
     if (aValue.hasErrorMessage ())
-      aElement.appendElement (sNamespaceURI, ELEMENT_ERROR_MSG).appendText (aValue.getErrorMessage ());
+      aElement.addElementNS (sNamespaceURI, ELEMENT_ERROR_MSG).addText (aValue.getErrorMessage ());
     return aElement;
   }
 

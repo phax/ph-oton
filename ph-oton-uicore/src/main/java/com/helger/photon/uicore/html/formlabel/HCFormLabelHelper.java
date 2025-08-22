@@ -165,14 +165,14 @@ public final class HCFormLabelHelper
   {
     final String sSuffixString = getSuffixString (eType);
     final String sLabelEnd = getDefaultLabelEnd ();
-    if (StringHelper.hasText (sSuffixString) && StringHelper.endsWith (sPlainText, sSuffixString))
+    if (StringHelper.isNotEmpty (sSuffixString) && StringHelper.endsWith (sPlainText, sSuffixString))
     {
       // Append only "label end"
       // No check if "label end is needed", because it would be weird if "Suffix
       // string" and "label end" would be the same string
       return sLabelEnd;
     }
-    if (StringHelper.hasText (sLabelEnd))
+    if (StringHelper.isNotEmpty (sLabelEnd))
     {
       if (StringHelper.endsWith (sPlainText, sLabelEnd))
       {
@@ -205,7 +205,7 @@ public final class HCFormLabelHelper
     ValueEnforcer.notNull (eType, "Type");
 
     String sPlainText = sText;
-    if (StringHelper.hasText (sPlainText))
+    if (StringHelper.isNotEmpty (sPlainText))
     {
       // Append suffix only, if at least some text is present
       sPlainText += _getTextToAppend (eType, sPlainText);
@@ -240,17 +240,17 @@ public final class HCFormLabelHelper
   @Nullable
   public static String trimAllKnownSuffixes (@Nullable final String s)
   {
-    if (StringHelper.hasNoText (s))
+    if (StringHelper.isEmpty (s))
       return s;
 
     // Get known suffixes list
     final ICommonsSet <String> aKnownSuffixes = new CommonsHashSet <> ();
     for (final String sSuffix : DEFAULT_SUFFIXES.values ())
-      if (StringHelper.hasText (sSuffix))
+      if (StringHelper.isNotEmpty (sSuffix))
         aKnownSuffixes.add (sSuffix);
 
     final String sLabelEnd = getDefaultLabelEnd ();
-    if (StringHelper.hasText (sLabelEnd))
+    if (StringHelper.isNotEmpty (sLabelEnd))
       aKnownSuffixes.add (sLabelEnd);
 
     String ret = s;

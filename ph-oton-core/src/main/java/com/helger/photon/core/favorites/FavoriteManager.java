@@ -99,10 +99,10 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    final IMicroElement eRoot = aDoc.appendElement ("root");
+    final IMicroElement eRoot = aDoc.addElement ("root");
     for (final ICommonsList <Favorite> aFavoritesOfUser : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
       for (final Favorite aFavorite : aFavoritesOfUser)
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aFavorite, ELEMENT_ITEM));
+        eRoot.addChild (MicroTypeConverter.convertToMicroElement (aFavorite, ELEMENT_ITEM));
     return aDoc;
   }
 
@@ -188,7 +188,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
    */
   public boolean containsFavoritesOfUser (@Nullable final String sUserID)
   {
-    if (StringHelper.hasNoText (sUserID))
+    if (StringHelper.isEmpty (sUserID))
       return false;
 
     final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
@@ -235,7 +235,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
                                 @Nullable final String sMenuItemID,
                                 @Nullable final Map <String, String> aAdditionalParams)
   {
-    if (StringHelper.hasText (sUserID) && StringHelper.hasText (sApplicationID) && StringHelper.hasText (sMenuItemID))
+    if (StringHelper.isNotEmpty (sUserID) && StringHelper.isNotEmpty (sApplicationID) && StringHelper.isNotEmpty (sMenuItemID))
     {
       final ICommonsList <Favorite> aFavs = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
       if (aFavs != null)
@@ -247,7 +247,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nullable
   public IFavorite getFavorite (@Nullable final String sUserID, @Nullable final String sFavoriteID)
   {
-    if (StringHelper.hasText (sUserID) && StringHelper.hasText (sFavoriteID))
+    if (StringHelper.isNotEmpty (sUserID) && StringHelper.isNotEmpty (sFavoriteID))
     {
       final ICommonsList <Favorite> aFavs = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
       if (aFavs != null)

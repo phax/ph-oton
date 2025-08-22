@@ -481,7 +481,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_ENABLED.getDisplayText (aDisplayLocale))
                                                      .setCtrl (EPhotonCoreText.getYesOrNo (aSelectedObject.isEnabled (),
                                                                                            aDisplayLocale)));
-    if (StringHelper.hasText (aSelectedObject.getDescription ()))
+    if (StringHelper.isNotEmpty (aSelectedObject.getDescription ()))
       aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DESCRIPTION.getDisplayText (aDisplayLocale))
                                                        .setCtrl (HCExtHelper.nl2divList (aSelectedObject.getDescription ())));
     aViewForm.addFormGroup (new BootstrapFormGroup ().setLabel (EText.LABEL_DELETED.getDisplayText (aDisplayLocale))
@@ -607,7 +607,7 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
     }
     else
     {
-      if (StringHelper.hasNoText (sLoginName))
+      if (StringHelper.isEmpty (sLoginName))
         aFormErrors.addFieldError (FIELD_LOGINNAME, EText.ERROR_LOGINNAME_REQUIRED.getDisplayText (aDisplayLocale));
       else
         if (sLoginName.length () > IUser.LOGIN_NAME_MAX_LENGTH)
@@ -617,13 +617,13 @@ public class BasePageSecurityUserManagement <WPECTYPE extends IWebPageExecutionC
                                                                                             Integer.toString (IUser.LOGIN_NAME_MAX_LENGTH)));
     }
 
-    if (StringHelper.hasNoText (sLastName))
+    if (StringHelper.isEmpty (sLastName))
     {
       if (isLastNameMandatory ())
         aFormErrors.addFieldError (FIELD_LASTNAME, EText.ERROR_LASTNAME_REQUIRED.getDisplayText (aDisplayLocale));
     }
 
-    if (StringHelper.hasNoText (sEmailAddress))
+    if (StringHelper.isEmpty (sEmailAddress))
     {
       if (isEmailMandatory ())
         aFormErrors.addFieldError (FIELD_EMAILADDRESS, EText.ERROR_EMAIL_REQUIRED.getDisplayText (aDisplayLocale));

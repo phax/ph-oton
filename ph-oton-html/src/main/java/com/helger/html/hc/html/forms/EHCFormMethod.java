@@ -53,7 +53,7 @@ public enum EHCFormMethod implements IHCHasHTMLAttributeValue
   @Nullable
   public static EHCFormMethod getFromAttrValueOrNull (@Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrValue))
+    if (StringHelper.isEmpty (sAttrValue))
       return null;
     return EnumHelper.findFirst (EHCFormMethod.class, x -> x.getAttrValue ().equals (sAttrValue));
   }

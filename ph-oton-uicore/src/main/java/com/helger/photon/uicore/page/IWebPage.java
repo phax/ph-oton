@@ -69,7 +69,7 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
   default IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
   {
     final String sHeaderText = getHeaderText (aWPEC);
-    if (StringHelper.hasNoText (sHeaderText))
+    if (StringHelper.isEmpty (sHeaderText))
       return null;
     return new HCH1 ().addChild (sHeaderText);
   }

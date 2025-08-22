@@ -142,7 +142,7 @@ public final class UITextFormatter
   @Nullable
   public static IHCNode markdownOnDemand (@Nullable final String sMD)
   {
-    return StringHelper.hasText (sMD) ? markdown (sMD) : null;
+    return StringHelper.isNotEmpty (sMD) ? markdown (sMD) : null;
   }
 
   /**

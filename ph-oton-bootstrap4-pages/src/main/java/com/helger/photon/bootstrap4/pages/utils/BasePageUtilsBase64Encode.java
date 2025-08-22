@@ -151,7 +151,7 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
 
     // Default for UI
     final String sTab = aWPEC.params ().getAsString (PARAM_TAB);
-    final boolean bFileSelected = StringHelper.hasNoText (sTab) || FIELD_FILE.equals (sTab);
+    final boolean bFileSelected = StringHelper.isEmpty (sTab) || FIELD_FILE.equals (sTab);
 
     final FormErrorList aFormErrors = new FormErrorList ();
     if (aWPEC.params ().hasStringValue (CPageParam.PARAM_ACTION, CPageParam.ACTION_PERFORM))
@@ -163,14 +163,14 @@ public class BasePageUtilsBase64Encode <WPECTYPE extends IWebPageExecutionContex
       byte [] aBytesToEncode = null;
       if (bFileSelected)
       {
-        if (aFile == null || StringHelper.hasNoText (aFile.getName ()))
+        if (aFile == null || StringHelper.isEmpty (aFile.getName ()))
           aFormErrors.addFieldError (FIELD_FILE, "No file was selected");
         else
           aBytesToEncode = aFile.directGet ();
       }
       else
       {
-        if (StringHelper.hasNoText (sText))
+        if (StringHelper.isEmpty (sText))
           aFormErrors.addFieldError (FIELD_TEXT, "No text to encode was provided");
         else
           aBytesToEncode = sText.getBytes (StandardCharsets.UTF_8);

@@ -427,18 +427,18 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected String getDataPath (@Nonnull final ServletContext aSC)
   {
     String sDataPath = aSC.getInitParameter (INIT_PARAMETER_DATA_PATH);
-    if (StringHelper.hasNoText (sDataPath))
+    if (StringHelper.isEmpty (sDataPath))
     {
       // Use legacy parameter name
       sDataPath = aSC.getInitParameter ("storagePath");
-      if (StringHelper.hasText (sDataPath))
+      if (StringHelper.isNotEmpty (sDataPath))
       {
         LOGGER.error ("You are using the old 'storagePath' parameter. Please use '" +
                       INIT_PARAMETER_DATA_PATH +
                       "' instead!");
       }
     }
-    if (StringHelper.hasNoText (sDataPath))
+    if (StringHelper.isEmpty (sDataPath))
     {
       // No storage path provided in web.xml
       sDataPath = getServletContextPath (aSC);
@@ -482,7 +482,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     final String sServletContextPath = getServletContextPath (aSC);
     // Get the data path
     final String sDataPath = getDataPath (aSC);
-    if (StringHelper.hasNoText (sDataPath))
+    if (StringHelper.isEmpty (sDataPath))
       throw new InitializationException ("No data path was provided!");
     final File aDataPath = new File (sDataPath).getAbsoluteFile ();
     // Should the file access check be performed?
@@ -654,7 +654,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       // StaticServerInfo
       {
         final String sInitParameter = getInitParameterServerURL (aSC, bProductionMode);
-        if (StringHelper.hasText (sInitParameter))
+        if (StringHelper.isNotEmpty (sInitParameter))
         {
           final URL aURL = URLHelper.getAsURL (sInitParameter);
           if (aURL != null)

@@ -105,9 +105,9 @@ public class ColorBoxOptions
     final JSAssocArray aArgs = new JSAssocArray ();
     if (m_bPhoto != DEFAULT_PHOTO)
       aArgs.add ("photo", m_bPhoto);
-    if (StringHelper.hasText (m_sMaxWidth))
+    if (StringHelper.isNotEmpty (m_sMaxWidth))
       aArgs.add ("maxWidth", m_sMaxWidth);
-    if (StringHelper.hasText (m_sMaxHeight))
+    if (StringHelper.isNotEmpty (m_sMaxHeight))
       aArgs.add ("maxHeight", m_sMaxHeight);
 
     if (m_aDisplayLocale != null)

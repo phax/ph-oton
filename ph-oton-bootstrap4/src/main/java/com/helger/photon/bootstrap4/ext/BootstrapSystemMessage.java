@@ -109,7 +109,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   public BootstrapSystemMessage setSystemMessage (@Nullable final String sContent)
   {
     removeAllChildren ();
-    if (StringHelper.hasText (sContent))
+    if (StringHelper.isNotEmpty (sContent))
       getDefaultFormatter ().renderSystemMessage (sContent, this);
     return this;
   }
@@ -124,7 +124,7 @@ public class BootstrapSystemMessage extends AbstractBootstrapAlert <BootstrapSys
   @Nullable
   public static BootstrapSystemMessage create (@Nonnull final ESystemMessageType eSystemMessageType, @Nullable final String sSystemMessage)
   {
-    if (StringHelper.hasNoText (sSystemMessage))
+    if (StringHelper.isEmpty (sSystemMessage))
       return null;
 
     return new BootstrapSystemMessage (eSystemMessageType).setSystemMessage (sSystemMessage);

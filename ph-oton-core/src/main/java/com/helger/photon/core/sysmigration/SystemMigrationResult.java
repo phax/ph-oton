@@ -88,7 +88,7 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
 
   public boolean hasErrorMessage ()
   {
-    return StringHelper.hasText (m_sErrorMessage);
+    return StringHelper.isNotEmpty (m_sErrorMessage);
   }
 
   @Override

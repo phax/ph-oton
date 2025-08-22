@@ -371,16 +371,16 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
       aOptions.add ("placement", m_ePlacement.getValue ());
     else
       aOptions.add ("placement", m_aPlacementFunc);
-    if (StringHelper.hasText (m_sSelector))
+    if (StringHelper.isNotEmpty (m_sSelector))
       aOptions.add ("selector", m_sSelector);
-    if (StringHelper.hasText (m_sTooltipTitle))
+    if (StringHelper.isNotEmpty (m_sTooltipTitle))
       aOptions.add ("title", m_sTooltipTitle);
     else
       if (m_aTooltipTitleFunc != null)
         aOptions.add ("title", m_aTooltipTitleFunc);
     if (!m_aTrigger.isEmpty () && !DEFAULT_TRIGGER.equals (m_aTrigger))
       aOptions.add ("trigger", StringImplode.getImplodedMapped (' ', m_aTrigger, EBootstrapTooltipTrigger::getValue));
-    if (StringHelper.hasText (m_sOffset))
+    if (StringHelper.isNotEmpty (m_sOffset))
       aOptions.add ("offset", m_sOffset);
     if (m_eBoundary != null)
       aOptions.add ("boundary", m_eBoundary.getValue ());

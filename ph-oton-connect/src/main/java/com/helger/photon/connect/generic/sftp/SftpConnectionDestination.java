@@ -57,7 +57,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
                                     @Nonnegative final int nPort,
                                     @Nonnegative final int nConnectTimeoutMilliSeconds)
   {
-    if (StringHelper.hasNoText (sHostname))
+    if (StringHelper.isEmpty (sHostname))
       throw new IllegalArgumentException ("hostname");
     if (nPort <= CNetworkPort.MINIMUM_PORT_NUMBER || nPort > CNetworkPort.MAXIMUM_PORT_NUMBER)
       throw new IllegalArgumentException ("port");

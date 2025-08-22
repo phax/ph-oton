@@ -126,7 +126,7 @@ public final class PhotonHTMLHelper
       aLink.setNonce (CSRFSessionManager.getInstance ().getNonce ());
 
     final String sConditionalComment = aCSS.getConditionalComment ();
-    if (StringHelper.hasText (sConditionalComment))
+    if (StringHelper.isNotEmpty (sConditionalComment))
       return new HCConditionalCommentNode (sConditionalComment, aLink);
 
     return aLink;
@@ -146,7 +146,7 @@ public final class PhotonHTMLHelper
     aJS.getScriptLoadingMode ().apply (aScript);
 
     final String sConditionalComment = aJS.getConditionalComment ();
-    if (StringHelper.hasText (sConditionalComment))
+    if (StringHelper.isNotEmpty (sConditionalComment))
       return new HCConditionalCommentNode (sConditionalComment, aScript);
 
     return aScript;
