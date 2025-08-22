@@ -19,15 +19,11 @@ package com.helger.photon.core.html;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.locale.LocaleHelper;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
@@ -39,6 +35,7 @@ import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.mime.IMimeType;
 import com.helger.photon.app.PhotonAppManager;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.html.IHTMLProvider;
@@ -47,8 +44,11 @@ import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.app.html.PhotonMetaElements;
 import com.helger.photon.core.appid.RequestSettings;
+import com.helger.text.locale.LocaleHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Main class for creating HTML output

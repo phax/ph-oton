@@ -16,16 +16,13 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -40,6 +37,9 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @OutOfBandNode
 public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>

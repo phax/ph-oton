@@ -19,20 +19,20 @@ package com.helger.photon.security.user;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.state.EChange;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.io.mgr.IPhotonManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.IPasswordSalt;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for managing all available users.

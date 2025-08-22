@@ -16,15 +16,15 @@
  */
 package com.helger.photon.audit;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ESuccess;
+import com.helger.base.type.ObjectType;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for interface {@link IAuditor}.
@@ -86,10 +86,14 @@ public abstract class AbstractAuditor implements IAuditor
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = m_aActionStringProvider.apply (aActionObjectType != null ? aActionObjectType.getName () : sAction, aArgs);
+    final String sFullAction = m_aActionStringProvider.apply (aActionObjectType != null ? aActionObjectType.getName ()
+                                                                                        : sAction, aArgs);
     if (sFullAction != null)
     {
-      final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (), eActionType, eSuccess, sFullAction);
+      final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
+                                                  eActionType,
+                                                  eSuccess,
+                                                  sFullAction);
       handleAuditItem (aAuditItem);
     }
   }

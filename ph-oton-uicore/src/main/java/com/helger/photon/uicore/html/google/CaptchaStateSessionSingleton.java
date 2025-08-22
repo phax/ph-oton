@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uicore.html.google;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.annotation.style.UsedViaReflection;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A generic session singleton maintaining the state of the captcha.

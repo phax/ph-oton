@@ -18,17 +18,17 @@ package com.helger.photon.core.appid;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.menu.IMenuTree;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Single global state per app
@@ -68,7 +68,8 @@ public final class PhotonGlobalStatePerApp implements Serializable
   public PhotonGlobalStatePerApp setServletPath (@Nonnull @Nonempty final String sServletPath)
   {
     ValueEnforcer.notEmpty (sServletPath, "ApplicationServletPath");
-    ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'), "ApplicationServletPath must start with a slash");
+    ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'),
+                          "ApplicationServletPath must start with a slash");
     ValueEnforcer.isFalse (StringHelper.endsWith (sServletPath, '/'), "ApplicationServletPath must end with a slash");
     m_aRWLock.writeLocked ( () -> m_sServletPath = sServletPath);
     return this;
@@ -97,6 +98,8 @@ public final class PhotonGlobalStatePerApp implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("ServletPath", m_sServletPath).append ("MenuTree", m_aMenuTree).getToString ();
+    return new ToStringGenerator (null).append ("ServletPath", m_sServletPath)
+                                       .append ("MenuTree", m_aMenuTree)
+                                       .getToString ();
   }
 }

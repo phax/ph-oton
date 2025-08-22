@@ -16,15 +16,12 @@
  */
 package com.helger.html.hc.ext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.version.Version;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.version.Version;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCConditionalCommentNode;
@@ -34,6 +31,9 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML conditional comment for IE specific usage. E.g.
@@ -73,7 +73,8 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   {
     ValueEnforcer.notEmpty (sCondition, "Condition");
     ValueEnforcer.notNull (aWrappedNode, "WrappedNode");
-    ValueEnforcer.isFalse (aWrappedNode instanceof HCCommentNode, "You cannot wrap a comment inside a conditional comment");
+    ValueEnforcer.isFalse (aWrappedNode instanceof HCCommentNode,
+                           "You cannot wrap a comment inside a conditional comment");
     ValueEnforcer.isFalse (aWrappedNode instanceof HCConditionalCommentNode,
                            "You cannot wrap a conditional comment inside another conditional comment");
     m_sCondition = sCondition;
@@ -81,8 +82,7 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   }
 
   /**
-   * @return The condition for the conditional comment. Neither
-   *         <code>null</code> nor empty.
+   * @return The condition for the conditional comment. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -108,14 +108,20 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
 
     // Only create a newline when alignment is enabled
     final IXMLWriterSettings aXMLWriterSettings = aConversionSettings.getXMLWriterSettings ();
-    final String sLineSeparator = aXMLWriterSettings.getIndent ().isAlign () ? aXMLWriterSettings.getNewLineString () : "";
+    final String sLineSeparator = aXMLWriterSettings.getIndent ().isAlign () ? aXMLWriterSettings.getNewLineString ()
+                                                                             : "";
     final String sPayload = MicroWriter.getNodeAsString (aWrappedMicroNode, aXMLWriterSettings);
 
     // Now wrap the created XML in the special format required for a conditional
     // comment
     // Note: this class assumes XML comment rendering with no space between
     // "<!--" and the provided payload
-    final HCCommentNode aCommentNode = new HCCommentNode ('[' + m_sCondition + "]>" + sLineSeparator + sPayload + "<![endif]");
+    final HCCommentNode aCommentNode = new HCCommentNode ('[' +
+                                                          m_sCondition +
+                                                          "]>" +
+                                                          sLineSeparator +
+                                                          sPayload +
+                                                          "<![endif]");
 
     return HCRenderer.getAsNode (aCommentNode, aConversionSettings);
   }
@@ -123,7 +129,9 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("condition", m_sCondition).append ("wrappedNode", m_aWrappedNode).getToString ();
+    return new ToStringGenerator (this).append ("condition", m_sCondition)
+                                       .append ("wrappedNode", m_aWrappedNode)
+                                       .getToString ();
   }
 
   @Nonnull
@@ -133,7 +141,8 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   }
 
   @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion (@Nonnull final Version aVersion, @Nonnull final IHCNode aWrappedNode)
+  public static HCConditionalCommentNode createForIEExactVersion (@Nonnull final Version aVersion,
+                                                                  @Nonnull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
 
@@ -183,7 +192,8 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   }
 
   @Nonnull
-  public static HCConditionalCommentNode createForIENotVersion (@Nonnull final Version aVersion, @Nonnull final IHCNode aWrappedNode)
+  public static HCConditionalCommentNode createForIENotVersion (@Nonnull final Version aVersion,
+                                                                @Nonnull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
 
@@ -191,7 +201,8 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   }
 
   @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion (@Nonnull final Version aVersion, @Nonnull final IHCNode aWrappedNode)
+  public static HCConditionalCommentNode createForIELowerThanVersion (@Nonnull final Version aVersion,
+                                                                      @Nonnull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
     return new HCConditionalCommentNode (CONDITION_IF_LT_IE + aVersion.getAsString (), aWrappedNode);
@@ -393,7 +404,8 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   }
 
   @Nullable
-  public static HCConditionalCommentNode getFromStringOrNull (@Nullable final String sCondition, @Nonnull final IHCNode aNode)
+  public static HCConditionalCommentNode getFromStringOrNull (@Nullable final String sCondition,
+                                                              @Nonnull final IHCNode aNode)
   {
     if (StringHelper.hasNoText (sCondition))
       return null;
@@ -401,10 +413,9 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   }
 
   /**
-   * Get the passed node wrapped in a conditional comment. This is a sanity
-   * method for <code>new HCConditionalCommentNode (this, sCondition)</code>. If
-   * this node is already an {@link HCConditionalCommentNode} the object is
-   * simply casted.
+   * Get the passed node wrapped in a conditional comment. This is a sanity method for
+   * <code>new HCConditionalCommentNode (this, sCondition)</code>. If this node is already an
+   * {@link HCConditionalCommentNode} the object is simply casted.
    *
    * @param sCondition
    *        The condition to us. May neither be <code>null</code> nor empty.

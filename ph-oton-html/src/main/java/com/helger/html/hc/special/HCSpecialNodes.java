@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.special;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.concurrent.NotThreadSafe;
 
 /**
  * Default implementation of {@link IHCSpecialNodes}.

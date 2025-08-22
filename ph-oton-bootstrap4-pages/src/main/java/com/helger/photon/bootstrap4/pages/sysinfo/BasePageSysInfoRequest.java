@@ -19,19 +19,11 @@ package com.helger.photon.bootstrap4.pages.sysinfo;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.compare.IComparator;
-import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.lang.clazz.ClassHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.impl.HCNodeList;
@@ -43,8 +35,15 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.servlet.cookie.CookieHelper;
 import com.helger.servlet.request.RequestLogger;
+import com.helger.text.IMultilingualText;
+import com.helger.text.compare.ComparatorHelper;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -129,7 +128,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
             .addCells (EText.MSG_NAME.getDisplayText (aDisplayLocale), EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, ICommonsList <String>> aEntry : aRequestScope.headers ()
                                                                                  .getAllHeaders ()
-                                                                                 .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
+                                                                                 .getSortedByKey (ComparatorHelper.getComparatorCollating (aDisplayLocale))
                                                                                  .entrySet ())
       {
         aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (HCExtHelper.list2divList (aEntry.getValue ()));
@@ -149,20 +148,20 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                        EText.MSG_VALUE.getDisplayText (aDisplayLocale),
                        EText.MSG_DETAILS.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Cookie> aEntry : CookieHelper.getAllCookies (aHttpRequest)
-                                                                 .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
+                                                                 .getSortedByKey (ComparatorHelper.getComparatorCollating (aDisplayLocale))
                                                                  .entrySet ())
       {
         final Cookie aCookie = aEntry.getValue ();
-        String sOther = "";
+        final StringBuilder sOther = new StringBuilder ();
         if (StringHelper.hasText (aCookie.getPath ()))
-          sOther += "[path: " + aCookie.getPath () + "]";
+          sOther.append ("[path: ").append (aCookie.getPath ()).append ("]");
         if (StringHelper.hasText (aCookie.getDomain ()))
-          sOther += "[domain: " + aCookie.getDomain () + "]";
+          sOther.append ("[domain: ").append (aCookie.getDomain ()).append ("]");
         if (aCookie.getSecure ())
-          sOther += "[secure]";
-        sOther += "[maxage: " + aCookie.getMaxAge () + "]";
+          sOther.append ("[secure]");
+        sOther.append ("[maxage: ").append (aCookie.getMaxAge ()).append ("]");
 
-        aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aCookie.getValue ()).addCell (sOther);
+        aTable.addBodyRow ().addCell (aEntry.getKey ()).addCell (aCookie.getValue ()).addCell (sOther.toString ());
       }
       final BootstrapDataTables aDT = BootstrapDataTables.createDefaultDataTables (aWPEC, aTable);
       aTabBox.addTab ("cookies",
@@ -195,7 +194,7 @@ public class BasePageSysInfoRequest <WPECTYPE extends IWebPageExecutionContext> 
                        EText.MSG_TYPE.getDisplayText (aDisplayLocale),
                        EText.MSG_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, Object> aEntry : aRequestScope.attrs ()
-                                                                  .getSortedByKey (IComparator.getComparatorCollating (aDisplayLocale))
+                                                                  .getSortedByKey (ComparatorHelper.getComparatorCollating (aDisplayLocale))
                                                                   .entrySet ())
       {
         aTable.addBodyRow ()

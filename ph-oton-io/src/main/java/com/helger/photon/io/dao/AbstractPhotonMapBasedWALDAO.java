@@ -16,13 +16,13 @@
  */
 package com.helger.photon.io.dao;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.id.IHasID;
+import com.helger.base.id.IHasID;
 import com.helger.dao.DAOException;
 import com.helger.dao.wal.AbstractMapBasedWALDAO;
 import com.helger.photon.io.WebFileIO;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special {@link AbstractMapBasedWALDAO} that uses the

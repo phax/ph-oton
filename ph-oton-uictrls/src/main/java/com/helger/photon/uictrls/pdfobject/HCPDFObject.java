@@ -16,20 +16,20 @@
  */
 package com.helger.photon.uictrls.pdfobject;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.jquery.JQuerySelector;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Embed an PDF inline into the page. See https://pdfobject.com/

@@ -18,10 +18,10 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for an API invoker. It has a set of {@link IAPIExecutor}

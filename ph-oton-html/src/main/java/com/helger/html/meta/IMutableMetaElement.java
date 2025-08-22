@@ -18,11 +18,11 @@ package com.helger.html.meta;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.state.EChange;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.state.EChange;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents a single meta element

@@ -18,16 +18,16 @@ package com.helger.photon.uicore.login;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.html.AbstractSWECHTMLProvider;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.WebPageCSRFHandler;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for providing an HTML login screen.

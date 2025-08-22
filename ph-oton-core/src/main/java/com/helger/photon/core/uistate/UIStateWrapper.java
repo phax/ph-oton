@@ -18,20 +18,19 @@ package com.helger.photon.core.uistate;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.reflection.GenericReflection;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.IHasObjectType;
+import com.helger.base.type.ObjectType;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.lang.GenericReflection;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.IHasObjectType;
-import com.helger.commons.type.ObjectType;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
- * A special wrapper that wraps an arbitrary object into an {@link IHasUIState}
- * object.
+ * A special wrapper that wraps an arbitrary object into an {@link IHasUIState} object.
  *
  * @author Philip Helger
  * @param <T>
@@ -93,11 +92,14 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("objectType", m_aObjectType).append ("object", m_aObject).getToString ();
+    return new ToStringGenerator (this).append ("objectType", m_aObjectType)
+                                       .append ("object", m_aObject)
+                                       .getToString ();
   }
 
   @Nonnull
-  public static <T extends Serializable> UIStateWrapper <T> create (@Nonnull final ObjectType aObjectType, @Nonnull final T aObject)
+  public static <T extends Serializable> UIStateWrapper <T> create (@Nonnull final ObjectType aObjectType,
+                                                                    @Nonnull final T aObject)
   {
     return new UIStateWrapper <> (aObjectType, aObject);
   }

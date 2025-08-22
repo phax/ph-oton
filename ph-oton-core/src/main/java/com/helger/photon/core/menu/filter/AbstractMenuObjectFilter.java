@@ -18,15 +18,15 @@ package com.helger.photon.core.menu.filter;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.locale.LocaleHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.ReadOnlyMultilingualText;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.menu.IMenuObjectFilter;
+import com.helger.text.IMultilingualText;
+import com.helger.text.ReadOnlyMultilingualText;
+import com.helger.text.locale.LocaleHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for a menu object filter.

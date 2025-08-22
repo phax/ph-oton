@@ -21,32 +21,32 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-import javax.annotation.WillCloseWhenClosed;
-import javax.annotation.concurrent.NotThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.charset.EUnicodeBOM;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.WillClose;
+import com.helger.annotation.WillCloseWhenClosed;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.charset.EUnicodeBOM;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.state.ESuccess;
+import com.helger.base.system.SystemHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.commons.csv.CCSV;
 import com.helger.commons.csv.CSVWriter;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.system.SystemHelper;
-import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
 import com.helger.photon.exchange.bulkexport.IExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.IExporterFile;
+import com.helger.typeconvert.impl.TypeConverter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IExporterFile} for CSV files.
@@ -170,8 +170,8 @@ public class ExporterCSV implements IExporterFile
   }
 
   /**
-   * @return <code>true</code> if empty files are not written,
-   *         <code>false</code> otherwise (by default).
+   * @return <code>true</code> if empty files are not written, <code>false</code> otherwise (by
+   *         default).
    */
   public final boolean isAvoidWriteEmpty ()
   {
@@ -179,14 +179,12 @@ public class ExporterCSV implements IExporterFile
   }
 
   /**
-   * Enable or disable that empty files are written. By enabling this, all
-   * records are collected which results in higher memory consumption but safer
-   * output. If this is disabled (the default) than it my happen that nothing is
-   * written on the output stream.
+   * Enable or disable that empty files are written. By enabling this, all records are collected
+   * which results in higher memory consumption but safer output. If this is disabled (the default)
+   * than it my happen that nothing is written on the output stream.
    *
    * @param bAvoidWriteEmpty
-   *        <code>true</code> to collect before write, <code>false</code> to
-   *        write directly
+   *        <code>true</code> to collect before write, <code>false</code> to write directly
    * @return this for chaining
    * @since 7.0.4
    */
@@ -198,8 +196,8 @@ public class ExporterCSV implements IExporterFile
   }
 
   /**
-   * @return <code>true</code> if the written data should end with a line end,
-   *         <code>false</code> otherwise (by default).
+   * @return <code>true</code> if the written data should end with a line end, <code>false</code>
+   *         otherwise (by default).
    * @since 7.1.1
    */
   public final boolean isAvoidFinalLineEnd ()
@@ -263,7 +261,8 @@ public class ExporterCSV implements IExporterFile
 
   @Override
   @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider, @Nonnull @WillClose final OutputStream aOS)
+  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
+                                 @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {

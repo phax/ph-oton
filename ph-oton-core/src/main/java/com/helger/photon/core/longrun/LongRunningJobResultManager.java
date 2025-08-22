@@ -16,16 +16,16 @@
  */
 package com.helger.photon.core.longrun;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.dao.DAOException;
 import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @ThreadSafe
 public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <LongRunningJobData, LongRunningJobData>

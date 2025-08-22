@@ -18,16 +18,16 @@ package com.helger.photon.bootstrap4.pages.sysinfo;
 
 import java.net.NetworkInterface;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.collection.IteratorHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.hierarchy.IParentProvider;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.PresentForCodeCoverage;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.hierarchy.IParentProvider;
+import com.helger.collection.iterator.IteratorHelper;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Some utility methods for {@link NetworkInterface}

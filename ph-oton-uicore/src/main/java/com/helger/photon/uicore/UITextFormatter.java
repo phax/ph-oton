@@ -16,18 +16,16 @@
  */
 package com.helger.photon.uicore;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.hierarchy.visit.IHierarchyVisitorCallback;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringReplace;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.hierarchy.visit.IHierarchyVisitorCallback;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCSettings;
@@ -44,6 +42,9 @@ import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.util.MicroVisitor;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 @Immutable
 public final class UITextFormatter
 {
@@ -56,12 +57,12 @@ public final class UITextFormatter
   {}
 
   /**
-   * Try to separate the value created from regular <code>toString</code>
-   * implementations back into fields :) This is more of a heuristic.
+   * Try to separate the value created from regular <code>toString</code> implementations back into
+   * fields :) This is more of a heuristic.
    *
    * @param aValue
-   *        The source object which's <code>toString</code> method is invoked.
-   *        May be <code>null</code>.
+   *        The source object which's <code>toString</code> method is invoked. May be
+   *        <code>null</code>.
    * @return A slightly beautified version.
    */
   @Nonnull
@@ -83,7 +84,7 @@ public final class UITextFormatter
           sValue = StringHelper.getConcatenatedOnDemand (aObjStart[0], aObjStart[2]).trim ();
           if (sValue.length () > 0)
           {
-            sValue = StringHelper.replaceAll (sValue, "; ", ";\n");
+            sValue = StringReplace.replaceAll (sValue, "; ", ";\n");
             aParts.addAll (StringHelper.getExploded ('\n', sValue));
           }
         }
@@ -106,8 +107,8 @@ public final class UITextFormatter
    *
    * @param sMD
    *        The Markdown source to be invoked. May be <code>null</code>.
-   * @return Either the processed markdown code or in case of an internal error
-   *         a {@link HCTextNode} which contains the source text.
+   * @return Either the processed markdown code or in case of an internal error a {@link HCTextNode}
+   *         which contains the source text.
    */
   @Nonnull
   public static IHCNode markdown (@Nullable final String sMD)
@@ -130,8 +131,8 @@ public final class UITextFormatter
   }
 
   /**
-   * Same as {@link #markdown(String)} but returning <code>null</code> if the
-   * passed string is <code>null</code> or empty.
+   * Same as {@link #markdown(String)} but returning <code>null</code> if the passed string is
+   * <code>null</code> or empty.
    *
    * @param sMD
    *        The Markdown source to be invoked. May be <code>null</code>.
@@ -145,8 +146,8 @@ public final class UITextFormatter
   }
 
   /**
-   * Parse the provided HTML string and convert it to an {@link IHCNode}. After
-   * parsing the code is cleaned up using {@link PageViewExternalHTMLCleanser}.
+   * Parse the provided HTML string and convert it to an {@link IHCNode}. After parsing the code is
+   * cleaned up using {@link PageViewExternalHTMLCleanser}.
    *
    * @param sHTML
    *        The source HTML. May not be <code>null</code>.
@@ -163,14 +164,14 @@ public final class UITextFormatter
   }
 
   /**
-   * Parse the provided HTML string and convert it to an {@link IHCNode}. If
-   * necessary a separate cleanup can be performed using the provided handler.
+   * Parse the provided HTML string and convert it to an {@link IHCNode}. If necessary a separate
+   * cleanup can be performed using the provided handler.
    *
    * @param sHTML
    *        The source HTML. May not be <code>null</code>.
    * @param aCleanupHandler
-   *        An optional cleanup handler that is invoked if parsing succeeded.
-   *        May be <code>null</code>.
+   *        An optional cleanup handler that is invoked if parsing succeeded. May be
+   *        <code>null</code>.
    * @return The parsed HTML code as an {@link IHCNode}
    * @throws IllegalStateException
    *         If parsing fails

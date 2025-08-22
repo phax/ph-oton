@@ -18,16 +18,13 @@ package com.helger.html.hc.render;
 
 import java.io.OutputStream;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.VisibleForTesting;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.lang.GenericReflection;
+import com.helger.annotation.WillClose;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.VisibleForTesting;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.reflection.GenericReflection;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCConversionSettings;
@@ -41,6 +38,9 @@ import com.helger.html.hc.html.root.HCHtml;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @Immutable
 public final class HCRenderer

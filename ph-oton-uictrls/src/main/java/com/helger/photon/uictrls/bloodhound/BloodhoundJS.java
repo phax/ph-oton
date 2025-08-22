@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.bloodhound;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
+
+import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class BloodhoundJS

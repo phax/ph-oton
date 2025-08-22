@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.system.ENewLineMode;
+import com.helger.base.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.mock.HCTestRuleHTMLVersion;

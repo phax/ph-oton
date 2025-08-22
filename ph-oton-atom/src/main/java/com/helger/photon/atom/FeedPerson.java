@@ -16,16 +16,17 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.email.EmailAddressHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.email.EmailAddressHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Represents a person within a feed.
@@ -51,9 +52,9 @@ public class FeedPerson extends AbstractFeedElement
   }
 
   /**
-   * The "atom:name" element's content conveys a human-readable name for the
-   * person. The content of atom:name is Language-Sensitive. Person constructs
-   * MUST contain exactly one "atom:name" element.
+   * The "atom:name" element's content conveys a human-readable name for the person. The content of
+   * atom:name is Language-Sensitive. Person constructs MUST contain exactly one "atom:name"
+   * element.
    *
    * @return name
    */
@@ -69,10 +70,9 @@ public class FeedPerson extends AbstractFeedElement
   }
 
   /**
-   * The "atom:uri" element's content conveys an IRI associated with the person.
-   * Person constructs MAY contain an atom:uri element, but MUST NOT contain
-   * more than one. The content of atom:uri in a Person construct MUST be an IRI
-   * reference [RFC3987].
+   * The "atom:uri" element's content conveys an IRI associated with the person. Person constructs
+   * MAY contain an atom:uri element, but MUST NOT contain more than one. The content of atom:uri in
+   * a Person construct MUST be an IRI reference [RFC3987].
    *
    * @return URI
    */
@@ -88,10 +88,9 @@ public class FeedPerson extends AbstractFeedElement
   }
 
   /**
-   * The "atom:email" element's content conveys an e-mail address associated
-   * with the person. Person constructs MAY contain an atom:email element, but
-   * MUST NOT contain more than one. Its content MUST conform to the "addr-spec"
-   * production in [RFC2822].
+   * The "atom:email" element's content conveys an e-mail address associated with the person. Person
+   * constructs MAY contain an atom:email element, but MUST NOT contain more than one. Its content
+   * MUST conform to the "addr-spec" production in [RFC2822].
    *
    * @return email
    */
@@ -111,7 +110,7 @@ public class FeedPerson extends AbstractFeedElement
     if (StringHelper.hasText (m_sEmail))
       aElement.appendElement (CFeed.XMLNS_ATOM, "email").appendText (m_sEmail);
     if (StringHelper.hasText (getLanguage ()))
-      aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
+      aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 

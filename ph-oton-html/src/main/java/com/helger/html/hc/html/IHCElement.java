@@ -18,18 +18,18 @@ package com.helger.html.hc.html;
 
 import java.util.function.Consumer;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.IHCNode;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for an HC element

@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.hc.IHCWrappingNode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for conditional comments.

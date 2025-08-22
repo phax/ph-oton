@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.role;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.ICommonsSet;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsSet;
+import jakarta.annotation.Nonnull;
 
 /**
  * Base read-only interface for objects containing roles.

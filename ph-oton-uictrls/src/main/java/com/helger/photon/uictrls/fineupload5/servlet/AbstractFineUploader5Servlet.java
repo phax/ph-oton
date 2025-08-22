@@ -18,22 +18,21 @@ package com.helger.photon.uictrls.fineupload5.servlet;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ESuccess;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
+import com.helger.mime.CMimeType;
 import com.helger.photon.core.interror.InternalErrorBuilder;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**

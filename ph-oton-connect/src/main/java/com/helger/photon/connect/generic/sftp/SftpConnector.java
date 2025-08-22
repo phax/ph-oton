@@ -21,21 +21,21 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.EChange;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.WillClose;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.state.EChange;
+import com.helger.base.state.ESuccess;
 import com.helger.photon.connect.generic.IConnectorFileBased;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelSftp.LsEntry>
 {

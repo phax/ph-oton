@@ -16,7 +16,7 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * Constants for ATOM feeds

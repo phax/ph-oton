@@ -19,15 +19,13 @@ package com.helger.html.hc.ext;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringRemove;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
@@ -125,11 +123,11 @@ import com.helger.html.hc.html.textlevel.*;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @SuppressWarnings ("deprecation")
 @Immutable
-@SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public final class HCExtHelper
 {
   public static final char PATTERN_NEWLINE = '\n';
@@ -410,7 +408,7 @@ public final class HCExtHelper
     if (StringHelper.hasText (sText))
     {
       // Remove all "\r" chars
-      final String sRealText = StringHelper.removeAll (sText, '\r');
+      final String sRealText = StringRemove.removeAll (sText, '\r');
       int nIndex = 0;
       while (nIndex < sRealText.length ())
       {
@@ -465,16 +463,15 @@ public final class HCExtHelper
   }
 
   /**
-   * Convert the passed text to a list of &lt;div&gt; elements. Each \n is used
-   * to split the text into separate lines. \r characters are removed from the
-   * string! Empty lines are preserved except for the last line. E.g.
-   * <code>Hello\nworld</code> results in 2 &lt;div&gt;s:
+   * Convert the passed text to a list of &lt;div&gt; elements. Each \n is used to split the text
+   * into separate lines. \r characters are removed from the string! Empty lines are preserved
+   * except for the last line. E.g. <code>Hello\nworld</code> results in 2 &lt;div&gt;s:
    * &lt;div&gt;Hello&lt;/div&gt; and &lt;div&gt;world&lt;/div&gt;
    *
    * @param sText
    *        The text to be split. May be <code>null</code>.
-   * @return A non-<code>null</code> but maybe empty list. The list is empty, if
-   *         the string is empty.
+   * @return A non-<code>null</code> but maybe empty list. The list is empty, if the string is
+   *         empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -486,16 +483,15 @@ public final class HCExtHelper
   }
 
   /**
-   * Convert the passed text to a list of &lt;div&gt; elements. Each \n is used
-   * to split the text into separate lines. \r characters are removed from the
-   * string! Empty lines are preserved except for the last line. E.g.
-   * <code>Hello\nworld</code> results in 2 &lt;div&gt;s:
+   * Convert the passed text to a list of &lt;div&gt; elements. Each \n is used to split the text
+   * into separate lines. \r characters are removed from the string! Empty lines are preserved
+   * except for the last line. E.g. <code>Hello\nworld</code> results in 2 &lt;div&gt;s:
    * &lt;div&gt;Hello&lt;/div&gt; and &lt;div&gt;world&lt;/div&gt;
    *
    * @param sText
    *        The text to be split. May be <code>null</code>.
-   * @return A non-<code>null</code> but maybe empty list. The list is empty, if
-   *         the string is empty.
+   * @return A non-<code>null</code> but maybe empty list. The list is empty, if the string is
+   *         empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -507,17 +503,15 @@ public final class HCExtHelper
   }
 
   /**
-   * Convert the passed text to a list of &lt;div&gt; elements. Each \n is used
-   * to split the text into separate lines. \r characters are removed from the
-   * string! Empty lines are preserved except for the last line. E.g.
-   * <code>Hello\nworld</code> results in 2 &lt;div&gt;s:
+   * Convert the passed text to a list of &lt;div&gt; elements. Each \n is used to split the text
+   * into separate lines. \r characters are removed from the string! Empty lines are preserved
+   * except for the last line. E.g. <code>Hello\nworld</code> results in 2 &lt;div&gt;s:
    * &lt;div&gt;Hello&lt;/div&gt; and &lt;div&gt;world&lt;/div&gt;
    *
    * @param sText
    *        The text to be split. May be <code>null</code>.
    * @param aTarget
-   *        The consumer to be invoked with every {@link HCDiv}. May not be
-   *        <code>null</code>.
+   *        The consumer to be invoked with every {@link HCDiv}. May not be <code>null</code>.
    */
   public static void nl2divList (@Nullable final String sText, @Nonnull final Consumer <? super HCDiv> aTarget)
   {

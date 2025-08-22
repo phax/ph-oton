@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.style.PresentForCodeCoverage;
+import com.helger.io.resource.ClassPathResource;
 
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.io.resource.ClassPathResource;
+import jakarta.annotation.Nonnull;
 
 /**
  * Constants in the field of Java web-related specifications

@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * This enum represents the internal state of {@link IHCNode} objects.

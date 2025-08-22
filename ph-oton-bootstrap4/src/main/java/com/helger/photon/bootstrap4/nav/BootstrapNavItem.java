@@ -16,18 +16,18 @@
  */
 package com.helger.photon.bootstrap4.nav;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCLI;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.dropdown.BootstrapDropdownMenu;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BootstrapNavItem extends AbstractHCLI <BootstrapNavItem>
 {

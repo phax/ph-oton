@@ -16,9 +16,9 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
-import javax.annotation.Nonnull;
-
 import com.helger.photon.exchange.EExchangeFileType;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A specialized exporter that exports to a file. This interface provides

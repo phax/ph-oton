@@ -16,15 +16,15 @@
  */
 package com.helger.photon.uictrls.youtube;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.embedded.AbstractHCObject;
 import com.helger.html.hc.html.embedded.HCEmbed;
 import com.helger.html.hc.html.embedded.HCParam;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+import com.helger.mime.CMimeType;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Embeds YouTube videos!<br>

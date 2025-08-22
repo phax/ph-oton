@@ -18,12 +18,12 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.collection.commons.CommonsArrayList;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Select box for currencies

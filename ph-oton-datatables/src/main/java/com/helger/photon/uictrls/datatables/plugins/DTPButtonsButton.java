@@ -16,13 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.ext.HCHasCSSClasses;
@@ -31,6 +28,9 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSAtom;
 import com.helger.html.jscode.JSExpr;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class DTPButtonsButton
 {

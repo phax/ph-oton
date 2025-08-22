@@ -22,9 +22,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.id.factory.ILongIDFactory;
+import com.helger.base.id.factory.ILongIDFactory;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.io.mock.PhotonIOTestRule;
 
 /**

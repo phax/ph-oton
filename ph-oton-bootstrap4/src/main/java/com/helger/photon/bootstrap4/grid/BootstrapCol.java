@@ -16,13 +16,13 @@
  */
 package com.helger.photon.bootstrap4.grid;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BootstrapCol extends AbstractBootstrapDiv <BootstrapCol>
 {

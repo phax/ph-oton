@@ -16,9 +16,9 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.jscode.JSAssocArray;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Wrapper for Fine Uploader 5.x cors part

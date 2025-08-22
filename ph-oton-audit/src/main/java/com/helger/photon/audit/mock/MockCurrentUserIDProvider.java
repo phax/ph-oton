@@ -16,10 +16,10 @@
  */
 package com.helger.photon.audit.mock;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Mock implementation of {@link ICurrentUserIDProvider}.

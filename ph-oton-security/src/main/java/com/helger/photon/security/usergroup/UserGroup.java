@@ -18,22 +18,22 @@ package com.helger.photon.security.usergroup;
 
 import java.util.Map;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.state.EChange;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.security.object.StubObject;
 import com.helger.tenancy.AbstractBusinessObject;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of the {@link IUserGroup} interface.
@@ -77,7 +77,9 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
    * @param sDescription
    *        The optional description. May be <code>null</code>.
    */
-  public UserGroup (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sName, @Nullable final String sDescription)
+  public UserGroup (@Nonnull final StubObject aStubObject,
+                    @Nonnull @Nonempty final String sName,
+                    @Nullable final String sDescription)
   {
     super (aStubObject);
     setName (sName);

@@ -18,9 +18,9 @@ package com.helger.html.js;
 
 import java.io.Serializable;
 
-import javax.annotation.Nullable;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import jakarta.annotation.Nullable;
 
 /**
  * Basic interface for object providing JavaScript code.

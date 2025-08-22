@@ -18,15 +18,15 @@ package com.helger.photon.bootstrap4.uictrls.typeahead;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.request.IHCRequestField;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.typeahead.TypeaheadEdit;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Bootstrap version of {@link TypeaheadEdit}

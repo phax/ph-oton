@@ -17,20 +17,21 @@
 package com.helger.photon.api;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsEnumMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsEnumMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.api.pathdescriptor.PathDescriptorHelper;
 import com.helger.photon.api.pathdescriptor.PathMatchingResult;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class manages a list of {@link APIDescriptor} objects.
@@ -82,7 +83,7 @@ public class APIDescriptorList implements Serializable
 
     // Split only once for performance reasons
     final String sSourcePath = aPath.getPath ();
-    final ICommonsList <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
+    final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sSourcePath);
 
     final ICommonsList <InvokableAPIDescriptor> aMatching = new CommonsArrayList <> ();
 

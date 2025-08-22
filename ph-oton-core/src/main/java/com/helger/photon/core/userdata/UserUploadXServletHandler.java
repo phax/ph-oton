@@ -20,23 +20,22 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.state.ISuccessIndicator;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.ISuccessIndicator;
+import com.helger.base.string.StringHelper;
+import com.helger.io.file.FilenameHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
+import com.helger.mime.CMimeType;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 
 /**

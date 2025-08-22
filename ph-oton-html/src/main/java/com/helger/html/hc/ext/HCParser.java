@@ -16,9 +16,6 @@
  */
 package com.helger.html.hc.ext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +25,9 @@ import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.parser.XHTMLParser;
 import com.helger.xml.microdom.IMicroContainer;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A special XHTML parser that can convert nodes to {@link IHCNode}s.

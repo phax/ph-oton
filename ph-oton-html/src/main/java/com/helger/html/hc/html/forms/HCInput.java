@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents a generic HTML &lt;input&gt; element.<br>

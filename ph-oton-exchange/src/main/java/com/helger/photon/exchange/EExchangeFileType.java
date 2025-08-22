@@ -19,21 +19,21 @@ package com.helger.photon.exchange;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.lang.EnumHelper;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.annotation.Nonempty;
+import com.helger.base.id.IHasID;
+import com.helger.base.lang.EnumHelper;
+import com.helger.mime.CMimeType;
+import com.helger.mime.IMimeType;
 import com.helger.photon.exchange.bulkexport.IExporter;
 import com.helger.photon.exchange.bulkexport.format.ExporterCSV;
 import com.helger.photon.exchange.bulkexport.format.ExporterExcel;
 import com.helger.photon.exchange.bulkexport.format.ExporterJSON;
 import com.helger.photon.exchange.bulkexport.format.ExporterXML;
 import com.helger.poi.excel.EExcelVersion;
+import com.helger.text.display.IHasDisplayText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Defines common file types for import/export.

@@ -16,8 +16,7 @@
  */
 package com.helger.photon.connect.sftp.progress;
 
-import javax.annotation.Nonnegative;
-
+import com.helger.annotation.Nonnegative;
 import com.jcraft.jsch.SftpProgressMonitor;
 
 /**

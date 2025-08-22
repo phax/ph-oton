@@ -16,20 +16,20 @@
  */
 package com.helger.photon.app.csrf;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.scope.IScope;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Per-session nonce manager.
@@ -74,8 +74,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   }
 
   /**
-   * @return The nonce of this session (Base64 encoded). Neither
-   *         <code>null</code> nor empty.
+   * @return The nonce of this session (Base64 encoded). Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -89,8 +88,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
    *
    * @param sNonceToCheck
    *        The nonce to be checked. May be <code>null</code>.
-   * @return <code>true</code> if the nonce is as expected, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the nonce is as expected, <code>false</code> otherwise.
    */
   public boolean isExpectedNonce (@Nullable final String sNonceToCheck)
   {

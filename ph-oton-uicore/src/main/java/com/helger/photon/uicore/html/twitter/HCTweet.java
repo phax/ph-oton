@@ -16,17 +16,17 @@
  */
 package com.helger.photon.uicore.html.twitter;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.base.debug.GlobalDebug;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
 import com.helger.html.resource.js.ConstantJSPathProvider;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.html.PhotonJS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * <pre>

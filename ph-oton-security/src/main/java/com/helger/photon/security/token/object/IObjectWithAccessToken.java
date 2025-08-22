@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.token.object;
 
-import javax.annotation.Nonnull;
-
 import com.helger.security.authentication.subject.IAuthSubject;
 import com.helger.tenancy.IBusinessObject;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for all kind of access tokens.

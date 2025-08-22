@@ -18,10 +18,10 @@ package com.helger.html.meta;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.name.IHasName;
 
-import com.helger.commons.name.IHasName;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Defines the properties for a meta tag declaration.

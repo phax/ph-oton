@@ -19,14 +19,10 @@ package com.helger.photon.icon.tools.supplementary;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.collection.impl.CommonsTreeSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.string.StringHelper;
-import com.helger.css.ECSSVersion;
+import com.helger.base.string.StringReplace;
+import com.helger.collection.commons.CommonsTreeSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.css.decl.CSSSelector;
 import com.helger.css.decl.CSSSelectorSimpleMember;
 import com.helger.css.decl.CascadingStyleSheet;
@@ -34,7 +30,10 @@ import com.helger.css.decl.ICSSSelectorMember;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
+import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.icon.EIconCSSPathProvider;
+
+import jakarta.annotation.Nonnull;
 
 public class MainExtractBootstrapIconCSSClasses
 {
@@ -42,7 +41,7 @@ public class MainExtractBootstrapIconCSSClasses
   static String createFieldName (@Nonnull final String s)
   {
     String sFieldName = s.toUpperCase (Locale.US);
-    sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
+    sFieldName = StringReplace.replaceAll (sFieldName, '-', '_');
     if (Character.isDigit (sFieldName.charAt (0)))
       sFieldName = "_" + sFieldName;
     return sFieldName;
@@ -51,8 +50,7 @@ public class MainExtractBootstrapIconCSSClasses
   public static void main (final String [] args)
   {
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.BOOTSTRAP_ICONS.getCSSItemPath (true)),
-                                                               StandardCharsets.UTF_8,
-                                                               ECSSVersion.CSS30);
+                                                               StandardCharsets.UTF_8);
     final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
     final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()

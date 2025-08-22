@@ -60,8 +60,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,16 +67,18 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsCollection;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.stream.NonBlockingBufferedReader;
-import com.helger.commons.regex.RegExCache;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.io.nonblocking.NonBlockingBufferedReader;
+import com.helger.base.string.StringHelper;
+import com.helger.cache.regex.RegExCache;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsCollection;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.html.markdown.MarkdownConfiguration.Builder;
+import com.helger.io.resource.ClassPathResource;
+
+import jakarta.annotation.Nonnull;
 
 @RunWith (Parameterized.class)
 public final class MarkupFileFuncTest

@@ -16,10 +16,10 @@
  */
 package com.helger.html.meta;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.CHTMLAttributes;
 import com.helger.xml.microdom.IMicroQName;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An enumeration with all meta element types. The type defines the layout of

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.uictrls.datatables;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.tabular.IHCTable;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for bootstrap datatables configurator.

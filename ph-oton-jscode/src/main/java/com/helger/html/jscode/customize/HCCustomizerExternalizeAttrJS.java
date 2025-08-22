@@ -18,9 +18,7 @@ package com.helger.html.jscode.customize;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -35,6 +33,8 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSConst;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.html.JSHtml;
+
+import jakarta.annotation.Nonnull;
 
 public class HCCustomizerExternalizeAttrJS extends AbstractHCCustomizer
 {

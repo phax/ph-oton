@@ -18,10 +18,10 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.person.EGender;
+
+import jakarta.annotation.Nonnull;
 
 public class HCGenderSelect extends HCExtSelect
 {

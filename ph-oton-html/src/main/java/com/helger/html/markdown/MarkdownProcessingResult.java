@@ -16,12 +16,12 @@
  */
 package com.helger.html.markdown;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * The result of a Markdown processing

@@ -18,11 +18,11 @@ package com.helger.photon.ajax;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for an AJAX invoker. It has a set of {@link IAjaxExecutor}

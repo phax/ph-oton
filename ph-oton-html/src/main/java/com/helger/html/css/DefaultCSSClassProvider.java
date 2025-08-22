@@ -18,21 +18,21 @@ package com.helger.html.css;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.hashcode.IHashCodeGenerator;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.hashcode.IHashCodeGenerator;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link ICSSClassProvider} interface. Uses an

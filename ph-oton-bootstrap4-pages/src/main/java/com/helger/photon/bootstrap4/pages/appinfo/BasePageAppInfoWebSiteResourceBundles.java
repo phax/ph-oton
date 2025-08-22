@@ -19,27 +19,20 @@ package com.helger.photon.bootstrap4.pages.appinfo;
 import java.io.File;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.datetime.PDTToString;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.textlevel.HCBR;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.io.file.FileSystemIterator;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.resource.WebSiteResourceBundleManager;
 import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
@@ -59,6 +52,13 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Show web site resource bundles.

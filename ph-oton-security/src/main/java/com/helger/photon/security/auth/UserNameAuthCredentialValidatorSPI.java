@@ -16,15 +16,15 @@
  */
 package com.helger.photon.security.auth;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.security.authentication.credentials.IAuthCredentialValidatorSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of the {@link IAuthCredentialValidatorSPI} for

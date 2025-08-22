@@ -16,17 +16,15 @@
  */
 package com.helger.photon.core.interror.callback;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ArrayHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.rt.StackTraceHelper;
 import com.helger.commons.deadlock.IThreadDeadlockCallback;
 import com.helger.commons.deadlock.ThreadDeadlockInfo;
-import com.helger.commons.lang.StackTraceHelper;
 import com.helger.photon.core.interror.InternalErrorHandler;
 import com.helger.photon.core.interror.InternalErrorSettings;
 import com.helger.smtp.data.EEmailType;
@@ -34,6 +32,8 @@ import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.xml.util.thread.ThreadDescriptor;
 import com.helger.xml.util.thread.ThreadDescriptorList;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An implementation if {@link IThreadDeadlockCallback} that sends an internal

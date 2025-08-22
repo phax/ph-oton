@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;ol&gt; element using {@link HCLI} as children.

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.buttongroup;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLRole;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
+
+import jakarta.annotation.Nonnull;
 
 public class BootstrapButtonGroup extends AbstractBootstrapDiv <BootstrapButtonGroup>
 {

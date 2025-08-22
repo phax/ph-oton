@@ -23,17 +23,17 @@ import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nullable;
-
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCConversionSettings;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.unittest.support.TestHelper;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Test class for class {@link MetaElement}.
@@ -59,11 +59,11 @@ public final class MetaElementTest
     final MetaElement e3 = MetaElement.createMetaCharset (StandardCharsets.ISO_8859_1);
     assertEquals ("<meta charset=\"ISO-8859-1\" />", _getAsString (e3));
 
-    CommonsTestHelper.testDefaultSerialization (e1);
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (e1, MetaElement.createMeta ("nam", "con"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam2", "con"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam", "con2"));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMetaHttpEquiv ("nam", "con"));
+    TestHelper.testDefaultSerialization (e1);
+    TestHelper.testDefaultImplementationWithEqualContentObject (e1, MetaElement.createMeta ("nam", "con"));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam2", "con"));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMeta ("nam", "con2"));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (e1, MetaElement.createMetaHttpEquiv ("nam", "con"));
   }
 
   @Nullable

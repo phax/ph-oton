@@ -16,7 +16,7 @@
  */
 package com.helger.html.markdown;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * A markdown link reference.

@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.user.credentials;
 
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.impl.ICommonsCollection;
+import com.helger.collection.commons.ICommonsCollection;
 import com.helger.photon.security.user.IUser;
 import com.helger.security.authentication.credentials.IAuthCredentials;
+
+import jakarta.annotation.Nullable;
 
 /**
  * This interface represents {@link IUser} and password credentials passed from

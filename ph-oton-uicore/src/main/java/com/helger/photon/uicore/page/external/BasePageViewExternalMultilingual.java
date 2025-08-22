@@ -21,26 +21,26 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.locale.LocaleHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IMultilingualText;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.io.resource.IReadableResource;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.text.IMultilingualText;
+import com.helger.text.locale.LocaleHelper;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroNode;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Renders a page with HTML code that is provided from an external resource

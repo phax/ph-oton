@@ -18,18 +18,18 @@ package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.http.EHttpMethod;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x request part
@@ -92,7 +92,7 @@ public class FineUploader5Request implements IFineUploader5Part
   @Nonnull
   public FineUploader5Request addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
-    m_aRequestCustomHeaders.addAll (aCustomHeaders);
+    m_aRequestCustomHeaders.putAllIfNotNull (aCustomHeaders);
     return this;
   }
 
@@ -143,8 +143,8 @@ public class FineUploader5Request implements IFineUploader5Part
   }
 
   /**
-   * The name of the parameter passed if the original filename has been edited
-   * or a Blob is being sent.
+   * The name of the parameter passed if the original filename has been edited or a Blob is being
+   * sent.
    *
    * @param sFilenameParam
    *        New value. May neither be <code>null</code> nor empty.
@@ -185,9 +185,9 @@ public class FineUploader5Request implements IFineUploader5Part
   }
 
   /**
-   * The attribute of the input element which will contain the file name. For
-   * non-multipart-encoded upload requests, this will be included as a parameter
-   * in the query string of the URI with a value equal to the file name.
+   * The attribute of the input element which will contain the file name. For non-multipart-encoded
+   * upload requests, this will be included as a parameter in the query string of the URI with a
+   * value equal to the file name.
    *
    * @param sInputName
    *        New value. May neither be <code>null</code> nor empty.
@@ -208,8 +208,8 @@ public class FineUploader5Request implements IFineUploader5Part
   }
 
   /**
-   * Specify a method to use when sending files to a traditional endpoint. This
-   * option is ignored in older browsers (such as IE9 and older).
+   * Specify a method to use when sending files to a traditional endpoint. This option is ignored in
+   * older browsers (such as IE9 and older).
    *
    * @param eMethod
    *        New value. May not be <code>null</code>.
@@ -254,7 +254,7 @@ public class FineUploader5Request implements IFineUploader5Part
   @Nonnull
   public FineUploader5Request addParams (@Nullable final Map <String, String> aParams)
   {
-    m_aRequestParams.addAll (aParams);
+    m_aRequestParams.putAllIfNotNull (aParams);
     return this;
   }
 
@@ -283,9 +283,8 @@ public class FineUploader5Request implements IFineUploader5Part
   }
 
   /**
-   * Enable or disable sending parameters in the request body. If false,
-   * parameters are sent in the URL. Otherwise, parameters are sent in the
-   * request body.
+   * Enable or disable sending parameters in the request body. If false, parameters are sent in the
+   * URL. Otherwise, parameters are sent in the request body.
    *
    * @param bRequestParamsInBody
    *        <code>true</code> to put request params in body
@@ -306,8 +305,8 @@ public class FineUploader5Request implements IFineUploader5Part
   }
 
   /**
-   * The name of the parameter the uniquely identifies each associated item. The
-   * value is a Level 4 UUID.
+   * The name of the parameter the uniquely identifies each associated item. The value is a Level 4
+   * UUID.
    *
    * @param sUUIDName
    *        New value. May neither be <code>null</code> nor empty.
@@ -329,8 +328,7 @@ public class FineUploader5Request implements IFineUploader5Part
   }
 
   /**
-   * The name of the parameter passed that specifies the total file size in
-   * bytes.
+   * The name of the parameter passed that specifies the total file size in bytes.
    *
    * @param sTotalFileSizeName
    *        New value. May neither be <code>null</code> nor empty.

@@ -19,10 +19,10 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.CodingStyleguideUnaware;
+import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.json.IJson;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A JS expression.

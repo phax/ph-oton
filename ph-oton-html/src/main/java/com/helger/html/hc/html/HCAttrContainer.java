@@ -33,7 +33,7 @@
  */
 package com.helger.html.hc.html;
 
-import com.helger.commons.collection.attr.AttributeContainer;
+import com.helger.typeconvert.collection.AttributeContainer;
 import com.helger.xml.microdom.IMicroQName;
 
 /**

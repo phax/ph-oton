@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.jscode.JSAssocArray;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class DTPButtonsDom
 {

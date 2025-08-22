@@ -16,17 +16,17 @@
  */
 package com.helger.photon.uictrls.pdfobject;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @Immutable
 public final class PDFObjectJS

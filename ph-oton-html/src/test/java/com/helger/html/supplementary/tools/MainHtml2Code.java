@@ -18,20 +18,21 @@ package com.helger.html.supplementary.tools;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.collection.NonBlockingStack;
-import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
-import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.collection.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.collection.stack.NonBlockingStack;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.parser.XHTMLParser;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.util.MicroVisitor;
+
+import jakarta.annotation.Nonnull;
 
 public class MainHtml2Code
 {

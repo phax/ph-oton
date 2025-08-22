@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Special interface that adds dynamic elements to the conversion settings

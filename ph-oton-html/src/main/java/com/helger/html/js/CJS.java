@@ -16,10 +16,9 @@
  */
 package com.helger.html.js;
 
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.url.EURLProtocol;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.PresentForCodeCoverage;
+import com.helger.base.url.EURLProtocol;
 
 /**
  * JavaScript constants.

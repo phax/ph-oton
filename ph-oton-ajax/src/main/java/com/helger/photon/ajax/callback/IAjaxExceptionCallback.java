@@ -16,12 +16,12 @@
  */
 package com.helger.photon.ajax.callback;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.callback.ICallback;
+import com.helger.base.callback.ICallback;
 import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface to handle thrown exception objects from the Ajax servlet.

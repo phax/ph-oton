@@ -16,14 +16,14 @@
  */
 package com.helger.photon.bootstrap4.nav;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCULBase;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Bootstrap 4 nav

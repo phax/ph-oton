@@ -16,14 +16,15 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractFeedText extends AbstractFeedElement
 {
@@ -57,7 +58,7 @@ public abstract class AbstractFeedText extends AbstractFeedElement
     aElement.setAttribute ("type", getType ());
     aElement.appendText (m_sText == null ? "" : m_sText);
     if (StringHelper.hasText (getLanguage ()))
-      aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
+      aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 

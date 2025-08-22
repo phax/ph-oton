@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.string.StringHelper;
+import com.helger.base.traits.IGenericImplTrait;
 
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.traits.IGenericImplTrait;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special interface for HC elements having an optional ID
@@ -34,9 +34,8 @@ public interface IHCHasID <IMPLTYPE extends IHCHasID <IMPLTYPE>> extends IGeneri
 {
   /**
    * Get the HTML ID of this object.<br>
-   * Note: we cannot use <code>IHasID&lt;String&gt;</code> because the
-   * constraint of IHasID is, that the returned ID may not be <code>null</code>
-   * whereas here the HTML ID can be <code>null</code>!
+   * Note: we cannot use <code>IHasID&lt;String&gt;</code> because the constraint of IHasID is, that
+   * the returned ID may not be <code>null</code> whereas here the HTML ID can be <code>null</code>!
    *
    * @return The HTML ID of this object.
    */
@@ -44,21 +43,19 @@ public interface IHCHasID <IMPLTYPE extends IHCHasID <IMPLTYPE>> extends IGeneri
   String getID ();
 
   /**
-   * @return <code>true</code> if this element has an ID, <code>false</code> if
-   *         not.
+   * @return <code>true</code> if this element has an ID, <code>false</code> if not.
    */
   default boolean hasID ()
   {
-    return StringHelper.hasText (getID ());
+    return StringHelper.isNotEmpty (getID ());
   }
 
   /**
-   * @return <code>true</code> if this element has no ID, <code>false</code> if
-   *         it has one.
+   * @return <code>true</code> if this element has no ID, <code>false</code> if it has one.
    */
   default boolean hasNoID ()
   {
-    return StringHelper.hasNoText (getID ());
+    return StringHelper.isEmpty (getID ());
   }
 
   /**

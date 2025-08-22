@@ -74,13 +74,6 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jscode</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <scope>compile</scope>
-      <optional>true</optional>
-    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -119,7 +112,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.html.jquery</Automatic-Module-Name>
             <Export-Package>com.helger.html.jquery.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
             <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.html.hc.config.IHCSettingsProviderSPI</Provide-Capability>
           </instructions>

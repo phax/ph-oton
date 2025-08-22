@@ -24,9 +24,9 @@ import java.lang.reflect.Modifier;
 
 import org.junit.Test;
 
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.system.EOperatingSystem;
+import com.helger.base.system.EOperatingSystem;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;

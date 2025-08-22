@@ -18,25 +18,25 @@ package com.helger.photon.uicore.html.google;
 
 import java.io.IOException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.CGlobal;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringHelper;
+import com.helger.http.url.SimpleURL;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.HttpClientSettings;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class ReCaptchaServerSideValidator
 {
@@ -51,8 +51,7 @@ public final class ReCaptchaServerSideValidator
    * @param sServerSideKey
    *        Server side ReCaptcha key for verification
    * @param sReCaptchaResponse
-   *        The value of the <code>g-recaptcha-response</code> request
-   *        parameter.
+   *        The value of the <code>g-recaptcha-response</code> request parameter.
    * @return {@link ESuccess}
    * @deprecated Use {@link #check(String, String, HttpClientSettings)} instead
    */
@@ -71,8 +70,7 @@ public final class ReCaptchaServerSideValidator
    * @param sServerSideKey
    *        Server side ReCaptcha key for verification
    * @param sReCaptchaResponse
-   *        The value of the <code>g-recaptcha-response</code> request
-   *        parameter.
+   *        The value of the <code>g-recaptcha-response</code> request parameter.
    * @param aHCS
    *        The HTTP client settings. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -96,7 +94,7 @@ public final class ReCaptchaServerSideValidator
                                                                                                                   sReCaptchaResponse)
                                                                                                             .getAsURI ());
       // Empty body - required to avoid HTTP 411
-      aPost.setEntity (new ByteArrayEntity (ArrayHelper.EMPTY_BYTE_ARRAY, ContentType.APPLICATION_JSON));
+      aPost.setEntity (new ByteArrayEntity (CGlobal.EMPTY_BYTE_ARRAY, ContentType.APPLICATION_JSON));
 
       final ResponseHandlerJson aRH = new ResponseHandlerJson ();
       final IJson aJson = aMgr.execute (aPost, aRH);

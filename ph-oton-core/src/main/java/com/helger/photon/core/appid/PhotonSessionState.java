@@ -16,18 +16,18 @@
  */
 package com.helger.photon.core.appid;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class maintains the session state per application ID
@@ -48,8 +48,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   {}
 
   /**
-   * @return The one and only instance for the current session. Never
-   *         <code>null</code>.
+   * @return The one and only instance for the current session. Never <code>null</code>.
    * @see #getInstanceIfInstantiated()
    */
   @Nonnull
@@ -59,8 +58,8 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   }
 
   /**
-   * @return The one and only instance for the current session. It may be
-   *         <code>null</code> if this singleton was not yet instantiated.
+   * @return The one and only instance for the current session. It may be <code>null</code> if this
+   *         singleton was not yet instantiated.
    * @see #getInstance()
    */
   @Nullable
@@ -70,8 +69,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   }
 
   /**
-   * @return The last application ID used for the application servlet. May be
-   *         <code>null</code>.
+   * @return The last application ID used for the application servlet. May be <code>null</code>.
    */
   @Nullable
   public String getLastApplicationID ()
@@ -94,8 +92,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
    * Get or create a new state for the provided app ID.
    *
    * @param sAppID
-   *        The app ID to get the state for. May neither be <code>null</code>
-   *        nor empty.
+   *        The app ID to get the state for. May neither be <code>null</code> nor empty.
    * @return Never <code>null</code>.
    */
   @Nonnull

@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.interactive;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
 
 public class HCDetails extends AbstractHCElementWithChildren <HCDetails>
 {

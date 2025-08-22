@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.Nonnull;
-
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.exception.InitializationException;
+import com.helger.annotation.Nonempty;
+import com.helger.base.exception.InitializationException;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A simple wrapper around Jetty. It synchronously starts and stops Jetty.

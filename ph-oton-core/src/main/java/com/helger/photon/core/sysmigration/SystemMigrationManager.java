@@ -20,25 +20,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.state.EChange;
-import com.helger.commons.state.SuccessWithValue;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
+import com.helger.base.state.SuccessWithValue;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.dao.DAOException;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.io.dao.AbstractPhotonSimpleDAO;
@@ -46,6 +43,9 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @ThreadSafe
 public class SystemMigrationManager extends AbstractPhotonSimpleDAO
@@ -67,7 +67,8 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   @Override
   protected EChange onRead (final IMicroDocument aDoc)
   {
-    for (final IMicroElement eMigrationResult : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_SYSTEM_MIGRATION_RESULT))
+    for (final IMicroElement eMigrationResult : aDoc.getDocumentElement ()
+                                                    .getAllChildElements (ELEMENT_SYSTEM_MIGRATION_RESULT))
       internalAdd (MicroTypeConverter.convertToNative (eMigrationResult, SystemMigrationResult.class));
     return EChange.UNCHANGED;
   }
@@ -77,10 +78,12 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_SYSTEM_MIGRATION_RESULTS);
-    for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ()).values ())
+    for (final List <SystemMigrationResult> aMigrationResults : m_aMap.getSortedByKey (Comparator.naturalOrder ())
+                                                                      .values ())
     {
       for (final SystemMigrationResult aMigrationResult : aMigrationResults)
-        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult, ELEMENT_SYSTEM_MIGRATION_RESULT));
+        eRoot.appendChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
+                                                                     ELEMENT_SYSTEM_MIGRATION_RESULT));
     }
     return aDoc;
   }
@@ -112,8 +115,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * Mark the specified migration as success.
    *
    * @param sMigrationID
-   *        The migration ID to be added. May neither be <code>null</code> nor
-   *        empty.
+   *        The migration ID to be added. May neither be <code>null</code> nor empty.
    */
   public void addMigrationResultSuccess (@Nonnull @Nonempty final String sMigrationID)
   {
@@ -124,8 +126,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * Mark the specified migration as failed.
    *
    * @param sMigrationID
-   *        The migration ID to be added. May neither be <code>null</code> nor
-   *        empty.
+   *        The migration ID to be added. May neither be <code>null</code> nor empty.
    * @param sErrorMsg
    *        The error message. May not be <code>null</code>.
    */
@@ -173,17 +174,16 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   }
 
   /**
-   * Perform a migration if it was not performed yet. The performed callback may
-   * not throw an error or return an error. All migrations executed with this
-   * method will be handled as a success only.
+   * Perform a migration if it was not performed yet. The performed callback may not throw an error
+   * or return an error. All migrations executed with this method will be handled as a success only.
    *
    * @param sMigrationID
-   *        The migration ID to handle. May neither be <code>null</code> nor
-   *        empty.
+   *        The migration ID to handle. May neither be <code>null</code> nor empty.
    * @param aMigrationAction
    *        The action to be performed. May not be <code>null</code>.
    */
-  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID, @Nonnull final Runnable aMigrationAction)
+  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID,
+                                           @Nonnull final Runnable aMigrationAction)
   {
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
@@ -214,8 +214,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * Perform a migration if it was not performed yet.
    *
    * @param sMigrationID
-   *        The migration ID to handle. May neither be <code>null</code> nor
-   *        empty.
+   *        The migration ID to handle. May neither be <code>null</code> nor empty.
    * @param aMigrationAction
    *        The action to be performed. May not be <code>null</code>.
    */
@@ -234,7 +233,10 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
         // Invoke the callback
         final SuccessWithValue <String> ret = aMigrationAction.get ();
 
-        LOGGER.info ("Finished performing migration '" + sMigrationID + "' with status " + (ret.isSuccess () ? "success" : "error"));
+        LOGGER.info ("Finished performing migration '" +
+                     sMigrationID +
+                     "' with status " +
+                     (ret.isSuccess () ? "success" : "error"));
 
         // Success or error
         if (ret.isSuccess ())

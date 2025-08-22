@@ -16,7 +16,7 @@
  */
 package com.helger.html.jquery.config;
 
-import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.config.IHCSettingsProviderSPI;
 

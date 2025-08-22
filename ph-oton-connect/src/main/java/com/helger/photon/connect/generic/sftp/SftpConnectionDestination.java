@@ -18,15 +18,12 @@ package com.helger.photon.connect.generic.sftp;
 
 import java.util.Properties;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
 import com.helger.network.port.CNetworkPort;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
@@ -35,6 +32,9 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class SftpConnectionDestination implements ISftpConnectionDestination
 {

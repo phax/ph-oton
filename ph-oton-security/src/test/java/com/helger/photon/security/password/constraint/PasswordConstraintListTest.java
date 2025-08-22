@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.unittest.support.TestHelper;
 
 /**
  * Test class for class {@link PasswordConstraintList}.
@@ -73,7 +73,7 @@ public final class PasswordConstraintListTest
     aPCL = new PasswordConstraintList (new PasswordConstraintMinLength (3),
                                        new PasswordConstraintMustContainDigit (1),
                                        new PasswordConstraintMustContainLetter (1));
-    CommonsTestHelper.testGetClone (aPCL);
+    TestHelper.testGetClone (aPCL);
     assertTrue (aPCL.hasConstraints ());
     assertEquals (3, aPCL.getConstraintCount ());
     assertFalse (aPCL.isPasswordValid (""));
@@ -85,7 +85,7 @@ public final class PasswordConstraintListTest
     aPCL = new PasswordConstraintList (new PasswordConstraintMinLength (3),
                                        new PasswordConstraintMustContainDigit (1),
                                        new PasswordConstraintMustContainLetterLowerCase (1));
-    CommonsTestHelper.testGetClone (aPCL);
+    TestHelper.testGetClone (aPCL);
     assertTrue (aPCL.hasConstraints ());
     assertEquals (3, aPCL.getConstraintCount ());
     assertFalse (aPCL.isPasswordValid (""));
@@ -97,7 +97,7 @@ public final class PasswordConstraintListTest
     aPCL = new PasswordConstraintList (new PasswordConstraintMinLength (3),
                                        new PasswordConstraintMustContainDigit (1),
                                        new PasswordConstraintMustContainLetterUpperCase (1));
-    CommonsTestHelper.testGetClone (aPCL);
+    TestHelper.testGetClone (aPCL);
     assertTrue (aPCL.hasConstraints ());
     assertEquals (3, aPCL.getConstraintCount ());
     assertFalse (aPCL.isPasswordValid (""));

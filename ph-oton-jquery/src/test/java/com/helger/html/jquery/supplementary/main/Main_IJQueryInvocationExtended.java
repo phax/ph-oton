@@ -19,12 +19,13 @@ package com.helger.html.jquery.supplementary.main;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.base.string.StringReplace;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.io.file.SimpleFileIO;
 
 public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
 {
@@ -95,10 +96,13 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                   aParams.append (", ");
 
                 final String sJavaType = aArg.getFirstJavaType ();
-                aParams.append (_getAnnotation (sJavaType)).append (sJavaType).append (' ').append (aArg.getIdentifier ());
+                aParams.append (_getAnnotation (sJavaType))
+                       .append (sJavaType)
+                       .append (' ')
+                       .append (aArg.getIdentifier ());
                 aJavaTypeKey.add (sJavaType);
               }
-              if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringHelper.getImploded (',', aJavaTypeKey)))
+              if (aUsedJavaSignatures.add (sUsedSignaturePrefix + StringImplode.getImploded (',', aJavaTypeKey)))
               {
                 final StringBuilder aLine = new StringBuilder ();
                 aLine.append (sRealPrefix)
@@ -136,14 +140,18 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                 else
                 {
                   final String sJavaType = aArg.getFirstJavaType ();
-                  aTemplate.append (_getAnnotation (sJavaType)).append (sJavaType).append (' ').append (aArg.getIdentifier ());
+                  aTemplate.append (_getAnnotation (sJavaType))
+                           .append (sJavaType)
+                           .append (' ')
+                           .append (aArg.getIdentifier ());
                   aJavaTypeKey.add (sJavaType);
                 }
                 ++nArgIndex;
               }
 
               ICommonsList <String> aAllParams = new CommonsArrayList <> (aTemplate.toString ());
-              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringHelper.getImploded (',', aJavaTypeKey));
+              ICommonsList <String> aAllJavaKeys = new CommonsArrayList <> (StringImplode.getImploded (',',
+                                                                                                       aJavaTypeKey));
 
               for (int i = 0; i < nArgCount; ++i)
                 if (aMultiJavaTypeArgs[i] != null)
@@ -154,9 +162,11 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                   for (final String sJavaType : aMultiJavaTypeArgs[i].getAllJavaTypes ())
                   {
                     for (final String sParam : aAllParams)
-                      aNewParams.add (StringHelper.replaceAll (sParam, sSearch, _getAnnotation (sJavaType) + sJavaType));
+                      aNewParams.add (StringReplace.replaceAll (sParam,
+                                                                sSearch,
+                                                                _getAnnotation (sJavaType) + sJavaType));
                     for (final String sJavaKey : aAllJavaKeys)
-                      aNewJavaKeys.add (StringHelper.replaceAll (sJavaKey, sSearch, sJavaType));
+                      aNewJavaKeys.add (StringReplace.replaceAll (sJavaKey, sSearch, sJavaType));
                   }
                   aAllParams = aNewParams;
                   aAllJavaKeys = aNewJavaKeys;
@@ -186,7 +196,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                                                    "import java.math.BigDecimal;\n" +
                                                    "import java.math.BigInteger;\n" +
                                                    "\n" +
-                                                   "import javax.annotation.Nonnull;\n" +
+                                                   "import jakarta.annotation.Nonnull;\n" +
                                                    "\n" +
                                                    "import com.helger.html.EHTMLElement;\n" +
                                                    "import com.helger.html.css.ICSSClassProvider;\n" +

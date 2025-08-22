@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.resource;
 
-import com.helger.commons.http.EHttpMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.xservlet.AbstractXServlet;
 import com.helger.xservlet.servletstatus.ServletStatusManager;

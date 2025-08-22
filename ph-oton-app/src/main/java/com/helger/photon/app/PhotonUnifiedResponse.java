@@ -21,22 +21,14 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.w3c.dom.Node;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.mime.MimeType;
-import com.helger.commons.serialize.SerializationHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
+import com.helger.base.serialize.SerializationHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -53,7 +45,9 @@ import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.html.resource.css.ICSSCodeProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.http.EHttpMethod;
 import com.helger.http.EHttpVersion;
+import com.helger.http.url.ISimpleURL;
 import com.helger.json.IJson;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
@@ -61,6 +55,9 @@ import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.json.serialize.IJsonWriterSettings;
 import com.helger.json.serialize.JsonWriterSettings;
+import com.helger.mime.CMimeType;
+import com.helger.mime.IMimeType;
+import com.helger.mime.MimeType;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.app.html.PhotonJS;
@@ -76,12 +73,13 @@ import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Extends the {@link UnifiedResponse} with additional sanity methods for easier
- * pratical use.
+ * Extends the {@link UnifiedResponse} with additional sanity methods for easier pratical use.
  *
  * @author Philip Helger
  */
@@ -201,13 +199,11 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   public static final class HtmlHelper
   {
     /**
-     * Response value property - only in case of success - contains the response
-     * data as object
+     * Response value property - only in case of success - contains the response data as object
      */
     public static final String PROPERTY_VALUE = "value";
     /**
-     * Additional CSS files - only in case of success - contains a list of
-     * strings
+     * Additional CSS files - only in case of success - contains a list of strings
      */
     public static final String PROPERTY_EXTERNAL_CSS = "externalcss";
     /** Additional inline CSS - only in case of success - contains a string */
@@ -221,8 +217,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     /** The sub key for CSS elements specifying the inline CSS content */
     public static final String SUBPROPERTY_CSS_CONTENT = "content";
     /**
-     * Additional JS files - only in case of success - contains a list of
-     * strings
+     * Additional JS files - only in case of success - contains a list of strings
      */
     public static final String PROPERTY_EXTERNAL_JS = "externaljs";
     /** Additional inline JS - only in case of success - contains a string */
@@ -295,8 +290,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       // Serialize remaining node to HTML
       final IMicroNode aMicroNode = aTargetNode.convertToMicroNode (aConversionSettings);
-      return aMicroNode == null ? ""
-                                : MicroWriter.getNodeAsString (aMicroNode, aConversionSettings.getXMLWriterSettings ());
+      return aMicroNode == null ? "" : MicroWriter.getNodeAsString (aMicroNode,
+                                                                    aConversionSettings.getXMLWriterSettings ());
     }
 
     public static void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -324,7 +319,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     {
       final IJsonObject aAssocArray = new JsonObject ();
       if (aSuccessValue != null)
-        aAssocArray.addJson (PROPERTY_VALUE, aSuccessValue);
+        aAssocArray.add (PROPERTY_VALUE, aSuccessValue);
 
       // Apply special nodes
       if (aSpecialNodes.hasExternalCSSs ())
@@ -335,7 +330,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
           for (final String sCSSFile : aEntry.getValue ())
             aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getKey ().getMediaString ())
                                         .add (SUBPROPERTY_CSS_HREF, sCSSFile));
-        aAssocArray.addJson (PROPERTY_EXTERNAL_CSS, aList);
+        aAssocArray.add (PROPERTY_EXTERNAL_CSS, aList);
       }
       if (aSpecialNodes.hasInlineCSSBeforeExternal ())
       {
@@ -343,7 +338,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
         for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSBeforeExternal ())
           aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
                                       .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-        aAssocArray.addJson (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
+        aAssocArray.add (PROPERTY_INLINE_CSS_BEFORE_EXTERNAL, aList);
       }
       if (aSpecialNodes.hasInlineCSSAfterExternal ())
       {
@@ -351,7 +346,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
         for (final ICSSCodeProvider aEntry : aSpecialNodes.getAllInlineCSSAfterExternal ())
           aList.add (new JsonObject ().add (SUBPROPERTY_CSS_MEDIA, aEntry.getMediaList ().getMediaString ())
                                       .add (SUBPROPERTY_CSS_CONTENT, aEntry.getCSSCode ()));
-        aAssocArray.addJson (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
+        aAssocArray.add (PROPERTY_INLINE_CSS_AFTER_EXTERNAL, aList);
       }
       if (aSpecialNodes.hasExternalJSs ())
         aAssocArray.add (PROPERTY_EXTERNAL_JS, aSpecialNodes.getAllExternalJSs ());
@@ -367,9 +362,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @Nonnull
   public PhotonUnifiedResponse html (@Nullable final IHCNode aNode)
   {
-    return html (aNode == null ? null
-                               : aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
-                                                                               : new HCNodeList ().addChild (aNode),
+    return html (aNode == null ? null : aNode instanceof IHCHasChildrenMutable <?, ?>
+                                                                                      ? (IHCHasChildrenMutable <?, IHCNode>) aNode
+                                                                                      : new HCNodeList ().addChild (aNode),
                  null,
                  null);
   }

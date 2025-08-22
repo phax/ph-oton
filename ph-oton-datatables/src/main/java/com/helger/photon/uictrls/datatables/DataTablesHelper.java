@@ -16,12 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -33,6 +30,9 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSOp;
 import com.helger.html.jscode.JSParam;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Some sanity functionality for {@link DataTables} objects.

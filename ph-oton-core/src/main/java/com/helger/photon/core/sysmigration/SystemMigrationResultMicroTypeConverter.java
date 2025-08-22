@@ -19,16 +19,16 @@ package com.helger.photon.core.sysmigration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ContainsSoftMigration;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringParser;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.ContainsSoftMigration;
+import com.helger.base.string.StringParser;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.util.MicroHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class SystemMigrationResultMicroTypeConverter implements IMicroTypeConverter <SystemMigrationResult>
 {

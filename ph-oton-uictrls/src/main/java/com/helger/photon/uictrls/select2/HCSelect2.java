@@ -16,10 +16,7 @@
  */
 package com.helger.photon.uictrls.select2;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -35,6 +32,9 @@ import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.photon.uicore.html.select.HCExtSelect;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCSelect2 extends HCExtSelect
 {

@@ -18,11 +18,11 @@ package com.helger.photon.uicore.page;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.state.EContinue;
+import com.helger.base.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Handle CSRF (Cross Site Request Forgery) issues on an {@link AbstractWebPage}

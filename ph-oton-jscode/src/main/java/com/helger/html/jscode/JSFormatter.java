@@ -21,15 +21,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillCloseWhenClosed;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.annotation.WillCloseWhenClosed;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSWriterSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This is a utility class for managing indentation and other basic formatting

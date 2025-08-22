@@ -61,13 +61,6 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jquery</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <scope>compile</scope>
-      <optional>true</optional>
-    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -86,7 +79,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.uictrls</Automatic-Module-Name>
             <Export-Package>com.helger.photon.uictrls.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>

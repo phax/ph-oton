@@ -18,11 +18,11 @@ package com.helger.photon.security.login;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
+import com.helger.text.display.IHasDisplayText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents the different login results.

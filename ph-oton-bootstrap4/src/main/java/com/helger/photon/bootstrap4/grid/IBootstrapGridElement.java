@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.grid;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrap;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Bootstrap3 grid element

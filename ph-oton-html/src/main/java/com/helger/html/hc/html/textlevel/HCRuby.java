@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.textlevel;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCRuby extends AbstractHCElementWithInternalChildren <HCRuby, IHCRubyChild <?>>
 {

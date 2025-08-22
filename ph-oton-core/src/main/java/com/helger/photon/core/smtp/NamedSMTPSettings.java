@@ -18,17 +18,17 @@ package com.helger.photon.core.smtp;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ITypedObject;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.EChange;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ITypedObject;
+import com.helger.base.type.ObjectType;
 import com.helger.smtp.settings.ISMTPSettings;
+
+import jakarta.annotation.Nonnull;
 
 public class NamedSMTPSettings implements ITypedObject <String>, Serializable
 {
@@ -43,7 +43,9 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
     this (GlobalIDFactory.getNewPersistentStringID (), sName, aSMTPSettings);
   }
 
-  NamedSMTPSettings (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSMTPSettings)
+  NamedSMTPSettings (@Nonnull @Nonempty final String sID,
+                     @Nonnull @Nonempty final String sName,
+                     @Nonnull final ISMTPSettings aSMTPSettings)
   {
     ValueEnforcer.notEmpty (sID, "ID");
     m_sID = sID;

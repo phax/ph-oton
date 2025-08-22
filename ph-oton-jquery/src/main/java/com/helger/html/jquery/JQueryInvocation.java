@@ -16,14 +16,14 @@
  */
 package com.helger.html.jquery;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.jscode.AbstractJSInvocation;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFunction;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special invocation semantics for jQuery

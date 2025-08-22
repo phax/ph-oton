@@ -19,13 +19,13 @@ package com.helger.photon.audit;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.state.ISuccessIndicator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.state.ESuccess;
+import com.helger.base.state.ISuccessIndicator;
 import com.helger.security.authentication.subject.user.IHasUserID;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a single audit item

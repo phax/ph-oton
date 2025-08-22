@@ -27,8 +27,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.junit.DebugModeTestRule;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.unittest.junit4.DebugModeTestRule;
 
 /**
  * Test class for class {@link HCTable}.

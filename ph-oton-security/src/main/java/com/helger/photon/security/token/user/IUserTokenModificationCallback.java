@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.token.user;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.callback.ICallback;
+import com.helger.annotation.Nonempty;
+import com.helger.base.callback.ICallback;
 import com.helger.photon.security.token.accesstoken.AccessToken;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface when a user token is created, modified, deleted.

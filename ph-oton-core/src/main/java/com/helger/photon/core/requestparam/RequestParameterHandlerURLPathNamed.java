@@ -16,30 +16,30 @@
  */
 package com.helger.photon.core.requestparam;
 
+import java.util.List;
 import java.util.Locale;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * An implementation of {@link IRequestParameterHandler} that takes the request
- * parameters from the URL path. It build URLs in the form
+ * An implementation of {@link IRequestParameterHandler} that takes the request parameters from the
+ * URL path. It build URLs in the form
  * <code>basePath[/<i>paramName</i><b>separator</b><i>paramValue</i>]*</code>
  *
  * @author Philip Helger
@@ -49,8 +49,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class RequestParameterHandlerURLPathNamed extends AbstractRequestParameterHandlerNamed
 {
   /**
-   * The separator char to be used if path based handling is enabled, to
-   * separate name and value
+   * The separator char to be used if path based handling is enabled, to separate name and value
    */
   public static final char DEFAULT_SEPARATOR_CHAR = '-';
 
@@ -70,8 +69,8 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
    * Constructor with a custom separator.
    *
    * @param sSeparator
-   *        The separator to use. May neither be <code>null</code> nor empty.
-   *        May not contain the "/" character!
+   *        The separator to use. May neither be <code>null</code> nor empty. May not contain the
+   *        "/" character!
    */
   public RequestParameterHandlerURLPathNamed (@Nonnull @Nonempty final String sSeparator)
   {
@@ -81,8 +80,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   }
 
   /**
-   * @return The separator as passed in the constructor. Neither
-   *         <code>null</code> nor empty.
+   * @return The separator as passed in the constructor. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -92,13 +90,14 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   }
 
   @Nonnull
-  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath, @Nonnull final IMenuTree aMenuTree)
+  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath,
+                                                           @Nonnull final IMenuTree aMenuTree)
   {
     // Use paths for standard menu items
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
     for (final String sPair : StringHelper.getExploded ('/', StringHelper.trimStartAndEnd (sPath, "/")))
     {
-      final ICommonsList <String> aElements = StringHelper.getExploded (m_sSeparator, sPair, 2);
+      final List <String> aElements = StringHelper.getExploded (m_sSeparator, sPair, 2);
       if (aElements.size () == 2)
       {
         final String sParamName = aElements.get (0);
@@ -126,7 +125,8 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL, @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
+                                                       @Nonnull final IMenuTree aMenuTree)
   {
     return getParametersFromPath (aURL.getPath (), aMenuTree);
   }
@@ -141,7 +141,10 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
 
     // Encode into path
     if (aDisplayLocale != null)
-      aFullPath.append ('/').append (getRequestParamNameLocale ()).append (m_sSeparator).append (aDisplayLocale.toString ());
+      aFullPath.append ('/')
+               .append (getRequestParamNameLocale ())
+               .append (m_sSeparator)
+               .append (aDisplayLocale.toString ());
     if (StringHelper.hasText (sMenuItemID))
       aFullPath.append ('/').append (getRequestParamNameMenuItem ()).append (m_sSeparator).append (sMenuItemID);
 

@@ -18,14 +18,14 @@ package com.helger.html.hc;
 
 import java.util.Comparator;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.CheckReturnValue;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.misc.DevelopersNote;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.traits.IGenericImplTrait;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.DevelopersNote;
-import com.helger.commons.traits.IGenericImplTrait;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for HC nodes that have mutable children.
@@ -45,8 +45,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * Add a new child.
    *
    * @param aNode
-   *        Child to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Child to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
   @Nonnull
@@ -56,8 +55,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * Remove all existing children and only set the new child.
    *
    * @param aNode
-   *        Child to add. May be <code>null</code> in which case the elements
-   *        stays empty.
+   *        Child to add. May be <code>null</code> in which case the elements stays empty.
    * @return this
    */
   @Nonnull
@@ -71,8 +69,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * @param nIndex
    *        The index to where the element should be inserted.
    * @param aNode
-   *        Child to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Child to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
   @Nonnull
@@ -82,8 +79,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * Use {@link #addChild(IHCNode)} instead.
    *
    * @param aChild
-   *        The child to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        The child to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
   @Deprecated (forRemoval = false)
@@ -95,8 +91,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
 
   /**
    * @param aChildren
-   *        Children to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
   @Nonnull
@@ -113,8 +108,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * @param nIndex
    *        The index to where the elements should be inserted.
    * @param aChildren
-   *        Children to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
   @Nonnull
@@ -133,8 +127,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
 
   /**
    * @param aChildren
-   *        Children to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
   @Nonnull
@@ -150,8 +143,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * @param nIndex
    *        The index to where the elements should be inserted.
    * @param aChildren
-   *        Children to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
   @Nonnull
@@ -170,8 +162,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
 
   /**
    * @param aChild
-   *        Child to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Child to add. May be <code>null</code> in which case nothing happens.
    * @param <V>
    *        The type to add. Needs to be a IHCNode or a sub class.
    * @return the added child. May be <code>null</code>.
@@ -188,8 +179,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * @param nIndex
    *        The index where the element should be added. Always &ge; 0.
    * @param aChild
-   *        Child to add. May be <code>null</code> in which case nothing
-   *        happens.
+   *        Child to add. May be <code>null</code> in which case nothing happens.
    * @param <V>
    *        The type to add. Needs to be a IHCNode or a sub class.
    * @return the added child. May be <code>null</code>.
@@ -216,8 +206,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    * Remove the passed direct child object.
    *
    * @param aNode
-   *        The node to be removed. May be <code>null</code> in which case
-   *        nothing happens.
+   *        The node to be removed. May be <code>null</code> in which case nothing happens.
    * @return this for chaining
    */
   @Nonnull
@@ -242,8 +231,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
   IMPLTYPE sortAllChildren (@Nonnull Comparator <? super CHILDTYPE> aComparator);
 
   /**
-   * @return A new node list with all contained children. Never
-   *         <code>null</code> but maybe empty.
+   * @return A new node list with all contained children. Never <code>null</code> but maybe empty.
    */
   @Nonnull
   IHCNodeList <?> getAllChildrenAsNodeList ();

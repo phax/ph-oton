@@ -16,13 +16,9 @@
  */
 package com.helger.photon.bootstrap4.navbar;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -30,8 +26,12 @@ import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.sections.AbstractHCNav;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.utils.EBootstrapBackgroundType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap 4 NavBar

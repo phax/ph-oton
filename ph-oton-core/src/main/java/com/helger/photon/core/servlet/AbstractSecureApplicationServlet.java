@@ -16,9 +16,9 @@
  */
 package com.helger.photon.core.servlet;
 
-import javax.annotation.Nonnull;
-
 import com.helger.photon.core.appid.CApplicationID;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * The servlet to show the secure application

@@ -22,21 +22,21 @@ import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.datetime.DateTimeFormatterCache;
-import com.helger.commons.math.MathHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.typeconvert.TypeConverter;
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.CGlobal;
+import com.helger.base.numeric.MathHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.datetime.format.DateTimeFormatterCache;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
+import com.helger.typeconvert.impl.TypeConverter;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCTime extends AbstractHCElementWithChildren <HCTime>
 {

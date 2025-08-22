@@ -16,12 +16,12 @@
  */
 package com.helger.photon.security.token.user;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.text.IHasDescription;
+import com.helger.annotation.Nonempty;
 import com.helger.photon.security.token.object.IObjectWithAccessToken;
 import com.helger.photon.security.user.IUser;
+import com.helger.text.IHasDescription;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a user token. A user token is always subordinated to an

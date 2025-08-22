@@ -18,7 +18,7 @@ package com.helger.photon.security.token.revocation;
 
 import java.time.LocalDateTime;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Read-only interface for the revocation status. This is e.g. used to determine

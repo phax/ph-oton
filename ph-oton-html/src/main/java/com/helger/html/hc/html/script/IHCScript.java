@@ -18,12 +18,12 @@ package com.helger.html.hc.html.script;
 
 import java.nio.charset.Charset;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.mime.IMimeType;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.embedded.EHCCORSSettings;
+import com.helger.mime.IMimeType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for SCRIPTs

@@ -18,12 +18,9 @@ package com.helger.photon.uictrls.autonumeric;
 
 import java.util.Iterator;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.special.IHCSpecialNodeListModifier;
@@ -31,6 +28,8 @@ import com.helger.html.jquery.IJQuerySelector;
 import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.jscode.JSAssocArray;
+
+import jakarta.annotation.Nonnull;
 
 public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNodeListModifier
 {
@@ -62,7 +61,7 @@ public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNod
     }
 
     final CollectingJSCodeProvider aMergedJS = new CollectingJSCodeProvider ();
-    final ICommonsList <HCAutoNumericJS> aRest = CollectionHelper.newList (aDTPs);
+    final ICommonsList <HCAutoNumericJS> aRest = aDTPs.getClone ();
     while (aRest.isNotEmpty ())
     {
       final HCAutoNumericJS aCurrent = aRest.remove (0);

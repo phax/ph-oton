@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.html.hc.html.IHCElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;pre&gt; element with open semantics.

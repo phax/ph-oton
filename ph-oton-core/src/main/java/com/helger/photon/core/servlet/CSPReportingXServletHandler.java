@@ -20,25 +20,23 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ELockType;
-import com.helger.commons.annotation.IsLocked;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.ELockType;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.IsLocked;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.http.EHttpMethod;
 import com.helger.http.EHttpVersion;
 import com.helger.json.IJson;
 import com.helger.json.IJsonObject;
@@ -47,13 +45,13 @@ import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.handler.IXServletHandler;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Default Servlet handler for CSP reporting. Used in
- * {@link CSPReportingServlet}.
+ * Default Servlet handler for CSP reporting. Used in {@link CSPReportingServlet}.
  *
  * @author Philip Helger
  */
@@ -81,8 +79,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
   }
 
   /**
-   * @return The JSON consumer provided in the constructor. Never
-   *         <code>null</code>.
+   * @return The JSON consumer provided in the constructor. Never <code>null</code>.
    */
   @Nonnull
   public final Consumer <? super IJsonObject> getJsonHandler ()
@@ -91,8 +88,8 @@ public class CSPReportingXServletHandler implements IXServletHandler
   }
 
   /**
-   * @return <code>true</code> if duplicate filtering is enabled (default),
-   *         <code>false</code> if not.
+   * @return <code>true</code> if duplicate filtering is enabled (default), <code>false</code> if
+   *         not.
    */
   public final boolean isFilterDuplicates ()
   {
@@ -103,8 +100,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
    * Enable or disable duplicate filtering.
    *
    * @param bFilterDuplicates
-   *        <code>true</code> to filter duplicates, <code>false</code> to
-   *        disable it.
+   *        <code>true</code> to filter duplicates, <code>false</code> to disable it.
    */
   public final void setFilterDuplicates (final boolean bFilterDuplicates)
   {

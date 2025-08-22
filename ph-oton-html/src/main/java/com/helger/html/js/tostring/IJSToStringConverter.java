@@ -16,10 +16,10 @@
  */
 package com.helger.html.js.tostring;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface that defines the conversion routines to convert an arbitrary Java

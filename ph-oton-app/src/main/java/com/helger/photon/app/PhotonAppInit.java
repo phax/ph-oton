@@ -16,12 +16,9 @@
  */
 package com.helger.photon.app;
 
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.cleanup.CommonsCleanup;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.cleanup.CleanUpRegistry;
 import com.helger.photon.io.WebFileIO;
-import com.helger.scope.ScopeCleanup;
-import com.helger.xml.util.XMLCleanup;
 
 @Immutable
 public final class PhotonAppInit
@@ -39,10 +36,6 @@ public final class PhotonAppInit
     // Init the base path once
     WebFileIO.resetPaths ();
 
-    // Clear commons cache also manually - but at the end because it
-    // is used in equals and hashCode implementations
-    ScopeCleanup.cleanup ();
-    XMLCleanup.cleanup ();
-    CommonsCleanup.cleanup ();
+    CleanUpRegistry.getInstance ().performCleanUp ();
   }
 }

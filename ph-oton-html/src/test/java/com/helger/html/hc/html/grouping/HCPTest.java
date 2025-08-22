@@ -23,7 +23,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.helger.base.debug.GlobalDebug;
 
 /**
  * Test class for class {@link HCP}
@@ -32,6 +36,18 @@ import org.junit.Test;
  */
 public final class HCPTest
 {
+  @BeforeClass
+  public static void beforeClass ()
+  {
+    GlobalDebug.setDebugModeDirect (true);
+  }
+
+  @AfterClass
+  public static void afterClass ()
+  {
+    GlobalDebug.setDebugModeDirect (GlobalDebug.DEFAULT_DEBUG_MODE);
+  }
+
   @Test
   public void testCreate ()
   {

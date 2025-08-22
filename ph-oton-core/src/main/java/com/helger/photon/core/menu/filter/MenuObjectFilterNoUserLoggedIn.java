@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.menu.filter;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
+import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.security.login.LoggedInUserManager;
+
+import jakarta.annotation.Nullable;
 
 /**
  * This filter matches any menu item if no user is logged in.

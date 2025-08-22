@@ -16,9 +16,9 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.grouping.HCDiv;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * XHTML text construct.

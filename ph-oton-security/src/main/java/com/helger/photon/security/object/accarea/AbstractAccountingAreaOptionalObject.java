@@ -19,21 +19,21 @@ package com.helger.photon.security.object.accarea;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.hashcode.IHashCodeGenerator;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.hashcode.IHashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
 import com.helger.tenancy.accarea.IAccountingArea;
 import com.helger.tenancy.accarea.IAccountingAreaObject;
 import com.helger.tenancy.tenant.ITenant;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Like {@link AbstractAccountingAreaObject} but with an optional accounting

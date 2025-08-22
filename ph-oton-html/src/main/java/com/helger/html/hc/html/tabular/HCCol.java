@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.helger.annotation.Nonnegative;
 import com.helger.css.ECSSUnit;
 import com.helger.html.CHTMLAttributeValues;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;col&gt; element

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.ajax.executor;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Special {@link IAjaxExecutor} that requires an

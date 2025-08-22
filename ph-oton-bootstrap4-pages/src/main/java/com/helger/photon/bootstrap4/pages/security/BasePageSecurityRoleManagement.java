@@ -19,23 +19,15 @@ package com.helger.photon.bootstrap4.pages.security;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.name.IHasName;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.name.IHasDisplayName;
+import com.helger.base.name.IHasName;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.tabular.HCCol;
@@ -44,6 +36,7 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
 import com.helger.photon.bootstrap4.form.BootstrapViewForm;
@@ -68,6 +61,14 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.text.IMultilingualText;
+import com.helger.text.compare.ComparatorHelper;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionContext> extends
                                             AbstractWebPageSecurityObjectWithAttributes <IRole, WPECTYPE>
@@ -110,12 +111,15 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     setDeleteHandler (new AbstractBootstrapWebPageActionHandlerDelete <IRole, WPECTYPE> ()
     {
       @Override
-      protected void showQuery (@Nonnull final WPECTYPE aWPEC, @Nonnull final BootstrapForm aForm, @Nullable final IRole aSelectedObject)
+      protected void showQuery (@Nonnull final WPECTYPE aWPEC,
+                                @Nonnull final BootstrapForm aForm,
+                                @Nullable final IRole aSelectedObject)
       {
         assert aSelectedObject != null;
         final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
-        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getName ())));
+        aForm.addChild (question (EText.DELETE_QUERY.getDisplayTextWithArgs (aDisplayLocale,
+                                                                             aSelectedObject.getName ())));
       }
 
       @Override
@@ -132,7 +136,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
         }
         else
         {
-          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale, aSelectedObject.getName ())));
+          aWPEC.postRedirectGetInternal (error (EText.DELETE_ERROR.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                           aSelectedObject.getName ())));
         }
       }
     });
@@ -225,7 +230,7 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     else
     {
       final HCNodeList aUserGroupUI = new HCNodeList ();
-      aAssignedUserGroups.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
+      aAssignedUserGroups.getSortedInline (ComparatorHelper.getComparatorCollating (IHasName::getName, aDisplayLocale))
                          .forEach (aUserGroup -> aUserGroupUI.addChild (div (new HCA (createViewURL (aWPEC,
                                                                                                      BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER_GROUP,
                                                                                                      aUserGroup.getID (),
@@ -242,7 +247,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
         for (final String sUserID : aUG.getAllContainedUserIDs ())
           aAllUsersHavingThisRole.add (aUserMgr.getUserOfID (sUserID));
 
-      aAllUsersHavingThisRole.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))
+      aAllUsersHavingThisRole.getSortedInline (ComparatorHelper.getComparatorCollating (IHasDisplayName::getDisplayName,
+                                                                                        aDisplayLocale))
                              .forEach (aUser -> aUserUI.addChild (div (new HCA (createViewURL (aWPEC,
                                                                                                BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
                                                                                                aUser.getID (),
@@ -256,14 +262,18 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
     final ICommonsMap <String, String> aCustomAttrs = aSelectedObject.attrs ();
 
     // Callback for custom attributes
-    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC, aSelectedObject, aCustomAttrs, aViewForm);
+    final ICommonsSet <String> aHandledAttrs = onShowSelectedObjectCustomAttrs (aWPEC,
+                                                                                aSelectedObject,
+                                                                                aCustomAttrs,
+                                                                                aViewForm);
 
     if (aCustomAttrs.isNotEmpty ())
     {
       // Show remaining custom attributes
       final BootstrapTable aAttrTable = new BootstrapTable (new HCCol (170), HCCol.star ());
       aAttrTable.addHeaderRow ()
-                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale), EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
+                .addCells (EText.HEADER_NAME.getDisplayText (aDisplayLocale),
+                           EText.HEADER_VALUE.getDisplayText (aDisplayLocale));
       for (final Map.Entry <String, String> aEntry : aCustomAttrs.entrySet ())
       {
         final String sName = aEntry.getKey ();
@@ -343,7 +353,8 @@ public class BasePageSecurityRoleManagement <WPECTYPE extends IWebPageExecutionC
       {
         aActionCell.addChild (createDeleteLink (aWPEC,
                                                 aRole,
-                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale, aRole.getName ())));
+                                                EWebPageText.OBJECT_DELETE.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                                   aRole.getName ())));
       }
       else
       {

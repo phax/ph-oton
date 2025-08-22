@@ -22,32 +22,27 @@ import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.annotation.Since;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.lang.CloneHelper;
-import com.helger.commons.state.EChange;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.misc.Since;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.clone.CloneHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.EChange;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -70,6 +65,8 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSParam;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.app.html.PhotonCSS;
@@ -81,6 +78,9 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginClientSortingDate;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This is the basic oh-oton DataTables wrapper.
@@ -1100,16 +1100,16 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
                                                      EDataTablesText.ARIA_ORDERABLE_REVERSE.getDisplayText (aDisplayLocale))
                                                .add ("orderableRemove",
                                                      EDataTablesText.ARIA_ORDERABLE_REMOVE.getDisplayText (aDisplayLocale));
-    aAria.addJson ("paginate",
-                   new JsonObject ().add ("first", EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
-                                    .add ("last", EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
-                                    .add ("next", EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
-                                    .add ("previous", EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale))
-                                    .add ("number", EDataTablesText.PAGINATE_NUMBER.getDisplayText (aDisplayLocale)));
-    aLanguage.addJson ("aria", aAria);
-    aLanguage.addJson ("entries",
-                       new JsonObject ().add ("_", EDataTablesText.ENTRIES_N.getDisplayText (aDisplayLocale))
-                                        .add ("1", EDataTablesText.ENTRIES_1.getDisplayText (aDisplayLocale)));
+    aAria.add ("paginate",
+               new JsonObject ().add ("first", EDataTablesText.PAGINATE_FIRST.getDisplayText (aDisplayLocale))
+                                .add ("last", EDataTablesText.PAGINATE_LAST.getDisplayText (aDisplayLocale))
+                                .add ("next", EDataTablesText.PAGINATE_NEXT.getDisplayText (aDisplayLocale))
+                                .add ("previous", EDataTablesText.PAGINATE_PREVIOUS.getDisplayText (aDisplayLocale))
+                                .add ("number", EDataTablesText.PAGINATE_NUMBER.getDisplayText (aDisplayLocale)));
+    aLanguage.add ("aria", aAria);
+    aLanguage.add ("entries",
+                   new JsonObject ().add ("_", EDataTablesText.ENTRIES_N.getDisplayText (aDisplayLocale))
+                                    .add ("1", EDataTablesText.ENTRIES_1.getDisplayText (aDisplayLocale)));
     aLanguage.add ("emptyTable", EDataTablesText.EMPTY_TABLE.getDisplayText (aDisplayLocale));
     aLanguage.add ("info", EDataTablesText.INFO.getDisplayText (aDisplayLocale));
     aLanguage.add ("infoEmpty", EDataTablesText.INFO_EMPTY.getDisplayText (aDisplayLocale));

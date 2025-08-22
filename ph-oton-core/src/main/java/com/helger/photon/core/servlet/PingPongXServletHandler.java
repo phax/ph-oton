@@ -19,16 +19,15 @@ package com.helger.photon.core.servlet;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
-import com.helger.commons.statistics.StatisticsManager;
+import com.helger.mime.CMimeType;
+import com.helger.mime.IMimeType;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.statistics.api.IMutableStatisticsHandlerCounter;
+import com.helger.statistics.impl.StatisticsManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 
 /**

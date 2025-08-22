@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.prism;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.core.configfile.EConfigurationFileSyntax;
+
+import jakarta.annotation.Nonnull;
 
 public enum EPrismLanguage implements ICSSClassProvider
 {

@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for HC objects that can be enabled and disabled.

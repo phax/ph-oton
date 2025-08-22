@@ -18,17 +18,19 @@ package com.helger.photon.uictrls.tools.supplementary;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringReplace;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.helper.CollectionSort;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+import com.helger.io.file.SimpleFileIO;
 
 public final class MainExtractPrismLanguage
 {
@@ -45,7 +47,7 @@ public final class MainExtractPrismLanguage
     // Languages
     {
       final String sLanguages = aURL.params ().getFirstParamValue ("languages");
-      final ICommonsList <String> aLanguages = CollectionHelper.getSortedInline (StringHelper.getExploded ('+', sLanguages));
+      final List <String> aLanguages = CollectionSort.getSortedInline (StringHelper.getExploded ('+', sLanguages));
       // Special "none" language
       aLanguages.add (0, "none");
       for (final String sLanguage : aLanguages)
@@ -57,9 +59,12 @@ public final class MainExtractPrismLanguage
     // Plugins
     {
       final String sPlugins = aURL.params ().getFirstParamValue ("plugins");
-      final ICommonsList <String> aPlugins = CollectionHelper.getSorted (StringHelper.getExploded ('+', sPlugins));
+      final ICommonsList <String> aPlugins = CollectionSort.getSorted (StringHelper.getExploded ('+', sPlugins));
       for (final String sPlugin : aPlugins)
-        aSB.append (StringHelper.replaceAll (sPlugin, '-', '_').toUpperCase (Locale.US)).append (" (\"").append (sPlugin).append ("\"),\n");
+        aSB.append (StringReplace.replaceAll (sPlugin, '-', '_').toUpperCase (Locale.US))
+           .append (" (\"")
+           .append (sPlugin)
+           .append ("\"),\n");
     }
     LOGGER.info (aSB.toString ());
   }

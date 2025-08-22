@@ -16,10 +16,7 @@
  */
 package com.helger.photon.security.auth;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.IUserManager;
@@ -27,6 +24,9 @@ import com.helger.photon.security.user.UserManager;
 import com.helger.security.authentication.credentials.IAuthCredentialToSubjectResolverSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting

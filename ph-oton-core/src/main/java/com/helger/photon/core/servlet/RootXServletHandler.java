@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.servlet;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 import com.helger.xservlet.handler.specific.RedirectToServletXServletHandler;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An {@link IXServletSimpleHandler} that does the necessary redirect for a ROOT

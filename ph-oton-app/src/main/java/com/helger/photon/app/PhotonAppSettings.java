@@ -16,24 +16,24 @@
  */
 package com.helger.photon.app;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.url.IWebURIToURLConverter;
 import com.helger.photon.app.url.StreamOrLocalURIToURLConverter;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Global photon-app settings. It contains the following settings:
@@ -104,8 +104,8 @@ public final class PhotonAppSettings
   }
 
   /**
-   * @return <code>true</code> to merge CSS resources if possible or
-   *         <code>false</code> to include each CSS separately.
+   * @return <code>true</code> to merge CSS resources if possible or <code>false</code> to include
+   *         each CSS separately.
    */
   public static boolean isMergeCSSResources ()
   {
@@ -120,8 +120,8 @@ public final class PhotonAppSettings
   }
 
   /**
-   * @return <code>true</code> to merge JS resources if possible or
-   *         <code>false</code> to include each JS separately.
+   * @return <code>true</code> to merge JS resources if possible or <code>false</code> to include
+   *         each JS separately.
    */
   public static boolean isMergeJSResources ()
   {
@@ -136,8 +136,8 @@ public final class PhotonAppSettings
   }
 
   /**
-   * @return The name of the resource bundle servlet without a leading nor a
-   *         trailing slash. Neither <code>null</code> nor empty.
+   * @return The name of the resource bundle servlet without a leading nor a trailing slash. Neither
+   *         <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty

@@ -21,17 +21,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.debug.GlobalDebug;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.interror.uihandler.IUIInternalErrorHandler;
@@ -42,6 +39,9 @@ import com.helger.smtp.data.EmailAttachmentList;
 import com.helger.smtp.data.IEmailAttachment;
 import com.helger.smtp.data.IEmailAttachmentList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Builder class for internal error triggering. Call all relevant setters and

@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Since;
+import com.helger.base.name.IHasName;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Since;
-import com.helger.commons.name.IHasName;
+import jakarta.annotation.Nonnull;
 
 /**
  * DataTables pagination type

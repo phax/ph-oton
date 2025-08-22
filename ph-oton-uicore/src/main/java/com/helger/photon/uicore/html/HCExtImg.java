@@ -16,17 +16,17 @@
  */
 package com.helger.photon.uicore.html;
 
-import javax.annotation.Nonnull;
-
+import com.helger.base.string.StringHelper;
 import com.helger.commons.gfx.ImageDataManager;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.embedded.AbstractHCImg;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+import com.helger.io.resource.IReadableResource;
 import com.helger.photon.io.WebFileIO;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.request.RequestHelper;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An extended image that tries to deduce the extent from the image payload.

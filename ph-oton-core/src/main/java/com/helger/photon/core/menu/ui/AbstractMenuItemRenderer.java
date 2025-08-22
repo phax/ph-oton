@@ -18,12 +18,12 @@ package com.helger.photon.core.menu.ui;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract base implementation of {@link IMenuItemRenderer}

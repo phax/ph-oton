@@ -16,14 +16,14 @@
  */
 package com.helger.photon.core.audit;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A simple implementation of {@link ILongRunningRequestCallback} simply

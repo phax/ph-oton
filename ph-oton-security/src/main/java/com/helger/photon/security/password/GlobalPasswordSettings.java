@@ -16,20 +16,17 @@
  */
 package com.helger.photon.security.password;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.lang.ServiceLoaderHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.PresentForCodeCoverage;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.spi.ServiceLoaderHelper;
 import com.helger.photon.security.password.constraint.IPasswordConstraintList;
 import com.helger.photon.security.password.constraint.PasswordConstraintList;
 import com.helger.photon.security.password.hash.IPasswordHashCreatorRegistrarSPI;
@@ -38,6 +35,9 @@ import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_1000_48;
 import com.helger.security.password.hash.PasswordHashCreatorSHA512;
 import com.helger.security.password.salt.IPasswordSalt;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Central class for all password related elements.
@@ -78,8 +78,7 @@ public final class GlobalPasswordSettings
   {}
 
   /**
-   * @return The current password constraint list. Never <code>null</code> but
-   *         maybe empty.
+   * @return The current password constraint list. Never <code>null</code> but maybe empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -105,8 +104,7 @@ public final class GlobalPasswordSettings
   }
 
   /**
-   * @return <code>true</code> if any password constraint is defined,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if any password constraint is defined, <code>false</code> if not.
    */
   public static boolean isAnyPasswordConstraintDefined ()
   {
@@ -123,12 +121,12 @@ public final class GlobalPasswordSettings
   }
 
   /**
-   * Create the password hash from the passed plain text password, using the
-   * default password hash creator.
+   * Create the password hash from the passed plain text password, using the default password hash
+   * creator.
    *
    * @param aSalt
-   *        Optional salt to be used. This parameter is only <code>null</code>
-   *        for backwards compatibility reasons.
+   *        Optional salt to be used. This parameter is only <code>null</code> for backwards
+   *        compatibility reasons.
    * @param sPlainTextPassword
    *        Plain text password. May not be <code>null</code>.
    * @return The password hash. Never <code>null</code>.
@@ -141,15 +139,15 @@ public final class GlobalPasswordSettings
   }
 
   /**
-   * Create the password hash from the passed plain text password, using the
-   * default password hash creator.
+   * Create the password hash from the passed plain text password, using the default password hash
+   * creator.
    *
    * @param sAlgorithmName
-   *        The password hash creator algorithm name to query. May neither be
-   *        <code>null</code> nor empty.
+   *        The password hash creator algorithm name to query. May neither be <code>null</code> nor
+   *        empty.
    * @param aSalt
-   *        Optional salt to be used. This parameter is only <code>null</code>
-   *        for backwards compatibility reasons.
+   *        Optional salt to be used. This parameter is only <code>null</code> for backwards
+   *        compatibility reasons.
    * @param sPlainTextPassword
    *        Plain text password. May not be <code>null</code>.
    * @return The password hash. Never <code>null</code>.

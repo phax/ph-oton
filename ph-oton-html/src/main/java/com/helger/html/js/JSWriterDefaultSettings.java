@@ -16,12 +16,12 @@
  */
 package com.helger.html.js;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.system.ENewLineMode;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.system.ENewLineMode;
+import jakarta.annotation.Nonnull;
 
 /**
  * Default settings for the textual representation of JSDOM objects

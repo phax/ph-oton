@@ -18,16 +18,16 @@ package com.helger.photon.core.audit;
 
 import java.util.List;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.xservlet.requesttrack.IParallelRunningRequestCallback;
 import com.helger.xservlet.requesttrack.TrackedRequest;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A simple implementation of {@link IParallelRunningRequestCallback} simply

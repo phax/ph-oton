@@ -17,25 +17,26 @@
 package com.helger.photon.api.pathdescriptor;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.CollectionHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
- * This class keeps a single path part. This can be either a static string or a
- * variable argument with optional constraints.
+ * This class keeps a single path part. This can be either a static string or a variable argument
+ * with optional constraints.
  *
  * @author Philip Helger
  */
@@ -62,8 +63,7 @@ public final class PathDescriptorPart implements Serializable
   }
 
   /**
-   * @return <code>true</code> if this is variable path part, <code>false</code>
-   *         if it is static
+   * @return <code>true</code> if this is variable path part, <code>false</code> if it is static
    */
   public boolean isVariable ()
   {
@@ -71,8 +71,8 @@ public final class PathDescriptorPart implements Serializable
   }
 
   /**
-   * @return Either the static string or the name of the variable. Neither
-   *         <code>null</code> nor empty.
+   * @return Either the static string or the name of the variable. Neither <code>null</code> nor
+   *         empty.
    */
   @Nonnull
   @Nonempty
@@ -82,8 +82,8 @@ public final class PathDescriptorPart implements Serializable
   }
 
   /**
-   * @return The optional variable constraints. Only relevant if this is a
-   *         variable path part. Never <code>null</code> but maybe empty.
+   * @return The optional variable constraints. Only relevant if this is a variable path part. Never
+   *         <code>null</code> but maybe empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -93,14 +93,13 @@ public final class PathDescriptorPart implements Serializable
   }
 
   /**
-   * Check if the passed path part matches the requirements of this object. If
-   * this is a static path part, it's a simple string equals. For variable path
-   * parts, all the constraints (if any) must be fulfilled.
+   * Check if the passed path part matches the requirements of this object. If this is a static path
+   * part, it's a simple string equals. For variable path parts, all the constraints (if any) must
+   * be fulfilled.
    *
    * @param sPathPart
    *        The string to be checked.
-   * @return <code>true</code> if the passed string matches, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the passed string matches, <code>false</code> otherwise.
    */
   public boolean matches (@Nonnull final String sPathPart)
   {
@@ -155,7 +154,10 @@ public final class PathDescriptorPart implements Serializable
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_bIsVariable).append (m_sName).append (m_aVariableConstraints).getHashCode ();
+    return new HashCodeGenerator (this).append (m_bIsVariable)
+                                       .append (m_sName)
+                                       .append (m_aVariableConstraints)
+                                       .getHashCode ();
   }
 
   @Override
@@ -163,7 +165,9 @@ public final class PathDescriptorPart implements Serializable
   {
     return new ToStringGenerator (null).append ("IsVariable", m_bIsVariable)
                                        .append ("Name", m_sName)
-                                       .appendIf ("VariableConstraints", m_aVariableConstraints, CollectionHelper::isNotEmpty)
+                                       .appendIf ("VariableConstraints",
+                                                  m_aVariableConstraints,
+                                                  CollectionHelper::isNotEmpty)
                                        .getToString ();
   }
 
@@ -172,7 +176,8 @@ public final class PathDescriptorPart implements Serializable
   public static String getVariableName (@Nonnull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
-    ValueEnforcer.isFalse ( () -> sName.startsWith (VARIABLE_START), () -> "Name is already a variable: '" + sName + "'");
+    ValueEnforcer.isFalse ( () -> sName.startsWith (VARIABLE_START),
+                            () -> "Name is already a variable: '" + sName + "'");
     return VARIABLE_START + sName + VARIABLE_END;
   }
 
@@ -180,16 +185,19 @@ public final class PathDescriptorPart implements Serializable
   public static PathDescriptorPart create (@Nonnull @Nonempty final String sPathPart)
   {
     ValueEnforcer.notEmpty (sPathPart, "PathPart");
-    if (sPathPart.length () > MIN_VARIABLE_LENGTH && sPathPart.startsWith (VARIABLE_START) && sPathPart.endsWith (VARIABLE_END))
+    if (sPathPart.length () > MIN_VARIABLE_LENGTH &&
+        sPathPart.startsWith (VARIABLE_START) &&
+        sPathPart.endsWith (VARIABLE_END))
     {
       // It's a variable
 
       // Remove "{" and "}"
-      final String sVariablePart = sPathPart.substring (VARIABLE_START.length (), sPathPart.length () - VARIABLE_END.length ());
+      final String sVariablePart = sPathPart.substring (VARIABLE_START.length (),
+                                                        sPathPart.length () - VARIABLE_END.length ());
 
       // Check for additional variable constraints
       // Example: {path:regex=^[0-9]+$}
-      final ICommonsList <String> aVarPartParts = StringHelper.getExploded (CONSTRAINT_SEPARATOR, sVariablePart);
+      final List <String> aVarPartParts = StringHelper.getExploded (CONSTRAINT_SEPARATOR, sVariablePart);
 
       // Variable name is always first
       final String sVariableName = aVarPartParts.get (0);

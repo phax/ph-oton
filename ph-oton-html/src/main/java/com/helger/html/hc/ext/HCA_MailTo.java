@@ -16,16 +16,16 @@
  */
 package com.helger.html.hc.ext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.email.IEmailAddress;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.EURLProtocol;
-import com.helger.commons.url.SimpleURL;
+import com.helger.base.email.IEmailAddress;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.url.EURLProtocol;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
+import com.helger.http.url.SimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCA_MailTo extends AbstractHCA <HCA_MailTo>
 {

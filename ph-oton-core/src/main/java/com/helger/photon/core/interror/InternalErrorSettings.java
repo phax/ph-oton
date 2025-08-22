@@ -21,24 +21,24 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.email.IEmailAddress;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.email.IEmailAddress;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.core.interror.callback.IInternalErrorCallback;
 import com.helger.photon.io.WebFileIO;
 import com.helger.smtp.settings.ISMTPSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Global settings for internal error handling.
@@ -139,9 +139,9 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Enable the creation of a dump of all threads. Warning: this takes a lot of
-   * CPU, so enable this only when you are not running a performance critical
-   * application! The default is {@value #DEFAULT_ENABLE_FULL_THREAD_DUMPS}.
+   * Enable the creation of a dump of all threads. Warning: this takes a lot of CPU, so enable this
+   * only when you are not running a performance critical application! The default is
+   * {@value #DEFAULT_ENABLE_FULL_THREAD_DUMPS}.
    *
    * @param bEnableDumpAllThreads
    *        <code>true</code> to enabled, <code>false</code> to disable.
@@ -152,8 +152,8 @@ public final class InternalErrorSettings
   }
 
   /**
-   * @return <code>true</code> to dump all threads on internal error,
-   *         <code>false</code> to not do it.
+   * @return <code>true</code> to dump all threads on internal error, <code>false</code> to not do
+   *         it.
    */
   public static boolean isDumpAllThreads ()
   {
@@ -161,8 +161,8 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Send an email when an internal error occurs? Sending happens only if
-   * configuration is available.
+   * Send an email when an internal error occurs? Sending happens only if configuration is
+   * available.
    *
    * @param bSendEmail
    *        <code>true</code> to send, <code>false</code> to not send
@@ -173,8 +173,8 @@ public final class InternalErrorSettings
   }
 
   /**
-   * @return <code>true</code> to send an email on an internal error,
-   *         <code>false</code> to not do it.
+   * @return <code>true</code> to send an email on an internal error, <code>false</code> to not do
+   *         it.
    */
   public static boolean isSendEmail ()
   {
@@ -193,8 +193,7 @@ public final class InternalErrorSettings
   }
 
   /**
-   * @return <code>true</code> to save internal error as XML, <code>false</code>
-   *         to not do it.
+   * @return <code>true</code> to save internal error as XML, <code>false</code> to not do it.
    */
   public static boolean isSaveAsXML ()
   {
@@ -225,8 +224,7 @@ public final class InternalErrorSettings
   }
 
   /**
-   * @return The current custom internal error callbacks. Never
-   *         <code>null</code>.
+   * @return The current custom internal error callbacks. Never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableObject
@@ -246,8 +244,7 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Set the provider that defines how to build the filename to save internal
-   * error files.
+   * Set the provider that defines how to build the filename to save internal error files.
    *
    * @param aStorageFileProvider
    *        Storage provider. May not be <code>null</code>
@@ -260,8 +257,8 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Set the default storage file provider. In case you played around and want
-   * to restore the default behavior.
+   * Set the default storage file provider. In case you played around and want to restore the
+   * default behavior.
    *
    * @see #setStorageFileProvider(Function)
    * @since 9.2.2
@@ -272,8 +269,7 @@ public final class InternalErrorSettings
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) +
-                               ".xml";
+                                                                     aMetadata.getErrorID ()) + ".xml";
       return WebFileIO.getDataIO ()
                       .getFile ("internal-errors/" +
                                 aNow.getYear () +
@@ -287,9 +283,9 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Set the storage file provider to the default before v9.2.2. The difference
-   * to {@link #setDefaultStorageFileProvider()} is, that this version does not
-   * contain a "day" subfolder.
+   * Set the storage file provider to the default before v9.2.2. The difference to
+   * {@link #setDefaultStorageFileProvider()} is, that this version does not contain a "day"
+   * subfolder.
    *
    * @see #setStorageFileProvider(Function)
    * @since 8.0.3
@@ -301,8 +297,7 @@ public final class InternalErrorSettings
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) +
-                               ".xml";
+                                                                     aMetadata.getErrorID ()) + ".xml";
       return WebFileIO.getDataIO ()
                       .getFile ("internal-errors/" +
                                 aNow.getYear () +
@@ -314,9 +309,9 @@ public final class InternalErrorSettings
   }
 
   /**
-   * Set the storage file provider to the default before v8.0.3. The difference
-   * to {@link #setDefaultStorageFileProvider()} is, that this version does not
-   * contain a "month" subfolder.
+   * Set the storage file provider to the default before v8.0.3. The difference to
+   * {@link #setDefaultStorageFileProvider()} is, that this version does not contain a "month"
+   * subfolder.
    *
    * @see #setStorageFileProvider(Function)
    */
@@ -327,8 +322,7 @@ public final class InternalErrorSettings
       final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTime ();
       final String sFilename = StringHelper.getConcatenatedOnDemand (PDTIOHelper.getLocalDateTimeForFilename (aNow),
                                                                      "-",
-                                                                     aMetadata.getErrorID ()) +
-                               ".xml";
+                                                                     aMetadata.getErrorID ()) + ".xml";
       return WebFileIO.getDataIO ().getFile ("internal-errors/" + aNow.getYear () + "/" + sFilename);
     });
   }

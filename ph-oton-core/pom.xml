@@ -54,6 +54,34 @@
   
   <dependencies>
     <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-tree</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-config-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.schedule</groupId>
+      <artifactId>ph-schedule</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.web</groupId>
+      <artifactId>ph-xservlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.web</groupId>
+      <artifactId>ph-smtp</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-html</artifactId>
     </dependency>
@@ -77,30 +105,6 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-security</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.helger.web</groupId>
-      <artifactId>ph-xservlet</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.web</groupId>
-      <artifactId>ph-smtp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.web</groupId>
-      <artifactId>ph-http</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.schedule</groupId>
-      <artifactId>ph-schedule</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.commons</groupId>
-      <artifactId>ph-tree</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.commons</groupId>
-      <artifactId>ph-config</artifactId>
-    </dependency>
     
     <dependency>
       <groupId>com.helger.photon</groupId>
@@ -110,13 +114,6 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     
@@ -154,7 +151,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.core</Automatic-Module-Name>
             <Export-Package>com.helger.photon.core.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
             <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI</Provide-Capability>
             <!-- The latter one has precedence -->

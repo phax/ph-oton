@@ -16,14 +16,10 @@
  */
 package com.helger.photon.uictrls.prism;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.css.writer.CSSWriterSettings;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
@@ -33,11 +29,15 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.html.hc.html.grouping.AbstractHCPre;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * prism.js pre + code element.

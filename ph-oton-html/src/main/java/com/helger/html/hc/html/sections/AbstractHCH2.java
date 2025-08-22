@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.sections;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;H2&gt; element

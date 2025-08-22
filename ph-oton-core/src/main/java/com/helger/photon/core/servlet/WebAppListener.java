@@ -19,50 +19,43 @@ package com.helger.photon.core.servlet;
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.impl.CommonsTreeMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsNavigableMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.exception.InitializationException;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.lang.ClassPathHelper;
-import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.locale.language.LanguageCache;
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.pool.ObjectPool;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
-import com.helger.commons.system.EJVMVendor;
-import com.helger.commons.system.SystemHelper;
-import com.helger.commons.system.SystemProperties;
-import com.helger.commons.thirdparty.IThirdPartyModule;
-import com.helger.commons.thirdparty.ThirdPartyModuleRegistry;
-import com.helger.commons.timing.StopWatch;
-import com.helger.commons.typeconvert.TypeConverter;
-import com.helger.commons.url.URLHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.CGlobal;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.exception.InitializationException;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.lang.ClassPathHelper;
+import com.helger.base.pool.ObjectPool;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
+import com.helger.base.system.EJVMVendor;
+import com.helger.base.system.SystemHelper;
+import com.helger.base.system.SystemProperties;
+import com.helger.base.thirdparty.IThirdPartyModule;
+import com.helger.base.thirdparty.ThirdPartyModuleRegistry;
+import com.helger.base.timing.StopWatch;
+import com.helger.collection.commons.CommonsTreeMap;
+import com.helger.collection.commons.ICommonsNavigableMap;
+import com.helger.collection.helper.CollectionSort;
 import com.helger.css.propertyvalue.CSSValue;
 import com.helger.dao.AbstractDAO;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.datetime.util.PDTIOHelper;
+import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.html.hc.config.HCSettings;
+import com.helger.io.url.URLHelper;
 import com.helger.photon.ajax.GlobalAjaxInvoker;
 import com.helger.photon.ajax.IAjaxRegistry;
 import com.helger.photon.api.GlobalAPIInvoker;
@@ -85,12 +78,19 @@ import com.helger.servlet.StaticServerInfo;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.smtp.EmailGlobalSettings;
 import com.helger.smtp.transport.listener.LoggingConnectionListener;
+import com.helger.text.compare.ComparatorHelper;
+import com.helger.text.locale.LocaleCache;
+import com.helger.text.locale.country.CountryCache;
+import com.helger.text.locale.language.LanguageCache;
+import com.helger.typeconvert.impl.TypeConverter;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.util.statistics.StatisticsExporter;
 import com.helger.xservlet.filter.XServletFilterConsistency;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -99,9 +99,8 @@ import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 
 /**
- * This class is intended to handle the initial application startup and the
- * final shutdown. It is also responsible for creating the global and session
- * scopes.
+ * This class is intended to handle the initial application startup and the final shutdown. It is
+ * also responsible for creating the global and session scopes.
  *
  * @author Philip Helger
  */
@@ -128,20 +127,17 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   public static final String INIT_PARAMETER_NO_STARTUP_INFO = "noStartupInfo";
 
   /**
-   * Name of the initialization parameter that contains the server URL for
-   * non-production mode.
+   * Name of the initialization parameter that contains the server URL for non-production mode.
    */
   public static final String INIT_PARAMETER_SERVER_URL = "serverUrl";
 
   /**
-   * Name of the initialization parameter that contains the server URL for
-   * production mode.
+   * Name of the initialization parameter that contains the server URL for production mode.
    */
   public static final String INIT_PARAMETER_SERVER_URL_PRODUCTION = "serverUrlProduction";
 
   /**
-   * Name of the initialization parameter to disable the file access check on
-   * startup.
+   * Name of the initialization parameter to disable the file access check on startup.
    */
   public static final String INIT_PARAMETER_NO_CHECK_FILE_ACCESS = "noCheckFileAccess";
 
@@ -220,9 +216,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // List class path elements in trace mode
     if (GlobalDebug.isDebugMode ())
     {
-      final ICommonsList <String> aCP = ClassPathHelper.getAllClassPathEntries ();
+      final List <String> aCP = ClassPathHelper.getAllClassPathEntries ();
+      Collections.sort (aCP);
       LOGGER.info ("Class path [" + aCP.size () + " elements]:");
-      for (final String sCP : aCP.getSorted (Comparator.naturalOrder ()))
+      for (final String sCP : aCP)
         LOGGER.info ("  " + sCP);
     }
   }
@@ -252,21 +249,23 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   protected static final void logThirdpartyModules ()
   {
     // List all third party modules for later evaluation
-    final ICommonsSet <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
-                                                                             .getAllRegisteredThirdPartyModules ();
+    final Set <IThirdPartyModule> aModules = ThirdPartyModuleRegistry.getInstance ()
+                                                                     .getAllRegisteredThirdPartyModules ();
     if (!aModules.isEmpty ())
     {
       LOGGER.info ("Using the following third party modules:");
-      for (final IThirdPartyModule aModule : aModules.getSorted (IHasDisplayName.getComparatorCollating (SystemHelper.getSystemLocale ())))
+      for (final IThirdPartyModule aModule : CollectionSort.getSorted (aModules,
+                                                                       ComparatorHelper.getComparatorCollating (IThirdPartyModule::getDisplayName,
+                                                                                                                SystemHelper.getSystemLocale ())))
         if (!aModule.isOptional ())
         {
-          String sMsg = "  " + aModule.getDisplayName ();
+          final StringBuilder sMsg = new StringBuilder ("  ").append (aModule.getDisplayName ());
           if (aModule.getVersion () != null)
-            sMsg += ' ' + aModule.getVersion ().getAsString (true);
-          sMsg += " licensed under " + aModule.getLicense ().getDisplayName ();
+            sMsg.append (' ').append (aModule.getVersion ().getAsString (true));
+          sMsg.append (" licensed under ").append (aModule.getLicense ().getDisplayName ());
           if (aModule.getLicense ().getVersion () != null)
-            sMsg += ' ' + aModule.getLicense ().getVersion ().getAsString ();
-          LOGGER.info (sMsg);
+            sMsg.append (' ').append (aModule.getLicense ().getVersion ().getAsString ());
+          LOGGER.info (sMsg.toString ());
         }
     }
   }
@@ -337,13 +336,13 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the value of the servlet context init-parameter that represents the
-   * <b>{@value #DEFAULT_INIT_PARAMETER_DEBUG}</b> flag. This value is than
-   * converted to a boolean internally.
+   * <b>{@value #DEFAULT_INIT_PARAMETER_DEBUG}</b> flag. This value is than converted to a boolean
+   * internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
-   * @return The string value of the <b>debug</b> init-parameter. May be
-   *         <code>null</code> if no such init-parameter is present.
+   * @return The string value of the <b>debug</b> init-parameter. May be <code>null</code> if no
+   *         such init-parameter is present.
    */
   @Nullable
   @OverrideOnDemand
@@ -354,13 +353,13 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the value of the servlet context init-parameter that represents the
-   * <b>{@value #DEFAULT_INIT_PARAMETER_PRODUCTION}</b> flag. This value is than
-   * converted to a boolean internally.
+   * <b>{@value #DEFAULT_INIT_PARAMETER_PRODUCTION}</b> flag. This value is than converted to a
+   * boolean internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
-   * @return The string value of the <b>production</b> init-parameter. May be
-   *         <code>null</code> if no such init-parameter is present.
+   * @return The string value of the <b>production</b> init-parameter. May be <code>null</code> if
+   *         no such init-parameter is present.
    */
   @Nullable
   @OverrideOnDemand
@@ -371,13 +370,13 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
   /**
    * Get the value of the servlet context init-parameter that represents the
-   * <b>{@value #INIT_PARAMETER_NO_STARTUP_INFO}</b> flag. This value is than
-   * converted to a boolean internally.
+   * <b>{@value #INIT_PARAMETER_NO_STARTUP_INFO}</b> flag. This value is than converted to a boolean
+   * internally.
    *
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
-   * @return The string value of the <b>no-startup-info</b> init-parameter. May
-   *         be <code>null</code> if no such init-parameter is present.
+   * @return The string value of the <b>no-startup-info</b> init-parameter. May be <code>null</code>
+   *         if no such init-parameter is present.
    */
   @Nullable
   @OverrideOnDemand
@@ -394,10 +393,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * @param aSC
    *        The servlet context under investigation. Never <code>null</code>.
    * @param bProductionMode
-   *        <code>true</code> if we're in production mode, <code>false</code> if
-   *        not.
-   * @return The string value of the <b>no-startup-info</b> init-parameter. May
-   *         be <code>null</code> if no such init-parameter is present.
+   *        <code>true</code> if we're in production mode, <code>false</code> if not.
+   * @return The string value of the <b>no-startup-info</b> init-parameter. May be <code>null</code>
+   *         if no such init-parameter is present.
    */
   @Nullable
   @OverrideOnDemand
@@ -415,9 +413,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * Get the data path to be used for this application. By default the servlet
-   * context init-parameter <b>{@link #INIT_PARAMETER_DATA_PATH}</b> is
-   * evaluated. If non is present, the servlet context path is used.
+   * Get the data path to be used for this application. By default the servlet context
+   * init-parameter <b>{@link #INIT_PARAMETER_DATA_PATH}</b> is evaluated. If non is present, the
+   * servlet context path is used.
    *
    * @param aSC
    *        The servlet context. Never <code>null</code>.
@@ -455,14 +453,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * Determine if the file access should be checked upon startup. By default
-   * this is done by evaluating the servlet context init-parameter
-   * {@link #INIT_PARAMETER_NO_CHECK_FILE_ACCESS}.
+   * Determine if the file access should be checked upon startup. By default this is done by
+   * evaluating the servlet context init-parameter {@link #INIT_PARAMETER_NO_CHECK_FILE_ACCESS}.
    *
    * @param aSC
    *        The servlet context. Never <code>null</code>.
-   * @return <code>true</code> if file access should be checked,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if file access should be checked, <code>false</code> otherwise.
    */
   @OverrideOnDemand
   protected boolean shouldCheckFileAccess (@Nonnull final ServletContext aSC)
@@ -471,11 +467,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * This method is supposed to call
-   * {@link WebFileIO#initPaths(File, String, boolean)} with parameters from
-   * {@link #getServletContextPath(ServletContext)},
-   * {@link #getDataPath(ServletContext)} and
-   * {@link #shouldCheckFileAccess(ServletContext)}.
+   * This method is supposed to call {@link WebFileIO#initPaths(File, String, boolean)} with
+   * parameters from {@link #getServletContextPath(ServletContext)},
+   * {@link #getDataPath(ServletContext)} and {@link #shouldCheckFileAccess(ServletContext)}.
    *
    * @param aSC
    *        The servlet context to be initialized. Never <code>null</code>.
@@ -498,9 +492,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * This method is called to initialize the global ID factory. By default a
-   * file-based {@link WebIOLongIDFactory} with the filename
-   * {@link #ID_FILENAME} is created. This is called init of the paths.
+   * This method is called to initialize the global ID factory. By default a file-based
+   * {@link WebIOLongIDFactory} with the filename {@link #ID_FILENAME} is created. This is called
+   * init of the paths.
    */
   @OverrideOnDemand
   protected void initGlobalIDFactory ()
@@ -511,8 +505,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * Init the default global settings. This is called after init of the global
-   * ID factory.
+   * Init the default global settings. This is called after init of the global ID factory.
    */
   protected static final void initDefaultGlobalSettings ()
   {
@@ -539,8 +532,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * Set global system properties, after the content was initialized but before
-   * the application specific init is started
+   * Set global system properties, after the content was initialized but before the application
+   * specific init is started
    */
   @OverrideOnDemand
   protected void initGlobalSettings ()
@@ -557,8 +550,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {}
 
   /**
-   * Init menu. If you have more than one menu tree, you need to init them all
-   * in here. This is called after init locales.
+   * Init menu. If you have more than one menu tree, you need to init them all in here. This is
+   * called after init locales.
    */
   @OverrideOnDemand
   protected void initMenu ()
@@ -615,8 +608,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {}
 
   /**
-   * @return <code>true</code> if Runtime exceptions on startup and shutdown
-   *         should be logged or not. Enabled by default.
+   * @return <code>true</code> if Runtime exceptions on startup and shutdown should be logged or
+   *         not. Enabled by default.
    * @since 8.3.1
    */
   @OverrideOnDemand
@@ -755,8 +748,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * @return The date time when the initialization started. May be
-   *         <code>null</code> if the context was never initialized.
+   * @return The date time when the initialization started. May be <code>null</code> if the context
+   *         was never initialized.
    */
   @Nullable
   public final LocalDateTime getInitializationStartDT ()
@@ -765,9 +758,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * @return The date time when the initialization ended. May be
-   *         <code>null</code> if the context was never initialized or is just
-   *         in the middle of initialization.
+   * @return The date time when the initialization ended. May be <code>null</code> if the context
+   *         was never initialized or is just in the middle of initialization.
    */
   @Nullable
   public final LocalDateTime getInitializationEndDT ()
@@ -796,8 +788,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {}
 
   /**
-   * @return <code>true</code> to write statistics on context shutdown,
-   *         <code>false</code> to not do so
+   * @return <code>true</code> to write statistics on context shutdown, <code>false</code> to not do
+   *         so
    */
   public final boolean isHandleStatisticsOnEnd ()
   {
@@ -812,8 +804,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   /**
-   * @return The filename where the statistics should be written to. May neither
-   *         be <code>null</code> nor empty.
+   * @return The filename where the statistics should be written to. May neither be
+   *         <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty

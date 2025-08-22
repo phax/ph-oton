@@ -18,21 +18,21 @@ package com.helger.photon.audit.v2;
 
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.type.ObjectType;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ESuccess;
+import com.helger.base.type.ObjectType;
 import com.helger.photon.audit.EAuditActionType;
 import com.helger.photon.audit.IAuditor;
 import com.helger.photon.audit.v2.domain.AuditEvent;
 import com.helger.photon.audit.v2.pipeline.IAuditEventConsumer;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Implementation of V1 {@link IAuditor} in terms of V2 {@link AuditEvent} etc.
- * This class is mainly meant for easy transition without adopting all APIs.
+ * Implementation of V1 {@link IAuditor} in terms of V2 {@link AuditEvent} etc. This class is mainly
+ * meant for easy transition without adopting all APIs.
  *
  * @author Philip Helger
  */

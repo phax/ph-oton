@@ -16,27 +16,27 @@
  */
 package com.helger.photon.security.password.hash;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsCollection;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsCollection;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.security.password.hash.IPasswordHashCreator;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.IPasswordSalt;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class manages multiple {@link IPasswordHashCreator} instances
@@ -58,12 +58,11 @@ public class PasswordHashCreatorManager
   {}
 
   /**
-   * Register a new password hash creator. No other password hash creator with
-   * the same algorithm name may be registered.
+   * Register a new password hash creator. No other password hash creator with the same algorithm
+   * name may be registered.
    *
    * @param aPasswordHashCreator
-   *        The password hash creator to be registered. May not be
-   *        <code>null</code>.
+   *        The password hash creator to be registered. May not be <code>null</code>.
    */
   public void registerPasswordHashCreator (@Nonnull final IPasswordHashCreator aPasswordHashCreator)
   {
@@ -75,7 +74,9 @@ public class PasswordHashCreatorManager
 
     m_aRWLock.writeLocked ( () -> {
       if (m_aPasswordHashCreators.containsKey (sAlgorithmName))
-        throw new IllegalArgumentException ("Another PasswordHashCreator for algorithm '" + sAlgorithmName + "' is already registered!");
+        throw new IllegalArgumentException ("Another PasswordHashCreator for algorithm '" +
+                                            sAlgorithmName +
+                                            "' is already registered!");
       m_aPasswordHashCreators.put (sAlgorithmName, aPasswordHashCreator);
     });
 
@@ -126,13 +127,12 @@ public class PasswordHashCreatorManager
   }
 
   /**
-   * Set the default password hash creator algorithm. A matching
-   * {@link IPasswordHashCreator} object must be registered previously using
-   * {@link #registerPasswordHashCreator(IPasswordHashCreator)}.
+   * Set the default password hash creator algorithm. A matching {@link IPasswordHashCreator} object
+   * must be registered previously using {@link #registerPasswordHashCreator(IPasswordHashCreator)}.
    *
    * @param sAlgorithm
-   *        The name of the algorithm to use as the default. May neither be
-   *        <code>null</code> nor empty.
+   *        The name of the algorithm to use as the default. May neither be <code>null</code> nor
+   *        empty.
    */
   public void setDefaultPasswordHashCreatorAlgorithm (@Nonnull @Nonempty final String sAlgorithm)
   {
@@ -148,8 +148,7 @@ public class PasswordHashCreatorManager
   }
 
   /**
-   * @return The default {@link IPasswordHashCreator} algorithm to use. Never
-   *         <code>null</code>.
+   * @return The default {@link IPasswordHashCreator} algorithm to use. Never <code>null</code>.
    */
   @Nonnull
   public IPasswordHashCreator getDefaultPasswordHashCreator ()
@@ -170,19 +169,20 @@ public class PasswordHashCreatorManager
   }
 
   /**
-   * Create the password hash from the passed plain text password, using the
-   * default password hash creator.
+   * Create the password hash from the passed plain text password, using the default password hash
+   * creator.
    *
    * @param aSalt
-   *        Optional salt to be used. This parameter is only <code>null</code>
-   *        for backwards compatibility reasons.
+   *        Optional salt to be used. This parameter is only <code>null</code> for backwards
+   *        compatibility reasons.
    * @param sPlainTextPassword
    *        Plain text password. May not be <code>null</code>.
    * @return The password hash. Never <code>null</code>.
    * @see #getDefaultPasswordHashCreator()
    */
   @Nonnull
-  public PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt, @Nonnull final String sPlainTextPassword)
+  public PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt,
+                                                     @Nonnull final String sPlainTextPassword)
   {
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
 
@@ -192,15 +192,15 @@ public class PasswordHashCreatorManager
   }
 
   /**
-   * Create the password hash from the passed plain text password, using the
-   * default password hash creator.
+   * Create the password hash from the passed plain text password, using the default password hash
+   * creator.
    *
    * @param sAlgorithmName
-   *        The password hash creator algorithm name to query. May neither be
-   *        <code>null</code> nor empty.
+   *        The password hash creator algorithm name to query. May neither be <code>null</code> nor
+   *        empty.
    * @param aSalt
-   *        Optional salt to be used. This parameter is only <code>null</code>
-   *        for backwards compatibility reasons.
+   *        Optional salt to be used. This parameter is only <code>null</code> for backwards
+   *        compatibility reasons.
    * @param sPlainTextPassword
    *        Plain text password. May not be <code>null</code>.
    * @return The password hash. Never <code>null</code>.
@@ -215,7 +215,9 @@ public class PasswordHashCreatorManager
 
     final IPasswordHashCreator aPHC = getPasswordHashCreatorOfAlgorithm (sAlgorithmName);
     if (aPHC == null)
-      throw new IllegalArgumentException ("No password hash creator for algorithm '" + sAlgorithmName + "' registered!");
+      throw new IllegalArgumentException ("No password hash creator for algorithm '" +
+                                          sAlgorithmName +
+                                          "' registered!");
     final String sPasswordHash = aPHC.createPasswordHash (aSalt, sPlainTextPassword);
     return new PasswordHash (sAlgorithmName, aSalt, sPasswordHash);
   }

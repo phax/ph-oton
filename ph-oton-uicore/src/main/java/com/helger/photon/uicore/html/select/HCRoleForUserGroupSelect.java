@@ -18,15 +18,15 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.name.IHasName;
+import com.helger.base.name.IHasName;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Select roles a user group should be assigned to

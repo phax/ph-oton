@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.bloodhound;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.Nonempty;
+import com.helger.base.string.StringHelper;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * All possible values for the rateLimitBy parameter used in Bloodhound options

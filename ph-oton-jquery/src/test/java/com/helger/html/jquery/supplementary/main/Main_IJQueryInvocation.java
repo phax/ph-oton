@@ -19,11 +19,11 @@ package com.helger.html.jquery.supplementary.main;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsTreeMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.io.file.SimpleFileIO;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsTreeMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.io.file.SimpleFileIO;
 
 public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
 {
@@ -74,10 +74,10 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
 
     final StringBuilder aFull = new StringBuilder ("package com.helger.html.jquery;\n" +
                                                    "\n" +
-                                                   "import javax.annotation.Nonnull;\n" +
-                                                   "import javax.annotation.Nullable;\n" +
+                                                   "import jakarta.annotation.Nonnull;\n" +
+                                                   "import jakarta.annotation.Nullable;\n" +
                                                    "\n" +
-                                                   "import com.helger.commons.annotation.Nonempty;\n" +
+                                                   "import com.helger.annotation.Nonempty;\n" +
                                                    "import com.helger.html.css.ICSSClassProvider;\n" +
                                                    "import com.helger.html.jscode.IJSInvocation;\n" +
                                                    "import com.helger.html.jscode.JSFieldRef;\n" +

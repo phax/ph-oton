@@ -16,16 +16,16 @@
  */
 package com.helger.photon.audit.v2.pipeline;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.callback.exception.IExceptionCallback;
-import com.helger.commons.callback.exception.LoggingExceptionCallback;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.callback.exception.IExceptionCallback;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.diagnostics.callback.exception.LoggingExceptionCallback;
 import com.helger.photon.audit.v2.domain.AuditEvent;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Pipeline of {@link IAuditEventConsumer} being itself an

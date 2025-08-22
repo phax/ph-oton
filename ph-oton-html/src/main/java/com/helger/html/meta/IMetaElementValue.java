@@ -19,10 +19,10 @@ package com.helger.html.meta;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.name.IHasName;
 
-import com.helger.commons.name.IHasName;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents the value of a single meta element

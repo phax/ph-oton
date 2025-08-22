@@ -18,32 +18,30 @@ package com.helger.photon.core.uistate;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.lang.GenericReflection;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.reflection.GenericReflection;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.scope.IScopeRenewalAware;
 import com.helger.web.scope.session.ISessionWebScopeDontPassivate;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Per session registry for UI control state data.
@@ -73,15 +71,15 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
   }
 
   /**
-   * Get the state with the passed ID for the current session. In case the state
-   * is a {@link UIStateWrapper} instance, it is returned as is.
+   * Get the state with the passed ID for the current session. In case the state is a
+   * {@link UIStateWrapper} instance, it is returned as is.
    *
    * @param aOT
    *        Object type
    * @param sStateID
    *        The state ID to be searched
-   * @return the {@link IHasUIState} for the specified control ID, if already
-   *         registered or <code>null</code>
+   * @return the {@link IHasUIState} for the specified control ID, if already registered or
+   *         <code>null</code>
    */
   @Nullable
   public IHasUIState getState (@Nullable final ObjectType aOT, @Nullable final String sStateID)
@@ -116,8 +114,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
   }
 
   /**
-   * Get the state object in the specified type. If the saved state is a
-   * {@link UIStateWrapper} instance, the contained value is returned!
+   * Get the state object in the specified type. If the saved state is a {@link UIStateWrapper}
+   * instance, the contained value is returned!
    *
    * @param aOT
    *        The ObjectType to be resolved. May be <code>null</code>.
@@ -146,16 +144,14 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
    * Registers a new control for the passed tree ID
    *
    * @param sStateID
-   *        the ID of the state in register. May neither be <code>null</code>
-   *        nor empty.
+   *        the ID of the state in register. May neither be <code>null</code> nor empty.
    * @param aNewState
    *        The state to set. May not be <code>null</code>.
    * @return {@link EChange#CHANGED} if the control was registered<br>
-   *         {@link EChange#UNCHANGED} if an illegal argument was passed or a
-   *         control has already been registered for that ID
+   *         {@link EChange#UNCHANGED} if an illegal argument was passed or a control has already
+   *         been registered for that ID
    */
   @Nonnull
-  @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   public EChange registerState (@Nonnull @Nonempty final String sStateID, @Nonnull final IHasUIState aNewState)
   {
     ValueEnforcer.notEmpty (sStateID, "StateID");
@@ -177,12 +173,10 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
   }
 
   /**
-   * Register a state for the passed HC element, using the internal ID of the
-   * element.
+   * Register a state for the passed HC element, using the internal ID of the element.
    *
    * @param aNewElement
-   *        The element to be added to the registry. May not be
-   *        <code>null</code>.
+   *        The element to be added to the registry. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull

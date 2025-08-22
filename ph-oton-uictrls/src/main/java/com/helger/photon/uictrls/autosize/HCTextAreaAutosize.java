@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.autosize;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.forms.AbstractHCTextArea;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * jQuery autosize plugin from

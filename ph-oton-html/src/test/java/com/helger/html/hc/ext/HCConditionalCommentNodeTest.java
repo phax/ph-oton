@@ -22,13 +22,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.junit.DebugModeTestRule;
-import com.helger.commons.system.ENewLineMode;
+import com.helger.base.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.textlevel.HCB;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.unittest.junit4.DebugModeTestRule;
 import com.helger.xml.serialize.write.EXMLSerializeIndent;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 

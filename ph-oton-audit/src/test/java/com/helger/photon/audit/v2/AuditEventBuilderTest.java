@@ -23,11 +23,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
-import com.helger.commons.state.ESuccess;
+import com.helger.base.state.ESuccess;
 import com.helger.photon.audit.EAuditActionType;
 import com.helger.photon.audit.v2.domain.AuditEvent;
 import com.helger.photon.audit.v2.domain.AuditField;
+import com.helger.unittest.support.TestHelper;
 import com.helger.xml.mock.XMLTestHelper;
 
 /**
@@ -54,7 +54,7 @@ public final class AuditEventBuilderTest
     assertTrue (aEvent.fields ().isEmpty ());
 
     // Test serialization
-    CommonsTestHelper.testDefaultSerialization (aEvent);
+    TestHelper.testDefaultSerialization (aEvent);
     XMLTestHelper.testMicroTypeConversion (aEvent);
   }
 
@@ -82,7 +82,7 @@ public final class AuditEventBuilderTest
     assertEquals (3, aEvent.fields ().size ());
 
     // Test serialization
-    CommonsTestHelper.testDefaultSerialization (aEvent);
+    TestHelper.testDefaultSerialization (aEvent);
     XMLTestHelper.testMicroTypeConversion (aEvent);
   }
 
@@ -103,7 +103,7 @@ public final class AuditEventBuilderTest
     assertTrue (aEvent.fields ().isEmpty ());
 
     // Test serialization
-    CommonsTestHelper.testDefaultSerialization (aEvent);
+    TestHelper.testDefaultSerialization (aEvent);
     XMLTestHelper.testMicroTypeConversion (aEvent);
   }
 }

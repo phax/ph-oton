@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.jscode.JSAssocArray;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Line Chart

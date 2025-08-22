@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.role;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.name.IHasName;
-import com.helger.commons.text.IHasDescription;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.name.IHasName;
 import com.helger.tenancy.IBusinessObject;
+import com.helger.text.IHasDescription;
 
 /**
  * Represents a single role that can be assigned to user groups.

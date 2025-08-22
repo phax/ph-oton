@@ -21,13 +21,13 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.text.display.IDisplayTextProvider;
+import com.helger.base.id.IHasID;
+import com.helger.collection.helper.CollectionSort;
 import com.helger.html.request.IHCRequestField;
+import com.helger.text.display.IDisplayTextProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCGenericSelect <T extends IHasID <String>> extends HCExtSelect
 {
@@ -41,7 +41,8 @@ public class HCGenericSelect <T extends IHasID <String>> extends HCExtSelect
   {
     super (aRF);
 
-    final Collection <? extends T> aIterable = aComparator == null ? aElements : CollectionHelper.getSorted (aElements, aComparator);
+    final Collection <? extends T> aIterable = aComparator == null ? aElements : CollectionSort.getSorted (aElements,
+                                                                                                           aComparator);
     // for all items
     for (final T aElement : aIterable)
       if (aFilter == null || aFilter.test (aElement))

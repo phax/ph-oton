@@ -22,21 +22,21 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.url.SimpleURL;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.MenuTree;
 import com.helger.photon.core.page.AbstractPage;
+import com.helger.text.locale.LocaleCache;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Test class for class {@link RequestParameterHandlerURLParameter}.

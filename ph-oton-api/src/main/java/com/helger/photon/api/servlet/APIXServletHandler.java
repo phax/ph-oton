@@ -19,16 +19,14 @@ package com.helger.photon.api.servlet;
 import java.io.IOException;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.http.CHttp;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.lang.GenericReflection;
-import com.helger.commons.mutable.MutableInt;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.reflection.GenericReflection;
+import com.helger.http.CHttp;
+import com.helger.http.EHttpMethod;
 import com.helger.http.EHttpVersion;
 import com.helger.photon.api.APIPath;
 import com.helger.photon.api.GlobalAPIInvoker;
@@ -41,6 +39,7 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 

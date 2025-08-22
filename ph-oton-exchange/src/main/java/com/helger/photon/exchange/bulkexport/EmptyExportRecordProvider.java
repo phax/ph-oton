@@ -16,7 +16,7 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * A special implementation of {@link IExportRecordProvider} delivering an empty

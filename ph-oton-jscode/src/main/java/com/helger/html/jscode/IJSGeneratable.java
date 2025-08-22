@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.js.IHasJSCodeWithSettings;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Common interface for code components that can generate uses of themselves.

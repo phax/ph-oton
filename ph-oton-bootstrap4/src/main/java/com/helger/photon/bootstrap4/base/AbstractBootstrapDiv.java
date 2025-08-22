@@ -16,12 +16,9 @@
  */
 package com.helger.photon.bootstrap4.base;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -31,6 +28,9 @@ import com.helger.photon.bootstrap4.utils.BootstrapDisplayBuilder;
 import com.helger.photon.bootstrap4.utils.BootstrapSpacingBuilder;
 import com.helger.photon.bootstrap4.utils.EBootstrapBackgroundType;
 import com.helger.photon.bootstrap4.utils.EBootstrapTextAlignType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base class for common bootstrap DIVs.

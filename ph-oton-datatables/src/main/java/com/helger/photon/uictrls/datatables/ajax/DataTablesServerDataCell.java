@@ -22,15 +22,12 @@ import java.io.ObjectOutputStream;
 import java.util.BitSet;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.regex.RegExHelper;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCNodeList;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
@@ -44,6 +41,9 @@ import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.IMicroNodeWithChildren;
 import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.serialize.MicroWriter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class holds table cells to be used by the DataTables server side

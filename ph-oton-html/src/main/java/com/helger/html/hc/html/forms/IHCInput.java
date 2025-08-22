@@ -16,17 +16,17 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.base.state.ETriState;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
+import com.helger.http.url.ISimpleURL;
+import com.helger.mime.CMimeType;
+import com.helger.mime.IMimeType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for controls base on &lt;input&gt; area.

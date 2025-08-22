@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.lang.ICloneable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.clone.ICloneable;
 import com.helger.html.EHTMLVersion;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Settings interface that is used to convert HC* nodes to micro nodes, to plain

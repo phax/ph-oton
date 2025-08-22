@@ -18,25 +18,22 @@ package com.helger.photon.app.html;
 
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.concurrent.SimpleLock;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.concurrent.SimpleLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
 import com.helger.html.resource.css.ConstantCSSPathProvider;
 import com.helger.html.resource.css.ICSSPathProvider;
+import com.helger.io.resource.IReadableResource;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
@@ -44,9 +41,12 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * This class keeps track of all the CSS files that must be included globally or
- * for a single request.
+ * This class keeps track of all the CSS files that must be included globally or for a single
+ * request.
  *
  * @author Philip Helger
  */
@@ -140,8 +140,7 @@ public final class PhotonCSS
    * Register a new CSS item for global scope.
    *
    * @param nIndex
-   *        The index to be used. If the value is &lt; 0 the value is ignored
-   *        and item is appended.
+   *        The index to be used. If the value is &lt; 0 the value is ignored and item is appended.
    * @param aCSSPathProvider
    *        The CSS path provider to use. May not be <code>null</code>.
    */
@@ -170,8 +169,7 @@ public final class PhotonCSS
   }
 
   /**
-   * @return A non-<code>null</code> set with all CSS paths to be included
-   *         globally.
+   * @return A non-<code>null</code> set with all CSS paths to be included globally.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -186,8 +184,7 @@ public final class PhotonCSS
   }
 
   /**
-   * @return <code>true</code> if at least a single CSS path has been registered
-   *         globally.
+   * @return <code>true</code> if at least a single CSS path has been registered globally.
    */
   public static boolean hasRegisteredCSSIncludesForGlobal ()
   {
@@ -245,8 +242,7 @@ public final class PhotonCSS
   }
 
   /**
-   * @return A non-<code>null</code> set with all CSS paths to be included in
-   *         this request.
+   * @return A non-<code>null</code> set with all CSS paths to be included in this request.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -270,8 +266,8 @@ public final class PhotonCSS
   }
 
   /**
-   * @return <code>true</code> if at least a single CSS path has been registered
-   *         for this request only
+   * @return <code>true</code> if at least a single CSS path has been registered for this request
+   *         only
    */
   public static boolean hasRegisteredCSSIncludesForThisRequest ()
   {

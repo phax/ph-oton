@@ -18,13 +18,13 @@ package com.helger.html.hc.html.embedded;
 
 import java.util.EnumSet;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.hc.html.EHCScrolling;
 import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for IFRAMEs

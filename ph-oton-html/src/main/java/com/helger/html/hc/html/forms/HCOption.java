@@ -16,10 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
@@ -28,6 +25,9 @@ import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
 import com.helger.html.hc.html.IHCHasState;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents a single option within a select box.

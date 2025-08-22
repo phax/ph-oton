@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.Nonnegative;
 import com.helger.css.ECSSUnit;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.html.IHCElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a table column.

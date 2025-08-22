@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
 
-import com.helger.commons.annotation.Nonempty;
+import jakarta.annotation.Nonnull;
 
 /**
  * Defines the different views of DTP.

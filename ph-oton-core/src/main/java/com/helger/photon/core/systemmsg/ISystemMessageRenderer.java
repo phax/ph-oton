@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.systemmsg;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.text.display.IHasDisplayText;
+import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.IHCElementWithChildren;
+import com.helger.text.display.IHasDisplayText;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract interface for a system message renderer.

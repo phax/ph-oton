@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.helger.annotation.Nonnegative;
 import com.helger.html.hc.html.IHCElementWithChildren;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a table cell.

@@ -16,17 +16,17 @@
  */
 package com.helger.photon.bootstrap4.breadcrumb;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCOLBase;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Breadcrumb list. The only member of {@link BootstrapBreadcrumb}.

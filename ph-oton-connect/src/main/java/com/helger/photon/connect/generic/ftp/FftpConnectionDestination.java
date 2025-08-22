@@ -19,19 +19,19 @@ package com.helger.photon.connect.generic.ftp;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class FftpConnectionDestination implements IFtpConnectionDestination
 {

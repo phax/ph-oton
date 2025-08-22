@@ -16,14 +16,15 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
+
+import jakarta.annotation.Nonnull;
 
 public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedContent
 {
@@ -58,7 +59,7 @@ public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedCo
     aElement.setAttribute ("type", m_sType);
     aElement.setAttribute ("src", m_sSrc);
     if (StringHelper.hasText (getLanguage ()))
-      aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
+      aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 

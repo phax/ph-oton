@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.js.IJSWriterSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A JS package. This is the entry point for all functions, declarations etc.

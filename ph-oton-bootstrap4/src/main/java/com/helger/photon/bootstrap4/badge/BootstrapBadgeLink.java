@@ -16,14 +16,14 @@
  */
 package com.helger.photon.bootstrap4.badge;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap4 badge link.

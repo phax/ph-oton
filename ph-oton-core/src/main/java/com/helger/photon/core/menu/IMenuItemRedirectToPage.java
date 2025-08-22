@@ -18,10 +18,10 @@ package com.helger.photon.core.menu;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.style.UnsupportedOperation;
 
-import com.helger.commons.annotation.UnsupportedOperation;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A special menu item that is just a link to an existing other menu item.

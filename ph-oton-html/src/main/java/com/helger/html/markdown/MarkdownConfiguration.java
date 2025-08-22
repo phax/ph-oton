@@ -20,15 +20,14 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.builder.IBuilder;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.builder.IBuilder;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Txtmark configuration.
@@ -39,8 +38,7 @@ public class MarkdownConfiguration
 {
   /**
    * <p>
-   * This is the default configuration for txtmark's <code>process</code>
-   * methods
+   * This is the default configuration for txtmark's <code>process</code> methods
    * </p>
    * <ul>
    * <li><code>safeMode = false</code></li>
@@ -53,8 +51,7 @@ public class MarkdownConfiguration
 
   /**
    * <p>
-   * This is the default configuration for txtmark's <code>process</code>
-   * methods
+   * This is the default configuration for txtmark's <code>process</code> methods
    * </p>
    * <ul>
    * <li><code>safeMode = false</code></li>
@@ -144,7 +141,7 @@ public class MarkdownConfiguration
     m_bForceExtendedProfile = bForceExtendedProfile;
     m_bConvertNewline2Br = bConvertNewline2Br;
     m_aSpecialLinkEmitter = aSpecialLinkEmitter;
-    m_aPlugins = CollectionHelper.newList (aPlugins);
+    m_aPlugins = new CommonsArrayList <> (aPlugins);
   }
 
   public boolean isSafeMode ()
@@ -270,8 +267,7 @@ public class MarkdownConfiguration
     }
 
     /**
-     * Sets the character encoding for txtmark. Default:
-     * <code>&quot;UTF-8&quot;</code>
+     * Sets the character encoding for txtmark. Default: <code>&quot;UTF-8&quot;</code>
      *
      * @param aEncoding
      *        The encoding

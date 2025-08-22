@@ -57,21 +57,21 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.file.FileSystemRecursiveIterator;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringRemove;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
+import com.helger.io.file.FileSystemRecursiveIterator;
+import com.helger.io.file.FilenameHelper;
+import com.helger.io.file.SimpleFileIO;
+
+import jakarta.annotation.Nonnull;
 
 @RunWith (value = Parameterized.class)
 public final class MarkdownProcessorTest
@@ -109,7 +109,7 @@ public final class MarkdownProcessorTest
   {
     // Avoid differences in newlines
     final String sFile = SimpleFileIO.getFileAsString (new File (sFilename), StandardCharsets.UTF_8);
-    return StringHelper.removeAll (sFile, '\r');
+    return StringRemove.removeAll (sFile, '\r');
   }
 
   @Test

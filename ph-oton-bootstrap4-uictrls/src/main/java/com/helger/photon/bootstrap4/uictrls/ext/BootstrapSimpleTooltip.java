@@ -16,13 +16,13 @@
  */
 package com.helger.photon.bootstrap4.uictrls.ext;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.tooltip.BootstrapTooltip;
 import com.helger.photon.icon.fontawesome.EFontAwesome4Icon;
+
+import jakarta.annotation.Nonnull;
 
 public class BootstrapSimpleTooltip
 {

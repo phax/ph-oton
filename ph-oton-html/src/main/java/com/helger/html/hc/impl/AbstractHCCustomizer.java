@@ -16,10 +16,9 @@
  */
 package com.helger.html.hc.impl;
 
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCCustomizer;
 
 /**

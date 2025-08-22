@@ -18,8 +18,7 @@ package com.helger.photon.bootstrap.demo.ajax;
 
 import java.util.function.Predicate;
 
-import javax.annotation.concurrent.Immutable;
-
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.bootstrap.demo.app.CApp;

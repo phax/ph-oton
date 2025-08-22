@@ -16,16 +16,16 @@
  */
 package com.helger.photon.api.callback;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.annotation.Nonnegative;
 import com.helger.photon.api.IAPIInvoker;
 import com.helger.photon.api.IAPILongRunningExecutionCallback;
 import com.helger.photon.api.InvokableAPIDescriptor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 public class LoggingAPILongRunningExecutionCallback implements IAPILongRunningExecutionCallback
 {

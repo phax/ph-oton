@@ -17,26 +17,25 @@
 package com.helger.photon.api.pathdescriptor;
 
 import java.io.Serializable;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.regex.RegExHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
- * This class keeps a single constraint that maybe used in a
- * {@link PathDescriptorPart} object.
+ * This class keeps a single constraint that maybe used in a {@link PathDescriptorPart} object.
  *
  * @author Philip Helger
  */
@@ -96,7 +95,8 @@ public final class PathDescriptorVariableConstraint implements Serializable
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final PathDescriptorVariableConstraint rhs = (PathDescriptorVariableConstraint) o;
-    return m_eConstraintType.equals (rhs.m_eConstraintType) && EqualsHelper.equals (m_sConstraintValue, rhs.m_sConstraintValue);
+    return m_eConstraintType.equals (rhs.m_eConstraintType) &&
+           EqualsHelper.equals (m_sConstraintValue, rhs.m_sConstraintValue);
   }
 
   @Override
@@ -114,16 +114,14 @@ public final class PathDescriptorVariableConstraint implements Serializable
   }
 
   /**
-   * Factory method. Tries to split the string of the form <code>x[=y]</code>
-   * where "x" is the constraint type and "y" is the constraint value. All
-   * possible constraint types are located in
-   * {@link EPathDescriptorVariableConstraintType}. If the constraint type
-   * requires no value the "y" part may be omitted.
+   * Factory method. Tries to split the string of the form <code>x[=y]</code> where "x" is the
+   * constraint type and "y" is the constraint value. All possible constraint types are located in
+   * {@link EPathDescriptorVariableConstraintType}. If the constraint type requires no value the "y"
+   * part may be omitted.
    *
    * @param sConstraint
    *        Constraint to be parsed.
-   * @return <code>null</code> if the passed constraint string could not be
-   *         parsed.
+   * @return <code>null</code> if the passed constraint string could not be parsed.
    */
   @Nullable
   public static PathDescriptorVariableConstraint createOrNull (@Nonnull final String sConstraint)
@@ -136,10 +134,10 @@ public final class PathDescriptorVariableConstraint implements Serializable
     }
 
     // Split in type and value
-    final ICommonsList <String> aParts = StringHelper.getExploded ('=', sConstraint, 2);
+    final List <String> aParts = StringHelper.getExploded ('=', sConstraint, 2);
 
     // Mandatory type
-    final String sConstraintType = aParts.getAtIndex (0);
+    final String sConstraintType = aParts.get (0);
     final EPathDescriptorVariableConstraintType eConstraintType = EPathDescriptorVariableConstraintType.getFromIDOrNull (sConstraintType);
     if (eConstraintType == null)
     {
@@ -148,7 +146,7 @@ public final class PathDescriptorVariableConstraint implements Serializable
     }
 
     // Optional value
-    final String sConstraintValue = aParts.getAtIndex (1);
+    final String sConstraintValue = aParts.size () > 1 ? aParts.get (1) : null;
     if (eConstraintType.isRequiresValue () && StringHelper.hasNoText (sConstraintValue))
     {
       LOGGER.error ("Variable constraint type '" +

@@ -19,21 +19,18 @@ package com.helger.photon.core.login;
 import java.time.Duration;
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.concurrent.ThreadHelper;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.state.EContinue;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.concurrent.ThreadHelper;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EContinue;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.security.login.ELoginResult;
@@ -44,6 +41,9 @@ import com.helger.photon.security.user.IUser;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Handle the application login process. This class requires a separate UI.

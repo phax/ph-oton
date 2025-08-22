@@ -20,13 +20,13 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.compare.CompareHelper;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.text.compare.ComparatorHelper;
 
-import com.helger.commons.compare.CompareHelper;
-import com.helger.commons.compare.IComparator;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class DTOrderSpec
 {
@@ -57,12 +57,11 @@ public class DTOrderSpec
 
   /**
    * @param aFormatter
-   *        Optional formatter to be used, to e.g. trim off certain prefixes or
-   *        suffixes. May be <code>null</code>.
+   *        Optional formatter to be used, to e.g. trim off certain prefixes or suffixes. May be
+   *        <code>null</code>.
    * @param aComparableExtractor
-   *        The converter from String to any comparable type. May be
-   *        <code>null</code> if no formatter is present. Must be
-   *        non-<code>null</code> if a formatter is present!
+   *        The converter from String to any comparable type. May be <code>null</code> if no
+   *        formatter is present. Must be non-<code>null</code> if a formatter is present!
    * @return this for chaining
    * @param <T>
    *        the data type to be used for comparison
@@ -79,8 +78,8 @@ public class DTOrderSpec
     else
     {
       // format, than extract
-      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null
-                                                                                          : aFormatter.apply (x));
+      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null : aFormatter.apply (
+                                                                                                                     x));
       m_aComparableExtractor = aRealCE;
     }
     // reset status vars
@@ -124,8 +123,7 @@ public class DTOrderSpec
   }
 
   /**
-   * @return A Comparator independent of the sort order and without
-   *         <code>null</code> handling.
+   * @return A Comparator independent of the sort order and without <code>null</code> handling.
    */
   @SuppressWarnings ({ "unchecked", "rawtypes" })
   @Nonnull
@@ -151,7 +149,7 @@ public class DTOrderSpec
         if (m_bCollating && aDisplayLocale != null)
         {
           // Compare with Collator of provided locale
-          ret = IComparator.getComparatorCollating (aDisplayLocale);
+          ret = ComparatorHelper.getComparatorCollating (aDisplayLocale);
         }
         else
         {

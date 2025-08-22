@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.traits.IGenericImplTrait;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.traits.IGenericImplTrait;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSEventMap;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for objects having JS event handlers

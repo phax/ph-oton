@@ -16,19 +16,19 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.DevelopersNote;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.traits.IGenericImplTrait;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.DevelopersNote;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.traits.IGenericImplTrait;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.css.ICSSWriterSettings;
 import com.helger.css.property.CSSPropertyFree;
 import com.helger.css.property.ECSSProperty;
 import com.helger.css.propertyvalue.ICSSValue;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for objects having CSS styles

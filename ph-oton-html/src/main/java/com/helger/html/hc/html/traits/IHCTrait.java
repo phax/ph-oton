@@ -16,10 +16,6 @@
  */
 package com.helger.html.hc.html.traits;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCBlockQuote;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -40,6 +36,10 @@ import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.html.textlevel.HCSub;
 import com.helger.html.hc.html.textlevel.HCSup;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Trait interface to add simpler UI codes.

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.name.IHasName;
+import com.helger.base.string.StringHelper;
 
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.name.IHasName;
-import com.helger.commons.string.StringHelper;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * DataTables column order sequence type

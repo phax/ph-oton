@@ -23,9 +23,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.collection.attr.StringMap;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.object.StubObject;
+import com.helger.typeconvert.collection.StringMap;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 

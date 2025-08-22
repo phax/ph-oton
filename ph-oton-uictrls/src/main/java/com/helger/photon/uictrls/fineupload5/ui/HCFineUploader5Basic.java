@@ -16,11 +16,8 @@
  */
 package com.helger.photon.uictrls.fineupload5.ui;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -42,6 +39,9 @@ import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.fineupload5.FineUploader5Core;
 import com.helger.web.scope.mgr.WebScopeManager;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Basic>
 {

@@ -19,23 +19,23 @@ package com.helger.photon.security.user;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ContainsSoftMigration;
-import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
+import com.helger.annotation.misc.ContainsSoftMigration;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_1000_48;
 import com.helger.security.password.salt.IPasswordSalt;
 import com.helger.security.password.salt.PasswordSalt;
+import com.helger.text.locale.LocaleCache;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <User>
 {

@@ -16,12 +16,12 @@
  */
 package com.helger.photon.bootstrap4.form;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
+import com.helger.annotation.Nonnegative;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a form group container.

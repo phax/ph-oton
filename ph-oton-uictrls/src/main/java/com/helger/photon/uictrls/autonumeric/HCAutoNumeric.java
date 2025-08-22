@@ -19,16 +19,16 @@ package com.helger.photon.uictrls.autonumeric;
 import java.math.BigDecimal;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
+import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSGlobal;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.request.IHCRequestField;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * jQuery autoNumeric plugin from

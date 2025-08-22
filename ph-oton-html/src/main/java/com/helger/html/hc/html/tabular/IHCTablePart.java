@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
+import com.helger.annotation.Nonnegative;
 import com.helger.html.hc.html.IHCElementWithInternalChildren;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for thead, tbody and tfoot. It encapsulates all table elements

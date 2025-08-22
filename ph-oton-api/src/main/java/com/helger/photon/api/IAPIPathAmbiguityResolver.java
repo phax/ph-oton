@@ -18,10 +18,10 @@ package com.helger.photon.api;
 
 import java.util.function.BiFunction;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.collection.commons.ICommonsList;
 
-import com.helger.commons.collection.impl.ICommonsList;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Shared interface to resolve API ambiguities. So if a single {@link APIPath}

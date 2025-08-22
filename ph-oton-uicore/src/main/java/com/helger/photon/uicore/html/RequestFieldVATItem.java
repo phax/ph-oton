@@ -16,12 +16,12 @@
  */
 package com.helger.photon.uicore.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
 import com.helger.photon.core.form.RequestField;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special {@link RequestField} child class, that handles {@link IVATItem}

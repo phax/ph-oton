@@ -22,21 +22,21 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.cache.Cache;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.compare.IComparator;
-import com.helger.commons.datetime.PDTFromString;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.CGlobal;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.impl.Cache;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.datetime.format.PDTFromString;
 import com.helger.photon.uicore.datetime.IDateFormatBuilder;
+import com.helger.text.compare.ComparatorHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class Bootstrap4DateTimePickerFormatBuilder implements IDateFormatBuilder
 {
@@ -120,7 +120,7 @@ public class Bootstrap4DateTimePickerFormatBuilder implements IDateFormatBuilder
   {
     private String m_sRest;
     private final ICommonsMap <String, EMomentsDateTimePickerFormatToken> m_aAllMatching = new CommonsHashMap <> ();
-    private final Comparator <String> m_aComp = IComparator.getComparatorStringLongestFirst ();
+    private final Comparator <String> m_aComp = ComparatorHelper.getComparatorStringLongestFirst ();
 
     public Searcher (@Nonnull final String sRest)
     {

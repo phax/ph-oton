@@ -18,7 +18,7 @@ package com.helger.html.jquery;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.SPITestHelper;
+import com.helger.unittestext.SPITestHelper;
 
 /**
  * Test if all SPI definitions are valid.

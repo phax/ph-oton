@@ -19,7 +19,7 @@ package com.helger.photon.exchange.bulkexport;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * The main record provider. Major rewrite in 7.0.4

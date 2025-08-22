@@ -16,12 +16,9 @@
  */
 package com.helger.photon.bootstrap4.modal;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -37,6 +34,9 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSPackage;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.utils.BootstrapCloseIcon;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BootstrapModal extends AbstractHCDiv <BootstrapModal>
 {

@@ -18,21 +18,18 @@ package com.helger.photon.core.smtp;
 
 import java.util.Comparator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.lang.IHasSize;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.iface.IHasSize;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.CollectionFind;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.dao.DAOException;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.io.dao.AbstractPhotonSimpleDAO;
@@ -43,6 +40,9 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class manages {@link NamedSMTPSettings} objects.
@@ -148,8 +148,8 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   }
 
   /**
-   * @return A copy of all contained SMTP settings as map from ID to object.
-   *         Never <code>null</code> but maybe empty.
+   * @return A copy of all contained SMTP settings as map from ID to object. Never <code>null</code>
+   *         but maybe empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -225,19 +225,18 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     if (StringHelper.hasNoText (sName))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> CollectionHelper.findFirst (m_aMap.values (), x -> x.getName ().equals (sName)));
+    return m_aRWLock.readLockedGet ( () -> CollectionFind.findFirst (m_aMap.values (),
+                                                                     x -> x.getName ().equals (sName)));
   }
 
   /**
    * Create a new settings object.
    *
    * @param sName
-   *        The name of the settings. May neither be <code>null</code> nor
-   *        empty.
+   *        The name of the settings. May neither be <code>null</code> nor empty.
    * @param aSettings
    *        The main SMTP settings. May not be <code>null</code>.
-   * @return The created {@link NamedSMTPSettings} object and never
-   *         <code>null</code>.
+   * @return The created {@link NamedSMTPSettings} object and never <code>null</code>.
    */
   @Nonnull
   public NamedSMTPSettings addSettings (@Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSettings)
@@ -266,17 +265,17 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
    * Update an existing settings object.
    *
    * @param sID
-   *        The ID of the settings object to be updated. May be
-   *        <code>null</code>.
+   *        The ID of the settings object to be updated. May be <code>null</code>.
    * @param sName
-   *        The new name of the settings. May neither be <code>null</code> nor
-   *        empty.
+   *        The new name of the settings. May neither be <code>null</code> nor empty.
    * @param aSettings
    *        The new SMTP settings. May not be <code>null</code>.
    * @return {@link EChange#CHANGED} if something was changed.
    */
   @Nullable
-  public EChange updateSettings (@Nullable final String sID, @Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSettings)
+  public EChange updateSettings (@Nullable final String sID,
+                                 @Nonnull @Nonempty final String sName,
+                                 @Nonnull final ISMTPSettings aSettings)
   {
     final NamedSMTPSettings aNamedSettings = getSettings (sID);
     if (aNamedSettings == null)

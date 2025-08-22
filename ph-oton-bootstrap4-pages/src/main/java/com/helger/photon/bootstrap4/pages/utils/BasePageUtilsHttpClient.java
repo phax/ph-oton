@@ -21,10 +21,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
@@ -35,26 +31,27 @@ import org.apache.hc.core5.http.message.StatusLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.http.HttpHeaderMap;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.timing.StopWatch;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.IHasID;
+import com.helger.base.name.IHasDisplayName;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringCount;
+import com.helger.base.string.StringHelper;
+import com.helger.base.timing.StopWatch;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.hc.html.forms.HCEdit;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.forms.HCTextArea;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.http.EHttpMethod;
+import com.helger.http.header.HttpHeaderMap;
+import com.helger.http.url.SimpleURL;
 import com.helger.httpclient.HttpClientHelper;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.HttpClientSettings;
@@ -74,11 +71,14 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.text.IMultilingualText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
- * Page with the possibility to perform a remote query to check if the network
- * connectivity is given. Using {@link HttpClientConfigRegistry} external
- * configurations can be added.
+ * Page with the possibility to perform a remote query to check if the network connectivity is
+ * given. Using {@link HttpClientConfigRegistry} external configurations can be added.
  *
  * @author Philip Helger
  * @param <WPECTYPE>
@@ -92,8 +92,7 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
   {
     /**
      * @param sTargetURI
-     *        The target URL to be accessed. May neither be <code>null</code>
-     *        nor empty.
+     *        The target URL to be accessed. May neither be <code>null</code> nor empty.
      * @return The HTTP client settings to use. May not be <code>null</code>.
      */
     @Nonnull
@@ -375,8 +374,8 @@ public class BasePageUtilsHttpClient <WPECTYPE extends IWebPageExecutionContext>
         }
         aNodeList.addChild (new HCTextArea ("responsepayload").setRows (Math.min (10,
                                                                                   1 +
-                                                                                      StringHelper.getCharCount (sResultContent,
-                                                                                                                 '\n')))
+                                                                                      StringCount.getCharCount (sResultContent,
+                                                                                                                '\n')))
                                                               .setValue (sResultContent)
                                                               .addClass (CBootstrapCSS.FORM_CONTROL)
                                                               .addClass (CBootstrapCSS.TEXT_MONOSPACE)

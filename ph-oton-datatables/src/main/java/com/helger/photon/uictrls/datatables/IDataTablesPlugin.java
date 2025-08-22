@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for DataTables plugins.

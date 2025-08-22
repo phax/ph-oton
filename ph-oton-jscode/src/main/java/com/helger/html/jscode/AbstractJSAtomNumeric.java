@@ -16,7 +16,7 @@
  */
 package com.helger.html.jscode;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Base class for numeric values

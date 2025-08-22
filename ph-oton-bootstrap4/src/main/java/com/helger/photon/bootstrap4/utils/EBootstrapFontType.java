@@ -16,11 +16,11 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Font properties. See https://getbootstrap.com/docs/4.1/utilities/text/

@@ -22,11 +22,12 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.impl.CommonsTreeSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringReplace;
+import com.helger.collection.commons.CommonsTreeSet;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.io.file.FileSystemIterator;
+import com.helger.text.locale.LocaleCache;
 
 public final class MainExtractBootstrapDatetimePickerLanguages
 {
@@ -44,7 +45,7 @@ public final class MainExtractBootstrapDatetimePickerLanguages
     final StringBuilder aSB = new StringBuilder ();
     for (final String s : aAll)
     {
-      final String sLocale = StringHelper.replaceAll (s, "-", "_");
+      final String sLocale = StringReplace.replaceAll (s, '-', '_');
       if (!LocaleCache.getInstance ().containsLocale (sLocale))
       {
         aSB.append ("/* Note: this is not a valid Java locale! */\n");

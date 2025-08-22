@@ -20,42 +20,42 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.Locale;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.CommonsTreeSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsNavigableSet;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.io.file.IFileFilter;
-import com.helger.commons.lang.EnumHelper;
-import com.helger.commons.name.IHasName;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.system.SystemProperties;
-import com.helger.commons.version.Version;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.lang.EnumHelper;
+import com.helger.base.name.IHasName;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
+import com.helger.base.system.SystemProperties;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.version.Version;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.CollectionFind;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.CommonsTreeSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsNavigableSet;
+import com.helger.collection.commons.ICommonsOrderedSet;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.io.file.FileSystemIterator;
+import com.helger.io.file.IFileFilter;
 import com.helger.xml.EXMLParserFeature;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
 import com.helger.xml.microdom.util.MicroHelper;
 import com.helger.xml.serialize.read.SAXReaderDefaultSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 abstract class AbstractCreateJQueryAPIList
 {
@@ -250,7 +250,7 @@ abstract class AbstractCreateJQueryAPIList
     @Nonnull
     public String getFirstJavaType ()
     {
-      return CollectionHelper.getFirstElement (m_aJavaTypes);
+      return CollectionFind.getFirstElement (m_aJavaTypes);
     }
 
     public boolean isOptional ()
@@ -629,7 +629,7 @@ abstract class AbstractCreateJQueryAPIList
                                                                        : false;
 
             final ICommonsList <String> aTypes = new CommonsArrayList <> ();
-            if (StringHelper.hasNoTextAfterTrim (sArgType))
+            if (StringHelper.isEmptyAfterTrim (sArgType))
             {
               for (final IMicroElement eArgType : eArg.getAllChildElements ("type"))
                 for (final String sRealArgType : StringHelper.getExploded ('/', eArgType.getAttributeValue ("name")))

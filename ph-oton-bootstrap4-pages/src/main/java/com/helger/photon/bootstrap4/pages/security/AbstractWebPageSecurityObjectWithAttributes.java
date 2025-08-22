@@ -18,21 +18,21 @@ package com.helger.photon.bootstrap4.pages.security;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.text.IMultilingualText;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.id.IHasID;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapViewForm;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPageForm;
 import com.helger.photon.core.form.FormErrorList;
 import com.helger.photon.uicore.page.EWebPageFormAction;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.text.IMultilingualText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractWebPageSecurityObjectWithAttributes <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
                                                                   extends

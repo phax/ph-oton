@@ -19,16 +19,16 @@ package com.helger.photon.core.configfile;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.IHasID;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.io.resource.IReadableResource;
+import com.helger.text.IHasDescription;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IHasDescription;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public class ConfigurationFile implements IHasID <String>, IHasDescription

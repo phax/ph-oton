@@ -16,10 +16,7 @@
  */
 package com.helger.photon.bootstrap4.nav;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -28,6 +25,9 @@ import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.uicore.html.tabbox.AbstractTabBox;
 import com.helger.photon.uicore.html.tabbox.Tab;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represent a single tab box

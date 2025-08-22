@@ -16,24 +16,24 @@
  */
 package com.helger.photon.core.longrun;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsCollection;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.CGlobal;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.ESuccess;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsCollection;
+import com.helger.collection.commons.ICommonsMap;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @ThreadSafe
 public final class LongRunningJobManager
@@ -79,13 +79,15 @@ public final class LongRunningJobManager
    *        The internal long running job ID created from
    *        {@link #onStartJob(ILongRunningJob,String)}.
    * @param eExecSuccess
-   *        Was the job execution successful or not from a technical point of
-   *        view? May not be <code>null</code>. If a JobExecutionException was
-   *        thrown, this should be {@link ESuccess#FAILURE}.
+   *        Was the job execution successful or not from a technical point of view? May not be
+   *        <code>null</code>. If a JobExecutionException was thrown, this should be
+   *        {@link ESuccess#FAILURE}.
    * @param aResult
    *        The main job results.
    */
-  public void onEndJob (@Nullable final String sJobID, @Nonnull final ESuccess eExecSuccess, @Nonnull final LongRunningJobResult aResult)
+  public void onEndJob (@Nullable final String sJobID,
+                        @Nonnull final ESuccess eExecSuccess,
+                        @Nonnull final LongRunningJobResult aResult)
   {
     ValueEnforcer.notNull (eExecSuccess, "ExecSuccess");
     ValueEnforcer.notNull (aResult, "Result");
@@ -128,7 +130,9 @@ public final class LongRunningJobManager
       if (nRunningJobCount == 0)
         break;
 
-      LOGGER.error ("There are still " + nRunningJobCount + " long running jobs in the background! Waiting for them to finish...");
+      LOGGER.error ("There are still " +
+                    nRunningJobCount +
+                    " long running jobs in the background! Waiting for them to finish...");
 
       // Wait some time
       Thread.sleep (nWaitSeconds * CGlobal.MILLISECONDS_PER_SECOND);

@@ -16,8 +16,7 @@
  */
 package com.helger.html.hc.impl;
 
-import javax.annotation.concurrent.NotThreadSafe;
-
+import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeList;
 

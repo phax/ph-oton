@@ -16,14 +16,15 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IHasDescription;
+import com.helger.base.string.StringHelper;
+import com.helger.text.IHasDescription;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents the generator of a feed.
@@ -50,10 +51,9 @@ public class FeedGenerator extends AbstractFeedElement implements IHasDescriptio
   }
 
   /**
-   * The atom:generator element MAY have a "uri" attribute whose value MUST be
-   * an IRI reference [RFC3987]. When dereferenced, the resulting URI (mapped
-   * from an IRI, if necessary) SHOULD produce a representation that is relevant
-   * to that agent.
+   * The atom:generator element MAY have a "uri" attribute whose value MUST be an IRI reference
+   * [RFC3987]. When dereferenced, the resulting URI (mapped from an IRI, if necessary) SHOULD
+   * produce a representation that is relevant to that agent.
    *
    * @return URI
    */
@@ -69,8 +69,8 @@ public class FeedGenerator extends AbstractFeedElement implements IHasDescriptio
   }
 
   /**
-   * The atom:generator element MAY have a "version" attribute that indicates
-   * the version of the generating agent.
+   * The atom:generator element MAY have a "version" attribute that indicates the version of the
+   * generating agent.
    *
    * @return version
    */
@@ -100,7 +100,7 @@ public class FeedGenerator extends AbstractFeedElement implements IHasDescriptio
     if (StringHelper.hasText (m_sVersion))
       aElement.setAttribute ("version", m_sVersion);
     if (StringHelper.hasText (getLanguage ()))
-      aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
+      aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     if (StringHelper.hasText (m_sDescription))
       aElement.appendText (m_sDescription);
     return aElement;

@@ -16,17 +16,18 @@
  */
 package com.helger.html.js;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringHex;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * JavaScript String helper
@@ -38,31 +39,30 @@ public final class JSMarshaller
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (JSMarshaller.class);
 
-  private static final char [] CHARS_TO_MASK = new char [] { '"', '\'', '\\', '/', '\t', '\r', '\n', '\f' };
-  private static final char [] CHARS_TO_MASK_REGEX = new char [] { '\\',
-                                                                   '^',
-                                                                   '$',
-                                                                   '*',
-                                                                   '+',
-                                                                   '?',
-                                                                   '|',
-                                                                   '.',
-                                                                   '-',
-                                                                   '[',
-                                                                   ']',
-                                                                   '(',
-                                                                   ')',
-                                                                   '{',
-                                                                   '}' };
+  private static final char [] CHARS_TO_MASK = { '"', '\'', '\\', '/', '\t', '\r', '\n', '\f' };
+  private static final char [] CHARS_TO_MASK_REGEX = { '\\',
+                                                       '^',
+                                                       '$',
+                                                       '*',
+                                                       '+',
+                                                       '?',
+                                                       '|',
+                                                       '.',
+                                                       '-',
+                                                       '[',
+                                                       ']',
+                                                       '(',
+                                                       ')',
+                                                       '{',
+                                                       '}' };
   private static final char MASK_CHAR = '\\';
   private static final char MASK_CHAR_REGEX = '\\';
 
   /**
-   * All reserved keywords of JS. see <a href=
-   * "https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Reserved_Words"
+   * All reserved keywords of JS. see
+   * <a href= "https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Reserved_Words"
    * >here</a><br>
-   * technically the last few are not reserved words but they cannot be used as
-   * identifiers.
+   * technically the last few are not reserved words but they cannot be used as identifiers.
    */
   private static final ICommonsSet <String> RESERVED_KEYWORDS = new CommonsHashSet <> ("break",
                                                                                        "case",
@@ -106,11 +106,11 @@ public final class JSMarshaller
   {}
 
   /**
-   * Turn special characters into escaped characters conforming to JavaScript.
-   * Handles complete character set defined in HTML 4.01 recommendation.<br>
+   * Turn special characters into escaped characters conforming to JavaScript. Handles complete
+   * character set defined in HTML 4.01 recommendation.<br>
    * Reference: <a href=
-   * "http://developer.mozilla.org/en/docs/Core_JavaScript_1.5_Guide:Literals#String_Literals"
-   * > Core JavaScript 1.5 Guide </a>
+   * "http://developer.mozilla.org/en/docs/Core_JavaScript_1.5_Guide:Literals#String_Literals" >
+   * Core JavaScript 1.5 Guide </a>
    *
    * @param sInput
    *        the input string
@@ -178,10 +178,10 @@ public final class JSMarshaller
   }
 
   /**
-   * Turn special regular expression characters into escaped characters
-   * conforming to JavaScript.<br>
-   * Reference: <a href=
-   * "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions"
+   * Turn special regular expression characters into escaped characters conforming to
+   * JavaScript.<br>
+   * Reference:
+   * <a href= "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions"
    * >MDN Regular Expressions</a>
    *
    * @param sInput
@@ -215,9 +215,8 @@ public final class JSMarshaller
 
   /**
    * Unescape a previously escaped string.<br>
-   * Important: this is not a 100% reversion of
-   * {@link #javaScriptEscape(String)} since the escaping method drops any '\r'
-   * character and it will therefore not be unescaped!
+   * Important: this is not a 100% reversion of {@link #javaScriptEscape(String)} since the escaping
+   * method drops any '\r' character and it will therefore not be unescaped!
    *
    * @param sInput
    *        The string to be unescaped. May be <code>null</code>.
@@ -271,7 +270,7 @@ public final class JSMarshaller
             final char cHex1 = aInput[i];
             i++;
             final char cHex2 = aInput[i];
-            final int nHexByte = StringHelper.getHexByte (cHex1, cHex2);
+            final int nHexByte = StringHex.getHexByte (cHex1, cHex2);
             if (nHexByte < 0)
             {
               LOGGER.warn ("Failed to unescape '" + sInput + "' - invalid hex values");

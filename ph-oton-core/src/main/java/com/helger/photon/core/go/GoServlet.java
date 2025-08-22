@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.go;
 
-import com.helger.commons.http.EHttpMethod;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.core.appid.RequestSettings;
 import com.helger.photon.core.appid.XServletFilterAppIDFromSessionID;
 import com.helger.xservlet.AbstractXServlet;

@@ -16,11 +16,11 @@
  */
 package com.helger.photon.api;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
-import com.helger.commons.callback.ICallback;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.callback.ICallback;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface to be used with the {@link IAPIInvoker} to get notified on

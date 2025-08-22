@@ -20,9 +20,9 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.io.file.FilenameHelper;
+import com.helger.io.file.SimpleFileIO;
+import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.icon.EIconCSSPathProvider;
 
 public class MainCreateMaterialDesignFontMappingCSS

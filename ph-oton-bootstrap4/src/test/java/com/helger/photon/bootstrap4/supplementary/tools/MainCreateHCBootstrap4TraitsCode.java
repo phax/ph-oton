@@ -18,18 +18,15 @@ package com.helger.photon.bootstrap4.supplementary.tools;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.lang.clazz.ClassHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.photon.bootstrap4.alert.BootstrapDangerBox;
 import com.helger.photon.bootstrap4.alert.BootstrapErrorBox;
 import com.helger.photon.bootstrap4.alert.BootstrapInfoBox;
@@ -38,6 +35,9 @@ import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.alert.BootstrapWarnBox;
 import com.helger.photon.bootstrap4.badge.BootstrapBadge;
 import com.helger.photon.bootstrap4.traits.IHCBootstrap4Trait;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Code creator for {@link IHCBootstrap4Trait}.
@@ -82,7 +82,7 @@ public class MainCreateHCBootstrap4TraitsCode
       final Details aDetails = e.getValue ();
       final String sType = aDetails.m_sType;
       final String sMethod = e.getKey ();
-      final String sParams = StringHelper.getImploded (", ", aDetails.m_aParams);
+      final String sParams = StringImplode.getImploded (", ", aDetails.m_aParams);
       final boolean bAddNumeric = sMethod.startsWith ("badge");
 
       aSB.append ("@Nonnull default " + sType + " " + sMethod + " (){return new " + sType + " (" + sParams + ");}\n");

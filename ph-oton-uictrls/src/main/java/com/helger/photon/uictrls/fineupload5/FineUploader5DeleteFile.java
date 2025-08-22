@@ -18,18 +18,18 @@ package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.http.EHttpMethod;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x deleteFile part
@@ -82,7 +82,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
   @Nonnull
   public FineUploader5DeleteFile addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
-    m_aDeleteFileCustomHeaders.addAll (aCustomHeaders);
+    m_aDeleteFileCustomHeaders.putAllIfNotNull (aCustomHeaders);
     return this;
   }
 
@@ -197,7 +197,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
   @Nonnull
   public FineUploader5DeleteFile addParams (@Nullable final Map <String, String> aParams)
   {
-    m_aDeleteFileParams.addAll (aParams);
+    m_aDeleteFileParams.putAllIfNotNull (aParams);
     return this;
   }
 

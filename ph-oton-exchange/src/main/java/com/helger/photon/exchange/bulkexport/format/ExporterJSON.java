@@ -22,20 +22,17 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-import javax.annotation.concurrent.NotThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsImmutableObject;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.WillClose;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsImmutableObject;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.state.ESuccess;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
@@ -49,6 +46,9 @@ import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
 import com.helger.photon.exchange.bulkexport.IExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.IExporterFile;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IExporterFile} for JSON files
@@ -140,7 +140,7 @@ public class ExporterJSON implements IExporterFile
         final IJsonObject aObject = new JsonObject ();
         aObject.add (ATTR_TYPE, aField.getFieldType ().getID ());
         if (aFieldValue == null)
-          aObject.addJson (ATTR_VALUE, JsonValue.NULL);
+          aObject.add (ATTR_VALUE, JsonValue.NULL);
         else
           aObject.add (ATTR_VALUE, aFieldValue);
         ret.add (aObject);
@@ -164,19 +164,19 @@ public class ExporterJSON implements IExporterFile
     final IJsonArray aHeader = new JsonArray ();
     aProvider.forEachHeaderRecord (x -> aHeader.add (_emitRecord (x)));
     if (aHeader.isNotEmpty ())
-      aDoc.addJson (ELEMENT_HEADER, aHeader);
+      aDoc.add (ELEMENT_HEADER, aHeader);
 
     // Body
     final IJsonArray aBody = new JsonArray ();
     aProvider.forEachBodyRecord (x -> aBody.add (_emitRecord (x)));
     if (aBody.isNotEmpty ())
-      aDoc.addJson (ELEMENT_BODY, aBody);
+      aDoc.add (ELEMENT_BODY, aBody);
 
     // Footer
     final IJsonArray aFooter = new JsonArray ();
     aProvider.forEachFooterRecord (x -> aFooter.add (_emitRecord (x)));
     if (aFooter.isNotEmpty ())
-      aDoc.addJson (ELEMENT_FOOTER, aFooter);
+      aDoc.add (ELEMENT_FOOTER, aFooter);
 
     if (aDoc.isEmpty ())
       return null;
@@ -186,7 +186,8 @@ public class ExporterJSON implements IExporterFile
 
   @Override
   @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider, @Nonnull @WillClose final OutputStream aOS)
+  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
+                                 @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {

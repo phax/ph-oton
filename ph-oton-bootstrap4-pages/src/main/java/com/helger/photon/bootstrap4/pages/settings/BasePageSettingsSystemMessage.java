@@ -19,18 +19,11 @@ package com.helger.photon.bootstrap4.pages.settings;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.datetime.PDTToString;
-import com.helger.commons.state.EChange;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.state.EChange;
+import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.impl.HCNodeList;
@@ -50,6 +43,13 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BasePageSettingsSystemMessage <WPECTYPE extends IWebPageExecutionContext> extends
                                            AbstractBootstrapWebPage <WPECTYPE>

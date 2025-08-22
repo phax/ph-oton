@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.html;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * Contains some predefined layout area IDs

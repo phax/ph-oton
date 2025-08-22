@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSMarshaller;
 import com.helger.html.js.UnparsedJSCodeProvider;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class FakeJS

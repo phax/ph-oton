@@ -16,15 +16,15 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.state.ETriState;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ETriState;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A button collection that provides column visibility control.

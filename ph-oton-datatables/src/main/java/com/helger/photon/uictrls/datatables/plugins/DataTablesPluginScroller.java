@@ -16,9 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.css.propertyvalue.CCSSValue;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jquery.JQuery;
@@ -33,6 +30,9 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Enable and configure the Scroller extension for DataTables. <br>

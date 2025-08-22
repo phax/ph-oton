@@ -16,15 +16,13 @@
  */
 package com.helger.photon.core.job.smtp;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.quartz.DisallowConcurrentExecution;
 import com.helger.quartz.IJobExecutionContext;
@@ -37,6 +35,8 @@ import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
 import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A Quartz job, that tries to re-send failed mails.

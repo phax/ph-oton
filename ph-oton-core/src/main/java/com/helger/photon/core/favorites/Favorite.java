@@ -18,19 +18,19 @@ package com.helger.photon.core.favorites;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.EChange;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ObjectType;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of favourites for bookmarks.
@@ -53,7 +53,12 @@ public class Favorite implements IFavorite
                    @Nonnull @Nonempty final String sDisplayName,
                    @Nullable final Map <String, String> aAdditionalParams)
   {
-    this (GlobalIDFactory.getNewPersistentStringID (), sUserID, sApplicationID, sMenuItemID, sDisplayName, aAdditionalParams);
+    this (GlobalIDFactory.getNewPersistentStringID (),
+          sUserID,
+          sApplicationID,
+          sMenuItemID,
+          sDisplayName,
+          aAdditionalParams);
   }
 
   Favorite (@Nonnull @Nonempty final String sID,
@@ -155,7 +160,9 @@ public class Favorite implements IFavorite
   {
     // Ensure same type
     final ICommonsMap <String, String> aRealAdditionalParams = new CommonsHashMap <> (aAdditionalParams);
-    return m_sApplicationID.equals (sAppID) && m_sMenuItemID.equals (sMenuItemID) && m_aAdditionalParams.equals (aRealAdditionalParams);
+    return m_sApplicationID.equals (sAppID) &&
+           m_sMenuItemID.equals (sMenuItemID) &&
+           m_aAdditionalParams.equals (aRealAdditionalParams);
   }
 
   @Override

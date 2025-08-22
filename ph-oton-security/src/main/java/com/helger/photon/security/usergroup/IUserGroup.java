@@ -16,12 +16,12 @@
  */
 package com.helger.photon.security.usergroup;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.name.IHasName;
-import com.helger.commons.text.IHasDescription;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.name.IHasName;
 import com.helger.photon.security.role.IRoleContainer;
 import com.helger.photon.security.user.IUserContainer;
 import com.helger.tenancy.IBusinessObject;
+import com.helger.text.IHasDescription;
 
 /**
  * Represents a single user group encapsulating 0-n users.

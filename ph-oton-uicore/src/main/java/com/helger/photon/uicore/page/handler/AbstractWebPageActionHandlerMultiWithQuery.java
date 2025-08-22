@@ -19,14 +19,11 @@ package com.helger.photon.uicore.page.handler;
 import java.util.Locale;
 import java.util.function.BiFunction;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.id.IHasID;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.IHasID;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.css.CPageParam;
@@ -37,6 +34,9 @@ import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractWebPageActionHandlerMultiWithQuery <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                                  extends

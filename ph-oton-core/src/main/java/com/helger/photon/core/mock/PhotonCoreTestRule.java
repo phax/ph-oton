@@ -19,19 +19,19 @@ package com.helger.photon.core.mock;
 import java.io.File;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.attr.StringMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.io.resourceprovider.IReadableResourceProvider;
 import com.helger.photon.core.servlet.WebAppListener;
 import com.helger.servlet.mock.MockHttpListener;
 import com.helger.servlet.mock.MockServletContext;
+import com.helger.typeconvert.collection.StringMap;
 import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
 import com.helger.web.scope.mock.WebScopeTestRule;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A JUnit test rule that is suitable for all ph-oton projects. It is optimized

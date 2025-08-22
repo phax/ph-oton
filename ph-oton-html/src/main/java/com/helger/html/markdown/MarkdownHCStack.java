@@ -16,13 +16,10 @@
  */
 package com.helger.html.markdown;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.NonBlockingStack;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.stack.NonBlockingStack;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeWithChildren;
 import com.helger.html.hc.IHCTextNode;
@@ -49,6 +46,9 @@ import com.helger.html.hc.html.textlevel.IHCRubyChild;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.js.UnparsedJSCodeProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 final class MarkdownHCStack

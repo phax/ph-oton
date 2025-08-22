@@ -16,15 +16,15 @@
  */
 package com.helger.photon.api;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.annotation.VisibleForTesting;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.annotation.style.VisibleForTesting;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Central API manager. Was reworked in v8.1.4 to clearly separate between

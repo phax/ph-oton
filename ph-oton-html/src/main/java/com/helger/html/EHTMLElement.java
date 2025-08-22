@@ -18,13 +18,13 @@ package com.helger.html;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.Nonempty;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.string.StringHelper;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Contains a list of all HTML element names.
@@ -189,8 +189,7 @@ public enum EHTMLElement
   }
 
   /**
-   * @return The defined element name in any lower case. Neither
-   *         <code>null</code> nor empty.
+   * @return The defined element name in any lower case. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -200,8 +199,7 @@ public enum EHTMLElement
   }
 
   /**
-   * @return The defined element name in upper case characters. Neither
-   *         <code>null</code> nor empty.
+   * @return The defined element name in upper case characters. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -211,9 +209,8 @@ public enum EHTMLElement
   }
 
   /**
-   * @return <code>true</code> if this element may be self-closed (e.g. &lt;br
-   *         /&gt;), and <code>false</code> if not (e.g.
-   *         &lt;link...&gt;&lt;/link&gt;)
+   * @return <code>true</code> if this element may be self-closed (e.g. &lt;br /&gt;), and
+   *         <code>false</code> if not (e.g. &lt;link...&gt;&lt;/link&gt;)
    */
   public boolean mayBeSelfClosed ()
   {
@@ -222,8 +219,8 @@ public enum EHTMLElement
 
   /**
    * @return <code>true</code> if this element may not be self-closed (e.g.
-   *         &lt;link...&gt;&lt;/link&gt;), <code>false</code> if it may be
-   *         self-closed (e.g. &lt;br /&gt;)
+   *         &lt;link...&gt;&lt;/link&gt;), <code>false</code> if it may be self-closed (e.g. &lt;br
+   *         /&gt;)
    */
   public boolean mayNotBeSelfClosed ()
   {
@@ -270,7 +267,7 @@ public enum EHTMLElement
    */
   public static boolean isTagThatMayBeSelfClosed (@Nullable final String sElementName)
   {
-    if (StringHelper.hasNoText (sElementName))
+    if (StringHelper.isEmpty (sElementName))
       return false;
 
     // Always check lower cased
@@ -286,7 +283,7 @@ public enum EHTMLElement
    */
   public static boolean isTagThatMayNotBeSelfClosed (@Nullable final String sElementName)
   {
-    if (StringHelper.hasNoText (sElementName))
+    if (StringHelper.isEmpty (sElementName))
       return false;
 
     // Always check lower cased
@@ -298,8 +295,7 @@ public enum EHTMLElement
    *
    * @param sTagName
    *        The case sensitive tag name to check.
-   * @return <code>true</code> if it is a known HTML tag, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if it is a known HTML tag, <code>false</code> otherwise.
    */
   public static boolean isHTMLTagName (@Nullable final String sTagName)
   {
@@ -307,18 +303,16 @@ public enum EHTMLElement
   }
 
   /**
-   * Get the {@link EHTMLElement} for the passed tag name using case insensitive
-   * compare
+   * Get the {@link EHTMLElement} for the passed tag name using case insensitive compare
    *
    * @param sTagName
    *        The case sensitive tag name to check.
-   * @return The matching {@link EHTMLElement} or <code>null</code> if no such
-   *         element is present.
+   * @return The matching {@link EHTMLElement} or <code>null</code> if no such element is present.
    */
   @Nullable
   public static EHTMLElement getFromTagNameOrNull (@Nullable final String sTagName)
   {
-    if (StringHelper.hasText (sTagName))
+    if (StringHelper.isNotEmpty (sTagName))
       for (final EHTMLElement eElement : values ())
         if (eElement.m_sElementNameLC.equalsIgnoreCase (sTagName))
           return eElement;

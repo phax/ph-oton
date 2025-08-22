@@ -16,9 +16,7 @@
  */
 package com.helger.photon.bootstrap4.alert;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -27,6 +25,8 @@ import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.utils.BootstrapCloseIcon;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Bootstrap alert box

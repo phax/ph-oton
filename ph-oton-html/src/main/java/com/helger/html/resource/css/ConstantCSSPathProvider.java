@@ -16,19 +16,19 @@
  */
 package com.helger.html.resource.css;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ChangeNextMajorRelease;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.builder.IBuilder;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.ChangeNextMajorRelease;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.builder.IBuilder;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.css.CSSFilenameHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ICSSMediaList;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link ICSSPathProvider} with constant paths.

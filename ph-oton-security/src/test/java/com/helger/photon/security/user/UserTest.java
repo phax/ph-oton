@@ -28,8 +28,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.datetime.PDTFactory;
+import com.helger.collection.helper.CollectionHelperExt;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.password.GlobalPasswordSettings;
@@ -53,7 +53,8 @@ public final class UserTest
     final User aUser = new User (StubObject.createForCurrentUserAndID ("id1"),
                                  "MyName",
                                  "me@example.org",
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (), "ABCDEF"),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
+                                                                                       "ABCDEF"),
                                  "Philip",
                                  "Helger",
                                  "bla",
@@ -85,7 +86,8 @@ public final class UserTest
     final User aUser = new User (StubObject.createForCurrentUserAndID ("id1"),
                                  "MyName",
                                  null,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (), "ABCDEF"),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
+                                                                                       "ABCDEF"),
                                  null,
                                  null,
                                  null,
@@ -123,10 +125,13 @@ public final class UserTest
   @Test
   public void testMicroConversion ()
   {
-    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1", CollectionHelper.newMap ("locale", "de_DE")),
+    final User aUser = new User (StubObject.createForCurrentUserAndID ("id1",
+                                                                       CollectionHelperExt.createMap ("locale",
+                                                                                                      "de_DE")),
                                  "MyName",
                                  "me@example.org",
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (), "ABCDEF"),
+                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
+                                                                                       "ABCDEF"),
                                  "Philip",
                                  "Helger",
                                  "bla",

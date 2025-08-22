@@ -16,14 +16,14 @@
  */
 package com.helger.photon.tinymce4;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.PresentForCodeCoverage;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * JS wrapped for TinyMCE4

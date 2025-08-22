@@ -21,35 +21,36 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsIterable;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EContinue;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.CGlobal;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EContinue;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.CollectionFind;
+import com.helger.collection.CollectionHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsIterable;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.MicroContainer;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * This class is an abstract HC node that represents a list of nodes without
- * creating an HTML element by itself.
+ * This class is an abstract HC node that represents a list of nodes without creating an HTML
+ * element by itself.
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
@@ -141,8 +142,8 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
    * Invoked after an element was removed.
    *
    * @param nIndex
-   *        The index where the element was removed from. Always &ge; 0. This is
-   *        the OLD index and now contains a different or no child.
+   *        The index where the element was removed from. Always &ge; 0. This is the OLD index and
+   *        now contains a different or no child.
    * @param aChild
    *        The child that was removed. Never <code>null</code>.
    */
@@ -231,7 +232,8 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
+                                    @Nonnull final Consumer <? super IHCNode> aConsumer)
   {
     if (m_aChildren != null)
       m_aChildren.findAll (aFilter, aConsumer);
@@ -257,7 +259,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   @Nullable
   public final CHILDTYPE getFirstChild ()
   {
-    return CollectionHelper.getFirstElement (m_aChildren);
+    return CollectionFind.getFirstElement (m_aChildren);
   }
 
   @Override
@@ -279,7 +281,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   @Nullable
   public final CHILDTYPE getLastChild ()
   {
-    return CollectionHelper.getLastElement (m_aChildren);
+    return CollectionFind.getLastElement (m_aChildren);
   }
 
   @Nonnull
@@ -316,14 +318,13 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   }
 
   /**
-   * Helper method that returns the elements in the correct order for emitting.
-   * This can e.g. be used for sorting or ordering.
+   * Helper method that returns the elements in the correct order for emitting. This can e.g. be
+   * used for sorting or ordering.
    *
    * @param aChildren
-   *        The children to be emitted. Is a direct reference to the container
-   *        where the children are stored. So handle with care!
-   * @return The non-<code>null</code> list with all child elements to be
-   *         emitted.
+   *        The children to be emitted. Is a direct reference to the container where the children
+   *        are stored. So handle with care!
+   * @return The non-<code>null</code> list with all child elements to be emitted.
    */
   @Nonnull
   @Nonempty

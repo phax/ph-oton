@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core.longrun;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
+import com.helger.text.IMultilingualText;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.text.IMultilingualText;
+import jakarta.annotation.Nonnull;
 
 /**
  * This is a marker interface that identifies long running background jobs.

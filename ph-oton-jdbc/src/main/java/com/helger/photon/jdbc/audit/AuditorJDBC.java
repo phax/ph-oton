@@ -21,24 +21,21 @@ import java.time.LocalDateTime;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.type.ObjectType;
-import com.helger.commons.wrapper.Wrapper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringHelper;
+import com.helger.base.type.ObjectType;
+import com.helger.base.wrapper.Wrapper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.db.api.helper.DBValueHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
 import com.helger.db.jdbc.executor.DBExecutor;
@@ -51,6 +48,9 @@ import com.helger.photon.audit.IAuditItem;
 import com.helger.photon.audit.IAuditor;
 import com.helger.security.authentication.subject.user.CUserID;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A special implementation of {@link IAuditor} writing data to a SQL table
@@ -68,11 +68,9 @@ public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
    * Constructor
    *
    * @param aDBExecSupplier
-   *        The supplier for {@link DBExecutor} objects. May not be
-   *        <code>null</code>.
+   *        The supplier for {@link DBExecutor} objects. May not be <code>null</code>.
    * @param aTableNameCustomizer
-   *        A customizer for database table names used by this class. May not be
-   *        <code>null</code>.
+   *        A customizer for database table names used by this class. May not be <code>null</code>.
    * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    */
@@ -102,9 +100,9 @@ public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
     final String sUserID = StringHelper.getNotEmpty (m_aCurrentUserIDProvider.getCurrentUserID (),
                                                      CUserID.USER_ID_GUEST);
     // Combine arguments into one big JSON
-    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType.getName ()
-                                                                                                : sAction,
-                                                                      aArgs);
+    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType
+                                                                                                                   .getName ()
+                                                                                                : sAction, aArgs);
 
     final DBExecutor aExecutor;
     try

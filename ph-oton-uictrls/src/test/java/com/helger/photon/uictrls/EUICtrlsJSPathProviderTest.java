@@ -20,8 +20,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.resource.IReadableResource;
+import com.helger.io.resource.ClassPathResource;
+import com.helger.io.resource.IReadableResource;
 
 /**
  * Test class for class {@link EUICtrlsJSPathProvider}.

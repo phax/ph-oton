@@ -18,15 +18,15 @@ package com.helger.photon.core.requestparam;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.appid.RequestSettings;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Predefined request parameter manager

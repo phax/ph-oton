@@ -18,13 +18,9 @@ package com.helger.photon.uictrls.typeahead;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -37,6 +33,10 @@ import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSParam;
 import com.helger.html.request.IHCRequestField;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This class encapsulates a HTML input field, a hidden field for the ID and the

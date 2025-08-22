@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;ul&gt; element

@@ -18,13 +18,13 @@ package com.helger.photon.app.html;
 
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsIterable;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.state.EChange;
+import com.helger.collection.commons.ICommonsIterable;
+import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.html.resource.IHTMLResourceProvider;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for CSS and JS resource sets.

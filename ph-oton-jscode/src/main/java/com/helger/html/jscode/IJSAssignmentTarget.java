@@ -16,7 +16,7 @@
  */
 package com.helger.html.jscode;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Marker interface for code components that can be placed to the left of '=' in

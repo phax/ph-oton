@@ -16,18 +16,18 @@
  */
 package com.helger.photon.uicore.html.toolbar;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.html.forms.HCButton;
 import com.helger.html.hc.html.forms.HCButton_Submit;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.js.IHasJSCode;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.icon.IIcon;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Simple button toolbar

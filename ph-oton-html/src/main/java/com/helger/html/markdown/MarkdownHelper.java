@@ -19,10 +19,10 @@ package com.helger.html.markdown;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnull;
+import com.helger.annotation.CheckForSigned;
+import com.helger.base.array.ArrayHelper;
 
-import com.helger.commons.collection.ArrayHelper;
+import jakarta.annotation.Nonnull;
 
 /**
  * Utilities.

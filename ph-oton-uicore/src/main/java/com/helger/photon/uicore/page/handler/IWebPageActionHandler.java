@@ -18,11 +18,11 @@ package com.helger.photon.uicore.page.handler;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.id.IHasID;
+import com.helger.base.id.IHasID;
 import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for handling delete/undelete actions inside an AbstractWebPageForm.

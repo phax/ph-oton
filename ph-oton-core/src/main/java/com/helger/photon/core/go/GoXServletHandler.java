@@ -19,26 +19,26 @@ package com.helger.photon.core.go;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
-import com.helger.commons.statistics.StatisticsManager;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.mgr.PhotonCoreManager;
 import com.helger.photon.core.requestparam.RequestParameterManager;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.statistics.impl.StatisticsManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Default servlet that performs URL redirects based on {@link GoMappingManager}

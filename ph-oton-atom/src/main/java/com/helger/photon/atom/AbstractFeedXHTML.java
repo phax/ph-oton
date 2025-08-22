@@ -16,12 +16,11 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.html.CHTMLDocTypes;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCConversionSettings;
@@ -31,6 +30,8 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.MicroElement;
+
+import jakarta.annotation.Nonnull;
 
 public abstract class AbstractFeedXHTML extends AbstractFeedElement
 {
@@ -70,7 +71,7 @@ public abstract class AbstractFeedXHTML extends AbstractFeedElement
       aElement.appendChild (aDivNode);
     }
     if (StringHelper.hasText (getLanguage ()))
-      aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
+      aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 

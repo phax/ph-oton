@@ -16,11 +16,8 @@
  */
 package com.helger.photon.security.object.tenant;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.Nonempty;
+import com.helger.base.state.EChange;
 import com.helger.dao.DAOException;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
@@ -28,6 +25,9 @@ import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.tenancy.tenant.CTenant;
 import com.helger.tenancy.tenant.ITenant;
 import com.helger.tenancy.tenant.ITenantResolver;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Manages all available tenants (before v8 called client).

@@ -18,16 +18,16 @@ package com.helger.photon.app.mock;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.NonBlockingStack;
-import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.collection.stack.NonBlockingStack;
 import com.helger.photon.app.PhotonAppInit;
 import com.helger.photon.io.WebFileIO;
 import com.helger.photon.io.WebIOIntIDFactory;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Static test init and shutdown code for this project
@@ -48,7 +48,6 @@ public final class PhotonAppTestInit
     final NonBlockingStack <Runnable> aCleansing = new NonBlockingStack <> ();
 
     PhotonAppInit.startUp ();
-    aCleansing.push (PhotonAppInit::shutdown);
 
     // Init the base path once
     // don't check access rights in test, for performance reasons

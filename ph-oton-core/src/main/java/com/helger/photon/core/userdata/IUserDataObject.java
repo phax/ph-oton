@@ -19,13 +19,13 @@ package com.helger.photon.core.userdata;
 import java.io.File;
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.http.url.SimpleURL;
+import com.helger.io.resource.FileSystemResource;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents a single web accessible object, that was provided by the user.

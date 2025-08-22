@@ -16,12 +16,12 @@
  */
 package com.helger.photon.bootstrap4.breadcrumb;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.sections.AbstractHCNav;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Breadcrumb container. Use {@link #getList()} to access the main item list.

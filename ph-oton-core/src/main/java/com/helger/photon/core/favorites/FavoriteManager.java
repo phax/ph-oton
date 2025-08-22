@@ -19,24 +19,21 @@ package com.helger.photon.core.favorites;
 import java.util.Comparator;
 import java.util.Map;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ELockType;
-import com.helger.commons.annotation.MustBeLocked;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.ELockType;
+import com.helger.annotation.concurrent.MustBeLocked;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.dao.DAOException;
 import com.helger.dao.EDAOActionType;
 import com.helger.photon.audit.AuditHelper;
@@ -45,6 +42,9 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class manages {@link Favorite} objects.
@@ -149,8 +149,8 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   /**
    * @param sUserID
    *        The ID of the user.
-   * @return A copy of all contained favorite as map from ID to object. Never
-   *         <code>null</code> but maybe empty.
+   * @return A copy of all contained favorite as map from ID to object. Never <code>null</code> but
+   *         maybe empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -266,8 +266,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
    * @param sMenuItemID
    *        Menu item ID. May neither be <code>null</code> nor empty.
    * @param sDisplayName
-   *        Display name of the favorite. May neither be <code>null</code> nor
-   *        empty.
+   *        Display name of the favorite. May neither be <code>null</code> nor empty.
    * @param aAdditionalParams
    *        Additional params. May be <code>null</code>.
    * @return The created {@link IFavorite} object and never <code>null</code>.
@@ -306,8 +305,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
    * @param sMenuItemID
    *        Menu item ID. May neither be <code>null</code> nor empty.
    * @param sDisplayName
-   *        The display name to change. May neither be <code>null</code> nor
-   *        empty.
+   *        The display name to change. May neither be <code>null</code> nor empty.
    * @param aAdditionalParams
    *        Additional params. May be <code>null</code>.
    * @return {@link EChange#CHANGED} if something was changed.
@@ -319,7 +317,6 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
                                  @Nonnull @Nonempty final String sDisplayName,
                                  @Nullable final Map <String, String> aAdditionalParams)
   {
-
     final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));
     final Favorite aFavorite = aFavorites == null ? null : aFavorites.findFirst (x -> x.getID ().equals (sID));
     if (aFavorite == null)

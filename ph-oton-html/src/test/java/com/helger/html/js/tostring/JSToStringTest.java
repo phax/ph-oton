@@ -26,14 +26,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.PrimitiveCollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
+import com.helger.collection.helper.PrimitiveCollectionHelper;
 import com.helger.html.js.UnparsedJSCodeProvider;
 
 /**
@@ -142,17 +141,17 @@ public final class JSToStringTest
     assertEquals ("[]",
                   JSToString.objectToJSString (new CommonsArrayList <> (), new JSListType (JSType.STRING), false));
     assertEquals ("['x']",
-                  JSToString.objectToJSString (CollectionHelper.newList ("x"), new JSListType (JSType.STRING), false));
+                  JSToString.objectToJSString (new CommonsArrayList <> ("x"), new JSListType (JSType.STRING), false));
     assertEquals ("['x','y']",
-                  JSToString.objectToJSString (CollectionHelper.newList ("x", "y"),
+                  JSToString.objectToJSString (new CommonsArrayList <> ("x", "y"),
                                                new JSListType (JSType.STRING),
                                                false));
     assertEquals ("[1,9]",
-                  JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1, 9),
+                  JSToString.objectToJSString (PrimitiveCollectionHelper.createPrimitiveList (1, 9),
                                                new JSListType (JSType.INT),
                                                false));
     assertEquals ("[1.1,9.8]",
-                  JSToString.objectToJSString (PrimitiveCollectionHelper.newPrimitiveList (1.1, 9.8),
+                  JSToString.objectToJSString (PrimitiveCollectionHelper.createPrimitiveList (1.1, 9.8),
                                                new JSListType (JSType.DOUBLE),
                                                false));
   }
@@ -186,16 +185,16 @@ public final class JSToStringTest
 
     // Collections
     assertEquals ("[1,'xx','y']",
-                  JSToString.objectToJSString (CollectionHelper.<Object> newList (Integer.valueOf (1),
-                                                                                  "xx",
-                                                                                  Character.valueOf ('y'))));
+                  JSToString.objectToJSString (new CommonsArrayList <> (Integer.valueOf (1),
+                                                                        "xx",
+                                                                        Character.valueOf ('y'))));
     ICommonsOrderedMap <Object, Object> aMap = new CommonsLinkedHashMap <> ();
     aMap.put (Integer.valueOf (1), "xx");
     aMap.put (Integer.valueOf (2), Character.valueOf ('y'));
     assertEquals ("{1:'xx',2:'y'}", JSToString.objectToJSString (aMap));
 
     aMap = new CommonsLinkedHashMap <> ();
-    aMap.put (Integer.valueOf (1), CollectionHelper.newList (Integer.valueOf (1), "xx", Character.valueOf ('y')));
+    aMap.put (Integer.valueOf (1), new CommonsArrayList <> (Integer.valueOf (1), "xx", Character.valueOf ('y')));
     aMap.put (Integer.valueOf (2), Character.valueOf ('y'));
     assertEquals ("{1:[1,'xx','y'],2:'y'}", JSToString.objectToJSString (aMap));
   }

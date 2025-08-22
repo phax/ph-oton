@@ -18,26 +18,25 @@ package com.helger.photon.io;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.io.relative.FileRelativeIO;
-import com.helger.commons.io.relative.IFileRelativeIO;
-import com.helger.commons.io.relative.IPathRelativeIO;
-import com.helger.commons.io.relative.PathRelativeIO;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.io.relative.FileRelativeIO;
+import com.helger.io.relative.IFileRelativeIO;
+import com.helger.io.relative.IPathRelativeIO;
+import com.helger.io.relative.PathRelativeIO;
+
+import jakarta.annotation.Nonnull;
 
 /**
- * Abstract for accessing files inside the web application. It differentiates
- * between the data path (where the runtime data is stored) and the servlet
- * context path (for accessing files inside the web application). The default
- * operations in this class work on the data path!
+ * Abstract for accessing files inside the web application. It differentiates between the data path
+ * (where the runtime data is stored) and the servlet context path (for accessing files inside the
+ * web application). The default operations in this class work on the data path!
  *
  * @author Philip Helger
  */
@@ -118,8 +117,7 @@ public final class WebFileIO
   }
 
   /**
-   * @return <code>true</code> if the base path was initialized,
-   *         <code>false</code> otherwise
+   * @return <code>true</code> if the base path was initialized, <code>false</code> otherwise
    */
   public static boolean isInited ()
   {
@@ -129,8 +127,7 @@ public final class WebFileIO
   /**
    * @return data IO provider.
    * @throws IllegalStateException
-   *         if no data path was provided. Call
-   *         {@link #initPaths(File, String, boolean)} first.
+   *         if no data path was provided. Call {@link #initPaths(File, String, boolean)} first.
    */
   @Nonnull
   public static IFileRelativeIO getDataIO ()
@@ -142,11 +139,11 @@ public final class WebFileIO
   }
 
   /**
-   * @return The servlet context IO provider. This is read-only because it makes
-   *         no sense to modify the contents of the servlet context directory.
+   * @return The servlet context IO provider. This is read-only because it makes no sense to modify
+   *         the contents of the servlet context directory.
    * @throws IllegalStateException
-   *         if no servlet context path was provided. Call
-   *         {@link #initPaths(File, String, boolean)} first.
+   *         if no servlet context path was provided. Call {@link #initPaths(File, String, boolean)}
+   *         first.
    */
   @Nonnull
   public static IPathRelativeIO getServletContextIO ()

@@ -16,10 +16,8 @@
  */
 package com.helger.photon.bootstrap4.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
@@ -30,6 +28,8 @@ import com.helger.photon.uictrls.datatables.EDataTablesB4CSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesB4JSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginButtons;
+
+import jakarta.annotation.Nonnull;
 
 public class BootstrapDataTablesPluginButtons extends DataTablesPluginButtons
 {

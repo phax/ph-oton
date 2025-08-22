@@ -18,10 +18,7 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.forms.AbstractHCSelect;
@@ -30,6 +27,9 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.request.IHCRequestField;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.photon.core.EPhotonCoreText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * An extension of the simple select box, where you can add a multilingual

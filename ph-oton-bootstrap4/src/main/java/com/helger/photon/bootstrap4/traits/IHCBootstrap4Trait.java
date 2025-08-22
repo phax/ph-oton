@@ -16,9 +16,6 @@
  */
 package com.helger.photon.bootstrap4.traits;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.traits.IHCTrait;
 import com.helger.photon.bootstrap4.alert.BootstrapDangerBox;
@@ -29,6 +26,9 @@ import com.helger.photon.bootstrap4.alert.BootstrapSuccessBox;
 import com.helger.photon.bootstrap4.alert.BootstrapWarnBox;
 import com.helger.photon.bootstrap4.badge.BootstrapBadge;
 import com.helger.photon.bootstrap4.badge.EBootstrapBadgeType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Traits interface to add simpler UI codes.<br>

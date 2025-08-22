@@ -59,7 +59,7 @@ import java.util.regex.Pattern;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.helger.commons.regex.RegExCache;
+import com.helger.cache.regex.RegExCache;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 
 public final class EdgeCasesFuncTest

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.prism;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Shows a "Copy to clipboard" button on the right top

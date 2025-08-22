@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for focusable objects. Must not necessarily be an IHCElement!

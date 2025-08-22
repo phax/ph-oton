@@ -18,19 +18,16 @@ package com.helger.photon.security.usergroup;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.dao.DAOException;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
@@ -39,6 +36,9 @@ import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUserManager;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class manages the available user groups.
@@ -150,7 +150,6 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     m_aCallbacks.forEach (aCB -> aCB.onUserGroupCreated (aUserGroup, false));
 
     return aUserGroup;
-
   }
 
   @Nonnull
@@ -160,11 +159,18 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
     // Create user group
-    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs), sName, sDescription);
+    final UserGroup aUserGroup = new UserGroup (StubObject.createForCurrentUserAndID (sID, aCustomAttrs),
+                                                sName,
+                                                sDescription);
 
     // Store
     m_aRWLock.writeLocked ( () -> internalCreateItem (aUserGroup));
-    AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), "predefined-usergroup", sName, sDescription, aCustomAttrs);
+    AuditHelper.onAuditCreateSuccess (UserGroup.OT,
+                                      aUserGroup.getID (),
+                                      "predefined-usergroup",
+                                      sName,
+                                      sDescription,
+                                      aCustomAttrs);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserGroupCreated (aUserGroup, true));
@@ -321,7 +327,12 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    AuditHelper.onAuditModifySuccess (UserGroup.OT, "set-all", aUserGroup.getID (), sNewName, sNewDescription, aNewCustomAttrs);
+    AuditHelper.onAuditModifySuccess (UserGroup.OT,
+                                      "set-all",
+                                      aUserGroup.getID (),
+                                      sNewName,
+                                      sNewDescription,
+                                      aNewCustomAttrs);
 
     // Execute callback as the very last action
     m_aCallbacks.forEach (aCB -> aCB.onUserGroupUpdated (sUserGroupID));
@@ -601,7 +612,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 
-  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID, @Nullable final String sRoleID)
+  public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,
+                                                              @Nullable final String sRoleID)
   {
     if (StringHelper.hasNoText (sUserID))
       return false;

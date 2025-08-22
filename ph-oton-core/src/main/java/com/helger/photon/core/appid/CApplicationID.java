@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.appid;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * This class contains application IDs for the most common use cases

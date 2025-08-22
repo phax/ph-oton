@@ -21,12 +21,12 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
+import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.exchange.bulkexport.ConstantExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.EmptyExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.ExportRecord;
@@ -62,27 +62,23 @@ public final class ExporterCSVTest
     assertTrue (aExporter.setAvoidWriteEmpty (false)
                          .exportRecords (new EmptyExportRecordProvider (), new NonBlockingByteArrayOutputStream ())
                          .isSuccess ());
-    assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (CollectionHelper.newList (aRecordWithAllTypes)),
-                                         new NonBlockingByteArrayOutputStream ())
-                         .isSuccess ());
-    assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (CollectionHelper.newList (aRecordWithAllTypes,
-                                                                                                     aRecordWithAllTypes,
-                                                                                                     aEmptyRecord)),
-                                         new NonBlockingByteArrayOutputStream ())
-                         .isSuccess ());
+    assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (Arrays.asList (aRecordWithAllTypes)),
+                                         new NonBlockingByteArrayOutputStream ()).isSuccess ());
+    assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (Arrays.asList (aRecordWithAllTypes,
+                                                                                          aRecordWithAllTypes,
+                                                                                          aEmptyRecord)),
+                                         new NonBlockingByteArrayOutputStream ()).isSuccess ());
     assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (null,
-                                                                           CollectionHelper.newList (aRecordWithAllTypes,
-                                                                                                     aRecordWithAllTypes,
-                                                                                                     aEmptyRecord),
+                                                                           Arrays.asList (aRecordWithAllTypes,
+                                                                                          aRecordWithAllTypes,
+                                                                                          aEmptyRecord),
                                                                            aRecordWithAllTypes),
-                                         new NonBlockingByteArrayOutputStream ())
-                         .isSuccess ());
+                                         new NonBlockingByteArrayOutputStream ()).isSuccess ());
     assertTrue (aExporter.exportRecords (new ConstantExportRecordProvider (aRecordWithAllTypes,
-                                                                           CollectionHelper.newList (aRecordWithAllTypes,
-                                                                                                     aRecordWithAllTypes,
-                                                                                                     aEmptyRecord),
+                                                                           Arrays.asList (aRecordWithAllTypes,
+                                                                                          aRecordWithAllTypes,
+                                                                                          aEmptyRecord),
                                                                            aRecordWithAllTypes),
-                                         new NonBlockingByteArrayOutputStream ())
-                         .isSuccess ());
+                                         new NonBlockingByteArrayOutputStream ()).isSuccess ());
   }
 }

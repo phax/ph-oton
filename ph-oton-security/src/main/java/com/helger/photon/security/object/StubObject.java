@@ -19,20 +19,20 @@ package com.helger.photon.security.object;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonempty;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.type.ObjectType;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * The most simple {@link IBusinessObject} implementation. Used for
- * serialization encapsulation and the like.
+ * The most simple {@link IBusinessObject} implementation. Used for serialization encapsulation and
+ * the like.
  *
  * @author Philip Helger
  */
@@ -63,7 +63,14 @@ public final class StubObject extends AbstractBusinessObject
                      @Nullable final String sDeletionUserID,
                      @Nullable final Map <String, String> aCustomAttrs)
   {
-    super (sID, aCreationDT, sCreationUserID, aLastModificationDT, sLastModificationUserID, aDeletionDT, sDeletionUserID, aCustomAttrs);
+    super (sID,
+           aCreationDT,
+           sCreationUserID,
+           aLastModificationDT,
+           sLastModificationUserID,
+           aDeletionDT,
+           sDeletionUserID,
+           aCustomAttrs);
   }
 
   @Nonnull
@@ -119,14 +126,14 @@ public final class StubObject extends AbstractBusinessObject
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static StubObject createForUser (@Nullable final String sUserID, @Nullable final Map <String, String> aCustomAttrs)
+  public static StubObject createForUser (@Nullable final String sUserID,
+                                          @Nullable final Map <String, String> aCustomAttrs)
   {
     return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID, aCustomAttrs);
   }
 
   /**
-   * Create a {@link StubObject} using the current user ID and the provided
-   * object ID
+   * Create a {@link StubObject} using the current user ID and the provided object ID
    *
    * @param sID
    *        Object ID
@@ -139,8 +146,7 @@ public final class StubObject extends AbstractBusinessObject
   }
 
   /**
-   * Create a {@link StubObject} using the current user ID and the provided
-   * object ID
+   * Create a {@link StubObject} using the current user ID and the provided object ID
    *
    * @param sID
    *        Object ID

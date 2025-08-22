@@ -18,10 +18,8 @@ package com.helger.photon.core.appid;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuObject;
@@ -32,6 +30,8 @@ import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * XServlet filter responsible for remembering the application ID in the current

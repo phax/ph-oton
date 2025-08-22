@@ -16,10 +16,7 @@
  */
 package com.helger.photon.bootstrap.demo.pub.page;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.CApp;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
@@ -27,6 +24,9 @@ import com.helger.photon.bootstrap.demo.app.ui.AppCommonUI;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.form.EBootstrapFormType;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class PagePublicLogin extends AbstractAppWebPage
 {

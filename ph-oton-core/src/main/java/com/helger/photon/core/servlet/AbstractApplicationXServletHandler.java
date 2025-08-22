@@ -18,15 +18,13 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.state.EContinue;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.state.EContinue;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.core.interror.InternalErrorBuilder;
@@ -34,6 +32,7 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 
 /**

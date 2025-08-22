@@ -16,27 +16,27 @@
  */
 package com.helger.photon.core.configfile;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.config.IConfig;
-import com.helger.config.source.res.ConfigurationSourceJson;
-import com.helger.config.source.res.ConfigurationSourceProperties;
-import com.helger.config.source.res.IConfigurationSourceResource;
+import com.helger.config.json.source.ConfigurationSourceJson;
+import com.helger.config.source.resource.IConfigurationSourceResource;
+import com.helger.config.source.resource.properties.ConfigurationSourceProperties;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
+import jakarta.annotation.Nonnull;
+
 /**
- * A non-persisting manager for {@link ConfigurationFile} objects. Needs to be
- * initialized manually at startup.
+ * A non-persisting manager for {@link ConfigurationFile} objects. Needs to be initialized manually
+ * at startup.
  *
  * @author Philip Helger
  */

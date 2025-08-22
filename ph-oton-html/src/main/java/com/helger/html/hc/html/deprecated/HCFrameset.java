@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html.deprecated;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.CGlobal;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;frameset&gt; element

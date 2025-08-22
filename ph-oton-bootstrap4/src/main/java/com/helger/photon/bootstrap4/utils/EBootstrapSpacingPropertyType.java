@@ -16,9 +16,9 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
-import com.helger.commons.annotation.Nonempty;
+import jakarta.annotation.Nonnull;
 
 /**
  * Spacing property. See https://getbootstrap.com/docs/4.1/utilities/spacing/

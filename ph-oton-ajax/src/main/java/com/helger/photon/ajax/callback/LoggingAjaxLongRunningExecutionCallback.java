@@ -16,15 +16,15 @@
  */
 package com.helger.photon.ajax.callback;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.annotation.Nonnegative;
 import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 public class LoggingAjaxLongRunningExecutionCallback implements IAjaxLongRunningExecutionCallback
 {

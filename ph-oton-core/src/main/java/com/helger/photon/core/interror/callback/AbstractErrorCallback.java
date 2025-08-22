@@ -19,20 +19,16 @@ package com.helger.photon.core.interror.callback;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.attr.StringMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.collection.map.LRUSet;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.collection.map.LRUSet;
 import com.helger.dao.AbstractDAO;
 import com.helger.dao.IDAOReadExceptionCallback;
 import com.helger.dao.IDAOWriteExceptionCallback;
+import com.helger.io.resource.IReadableResource;
 import com.helger.photon.ajax.AjaxSettings;
 import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.callback.IAjaxExceptionCallback;
@@ -46,12 +42,16 @@ import com.helger.photon.core.longrun.ILongRunningJob;
 import com.helger.quartz.IJob;
 import com.helger.schedule.job.AbstractJob;
 import com.helger.schedule.job.IJobExceptionCallback;
+import com.helger.typeconvert.collection.StringMap;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
 import com.helger.xservlet.requesttrack.IParallelRunningRequestCallback;
 import com.helger.xservlet.requesttrack.RequestTracker;
 import com.helger.xservlet.requesttrack.TrackedRequest;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A base class for a central error callback that handles all kind of errors and

@@ -19,11 +19,11 @@ package com.helger.photon.security.password.constraint;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single password constraint type.

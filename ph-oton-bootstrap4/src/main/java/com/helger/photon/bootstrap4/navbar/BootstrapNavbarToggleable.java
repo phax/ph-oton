@@ -16,13 +16,13 @@
  */
 package com.helger.photon.bootstrap4.navbar;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Bootstrap 4 Navbar toggleable

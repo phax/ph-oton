@@ -16,8 +16,8 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface IHCHasMedia <IMPLTYPE extends IHCHasMedia <IMPLTYPE>>
 {

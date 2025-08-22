@@ -16,10 +16,10 @@
  */
 package com.helger.photon.connect.sftp;
 
-import javax.annotation.Nonnull;
-
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Provider interface for JSch {@link Session} objects.

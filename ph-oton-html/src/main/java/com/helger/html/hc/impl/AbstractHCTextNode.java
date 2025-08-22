@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCTextNode;
 import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.MicroText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents a single text node as HC node.

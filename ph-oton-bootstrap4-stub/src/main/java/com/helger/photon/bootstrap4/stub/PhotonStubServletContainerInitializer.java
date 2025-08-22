@@ -18,11 +18,10 @@ package com.helger.photon.bootstrap4.stub;
 
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.bootstrap4.stub.init.PhotonStubServletInitializer;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletContainerInitializer;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;

@@ -18,9 +18,9 @@ package com.helger.photon.uictrls.autonumeric;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.request.IHCRequestField;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Special numeric edit for years from {@value #DEFAULT_MIN} to

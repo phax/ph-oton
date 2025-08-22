@@ -22,27 +22,26 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.concurrent.BasicThreadFactory;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.BasicThreadFactoryBuilder;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
-import com.helger.commons.state.EChange;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
+import jakarta.annotation.Nonnull;
+
 /**
- * The class handles audit items asynchronously. If a new audit item is to be
- * handled it is put into the {@link IConcurrentPerformer}'s queue as provided
- * in the constructor.<br>
- * Please ensure to call {@link #stop()} if this auditor is no longer used, so
- * that the created {@link ExecutorService} can be gracefully shutdown.
+ * The class handles audit items asynchronously. If a new audit item is to be handled it is put into
+ * the {@link IConcurrentPerformer}'s queue as provided in the constructor.<br>
+ * Please ensure to call {@link #stop()} if this auditor is no longer used, so that the created
+ * {@link ExecutorService} can be gracefully shutdown.
  *
  * @author Philip Helger
  */
@@ -50,9 +49,9 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 public class AsynchronousAuditor extends AbstractAuditor
 {
   // Just to have custom named threads....
-  private static final ThreadFactory THREAD_FACTORY = new BasicThreadFactory.Builder ().namingPattern ("AsyncAuditor")
-                                                                                       .daemon (true)
-                                                                                       .build ();
+  private static final ThreadFactory THREAD_FACTORY = new BasicThreadFactoryBuilder ().namingPattern ("AsyncAuditor")
+                                                                                      .daemon (true)
+                                                                                      .build ();
   private static final Logger LOGGER = LoggerFactory.getLogger (AsynchronousAuditor.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
@@ -93,13 +92,12 @@ public class AsynchronousAuditor extends AbstractAuditor
   }
 
   /**
-   * When using this auditor, it is important to call this {@link #stop()}
-   * method before shutdown. It avoids further queuing of objects and waits
-   * until all items are handled. This method blocks until all remaining objects
-   * are handled.
+   * When using this auditor, it is important to call this {@link #stop()} method before shutdown.
+   * It avoids further queuing of objects and waits until all items are handled. This method blocks
+   * until all remaining objects are handled.
    *
-   * @return {@link EChange#CHANGED} if the shutdown was performed,
-   *         {@link EChange#UNCHANGED} if the auditor was already shut down.
+   * @return {@link EChange#CHANGED} if the shutdown was performed, {@link EChange#UNCHANGED} if the
+   *         auditor was already shut down.
    */
   @Nonnull
   public EChange stop ()

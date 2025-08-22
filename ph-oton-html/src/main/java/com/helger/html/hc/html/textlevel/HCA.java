@@ -16,16 +16,16 @@
  */
 package com.helger.html.hc.html.textlevel;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
-import com.helger.commons.url.URLValidator;
+import com.helger.base.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+import com.helger.http.url.URLValidator;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;a&gt; element

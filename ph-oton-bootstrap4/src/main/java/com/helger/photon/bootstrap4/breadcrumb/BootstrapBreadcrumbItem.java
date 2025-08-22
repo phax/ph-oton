@@ -16,13 +16,13 @@
  */
 package com.helger.photon.bootstrap4.breadcrumb;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.AbstractHCLI;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Single item inside a {@link BootstrapBreadcrumbList}.

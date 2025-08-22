@@ -16,14 +16,11 @@
  */
 package com.helger.photon.core.job.longrun;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.base.state.ESuccess;
 import com.helger.photon.core.longrun.ILongRunningJob;
 import com.helger.photon.core.longrun.LongRunningJobManager;
 import com.helger.photon.core.longrun.LongRunningJobResult;
@@ -32,6 +29,9 @@ import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract scope aware long running job.

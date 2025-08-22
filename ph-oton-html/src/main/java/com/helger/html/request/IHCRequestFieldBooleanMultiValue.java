@@ -16,7 +16,7 @@
  */
 package com.helger.html.request;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Special request field for check boxes and radio buttons where the same field

@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.js.IHasJSCodeWithSettings;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * The common aspect of a package and a function.

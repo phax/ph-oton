@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.grid;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.lang.EnumHelper;
 
-import com.helger.commons.lang.EnumHelper;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Grid breakpoint name

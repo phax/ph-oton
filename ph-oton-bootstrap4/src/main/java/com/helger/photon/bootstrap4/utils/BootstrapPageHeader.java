@@ -16,14 +16,14 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
-import javax.annotation.Nullable;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap 4 page header.

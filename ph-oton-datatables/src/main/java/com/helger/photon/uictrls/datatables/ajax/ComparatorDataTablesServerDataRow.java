@@ -16,12 +16,12 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import javax.annotation.Nonnull;
+import com.helger.base.compare.IComparator;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.ICommonsList;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.compare.IComparator;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nonnull;
 
 final class ComparatorDataTablesServerDataRow implements IComparator <DataTablesServerDataRow>
 {

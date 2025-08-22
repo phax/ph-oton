@@ -16,11 +16,8 @@
  */
 package com.helger.photon.icon.bootstrapicons;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
@@ -31,6 +28,9 @@ import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap icons v1.11.3

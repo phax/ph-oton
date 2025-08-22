@@ -18,7 +18,7 @@ package com.helger.html.markdown;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Block emitter interface. An example for a code block emitter is given below:

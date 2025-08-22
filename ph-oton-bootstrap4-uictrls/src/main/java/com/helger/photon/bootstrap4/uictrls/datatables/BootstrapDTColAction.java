@@ -18,14 +18,14 @@ package com.helger.photon.bootstrap4.uictrls.datatables;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special action column. Has a special CSS class and is never sortable nor

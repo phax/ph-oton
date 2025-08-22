@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.script;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Simple way to define the script loading mode.

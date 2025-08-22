@@ -16,18 +16,18 @@
  */
 package com.helger.photon.connect.sftp;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.name.IHasDisplayName;
+import com.helger.annotation.CheckReturnValue;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.name.IHasDisplayName;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
 
+import jakarta.annotation.Nonnull;
+
 /**
- * Callback interface for executing SFTP actions. The {@link IHasDisplayName}
- * interface is only used for better messages in case of an error.
+ * Callback interface for executing SFTP actions. The {@link IHasDisplayName} interface is only used
+ * for better messages in case of an error.
  *
  * @author philip
  */
@@ -44,12 +44,10 @@ public interface IChannelSftpRunnable extends IHasDisplayName
   void execute (@Nonnull ChannelSftp aChannel) throws SftpException;
 
   /**
-   * Create a new runnable that first executes this action, and than the
-   * provided one.
+   * Create a new runnable that first executes this action, and than the provided one.
    *
    * @param aOther
-   *        The other runnable to execute after this. May not be
-   *        <code>null</code>.
+   *        The other runnable to execute after this. May not be <code>null</code>.
    * @return Never <code>null</code>.
    * @since 8.3.2
    */
@@ -61,8 +59,7 @@ public interface IChannelSftpRunnable extends IHasDisplayName
   }
 
   /**
-   * Create a new {@link IChannelSftpRunnable} that contains both parameters in
-   * a row.
+   * Create a new {@link IChannelSftpRunnable} that contains both parameters in a row.
    *
    * @param aLhs
    *        First runnable. May not be <code>null</code>.

@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.ext;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.FakeJS;
 import com.helger.html.hc.html.forms.AbstractHCButton;
 import com.helger.html.js.IHasJSCodeWithSettings;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A special &lt;button&gt; that changes the location of the current page.

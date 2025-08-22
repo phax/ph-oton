@@ -19,14 +19,14 @@ package com.helger.photon.uicore.html.select;
 import java.util.Comparator;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.compare.IComparator;
-import com.helger.commons.text.display.IDisplayTextProvider;
+import com.helger.collection.helper.CollectionSort;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.locale.GlobalLocaleManager;
+import com.helger.text.compare.ComparatorHelper;
+import com.helger.text.display.IDisplayTextProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCLanguageSelect extends HCExtSelect
 {
@@ -40,11 +40,11 @@ public class HCLanguageSelect extends HCExtSelect
 
     final Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
-      aComp = IComparator.getComparatorCollating (x -> x.getDisplayLanguage (aDisplayLocale), aDisplayLocale);
+      aComp = ComparatorHelper.getComparatorCollating (x -> x.getDisplayLanguage (aDisplayLocale), aDisplayLocale);
     else
       aComp = aDisplayTextProvider.getComparatorCollating (aDisplayLocale, aDisplayLocale);
 
-    for (final Locale aLocale : CollectionHelper.getSorted (aLocales, aComp))
+    for (final Locale aLocale : CollectionSort.getSorted (aLocales, aComp))
     {
       final String sDisplayLanguage = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aLocale,
                                                                                                           aDisplayLocale)

@@ -20,18 +20,15 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.string.StringParser;
-import com.helger.commons.typeconvert.TypeConverter;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.string.StringParser;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.helper.CollectionSort;
 import com.helger.html.hc.special.HCSpecialNodes;
 import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.IJsonObject;
@@ -44,7 +41,10 @@ import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
 import com.helger.servlet.request.IRequestParamMap;
+import com.helger.typeconvert.impl.TypeConverter;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * AJAX handler for filling DataTables
@@ -81,8 +81,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
   private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorDataTables.class);
 
   /**
-   * Extract the DataTables request data and convert them to a structured
-   * {@link DTSSRequestData}.
+   * Extract the DataTables request data and convert them to a structured {@link DTSSRequestData}.
    *
    * @param aRequestScope
    *        The current request scope. May not be <code>null</code>.
@@ -115,7 +114,8 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
           if (aOrderPerIndex == null)
             break;
 
-          final int nOrderColumn = Math.max (TypeConverter.convertToInt (aOrderPerIndex.getString (ORDER_COLUMN), 0), 0);
+          final int nOrderColumn = Math.max (TypeConverter.convertToInt (aOrderPerIndex.getString (ORDER_COLUMN), 0),
+                                             0);
           final String sOrderDir = aOrderPerIndex.getString (ORDER_DIR);
           final ESortOrder eOrderDir = EDataTablesOrderDirectionType.getSortOrderFromNameOrNull (sOrderDir);
           aOrderColumns.add (new DTSSRequestDataOrderColumn (nOrderColumn, eOrderDir));
@@ -144,18 +144,32 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
           final boolean bCSearchable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCHABLE), true);
           final boolean bCOrderable = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_ORDERABLE), true);
           final String sCSearchValue = aColumnsPerIndex.getString (COLUMNS_SEARCH, COLUMNS_SEARCH_VALUE);
-          final boolean bCSearchRegEx = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCH, COLUMNS_SEARCH_REGEX), true);
-          aColumnData.add (new DTSSRequestDataColumn (sCData, sCName, bCSearchable, bCOrderable, sCSearchValue, bCSearchRegEx));
+          final boolean bCSearchRegEx = StringParser.parseBool (aColumnsPerIndex.getString (COLUMNS_SEARCH,
+                                                                                            COLUMNS_SEARCH_REGEX),
+                                                                true);
+          aColumnData.add (new DTSSRequestDataColumn (sCData,
+                                                      sCName,
+                                                      bCSearchable,
+                                                      bCOrderable,
+                                                      sCSearchValue,
+                                                      bCSearchRegEx));
 
           ++nIndex;
         } while (true);
       }
     }
 
-    return new DTSSRequestData (nDraw, nDisplayStart, nDisplayLength, sSearchValue, bSearchRegEx, aColumnData, aOrderColumns);
+    return new DTSSRequestData (nDraw,
+                                nDisplayStart,
+                                nDisplayLength,
+                                sSearchValue,
+                                bSearchRegEx,
+                                aColumnData,
+                                aOrderColumns);
   }
 
-  private static void _sort (@Nonnull final DTSSRequestData aRequestData, @Nonnull final DataTablesServerData aServerData)
+  private static void _sort (@Nonnull final DTSSRequestData aRequestData,
+                             @Nonnull final DataTablesServerData aServerData)
   {
     // Sorting possible and necessary?
     if (aServerData.getRowCount () > 1)
@@ -216,7 +230,10 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
           final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
           if (aColumn == null)
           {
-            LOGGER.warn ("Invalid columnn index " + nSearchableCellIndex + " for columns " + Arrays.toString (aColumns));
+            LOGGER.warn ("Invalid columnn index " +
+                         nSearchableCellIndex +
+                         " for columns " +
+                         Arrays.toString (aColumns));
           }
           else
             if (aColumn.isSearchable ())
@@ -380,21 +397,27 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
     final int nTotalRecords = aServerData.getRowCount ();
     final int nTotalDisplayRecords = aResultRows.size ();
     final String sErrorMsg = null;
-    return new DTSSResponseData (aRequestData.getDraw (), nTotalRecords, nTotalDisplayRecords, aData, sErrorMsg, aSpecialNodes);
+    return new DTSSResponseData (aRequestData.getDraw (),
+                                 nTotalRecords,
+                                 nTotalDisplayRecords,
+                                 aData,
+                                 sErrorMsg,
+                                 aSpecialNodes);
   }
 
   public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("DataTables AJAX request: " + CollectionHelper.getSortedByKey (aRequestScope.params ()));
+      LOGGER.debug ("DataTables AJAX request: " + CollectionSort.getSortedByKey (aRequestScope.params ()));
 
     final DTSSRequestData aRequestData = extractDTSRequestData (aRequestScope);
 
     // Resolve dataTables from UIStateRegistry
     final String sDataTablesID = aRequestScope.params ().getAsString (OBJECT_ID);
     final DataTablesServerData aServerData = UIStateRegistry.getCurrent ()
-                                                            .getCastedState (DataTablesServerData.OT_DATATABLES, sDataTablesID);
+                                                            .getCastedState (DataTablesServerData.OT_DATATABLES,
+                                                                             sDataTablesID);
     if (aServerData == null)
     {
       LOGGER.error ("No such data tables ID: " + sDataTablesID);

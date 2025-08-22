@@ -16,9 +16,6 @@
  */
 package com.helger.photon.uictrls.prism;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.propertyvalue.CCSSValue;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -26,6 +23,9 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class PrismPluginLineNumbers implements IPrismPlugin
 {

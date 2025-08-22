@@ -19,11 +19,11 @@ package com.helger.photon.core.mock;
 import java.io.File;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.io.resourceprovider.IReadableResourceProvider;
+import com.helger.io.resourceprovider.IReadableResourceProvider;
 import com.helger.servlet.mock.MockServletContext;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A JUnit test rule that is suitable for all ph-oton projects. It is optimized

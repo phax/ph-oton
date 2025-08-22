@@ -56,10 +56,6 @@
   <dependencies>
     <dependency>
       <groupId>com.helger.commons</groupId>
-      <artifactId>ph-commons</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.commons</groupId>
       <artifactId>ph-collection</artifactId>
     </dependency>
     <dependency>
@@ -74,13 +70,6 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     
@@ -101,7 +90,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.io</Automatic-Module-Name>
             <Export-Package>com.helger.photon.io.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>

@@ -18,8 +18,6 @@ package com.helger.photon.bootstrap.demo.pub.page;
 
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -34,6 +32,8 @@ import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
+
+import jakarta.annotation.Nonnull;
 
 public class PagePublicFormGroups extends AbstractAppWebPage
 {

@@ -20,10 +20,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.collection.commons.ICommonsList;
 
-import com.helger.commons.collection.impl.ICommonsList;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract date format builder interface

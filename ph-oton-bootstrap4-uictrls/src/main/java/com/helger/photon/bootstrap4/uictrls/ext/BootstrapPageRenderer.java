@@ -18,10 +18,8 @@ package com.helger.photon.bootstrap4.uictrls.ext;
 
 import java.util.function.BiFunction;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.lang.GenericReflection;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.reflection.GenericReflection;
+import com.helger.base.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -44,6 +42,8 @@ import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.xservlet.forcedredirect.ForcedRedirectManager;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Common page part renderings.

@@ -18,16 +18,16 @@ package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSAssocArray;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x session part
@@ -54,8 +54,8 @@ public class FineUploader5Session implements IFineUploader5Part
   }
 
   /**
-   * Any additional headers you would like included with the GET request sent to
-   * your server. Ignored in IE9 and IE8 if the endpoint is cross-origin.
+   * Any additional headers you would like included with the GET request sent to your server.
+   * Ignored in IE9 and IE8 if the endpoint is cross-origin.
    *
    * @param aCustomHeaders
    *        Custom headers to be set.
@@ -69,8 +69,8 @@ public class FineUploader5Session implements IFineUploader5Part
   }
 
   /**
-   * Any additional headers you would like included with the GET request sent to
-   * your server. Ignored in IE9 and IE8 if the endpoint is cross-origin.
+   * Any additional headers you would like included with the GET request sent to your server.
+   * Ignored in IE9 and IE8 if the endpoint is cross-origin.
    *
    * @param aCustomHeaders
    *        Custom headers to be added.
@@ -79,13 +79,13 @@ public class FineUploader5Session implements IFineUploader5Part
   @Nonnull
   public FineUploader5Session addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
-    m_aSessionCustomHeaders.addAll (aCustomHeaders);
+    m_aSessionCustomHeaders.putAllIfNotNull (aCustomHeaders);
     return this;
   }
 
   /**
-   * Any additional headers you would like included with the GET request sent to
-   * your server. Ignored in IE9 and IE8 if the endpoint is cross-origin.
+   * Any additional headers you would like included with the GET request sent to your server.
+   * Ignored in IE9 and IE8 if the endpoint is cross-origin.
    *
    * @param sKey
    *        Custom header name
@@ -110,9 +110,8 @@ public class FineUploader5Session implements IFineUploader5Part
   }
 
   /**
-   * If non-null, Fine Uploader will send a GET request on startup to this
-   * endpoint, expecting a JSON response containing data about the initial file
-   * list to populate.
+   * If non-null, Fine Uploader will send a GET request on startup to this endpoint, expecting a
+   * JSON response containing data about the initial file list to populate.
    *
    * @param aEndpoint
    *        New value. May be <code>null</code>.
@@ -134,8 +133,7 @@ public class FineUploader5Session implements IFineUploader5Part
   }
 
   /**
-   * Any parameters you would like passed with the associated GET request to
-   * your server.
+   * Any parameters you would like passed with the associated GET request to your server.
    *
    * @param aParams
    *        New parameters to be set.
@@ -149,8 +147,7 @@ public class FineUploader5Session implements IFineUploader5Part
   }
 
   /**
-   * Any parameters you would like passed with the associated GET request to
-   * your server.
+   * Any parameters you would like passed with the associated GET request to your server.
    *
    * @param aParams
    *        New parameters to be added.
@@ -159,13 +156,12 @@ public class FineUploader5Session implements IFineUploader5Part
   @Nonnull
   public FineUploader5Session addParams (@Nullable final Map <String, String> aParams)
   {
-    m_aSessionParams.addAll (aParams);
+    m_aSessionParams.putAllIfNotNull (aParams);
     return this;
   }
 
   /**
-   * Any parameters you would like passed with the associated GET request to
-   * your server.
+   * Any parameters you would like passed with the associated GET request to your server.
    *
    * @param sKey
    *        Parameter name
@@ -189,8 +185,8 @@ public class FineUploader5Session implements IFineUploader5Part
   }
 
   /**
-   * Set this to false if you do not want the file list to be retrieved from the
-   * server as part of a reset.
+   * Set this to false if you do not want the file list to be retrieved from the server as part of a
+   * reset.
    *
    * @param bRefreshOnReset
    *        New value

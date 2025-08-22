@@ -18,29 +18,29 @@ package com.helger.photon.uictrls.typeahead;
 
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.json.IHasJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Represents a single typeahead datum (= data record) with the minimum data
- * elements {@link #JSON_VALUE} and {@link #JSON_TOKENS}.
+ * Represents a single typeahead datum (= data record) with the minimum data elements
+ * {@link #JSON_VALUE} and {@link #JSON_TOKENS}.
  *
  * @author Philip Helger
  */
@@ -56,8 +56,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   private String m_sID;
 
   /**
-   * Constructor using {@link #getTokensFromValue(String)} to tokenize the
-   * string.
+   * Constructor using {@link #getTokensFromValue(String)} to tokenize the string.
    *
    * @param sValue
    *        Value to display. Must not be <code>null</code>.
@@ -90,7 +89,9 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    * @param sID
    *        Optional ID of the element. May be <code>null</code>.
    */
-  public TypeaheadDatum (@Nonnull final String sValue, @Nonnull final Collection <String> aTokens, @Nullable final String sID)
+  public TypeaheadDatum (@Nonnull final String sValue,
+                         @Nonnull final Collection <String> aTokens,
+                         @Nullable final String sID)
   {
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
@@ -149,8 +150,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   }
 
   /**
-   * @return This object as JSON object representation. May not be
-   *         <code>null</code>.
+   * @return This object as JSON object representation. May not be <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -159,7 +159,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   public IJsonObject getAsJson ()
   {
     return new JsonObject ().add (JSON_VALUE, m_sValue)
-                            .addJson (JSON_TOKENS, new JsonArray ().addAll (m_aTokens))
+                            .add (JSON_TOKENS, new JsonArray ().addAll (m_aTokens))
                             .addIfNotNull (JSON_ID, m_sID);
   }
 
@@ -195,8 +195,8 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   }
 
   /**
-   * Create a new TypeaheadDatum with a text and an ID using
-   * {@link #getTokensFromValue(String)} to tokenize the string.
+   * Create a new TypeaheadDatum with a text and an ID using {@link #getTokensFromValue(String)} to
+   * tokenize the string.
    *
    * @param sValue
    *        Value to display. Must not be <code>null</code>.

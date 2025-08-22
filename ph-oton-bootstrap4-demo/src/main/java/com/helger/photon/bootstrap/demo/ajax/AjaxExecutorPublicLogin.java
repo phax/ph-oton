@@ -18,12 +18,10 @@ package com.helger.photon.bootstrap.demo.ajax;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.debug.GlobalDebug;
+import com.helger.base.debug.GlobalDebug;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.JsonObject;
@@ -38,6 +36,8 @@ import com.helger.photon.core.login.CLogin;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Ajax executor to login a user from view application.

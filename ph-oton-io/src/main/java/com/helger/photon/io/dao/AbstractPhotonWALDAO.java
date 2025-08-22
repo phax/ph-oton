@@ -18,11 +18,11 @@ package com.helger.photon.io.dao;
 
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.dao.wal.AbstractWALDAO;
 import com.helger.photon.io.WebFileIO;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special {@link AbstractWALDAO} that uses the {@link WebFileIO#getDataIO()}

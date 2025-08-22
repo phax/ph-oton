@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCHasName;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCHasState;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for controls like edit, checkbox, radio button, select or text

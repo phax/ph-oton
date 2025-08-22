@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.page;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.state.EContinue;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.uicore.css.CPageParam;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IWebPageCSRFHandler}. Using the nonce from

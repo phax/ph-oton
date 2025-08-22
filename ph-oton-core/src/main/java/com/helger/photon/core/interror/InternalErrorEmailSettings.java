@@ -16,27 +16,26 @@
  */
 package com.helger.photon.core.interror;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.email.IEmailAddress;
-import com.helger.commons.lang.ICloneable;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.clone.ICloneable;
+import com.helger.base.email.IEmailAddress;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.CollectionFind;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.smtp.settings.ISMTPSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special email settings for Internal Error handling.
  *
  * @author Philip Helger
- * @since 7.0.4 - was previously an internal class to
- *        {@link InternalErrorHandler}
+ * @since 7.0.4 - was previously an internal class to {@link InternalErrorHandler}
  */
 @NotThreadSafe
 public final class InternalErrorEmailSettings implements ICloneable <InternalErrorEmailSettings>
@@ -91,7 +90,7 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
   @Nonnull
   public InternalErrorEmailSettings setReceiverAddresses (@Nullable final Iterable <? extends IEmailAddress> aReceiverAddresses)
   {
-    if (aReceiverAddresses != null && CollectionHelper.containsAnyNullElement (aReceiverAddresses))
+    if (aReceiverAddresses != null && CollectionFind.containsAnyNullElement (aReceiverAddresses))
       throw new IllegalArgumentException ("The list of receiver addresses may not contain any null element!");
 
     m_aReceiverAddresses.setAll (aReceiverAddresses);

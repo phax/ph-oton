@@ -19,7 +19,7 @@ package com.helger.html.markdown;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public abstract class AbstractMarkdownPlugin
 {

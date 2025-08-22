@@ -19,31 +19,31 @@ package com.helger.photon.app.html;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.concurrent.SimpleLock;
-import com.helger.commons.io.resource.IReadableResource;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.concurrent.SimpleLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.meta.IMetaElement;
 import com.helger.html.meta.MetaElement;
 import com.helger.html.meta.MetaElementList;
+import com.helger.io.resource.IReadableResource;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.util.XMLMapHandler;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * This class keeps track of all the meta elements that must be included
- * globally or for a single request.
+ * This class keeps track of all the meta elements that must be included globally or for a single
+ * request.
  *
  * @author Philip Helger
  */
@@ -112,8 +112,7 @@ public final class PhotonMetaElements
   }
 
   /**
-   * @return A non-<code>null</code> set with all meta elements to be included
-   *         globally.
+   * @return A non-<code>null</code> set with all meta elements to be included globally.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -128,8 +127,7 @@ public final class PhotonMetaElements
   }
 
   /**
-   * @return <code>true</code> if at least a single meta element has been
-   *         registered globally.
+   * @return <code>true</code> if at least a single meta element has been registered globally.
    */
   public static boolean hasRegisteredMetaElementsForGlobal ()
   {
@@ -167,8 +165,7 @@ public final class PhotonMetaElements
    * Unregister an existing meta element only from this request
    *
    * @param sMetaElementName
-   *        The name of the meta element to be removed. May not be
-   *        <code>null</code>.
+   *        The name of the meta element to be removed. May not be <code>null</code>.
    */
   public static void unregisterMetaElementFromThisRequest (@Nullable final String sMetaElementName)
   {
@@ -188,8 +185,7 @@ public final class PhotonMetaElements
   }
 
   /**
-   * @return A non-<code>null</code> set with all meta elements to be included
-   *         in this request.
+   * @return A non-<code>null</code> set with all meta elements to be included in this request.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -207,8 +203,8 @@ public final class PhotonMetaElements
   }
 
   /**
-   * @return <code>true</code> if at least a single CSS path has been registered
-   *         for this request only
+   * @return <code>true</code> if at least a single CSS path has been registered for this request
+   *         only
    */
   public static boolean hasRegisteredMetaElementsForThisRequest ()
   {

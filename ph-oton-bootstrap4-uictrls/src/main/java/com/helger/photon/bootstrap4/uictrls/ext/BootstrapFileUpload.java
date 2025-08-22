@@ -18,18 +18,12 @@ package com.helger.photon.bootstrap4.uictrls.ext;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringReplace;
 import com.helger.css.decl.CSSDeclaration;
 import com.helger.css.decl.CSSExpression;
 import com.helger.css.decl.CSSSelector;
@@ -51,6 +45,13 @@ import com.helger.html.js.EJSEvent;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Custom file upload.
@@ -137,8 +138,8 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
   }
 
   /**
-   * Create the "placeholder" component. By default it is a "label". To switch
-   * this to a "div" or a "span" just override this method.
+   * Create the "placeholder" component. By default it is a "label". To switch this to a "div" or a
+   * "span" just override this method.
    *
    * @param sPlaceholder
    *        Place holder text to use. May not be <code>null</code>.
@@ -190,7 +191,7 @@ public class BootstrapFileUpload extends AbstractHCDiv <BootstrapFileUpload>
     }
     else
       addChild (new HCStyle (".custom-file-label::after { content: \"" +
-                             StringHelper.replaceAll (sButtonText, "\"", "\\\"") +
+                             StringReplace.replaceAll (sButtonText, "\"", "\\\"") +
                              "\";  }"));
 
     // Update label with selected file

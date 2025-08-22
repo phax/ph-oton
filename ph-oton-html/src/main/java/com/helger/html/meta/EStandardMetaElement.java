@@ -18,12 +18,12 @@ package com.helger.html.meta;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.Nonempty;
+import com.helger.base.lang.EnumHelper;
+import com.helger.http.CHttpHeader;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.http.CHttpHeader;
-import com.helger.commons.lang.EnumHelper;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A class with a set of predefined meta tag names.

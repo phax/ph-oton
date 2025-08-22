@@ -19,14 +19,12 @@ package com.helger.photon.bootstrap4.stub.init;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.PresentForCodeCoverage;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.photon.ajax.servlet.PhotonAjaxServlet;
 import com.helger.photon.api.servlet.PhotonAPIServlet;
 import com.helger.photon.bootstrap4.stub.PhotonStubServletContextListener;
@@ -39,6 +37,7 @@ import com.helger.photon.core.userdata.UserStreamServlet;
 import com.helger.photon.core.userdata.UserUploadServlet;
 import com.helger.servlet.filter.CharacterEncodingFilter;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterRegistration;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;

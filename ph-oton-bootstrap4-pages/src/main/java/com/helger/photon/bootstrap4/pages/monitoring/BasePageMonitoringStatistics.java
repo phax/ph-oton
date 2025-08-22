@@ -20,32 +20,16 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.math.MathHelper;
-import com.helger.commons.statistics.IStatisticsHandlerCache;
-import com.helger.commons.statistics.IStatisticsHandlerCounter;
-import com.helger.commons.statistics.IStatisticsHandlerKeyedCounter;
-import com.helger.commons.statistics.IStatisticsHandlerKeyedSize;
-import com.helger.commons.statistics.IStatisticsHandlerKeyedTimer;
-import com.helger.commons.statistics.IStatisticsHandlerSize;
-import com.helger.commons.statistics.IStatisticsHandlerTimer;
-import com.helger.commons.statistics.util.IStatisticsVisitorCallback;
-import com.helger.commons.statistics.util.StatisticsVisitor;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.CGlobal;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.numeric.BigHelper;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
@@ -60,9 +44,25 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.statistics.api.IStatisticsHandlerCache;
+import com.helger.statistics.api.IStatisticsHandlerCounter;
+import com.helger.statistics.api.IStatisticsHandlerKeyedCounter;
+import com.helger.statistics.api.IStatisticsHandlerKeyedSize;
+import com.helger.statistics.api.IStatisticsHandlerKeyedTimer;
+import com.helger.statistics.api.IStatisticsHandlerSize;
+import com.helger.statistics.api.IStatisticsHandlerTimer;
+import com.helger.statistics.visit.IStatisticsVisitorCallback;
+import com.helger.statistics.visit.StatisticsVisitor;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.util.statistics.StatisticsExporter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Page with all currently available in memory statistics.
@@ -275,9 +275,9 @@ public class BasePageMonitoringStatistics <WPECTYPE extends IWebPageExecutionCon
           final int nHits = aHandler.getHits ();
           final int nMisses = aHandler.getMisses ();
           final int nScale = 4;
-          final BigDecimal aHitsPerc = MathHelper.getDividedBigDecimal (nHits, nTotal, nScale, RoundingMode.HALF_UP)
-                                                 .multiply (CGlobal.BIGDEC_100)
-                                                 .setScale (nScale - 2);
+          final BigDecimal aHitsPerc = BigHelper.getDividedBigDecimal (nHits, nTotal, nScale, RoundingMode.HALF_UP)
+                                                .multiply (CGlobal.BIGDEC_100)
+                                                .setScale (nScale - 2);
           final BigDecimal aMissPerc = CGlobal.BIGDEC_100.subtract (aHitsPerc);
           aTableCache.addBodyRow ()
                      .addCells (sName,

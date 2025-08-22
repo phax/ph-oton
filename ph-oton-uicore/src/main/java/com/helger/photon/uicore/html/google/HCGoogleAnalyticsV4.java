@@ -16,13 +16,10 @@
  */
 package com.helger.photon.uicore.html.google;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -35,7 +32,10 @@ import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.jscode.type.JSTypeDate;
 import com.helger.html.resource.js.ConstantJSPathProvider;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.html.PhotonJS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Control for emitting Google Analytics V4 code.

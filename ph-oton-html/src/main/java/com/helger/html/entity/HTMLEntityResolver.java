@@ -18,22 +18,22 @@ package com.helger.html.entity;
 
 import java.io.InputStream;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.Singleton;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.stream.StreamHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Singleton;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.CHTMLDocTypes;
+import com.helger.io.resource.ClassPathResource;
 import com.helger.xml.sax.InputSourceFactory;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * The SAX entity resolver for XHTML resources.

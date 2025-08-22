@@ -16,9 +16,9 @@
  */
 package com.helger.photon.uicore.icon;
 
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.html.IHCElement;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Contains all default icon types. A default icon is an abstraction level for

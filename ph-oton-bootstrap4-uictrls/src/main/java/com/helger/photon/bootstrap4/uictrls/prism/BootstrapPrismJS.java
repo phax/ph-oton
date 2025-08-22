@@ -16,14 +16,14 @@
  */
 package com.helger.photon.bootstrap4.uictrls.prism;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.prism.EPrismLanguage;
 import com.helger.photon.uictrls.prism.HCPrismJS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Bootstrap version of prism.

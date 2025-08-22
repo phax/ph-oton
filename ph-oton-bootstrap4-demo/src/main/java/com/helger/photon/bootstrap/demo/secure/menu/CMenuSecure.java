@@ -16,7 +16,7 @@
  */
 package com.helger.photon.bootstrap.demo.secure.menu;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 @Immutable
 public final class CMenuSecure

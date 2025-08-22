@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uicore.page;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.equals.EqualsHelper;
+import com.helger.base.equals.EqualsHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.css.CPageParam;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface IWebPageExecutionContext extends ILayoutExecutionContext
 {

@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.embedded;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.http.url.ISimpleURL;
 
-import com.helger.commons.url.ISimpleURL;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;img&gt; element

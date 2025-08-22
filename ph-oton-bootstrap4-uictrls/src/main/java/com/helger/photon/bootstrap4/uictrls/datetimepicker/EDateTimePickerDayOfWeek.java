@@ -19,8 +19,9 @@ package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 import java.time.DayOfWeek;
 import java.util.Calendar;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nullable;
+import com.helger.annotation.Nonnegative;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Defines the day of week constants used by moments.js

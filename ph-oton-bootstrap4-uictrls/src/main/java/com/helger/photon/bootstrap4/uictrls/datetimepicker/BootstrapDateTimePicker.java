@@ -23,18 +23,15 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTToString;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
+import com.helger.datetime.format.PDTToString;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -57,6 +54,9 @@ import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsJSPathProvider;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.icon.fontawesome.EFontAwesome4Icon;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class represents a wrapper around the DateTime Picker for Bootstrap from
@@ -201,10 +201,9 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * Set the overall mode. By default DATE is selected. This implies, that the
-   * default format for the locale (as specified in the constructor is used). If
-   * you don't like the default, manually set the format but this should not be
-   * necessary.
+   * Set the overall mode. By default DATE is selected. This implies, that the default format for
+   * the locale (as specified in the constructor is used). If you don't like the default, manually
+   * set the format but this should not be necessary.
    *
    * @param eMode
    *        Mode to use. May not be <code>null</code>.
@@ -226,8 +225,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * Set the format string to be used. This is only necessary, if the default
-   * one from {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
+   * Set the format string to be used. This is only necessary, if the default one from
+   * {@link #setMode(EBootstrap4DateTimePickerMode)} is not applicable.
    *
    * @param sFormat
    *        Format string to be used. May be <code>null</code>.
@@ -485,9 +484,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * @return The icon that is by default prepended to each date time picker
-   *         input group. By default it is {@link #DEFAULT_PREPEND_ICON}. May
-   *         also be <code>null</code>.
+   * @return The icon that is by default prepended to each date time picker input group. By default
+   *         it is {@link #DEFAULT_PREPEND_ICON}. May also be <code>null</code>.
    * @since 8.3.1
    */
   @Nullable
@@ -497,9 +495,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * Set the default icon that is prepended to each date time picker input
-   * group. Call this method with <code>null</code> to avoid the default
-   * calendar icon to be drawn.
+   * Set the default icon that is prepended to each date time picker input group. Call this method
+   * with <code>null</code> to avoid the default calendar icon to be drawn.
    *
    * @param aPrependIcon
    *        The prepend icon to be used. May be <code>null</code>.
@@ -514,11 +511,11 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * @return The mutable icon map for the calendar. The key depends on the JS
-   *         version used. Currently this can be
-   *         <code>time, date, up, down, previous, next, today, clear or close</code>.
-   *         The value is the String that contains the CSS classes to be applied
-   *         (e.g. <code>fa fa-calendar</code>).
+   * @return The mutable icon map for the calendar. The key depends on the JS version used.
+   *         Currently this can be
+   *         <code>time, date, up, down, previous, next, today, clear or close</code>. The value is
+   *         the String that contains the CSS classes to be applied (e.g.
+   *         <code>fa fa-calendar</code>).
    */
   @Nonnull
   @ReturnsMutableObject
@@ -592,8 +589,8 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
   }
 
   /**
-   * @return A {@link JSAssocArray} with all options for this date and time
-   *         Picker. Never <code>null</code>.
+   * @return A {@link JSAssocArray} with all options for this date and time Picker. Never
+   *         <code>null</code>.
    */
   @Nonnull
   public JSAssocArray getJSOptions ()
@@ -651,7 +648,7 @@ public class BootstrapDateTimePicker extends BootstrapInputGroup
 
     // Add icons
     if (m_aIcons.isNotEmpty ())
-      aOptions.add ("icons", new JsonObject ().addAll (m_aIcons));
+      aOptions.add ("icons", new JsonObject ().addAllAny (m_aIcons));
 
     return aOptions;
   }

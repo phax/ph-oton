@@ -16,21 +16,23 @@
  */
 package com.helger.html.hc.html;
 
+import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.attr.IAttributeContainer;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.collection.CollectionFind;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.CHTMLAttributes;
+import com.helger.typeconvert.collection.IAttributeContainer;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special attribute container for HC elements
@@ -50,7 +52,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    */
   default boolean hasDataAttrs ()
   {
-    return CollectionHelper.containsAny (keySet (), x -> CHTMLAttributes.isDataAttrName (x.getName ()));
+    return CollectionFind.containsAny (keySet (), x -> CHTMLAttributes.isDataAttrName (x.getName ()));
   }
 
   /**
@@ -99,8 +101,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    * <code>setCustomAttr ("data-"+sName, nValue)</code>.
    *
    * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The name of the attribute. If it is <code>null</code> nothing happens
    * @param nValue
    *        The value of the attribute that is converted to a String.
    * @return {@link EChange}
@@ -116,8 +117,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    * <code>setCustomAttr ("data-"+sName, nValue)</code>.
    *
    * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The name of the attribute. If it is <code>null</code> nothing happens
    * @param nValue
    *        The value of the attribute that is converted to a String.
    * @return {@link EChange}
@@ -133,11 +133,9 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    * <code>setCustomAttr ("data-"+sName, sValue)</code>.
    *
    * @param sName
-   *        The name of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The name of the attribute. If it is <code>null</code> nothing happens
    * @param sValue
-   *        The value of the attribute. If it is <code>null</code> nothing
-   *        happens
+   *        The value of the attribute. If it is <code>null</code> nothing happens
    * @return {@link EChange}
    */
   @Nonnull
@@ -209,12 +207,12 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
-  default EChange setAriaDescribedBy (@Nonnull final Iterable <? extends IHCElement <?>> aDescribedByMultiple)
+  default EChange setAriaDescribedBy (@Nonnull final List <? extends IHCElement <?>> aDescribedByMultiple)
   {
-    return setAriaDescribedBy (StringHelper.imploder ()
-                                           .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
-                                           .separator (' ')
-                                           .build ());
+    return setAriaDescribedBy (StringImplode.imploder ()
+                                            .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                            .separator (' ')
+                                            .build ());
   }
 
   @Nonnull
@@ -229,10 +227,10 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   @Nonnull
   default EChange setAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
   {
-    return setAriaDescribedBy (StringHelper.imploder ()
-                                           .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
-                                           .separator (' ')
-                                           .build ());
+    return setAriaDescribedBy (StringImplode.imploder ()
+                                            .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
+                                            .separator (' ')
+                                            .build ());
   }
 
   @Nonnull
@@ -331,19 +329,12 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   }
 
   @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
+  default EChange setAriaLabeledBy (@Nonnull final List <? extends IHCElement <?>> aLabeledByMultiple)
   {
-    return setAriaLabeledBy (StringHelper.imploder ()
-                                         .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
-                                         .separator (' ')
-                                         .build ());
-  }
-
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.7")
-  default EChange addAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
-  {
-    return addToAriaLabeledBy (aLabeledByMultiple);
+    return setAriaLabeledBy (StringImplode.imploder ()
+                                          .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
+                                          .separator (' ')
+                                          .build ());
   }
 
   @Nonnull
@@ -358,10 +349,10 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   @Nonnull
   default EChange setAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
   {
-    return setAriaLabeledBy (StringHelper.imploder ()
-                                         .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
-                                         .separator (' ')
-                                         .build ());
+    return setAriaLabeledBy (StringImplode.imploder ()
+                                          .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
+                                          .separator (' ')
+                                          .build ());
   }
 
   @Nonnull

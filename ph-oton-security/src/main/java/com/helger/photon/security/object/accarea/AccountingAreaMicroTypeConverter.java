@@ -18,11 +18,8 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.system.SystemHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.system.SystemHelper;
 import com.helger.masterdata.address.PostalAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
@@ -33,6 +30,9 @@ import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <AccountingArea>
 {

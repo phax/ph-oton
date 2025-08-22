@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uicore.page;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Logging implementation of {@link ICSRFErrorHandler}

@@ -18,13 +18,11 @@ package com.helger.photon.bootstrap4.form;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -35,6 +33,8 @@ import com.helger.photon.bootstrap4.CBootstrap;
 import com.helger.photon.bootstrap4.grid.BootstrapGridSpec;
 import com.helger.photon.bootstrap4.grid.IBootstrapGridElement;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
+
+import jakarta.annotation.Nonnull;
 
 @NotThreadSafe
 public class BootstrapForm extends AbstractHCForm <BootstrapForm> implements IBootstrapFormGroupContainer <BootstrapForm>

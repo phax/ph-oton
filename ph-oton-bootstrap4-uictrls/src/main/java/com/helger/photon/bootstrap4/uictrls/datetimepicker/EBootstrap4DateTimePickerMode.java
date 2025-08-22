@@ -19,9 +19,9 @@ package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 import java.util.Locale;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
+import com.helger.datetime.format.PDTFormatPatterns;
 
-import com.helger.commons.datetime.PDTFormatPatterns;
+import jakarta.annotation.Nonnull;
 
 /**
  * Action mode for the {@link BootstrapDateTimePicker}.

@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.helger.annotation.CheckReturnValue;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElementWithInternalChildren;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for OLs and ULs

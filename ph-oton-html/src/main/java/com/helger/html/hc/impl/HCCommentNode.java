@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroComment;
 import com.helger.xml.microdom.MicroComment;
 import com.helger.xml.serialize.write.XMLEmitter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents a single CDATA node as HC node.

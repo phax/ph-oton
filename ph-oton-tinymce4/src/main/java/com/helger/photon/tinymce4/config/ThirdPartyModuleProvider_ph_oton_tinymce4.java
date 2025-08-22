@@ -16,14 +16,14 @@
  */
 package com.helger.photon.tinymce4.config;
 
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.commons.thirdparty.ELicense;
-import com.helger.commons.thirdparty.IThirdPartyModule;
-import com.helger.commons.thirdparty.IThirdPartyModuleProviderSPI;
-import com.helger.commons.thirdparty.ThirdPartyModule;
+import com.helger.annotation.style.IsSPIImplementation;
+import com.helger.base.thirdparty.ELicense;
+import com.helger.base.thirdparty.IThirdPartyModule;
+import com.helger.base.thirdparty.IThirdPartyModuleProviderSPI;
+import com.helger.base.thirdparty.ThirdPartyModule;
 import com.helger.photon.tinymce4.CTinyMCE4;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Implement this SPI interface if your JAR file contains external third party

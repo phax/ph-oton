@@ -16,13 +16,13 @@
  */
 package com.helger.photon.bootstrap4.dropdown;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.textlevel.AbstractHCSpan;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 public class BootstrapDropdownText extends AbstractHCSpan <BootstrapDropdownText>
 {

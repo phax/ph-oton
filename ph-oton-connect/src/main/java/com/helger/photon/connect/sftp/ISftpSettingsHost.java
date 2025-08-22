@@ -16,15 +16,15 @@
  */
 package com.helger.photon.connect.sftp;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.CGlobal;
+import com.helger.base.name.IHasDisplayName;
+import com.helger.base.string.StringHelper;
 import com.helger.network.port.DefaultNetworkPorts;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for SFTP settings per host. These settings

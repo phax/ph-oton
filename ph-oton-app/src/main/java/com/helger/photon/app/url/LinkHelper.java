@@ -16,24 +16,24 @@
  */
 package com.helger.photon.app.url;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.SimpleURL;
-import com.helger.commons.url.URLProtocolRegistry;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.http.url.SimpleURL;
+import com.helger.http.url.URLProtocolRegistry;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Misc utilities to create link URLs.
@@ -46,8 +46,8 @@ public final class LinkHelper
   public static final String STREAM_SERVLET_NAME_REGEX = "[a-zA-Z0-9-_]+";
 
   /**
-   * The default name of the stream servlet. If this is different in you
-   * application you may not use the methods that refer to this path!
+   * The default name of the stream servlet. If this is different in you application you may not use
+   * the methods that refer to this path!
    */
   public static final String DEFAULT_STREAM_SERVLET_NAME = "stream";
 
@@ -84,8 +84,7 @@ public final class LinkHelper
   }
 
   /**
-   * @return The relative path of the stream servlet. Default is
-   *         <code>/stream</code>
+   * @return The relative path of the stream servlet. Default is <code>/stream</code>
    * @see #getStreamServletName()
    */
   @Nonnull
@@ -96,9 +95,8 @@ public final class LinkHelper
   }
 
   /**
-   * Special "has known protocol" version that also supports the pseudo protocol
-   * "//" that maps to either "http" or "https" depending on the surrounding
-   * setup.
+   * Special "has known protocol" version that also supports the pseudo protocol "//" that maps to
+   * either "http" or "https" depending on the surrounding setup.
    *
    * @param sURI
    *        Source URI. MAy be <code>null</code>.
@@ -128,16 +126,14 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the relative context path in case the passed
-   * href has no protocol yet.<br>
-   * Important: this method does not add the session ID in case cookies are
-   * disabled by the client!
+   * Prefix the passed href with the relative context path in case the passed href has no protocol
+   * yet.<br>
+   * Important: this method does not add the session ID in case cookies are disabled by the client!
    *
    * @param sHRef
    *        The href to be extended. May not be <code>null</code>.
    * @return Either the original href if already absolute or
-   *         <code>/webapp-context/<i>href</i></code> otherwise. Never
-   *         <code>null</code>.
+   *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
   @Nonnull
   public static String getURIWithContext (@Nonnull final String sHRef)
@@ -153,20 +149,20 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the relative context path in case the passed
-   * href has no protocol yet.
+   * Prefix the passed href with the relative context path in case the passed href has no protocol
+   * yet.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param sHRef
    *        The href to be extended. May not be <code>null</code>.
    * @return Either the original href if already absolute or
-   *         <code>/webapp-context/<i>href</i></code> otherwise. Never
-   *         <code>null</code>.
+   *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
   @Nonnull
-  public static String getURIWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sHRef)
+  public static String getURIWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                          @Nonnull final String sHRef)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notNull (sHRef, "HRef");
@@ -180,16 +176,14 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the relative context path in case the passed
-   * href has no protocol yet.<br>
-   * Important: this method does not add the session ID in case cookies are
-   * disabled by the client!
+   * Prefix the passed href with the relative context path in case the passed href has no protocol
+   * yet.<br>
+   * Important: this method does not add the session ID in case cookies are disabled by the client!
    *
    * @param sHRef
    *        The href to be extended. May not be <code>null</code>.
    * @return Either the original href if already absolute or
-   *         <code>/webapp-context/<i>href</i></code> otherwise. Never
-   *         <code>null</code>.
+   *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
   @Nonnull
   public static SimpleURL getURLWithContext (@Nonnull final String sHRef)
@@ -198,35 +192,34 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the relative context path in case the passed
-   * href has no protocol yet.
+   * Prefix the passed href with the relative context path in case the passed href has no protocol
+   * yet.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param sHRef
    *        The href to be extended. May not be <code>null</code>.
    * @return Either the original href if already absolute or
-   *         <code>/webapp-context/<i>href</i></code> otherwise. Never
-   *         <code>null</code>.
+   *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
   @Nonnull
-  public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sHRef)
+  public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                             @Nonnull final String sHRef)
   {
     return new SimpleURL (getURIWithContext (aRequestScope, sHRef));
   }
 
   /**
-   * Prefix the passed href with the absolute server + context path in case the
-   * passed href has no protocol yet.<br>
-   * Important: this method does not add the session ID in case cookies are
-   * disabled by the client!
+   * Prefix the passed href with the absolute server + context path in case the passed href has no
+   * protocol yet.<br>
+   * Important: this method does not add the session ID in case cookies are disabled by the client!
    *
    * @param sHRef
    *        The href to be extended. May not be <code>null</code>.
    * @return Either the original href if already absolute or
-   *         <code>http://servername:8123/webapp-context/<i>href</i></code>
-   *         otherwise. Never <code>null</code>.
+   *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise. Never
+   *         <code>null</code>.
    */
   @Nonnull
   public static String getURIWithServerAndContext (@Nonnull final String sHRef)
@@ -241,17 +234,17 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the absolute server + context path in case the
-   * passed href has no protocol yet.
+   * Prefix the passed href with the absolute server + context path in case the passed href has no
+   * protocol yet.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param sHRef
    *        The href to be extended. May not be <code>null</code>.
    * @return Either the original href if already absolute or
-   *         <code>http://servername:8123/webapp-context/<i>href</i></code>
-   *         otherwise. Never <code>null</code>.
+   *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise. Never
+   *         <code>null</code>.
    */
   @Nonnull
   public static String getURIWithServerAndContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -270,16 +263,14 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the absolute server + context path in case the
-   * passed href has no protocol yet.<br>
-   * Important: this method does not add the session ID in case cookies are
-   * disabled by the client!
+   * Prefix the passed href with the absolute server + context path in case the passed href has no
+   * protocol yet.<br>
+   * Important: this method does not add the session ID in case cookies are disabled by the client!
    *
    * @param sHRef
    *        The href to be extended.
    * @return Either the original href if already absolute or
-   *         <code>http://servername:8123/webapp-context/<i>href</i></code>
-   *         otherwise.
+   *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise.
    */
   @Nonnull
   public static SimpleURL getURLWithServerAndContext (@Nonnull final String sHRef)
@@ -288,17 +279,16 @@ public final class LinkHelper
   }
 
   /**
-   * Prefix the passed href with the absolute server + context path in case the
-   * passed href has no protocol yet.
+   * Prefix the passed href with the absolute server + context path in case the passed href has no
+   * protocol yet.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param sHRef
    *        The href to be extended.
    * @return Either the original href if already absolute or
-   *         <code>http://servername:8123/webapp-context/<i>href</i></code>
-   *         otherwise.
+   *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise.
    */
   @Nonnull
   public static SimpleURL getURLWithServerAndContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -308,9 +298,8 @@ public final class LinkHelper
   }
 
   /**
-   * @return A link to the start page without any session ID. Never
-   *         <code>null</code>. E.g. <code>/</code> or <code>/context</code>.
-   *         This is useful for logout links.
+   * @return A link to the start page without any session ID. Never <code>null</code>. E.g.
+   *         <code>/</code> or <code>/context</code>. This is useful for logout links.
    */
   @Nonnull
   public static SimpleURL getHomeLinkWithoutSession ()
@@ -320,22 +309,22 @@ public final class LinkHelper
   }
 
   /**
-   * Get the default URL to stream the passed URL. It is assumed that the
-   * servlet is located under the path "/stream". Because of the logic of the
-   * stream servlet, no parameter are assumed.
+   * Get the default URL to stream the passed URL. It is assumed that the servlet is located under
+   * the path "/stream". Because of the logic of the stream servlet, no parameter are assumed.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param sURL
-   *        The URL to be streamed. If it does not start with a slash ("/") one
-   *        is prepended automatically. If the URL already has a protocol, it is
-   *        returned unchanged. May neither be <code>null</code> nor empty.
+   *        The URL to be streamed. If it does not start with a slash ("/") one is prepended
+   *        automatically. If the URL already has a protocol, it is returned unchanged. May neither
+   *        be <code>null</code> nor empty.
    * @return The URL incl. the context to be stream. E.g.
    *         <code>/<i>webapp-context</i>/stream/<i>URL</i></code>.
    */
   @Nonnull
-  public static SimpleURL getStreamURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty final String sURL)
+  public static SimpleURL getStreamURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @Nonnull @Nonempty final String sURL)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURL, "URL");

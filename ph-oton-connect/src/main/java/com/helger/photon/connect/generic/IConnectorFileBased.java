@@ -21,11 +21,11 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillClose;
+import com.helger.annotation.WillClose;
+import com.helger.base.state.ESuccess;
 
-import com.helger.commons.state.ESuccess;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConnector <HANDLETYPE>
 {

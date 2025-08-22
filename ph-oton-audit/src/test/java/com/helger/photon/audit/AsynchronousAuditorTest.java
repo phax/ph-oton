@@ -25,10 +25,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.helger.commons.concurrent.ThreadHelper;
+import com.helger.base.concurrent.ThreadHelper;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.type.ObjectType;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.type.ObjectType;
 import com.helger.photon.audit.mock.MockCurrentUserIDProvider;
 
 /**

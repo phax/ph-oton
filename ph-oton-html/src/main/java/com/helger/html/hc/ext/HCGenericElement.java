@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.ext;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Fallback implementation of {@link AbstractHCElement} for {@link EHTMLElement}

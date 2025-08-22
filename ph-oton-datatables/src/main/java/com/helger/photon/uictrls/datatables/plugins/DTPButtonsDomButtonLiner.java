@@ -16,15 +16,15 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class DTPButtonsDomButtonLiner
 {

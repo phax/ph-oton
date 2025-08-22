@@ -18,8 +18,6 @@ package com.helger.photon.core.menu.ui;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -32,6 +30,8 @@ import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuSeparator;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link IMenuItemRenderer}

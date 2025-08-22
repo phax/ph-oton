@@ -18,16 +18,16 @@ package com.helger.photon.io.mock;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.junit.rules.ExternalResource;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.dao.AbstractDAO;
 import com.helger.photon.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Non-web scope aware test rule, with a defined storage root directory

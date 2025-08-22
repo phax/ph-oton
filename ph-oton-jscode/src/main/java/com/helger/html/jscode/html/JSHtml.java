@@ -18,14 +18,10 @@ package com.helger.html.jscode.html;
 
 import java.nio.charset.Charset;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.DevelopersNote;
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.misc.DevelopersNote;
+import com.helger.annotation.style.PresentForCodeCoverage;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.jscode.AbstractJSVariable;
@@ -36,6 +32,10 @@ import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class contains JS builder default constructs that are used very commonly

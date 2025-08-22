@@ -18,15 +18,15 @@ package com.helger.photon.bootstrap4.pages.handler;
 
 import java.util.function.BiFunction;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
+import com.helger.annotation.Nonempty;
+import com.helger.base.id.IHasID;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.pages.BootstrapWebPageUIHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.handler.AbstractWebPageActionHandlerMultiDelete;
+
+import jakarta.annotation.Nonnull;
 
 public abstract class AbstractBootstrapWebPageActionHandlerMultiDelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
                                                                        extends

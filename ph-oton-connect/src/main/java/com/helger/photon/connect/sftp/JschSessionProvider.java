@@ -18,16 +18,16 @@ package com.helger.photon.connect.sftp;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.connect.connection.ServerConnectionSettingsKeyPair;
 import com.helger.photon.connect.connection.ServerConnectionSettingsPassword;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Special JSch session provider. It differentiates between username/password

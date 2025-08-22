@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.special;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCNode;
+
+import jakarta.annotation.Nonnull;
 
 @FunctionalInterface
 public interface IHCSpecialNodeListModifier

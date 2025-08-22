@@ -16,14 +16,14 @@
  */
 package com.helger.photon.connect.connection;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.network.port.NetworkPortHelper;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Default abstract implementation of the {@link IBaseServerConnectionSettings}

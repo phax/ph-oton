@@ -18,14 +18,14 @@ package com.helger.html.hc.special;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.resource.css.ICSSCodeProvider;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This interface represents all special nodes that can occur in an HTML

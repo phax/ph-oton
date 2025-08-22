@@ -18,10 +18,9 @@ package com.helger.photon.bootstrap4.stub;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.Nonnull;
-
 import com.helger.photon.bootstrap4.stub.init.PhotonStubInitializer;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 

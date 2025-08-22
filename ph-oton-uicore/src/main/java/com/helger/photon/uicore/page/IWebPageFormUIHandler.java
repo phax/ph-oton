@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uicore.page;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends
                                        IWebPageUIHandler

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.connect.connection;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface having all required fields required for connecting to a server via

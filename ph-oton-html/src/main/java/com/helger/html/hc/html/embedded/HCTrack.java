@@ -16,17 +16,17 @@
  */
 package com.helger.html.hc.html.embedded;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.base.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCMediaElementChild;
+import com.helger.http.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
 {

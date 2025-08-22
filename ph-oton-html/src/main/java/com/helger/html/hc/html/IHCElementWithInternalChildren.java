@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for elements having children of a certain type.

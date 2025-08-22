@@ -18,10 +18,10 @@ package com.helger.photon.uictrls.fineupload;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.jscode.JSAssocArray;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class FineUploader extends FineUploaderBasic
 {

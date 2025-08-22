@@ -19,15 +19,15 @@ package com.helger.photon.core.favorites;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.name.IHasDisplayName;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.id.IHasID;
+import com.helger.base.name.IHasDisplayName;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.security.authentication.subject.user.IHasUserID;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single favorite bookmark.

@@ -18,16 +18,16 @@ package com.helger.photon.uictrls.fineupload5.ui;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.uictrls.fineupload5.FineUploader5Core;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class FineUploader5UI extends FineUploader5Core
 {

@@ -22,49 +22,46 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.hashcode.IHashCodeGenerator;
-import com.helger.commons.io.IHasInputStream;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.resource.URLResource;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.css.ECSSVersion;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.CGlobal;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.hashcode.IHashCodeGenerator;
+import com.helger.base.io.iface.IHasInputStream;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringHex;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.visit.AbstractModifyingCSSUrlVisitor;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriter;
+import com.helger.http.url.ISimpleURL;
+import com.helger.io.file.FilenameHelper;
+import com.helger.io.resource.IReadableResource;
+import com.helger.io.resource.URLResource;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
- * A single web site resource. This class is only used internally in
- * {@link WebSiteResourceCache}.
+ * A single web site resource. This class is only used internally in {@link WebSiteResourceCache}.
  *
  * @author Philip Helger
  */
 @Immutable
-@SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public class WebSiteResource
 {
   public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
@@ -95,7 +92,7 @@ public class WebSiteResource
     // No hash for external resources
     if (m_bResourceExists && !(m_aResource instanceof URLResource))
     {
-      byte [] aDigestBytes = ArrayHelper.EMPTY_BYTE_ARRAY;
+      byte [] aDigestBytes = CGlobal.EMPTY_BYTE_ARRAY;
       try
       {
         // In some cases "getInputStream" fails even though the file exists!
@@ -110,12 +107,12 @@ public class WebSiteResource
         LOGGER.error ("Failed to create message digest of " + m_aResource.getPath (), ex);
       }
       m_aContentHash = aDigestBytes;
-      m_sContentHash = StringHelper.getHexEncoded (aDigestBytes);
+      m_sContentHash = StringHex.getHexEncoded (aDigestBytes);
     }
     else
     {
       // No hash value
-      m_aContentHash = ArrayHelper.EMPTY_BYTE_ARRAY;
+      m_aContentHash = CGlobal.EMPTY_BYTE_ARRAY;
       m_sContentHash = "";
     }
   }
@@ -153,8 +150,7 @@ public class WebSiteResource
    * @param sBasePath
    *        The base path, where the source CSS is read from.
    * @param bRegular
-   *        <code>true</code> for normal output, <code>false</code> for minified
-   *        output.
+   *        <code>true</code> for normal output, <code>false</code> for minified output.
    * @return The modified String.
    */
   @Nonnull
@@ -162,7 +158,7 @@ public class WebSiteResource
                                    @Nonnull @Nonempty final String sBasePath,
                                    final boolean bRegular)
   {
-    final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP, m_aCharset, ECSSVersion.CSS30);
+    final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP, m_aCharset);
     if (aCSS == null)
     {
       LOGGER.error ("Failed to parse CSS. Returning 'as-is'");
@@ -184,9 +180,7 @@ public class WebSiteResource
     });
 
     // Write again after modification
-    return new CSSWriter (ECSSVersion.CSS30, !bRegular).setWriteHeaderText (false)
-                                                       .setWriteFooterText (false)
-                                                       .getCSSAsString (aCSS);
+    return new CSSWriter (!bRegular).setWriteHeaderText (false).setWriteFooterText (false).getCSSAsString (aCSS);
   }
 
   @Nullable

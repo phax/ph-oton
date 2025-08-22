@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-
+import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
+
+import jakarta.annotation.Nonnull;
 
 @NotThreadSafe
 public abstract class AbstractHCElementWithChildren <IMPLTYPE extends AbstractHCElementWithChildren <IMPLTYPE>> extends

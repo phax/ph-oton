@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.script;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.CGlobal;
+import com.helger.base.CGlobal;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * BAse class for HTML &lt;canvas&gt; elements.

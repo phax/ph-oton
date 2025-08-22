@@ -19,13 +19,14 @@ package com.helger.photon.uicore.html.select;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.name.IHasDisplayName;
+import com.helger.base.name.IHasDisplayName;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.user.IUserToken;
+import com.helger.text.compare.ComparatorHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCUserTokenSelect extends HCExtSelect
 {
@@ -38,7 +39,8 @@ public class HCUserTokenSelect extends HCExtSelect
     // for all items
     for (final IUserToken aUserToken : PhotonSecurityManager.getUserTokenMgr ()
                                                             .getAll ()
-                                                            .getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale)))
+                                                            .getSortedInline (ComparatorHelper.getComparatorCollating (IHasDisplayName::getDisplayName,
+                                                                                                                       aDisplayLocale)))
       if (aFilter == null || aFilter.test (aUserToken))
         addOption (aUserToken.getID (), aUserToken.getDisplayName ());
   }

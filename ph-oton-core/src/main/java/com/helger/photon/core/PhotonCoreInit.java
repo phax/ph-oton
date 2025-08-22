@@ -18,8 +18,7 @@ package com.helger.photon.core;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.concurrent.Immutable;
-
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.photon.app.PhotonAppInit;
 import com.helger.photon.core.audit.AuditingLongRunningRequestCallback;
 import com.helger.photon.core.audit.AuditingParallelRunningRequestCallback;

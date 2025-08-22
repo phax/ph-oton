@@ -16,8 +16,6 @@
  */
 package com.helger.html.markdown;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.embedded.HCImg;
 import com.helger.html.hc.html.grouping.HCBlockQuote;
@@ -39,6 +37,8 @@ import com.helger.html.hc.html.textlevel.HCEM;
 import com.helger.html.hc.html.textlevel.HCS;
 import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.html.textlevel.HCSup;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Default Decorator implementation.

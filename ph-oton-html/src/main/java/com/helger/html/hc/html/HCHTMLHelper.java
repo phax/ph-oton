@@ -16,20 +16,20 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EContinue;
-import com.helger.commons.wrapper.Wrapper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EContinue;
+import com.helger.base.wrapper.Wrapper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNode;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @Immutable
 public final class HCHTMLHelper
@@ -38,15 +38,13 @@ public final class HCHTMLHelper
   {}
 
   /**
-   * Helper method to enforce correct element nesting. See
-   * http://www.w3.org/TR/xhtml1#prohibitions
+   * Helper method to enforce correct element nesting. See http://www.w3.org/TR/xhtml1#prohibitions
    *
    * @param aOwner
    *        Owner where to start searching
    * @param aElements
    *        The tag names to search. May not be <code>null</code>.
-   * @return All elements with the passed element name on any level. Never
-   *         <code>null</code>.
+   * @return All elements with the passed element name on any level. Never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -74,15 +72,14 @@ public final class HCHTMLHelper
   }
 
   /**
-   * Helper method to enforce correct element nesting. See
-   * http://www.w3.org/TR/xhtml1#prohibitions
+   * Helper method to enforce correct element nesting. See http://www.w3.org/TR/xhtml1#prohibitions
    *
    * @param aOwner
    *        Owner where to start searching
    * @param aElements
    *        The tag names to search. May not be <code>null</code>.
-   * @return The first element with a different than the passed tag name on any
-   *         level, or <code>null</code> if no such element exists.
+   * @return The first element with a different than the passed tag name on any level, or
+   *         <code>null</code> if no such element exists.
    */
   @Nullable
   public static IHCElement <?> recursiveGetFirstChildWithDifferentTagName (@Nonnull final IHCNode aOwner,
@@ -122,15 +119,14 @@ public final class HCHTMLHelper
   }
 
   /**
-   * Helper method to enforce correct element nesting. See
-   * http://www.w3.org/TR/xhtml1#prohibitions
+   * Helper method to enforce correct element nesting. See http://www.w3.org/TR/xhtml1#prohibitions
    *
    * @param aOwner
    *        Owner to start searching
    * @param aElements
    *        The tag names to search. May not be <code>null</code>.
-   * @return The first element with the passed tag name on any level, or
-   *         <code>null</code> if no such element exists.
+   * @return The first element with the passed tag name on any level, or <code>null</code> if no
+   *         such element exists.
    */
   @Nullable
   public static IHCElement <?> recursiveGetFirstChildWithTagName (@Nonnull final IHCNode aOwner,

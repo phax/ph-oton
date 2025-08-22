@@ -19,19 +19,19 @@ package com.helger.photon.core.menu;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.url.ConstantHasSimpleURL;
-import com.helger.commons.url.IHasSimpleURL;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.http.url.ConstantHasSimpleURL;
+import com.helger.http.url.IHasSimpleURL;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.core.page.IPage;
+import com.helger.text.display.IHasDisplayText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Contains all the menu-specific menu operations. This is not meant to be

@@ -18,18 +18,18 @@ package com.helger.photon.core.appid;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.attr.IAttributeContainerAny;
-import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.scope.mgr.ScopeManager;
+import com.helger.text.locale.country.CountryCache;
+import com.helger.typeconvert.collection.IAttributeContainerAny;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This is a utility class to get the

@@ -16,23 +16,24 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * ATOM 1.0 feed source.
@@ -226,7 +227,7 @@ public class FeedSource extends AbstractFeedElement
     if (m_aUpdated != null)
       aElement.appendChild (m_aUpdated.getAsElement ("updated"));
     if (StringHelper.hasText (getLanguage ()))
-      aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
+      aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
   }
 
   @Nonnull
@@ -330,7 +331,9 @@ public class FeedSource extends AbstractFeedElement
       for (final FeedLink aLink : m_aLinks)
         if (FeedLink.REL_ALTERNATE.equals (aLink.getRel ()))
         {
-          final String sKey = aLink.getType () + ":" + (aLink.getHrefLang () == null ? "" : aLink.getHrefLang ().toString ());
+          final String sKey = aLink.getType () +
+                              ":" +
+                              (aLink.getHrefLang () == null ? "" : aLink.getHrefLang ().toString ());
           if (!aUniques.add (sKey))
           {
             LOGGER.warn ("'" + FeedLink.REL_ALTERNATE + "' link is not unique: " + aLink);

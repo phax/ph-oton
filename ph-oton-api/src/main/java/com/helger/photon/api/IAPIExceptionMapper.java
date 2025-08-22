@@ -18,11 +18,11 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.state.EHandled;
+import com.helger.base.state.EHandled;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * API exception mapper to convert exceptions into reasonable HTTP responses. It

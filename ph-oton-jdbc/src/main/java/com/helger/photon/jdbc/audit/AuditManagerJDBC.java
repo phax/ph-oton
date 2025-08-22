@@ -20,18 +20,18 @@ import java.time.LocalDate;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.photon.audit.IAuditItem;
 import com.helger.photon.audit.IAuditManager;
 import com.helger.photon.audit.IAuditor;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * The JDBC based implementation of {@link IAuditManager}

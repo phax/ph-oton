@@ -19,27 +19,19 @@ package com.helger.photon.bootstrap4.pages.security;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.attr.IStringMap;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsCollection;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.name.IHasName;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.name.IHasDisplayName;
+import com.helger.base.name.IHasName;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.CollectionHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsCollection;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.collection.helper.CollectionHelperExt;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.forms.HCEdit;
@@ -49,6 +41,7 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -78,6 +71,15 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.autosize.HCTextAreaAutosize;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.text.IMultilingualText;
+import com.helger.text.compare.ComparatorHelper;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+import com.helger.typeconvert.collection.IStringMap;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecutionContext> extends
                                                  AbstractWebPageSecurityObjectWithAttributes <IUserGroup, WPECTYPE>
@@ -284,7 +286,8 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final ICommonsList <IUser> aAssignedUsers = new CommonsArrayList <> (aAssignedUserIDs, aUserMgr::getUserOfID);
 
       final HCNodeList aUserUI = new HCNodeList ();
-      aAssignedUsers.getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale))
+      aAssignedUsers.getSortedInline (ComparatorHelper.getComparatorCollating (IHasDisplayName::getDisplayName,
+                                                                               aDisplayLocale))
                     .forEach (aUser -> aUserUI.addChild (div (new HCA (createViewURL (aWPEC,
                                                                                       BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_USER,
                                                                                       aUser.getID (),
@@ -309,7 +312,7 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
       final ICommonsList <IRole> aAssignedRoles = new CommonsArrayList <> (aAssignedRoleIDs, aRoleMgr::getRoleOfID);
 
       final HCNodeList aRoleUI = new HCNodeList ();
-      aAssignedRoles.getSortedInline (IHasName.getComparatorCollating (aDisplayLocale))
+      aAssignedRoles.getSortedInline (ComparatorHelper.getComparatorCollating (IHasName::getName, aDisplayLocale))
                     .forEach (aRole -> aRoleUI.addChild (div (new HCA (createViewURL (aWPEC,
                                                                                       BootstrapPagesMenuConfigurator.MENU_ADMIN_SECURITY_ROLE,
                                                                                       aRole.getID (),
@@ -402,12 +405,12 @@ public class BasePageSecurityUserGroupManagement <WPECTYPE extends IWebPageExecu
         // assign to the matching roles
         final ICommonsSet <String> aPrevRoleIDs = aSelectedObject.getAllContainedRoleIDs ();
         // Create all missing assignments
-        final ICommonsSet <String> aRolesToBeAssigned = CollectionHelper.getDifference (aRoleIDs, aPrevRoleIDs);
+        final ICommonsSet <String> aRolesToBeAssigned = CollectionHelperExt.getDifference (aRoleIDs, aPrevRoleIDs);
         for (final String sRoleID : aRolesToBeAssigned)
           aUserGroupMgr.assignRoleToUserGroup (sUserGroupID, sRoleID);
 
         // Delete all old assignments
-        final ICommonsSet <String> aRolesToBeUnassigned = CollectionHelper.getDifference (aPrevRoleIDs, aRoleIDs);
+        final ICommonsSet <String> aRolesToBeUnassigned = CollectionHelperExt.getDifference (aPrevRoleIDs, aRoleIDs);
         for (final String sRoleID : aRolesToBeUnassigned)
           aUserGroupMgr.unassignRoleFromUserGroup (sUserGroupID, sRoleID);
 

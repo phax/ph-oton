@@ -21,23 +21,23 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.callback.IThrowingRunnable;
-import com.helger.commons.concurrent.BasicThreadFactory;
-import com.helger.commons.concurrent.ExecutorServiceHelper;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.functional.IThrowingSupplier;
-import com.helger.commons.log.ConditionalLogger;
-import com.helger.commons.timing.StopWatch;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.concurrent.BasicThreadFactoryBuilder;
+import com.helger.base.concurrent.ExecutorServiceHelper;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.functional.IThrowingSupplier;
+import com.helger.base.iface.IThrowingRunnable;
+import com.helger.base.log.ConditionalLogger;
+import com.helger.base.timing.StopWatch;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Asynchronous worker pool that handles stuff that runs in the background.
@@ -62,9 +62,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   public PhotonWorkerPool (@Nonnegative final int nThreadPoolSize)
   {
     this (Executors.newFixedThreadPool (nThreadPoolSize,
-                                        new BasicThreadFactory.Builder ().daemon (true)
-                                                                         .namingPattern ("ph-oton-worker-%d")
-                                                                         .build ()));
+                                        new BasicThreadFactoryBuilder ().daemon (true)
+                                                                        .namingPattern ("ph-oton-worker-%d")
+                                                                        .build ()));
   }
 
   public PhotonWorkerPool (@Nonnull final ExecutorService aES)
@@ -80,8 +80,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   }
 
   /**
-   * @return <code>true</code> if logging is disabled, <code>false</code> if it
-   *         is enabled.
+   * @return <code>true</code> if logging is disabled, <code>false</code> if it is enabled.
    * @since 9.3.0
    */
   public static boolean isSilentMode ()
@@ -93,8 +92,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
    * Enable or disable certain regular log messages.
    *
    * @param bSilentMode
-   *        <code>true</code> to disable logging, <code>false</code> to enable
-   *        logging
+   *        <code>true</code> to disable logging, <code>false</code> to enable logging
    * @return The previous value of the silent mode.
    * @since 9.3.0
    */

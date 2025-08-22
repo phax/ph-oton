@@ -19,11 +19,11 @@ package com.helger.photon.uicore.html.select;
 import java.util.List;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.smtp.settings.ISMTPSettings;
+
+import jakarta.annotation.Nonnull;
 
 public class HCNamedSMTPSettingsSelect extends HCExtSelect
 {

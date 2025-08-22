@@ -18,10 +18,10 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.systemmsg.ESystemMessageType;
+
+import jakarta.annotation.Nonnull;
 
 public class HCSystemMessageTypeSelect extends HCExtSelect
 {

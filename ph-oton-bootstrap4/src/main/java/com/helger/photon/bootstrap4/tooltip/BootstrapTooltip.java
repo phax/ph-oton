@@ -19,18 +19,16 @@ package com.helger.photon.bootstrap4.tooltip;
 import java.util.Collection;
 import java.util.Set;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.CodingStyleguideUnaware;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.CommonsTreeSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.CommonsTreeSet;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -45,6 +43,9 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSInvocation;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
  * Bootstrap Tooltip
  *
@@ -58,23 +59,22 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
    */
   public static final String JS_EVENT_SHOW = "show.bs.tooltip";
   /**
-   * This event is fired when the tooltip has been made visible to the user
-   * (will wait for CSS transitions to complete).
+   * This event is fired when the tooltip has been made visible to the user (will wait for CSS
+   * transitions to complete).
    */
   public static final String JS_EVENT_SHOWN = "shown.bs.tooltip";
   /**
-   * This event is fired immediately when the hide instance method has been
-   * called.
+   * This event is fired immediately when the hide instance method has been called.
    */
   public static final String JS_EVENT_HIDE = "hide.bs.tooltip";
   /**
-   * This event is fired when the tooltip has finished being hidden from the
-   * user (will wait for CSS transitions to complete).
+   * This event is fired when the tooltip has finished being hidden from the user (will wait for CSS
+   * transitions to complete).
    */
   public static final String JS_EVENT_HIDDEN = "hidden.bs.tooltip";
   /**
-   * This event is fired after the show.bs.tooltip event when the tooltip
-   * template has been added to the DOM.
+   * This event is fired after the show.bs.tooltip event when the tooltip template has been added to
+   * the DOM.
    */
   public static final String JS_EVENT_INSERTED = "inserted.bs.tooltip";
 
@@ -162,9 +162,9 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
 
   /**
    * @param aFunction
-   *        Callback function that is called with the tooltip DOM node as its
-   *        first argument and the triggering element DOM node as its second.
-   *        The this context is set to the tooltip instance.
+   *        Callback function that is called with the tooltip DOM node as its first argument and the
+   *        triggering element DOM node as its second. The this context is set to the tooltip
+   *        instance.
    * @return this
    */
   @Nonnull
@@ -379,7 +379,7 @@ public class BootstrapTooltip extends HCScriptInlineOnDocumentReady
       if (m_aTooltipTitleFunc != null)
         aOptions.add ("title", m_aTooltipTitleFunc);
     if (!m_aTrigger.isEmpty () && !DEFAULT_TRIGGER.equals (m_aTrigger))
-      aOptions.add ("trigger", StringHelper.getImplodedMapped (' ', m_aTrigger, EBootstrapTooltipTrigger::getValue));
+      aOptions.add ("trigger", StringImplode.getImplodedMapped (' ', m_aTrigger, EBootstrapTooltipTrigger::getValue));
     if (StringHelper.hasText (m_sOffset))
       aOptions.add ("offset", m_sOffset);
     if (m_eBoundary != null)

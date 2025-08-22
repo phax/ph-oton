@@ -20,19 +20,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.base64.Base64;
-import com.helger.commons.charset.CharsetHelper;
-import com.helger.commons.locale.LocaleFormatter;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.mime.MimeTypeDeterminator;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IMultilingualText;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.charset.CharsetHelper;
+import com.helger.base.codec.base64.Base64;
+import com.helger.base.string.StringHelper;
 import com.helger.css.property.CCSSProperties;
 import com.helger.css.propertyvalue.CCSSValue;
 import com.helger.html.hc.html.forms.HCCheckBox;
@@ -41,6 +33,9 @@ import com.helger.html.hc.html.forms.HCTextArea;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.js.EJSEvent;
+import com.helger.mime.CMimeType;
+import com.helger.mime.IMimeType;
+import com.helger.mime.determine.MimeTypeDeterminator;
 import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
@@ -58,8 +53,13 @@ import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.servlet.response.EContentDispositionType;
+import com.helger.text.IMultilingualText;
+import com.helger.text.locale.LocaleFormatter;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base64 decoder

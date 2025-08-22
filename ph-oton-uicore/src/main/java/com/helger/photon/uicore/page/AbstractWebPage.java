@@ -16,16 +16,12 @@
  */
 package com.helger.photon.uicore.page;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.state.EValidity;
-import com.helger.commons.state.IValidityIndicator;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IMultilingualText;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EValidity;
+import com.helger.base.state.IValidityIndicator;
+import com.helger.base.string.StringHelper;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.traits.IHCTrait;
 import com.helger.photon.ajax.GlobalAjaxInvoker;
@@ -33,6 +29,10 @@ import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.page.AbstractPage;
 import com.helger.photon.uicore.css.CUICoreCSS;
+import com.helger.text.IMultilingualText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract base implementation for {@link IWebPage}.

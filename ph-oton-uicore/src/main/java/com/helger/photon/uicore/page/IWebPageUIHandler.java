@@ -18,13 +18,13 @@ package com.helger.photon.uicore.page;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.uicore.css.CUICoreCSS;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface IWebPageUIHandler extends Serializable
 {

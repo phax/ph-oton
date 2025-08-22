@@ -19,22 +19,21 @@ package com.helger.photon.core.resource;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.state.EContinue;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.base.CGlobal;
+import com.helger.base.state.EContinue;
+import com.helger.io.file.FilenameHelper;
 import com.helger.photon.app.PhotonAppManager;
 import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHttpHandler

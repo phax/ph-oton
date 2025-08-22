@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.DevelopersNote;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.misc.DevelopersNote;
 import com.helger.html.hc.impl.HCTextNode;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special node interface for objects containing other objects

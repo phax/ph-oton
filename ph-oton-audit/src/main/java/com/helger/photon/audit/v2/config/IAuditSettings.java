@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Read-only interface for audit settings.

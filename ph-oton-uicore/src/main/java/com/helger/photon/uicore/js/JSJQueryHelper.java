@@ -16,10 +16,7 @@
  */
 package com.helger.photon.uicore.js;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
@@ -29,6 +26,9 @@ import com.helger.html.jscode.JSParam;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Java JavaScript wrapper for uicore-jquery.js

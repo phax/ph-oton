@@ -16,13 +16,13 @@
  */
 package com.helger.html.markdown;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.embedded.HCImg;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCCode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Decorator interface.

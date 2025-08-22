@@ -16,11 +16,11 @@
  */
 package com.helger.photon.bootstrap4.listgroup;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.grouping.AbstractHCUL;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 public class BootstrapListGroup extends AbstractHCUL <BootstrapListGroup>
 {

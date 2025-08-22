@@ -19,31 +19,23 @@ package com.helger.photon.bootstrap4.pages.sysinfo;
 import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTToString;
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.io.misc.SizeHelper;
-import com.helger.commons.lang.ClassLoaderHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.system.CryptoPolicy;
-import com.helger.commons.system.SystemHelper;
-import com.helger.commons.system.SystemProperties;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.classloader.ClassLoaderHelper;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringReplace;
+import com.helger.base.system.CryptoPolicy;
+import com.helger.base.system.SystemHelper;
+import com.helger.base.system.SystemProperties;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.helper.CollectionSort;
+import com.helger.datetime.format.PDTToString;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.grouping.HCUL;
@@ -52,6 +44,8 @@ import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.io.file.FileSystemIterator;
+import com.helger.io.misc.SizeHelper;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap4.table.BootstrapTable;
 import com.helger.photon.bootstrap4.uictrls.datatables.BootstrapDataTables;
@@ -61,7 +55,14 @@ import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
 import com.helger.web.scope.mgr.WebScopeManager;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Page with all system properties
@@ -323,9 +324,8 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
       final String sPathSep = SystemProperties.getPathSeparator ();
 
       // For all system properties
-      for (final Map.Entry <String, String> aEntry : SystemProperties.getAllProperties ()
-                                                                     .getSortedByKey (Comparator.naturalOrder ())
-                                                                     .entrySet ())
+      for (final Map.Entry <String, String> aEntry : CollectionSort.getSortedByKey (SystemProperties.getAllProperties ())
+                                                                   .entrySet ())
       {
         final String sName = aEntry.getKey ();
         final String sNameLC = sName.toLowerCase (Locale.ROOT);
@@ -337,7 +337,7 @@ public class BasePageSysInfoSystemProperties <WPECTYPE extends IWebPageExecution
         if ((sNameLC.endsWith (".path") || sNameLC.endsWith (".dirs")) && sValue.contains (sPathSep))
         {
           // Special handling for paths
-          aRow.addCell (HCExtHelper.nl2brList (StringHelper.replaceAll (sValue, sPathSep, "\n")));
+          aRow.addCell (HCExtHelper.nl2brList (StringReplace.replaceAll (sValue, sPathSep, "\n")));
         }
         else
         {

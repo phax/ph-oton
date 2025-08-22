@@ -16,7 +16,7 @@
  */
 package com.helger.html;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * List of constant HTML attribute values.

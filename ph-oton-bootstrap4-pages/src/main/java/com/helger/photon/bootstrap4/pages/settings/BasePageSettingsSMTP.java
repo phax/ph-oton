@@ -19,25 +19,17 @@ package com.helger.photon.bootstrap4.pages.settings;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.charset.CharsetHelper;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.email.EmailAddress;
-import com.helger.commons.email.EmailAddressHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.CGlobal;
+import com.helger.base.charset.CharsetHelper;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.email.EmailAddress;
+import com.helger.base.email.EmailAddressHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
 import com.helger.commons.vendor.VendorInfo;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCCheckBox;
@@ -48,6 +40,7 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.http.url.ISimpleURL;
 import com.helger.network.port.CNetworkPort;
 import com.helger.photon.bootstrap4.button.BootstrapButton;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
@@ -86,6 +79,13 @@ import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.settings.SMTPSettings;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BasePageSettingsSMTP <WPECTYPE extends IWebPageExecutionContext> extends
                                   AbstractBootstrapWebPageForm <NamedSMTPSettings, WPECTYPE>

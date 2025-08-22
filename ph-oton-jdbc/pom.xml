@@ -54,7 +54,7 @@
   </developers>
   
   <properties>
-    <ph-db.version>7.1.0</ph-db.version>
+    <ph-db.version>8.0.0-SNAPSHOT</ph-db.version>
   </properties>
 
   <dependencies>
@@ -67,7 +67,7 @@
       <artifactId>ph-oton-security</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.db</groupId>
       <artifactId>ph-db-jdbc</artifactId>
       <version>${ph-db.version}</version>
     </dependency>
@@ -94,7 +94,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.jdbc</Automatic-Module-Name>
             <Export-Package>com.helger.photon.jdbc.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>

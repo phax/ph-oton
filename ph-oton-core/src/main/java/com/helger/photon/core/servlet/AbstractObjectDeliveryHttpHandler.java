@@ -20,29 +20,29 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.math.MathHelper;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.state.EContinue;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.URLHelper;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.numeric.MathHelper;
+import com.helger.base.state.EContinue;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringReplace;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsOrderedSet;
+import com.helger.http.url.URLCoder;
+import com.helger.io.file.FilenameHelper;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -69,11 +69,10 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractObjectDeliveryHttpHandler.class);
 
   /**
-   * Create a unique value per server startup. This is the ETag value for all
-   * resources streamed from this servlet, since it uses only ClassPath
-   * resources that may only change upon new initialisation of this class.
-   * Therefore the ETag value is calculated only once and used to stream all
-   * classpath resources.
+   * Create a unique value per server startup. This is the ETag value for all resources streamed
+   * from this servlet, since it uses only ClassPath resources that may only change upon new
+   * initialisation of this class. Therefore the ETag value is calculated only once and used to
+   * stream all classpath resources.
    */
   protected static final String ETAG_VALUE_OBJECT_DELIVERY_SERVLET = '"' +
                                                                      Long.toString (MathHelper.abs (ThreadLocalRandom.current ()
@@ -112,13 +111,11 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
    * @param aSet
    *        The set to be filled. May not be <code>null</code>.
    * @param sItemList
-   *        The string to be separated to a list. Each item is separated by a
-   *        ",".
+   *        The string to be separated to a list. Each item is separated by a ",".
    * @param bUnify
-   *        To unify the found item by converting them all to lowercase. This
-   *        makes only sense for file extensions but not for file names. This
-   *        unification is only relevant because of the case insensitive file
-   *        system on Windows machines.
+   *        To unify the found item by converting them all to lowercase. This makes only sense for
+   *        file extensions but not for file names. This unification is only relevant because of the
+   *        case insensitive file system on Windows machines.
    */
   private static void _initialFillSet (@Nonnull final ICommonsOrderedSet <String> aSet,
                                        @Nullable final String sItemList,
@@ -132,7 +129,9 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     {
       // Perform some default replacements to avoid updating all references at
       // once before splitting
-      final String sRealItemList = StringHelper.replaceAll (sItemList, EXTENSION_MACRO_WEB_DEFAULT, WEB_DEFAULT_EXTENSIONS);
+      final String sRealItemList = StringReplace.replaceAll (sItemList,
+                                                             EXTENSION_MACRO_WEB_DEFAULT,
+                                                             WEB_DEFAULT_EXTENSIONS);
 
       for (final String sItem : StringHelper.getExploded (',', sRealItemList))
       {
@@ -297,14 +296,18 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     if (m_aAllowedFilenames.contains (sFilename))
     {
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Allowed object with name '" + sRelativeFilename + "' because it is in the allowed filenames list");
+        LOGGER.debug ("Allowed object with name '" +
+                      sRelativeFilename +
+                      "' because it is in the allowed filenames list");
       return true;
     }
 
     if (m_bAllowedAllExtensions || m_aAllowedExtensions.contains (sUnifiedExt))
     {
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Allowed object with name '" + sRelativeFilename + "' because it is in the allowed extension list");
+        LOGGER.debug ("Allowed object with name '" +
+                      sRelativeFilename +
+                      "' because it is in the allowed extension list");
       return true;
     }
 
@@ -313,7 +316,9 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
         if (RegExHelper.stringMatchesPattern (sAllowedRegEx, sFilename))
         {
           if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Allowed object with name '" + sRelativeFilename + "' because it is in the allowed regex list");
+            LOGGER.debug ("Allowed object with name '" +
+                          sRelativeFilename +
+                          "' because it is in the allowed regex list");
           return true;
         }
 
@@ -337,7 +342,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
                                      @Nonnull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
-    final String sFilename = URLHelper.urlDecodeOrNull (aRequestScope.getPathWithinServlet ());
+    final String sFilename = URLCoder.urlDecodeOrNull (aRequestScope.getPathWithinServlet ());
 
     if (StringHelper.hasNoText (sFilename) ||
         !isValidFilenameAccordingToTheRules (sFilename) ||

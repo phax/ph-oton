@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;dl&gt; element

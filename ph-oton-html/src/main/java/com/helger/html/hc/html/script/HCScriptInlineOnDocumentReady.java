@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.script;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.js.IHasJSCode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Regular inline JS script elements with the special semantics, that stuff will

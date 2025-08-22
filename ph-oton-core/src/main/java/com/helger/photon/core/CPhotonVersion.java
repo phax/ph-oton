@@ -16,14 +16,13 @@
  */
 package com.helger.photon.core;
 
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.lang.PropertiesHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.rt.NonBlockingProperties;
+import com.helger.base.rt.PropertiesHelper;
+import com.helger.io.resource.ClassPathResource;
 
 /**
  * Contains the version number details
@@ -45,7 +44,8 @@ public final class CPhotonVersion
     String sProjectVersion = null;
     String sProjectTimestamp = null;
     final String sFilename = "ph-oton-version.properties";
-    final ICommonsMap <String, String> p = PropertiesHelper.loadProperties (new ClassPathResource (sFilename));
+    final NonBlockingProperties p = PropertiesHelper.loadProperties (ClassPathResource.getInputStream (sFilename,
+                                                                                                       CPhotonVersion.class.getClassLoader ()));
     if (p != null)
     {
       sProjectVersion = p.get ("version");

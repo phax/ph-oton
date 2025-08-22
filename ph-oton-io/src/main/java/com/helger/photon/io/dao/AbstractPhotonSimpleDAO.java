@@ -18,12 +18,12 @@ package com.helger.photon.io.dao;
 
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.io.relative.FileRelativeIO;
 import com.helger.dao.simple.AbstractSimpleDAO;
+import com.helger.io.relative.FileRelativeIO;
 import com.helger.photon.io.WebFileIO;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special {@link AbstractSimpleDAO} that uses the {@link WebFileIO#getDataIO()}

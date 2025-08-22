@@ -19,46 +19,48 @@ package com.helger.photon.jetty;
 import java.io.File;
 import java.util.function.IntUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.ee10.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
+import org.eclipse.jetty.ee10.servlet.SessionHandler;
+import org.eclipse.jetty.ee10.webapp.Configuration;
+import org.eclipse.jetty.ee10.webapp.FragmentConfiguration;
+import org.eclipse.jetty.ee10.webapp.JettyWebXmlConfiguration;
+import org.eclipse.jetty.ee10.webapp.JspConfiguration;
+import org.eclipse.jetty.ee10.webapp.MetaInfConfiguration;
+import org.eclipse.jetty.ee10.webapp.WebAppConfiguration;
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
+import org.eclipse.jetty.ee10.webapp.WebInfConfiguration;
+import org.eclipse.jetty.ee10.webapp.WebXmlConfiguration;
 import org.eclipse.jetty.http.HttpCookie;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.session.DefaultSessionCache;
-import org.eclipse.jetty.server.session.FileSessionDataStore;
-import org.eclipse.jetty.server.session.SessionHandler;
-import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.session.DefaultSessionCache;
+import org.eclipse.jetty.session.FileSessionDataStore;
+import org.eclipse.jetty.util.resource.PathResourceFactory;
 import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.util.resource.ResourceFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
-import org.eclipse.jetty.webapp.Configuration;
-import org.eclipse.jetty.webapp.FragmentConfiguration;
-import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
-import org.eclipse.jetty.webapp.JspConfiguration;
-import org.eclipse.jetty.webapp.MetaInfConfiguration;
-import org.eclipse.jetty.webapp.WebAppConfiguration;
-import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.webapp.WebInfConfiguration;
-import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.lang.ClassHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.system.SystemProperties;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.CGlobal;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.lang.clazz.ClassHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.system.SystemProperties;
+import com.helger.io.file.FilenameHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Run a standalone web application in Jetty on port 8080.<br>
@@ -89,6 +91,7 @@ public class JettyStarter
   private static final String CONTAINER_JAR_PATTERN = "org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern";
   private static final String WEBINF_JAR_PATTERN = "org.eclipse.jetty.server.webapp.WebInfIncludeJarPattern";
 
+  private final ResourceFactory m_aRF = new PathResourceFactory ();
   private final String m_sAppName;
   private final String m_sDirBaseName;
   private int m_nPort = DEFAULT_PORT;
@@ -96,7 +99,7 @@ public class JettyStarter
   private String m_sStopKey = DEFAULT_STOP_KEY;
   private IntUnaryOperator m_aStopPort = x -> DEFAULT_STOP_PORT;
   private boolean m_bSpecialSessionMgr = true;
-  private Resource m_aResourceBase = _asRes ("target/webapp-classes");
+  private Resource m_aResourceBase = m_aRF.newResource ("target/webapp-classes");
   private String m_sWebXmlResource;
   private String m_sContextPath = DEFAULT_CONTEXT_PATH;
   private String m_sContainerIncludeJarPattern = DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN;
@@ -105,19 +108,6 @@ public class JettyStarter
   private boolean m_bAllowAnnotationBasedConfig = DEFAULT_ALLOW_ANNOTATION_BASED_CONFIG;
   private boolean m_bAllowDirectoryListing = DEFAULT_ALLOW_DIRECTORY_LISTING;
   private String m_sSessionCookieName = DEFAULT_SESSION_COOKIE_NAME;
-
-  @Nonnull
-  private static Resource _asRes (@Nonnull final String sPath)
-  {
-    try
-    {
-      return Resource.newResource (sPath);
-    }
-    catch (final Exception ex)
-    {
-      throw new IllegalArgumentException ("Invalid resource path '" + sPath + "'");
-    }
-  }
 
   public JettyStarter (@Nonnull final Class <?> aAppClass)
   {
@@ -150,8 +140,7 @@ public class JettyStarter
   }
 
   /**
-   * Set the port to be used to run the application. Defaults to
-   * {@value #DEFAULT_PORT}
+   * Set the port to be used to run the application. Defaults to {@value #DEFAULT_PORT}
    *
    * @param nPort
    *        The port to be used. Must be &gt; 0.
@@ -171,8 +160,8 @@ public class JettyStarter
   }
 
   /**
-   * Enable or disable the "stop monitor" that listens for the graceful
-   * shutdown. By default this is enabled.
+   * Enable or disable the "stop monitor" that listens for the graceful shutdown. By default this is
+   * enabled.
    *
    * @param bRunStopMonitor
    *        <code>true</code> to enable it, <code>false</code> to disable it.
@@ -192,9 +181,8 @@ public class JettyStarter
   }
 
   /**
-   * Set the hidden "stop key" that must be submitted to stop the server.
-   * Defaults to {@link #DEFAULT_STOP_KEY}. If set here, it must also be set in
-   * {@link JettyStopper}.
+   * Set the hidden "stop key" that must be submitted to stop the server. Defaults to
+   * {@link #DEFAULT_STOP_KEY}. If set here, it must also be set in {@link JettyStopper}.
    *
    * @param sStopKey
    *        The stop key to be used. May not be <code>null</code>.
@@ -215,9 +203,8 @@ public class JettyStarter
 
   /**
    * Set the port on which the "stop monitor" should be running. Defaults to
-   * {@link #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each
-   * instance must use it's own stop port. If this is set here, it must also be
-   * set in {@link JettyStopper}.
+   * {@link #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each instance must use it's
+   * own stop port. If this is set here, it must also be set in {@link JettyStopper}.
    *
    * @param nStopPort
    *        The stop port to be used. Must be &gt; 0.
@@ -233,11 +220,10 @@ public class JettyStarter
 
   /**
    * Set the port on which the "stop monitor" should be running. Defaults to
-   * {@link #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each
-   * instance must use it's own stop port. If this is set here, it must also be
-   * set in {@link JettyStopper}.<br>
-   * This overload lets you set a function that takes as input the default port
-   * and you can calculate the stop port from it.
+   * {@link #DEFAULT_STOP_PORT}. When running multiple Jettys at once, each instance must use it's
+   * own stop port. If this is set here, it must also be set in {@link JettyStopper}.<br>
+   * This overload lets you set a function that takes as input the default port and you can
+   * calculate the stop port from it.
    *
    * @param aStopPort
    *        The stop port to be used. May not be <code>null</code>.
@@ -259,8 +245,8 @@ public class JettyStarter
 
   /**
    * @param bSpecialSessionMgr
-   *        <code>true</code> to set a session manager that allows for
-   *        persistent activation and passivation of sessions.
+   *        <code>true</code> to set a session manager that allows for persistent activation and
+   *        passivation of sessions.
    * @return this for chaining
    */
   @Nonnull
@@ -277,8 +263,8 @@ public class JettyStarter
   }
 
   /**
-   * Set the common resource base (directory) from which all web application
-   * resources will be loaded (servlet context root).
+   * Set the common resource base (directory) from which all web application resources will be
+   * loaded (servlet context root).
    *
    * @param sResourceBase
    *        The path. May neither be <code>null</code> nor empty.
@@ -288,12 +274,12 @@ public class JettyStarter
   public final JettyStarter setResourceBase (@Nonnull @Nonempty final String sResourceBase)
   {
     ValueEnforcer.notEmpty (sResourceBase, "ResourceBase");
-    return setResourceBase (_asRes (sResourceBase));
+    return setResourceBase (m_aRF.newResource (sResourceBase));
   }
 
   /**
-   * Set the common resource base (directory) from which all web application
-   * resources will be loaded (servlet context root).
+   * Set the common resource base (directory) from which all web application resources will be
+   * loaded (servlet context root).
    *
    * @param aResourceBase
    *        The resource. May neither be <code>null</code> nor empty.
@@ -314,8 +300,8 @@ public class JettyStarter
   }
 
   /**
-   * Set the path to WEB-INF/web.xml. If unspecified, the default relative to
-   * the resource base is used.
+   * Set the path to WEB-INF/web.xml. If unspecified, the default relative to the resource base is
+   * used.
    *
    * @param sWebXmlResource
    *        web.xml resource. May be <code>null</code>.
@@ -336,12 +322,12 @@ public class JettyStarter
   }
 
   /**
-   * Set the context path in which the web application should run. By default
-   * this {@link #DEFAULT_CONTEXT_PATH}
+   * Set the context path in which the web application should run. By default this
+   * {@link #DEFAULT_CONTEXT_PATH}
    *
    * @param sContextPath
-   *        The new context path. May neither be <code>null</code> nor empty and
-   *        must start with a slash.
+   *        The new context path. May neither be <code>null</code> nor empty and must start with a
+   *        slash.
    * @return this for chaining
    */
   @Nonnull
@@ -359,12 +345,11 @@ public class JettyStarter
   }
 
   /**
-   * Set the container JAR pattern to be scanned for annotations. By default
-   * this {@link #DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN}
+   * Set the container JAR pattern to be scanned for annotations. By default this
+   * {@link #DEFAULT_CONTAINER_INCLUDE_JAR_PATTERN}
    *
    * @param sContainerIncludeJarPattern
-   *        The new container JAR pattern. May be <code>null</code> to use the
-   *        default.
+   *        The new container JAR pattern. May be <code>null</code> to use the default.
    * @return this for chaining
    */
   @Nonnull
@@ -397,8 +382,7 @@ public class JettyStarter
    * Set the thread pool to use.
    *
    * @param aThreadPool
-   *        Thread pool. May be <code>null</code> to use the default thread
-   *        pool.
+   *        Thread pool. May be <code>null</code> to use the default thread pool.
    * @return this
    * @since 7.0.6
    */
@@ -415,8 +399,8 @@ public class JettyStarter
   }
 
   /**
-   * Enable or disable annotation based scanning. By default it is enabled.
-   * Disable it for better performance.
+   * Enable or disable annotation based scanning. By default it is enabled. Disable it for better
+   * performance.
    *
    * @param bAllowAnnotationBasedConfig
    *        <code>false</code> to disable it.
@@ -436,8 +420,7 @@ public class JettyStarter
   }
 
   /**
-   * Enable or disable the listing of Directories. Turned off by default for
-   * security reasons.
+   * Enable or disable the listing of Directories. Turned off by default for security reasons.
    *
    * @param bAllowDirectoryListing
    *        <code>true</code> to enable it.
@@ -452,8 +435,8 @@ public class JettyStarter
   }
 
   /**
-   * @return The name of the session cookie or null to use Jetty default. The
-   *         default values is {@link #DEFAULT_SESSION_COOKIE_NAME}.
+   * @return The name of the session cookie or null to use Jetty default. The default values is
+   *         {@link #DEFAULT_SESSION_COOKIE_NAME}.
    */
   @Nullable
   public String getSessionCookieName ()
@@ -462,9 +445,8 @@ public class JettyStarter
   }
 
   /**
-   * Set the session cookie name. Default is
-   * {@value #DEFAULT_SESSION_COOKIE_NAME}. When running different applications
-   * ensure to use different names to ensure you can test them in the same
+   * Set the session cookie name. Default is {@value #DEFAULT_SESSION_COOKIE_NAME}. When running
+   * different applications ensure to use different names to ensure you can test them in the same
    * browser in the same session.
    *
    * @param sSessionCookieName
@@ -545,8 +527,7 @@ public class JettyStarter
    * Create a new {@link WebAppContext} based on the settings of this class.
    *
    * @param sContextPath
-   *        The context path to be used. May neither be <code>null</code> nor
-   *        empty.
+   *        The context path to be used. May neither be <code>null</code> nor empty.
    * @return The created object. Never <code>null</code>.
    * @throws Exception
    *         In case of error
@@ -562,16 +543,17 @@ public class JettyStarter
     final WebAppContext aWebAppCtx = new WebAppContext ();
     {
       aWebAppCtx.setBaseResource (m_aResourceBase);
-      aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource
-                                                          : m_aResourceBase.addPath ("/WEB-INF/web.xml").getName ());
+      aWebAppCtx.setDescriptor (m_sWebXmlResource != null ? m_sWebXmlResource : m_aRF.newResource (m_aResourceBase
+                                                                                                                  .getName () +
+                                                                                                   "/WEB-INF/web.xml")
+                                                                                     .getName ());
       aWebAppCtx.setContextPath (sContextPath);
       aWebAppCtx.setTempDirectory (new File (sTempDir, m_sDirBaseName + ".webapp"));
       /*
-       * This line can make a difference between Jetty and Tomcat: True if the
-       * classloader should delegate first to the parentclassloader (standard
-       * java behaviour) or false if the classloader should first try to load
-       * from WEB-INF/lib or WEB-INF/classes (servletspec recommendation).
-       * Default is false or can be set by the systemproperty
+       * This line can make a difference between Jetty and Tomcat: True if the classloader should
+       * delegate first to the parentclassloader (standard java behaviour) or false if the
+       * classloader should first try to load from WEB-INF/lib or WEB-INF/classes (servletspec
+       * recommendation). Default is false or can be set by the systemproperty
        * org.eclipse.jetty.server.webapp.parentLoaderPriority
        */
       aWebAppCtx.setParentLoaderPriority (true);
@@ -620,7 +602,7 @@ public class JettyStarter
     }
 
     // Hack to circumvent API limits - ensure SameSite for Session cookie
-    aWebAppCtx.getSessionHandler ().getSessionCookieConfig ().setComment (HttpCookie.SAME_SITE_STRICT_COMMENT);
+    aWebAppCtx.getSessionHandler ().getSessionCookieConfig ().setComment (HttpCookie.SAME_SITE_ATTRIBUTE);
     aWebAppCtx.getSessionHandler ().getSessionCookieConfig ().setHttpOnly (true);
     if (StringHelper.hasText (m_sSessionCookieName))
       aWebAppCtx.getSessionHandler ().setSessionCookie (m_sSessionCookieName);
@@ -638,7 +620,7 @@ public class JettyStarter
    * @throws Exception
    *         in case of error
    */
-  protected void customizeHandlerList (@Nonnull final HandlerList aHandlerList) throws Exception
+  protected void customizeHandlerList (@Nonnull final ContextHandlerCollection aHandlerList) throws Exception
   {}
 
   /**
@@ -677,9 +659,6 @@ public class JettyStarter
    */
   public void run () throws Exception
   {
-    if (System.getSecurityManager () != null)
-      throw new IllegalStateException ("Security Manager is set but not supported - aborting!");
-
     // Create main server
     final Server aServer = new Server (m_aThreadPool);
     {
@@ -708,7 +687,7 @@ public class JettyStarter
 
     final WebAppContext aWebAppCtx = createWebAppContext (m_sContextPath);
 
-    final HandlerList aHandlerList = new HandlerList ();
+    final ContextHandlerCollection aHandlerList = new ContextHandlerCollection ();
     aHandlerList.addHandler (aWebAppCtx);
     // Allow for additional web app contexts ;-)
     customizeHandlerList (aHandlerList);

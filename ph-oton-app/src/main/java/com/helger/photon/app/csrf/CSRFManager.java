@@ -19,28 +19,28 @@ package com.helger.photon.app.csrf;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.base64.Base64;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.codec.base64.Base64;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Global CSRF manager keeping track of the available nonces. All nonces are
- * provided as Base64 encoded strings.
+ * Global CSRF manager keeping track of the available nonces. All nonces are provided as Base64
+ * encoded strings.
  *
  * @author Philip Helger
  */
@@ -72,8 +72,8 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   }
 
   /**
-   * Create a new unique nonce with {@link #NONCE_BYTES} bytes and return the
-   * response as Base64 encoded String.
+   * Create a new unique nonce with {@link #NONCE_BYTES} bytes and return the response as Base64
+   * encoded String.
    *
    * @return A new Base64 encoded nonce string.
    */

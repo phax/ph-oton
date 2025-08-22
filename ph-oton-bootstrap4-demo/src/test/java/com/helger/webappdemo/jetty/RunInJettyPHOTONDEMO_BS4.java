@@ -16,8 +16,7 @@
  */
 package com.helger.webappdemo.jetty;
 
-import javax.annotation.concurrent.Immutable;
-
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.photon.jetty.JettyStarter;
 
 /**

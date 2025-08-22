@@ -16,12 +16,11 @@
  */
 package com.helger.photon.app;
 
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.thirdparty.ELicense;
-import com.helger.commons.thirdparty.IThirdPartyModule;
-import com.helger.commons.thirdparty.ThirdPartyModule;
-import com.helger.commons.version.Version;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.thirdparty.ELicense;
+import com.helger.base.thirdparty.IThirdPartyModule;
+import com.helger.base.thirdparty.ThirdPartyModule;
+import com.helger.base.version.Version;
 
 @Immutable
 public final class PhotonAppConfig
@@ -29,7 +28,7 @@ public final class PhotonAppConfig
   public static final IThirdPartyModule LOG4J2 = new ThirdPartyModule ("Apache Log4j 2",
                                                                        "Apache",
                                                                        ELicense.APACHE2,
-                                                                       new Version (2, 25, 0),
+                                                                       new Version (2, 25, 1),
                                                                        "http://logging.apache.org/log4j/2.x/");
 
   private PhotonAppConfig ()

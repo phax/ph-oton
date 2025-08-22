@@ -18,10 +18,8 @@ package com.helger.photon.core.html;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.hc.html.metadata.HCHead;
 import com.helger.html.hc.html.root.HCHtml;
 import com.helger.photon.app.html.IHTMLProvider;
@@ -33,6 +31,8 @@ import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract {@link IHTMLProvider} implementation based on

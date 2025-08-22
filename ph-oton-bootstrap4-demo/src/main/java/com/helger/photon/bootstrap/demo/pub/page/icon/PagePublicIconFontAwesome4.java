@@ -16,12 +16,12 @@
  */
 package com.helger.photon.bootstrap.demo.pub.page.icon;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.icon.fontawesome.EFontAwesome4Icon;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Show all Font Awesome icons in action

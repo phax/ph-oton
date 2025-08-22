@@ -19,21 +19,21 @@ package com.helger.photon.core.requestparam;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.locale.ILocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuItemRedirectToPage;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuOperations;
+import com.helger.text.locale.LocaleCache;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Holder for the special ph-oton parameters

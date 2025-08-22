@@ -27,8 +27,8 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.commons.datetime.PDTFormatPatterns;
-import com.helger.commons.locale.LocaleCache;
+import com.helger.datetime.format.PDTFormatPatterns;
+import com.helger.text.locale.LocaleCache;
 
 /**
  * Test class for class {@link DateFormatBuilder}.

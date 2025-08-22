@@ -18,18 +18,18 @@ package com.helger.photon.uicore.html.google;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.html.resource.js.ConstantJSPathProvider;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.html.PhotonJS;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Handle Google reCAPTCHA according to

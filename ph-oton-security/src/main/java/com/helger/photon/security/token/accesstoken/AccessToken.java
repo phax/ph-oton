@@ -19,23 +19,22 @@ package com.helger.photon.security.token.accesstoken;
 import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.base64.Base64;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.codec.base64.Base64;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * This class represents a single token. It uniquely belongs to an application
- * token or a user token. It consists of a random string token, a not-before
- * date time and an optional not-after date time. Additionally it contains a
- * revocation status.
+ * This class represents a single token. It uniquely belongs to an application token or a user
+ * token. It consists of a random string token, a not-before date time and an optional not-after
+ * date time. Additionally it contains a revocation status.
  *
  * @author Philip Helger
  */
@@ -48,18 +47,15 @@ public final class AccessToken implements IAccessToken
   private final RevocationStatus m_aRevocationStatus;
 
   /**
-   * Internal constructor for deserialization only. Use
-   * {@link #createNewAccessTokenValidFromNow()} or
-   * {@link #createAccessTokenValidFromNow(String)} instead.
+   * Internal constructor for deserialization only. Use {@link #createNewAccessTokenValidFromNow()}
+   * or {@link #createAccessTokenValidFromNow(String)} instead.
    *
    * @param sTokenString
    *        The token string. May neither be <code>null</code> nor empty.
    * @param aNotBefore
-   *        The date time before which the access token is invalid. May not be
-   *        <code>null</code>.
+   *        The date time before which the access token is invalid. May not be <code>null</code>.
    * @param aNotAfter
-   *        The date time after which the access token is invalid. May be
-   *        <code>null</code>.
+   *        The date time after which the access token is invalid. May be <code>null</code>.
    * @param aRevocationStatus
    *        The revocation status. May not be <code>null</code>.
    */
@@ -131,10 +127,10 @@ public final class AccessToken implements IAccessToken
 
   /**
    * @param nBytes
-   *        The number of bytes to be used for the token. Must be &gt; 0.
-   *        Suggested value is 66 (dividable by 3).
-   * @return A newly created random token of x bytes as a Base64-encoded String.
-   *         Never <code>null</code>.
+   *        The number of bytes to be used for the token. Must be &gt; 0. Suggested value is 66
+   *        (dividable by 3).
+   * @return A newly created random token of x bytes as a Base64-encoded String. Never
+   *         <code>null</code>.
    */
   @Nonnull
   @Nonempty
@@ -150,8 +146,7 @@ public final class AccessToken implements IAccessToken
   }
 
   /**
-   * Create a new access token that is valid from now on for an infinite amount
-   * of time.
+   * Create a new access token that is valid from now on for an infinite amount of time.
    *
    * @return Never <code>null</code>.
    */
@@ -162,12 +157,11 @@ public final class AccessToken implements IAccessToken
   }
 
   /**
-   * Create a new access token that is valid from now on for an infinite amount
-   * of time.
+   * Create a new access token that is valid from now on for an infinite amount of time.
    *
    * @param sTokenString
-   *        The existing token string. May be <code>null</code> in which case a
-   *        new token string is created.
+   *        The existing token string. May be <code>null</code> in which case a new token string is
+   *        created.
    * @return Never <code>null</code>.
    */
   @Nonnull

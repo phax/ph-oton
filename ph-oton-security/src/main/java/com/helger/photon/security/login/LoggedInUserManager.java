@@ -20,27 +20,24 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.Duration;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsCollection;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsCollection;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
@@ -57,6 +54,9 @@ import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
  * This class manages all logged-in users.
  *
@@ -66,8 +66,8 @@ import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 public final class LoggedInUserManager extends AbstractGlobalSingleton implements ICurrentUserIDProvider
 {
   /**
-   * This class manages the user ID of the current session. This is an internal
-   * class and should not be used from the outside!
+   * This class manages the user ID of the current session. This is an internal class and should not
+   * be used from the outside!
    *
    * @author Philip Helger
    */
@@ -84,8 +84,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {}
 
     /**
-     * @return The instance of the current session. If none exists, an instance
-     *         is created. Never <code>null</code>.
+     * @return The instance of the current session. If none exists, an instance is created. Never
+     *         <code>null</code>.
      */
     @Nonnull
     private static InternalSessionUserHolder _getInstance ()
@@ -94,8 +94,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     }
 
     /**
-     * @return The instance of the current session. If none exists,
-     *         <code>null</code> is returned.
+     * @return The instance of the current session. If none exists, <code>null</code> is returned.
      */
     @Nullable
     private static InternalSessionUserHolder _getInstanceIfInstantiated ()
@@ -186,8 +185,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * Special logout callback that is executed every time a user logs out. It
-   * removes all objects from the {@link ObjectLockManager}.
+   * Special logout callback that is executed every time a user logs out. It removes all objects
+   * from the {@link ObjectLockManager}.
    *
    * @author Philip Helger
    */
@@ -253,9 +252,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return <code>true</code> if a new login of a user, destroys any previously
-   *         present session, <code>false</code> if a login should fail, if that
-   *         user is already logged in.
+   * @return <code>true</code> if a new login of a user, destroys any previously present session,
+   *         <code>false</code> if a login should fail, if that user is already logged in.
    */
   public boolean isLogoutAlreadyLoggedInUser ()
   {
@@ -317,16 +315,14 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * Login the passed user and require a set of certain roles, the used needs to
-   * have to login here.
+   * Login the passed user and require a set of certain roles, the used needs to have to login here.
    *
    * @param sLoginName
    *        Login name of the user to log-in. May be <code>null</code>.
    * @param sPlainTextPassword
    *        Plain text password to use. May be <code>null</code>.
    * @param aRequiredRoleIDs
-   *        A set of required role IDs, the user needs to have. May be
-   *        <code>null</code>.
+   *        A set of required role IDs, the user needs to have. May be <code>null</code>.
    * @return Never <code>null</code> login status.
    */
   @Nonnull
@@ -345,17 +341,15 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * Login the passed user and require a set of certain roles, the used needs to
-   * have to login here.
+   * Login the passed user and require a set of certain roles, the used needs to have to login here.
    *
    * @param aUser
-   *        The user to log-in. May be <code>null</code>. When the user is
-   *        <code>null</code> the login must fail.
+   *        The user to log-in. May be <code>null</code>. When the user is <code>null</code> the
+   *        login must fail.
    * @param sPlainTextPassword
    *        Plain text password to use. May be <code>null</code>.
    * @param aRequiredRoleIDs
-   *        A set of required role IDs, the user needs to have. May be
-   *        <code>null</code>.
+   *        A set of required role IDs, the user needs to have. May be <code>null</code>.
    * @return Never <code>null</code> login status.
    */
   @Nonnull
@@ -534,8 +528,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @param sUserID
    *        The user ID to check. May be <code>null</code>.
-   * @return <code>true</code> if the user is logged in, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the user is logged in, <code>false</code> otherwise.
    */
   public boolean isUserLoggedIn (@Nullable final String sUserID)
   {
@@ -543,8 +536,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return A non-<code>null</code> but maybe empty set with all currently
-   *         logged in user IDs.
+   * @return A non-<code>null</code> but maybe empty set with all currently logged in user IDs.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -567,8 +559,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return A non-<code>null</code> but maybe empty collection with the details
-   *         of all currently logged in users.
+   * @return A non-<code>null</code> but maybe empty collection with the details of all currently
+   *         logged in users.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -587,8 +579,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return The ID of the user logged in this session or <code>null</code> if
-   *         no user is logged in.
+   * @return The ID of the user logged in this session or <code>null</code> if no user is logged in.
    */
   @Nullable
   public String getCurrentUserID ()
@@ -598,9 +589,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return <code>true</code> if a user is currently logged into this session,
-   *         <code>false</code> otherwise. This is the inverse of
-   *         {@link #isNoUserLoggedInInCurrentSession()}.
+   * @return <code>true</code> if a user is currently logged into this session, <code>false</code>
+   *         otherwise. This is the inverse of {@link #isNoUserLoggedInInCurrentSession()}.
    */
   public boolean isUserLoggedInInCurrentSession ()
   {
@@ -608,9 +598,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return <code>true</code> if not user is currently logged into this
-   *         session, <code>false</code> if it is. This is the inverse of
-   *         {@link #isUserLoggedInInCurrentSession()}.
+   * @return <code>true</code> if not user is currently logged into this session, <code>false</code>
+   *         if it is. This is the inverse of {@link #isUserLoggedInInCurrentSession()}.
    */
   public boolean isNoUserLoggedInInCurrentSession ()
   {
@@ -618,8 +607,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
-   * @return The user currently logged in this session or <code>null</code> if
-   *         no user is logged in.
+   * @return The user currently logged in this session or <code>null</code> if no user is logged in.
    */
   @Nullable
   public IUser getCurrentUser ()

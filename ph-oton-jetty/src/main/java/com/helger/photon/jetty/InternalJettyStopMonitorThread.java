@@ -24,14 +24,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.callback.IThrowingRunnable;
-import com.helger.commons.io.stream.StreamHelper;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.iface.IThrowingRunnable;
+import com.helger.base.io.stream.StreamHelper;
+
+import jakarta.annotation.Nonnull;
 
 final class InternalJettyStopMonitorThread extends Thread
 {

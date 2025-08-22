@@ -19,12 +19,12 @@ package com.helger.photon.core;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Test;
 
-import com.helger.commons.io.resource.IReadableResource;
+import com.helger.io.resource.IReadableResource;
 import com.helger.xml.schema.XMLSchemaCache;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Test class for class {@link CWebSpecs}.

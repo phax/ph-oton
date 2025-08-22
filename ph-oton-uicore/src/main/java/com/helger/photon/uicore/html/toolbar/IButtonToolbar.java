@@ -19,18 +19,18 @@ package com.helger.photon.uicore.html.toolbar;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.html.hc.html.forms.IHCButton;
 import com.helger.html.hc.html.grouping.IHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.html.JSHtml;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base button toolbar

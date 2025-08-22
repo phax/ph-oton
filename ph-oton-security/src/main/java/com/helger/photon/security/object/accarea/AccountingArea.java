@@ -18,18 +18,18 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.type.ObjectType;
 import com.helger.masterdata.address.IPostalAddress;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.security.object.StubObject;
 import com.helger.tenancy.accarea.AbstractAccountingArea;
 import com.helger.tenancy.accarea.IAccountingArea;
 import com.helger.tenancy.tenant.ITenant;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IAccountingArea}

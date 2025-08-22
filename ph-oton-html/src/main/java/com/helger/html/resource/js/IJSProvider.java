@@ -16,10 +16,10 @@
  */
 package com.helger.html.resource.js;
 
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.html.resource.IHTMLResourceProvider;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Base for external JS provider with all constraints

@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.script;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.IHCElementWithChildren;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for CANVASs

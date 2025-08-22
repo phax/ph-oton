@@ -19,12 +19,12 @@ package com.helger.photon.core.menu;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.text.display.IHasDisplayText;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.display.IHasDisplayText;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special menu item filter to determine the visibility of a menu item. If

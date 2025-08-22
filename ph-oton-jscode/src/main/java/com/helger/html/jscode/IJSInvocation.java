@@ -19,18 +19,18 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.traits.IGenericImplTrait;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.traits.IGenericImplTrait;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
 import com.helger.xml.microdom.IMicroQName;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> extends IJSExpression, IJSStatement, IGenericImplTrait <IMPLTYPE>
 {

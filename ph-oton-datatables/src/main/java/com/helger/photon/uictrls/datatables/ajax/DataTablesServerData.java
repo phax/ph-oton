@@ -21,23 +21,20 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCCustomizer;
 import com.helger.html.hc.config.HCConversionSettings;
@@ -51,11 +48,13 @@ import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * This class holds tables to be used by the DataTables server side handling.
- * Each DataTable in each session is represented as a single object of this
- * class. SO if you have a lot of DataTables instances of this class may use a
- * huge amount of memory!
+ * This class holds tables to be used by the DataTables server side handling. Each DataTable in each
+ * session is represented as a single object of this class. SO if you have a lot of DataTables
+ * instances of this class may use a huge amount of memory!
  *
  * @author Philip Helger
  */

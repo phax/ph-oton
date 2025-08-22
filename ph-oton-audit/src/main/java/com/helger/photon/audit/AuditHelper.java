@@ -16,24 +16,23 @@
  */
 package com.helger.photon.audit;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.DevelopersNote;
-import com.helger.commons.annotation.UnsupportedOperation;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.misc.DevelopersNote;
+import com.helger.annotation.style.UnsupportedOperation;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.type.ObjectType;
 import com.helger.photon.audit.mock.MockCurrentUserIDProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Simplify system auditing calls.<br>
- * For each predefined action (see {@link EAuditActionType} - CREATE, MODIFY,
- * DELETE, UNDELETE, EXECUTE) this class provided static helpers methods.<br>
- * For MODIFY actions, the performed action (like "set-name") should always be
- * first.<br>
+ * For each predefined action (see {@link EAuditActionType} - CREATE, MODIFY, DELETE, UNDELETE,
+ * EXECUTE) this class provided static helpers methods.<br>
+ * For MODIFY actions, the performed action (like "set-name") should always be first.<br>
  * Error details should always go last.
  *
  * @author Philip Helger
@@ -82,9 +81,8 @@ public final class AuditHelper
   }
 
   /**
-   * Set the default auditor again. This may be helpful when shutting down the
-   * main auditor, and at least want some prove, when something auditible
-   * happens.
+   * Set the default auditor again. This may be helpful when shutting down the main auditor, and at
+   * least want some prove, when something auditible happens.
    */
   public static void setDefaultAuditor ()
   {

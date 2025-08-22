@@ -31,9 +31,9 @@ import java.time.format.SignStyle;
 import java.time.temporal.ChronoField;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
-import com.helger.commons.annotation.Nonempty;
+import jakarta.annotation.Nonnull;
 
 public enum EDateTimeFormatToken
 {

@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.lang.EnumHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.lang.EnumHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Alignment of an {@link com.helger.html.hc.html.tabular.AbstractHCCell}

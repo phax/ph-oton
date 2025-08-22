@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.metadata;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.annotation.PresentForCodeCoverage;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.PresentForCodeCoverage;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNode;
+
+import jakarta.annotation.Nullable;
 
 /**
  * This class is used to determine the special nodes (JS and CSS, inline and

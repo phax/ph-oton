@@ -19,24 +19,23 @@ package com.helger.photon.api.pathdescriptor;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
+import com.helger.http.url.URLCoder;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.URLHelper;
+import jakarta.annotation.Nonnull;
 
 /**
- * This class keeps a list of {@link PathDescriptorPart} objects that are
- * created when initially parsing an API path. It consists of plain string parts
- * as well as of dynamic (variable) parts.
+ * This class keeps a list of {@link PathDescriptorPart} objects that are created when initially
+ * parsing an API path. It consists of plain string parts as well as of dynamic (variable) parts.
  *
  * @author Philip Helger
  */
@@ -60,14 +59,14 @@ public final class PathDescriptor implements Serializable
   }
 
   /**
-   * Check if this path descriptor matches the provided path parts. This
-   * requires that this path descriptor and the provided collection have the
-   * same number of elements and that all static and variable parts match.
+   * Check if this path descriptor matches the provided path parts. This requires that this path
+   * descriptor and the provided collection have the same number of elements and that all static and
+   * variable parts match.
    *
    * @param aPathParts
    *        The parts to
-   * @return A non-<code>null</code> {@link PathMatchingResult} object with all
-   *         matching variable names.
+   * @return A non-<code>null</code> {@link PathMatchingResult} object with all matching variable
+   *         names.
    */
   @Nonnull
   public PathMatchingResult matchesParts (@Nonnull final List <String> aPathParts)
@@ -95,7 +94,7 @@ public final class PathDescriptor implements Serializable
       if (aPart.isVariable ())
       {
         // Explicitly decode here
-        aVariableValues.put (aPart.getName (), URLHelper.urlDecodeOrNull (sPathPart));
+        aVariableValues.put (aPart.getName (), URLCoder.urlDecodeOrNull (sPathPart));
       }
     }
 
@@ -147,7 +146,7 @@ public final class PathDescriptor implements Serializable
     ValueEnforcer.notEmpty (sPath, "Path");
 
     // Split into pieces
-    final ICommonsList <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sPath);
+    final List <String> aPathParts = PathDescriptorHelper.getCleanPathParts (sPath);
     return new PathDescriptor (aPathParts);
   }
 }

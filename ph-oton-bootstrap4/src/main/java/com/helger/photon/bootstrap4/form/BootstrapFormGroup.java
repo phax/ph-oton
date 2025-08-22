@@ -18,13 +18,10 @@ package com.helger.photon.bootstrap4.form;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.string.StringHelper;
+import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -35,6 +32,9 @@ import com.helger.photon.bootstrap4.base.AbstractBootstrapObject;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.html.formlabel.ELabelType;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents a single form group.

@@ -16,14 +16,12 @@
  */
 package com.helger.photon.core.mgr;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.exception.InitializationException;
-import com.helger.commons.lang.ClassHelper;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.exception.InitializationException;
+import com.helger.base.lang.clazz.ClassHelper;
 import com.helger.photon.core.favorites.FavoriteManager;
 import com.helger.photon.core.longrun.LongRunningJobManager;
 import com.helger.photon.core.longrun.LongRunningJobResultManager;
@@ -31,6 +29,8 @@ import com.helger.photon.core.sysmigration.SystemMigrationManager;
 import com.helger.photon.core.systemmsg.SystemMessageManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * The meta system manager encapsulates all managers that are located in this

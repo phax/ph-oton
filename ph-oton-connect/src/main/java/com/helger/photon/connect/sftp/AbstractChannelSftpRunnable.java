@@ -16,10 +16,10 @@
  */
 package com.helger.photon.connect.sftp;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract implementation of the {@link IChannelSftpRunnable} interface

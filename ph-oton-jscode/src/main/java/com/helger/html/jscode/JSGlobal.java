@@ -16,13 +16,11 @@
  */
 package com.helger.html.jscode;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.annotation.style.PresentForCodeCoverage;
 
-import com.helger.commons.annotation.CodingStyleguideUnaware;
-import com.helger.commons.annotation.PresentForCodeCoverage;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nonnull;
 
 /**
  * This contains global JS function wrappers.<br>
@@ -32,7 +30,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @Immutable
 @CodingStyleguideUnaware
-@SuppressFBWarnings ("NM_METHOD_NAMING_CONVENTION")
 public final class JSGlobal
 {
   @PresentForCodeCoverage

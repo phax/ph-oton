@@ -16,7 +16,7 @@
  */
 package com.helger.photon.core.smtp;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * Constants for named SMTP settings handling

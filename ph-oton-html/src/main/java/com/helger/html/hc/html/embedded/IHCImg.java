@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.embedded;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.dimension.SizeInt;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.dimension.SizeInt;
 import com.helger.html.hc.html.IHCMediaElementChild;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for IMGs

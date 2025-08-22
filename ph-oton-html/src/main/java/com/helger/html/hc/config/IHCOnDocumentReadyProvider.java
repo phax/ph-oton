@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.config;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.js.IHasJSCode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An interface to create the "on document ready" deferred code.

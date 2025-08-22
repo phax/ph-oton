@@ -16,10 +16,10 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonnegative;
+import com.helger.collection.commons.ICommonsList;
 
-import com.helger.commons.collection.impl.ICommonsList;
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents a single record to be exported.

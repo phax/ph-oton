@@ -16,11 +16,11 @@
  */
 package com.helger.html.resource.js;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.html.hc.html.script.EHCScriptLoadingMode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Provides a path to an external JS object.

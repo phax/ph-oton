@@ -24,8 +24,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.CollectionHelper;
 
 /**
  * Test class for class {@link EJSEvent}

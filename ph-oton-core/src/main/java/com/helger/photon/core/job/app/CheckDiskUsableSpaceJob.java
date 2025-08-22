@@ -21,16 +21,14 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.io.misc.SizeHelper;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.io.misc.SizeHelper;
 import com.helger.photon.core.interror.InternalErrorHandler;
 import com.helger.photon.core.interror.InternalErrorSettings;
 import com.helger.photon.io.WebFileIO;
@@ -47,6 +45,8 @@ import com.helger.smtp.data.EEmailType;
 import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Check whether at least x bytes of usable space is present on the file system

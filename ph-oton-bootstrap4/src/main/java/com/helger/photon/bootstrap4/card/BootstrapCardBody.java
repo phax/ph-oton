@@ -16,8 +16,6 @@
  */
 package com.helger.photon.bootstrap4.card;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.embedded.HCImg;
 import com.helger.html.hc.html.grouping.HCP;
 import com.helger.html.hc.html.sections.HCH5;
@@ -25,6 +23,8 @@ import com.helger.html.hc.html.sections.HCH6;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Special Bootstrap 4 card body.

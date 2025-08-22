@@ -18,12 +18,9 @@ package com.helger.html.hc.html.script;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.config.EHCScriptInlineMode;
 import com.helger.html.hc.config.HCSettings;
@@ -33,6 +30,9 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNodeWithChildren;
 import com.helger.xml.microdom.MicroText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class represents an HTML &lt;script&gt; element with inline JS content.

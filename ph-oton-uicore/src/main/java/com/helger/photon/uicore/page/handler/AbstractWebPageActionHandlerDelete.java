@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.page.handler;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.id.IHasID;
+import com.helger.base.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.uicore.css.CPageParam;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
+
+import jakarta.annotation.Nonnull;
 
 public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                          extends

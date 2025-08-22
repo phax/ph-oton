@@ -16,9 +16,9 @@
  */
 package com.helger.html.request;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
-import com.helger.commons.annotation.Nonempty;
+import jakarta.annotation.Nonnull;
 
 /**
  * Defines an abstract request field for input controls. It encapsulates a name

@@ -18,22 +18,22 @@ package com.helger.photon.core.userdata;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.io.relative.IFileRelativeIO;
-import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.http.url.SimpleURL;
+import com.helger.io.relative.IFileRelativeIO;
+import com.helger.io.resource.FileSystemResource;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.photon.io.WebFileIO;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Manager for {@link IUserDataObject} objects.

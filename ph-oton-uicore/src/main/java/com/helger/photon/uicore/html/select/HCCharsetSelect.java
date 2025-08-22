@@ -20,11 +20,11 @@ import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.charset.CharsetHelper;
+import com.helger.base.charset.CharsetHelper;
 import com.helger.html.request.IHCRequestField;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Select box for character sets

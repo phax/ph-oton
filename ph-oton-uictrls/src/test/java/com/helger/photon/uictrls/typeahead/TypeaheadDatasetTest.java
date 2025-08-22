@@ -22,10 +22,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.url.SimpleURL;
+import com.helger.base.state.ETriState;
+import com.helger.collection.commons.CommonsArrayList;
 import com.helger.html.js.JSWriterSettings;
+import com.helger.http.url.SimpleURL;
 
 /**
  * Test class for class {@link TypeaheadDataset}.

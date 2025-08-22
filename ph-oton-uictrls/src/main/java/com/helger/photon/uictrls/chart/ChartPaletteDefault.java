@@ -16,17 +16,15 @@
  */
 package com.helger.photon.uictrls.chart;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.css.decl.CSSRGB;
 import com.helger.css.decl.CSSRGBA;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class ChartPaletteDefault
@@ -87,7 +85,6 @@ public final class ChartPaletteDefault
    */
   @Nonnull
   @Nonempty
-  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static String getColorString (@Nonnegative final int nIndex)
   {
     return COLORS[nIndex % COLORS.length].getAsString ();
@@ -128,7 +125,6 @@ public final class ChartPaletteDefault
    */
   @Nonnull
   @Nonempty
-  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static String getFillColorString (@Nonnegative final int nIndex)
   {
     return FILL_COLORS[nIndex % FILL_COLORS.length].getAsString ();
@@ -155,7 +151,6 @@ public final class ChartPaletteDefault
    */
   @Nonnull
   @Nonempty
-  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static String getHighlightColorString (@Nonnegative final int nIndex)
   {
     return HIGHLIGHT_COLORS[nIndex % HIGHLIGHT_COLORS.length].getAsString ();

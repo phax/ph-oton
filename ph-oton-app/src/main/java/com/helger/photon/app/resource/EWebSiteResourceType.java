@@ -16,16 +16,10 @@
  */
 package com.helger.photon.app.resource;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.lang.EnumHelper;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.name.IHasDisplayName;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.id.IHasID;
+import com.helger.base.lang.EnumHelper;
+import com.helger.base.name.IHasDisplayName;
 import com.helger.css.CCSS;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.hc.IHCNode;
@@ -33,7 +27,13 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.metadata.HCLink;
 import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.js.CJS;
+import com.helger.http.url.ISimpleURL;
+import com.helger.mime.CMimeType;
+import com.helger.mime.IMimeType;
 import com.helger.photon.app.csrf.CSRFSessionManager;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Defines the available resource types.

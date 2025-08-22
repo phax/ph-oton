@@ -16,7 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * This class contains all the version numbers for the Datatables components.

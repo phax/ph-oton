@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.request.IHCRequestField;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;input&gt; element with type "text"

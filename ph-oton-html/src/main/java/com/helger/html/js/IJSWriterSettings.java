@@ -18,10 +18,10 @@ package com.helger.html.js;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
+import com.helger.base.system.ENewLineMode;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.system.ENewLineMode;
+import jakarta.annotation.Nonnull;
 
 /**
  * Read only interface with all JS writer settings.

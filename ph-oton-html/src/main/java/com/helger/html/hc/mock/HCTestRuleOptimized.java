@@ -16,11 +16,10 @@
  */
 package com.helger.html.hc.mock;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.junit.rules.ExternalResource;
 
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;

@@ -24,33 +24,30 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLParameters;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.lang.PropertiesHelper;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.system.SystemProperties;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
-import com.helger.commons.url.SimpleURL;
-import com.helger.commons.version.Version;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.rt.NonBlockingProperties;
+import com.helger.base.rt.PropertiesHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.base.system.SystemProperties;
+import com.helger.base.version.Version;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.collection.helper.CollectionSort;
 import com.helger.html.hc.html.tabular.HCCol;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
+import com.helger.io.file.FileHelper;
+import com.helger.io.resource.URLResource;
+import com.helger.io.url.URLHelper;
 import com.helger.photon.bootstrap4.nav.BootstrapTabBox;
 import com.helger.photon.bootstrap4.pages.AbstractBootstrapWebPage;
 import com.helger.photon.bootstrap4.table.BootstrapTable;
@@ -60,6 +57,13 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Page with information on the current security settings
@@ -139,14 +143,14 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
 
     final BootstrapTabBox aTabBox = new BootstrapTabBox ();
 
-    final ICommonsList <Provider> aSortedProviders = CollectionHelper.getSorted (Security.getProviders (),
-                                                                                 Comparator.comparing (Provider::getName)
-                                                                                           .thenComparing (Comparator.comparing (p -> Version.parse (p.getVersionStr ()))));
+    final ICommonsList <Provider> aSortedProviders = CollectionSort.getSorted (Security.getProviders (),
+                                                                               Comparator.comparing (Provider::getName)
+                                                                                         .thenComparing (Comparator.comparing (p -> Version.parse (p.getVersionStr ()))));
 
     // show all Security attributes
     {
       File aSecurityPropFile = new File (SystemProperties.getJavaHome () + "/lib/security", "java.security");
-      ICommonsMap <String, String> aProps = PropertiesHelper.loadProperties (aSecurityPropFile);
+      NonBlockingProperties aProps = PropertiesHelper.loadProperties (FileHelper.getInputStream (aSecurityPropFile));
       if (aProps != null && "true".equalsIgnoreCase (aProps.get ("security.overridePropertiesFile")))
       {
         String sExtraPropFile = SystemProperties.getPropertyValueOrNull ("java.security.properties");
@@ -165,14 +169,15 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
           sExtraPropFile = PropertiesHelper.expandSystemProperties (sExtraPropFile);
           aSecurityPropFile = new File (sExtraPropFile);
           if (aSecurityPropFile.exists ())
-            aProps = PropertiesHelper.loadProperties (aSecurityPropFile);
+            aProps = PropertiesHelper.loadProperties (FileHelper.getInputStream (aSecurityPropFile));
           else
-            aProps = PropertiesHelper.loadProperties (new SimpleURL (sExtraPropFile));
+            aProps = PropertiesHelper.loadProperties (URLResource.getInputStream (URLHelper.getAsURL (sExtraPropFile)));
         }
       }
 
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                          new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (getID () + "-secattrs");
+                                          new DTCol (EText.MSG_VALUE.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                              "-secattrs");
 
       if (aProps != null)
         for (final Map.Entry <String, String> aEntry : aProps.entrySet ())
@@ -195,7 +200,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
       final HCTable aTable = new HCTable (new DTCol (EText.MSG_NAME.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_VERSION.getDisplayText (aDisplayLocale)).setDisplayType (EDTColType.DOUBLE,
                                                                                                                         aDisplayLocale),
-                                          new DTCol (EText.MSG_INFO.getDisplayText (aDisplayLocale))).setID (getID () + "-providers");
+                                          new DTCol (EText.MSG_INFO.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                             "-providers");
 
       for (final Provider aSecurityProvider : aSortedProviders)
       {
@@ -221,7 +227,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
                                           new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (1, 2)
                                                                                                     .setInitialSorting (ESortOrder.ASCENDING),
                                           new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () + "-algorithm");
+                                          new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                  "-algorithm");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersionStr ();
@@ -251,7 +258,9 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
         final HCTable aTable = new HCTable (new DTCol (EText.MSG_TYPE.getDisplayText (aDisplayLocale)).setDataSort (0,
                                                                                                                     1),
                                             new DTCol (EText.MSG_ALGORITHM.getDisplayText (aDisplayLocale)).setInitialSorting (ESortOrder.ASCENDING),
-                                            new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () + "-" + RegExHelper.getAsIdentifier (sProviderName));
+                                            new DTCol (EText.MSG_CLASSNAME.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                    "-" +
+                                                                                                                    RegExHelper.getAsIdentifier (sProviderName));
 
         // Services of this providers
         for (final Service aService : aSecurityProvider.getServices ())
@@ -299,7 +308,8 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
                                           new DTCol (EText.MSG_DEFAULT_PROTOCOLS.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_DEFAULT_CIPHER_SUITES.getDisplayText (aDisplayLocale)),
                                           new DTCol (EText.MSG_SUPPORTED_PROTOCOLS.getDisplayText (aDisplayLocale)),
-                                          new DTCol (EText.MSG_SUPPORTED_CIPHER_SUITES.getDisplayText (aDisplayLocale))).setID (getID () + "-sslcontexts");
+                                          new DTCol (EText.MSG_SUPPORTED_CIPHER_SUITES.getDisplayText (aDisplayLocale))).setID (getID () +
+                                                                                                                                "-sslcontexts");
       for (final Provider aSecurityProvider : aSortedProviders)
       {
         final String sProviderName = aSecurityProvider.getName () + " " + aSecurityProvider.getVersionStr ();
@@ -320,11 +330,11 @@ public class BasePageSysInfoSecurity <WPECTYPE extends IWebPageExecutionContext>
                 aSSLCtx.init (null, null, null);
               }
               SSLParameters aParams = aSSLCtx.getDefaultSSLParameters ();
-              aRow.addCell (StringHelper.getImploded (", ", aParams.getProtocols ()));
-              aRow.addCell (StringHelper.getImploded (", ", aParams.getCipherSuites ()));
+              aRow.addCell (StringImplode.getImploded (", ", aParams.getProtocols ()));
+              aRow.addCell (StringImplode.getImploded (", ", aParams.getCipherSuites ()));
               aParams = aSSLCtx.getSupportedSSLParameters ();
-              aRow.addCell (StringHelper.getImploded (", ", aParams.getProtocols ()));
-              aRow.addCell (StringHelper.getImploded (", ", aParams.getCipherSuites ()));
+              aRow.addCell (StringImplode.getImploded (", ", aParams.getProtocols ()));
+              aRow.addCell (StringImplode.getImploded (", ", aParams.getCipherSuites ()));
             }
             catch (final Exception ex)
             {

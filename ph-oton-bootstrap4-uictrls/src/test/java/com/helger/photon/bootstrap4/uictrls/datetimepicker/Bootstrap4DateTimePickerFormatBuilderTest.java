@@ -18,9 +18,9 @@ package com.helger.photon.bootstrap4.uictrls.datetimepicker;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Test;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Test class for class {@link Bootstrap4DateTimePickerFormatBuilder}.

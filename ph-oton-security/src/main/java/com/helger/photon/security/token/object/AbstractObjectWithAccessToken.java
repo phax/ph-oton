@@ -18,15 +18,15 @@ package com.helger.photon.security.token.object;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract base implementation if {@link IObjectWithAccessToken}.

@@ -26,17 +26,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.datetime.EDTFormatterMode;
-import com.helger.commons.datetime.PDTFormatter;
-import com.helger.commons.datetime.PDTFromString;
-import com.helger.commons.locale.LocaleParser;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.datetime.format.EDTFormatterMode;
+import com.helger.datetime.format.PDTFormatter;
+import com.helger.datetime.format.PDTFromString;
 import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
+import com.helger.text.locale.LocaleParser;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Marker interface for all data tables Comparators

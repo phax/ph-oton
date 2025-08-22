@@ -16,18 +16,18 @@
  */
 package com.helger.photon.uictrls.autonumeric;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.hc.special.SpecialNodeListModifier;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.js.IHasJSCode;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A special script that initializes the auto numeric. It is a separate class,

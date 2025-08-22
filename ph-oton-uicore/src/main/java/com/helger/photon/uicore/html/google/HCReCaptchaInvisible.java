@@ -16,12 +16,10 @@
  */
 package com.helger.photon.uicore.html.google;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.id.factory.GlobalIDFactory;
+import com.helger.annotation.Nonempty;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -33,6 +31,8 @@ import com.helger.html.jscode.JSFunction;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Handle Google reCAPTCHA according to

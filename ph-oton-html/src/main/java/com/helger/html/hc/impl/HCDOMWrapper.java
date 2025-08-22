@@ -16,17 +16,17 @@
  */
 package com.helger.html.hc.impl;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.EMicroNodeType;
 import com.helger.xml.microdom.IMicroCDATA;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.util.MicroRecursiveIterator;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This is a simple wrapper around any {@link IMicroNode} so it can easily be

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.dropdown;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Drop types. Most usual one is {@link #DROPDOWN}

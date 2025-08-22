@@ -18,18 +18,11 @@ package com.helger.photon.bootstrap4.pages.security;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.datetime.PDTToString;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.id.IHasID;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.format.PDTToString;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.grouping.HCUL;
@@ -40,6 +33,13 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
 import com.helger.photon.security.util.SecurityHelper;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractWebPageSecurityToken <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
                                                    extends

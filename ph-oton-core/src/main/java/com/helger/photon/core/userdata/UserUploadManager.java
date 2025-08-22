@@ -16,36 +16,36 @@
  */
 package com.helger.photon.core.userdata;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.io.file.FileIOError;
-import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
+import com.helger.io.file.FileIOError;
+import com.helger.io.file.FileOperationManager;
 import com.helger.scope.IScope;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * A per-session manager, that handles all the uploaded files while the process
- * to which the files belong is still in process.
+ * A per-session manager, that handles all the uploaded files while the process to which the files
+ * belong is still in process.
  *
  * @author Philip Helger
  */
@@ -88,14 +88,12 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   }
 
   /**
-   * Add an uploaded file. Existing UDOs with the same field name are
-   * overwritten and the underlying file is deleted. By default an uploaded file
-   * is not confirmed and will be deleted when the session expires. By
-   * confirming the uploaded image it is safe for later reuse.
+   * Add an uploaded file. Existing UDOs with the same field name are overwritten and the underlying
+   * file is deleted. By default an uploaded file is not confirmed and will be deleted when the
+   * session expires. By confirming the uploaded image it is safe for later reuse.
    *
    * @param sFieldName
-   *        The ID of the uploaded file. May neither be <code>null</code> nor
-   *        empty.
+   *        The ID of the uploaded file. May neither be <code>null</code> nor empty.
    * @param aUDO
    *        The user data object to be added. May not be <code>null</code>.
    * @see #confirmUploadedFiles(String...)
@@ -122,10 +120,9 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
    *
    * @param aFieldNames
    *        The field names to be confirmed. May be <code>null</code>.
-   * @return A map from the passed field name to the (non-temporary) user data
-   *         objects for all resolved IDs. Never <code>null</code>. Field names
-   *         that could not be resolved are not returned. If a field name is
-   *         contained more than once, it is returned only once.
+   * @return A map from the passed field name to the (non-temporary) user data objects for all
+   *         resolved IDs. Never <code>null</code>. Field names that could not be resolved are not
+   *         returned. If a field name is contained more than once, it is returned only once.
    * @see #cancelUploadedFiles(String...)
    */
   @Nonnull
@@ -157,8 +154,8 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
    *
    * @param sFieldName
    *        The field name to be confirmed. May be <code>null</code>.
-   * @return The (non-temporary) user data object for the resolved field name.
-   *         May be <code>null</code> if the passed field name is not contained.
+   * @return The (non-temporary) user data object for the resolved field name. May be
+   *         <code>null</code> if the passed field name is not contained.
    * @see #cancelUploadedFiles(String...)
    */
   @Nullable
@@ -181,13 +178,13 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   }
 
   /**
-   * Remove all uploaded files and delete the underlying UDO objects. This is
-   * usually called, when the operation is cancelled without saving.
+   * Remove all uploaded files and delete the underlying UDO objects. This is usually called, when
+   * the operation is cancelled without saving.
    *
    * @param aFieldNames
    *        The IDs to be removed and deleted.
-   * @return A non-<code>null</code> list with all field names that could be
-   *         resolved and were removed.
+   * @return A non-<code>null</code> list with all field names that could be resolved and were
+   *         removed.
    * @see #confirmUploadedFiles(String...)
    */
   @Nonnull

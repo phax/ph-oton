@@ -20,28 +20,25 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.mutable.MutableBoolean;
-import com.helger.commons.mutable.MutableLong;
-import com.helger.commons.state.EChange;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.wrapper.Wrapper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.numeric.mutable.MutableBoolean;
+import com.helger.base.numeric.mutable.MutableLong;
+import com.helger.base.state.EChange;
+import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringHelper;
+import com.helger.base.wrapper.Wrapper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedSet;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.db.api.helper.DBValueHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
 import com.helger.db.jdbc.executor.DBExecutor;
@@ -57,6 +54,9 @@ import com.helger.photon.security.usergroup.IUserGroupManager;
 import com.helger.photon.security.usergroup.IUserGroupModificationCallback;
 import com.helger.photon.security.usergroup.UserGroup;
 import com.helger.photon.security.usergroup.UserGroupManager;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IUserGroupManager} for JDBC backends.
@@ -82,8 +82,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   }
 
   /**
-   * @return The name of the database table this class is operating on. Neither
-   *         <code>null</code> nor empty.
+   * @return The name of the database table this class is operating on. Neither <code>null</code>
+   *         nor empty.
    */
   @Nonnull
   @Nonempty
@@ -651,8 +651,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       newExecutor ().querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
                                   new ConstantPreparedStatementDataProvider (sUserGroupID),
                                   aDBResult::set);
-      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null
-                                                                      : idsToSet (aDBResult.get ().getAsString (0));
+      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ()
+                                                                                                  .getAsString (0));
 
       if (aAssignedIDs != null && aAssignedIDs.remove (sUserID))
       {
@@ -766,9 +766,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       return new CommonsArrayList <> ();
 
     // Limit from the SQL point as much as possible and filter the results here
-    return _getAllWhere ("userids LIKE ?",
-                         new ConstantPreparedStatementDataProvider ("%" + sUserID + "%"))
-                                                                                         .getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
+    return _getAllWhere ("userids LIKE ?", new ConstantPreparedStatementDataProvider ("%" + sUserID + "%")).getAll (
+                                                                                                                    aUserGroup -> aUserGroup.containsUserID (sUserID));
   }
 
   @Nonnull
@@ -864,8 +863,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       newExecutor ().querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
                                   new ConstantPreparedStatementDataProvider (sUserGroupID),
                                   aDBResult::set);
-      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null
-                                                                      : idsToSet (aDBResult.get ().getAsString (0));
+      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ()
+                                                                                                  .getAsString (0));
 
       if (aAssignedIDs != null && aAssignedIDs.remove (sRoleID))
       {
@@ -979,9 +978,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       return getNone ();
 
     // Limit from the SQL point as much as possible and filter the results here
-    return _getAllWhere ("roleids LIKE ?",
-                         new ConstantPreparedStatementDataProvider ("%" + sRoleID + "%"))
-                                                                                         .getAll (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
+    return _getAllWhere ("roleids LIKE ?", new ConstantPreparedStatementDataProvider ("%" + sRoleID + "%")).getAll (
+                                                                                                                    aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 
   @Nonnull
@@ -997,9 +995,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   public boolean containsUserGroupWithAssignedRole (@Nullable final String sRoleID)
   {
     // Limit from the SQL point as much as possible and filter the results here
-    return _getAllWhere ("roleids LIKE ?",
-                         new ConstantPreparedStatementDataProvider ("%" + sRoleID + "%"))
-                                                                                         .containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
+    return _getAllWhere ("roleids LIKE ?", new ConstantPreparedStatementDataProvider ("%" + sRoleID + "%"))
+                                                                                                           .containsAny (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 
   public boolean containsAnyUserGroupWithAssignedUserAndRole (@Nullable final String sUserID,

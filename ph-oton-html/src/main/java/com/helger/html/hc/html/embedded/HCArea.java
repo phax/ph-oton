@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.embedded;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.string.StringHelper;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
 
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;area&gt; element

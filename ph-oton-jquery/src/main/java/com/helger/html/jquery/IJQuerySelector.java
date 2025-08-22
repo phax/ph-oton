@@ -16,11 +16,11 @@
  */
 package com.helger.html.jquery;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-
+import com.helger.annotation.CheckReturnValue;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.jscode.IJSExpression;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A single jQuery selector
@@ -30,8 +30,8 @@ import com.helger.html.jscode.IJSExpression;
 public interface IJQuerySelector extends IHasJSCodeWithSettings
 {
   /**
-   * @return The contained expression that was used as the parameter to this
-   *         selector. Never <code>null</code>.
+   * @return The contained expression that was used as the parameter to this selector. Never
+   *         <code>null</code>.
    */
   @Nonnull
   IJSExpression getExpression ();

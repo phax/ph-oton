@@ -20,17 +20,14 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.datetime.EDTFormatterMode;
-import com.helger.commons.datetime.EDTType;
-import com.helger.commons.datetime.PDTFormatter;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringReplace;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.datetime.EDTType;
+import com.helger.datetime.format.EDTFormatterMode;
+import com.helger.datetime.format.PDTFormatter;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.photon.app.html.PhotonJS;
@@ -39,9 +36,11 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Add date/time based sorting for client side DataTables. This is based on
- * moment.js
+ * Add date/time based sorting for client side DataTables. This is based on moment.js
  *
  * @author Philip Helger
  */
@@ -67,8 +66,8 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   private static String _fixFormatter (@Nonnull final String s)
   {
     String ret = s;
-    ret = StringHelper.replaceAll (ret, 'y', 'Y');
-    ret = StringHelper.replaceAll (ret, 'd', 'D');
+    ret = StringReplace.replaceAll (ret, 'y', 'Y');
+    ret = StringReplace.replaceAll (ret, 'd', 'D');
     return ret;
   }
 

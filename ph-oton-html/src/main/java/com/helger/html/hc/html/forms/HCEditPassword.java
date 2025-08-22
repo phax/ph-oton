@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.config.HCSettings;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;input&gt; element with type "password"

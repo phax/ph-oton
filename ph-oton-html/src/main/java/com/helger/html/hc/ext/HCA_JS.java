@@ -16,17 +16,17 @@
  */
 package com.helger.html.hc.ext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.url.ISimpleURL;
-import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.FakeJS;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
 import com.helger.html.hc.html.textlevel.IHCA;
 import com.helger.html.js.CJS;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.IHasJSCode;
+import com.helger.http.url.ISimpleURL;
+import com.helger.http.url.SimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class HCA_JS extends AbstractHCA <HCA_JS>
 {

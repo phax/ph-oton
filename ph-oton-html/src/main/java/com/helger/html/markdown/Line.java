@@ -16,12 +16,12 @@
  */
 package com.helger.html.markdown;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.CodingStyleguideUnaware;
-import com.helger.commons.collection.impl.CommonsLinkedList;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.collection.commons.CommonsLinkedList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This class represents a text line.

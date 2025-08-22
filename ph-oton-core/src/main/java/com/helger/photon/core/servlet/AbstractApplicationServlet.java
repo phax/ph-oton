@@ -18,12 +18,12 @@ package com.helger.photon.core.servlet;
 
 import java.util.EnumSet;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.http.EHttpMethod;
+import com.helger.annotation.Nonempty;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.core.appid.XServletFilterAppIDExplicit;
 import com.helger.xservlet.AbstractXServlet;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * The servlet to show the secure application

@@ -18,18 +18,19 @@ package com.helger.photon.uictrls.bloodhound;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.array.ArrayHelper;
+import com.helger.collection.CollectionHelper;
+import com.helger.collection.commons.CommonsArrayList;
 import com.helger.html.jscode.AbstractJSInvocation;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.IJSGeneratable;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSExpr;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special Bloodhound invocation. Offers all methods as of 0.10.2
@@ -52,8 +53,7 @@ public class BloodhoundJSInvocation extends AbstractJSInvocation <BloodhoundJSIn
    * Invoke an arbitrary function on this jQuery object.
    *
    * @param sMethod
-   *        The method to be invoked. May neither be <code>null</code> nor
-   *        empty.
+   *        The method to be invoked. May neither be <code>null</code> nor empty.
    * @return A new jQuery invocation object. Never <code>null</code>.
    */
   @Nonnull
@@ -78,7 +78,7 @@ public class BloodhoundJSInvocation extends AbstractJSInvocation <BloodhoundJSIn
   public BloodhoundJSInvocation add (@Nullable final BloodhoundDatum aDatum)
   {
     if (aDatum != null)
-      return add (CollectionHelper.newList (aDatum));
+      return add (new CommonsArrayList <> (aDatum));
     return this;
   }
 
@@ -86,7 +86,7 @@ public class BloodhoundJSInvocation extends AbstractJSInvocation <BloodhoundJSIn
   public BloodhoundJSInvocation add (@Nullable final BloodhoundDatum... aDatums)
   {
     if (ArrayHelper.isNotEmpty (aDatums))
-      return add (CollectionHelper.newList (aDatums));
+      return add (new CommonsArrayList <> (aDatums));
     return this;
   }
 
@@ -128,14 +128,12 @@ public class BloodhoundJSInvocation extends AbstractJSInvocation <BloodhoundJSIn
   }
 
   /**
-   * Computes a set of suggestions for <code>query</code>. <code>cb</code> will
-   * be invoked with an array of datums that represent said set. <code>cb</code>
-   * will always be invoked once synchronously with suggestions that were
-   * available on the client. If those suggestions are insufficient (# of
-   * suggestions is less than <code>limit</code>) and remote was configured,
-   * <code>cb</code> may also be invoked asynchronously with the suggestions
-   * available on the client mixed with suggestions from the <code>remote</code>
-   * source.
+   * Computes a set of suggestions for <code>query</code>. <code>cb</code> will be invoked with an
+   * array of datums that represent said set. <code>cb</code> will always be invoked once
+   * synchronously with suggestions that were available on the client. If those suggestions are
+   * insufficient (# of suggestions is less than <code>limit</code>) and remote was configured,
+   * <code>cb</code> may also be invoked asynchronously with the suggestions available on the client
+   * mixed with suggestions from the <code>remote</code> source.
    *
    * @param sQuery
    *        Query string
@@ -150,14 +148,12 @@ public class BloodhoundJSInvocation extends AbstractJSInvocation <BloodhoundJSIn
   }
 
   /**
-   * Computes a set of suggestions for <code>query</code>. <code>cb</code> will
-   * be invoked with an array of datums that represent said set. <code>cb</code>
-   * will always be invoked once synchronously with suggestions that were
-   * available on the client. If those suggestions are insufficient (# of
-   * suggestions is less than <code>limit</code>) and remote was configured,
-   * <code>cb</code> may also be invoked asynchronously with the suggestions
-   * available on the client mixed with suggestions from the <code>remote</code>
-   * source.
+   * Computes a set of suggestions for <code>query</code>. <code>cb</code> will be invoked with an
+   * array of datums that represent said set. <code>cb</code> will always be invoked once
+   * synchronously with suggestions that were available on the client. If those suggestions are
+   * insufficient (# of suggestions is less than <code>limit</code>) and remote was configured,
+   * <code>cb</code> may also be invoked asynchronously with the suggestions available on the client
+   * mixed with suggestions from the <code>remote</code> source.
    *
    * @param aQuery
    *        Query string

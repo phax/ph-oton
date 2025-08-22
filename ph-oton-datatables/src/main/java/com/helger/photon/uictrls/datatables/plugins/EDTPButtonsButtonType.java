@@ -16,16 +16,16 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.name.IHasName;
+import com.helger.annotation.Nonempty;
+import com.helger.base.name.IHasName;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * DataTables Buttons plugin, button type

@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.embedded;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.links.EHCReferrerPolicy;
+import com.helger.http.url.ISimpleURL;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for AREAs

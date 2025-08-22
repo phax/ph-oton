@@ -16,19 +16,13 @@
  */
 package com.helger.photon.app.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.stream.HasInputStream;
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.mime.MimeType;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.CGlobal;
+import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
+import com.helger.base.io.stream.HasInputStream;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCConversionSettings;
@@ -45,6 +39,9 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.meta.EStandardMetaElement;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
+import com.helger.mime.CMimeType;
+import com.helger.mime.IMimeType;
+import com.helger.mime.MimeType;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.resource.IWebSiteResourceBundleProvider;
@@ -52,6 +49,9 @@ import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.app.resource.WebSiteResourceWithCondition;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A utility class for consistent HTML creation.
@@ -181,9 +181,8 @@ public final class PhotonHTMLHelper
   }
 
   /**
-   * Merge external CSS and JS contents to a single resource for improved
-   * browser performance. All source nodes are taken from the head and all
-   * target nodes are written to the head.
+   * Merge external CSS and JS contents to a single resource for improved browser performance. All
+   * source nodes are taken from the head and all target nodes are written to the head.
    *
    * @param aRequestScope
    *        Current request scope. Never <code>null</code>.

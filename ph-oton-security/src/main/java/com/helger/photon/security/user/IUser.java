@@ -19,17 +19,17 @@ package com.helger.photon.security.user;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.IHasDescription;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.string.StringHelper;
 import com.helger.security.authentication.subject.IAuthSubject;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.tenancy.IBusinessObject;
+import com.helger.text.IHasDescription;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for a single user

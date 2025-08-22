@@ -19,17 +19,17 @@ package com.helger.photon.security.token.user;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.state.EChange;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.io.mgr.IPhotonManager;
 import com.helger.photon.security.user.IUser;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a manager for {@link UserToken} objects.

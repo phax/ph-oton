@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base class for &lt;source&gt; and &lt;track

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Width. See https://getbootstrap.com/docs/4.1/utilities/sizing/

@@ -16,7 +16,7 @@
  */
 package com.helger.photon.security.lock;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Locked enumeration

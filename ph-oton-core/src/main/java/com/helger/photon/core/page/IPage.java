@@ -18,13 +18,13 @@ package com.helger.photon.core.page;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.id.IHasID;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.typeconvert.collection.IAttributeContainerAny;
 
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IAttributeContainerAny;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.text.display.IHasDisplayText;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * The base interface for a single page of content.

@@ -16,12 +16,12 @@
  */
 package com.helger.photon.bootstrap4.form;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.forms.AbstractHCCheckBox;
 import com.helger.html.hc.html.forms.AbstractHCRadioButton;
 import com.helger.html.hc.html.grouping.AbstractHCDiv;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Special wrapper for a DIV with classes "form-check" and "form-check-inline"

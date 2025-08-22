@@ -18,20 +18,20 @@ package com.helger.photon.core.longrun;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.rt.StackTraceHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
+import com.helger.http.url.ISimpleURL;
 import com.helger.json.IJson;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class represents the result of a single long running job execution.

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import javax.annotation.Nullable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.regex.RegExHelper;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents search settings, either for the global request or per-column.
@@ -37,7 +37,7 @@ public final class DTSSRequestDataSearch
   @Nullable
   public static String [] getSearchTexts (@Nullable final String sSearchText)
   {
-    if (StringHelper.hasNoTextAfterTrim (sSearchText))
+    if (StringHelper.isEmptyAfterTrim (sSearchText))
       return null;
 
     return RegExHelper.getSplitToArray (sSearchText, "\\s+");
@@ -68,8 +68,8 @@ public final class DTSSRequestDataSearch
   }
 
   /**
-   * @return <code>true</code> if the filter should be treated as a regular
-   *         expression for advanced filtering, <code>false</code> if not.
+   * @return <code>true</code> if the filter should be treated as a regular expression for advanced
+   *         filtering, <code>false</code> if not.
    */
   public boolean isRegEx ()
   {

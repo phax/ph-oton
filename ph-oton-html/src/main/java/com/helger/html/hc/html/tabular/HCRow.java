@@ -16,17 +16,17 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.DevelopersNote;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.CheckReturnValue;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.misc.DevelopersNote;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;tr&gt; element
@@ -69,8 +69,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * Add an empty cell.
    *
    * @param bHeader
-   *        <code>true</code> to create a <code>th</code> or a <code>td</code>
-   *        element.
+   *        <code>true</code> to create a <code>th</code> or a <code>td</code> element.
    * @return The created cell. Never <code>null</code>.
    * @since 9.2.5
    */
@@ -127,8 +126,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * Add an empty cell at the specified index.
    *
    * @param bHeader
-   *        <code>true</code> to create a <code>th</code> or a <code>td</code>
-   *        element.
+   *        <code>true</code> to create a <code>th</code> or a <code>td</code> element.
    * @param nIndex
    *        The index where the cell should be added
    * @return The created cell. Never <code>null</code>.
@@ -509,8 +507,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * Add multiple cells, one for each passed element.
    *
    * @param aCellChildren
-   *        The list of elements for which new cells should be created. May be
-   *        <code>null</code>.
+   *        The list of elements for which new cells should be created. May be <code>null</code>.
    * @return this (the table row)
    */
   @Nonnull
@@ -526,8 +523,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * Add multiple cells, one for each passed element.
    *
    * @param aCellChildren
-   *        The list of elements for which new cells should be created. May be
-   *        <code>null</code>.
+   *        The list of elements for which new cells should be created. May be <code>null</code>.
    * @return this (the table row)
    */
   @Nonnull
@@ -540,8 +536,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   /**
-   * Get the cell at the specified index in this row. This method does NOT
-   * consider colspans!!!!
+   * Get the cell at the specified index in this row. This method does NOT consider colspans!!!!
    *
    * @param nIndex
    *        The index of the cell
@@ -554,8 +549,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   /**
-   * Get the cell at the specified index in this row. This method does consider
-   * colspans!!!!
+   * Get the cell at the specified index in this row. This method does consider colspans!!!!
    *
    * @param nIndex
    *        The index of the cell. Should be &ge; 0.
@@ -576,8 +570,8 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   /**
-   * Note: this method only counts the effective cells and does NOT include
-   * eventually contained "colspans"!
+   * Note: this method only counts the effective cells and does NOT include eventually contained
+   * "colspans"!
    *
    * @return The number of contained cells.
    */

@@ -18,9 +18,9 @@ package com.helger.photon.audit.v2.pipeline;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
 import com.helger.photon.audit.v2.domain.AuditEvent;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract {@link AuditEvent} handler.

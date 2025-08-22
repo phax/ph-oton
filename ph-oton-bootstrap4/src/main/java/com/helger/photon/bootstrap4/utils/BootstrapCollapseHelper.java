@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.utils;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.IHCElement;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Helper for the collapse functionality

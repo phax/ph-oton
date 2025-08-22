@@ -21,26 +21,26 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IMultilingualText;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.parser.XHTMLParser;
+import com.helger.io.resource.IReadableResource;
 import com.helger.photon.uicore.page.AbstractWebPage;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+import com.helger.text.IMultilingualText;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.util.MicroVisitor;
 import com.helger.xml.serialize.read.SAXReaderSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base class for pages consisting of external HTML code that is provided from

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.audit;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ESuccess;
+import com.helger.base.type.ObjectType;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.type.ObjectType;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Main interface for an auditing service. Not serializable.
@@ -42,8 +42,7 @@ public interface IAuditor
    * @param aActionObjectType
    *        Action object type. May be <code>null</code> if sAction is set.
    * @param sAction
-   *        The performed action. May be <code>null</code> if aActionObjectType
-   *        is set.
+   *        The performed action. May be <code>null</code> if aActionObjectType is set.
    * @param aArgs
    *        An optional array of arguments. May be <code>null</code> or empty.
    */
@@ -91,7 +90,9 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onModifySuccess (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
+  default void onModifySuccess (@Nonnull final ObjectType aObjectType,
+                                @Nonnull final String sWhat,
+                                @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.MODIFY,
@@ -111,7 +112,9 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onModifyFailure (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
+  default void onModifyFailure (@Nonnull final ObjectType aObjectType,
+                                @Nonnull final String sWhat,
+                                @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.MODIFY,
@@ -213,7 +216,9 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteSuccess (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
+  default void onExecuteSuccess (@Nonnull final ObjectType aObjectType,
+                                 @Nonnull final String sWhat,
+                                 @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.EXECUTE,
@@ -233,7 +238,9 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteFailure (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat, @Nullable final Object... aArgs)
+  default void onExecuteFailure (@Nonnull final ObjectType aObjectType,
+                                 @Nonnull final String sWhat,
+                                 @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.EXECUTE,

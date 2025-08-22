@@ -26,14 +26,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.helger.commons.state.EChange;
-import com.helger.commons.url.SimpleURL;
+import com.helger.base.state.EChange;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.UnparsedJSCodeProvider;
+import com.helger.http.url.SimpleURL;
 
 /**
  * Test class for class {@link HCHead}

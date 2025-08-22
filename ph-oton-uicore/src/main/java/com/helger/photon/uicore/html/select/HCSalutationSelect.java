@@ -18,11 +18,11 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.person.ESalutation;
+
+import jakarta.annotation.Nonnull;
 
 public class HCSalutationSelect extends HCExtSelect
 {

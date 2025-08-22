@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uicore.page.handler;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.id.IHasID;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.id.IHasID;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for handling multi object actions.

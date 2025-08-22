@@ -18,11 +18,11 @@ package com.helger.photon.bootstrap4.utils;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Utility class to build a display class based on {@link EBootstrapGridType}

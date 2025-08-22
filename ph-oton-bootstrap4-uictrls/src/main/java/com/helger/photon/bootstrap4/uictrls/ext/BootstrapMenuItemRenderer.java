@@ -18,11 +18,9 @@ package com.helger.photon.bootstrap4.uictrls.ext;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.factory.FactoryNewInstance;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.lang.clazz.FactoryNewInstance;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -44,6 +42,8 @@ import com.helger.photon.core.menu.MenuItemDeterminatorCallback;
 import com.helger.photon.core.menu.ui.AbstractMenuItemRenderer;
 import com.helger.photon.core.menu.ui.IMenuItemRenderer;
 import com.helger.photon.core.menu.ui.MenuRendererCallback;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link IMenuItemRenderer}

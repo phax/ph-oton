@@ -19,11 +19,11 @@ package com.helger.html.jquery.supplementary.main;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsTreeMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.io.file.SimpleFileIO;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsTreeMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.io.file.SimpleFileIO;
 
 public class Main_QueryInvocationFuncTest extends AbstractCreateJQueryAPIList
 {

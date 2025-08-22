@@ -18,23 +18,23 @@ package com.helger.html.hc.config;
 
 import java.nio.charset.Charset;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.lang.ServiceLoaderHelper;
-import com.helger.commons.log.ConditionalLogger;
-import com.helger.commons.system.ENewLineMode;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.CGlobal;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.log.ConditionalLogger;
+import com.helger.base.spi.ServiceLoaderHelper;
+import com.helger.base.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCConversionSettings;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Global HTML Control settings

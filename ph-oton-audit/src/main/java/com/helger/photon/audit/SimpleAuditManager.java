@@ -18,21 +18,18 @@ package com.helger.photon.audit;
 
 import java.util.List;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ELockType;
-import com.helger.commons.annotation.IsLocked;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.state.EChange;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.ELockType;
+import com.helger.annotation.concurrent.IsLocked;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.state.EChange;
+import com.helger.base.state.ESuccess;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.dao.DAOException;
 import com.helger.dao.EDAOActionType;
 import com.helger.photon.io.dao.AbstractPhotonWALDAO;
@@ -42,9 +39,12 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * The class handles audit actions in a very simple way. All actions are
- * synchronously written to a single large file.
+ * The class handles audit actions in a very simple way. All actions are synchronously written to a
+ * single large file.
  *
  * @author Philip Helger
  */
@@ -58,8 +58,8 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
    * Constructor
    *
    * @param sFilename
-   *        The filename to write the audits to. May be <code>null</code> to
-   *        indicate an in-memory auditor only.
+   *        The filename to write the audits to. May be <code>null</code> to indicate an in-memory
+   *        auditor only.
    * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    * @throws DAOException
@@ -120,9 +120,13 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType.getName () : sAction,
-                                                                      aArgs);
-    final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (), eActionType, eSuccess, sFullAction);
+    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType
+                                                                                                                   .getName ()
+                                                                                                : sAction, aArgs);
+    final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
+                                                eActionType,
+                                                eSuccess,
+                                                sFullAction);
 
     m_aRWLock.writeLocked ( () -> {
       m_aItems.internalAddItem (aAuditItem);

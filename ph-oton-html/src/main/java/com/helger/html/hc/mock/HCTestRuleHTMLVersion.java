@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.mock;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.junit.rules.ExternalResource;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A JUnit test rule that ensures that a certain HTML version is used.

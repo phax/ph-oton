@@ -16,7 +16,7 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
 public final class DataTablesSettings

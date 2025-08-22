@@ -16,16 +16,16 @@
  */
 package com.helger.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.xml.microdom.AbstractMicroNode;
 import com.helger.xml.microdom.EMicroNodeType;
 import com.helger.xml.microdom.IMicroDocumentType;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.MicroDocumentType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * HTML5 document type representation

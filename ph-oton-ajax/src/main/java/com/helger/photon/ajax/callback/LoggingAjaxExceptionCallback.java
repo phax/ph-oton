@@ -18,18 +18,18 @@ package com.helger.photon.ajax.callback;
 
 import java.io.IOException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.io.stream.StreamHelper;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.io.stream.StreamHelper;
 import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IAjaxExceptionCallback} logging to an SLF4J logger

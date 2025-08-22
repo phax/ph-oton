@@ -18,16 +18,16 @@ package com.helger.photon.bootstrap4.breadcrumb;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.core.menu.IMenuItem;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.tree.withid.DefaultTreeItemWithID;
+
+import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class BootstrapBreadcrumbProvider

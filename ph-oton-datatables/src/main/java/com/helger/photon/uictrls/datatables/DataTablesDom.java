@@ -16,24 +16,25 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.lang.ICloneable;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.Nonempty;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.clone.ICloneable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class DataTablesDom implements ICloneable <DataTablesDom>
 {
@@ -306,7 +307,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     if (m_nOpenDivs != 0)
       LOGGER.error ("The DIVs are not balanced: " +
                     (m_nOpenDivs > 0 ? m_nOpenDivs + " DIVs are open!" : m_nOpenDivs + " DIVs too many are closed!"));
-    return StringHelper.getImploded (m_aElements);
+    return StringImplode.getImploded (m_aElements);
   }
 
   @Nonnull

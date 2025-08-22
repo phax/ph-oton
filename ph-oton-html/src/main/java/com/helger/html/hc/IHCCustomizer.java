@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLVersion;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A special customization interface, that lets you modify existing elements

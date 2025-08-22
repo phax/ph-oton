@@ -18,19 +18,17 @@ package com.helger.photon.bootstrap4.form;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.collection.impl.ICommonsCollection;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.PresentForCodeCoverage;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.collection.commons.ICommonsCollection;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -47,10 +45,10 @@ import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
 import com.helger.photon.uicore.html.formlabel.HCFormLabelHelper;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @Immutable
-@SuppressFBWarnings ("JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS")
 public final class BootstrapFormHelper
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_GROUP_ERROR_TEXT = DefaultCSSClassProvider.create ("form-group-error-text");
@@ -173,10 +171,10 @@ public final class BootstrapFormHelper
     if (aCtrls != null && aErrorNodes != null)
     {
       // Use all error node HTML IDs and add them as one "aria-describedby"
-      final String sDescribedBy = StringHelper.imploder ()
-                                              .source (aErrorNodes, x -> x.ensureID ().getID ())
-                                              .separator (' ')
-                                              .build ();
+      final String sDescribedBy = StringImplode.imploder ()
+                                               .source (aErrorNodes, x -> x.ensureID ().getID ())
+                                               .separator (' ')
+                                               .build ();
       if (StringHelper.hasText (sDescribedBy))
         for (final IHCElement <?> aCurCtrl : aCtrls)
           if (!aCurCtrl.customAttrs ().containsAriaDescription () &&
@@ -236,19 +234,19 @@ public final class BootstrapFormHelper
                                                                  @Nonnull final Locale aContentLocale,
                                                                  final boolean bWithLocation)
   {
-    String sText = "";
+    final StringBuilder sText = new StringBuilder ();
 
     if (bWithLocation)
     {
       final String sErrorLocation = aError.getErrorLocation ().getAsString ();
       if (StringHelper.hasText (sErrorLocation))
-        sText += sErrorLocation + " ";
+        sText.append (sErrorLocation).append (" ");
     }
 
     {
       final String sErrorID = aError.getErrorID ();
       if (StringHelper.hasText (sErrorID))
-        sText += "[" + sErrorID + "] ";
+        sText.append ("[").append (sErrorID).append ("] ");
     }
 
     {
@@ -256,12 +254,12 @@ public final class BootstrapFormHelper
       if (StringHelper.hasNoText (sErrorText))
         LOGGER.warn ("Error " + aError + " has no text in locale " + aContentLocale);
       else
-        sText += sErrorText;
+        sText.append (sErrorText);
     }
 
     final BootstrapInvalidFeedback aErrorBlock = new BootstrapInvalidFeedback ().addClass (CSS_CLASS_FORM_GROUP_ERROR_TEXT);
     // Display it, even if it is empty (because of non-translation)
-    aErrorBlock.addChild (sText);
+    aErrorBlock.addChild (sText.toString ());
     return aErrorBlock;
   }
 

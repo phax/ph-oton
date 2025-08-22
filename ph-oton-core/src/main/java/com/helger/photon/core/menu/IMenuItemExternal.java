@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.menu;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.http.url.IHasSimpleURL;
+import com.helger.http.url.ISimpleURL;
 
-import com.helger.commons.url.IHasSimpleURL;
-import com.helger.commons.url.ISimpleURL;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single menu item referencing an arbitrary URL.

@@ -16,19 +16,19 @@
  */
 package com.helger.photon.core.longrun;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.text.IMultilingualText;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ESuccess;
 import com.helger.photon.core.mgr.PhotonBasicManager;
 import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.text.IMultilingualText;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract implementation of {@link ILongRunningJob}

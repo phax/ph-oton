@@ -18,21 +18,18 @@ package com.helger.photon.uictrls.bloodhound;
 
 import java.util.List;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.lang.ICloneable;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.clone.ICloneable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSArray;
@@ -40,6 +37,9 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSParam;
 import com.helger.html.jscode.JSReturn;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
@@ -83,8 +83,8 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   }
 
   /**
-   * @return A function with the signature (datum) that transforms a datum into
-   *         an array of string tokens. Required.
+   * @return A function with the signature (datum) that transforms a datum into an array of string
+   *         tokens. Required.
    */
   @Nullable
   public IJSExpression getDatumTokenizer ()
@@ -122,9 +122,8 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   }
 
   /**
-   * Set a datum tokenizer that uses pre-tokenized tokens (e.g. from remote) as
-   * contained in the datum. It therefore uses the field
-   * {@link BloodhoundDatum#JSON_TOKENS} of each datum.
+   * Set a datum tokenizer that uses pre-tokenized tokens (e.g. from remote) as contained in the
+   * datum. It therefore uses the field {@link BloodhoundDatum#JSON_TOKENS} of each datum.
    *
    * @return this
    */
@@ -137,8 +136,8 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   }
 
   /**
-   * @return A function with the signature (query) that transforms a query into
-   *         an array of string tokens. Required.
+   * @return A function with the signature (query) that transforms a query into an array of string
+   *         tokens. Required.
    */
   @Nullable
   public IJSExpression getQueryTokenizer ()
@@ -166,9 +165,8 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   }
 
   /**
-   * @return The max number of suggestions to return from Bloodhound#get. If not
-   *         reached, the data source will attempt to backfill the suggestions
-   *         from remote.
+   * @return The max number of suggestions to return from Bloodhound#get. If not reached, the data
+   *         source will attempt to backfill the suggestions from remote.
    */
   @Nonnegative
   public int getLimit ()
@@ -184,10 +182,9 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   }
 
   /**
-   * @return If set, this is expected to be a function with the signature
-   *         (remoteMatch, localMatch) that returns <code>true</code> if the
-   *         datums are duplicates or <code>false</code> otherwise. If not set,
-   *         duplicate detection will not be performed.
+   * @return If set, this is expected to be a function with the signature (remoteMatch, localMatch)
+   *         that returns <code>true</code> if the datums are duplicates or <code>false</code>
+   *         otherwise. If not set, duplicate detection will not be performed.
    */
   @Nullable
   public IJSExpression getDupDetector ()
@@ -232,13 +229,13 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   @Nonnull
   public BloodhoundOptions setLocal (@Nullable final BloodhoundDatum... aLocal)
   {
-    return setLocal (aLocal == null ? null : CollectionHelper.newList (aLocal));
+    return setLocal (aLocal == null ? null : new CommonsArrayList <> (aLocal));
   }
 
   @Nonnull
   public BloodhoundOptions setLocal (@Nullable final List <? extends BloodhoundDatum> aLocal)
   {
-    m_aLocal = aLocal == null ? null : CollectionHelper.newList (aLocal);
+    m_aLocal = aLocal == null ? null : new CommonsArrayList <> (aLocal);
     return this;
   }
 

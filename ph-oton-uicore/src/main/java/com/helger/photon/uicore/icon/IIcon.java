@@ -18,10 +18,10 @@ package com.helger.photon.uicore.icon;
 
 import java.io.Serializable;
 
-import javax.annotation.Nullable;
-
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
+
+import jakarta.annotation.Nullable;
 
 /**
  * A base interface for icons

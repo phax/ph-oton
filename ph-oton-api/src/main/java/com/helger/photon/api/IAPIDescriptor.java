@@ -18,13 +18,13 @@ package com.helger.photon.api;
 
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.http.EHttpMethod;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.collection.commons.ICommonsOrderedSet;
+import com.helger.http.EHttpMethod;
 import com.helger.photon.api.pathdescriptor.PathDescriptor;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * The read-only part of {@link APIDescriptor}.

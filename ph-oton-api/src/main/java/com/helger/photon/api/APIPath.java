@@ -18,19 +18,19 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.http.EHttpMethod;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.http.EHttpMethod;
+import com.helger.http.url.SimpleURL;
+import com.helger.io.file.FilenameHelper;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This class contains a combination of path and HTTP method.

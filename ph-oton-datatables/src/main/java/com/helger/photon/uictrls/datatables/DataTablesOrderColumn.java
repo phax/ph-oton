@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.jscode.JSArray;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Defines a DataTables orderable column

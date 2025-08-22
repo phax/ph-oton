@@ -88,7 +88,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.uicore</Automatic-Module-Name>
             <Export-Package>com.helger.photon.uicore.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>

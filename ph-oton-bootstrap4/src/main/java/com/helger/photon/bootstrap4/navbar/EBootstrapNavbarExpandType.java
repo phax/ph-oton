@@ -16,11 +16,11 @@
  */
 package com.helger.photon.bootstrap4.navbar;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.EBootstrapGridType;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Navbar expansion type. See

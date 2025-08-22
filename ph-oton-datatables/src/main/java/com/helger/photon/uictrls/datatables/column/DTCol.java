@@ -19,15 +19,12 @@ package com.helger.photon.uictrls.datatables.column;
 import java.util.Locale;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.version.Version;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.version.Version;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.tabular.AbstractHCCol;
@@ -36,10 +33,12 @@ import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.DataTables;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Specialized column for DataTables to be used in IHCTable implementation
- * constructors. Only when used with {@link DataTables} it will customize the
- * column design.
+ * Specialized column for DataTables to be used in IHCTable implementation constructors. Only when
+ * used with {@link DataTables} it will customize the column design.
  *
  * @author Philip Helger
  */
@@ -111,8 +110,8 @@ public class DTCol extends AbstractHCCol <DTCol>
         break;
       case DOUBLE:
         /*
-         * Ensure that columns without text are sorted consistently compared to
-         * the ones with non-numeric content
+         * Ensure that columns without text are sorted consistently compared to the ones with
+         * non-numeric content
          */
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorBigDecimal (aDisplayLocale));
@@ -124,8 +123,8 @@ public class DTCol extends AbstractHCCol <DTCol>
         break;
       case INT:
         /*
-         * Ensure that columns without text are sorted consistently compared to
-         * the ones with non-numeric content
+         * Ensure that columns without text are sorted consistently compared to the ones with
+         * non-numeric content
          */
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorBigInteger (aDisplayLocale));

@@ -16,15 +16,13 @@
  */
 package com.helger.html.parser;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.cache.regex.RegExHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.entity.HTMLEntityResolver;
@@ -40,6 +38,9 @@ import com.helger.xml.serialize.read.SAXReaderSettings;
 import com.helger.xml.serialize.write.EXMLIncorrectCharacterHandling;
 import com.helger.xml.serialize.write.EXMLSerializeVersion;
 import com.helger.xml.serialize.write.XMLEmitter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Utility class for parsing stuff as HTML.

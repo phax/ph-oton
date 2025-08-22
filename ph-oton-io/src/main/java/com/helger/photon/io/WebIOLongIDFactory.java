@@ -16,14 +16,13 @@
  */
 package com.helger.photon.io;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.io.id.factory.FileLongIDFactory;
 
-import com.helger.commons.id.factory.FileLongIDFactory;
+import jakarta.annotation.Nonnull;
 
 /**
- * A special {@link FileLongIDFactory} that uses {@link WebFileIO} to get the
- * filename.
+ * A special {@link FileLongIDFactory} that uses {@link WebFileIO} to get the filename.
  *
  * @author Philip Helger
  */

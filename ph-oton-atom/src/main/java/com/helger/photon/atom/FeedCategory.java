@@ -16,12 +16,13 @@
  */
 package com.helger.photon.atom;
 
-import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
+
+import jakarta.annotation.Nullable;
 
 public class FeedCategory extends AbstractFeedElement
 {
@@ -40,8 +41,8 @@ public class FeedCategory extends AbstractFeedElement
   }
 
   /**
-   * The "term" attribute is a string that identifies the category to which the
-   * entry or feed belongs. Category elements MUST have a "term" attribute.
+   * The "term" attribute is a string that identifies the category to which the entry or feed
+   * belongs. Category elements MUST have a "term" attribute.
    *
    * @return term
    */
@@ -57,8 +58,8 @@ public class FeedCategory extends AbstractFeedElement
   }
 
   /**
-   * The "scheme" attribute is an IRI that identifies a categorization scheme.
-   * Category elements MAY have a "scheme" attribute.
+   * The "scheme" attribute is an IRI that identifies a categorization scheme. Category elements MAY
+   * have a "scheme" attribute.
    *
    * @return scheme
    */
@@ -74,10 +75,9 @@ public class FeedCategory extends AbstractFeedElement
   }
 
   /**
-   * The "label" attribute provides a human-readable label for display in
-   * end-user applications. The content of the "label" attribute is
-   * Language-Sensitive. Entities such as "&amp;amp;" and "&amp;lt;" represent
-   * their corresponding characters ("&amp;" and "&lt;", respectively), not
+   * The "label" attribute provides a human-readable label for display in end-user applications. The
+   * content of the "label" attribute is Language-Sensitive. Entities such as "&amp;amp;" and
+   * "&amp;lt;" represent their corresponding characters ("&amp;" and "&lt;", respectively), not
    * markup. Category elements MAY have a "label" attribute.
    *
    * @return type
@@ -98,7 +98,7 @@ public class FeedCategory extends AbstractFeedElement
     if (StringHelper.hasText (m_sLabel))
       aElement.setAttribute ("label", m_sLabel);
     if (StringHelper.hasText (getLanguage ()))
-      aElement.setAttribute (XMLConstants.XML_NS_URI, "lang", getLanguage ());
+      aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
     return aElement;
   }
 

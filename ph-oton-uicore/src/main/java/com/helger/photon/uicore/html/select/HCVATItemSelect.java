@@ -20,12 +20,12 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
+
+import jakarta.annotation.Nonnull;
 
 public class HCVATItemSelect extends HCExtSelect
 {

@@ -18,9 +18,7 @@ package com.helger.photon.bootstrap.demo.servlet;
 
 import java.io.IOException;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.http.CHttpHeader;
+import com.helger.http.CHttpHeader;
 import com.helger.http.csp.CSPDirective;
 import com.helger.http.csp.CSPPolicy;
 import com.helger.http.csp.CSPSourceList;
@@ -30,6 +28,7 @@ import com.helger.photon.core.servlet.AbstractApplicationXServletHandler;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 
 /**

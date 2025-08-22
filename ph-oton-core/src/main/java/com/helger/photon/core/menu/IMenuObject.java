@@ -18,12 +18,12 @@ package com.helger.photon.core.menu;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.id.IHasID;
+import com.helger.typeconvert.collection.IAttributeContainerAny;
 
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.IAttributeContainerAny;
-import com.helger.commons.id.IHasID;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for menu items and menu separators.

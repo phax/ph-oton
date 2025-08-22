@@ -18,7 +18,7 @@ package com.helger.photon.api;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.SPITestHelper;
+import com.helger.unittestext.SPITestHelper;
 
 /**
  * SPI definition test

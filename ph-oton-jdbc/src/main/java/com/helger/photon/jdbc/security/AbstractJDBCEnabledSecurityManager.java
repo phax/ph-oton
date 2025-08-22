@@ -19,18 +19,15 @@ package com.helger.photon.jdbc.security;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.CollectionHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.db.jdbc.mgr.AbstractJDBCEnabledManager;
 import com.helger.json.IJson;
@@ -39,6 +36,9 @@ import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.json.serialize.JsonReader;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A special JDBC enabled manager with common methods for the security managers.
@@ -64,7 +64,7 @@ public abstract class AbstractJDBCEnabledSecurityManager extends AbstractJDBCEna
   {
     if (CollectionHelper.isEmpty (aAttrs))
       return null;
-    return new JsonObject ().addAll (aAttrs).getAsJsonString ();
+    return new JsonObject ().addAllAny (aAttrs).getAsJsonString ();
   }
 
   @Nullable

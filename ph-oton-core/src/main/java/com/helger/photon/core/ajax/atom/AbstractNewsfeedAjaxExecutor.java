@@ -19,26 +19,26 @@ package com.helger.photon.core.ajax.atom;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
-import com.helger.commons.statistics.StatisticsManager;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.timing.StopWatch;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.IHasID;
+import com.helger.base.timing.StopWatch;
+import com.helger.mime.CMimeType;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.atom.Feed;
 import com.helger.photon.atom.FeedGenerator;
 import com.helger.photon.atom.FeedLink;
+import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.statistics.impl.StatisticsManager;
+import com.helger.text.display.IHasDisplayText;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract news feed action.

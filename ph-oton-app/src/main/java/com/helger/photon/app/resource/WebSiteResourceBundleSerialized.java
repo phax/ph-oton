@@ -22,28 +22,28 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.io.EAppend;
-import com.helger.commons.io.IHasInputStream;
-import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.EAppend;
+import com.helger.base.io.iface.IHasInputStream;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.html.hc.IHCNode;
+import com.helger.http.url.ISimpleURL;
+import com.helger.io.resource.FileSystemResource;
+import com.helger.mime.IMimeType;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.photon.io.WebFileIO;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class combines a {@link WebSiteResourceBundle} with an internal ID and a

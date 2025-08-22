@@ -64,13 +64,6 @@
       <artifactId>log4j-core</artifactId>
       <scope>compile</scope>
     </dependency>
-
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <scope>compile</scope>
-      <optional>true</optional>
-    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -89,7 +82,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.bootstrap4.pages</Automatic-Module-Name>
             <Export-Package>com.helger.photon.bootstrap4.pages.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>

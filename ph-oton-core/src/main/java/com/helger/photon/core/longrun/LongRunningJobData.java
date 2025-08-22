@@ -20,18 +20,18 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.IHasID;
+import com.helger.base.state.ESuccess;
+import com.helger.base.state.ETriState;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.text.IMultilingualText;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IMultilingualText;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class contains the data for a single long running job.

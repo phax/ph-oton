@@ -18,14 +18,12 @@ package com.helger.html.hc.special;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Test;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.system.ENewLineMode;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.system.ENewLineMode;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
 import com.helger.html.EHTMLVersion;
@@ -39,6 +37,8 @@ import com.helger.html.hc.html.sections.HCH1;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.xml.serialize.write.EXMLSerializeIndent;
+
+import jakarta.annotation.Nonnull;
 
 public final class HCSpecialNodeHandlerTest
 {

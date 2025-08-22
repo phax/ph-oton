@@ -16,10 +16,8 @@
  */
 package com.helger.photon.core.config;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.core.favorites.Favorite;
 import com.helger.photon.core.favorites.FavoriteMicroTypeConverter;
 import com.helger.photon.core.longrun.LongRunningJobData;
@@ -32,6 +30,8 @@ import com.helger.photon.core.userdata.UserDataObject;
 import com.helger.photon.core.userdata.UserDataObjectMicroTypeConverter;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Register all MicroTypeConverter implementations of this project.

@@ -18,11 +18,11 @@ package com.helger.photon.connect.generic.file;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.state.EChange;
+import com.helger.base.state.EChange;
 import com.helger.security.authentication.credentials.IAuthCredentials;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class FileConnectionDestination implements IFileConnectionDestination
 {

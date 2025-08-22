@@ -16,21 +16,20 @@
  */
 package com.helger.photon.uicore.page.external;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.XMLConstants;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
-import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.url.URLProtocolRegistry;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringReplace;
+import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.collection.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLVersion;
+import com.helger.http.url.URLProtocolRegistry;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.xml.microdom.IMicroComment;
 import com.helger.xml.microdom.IMicroElement;
@@ -38,15 +37,16 @@ import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.IMicroText;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Perform a standard cleansing on externally parsed HTML content. This
- * includes:
+ * Perform a standard cleansing on externally parsed HTML content. This includes:
  * <ul>
  * <li>Setting the correct namespace as provided in the constructor</li>
  * <li>Removing any read <code>xml:space</code> attributes</li>
- * <li>Ensure that only valid elements are self-closed
- * (<code>&lt;tag .../&gt;</code>) - all other documents will get an empty text
- * node so that they are rendered as
+ * <li>Ensure that only valid elements are self-closed (<code>&lt;tag .../&gt;</code>) - all other
+ * documents will get an empty text node so that they are rendered as
  * <code>&lt;tag ...&gt;&lt;/tag&gt;</code></li>
  * </ul>
  *
@@ -78,8 +78,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * @return The server prefix path to be added to read links. May neither be
-   *         <code>null</code> nor empty.
+   * @return The server prefix path to be added to read links. May neither be <code>null</code> nor
+   *         empty.
    * @since 7.0.2
    */
   @Nonnull
@@ -90,8 +90,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * Set the link prefix that will be added to links missing the prefix. If set,
-   * must end with a slash ("/")
+   * Set the link prefix that will be added to links missing the prefix. If set, must end with a
+   * slash ("/")
    *
    * @param sServerPrefixPath
    *        The link prefix to use. May neither be <code>null</code> nor empty
@@ -108,8 +108,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * @return The HTML version as specified in the constructor. May be
-   *         <code>null</code>.
+   * @return The HTML version as specified in the constructor. May be <code>null</code>.
    */
   @Nullable
   public EHTMLVersion getHTMLVersion ()
@@ -118,9 +117,9 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * @return The HTML namespace URI from the HTML version specified in the
-   *         constructor. May be <code>null</code> if no HTML version was
-   *         specified or if the HTML version has no namespace URI.
+   * @return The HTML namespace URI from the HTML version specified in the constructor. May be
+   *         <code>null</code> if no HTML version was specified or if the HTML version has no
+   *         namespace URI.
    */
   @Nullable
   public String getHTMLNamespaceURI ()
@@ -129,9 +128,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * @return <code>true</code> if all comments will be removed,
-   *         <code>false</code> if not. Default is
-   *         {@link #DEFAULT_REMOVE_COMMENTS}.
+   * @return <code>true</code> if all comments will be removed, <code>false</code> if not. Default
+   *         is {@link #DEFAULT_REMOVE_COMMENTS}.
    */
   public boolean isRemoveComments ()
   {
@@ -142,8 +140,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
    * Change if comments should be removed. By default comments are removed.
    *
    * @param bRemoveComments
-   *        <code>true</code> to remove comments, <code>false</code> to leave
-   *        them in.
+   *        <code>true</code> to remove comments, <code>false</code> to leave them in.
    * @return this for chaining
    */
   @Nonnull
@@ -154,9 +151,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * @return <code>true</code> if text content should be cleaned on whitespace
-   *         usage, <code>false</code> to not do it. Default is
-   *         {@link #DEFAULT_CLEAN_TEXTS}.
+   * @return <code>true</code> if text content should be cleaned on whitespace usage,
+   *         <code>false</code> to not do it. Default is {@link #DEFAULT_CLEAN_TEXTS}.
    * @since 7.0.2
    */
   public boolean isCleanTexts ()
@@ -168,8 +164,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
    * Change if texts should be cleaned. By default this happens.
    *
    * @param bCleanTexts
-   *        <code>true</code> to clean texts, <code>false</code> to leave them
-   *        untouched.
+   *        <code>true</code> to clean texts, <code>false</code> to leave them untouched.
    * @return this for chaining
    * @since 7.0.2
    */
@@ -181,13 +176,12 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   }
 
   /**
-   * Protected method to determine if a link (e.g. from an 'a' or 'img'
-   * elements) needs a context path prefix
+   * Protected method to determine if a link (e.g. from an 'a' or 'img' elements) needs a context
+   * path prefix
    *
    * @param sHref
    *        The link HREF to check
-   * @return <code>true</code> if the link needs a context path,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if the link needs a context path, <code>false</code> if not.
    */
   @OverrideOnDemand
   protected boolean linkNeedsContextPath (@Nullable final String sHref)
@@ -209,7 +203,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
     return true;
   }
 
-  private static final IMicroQName [] LINK_ATTR_NAMES = new IMicroQName [] { CHTMLAttributes.SRC, CHTMLAttributes.HREF };
+  private static final IMicroQName [] LINK_ATTR_NAMES = { CHTMLAttributes.SRC, CHTMLAttributes.HREF };
 
   @Override
   public EHierarchyVisitorReturn onItemBeforeChildren (final IMicroNode aItem)
@@ -232,7 +226,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
         aElement.setNamespaceURI (m_sNamespaceURI);
 
         // Remove attribute xml:space
-        aElement.removeAttribute (XMLConstants.XML_NS_URI, "space");
+        aElement.removeAttributeNS (XMLConstants.XML_NS_URI, "space");
 
         // Remove unnecessary attributes
         final String sRowSpan = aElement.getAttributeValue (CHTMLAttributes.ROWSPAN);
@@ -277,12 +271,12 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
             {
               // Remove unnecessary whitespaces
               String sTextNodeNew = sTextNode;
-              sTextNodeNew = StringHelper.replaceAll (sTextNodeNew, "\r\n", " ");
-              sTextNodeNew = StringHelper.replaceAll (sTextNodeNew, "\r", "");
-              sTextNodeNew = StringHelper.replaceAll (sTextNodeNew, '\n', ' ');
-              sTextNodeNew = StringHelper.replaceAll (sTextNodeNew, '\t', ' ');
+              sTextNodeNew = StringReplace.replaceAll (sTextNodeNew, "\r\n", " ");
+              sTextNodeNew = StringReplace.replaceAll (sTextNodeNew, "\r", "");
+              sTextNodeNew = StringReplace.replaceAll (sTextNodeNew, '\n', ' ');
+              sTextNodeNew = StringReplace.replaceAll (sTextNodeNew, '\t', ' ');
               // Merge 2 blanks to 1
-              sTextNodeNew = StringHelper.replaceAllRepeatedly (sTextNodeNew, "  ", " ");
+              sTextNodeNew = StringReplace.replaceAllRepeatedly (sTextNodeNew, "  ", " ");
               if (!sTextNode.equals (sTextNodeNew))
                 aText.setData (sTextNodeNew);
             }

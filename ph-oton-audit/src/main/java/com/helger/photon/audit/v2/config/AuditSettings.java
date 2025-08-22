@@ -19,9 +19,9 @@ package com.helger.photon.audit.v2.config;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
+import com.helger.base.enforce.ValueEnforcer;
 
-import com.helger.commons.ValueEnforcer;
+import jakarta.annotation.Nonnull;
 
 /**
  * Settings for auditing

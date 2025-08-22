@@ -24,32 +24,29 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.base64.Base64;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.email.IEmailAddress;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.lang.ClassPathHelper;
-import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.codec.base64.Base64;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.email.IEmailAddress;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.lang.ClassPathHelper;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.rt.StackTraceHelper;
+import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.photon.core.appid.RequestSettings;
 import com.helger.photon.core.interror.uihandler.IUIInternalErrorHandler;
 import com.helger.scope.mgr.ScopeSessionManager;
@@ -74,6 +71,8 @@ import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.util.thread.ThreadDescriptor;
 import com.helger.xml.util.thread.ThreadDescriptorList;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -100,8 +99,8 @@ public final class InternalErrorHandler
   /**
    * Create a new unique error ID.
    *
-   * @return This is either a new persistent int ID or a non-persistent ID
-   *         together with the timestamp. Neither <code>null</code> nor empty.
+   * @return This is either a new persistent int ID or a non-persistent ID together with the
+   *         timestamp. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
@@ -209,11 +208,14 @@ public final class InternalErrorHandler
 
       // Main error thread dump
       final String sSeparator = "\n---------------------------------------------------------------\n";
-      String sMailBody = aMetadata.getAsString () + sSeparator + aCurrentThreadDescriptor.getAsString () + sSeparator;
+      StringBuilder sMailBody = new StringBuilder ().append (aMetadata.getAsString ())
+                                                    .append (sSeparator)
+                                                    .append (aCurrentThreadDescriptor.getAsString ())
+                                                    .append (sSeparator);
       if (aAllThreads != null)
       {
         // Add dump of all threads
-        sMailBody += aAllThreads.getAsString () + sSeparator;
+        sMailBody.append (aAllThreads.getAsString ()).append (sSeparator);
       }
 
       if (bAddClassPath)
@@ -223,14 +225,14 @@ public final class InternalErrorHandler
         for (final String sClassPathEntry : ClassPathHelper.getAllClassPathEntries ())
           aSB.append ("  ").append (sClassPathEntry).append ('\n');
         aSB.append (sSeparator);
-        sMailBody += aSB.toString ();
+        sMailBody.append (aSB.toString ());
       }
 
       final EmailData aEmailData = new EmailData (EEmailType.TEXT);
       aEmailData.setFrom (aSender);
       aEmailData.to ().addAll (aReceivers);
       aEmailData.setSubject (sMailSubject);
-      aEmailData.setBody (sMailBody);
+      aEmailData.setBody (sMailBody.toString ());
       aEmailData.setAttachments (aEmailAttachments);
 
       try
@@ -527,9 +529,8 @@ public final class InternalErrorHandler
   }
 
   /**
-   * Triggering of an internal error. This method should not be called manually
-   * but instead {@link InternalErrorBuilder} should be used, as this is the
-   * builder class for this method.
+   * Triggering of an internal error. This method should not be called manually but instead
+   * {@link InternalErrorBuilder} should be used, as this is the builder class for this method.
    *
    * @param bSendEmail
    *        <code>true</code> to send the internal error as email
@@ -540,30 +541,26 @@ public final class InternalErrorHandler
    * @param t
    *        The exception that occurred. May be <code>null</code>.
    * @param aRequestScope
-   *        The request scope in which the error occurred. May be
-   *        <code>null</code>.
+   *        The request scope in which the error occurred. May be <code>null</code>.
    * @param aCustomData
    *        Custom data to be put into the error. May be <code>null</code>.
    * @param aEmailAttachments
    *        Email attachments to be added. May be <code>null</code>.
    * @param aDisplayLocale
-   *        The display locale to use for the texts. May be <code>null</code> in
-   *        which case it will be the request locale or the fallback locale from
-   *        the internal error settings.
+   *        The display locale to use for the texts. May be <code>null</code> in which case it will
+   *        be the request locale or the fallback locale from the internal error settings.
    * @param bInvokeCustomExceptionHandler
-   *        <code>true</code> to invoke the custom exception handler (if any is
-   *        present), <code>false</code> to not do so.
+   *        <code>true</code> to invoke the custom exception handler (if any is present),
+   *        <code>false</code> to not do so.
    * @param bAddClassPath
    *        Add the class path entries to the email message.
    * @param nDuplicateEliminiationCounter
-   *        A modulo value to be used for sending emails every Nth time an error
-   *        occurs. So if the same exception occurs 2mio times, that an email is
-   *        send out only every "2mio % value" times. Only values &gt; 1 are
-   *        considered.
+   *        A modulo value to be used for sending emails every Nth time an error occurs. So if the
+   *        same exception occurs 2mio times, that an email is send out only every "2mio % value"
+   *        times. Only values &gt; 1 are considered.
    * @param aCustomEmailSettings
-   *        Optional custom email settings to be used instead of the global ones
-   *        from {@link InternalErrorSettings}. If <code>null</code> the default
-   *        ones are used.
+   *        Optional custom email settings to be used instead of the global ones from
+   *        {@link InternalErrorSettings}. If <code>null</code> the default ones are used.
    * @return The created unique error ID. Neither <code>null</code> nor empty.
    */
   @Nonnull
@@ -612,8 +609,8 @@ public final class InternalErrorHandler
                                     aRequestScope,
                                     sErrorID,
                                     aCustomData,
-                                    aCustomEmailSettings != null ? aCustomEmailSettings
-                                                                 : InternalErrorSettings.getCopyOfEmailSettings (),
+                                    aCustomEmailSettings != null ? aCustomEmailSettings : InternalErrorSettings
+                                                                                                               .getCopyOfEmailSettings (),
                                     aEmailAttachments,
                                     bAddClassPath,
                                     nDuplicateEliminiationCounter);

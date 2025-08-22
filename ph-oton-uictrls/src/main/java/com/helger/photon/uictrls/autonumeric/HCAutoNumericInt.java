@@ -18,10 +18,10 @@ package com.helger.photon.uictrls.autonumeric;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.request.IHCRequestField;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Special auto numeric that only takes integers (and not decimal places)

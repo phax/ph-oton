@@ -16,9 +16,6 @@
  */
 package com.helger.photon.bootstrap4.dropdown;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -30,6 +27,9 @@ import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonGroup;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap dropdown menu, without integration into surrounding objects.

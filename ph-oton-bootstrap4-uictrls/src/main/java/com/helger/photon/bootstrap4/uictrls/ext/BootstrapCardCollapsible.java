@@ -16,11 +16,7 @@
  */
 package com.helger.photon.bootstrap4.uictrls.ext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -28,6 +24,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.textlevel.HCA;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
@@ -35,6 +32,9 @@ import com.helger.photon.bootstrap4.card.BootstrapCardBody;
 import com.helger.photon.bootstrap4.card.BootstrapCardHeader;
 import com.helger.photon.bootstrap4.uictrls.EBootstrapUICtrlsCSSPathProvider;
 import com.helger.photon.icon.fontawesome.EFontAwesome4Icon;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap 4 collapsible card. It contains a fixed header that is clickable.

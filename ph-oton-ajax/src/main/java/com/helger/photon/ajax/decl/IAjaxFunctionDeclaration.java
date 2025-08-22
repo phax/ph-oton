@@ -20,15 +20,15 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.name.IHasName;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.base.name.IHasName;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for all AJAX function declarations

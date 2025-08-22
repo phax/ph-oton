@@ -16,7 +16,7 @@
  */
 package com.helger.photon.uicore.css;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * Contains default request parameters for typical use cases.

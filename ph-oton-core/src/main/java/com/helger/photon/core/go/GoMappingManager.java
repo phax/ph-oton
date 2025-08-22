@@ -20,28 +20,25 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ELockType;
-import com.helger.commons.annotation.MustBeLocked;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.ELockType;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.MustBeLocked;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.dao.DAOException;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.mgr.PhotonCoreManager;
@@ -53,6 +50,9 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Manager for {@link GoMappingItem} objects.
@@ -288,18 +288,17 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   }
 
   /**
-   * Check whether all internal go links, that point to a page use existing menu
-   * item IDs
+   * Check whether all internal go links, that point to a page use existing menu item IDs
    *
    * @param aMenuTree
    *        The menu tree to search. May not be <code>null</code>.
    * @param aErrorCallback
-   *        The callback that is invoked for all invalid {@link GoMappingItem}
-   *        objects.
+   *        The callback that is invoked for all invalid {@link GoMappingItem} objects.
    * @return The number of errors occurred. Always &ge; 0.
    */
   @Nonnegative
-  public int checkInternalMappings (@Nonnull final IMenuTree aMenuTree, @Nonnull final Consumer <GoMappingItem> aErrorCallback)
+  public int checkInternalMappings (@Nonnull final IMenuTree aMenuTree,
+                                    @Nonnull final Consumer <GoMappingItem> aErrorCallback)
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
     ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
@@ -351,7 +350,8 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
    * @return <code>/webapp-context/go/<i>key</i></code>. Never <code>null</code>
    */
   @Nonnull
-  public static SimpleURL getGoLink (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty final String sKey)
+  public static SimpleURL getGoLink (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @Nonnull @Nonempty final String sKey)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
 

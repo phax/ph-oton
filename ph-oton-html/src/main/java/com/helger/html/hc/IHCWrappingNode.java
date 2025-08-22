@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for nodes that wrap other nodes (e.g. conditional comment)

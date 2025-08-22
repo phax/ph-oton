@@ -20,24 +20,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.poi.ss.usermodel.Cell;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.text.display.IHasDisplayTextWithArgs;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.misc.Translatable;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringParser;
+import com.helger.base.string.StringReplace;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.poi.excel.ExcelReadHelper;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.display.IHasDisplayTextWithArgs;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract base implementation of a bulk import based on MS Excel files.
@@ -84,7 +84,7 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
     for (final char c : s.toCharArray ())
       if (Character.getType (c) != Character.CONTROL)
         aSB.append (c);
-    return StringHelper.replaceAllRepeatedly (aSB.toString ().trim (), "  ", " ");
+    return StringReplace.replaceAllRepeatedly (aSB.toString ().trim (), "  ", " ");
   }
 
   @Nullable
@@ -98,7 +98,7 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
     for (final char c : sValue.toCharArray ())
       if (Character.getType (c) != Character.CONTROL)
         aSB.append (c);
-    return StringHelper.replaceAllRepeatedly (aSB.toString ().trim (), "  ", " ");
+    return StringReplace.replaceAllRepeatedly (aSB.toString ().trim (), "  ", " ");
   }
 
   @Nullable

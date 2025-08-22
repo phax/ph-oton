@@ -16,16 +16,16 @@
  */
 package com.helger.photon.connect.sftp.progress;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.jcraft.jsch.SftpProgressMonitor;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of {@link SftpProgressMonitor} that logs progress.

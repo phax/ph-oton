@@ -18,16 +18,16 @@ package com.helger.html.jscode;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.annotation.Nonnull;
-
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.html.jscode.type.JSPrimitiveTypes;
+import com.helger.unittest.support.TestHelper;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Test class for class {@link JSPackage}
@@ -210,7 +210,7 @@ public final class JSPackageTest
   public void testMinimumCodeSize ()
   {
     final JSPackage aPkg = _createMockPackage ();
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aPkg, _createMockPackage ());
+    TestHelper.testDefaultImplementationWithEqualContentObject (aPkg, _createMockPackage ());
 
     final String sCode = aPkg.getJSCode (new JSWriterSettings ().setMinimumCodeSize (false));
     LOGGER.info (sCode);

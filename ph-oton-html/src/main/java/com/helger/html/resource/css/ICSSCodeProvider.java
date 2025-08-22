@@ -16,9 +16,9 @@
  */
 package com.helger.html.resource.css;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for an inline CSS code provider.

@@ -16,12 +16,12 @@
  */
 package com.helger.photon.bootstrap4.stub.config;
 
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.commons.thirdparty.IThirdPartyModule;
-import com.helger.commons.thirdparty.IThirdPartyModuleProviderSPI;
+import com.helger.annotation.style.IsSPIImplementation;
+import com.helger.base.thirdparty.IThirdPartyModule;
+import com.helger.base.thirdparty.IThirdPartyModuleProviderSPI;
 import com.helger.photon.app.PhotonAppConfig;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Implement this SPI interface if your JAR file contains external third party

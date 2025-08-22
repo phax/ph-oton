@@ -16,14 +16,14 @@
  */
 package com.helger.photon.bootstrap4.uictrls.ext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.core.login.AbstractLoginManager;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class BootstrapLoginManager extends AbstractLoginManager
 {

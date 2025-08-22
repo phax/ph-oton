@@ -18,21 +18,21 @@ package com.helger.photon.audit.v2.domain;
 
 import java.time.LocalDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.audit.EAuditActionType;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Convert {@link AuditEvent} objects to {@link IMicroElement} and vice versa.
@@ -87,7 +87,8 @@ public class AuditEventMicroTypeConverter implements IMicroTypeConverter <AuditE
       throw new IllegalStateException ("Failed to parse action type '" + sActionID + "'");
 
     final String sSuccess = aElement.getAttributeValue (ATTR_SUCCESS);
-    final ESuccess eSuccess = StringHelper.hasNoText (sSuccess) ? null : ESuccess.valueOf (StringParser.parseBool (sSuccess));
+    final ESuccess eSuccess = StringHelper.hasNoText (sSuccess) ? null : ESuccess.valueOf (StringParser.parseBool (
+                                                                                                                   sSuccess));
 
     final ICommonsList <AuditField> aFields = new CommonsArrayList <> ();
     for (final IMicroElement eField : aElement.getAllChildElements (ELEMENT_FIELD))

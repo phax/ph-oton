@@ -19,16 +19,13 @@ package com.helger.photon.exchange.bulkexport.format;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsImmutableObject;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.WillClose;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsImmutableObject;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.state.ESuccess;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
@@ -40,6 +37,9 @@ import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IExporterFile} for XML files
@@ -153,7 +153,8 @@ public class ExporterXML implements IExporterFile
 
   @Override
   @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider, @Nonnull @WillClose final OutputStream aOS)
+  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
+                                 @Nonnull @WillClose final OutputStream aOS)
   {
     try
     {

@@ -18,14 +18,14 @@ package com.helger.photon.audit;
 
 import java.util.function.BiFunction;
 
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.typeconvert.TypeConverter;
-import com.helger.commons.typeconvert.TypeConverterException;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.string.StringImplode;
 import com.helger.json.IJson;
 import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.typeconvert.TypeConverterException;
+import com.helger.typeconvert.impl.TypeConverter;
 
 /**
  * Interface that is used to convert audit parameters to an audit string
@@ -38,12 +38,12 @@ public interface IAuditActionStringProvider extends BiFunction <String, Object [
   IAuditActionStringProvider PLAIN_STRING = (sAction, aArgs) -> {
     if (ArrayHelper.isEmpty (aArgs))
       return sAction;
-    return sAction + '(' + StringHelper.getImploded (',', aArgs) + ')';
+    return sAction + '(' + StringImplode.getImploded (',', aArgs) + ')';
   };
 
   IAuditActionStringProvider JSON = (sAction, aArgs) -> {
     final IJsonArray aData = new JsonArray ().addAll (aArgs);
-    return new JsonObject ().addJson (sAction, aData).getAsJsonString ();
+    return new JsonObject ().add (sAction, aData).getAsJsonString ();
   };
 
   IAuditActionStringProvider JSON_WITH_CONVERSION = (sAction, aArgs) -> {
@@ -65,6 +65,6 @@ public interface IAuditActionStringProvider extends BiFunction <String, Object [
         aData.add (aArg);
     }
 
-    return new JsonObject ().addJson (sAction, aData).getAsJsonString ();
+    return new JsonObject ().add (sAction, aData).getAsJsonString ();
   };
 }

@@ -16,21 +16,21 @@
  */
 package com.helger.photon.api;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedCounter;
-import com.helger.commons.statistics.IMutableStatisticsHandlerKeyedTimer;
-import com.helger.commons.statistics.StatisticsManager;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.timing.StopWatch;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.timing.StopWatch;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.statistics.api.IMutableStatisticsHandlerCounter;
+import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
+import com.helger.statistics.api.IMutableStatisticsHandlerKeyedTimer;
+import com.helger.statistics.impl.StatisticsManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link IAPIInvoker}.

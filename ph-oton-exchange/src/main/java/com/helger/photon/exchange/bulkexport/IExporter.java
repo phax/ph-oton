@@ -18,10 +18,10 @@ package com.helger.photon.exchange.bulkexport;
 
 import java.io.OutputStream;
 
-import javax.annotation.Nonnull;
-import javax.annotation.WillClose;
+import com.helger.annotation.WillClose;
+import com.helger.base.state.ESuccess;
 
-import com.helger.commons.state.ESuccess;
+import jakarta.annotation.Nonnull;
 
 /**
  * Generic interface for exporting records to an OutputStream.

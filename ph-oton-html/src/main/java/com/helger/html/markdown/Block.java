@@ -16,9 +16,9 @@
  */
 package com.helger.html.markdown;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.style.CodingStyleguideUnaware;
 
-import com.helger.commons.annotation.CodingStyleguideUnaware;
+import jakarta.annotation.Nonnull;
 
 /**
  * This class represents a block of lines.

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.security.lock;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Singleton of {@link ILockManager}.

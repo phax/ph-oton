@@ -16,14 +16,11 @@
  */
 package com.helger.photon.uictrls.famfam;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.lang.EnumHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.id.IHasID;
+import com.helger.base.lang.EnumHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCElement;
@@ -32,6 +29,9 @@ import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.uicore.icon.IIcon;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Contains all free FamFam 0.13 icons

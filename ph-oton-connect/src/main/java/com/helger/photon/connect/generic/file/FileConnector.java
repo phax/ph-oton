@@ -22,19 +22,19 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.io.file.FileHelper;
-import com.helger.commons.io.file.FileOperations;
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.EChange;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.WillClose;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.state.EChange;
+import com.helger.base.state.ESuccess;
+import com.helger.io.file.FileHelper;
+import com.helger.io.file.FileOperations;
+import com.helger.io.file.FileSystemIterator;
 import com.helger.photon.connect.generic.IConnectorFileBased;
 import com.helger.security.authentication.credentials.IAuthCredentials;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class FileConnector implements IConnectorFileBased <File, File>
 {

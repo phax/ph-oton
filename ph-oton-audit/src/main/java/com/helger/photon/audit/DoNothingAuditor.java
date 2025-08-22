@@ -16,9 +16,9 @@
  */
 package com.helger.photon.audit;
 
-import javax.annotation.Nonnull;
-
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of {@link IAuditor} that does nothing

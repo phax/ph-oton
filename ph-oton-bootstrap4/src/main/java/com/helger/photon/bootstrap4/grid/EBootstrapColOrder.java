@@ -16,10 +16,10 @@
  */
 package com.helger.photon.bootstrap4.grid;
 
-import javax.annotation.Nullable;
-
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap4 grid order.

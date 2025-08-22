@@ -18,9 +18,7 @@ package com.helger.photon.bootstrap.demo.pub.page;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.compare.ESortOrder;
+import com.helger.base.compare.ESortOrder;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
@@ -28,6 +26,8 @@ import com.helger.photon.bootstrap4.uictrls.datatables.BootstrapDataTables;
 import com.helger.photon.uicore.page.WebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
+
+import jakarta.annotation.Nonnull;
 
 public class PagePublicDataTables extends AbstractAppWebPage
 {

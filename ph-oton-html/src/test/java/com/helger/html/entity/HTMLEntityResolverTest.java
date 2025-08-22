@@ -24,8 +24,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.xml.sax.InputSource;
 
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.io.stream.StreamHelper;
+import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
+import com.helger.base.io.stream.StreamHelper;
 import com.helger.html.CHTMLDocTypes;
 import com.helger.xml.EXMLParserFeature;
 import com.helger.xml.microdom.IMicroDocument;

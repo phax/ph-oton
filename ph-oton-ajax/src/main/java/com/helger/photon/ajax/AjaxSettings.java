@@ -16,21 +16,21 @@
  */
 package com.helger.photon.ajax;
 
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.annotation.CheckForSigned;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.CGlobal;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.photon.ajax.callback.IAjaxAfterExecutionCallback;
 import com.helger.photon.ajax.callback.IAjaxBeforeExecutionCallback;
 import com.helger.photon.ajax.callback.IAjaxExceptionCallback;
 import com.helger.photon.ajax.callback.IAjaxLongRunningExecutionCallback;
 import com.helger.photon.ajax.callback.LoggingAjaxExceptionCallback;
 import com.helger.photon.ajax.callback.LoggingAjaxLongRunningExecutionCallback;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A central helper class that centrally manages the AJAX callbacks.

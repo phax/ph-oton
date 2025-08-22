@@ -18,12 +18,12 @@ package com.helger.photon.tinymce4.type;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.Nonempty;
+import com.helger.base.string.StringHelper;
+import com.helger.text.locale.LocaleCache;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.string.StringHelper;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * All TinyMCE4 supported languages. Note: not all locales here are valid Java

@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;button&gt; element with type "submit"

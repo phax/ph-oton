@@ -18,18 +18,18 @@ package com.helger.photon.uicore.serverlog;
 
 import java.util.Random;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.string.StringHex;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Session singleton to create unique keys for server logging. Each generated
- * String has a length of 16.
+ * Session singleton to create unique keys for server logging. Each generated String has a length of
+ * 16.
  *
  * @author Philip Helger
  */
@@ -43,7 +43,7 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
   {
     final byte [] aKey = new byte [8];
     new Random ().nextBytes (aKey);
-    m_sGeneratedKey = StringHelper.getHexEncoded (aKey);
+    m_sGeneratedKey = StringHex.getHexEncoded (aKey);
   }
 
   @Nonnull
@@ -62,8 +62,8 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
   }
 
   /**
-   * @return The generated session key or <code>null</code> if no
-   *         {@link ServerLogSessionKey} was created yet.
+   * @return The generated session key or <code>null</code> if no {@link ServerLogSessionKey} was
+   *         created yet.
    */
   @Nullable
   public static String getGeneratedSessionKey ()

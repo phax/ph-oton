@@ -18,8 +18,6 @@ package com.helger.photon.bootstrap.demo.pub.page;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.photon.bootstrap.demo.app.ui.AbstractAppWebPage;
@@ -32,6 +30,8 @@ import com.helger.photon.uictrls.chart.v4.ChartDataSetPie;
 import com.helger.photon.uictrls.chart.v4.ChartLine;
 import com.helger.photon.uictrls.chart.v4.ChartPie;
 import com.helger.photon.uictrls.chart.v4.HCChartV4;
+
+import jakarta.annotation.Nonnull;
 
 public class PagePublicChartsV4 extends AbstractAppWebPage
 {

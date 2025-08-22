@@ -19,8 +19,8 @@ package com.helger.photon.core.interror.uihandler;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Callback interface to show internal errors on the UI in a generic way.

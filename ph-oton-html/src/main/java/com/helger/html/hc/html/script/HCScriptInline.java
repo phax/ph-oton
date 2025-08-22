@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.script;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.js.IHasJSCode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This class represents an HTML &lt;script&gt; element with inline JS content.

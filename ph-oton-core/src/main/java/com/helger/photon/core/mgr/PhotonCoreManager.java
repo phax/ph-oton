@@ -16,20 +16,20 @@
  */
 package com.helger.photon.core.mgr;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.exception.InitializationException;
-import com.helger.commons.lang.ClassHelper;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.exception.InitializationException;
+import com.helger.base.lang.clazz.ClassHelper;
 import com.helger.photon.core.go.GoMappingManager;
 import com.helger.photon.core.smtp.FailedMailQueueWithDAO;
 import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.smtp.scope.ScopedMailAPI;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * The meta system manager encapsulates all managers that are located in this

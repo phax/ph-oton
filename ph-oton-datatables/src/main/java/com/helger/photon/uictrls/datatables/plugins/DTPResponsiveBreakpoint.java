@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
+
+import jakarta.annotation.Nonnull;
 
 public class DTPResponsiveBreakpoint
 {

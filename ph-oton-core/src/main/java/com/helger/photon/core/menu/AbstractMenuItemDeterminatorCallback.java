@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.menu;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.tree.withid.DefaultTreeItemWithID;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract implementation of {@link IMenuItemDeterminatorCallback}.

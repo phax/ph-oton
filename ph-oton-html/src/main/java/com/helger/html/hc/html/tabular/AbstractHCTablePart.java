@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This is the base class for thead, tbody and tfoot

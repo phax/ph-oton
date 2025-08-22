@@ -16,13 +16,14 @@
  */
 package com.helger.html.jquery.supplementary.main;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.CommonsTreeMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsOrderedSet;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.CommonsTreeMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsOrderedSet;
 
 public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
 {
@@ -81,18 +82,21 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
             }
             else
             {
-              String sLine = sRealPrefix + "(";
+              final StringBuilder sLine = new StringBuilder ().append (sRealPrefix).append ("(");
               boolean bFirst = true;
               for (final Argument aArg : aSignature.getAllArguments ())
               {
                 if (bFirst)
                   bFirst = false;
                 else
-                  sLine += ", ";
+                  sLine.append (", ");
 
-                sLine += "{" + StringHelper.getImploded ('/', aArg.getAllJavaTypes ()) + "} " + aArg.getIdentifier ();
+                sLine.append ("{")
+                     .append (StringImplode.getImploded ('/', aArg.getAllJavaTypes ()))
+                     .append ("} ")
+                     .append (aArg.getIdentifier ());
               }
-              aLines.add (sLine + ");");
+              aLines.add (sLine.append (");").toString ());
             }
           }
         }
@@ -168,14 +172,14 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
             aLines.add ("/**");
             if (!bIsDeprecated && bIsPartiallyDeprecated)
               aLines.add ("* Certain versions of this method are deprecated since jQuery " +
-                          StringHelper.getImploded (" or ", aDeprecatedVersions));
+                          StringImplode.getImploded (" or ", aDeprecatedVersions));
             aLines.add (" * @return The invocation of the static jQuery function <code>" +
                         aEntry.getName () +
                         "()</code> with return type " +
-                        StringHelper.getImploded (" or ", aReturnTypes));
+                        StringImplode.getImploded (" or ", aReturnTypes));
             if (bIsDeprecated)
               aLines.add ("* @deprecated Deprecated since jQuery " +
-                          StringHelper.getImploded (" or ", aDeprecatedVersions));
+                          StringImplode.getImploded (" or ", aDeprecatedVersions));
             if (sSince != null)
               aLines.add (" * @since jQuery " + sSince);
             aLines.add (" */");

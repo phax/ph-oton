@@ -18,13 +18,13 @@ package com.helger.html.hc;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.hierarchy.IHasChildrenRecursive;
-import com.helger.commons.hierarchy.IHasChildrenSorted;
+import com.helger.collection.hierarchy.IHasChildrenRecursive;
+import com.helger.collection.hierarchy.IHasChildrenSorted;
 import com.helger.html.EHTMLVersion;
 import com.helger.xml.microdom.IMicroNode;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a main HC node.<br>

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.bootstrap.demo.ajax;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.bootstrap.demo.secure.AppRendererSecure;
 import com.helger.photon.core.execcontext.LayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Ajax executor to get the update content the config application's menu.

@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.script;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.config.EHCScriptInlineMode;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IJSWriterSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for inline SCRIPTs

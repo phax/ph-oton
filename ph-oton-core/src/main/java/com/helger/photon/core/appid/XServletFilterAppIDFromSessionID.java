@@ -16,15 +16,15 @@
  */
 package com.helger.photon.core.appid;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * XServlet filter responsible for remembering the application ID in the current

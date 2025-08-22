@@ -16,8 +16,8 @@
  */
 package com.helger.photon.core.menu;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for a menu item separator.

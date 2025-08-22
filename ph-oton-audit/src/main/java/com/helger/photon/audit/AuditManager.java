@@ -23,32 +23,29 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.CodingStyleguideUnaware;
-import com.helger.commons.annotation.ContainsSoftMigration;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.misc.ContainsSoftMigration;
+import com.helger.annotation.style.CodingStyleguideUnaware;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.relative.IFileRelativeIO;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
 import com.helger.dao.DAOException;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.datetime.util.PDTIOHelper;
+import com.helger.io.file.FileSystemIterator;
+import com.helger.io.file.FilenameHelper;
+import com.helger.io.relative.IFileRelativeIO;
 import com.helger.photon.io.WebFileIO;
 import com.helger.photon.io.dao.AbstractPhotonSimpleDAO;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
@@ -58,10 +55,12 @@ import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.serialize.MicroReader;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * The class handles all system audit actions. It collects them asynchronously
- * (see {@link AsynchronousAuditor}) and writes them to XML files on a per-day
- * basis.
+ * The class handles all system audit actions. It collects them asynchronously (see
+ * {@link AsynchronousAuditor}) and writes them to XML files on a per-day basis.
  *
  * @author Philip Helger
  */
@@ -130,8 +129,8 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
    * Constructor
    *
    * @param sBaseDir
-   *        The base directory, relative to the default IO base directory. May
-   *        be <code>null</code> to indicate an in-memory auditor only.
+   *        The base directory, relative to the default IO base directory. May be <code>null</code>
+   *        to indicate an in-memory auditor only.
    * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    * @throws DAOException

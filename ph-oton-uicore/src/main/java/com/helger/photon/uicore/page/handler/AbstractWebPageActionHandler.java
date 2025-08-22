@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.page.handler;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.id.IHasID;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract, generic implementation of {@link IWebPageActionHandler}.

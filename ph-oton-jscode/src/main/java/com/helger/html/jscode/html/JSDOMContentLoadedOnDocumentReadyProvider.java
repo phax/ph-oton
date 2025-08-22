@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode.html;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.JSAnonymousFunction;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * The default JS "DOMContentLoaded" event listener based "on document ready"

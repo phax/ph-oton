@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.menu;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.string.StringHelper;
+import com.helger.text.display.IHasDisplayText;
 
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.text.display.IHasDisplayText;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single menu item.

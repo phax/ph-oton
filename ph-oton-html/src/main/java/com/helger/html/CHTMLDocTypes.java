@@ -16,8 +16,7 @@
  */
 package com.helger.html;
 
-import javax.annotation.concurrent.Immutable;
-
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.xml.microdom.IMicroDocumentType;
 import com.helger.xml.microdom.MicroDocumentType;
 

@@ -16,7 +16,7 @@
  */
 package com.helger.html.jscode.type;
 
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
 
 /**
  * Contains all the JS primitive types. Originally they were at

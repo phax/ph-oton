@@ -19,13 +19,11 @@ package com.helger.photon.core.menu.ui;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.NonBlockingStack;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
-import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.collection.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.collection.stack.NonBlockingStack;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
@@ -40,6 +38,8 @@ import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.menu.MenuItemDeterminatorCallback;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.DefaultTreeItemWithID;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Renders menu item nodes.

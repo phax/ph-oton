@@ -16,12 +16,12 @@
  */
 package com.helger.photon.bootstrap4.table;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.html.tabular.AbstractHCTable;
 import com.helger.html.hc.html.tabular.IHCCol;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract table with basic Bootstrap styling.

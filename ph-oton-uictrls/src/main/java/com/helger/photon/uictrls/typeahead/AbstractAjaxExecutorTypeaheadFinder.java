@@ -19,28 +19,27 @@ package com.helger.photon.uictrls.typeahead;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.json.IJsonArray;
 import com.helger.json.JsonArray;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Abstract AJAX handler that can be used as the source for a Bootstrap
- * typeahead control.
+ * Abstract AJAX handler that can be used as the source for a Bootstrap typeahead control.
  *
  * @author Philip Helger
  * @param <LECTYPE>
@@ -77,14 +76,14 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
      * Initialization method.
      *
      * @param sSearchTerms
-     *        The search term string. It is internally separated into multiple
-     *        tokens by using a "\s+" regular expression.
+     *        The search term string. It is internally separated into multiple tokens by using a
+     *        "\s+" regular expression.
      * @return this
      */
     @Nonnull
     protected Finder initialize (@Nonnull @Nonempty final String sSearchTerms)
     {
-      if (StringHelper.hasNoTextAfterTrim (sSearchTerms))
+      if (StringHelper.isEmptyAfterTrim (sSearchTerms))
         throw new IllegalArgumentException ("SearchTerms");
 
       // Split search terms by white spaces
@@ -98,8 +97,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     }
 
     /**
-     * @return An array with all search terms. Never <code>null</code> nor
-     *         empty.
+     * @return An array with all search terms. Never <code>null</code> nor empty.
      */
     @Nonnull
     @ReturnsMutableCopy
@@ -110,8 +108,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     }
 
     /**
-     * @return The sort locale provided in the constructor. Never
-     *         <code>null</code>.
+     * @return The sort locale provided in the constructor. Never <code>null</code>.
      */
     @Nonnull
     public final Locale getSortLocale ()
@@ -124,8 +121,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
      *
      * @param sSource
      *        Source string. May be <code>null</code>.
-     * @return <code>true</code> if the source is not <code>null</code> and if
-     *         all search terms are contained, <code>false</code> otherwise.
+     * @return <code>true</code> if the source is not <code>null</code> and if all search terms are
+     *         contained, <code>false</code> otherwise.
      * @see #matchesAll(String)
      */
     public boolean matches (@Nullable final String sSource)
@@ -134,16 +131,14 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     }
 
     /**
-     * Match method for a single string. By default a case-insensitive lookup is
-     * performed.
+     * Match method for a single string. By default a case-insensitive lookup is performed.
      *
      * @param sSource
-     *        The source string to search the search term in. Never
-     *        <code>null</code>.
+     *        The source string to search the search term in. Never <code>null</code>.
      * @param sSearchTerm
      *        The search term to be searched. Never <code>null</code>.
-     * @return <code>true</code> if the source string contains the search term,
-     *         <code>false</code> otherwise.
+     * @return <code>true</code> if the source string contains the search term, <code>false</code>
+     *         otherwise.
      */
     @OverrideOnDemand
     protected boolean isSingleStringMatching (@Nonnull final String sSource, @Nonnull final String sSearchTerm)
@@ -156,8 +151,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
      *
      * @param sSource
      *        Source string. May be <code>null</code>.
-     * @return <code>true</code> if the source is not <code>null</code> and if
-     *         all search terms are contained, <code>false</code> otherwise.
+     * @return <code>true</code> if the source is not <code>null</code> and if all search terms are
+     *         contained, <code>false</code> otherwise.
      */
     public boolean matchesAll (@Nullable final String sSource)
     {
@@ -174,8 +169,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
      *
      * @param sSource
      *        Source string. May be <code>null</code>.
-     * @return <code>true</code> if the source is not <code>null</code> and if
-     *         one search term is contained, <code>false</code> otherwise.
+     * @return <code>true</code> if the source is not <code>null</code> and if one search term is
+     *         contained, <code>false</code> otherwise.
      */
     public boolean matchesAny (@Nullable final String sSource)
     {
@@ -190,7 +185,9 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (this).append ("searchTerms", m_aSearchTerms).append ("sortLocale", m_aSortLocale).getToString ();
+      return new ToStringGenerator (this).append ("searchTerms", m_aSearchTerms)
+                                         .append ("sortLocale", m_aSortLocale)
+                                         .getToString ();
     }
   }
 
@@ -200,8 +197,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   {}
 
   /**
-   * Get the provided query string from the parameter map. By default the value
-   * of parameter {@link #PARAM_QUERY} is used.
+   * Get the provided query string from the parameter map. By default the value of parameter
+   * {@link #PARAM_QUERY} is used.
    *
    * @param aLEC
    *        The layout execution context.
@@ -231,8 +228,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   }
 
   /**
-   * This is the main searcher method. It must filter all objects matching the
-   * criteria in the finder.
+   * This is the main searcher method. It must filter all objects matching the criteria in the
+   * finder.
    *
    * @param aFinder
    *        The finder. Never <code>null</code>.
@@ -241,11 +238,12 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    * @return A non-<code>null</code> list with all datums to use.
    */
   @Nonnull
-  protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder, @Nonnull LECTYPE aLEC);
+  protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder,
+                                                                                   @Nonnull LECTYPE aLEC);
 
   /**
-   * @return <code>true</code> if the default suffix "[x of y]" should not be
-   *         added to the displayname!
+   * @return <code>true</code> if the default suffix "[x of y]" should not be added to the
+   *         displayname!
    */
   public final boolean isAddDatumCount ()
   {
@@ -258,10 +256,11 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   }
 
   @Override
-  protected void mainHandleRequest (@Nonnull final LECTYPE aLEC, @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  protected void mainHandleRequest (@Nonnull final LECTYPE aLEC, @Nonnull final PhotonUnifiedResponse aAjaxResponse)
+                                                                                                                     throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);
-    if (StringHelper.hasNoTextAfterTrim (sOriginalQuery))
+    if (StringHelper.isEmptyAfterTrim (sOriginalQuery))
     {
       // May happen when the user enters " " (only spaces)
       aAjaxResponse.jsonEmpty ();
@@ -286,7 +285,9 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
         for (final TypeaheadDatum aDatum : aMatchingDatums)
         {
           nIndex++;
-          final String sText = ETypeaheadText.DATUM_INDEX.getDisplayTextWithArgs (aDisplayLocale, Integer.toString (nIndex), sMax);
+          final String sText = ETypeaheadText.DATUM_INDEX.getDisplayTextWithArgs (aDisplayLocale,
+                                                                                  Integer.toString (nIndex),
+                                                                                  sMax);
           aDatum.setValue (aDatum.getValue () + " " + sText);
           aDatum.tokens ().addAll (TypeaheadDatum.getTokensFromValue (sText));
         }

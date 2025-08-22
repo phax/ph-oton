@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.menu;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.hierarchy.visit.IHierarchyVisitorCallback;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.hierarchy.visit.IHierarchyVisitorCallback;
 import com.helger.tree.withid.DefaultTreeItemWithID;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for {@link MenuItemDeterminatorCallback}.

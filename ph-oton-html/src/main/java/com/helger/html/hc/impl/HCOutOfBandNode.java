@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.impl;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCNode;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Implementation of a node that is ONLY an out-of-band node!

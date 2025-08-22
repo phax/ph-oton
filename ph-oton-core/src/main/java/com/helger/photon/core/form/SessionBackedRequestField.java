@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.form;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.SessionBackedRequestFieldData;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of a request field with a name and an optional default

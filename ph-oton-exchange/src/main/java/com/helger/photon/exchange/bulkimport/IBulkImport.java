@@ -18,13 +18,13 @@ package com.helger.photon.exchange.bulkimport;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.IHasInputStream;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.io.iface.IHasInputStream;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.exchange.EExchangeFileType;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a bulk import action.

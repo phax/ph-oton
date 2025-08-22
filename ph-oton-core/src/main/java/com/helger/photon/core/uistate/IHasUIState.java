@@ -18,8 +18,8 @@ package com.helger.photon.core.uistate;
 
 import java.io.Serializable;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.type.IHasObjectType;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.type.IHasObjectType;
 
 /**
  * Marker interface for object that can fit into {@link UIStateRegistry}.

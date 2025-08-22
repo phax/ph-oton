@@ -18,13 +18,13 @@ package com.helger.photon.api;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.rt.StackTraceHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.mime.CMimeType;
 import com.helger.servlet.response.UnifiedResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract implementation of {@link IAPIExceptionMapper} with some helper

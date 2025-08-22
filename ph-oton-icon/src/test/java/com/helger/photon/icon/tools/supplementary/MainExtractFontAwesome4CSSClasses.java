@@ -19,14 +19,10 @@ package com.helger.photon.icon.tools.supplementary;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.collection.impl.CommonsTreeSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.string.StringHelper;
-import com.helger.css.ECSSVersion;
+import com.helger.base.string.StringReplace;
+import com.helger.collection.commons.CommonsTreeSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsSet;
 import com.helger.css.decl.CSSSelector;
 import com.helger.css.decl.CSSSelectorSimpleMember;
 import com.helger.css.decl.CascadingStyleSheet;
@@ -34,15 +30,17 @@ import com.helger.css.decl.ICSSSelectorMember;
 import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.decl.visit.DefaultCSSVisitor;
 import com.helger.css.reader.CSSReader;
+import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.icon.EIconCSSPathProvider;
+
+import jakarta.annotation.Nonnull;
 
 public class MainExtractFontAwesome4CSSClasses
 {
   public static void main (final String [] args)
   {
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (new ClassPathResource (EIconCSSPathProvider.FONT_AWESOME4.getCSSItemPath (true)),
-                                                               StandardCharsets.UTF_8,
-                                                               ECSSVersion.CSS30);
+                                                               StandardCharsets.UTF_8);
     final ICommonsSet <String> aClasses = new CommonsTreeSet <> ();
     final ICommonsSet <String> aClassesIcon = new CommonsTreeSet <> ();
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
@@ -71,7 +69,7 @@ public class MainExtractFontAwesome4CSSClasses
     {
       final String sClassName = sClass.substring (1);
       String sFieldName = sClassName.toUpperCase (Locale.US);
-      sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
+      sFieldName = StringReplace.replaceAll (sFieldName, '-', '_');
       System.out.println ("public static final ICSSClassProvider " +
                           sFieldName +
                           " = DefaultCSSClassProvider.create (\"" +
@@ -87,7 +85,7 @@ public class MainExtractFontAwesome4CSSClasses
       {
         final String sClassName = sClass.substring (1);
         String sFieldName = sClassName.toUpperCase (Locale.US);
-        sFieldName = StringHelper.replaceAll (sFieldName, '-', '_');
+        sFieldName = StringReplace.replaceAll (sFieldName, '-', '_');
         System.out.println (sFieldName.substring ("fa-".length ()) + " (CFontAwesome4CSS." + sFieldName + "),");
       }
   }

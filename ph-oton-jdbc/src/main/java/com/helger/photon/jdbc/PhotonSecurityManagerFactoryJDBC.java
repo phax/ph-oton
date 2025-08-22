@@ -19,9 +19,7 @@ package com.helger.photon.jdbc;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.dao.DAOException;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.photon.audit.IAuditManager;
@@ -36,6 +34,8 @@ import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroupManager;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of {@link IFactory} for JDBC based managers.

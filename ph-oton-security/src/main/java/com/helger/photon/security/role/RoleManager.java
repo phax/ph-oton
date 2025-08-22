@@ -18,20 +18,20 @@ package com.helger.photon.security.role;
 
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.callback.CallbackList;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.callback.CallbackList;
+import com.helger.base.state.EChange;
 import com.helger.dao.DAOException;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.object.StubObject;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class manages the available roles.
@@ -59,7 +59,9 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
   @Nonnull
   public static Role createDefaultRoleUser ()
   {
-    return new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_USER_ID), CSecurity.ROLE_USER_NAME, (String) null);
+    return new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
+                     CSecurity.ROLE_USER_NAME,
+                     (String) null);
   }
 
   public void createDefaultsForTest ()

@@ -16,13 +16,14 @@
  */
 package com.helger.photon.api.pathdescriptor;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+import java.util.List;
 
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.string.StringHelper;
+import com.helger.io.file.FilenameHelper;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Utility class for API path handling.
@@ -44,7 +45,7 @@ public final class PathDescriptorHelper
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <String> getCleanPathParts (@Nonnull final String sPath)
+  public static List <String> getCleanPathParts (@Nonnull final String sPath)
   {
     // Remove leading and trailing whitespaces and slashes
     String sRealPath = StringHelper.trimStartAndEnd (sPath.trim (), "/", "/");

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core.menu;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.photon.core.page.IPage;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single menu item referencing an internal page.

@@ -18,28 +18,27 @@ package com.helger.photon.uictrls.bloodhound;
 
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.regex.RegExHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.cache.regex.RegExHelper;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.json.IHasJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 
+import jakarta.annotation.Nonnull;
+
 /**
- * Represents a single Bloodhound datum (= data record) with the minimum data
- * elements {@link #JSON_VALUE} and an automatically created set of
- * {@link #JSON_TOKENS}.
+ * Represents a single Bloodhound datum (= data record) with the minimum data elements
+ * {@link #JSON_VALUE} and an automatically created set of {@link #JSON_TOKENS}.
  *
  * @author Philip Helger
  */
@@ -53,8 +52,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   private final ICommonsList <String> m_aTokens;
 
   /**
-   * Constructor using {@link #getTokensFromValue(String)} to tokenize the
-   * string.
+   * Constructor using {@link #getTokensFromValue(String)} to tokenize the string.
    *
    * @param sValue
    *        Value to display. Must not be <code>null</code>.
@@ -116,8 +114,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   }
 
   /**
-   * @return This object as JSON object representation. May not be
-   *         <code>null</code>.
+   * @return This object as JSON object representation. May not be <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -125,7 +122,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   @OverridingMethodsMustInvokeSuper
   public IJsonObject getAsJson ()
   {
-    return new JsonObject ().add (JSON_VALUE, m_sValue).addJson (JSON_TOKENS, new JsonArray ().addAll (m_aTokens));
+    return new JsonObject ().add (JSON_VALUE, m_sValue).add (JSON_TOKENS, new JsonArray ().addAll (m_aTokens));
   }
 
   public int compareTo (@Nonnull final BloodhoundDatum aOther)

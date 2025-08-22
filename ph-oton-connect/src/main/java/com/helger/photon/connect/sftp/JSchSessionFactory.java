@@ -18,22 +18,22 @@ package com.helger.photon.connect.sftp;
 
 import java.util.Properties;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.state.EChange;
-import com.helger.commons.statistics.IMutableStatisticsHandlerCounter;
-import com.helger.commons.statistics.StatisticsManager;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
 import com.helger.photon.connect.connection.IBaseServerConnectionSettings;
 import com.helger.photon.connect.connection.IServerConnectionSettingsKeyPair;
 import com.helger.photon.connect.connection.IServerConnectionSettingsPassword;
+import com.helger.statistics.api.IMutableStatisticsHandlerCounter;
+import com.helger.statistics.impl.StatisticsManager;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Utility class to create JSch sessions.

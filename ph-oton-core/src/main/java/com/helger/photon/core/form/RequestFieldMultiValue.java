@@ -18,12 +18,12 @@ package com.helger.photon.core.form;
 
 import java.util.Collection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.web.scope.util.RequestFieldDataMultiValue;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class RequestFieldMultiValue extends RequestFieldDataMultiValue implements IHCRequestFieldMultiValue
 {

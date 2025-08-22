@@ -20,7 +20,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.url.SimpleURL;
 import com.helger.html.hc.html.metadata.HCLink;
 import com.helger.html.hc.html.metadata.HCStyle;
 import com.helger.html.hc.html.root.HCHtml;
@@ -28,6 +27,7 @@ import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.html.js.UnparsedJSCodeProvider;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.web.scope.mgr.WebScoped;
 

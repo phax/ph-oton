@@ -16,10 +16,10 @@
  */
 package com.helger.html;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.xml.microdom.IMicroDocumentType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Enum of supported HTML versions.

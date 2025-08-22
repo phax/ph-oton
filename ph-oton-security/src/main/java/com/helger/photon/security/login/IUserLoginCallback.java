@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.login;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
+import com.helger.base.callback.ICallback;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.callback.ICallback;
+import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface when a user logs in.

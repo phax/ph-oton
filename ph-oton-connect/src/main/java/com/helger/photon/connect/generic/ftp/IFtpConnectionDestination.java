@@ -16,13 +16,13 @@
  */
 package com.helger.photon.connect.generic.ftp;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.helger.annotation.Nonnegative;
 import com.helger.network.port.DefaultNetworkPorts;
 import com.helger.photon.connect.generic.IConnectionDestination;
+
+import jakarta.annotation.Nonnull;
 
 public interface IFtpConnectionDestination extends IConnectionDestination <FTPClient>
 {

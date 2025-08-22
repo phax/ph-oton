@@ -16,7 +16,7 @@
  */
 package com.helger.photon.bootstrap4.pages.handler;
 
-import com.helger.commons.id.IHasID;
+import com.helger.base.id.IHasID;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.pages.BootstrapWebPageUIHandler;

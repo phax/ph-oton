@@ -16,17 +16,17 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.CollectionFind;
+import com.helger.collection.commons.ICommonsList;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Encapsulates the request data to a single DataTables AJAX request
@@ -51,8 +51,8 @@ public final class DTSSRequestData
                           @Nonnull final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns)
   {
     ValueEnforcer.notNull (aColumnData, "ColumnData");
-    if (CollectionHelper.containsAnyNullElement (aColumnData))
-      throw new IllegalArgumentException ("ColumnData may not contain null elements");
+    ValueEnforcer.isFalse ( () -> CollectionFind.containsAnyNullElement (aColumnData),
+                            "ColumnData may not contain null elements");
     ValueEnforcer.notNull (aOrderColumns, "OrderColumns");
     m_nDraw = nDraw;
     m_nDisplayStart = nDisplayStart;
@@ -79,10 +79,9 @@ public final class DTSSRequestData
   }
 
   /**
-   * @return Number of records that the table can display in the current draw.
-   *         It is expected that the number of records returned will be equal to
-   *         this number, unless the server has fewer records to return. If this
-   *         value is -1 it means show all entries.
+   * @return Number of records that the table can display in the current draw. It is expected that
+   *         the number of records returned will be equal to this number, unless the server has
+   *         fewer records to return. If this value is -1 it means show all entries.
    */
   public int getDisplayLength ()
   {
@@ -90,8 +89,8 @@ public final class DTSSRequestData
   }
 
   /**
-   * @return <code>true</code> if all entries should be shown,
-   *         <code>false</code> if the number is limited
+   * @return <code>true</code> if all entries should be shown, <code>false</code> if the number is
+   *         limited
    */
   public boolean showAllEntries ()
   {
@@ -99,8 +98,7 @@ public final class DTSSRequestData
   }
 
   /**
-   * @return Number of columns being displayed (useful for getting individual
-   *         column search info)
+   * @return Number of columns being displayed (useful for getting individual column search info)
    */
   public int getColumnCount ()
   {
@@ -108,8 +106,7 @@ public final class DTSSRequestData
   }
 
   /**
-   * @return <code>true</code> if either the global search or any column search
-   *         is active.
+   * @return <code>true</code> if either the global search or any column search is active.
    */
   public boolean isSearchActive ()
   {
@@ -151,7 +148,7 @@ public final class DTSSRequestData
   @ReturnsMutableCopy
   public DTSSRequestDataColumn [] getColumnDataArray ()
   {
-    return ArrayHelper.newArray (m_aColumnData, DTSSRequestDataColumn.class);
+    return ArrayHelper.createArray (m_aColumnData, DTSSRequestDataColumn.class);
   }
 
   /**

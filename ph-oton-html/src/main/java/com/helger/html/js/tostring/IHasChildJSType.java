@@ -16,7 +16,7 @@
  */
 package com.helger.html.js.tostring;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for {@link JSType} objects having child types. Used for lists,

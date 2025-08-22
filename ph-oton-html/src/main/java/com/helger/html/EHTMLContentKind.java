@@ -16,7 +16,7 @@
  */
 package com.helger.html;
 
-import javax.annotation.Nonnegative;
+import com.helger.annotation.Nonnegative;
 
 /**
  * Source:

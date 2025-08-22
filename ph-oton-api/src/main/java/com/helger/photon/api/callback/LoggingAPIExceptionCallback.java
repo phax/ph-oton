@@ -18,18 +18,18 @@ package com.helger.photon.api.callback;
 
 import java.io.IOException;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.io.stream.StreamHelper;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.io.stream.StreamHelper;
 import com.helger.photon.api.IAPIExceptionCallback;
 import com.helger.photon.api.IAPIInvoker;
 import com.helger.photon.api.InvokableAPIDescriptor;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Implementation of {@link IAPIExceptionCallback} logging to an SLF4J logger

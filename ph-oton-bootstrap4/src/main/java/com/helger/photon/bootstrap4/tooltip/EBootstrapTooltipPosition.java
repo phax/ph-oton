@@ -16,9 +16,9 @@
  */
 package com.helger.photon.bootstrap4.tooltip;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
-import com.helger.commons.annotation.Nonempty;
+import jakarta.annotation.Nonnull;
 
 public enum EBootstrapTooltipPosition
 {

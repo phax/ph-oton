@@ -19,25 +19,25 @@ package com.helger.photon.app.resource;
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.PresentForCodeCoverage;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.debug.GlobalDebug;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.PresentForCodeCoverage;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.debug.GlobalDebug;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
+
+import jakarta.annotation.Nonnull;
 
 /**
- * A global cache for {@link WebSiteResource} objects, to avoid the hash
- * calculation over and over again.
+ * A global cache for {@link WebSiteResource} objects, to avoid the hash calculation over and over
+ * again.
  *
  * @author Philip Helger
  */
@@ -60,8 +60,7 @@ public final class WebSiteResourceCache
   {}
 
   /**
-   * @return <code>true</code> if logging is disabled, <code>false</code> if it
-   *         is enabled.
+   * @return <code>true</code> if logging is disabled, <code>false</code> if it is enabled.
    */
   public static boolean isSilentMode ()
   {
@@ -72,8 +71,7 @@ public final class WebSiteResourceCache
    * Enable or disable certain regular log messages.
    *
    * @param bSilentMode
-   *        <code>true</code> to disable logging, <code>false</code> to enable
-   *        logging
+   *        <code>true</code> to disable logging, <code>false</code> to enable logging
    * @return The previous value of the silent mode.
    */
   public static boolean setSilentMode (final boolean bSilentMode)
@@ -82,8 +80,8 @@ public final class WebSiteResourceCache
   }
 
   /**
-   * @return <code>true</code> if the cache is globally enabled,
-   *         <code>false</code> if the cache is disabled.
+   * @return <code>true</code> if the cache is globally enabled, <code>false</code> if the cache is
+   *         disabled.
    */
   public static boolean isCacheEnabled ()
   {
@@ -117,7 +115,11 @@ public final class WebSiteResourceCache
       // Always create a new resource to allow for modifications
       final WebSiteResource aResource = new WebSiteResource (eResourceType, sPath, aCharset);
       if (!aResource.isExisting ())
-        throw new IllegalArgumentException ("WebSiteResource '" + sPath + "' of type " + eResourceType + " does not exist");
+        throw new IllegalArgumentException ("WebSiteResource '" +
+                                            sPath +
+                                            "' of type " +
+                                            eResourceType +
+                                            " does not exist");
       return aResource;
     }
 
@@ -129,11 +131,15 @@ public final class WebSiteResourceCache
       return ret;
 
     // Try again in write lock
-    return RW_LOCK.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey, k -> new WebSiteResource (eResourceType, sPath, aCharset)));
+    return RW_LOCK.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey,
+                                                                  k -> new WebSiteResource (eResourceType,
+                                                                                            sPath,
+                                                                                            aCharset)));
   }
 
   @Nonnull
-  public static EChange removeFromCache (@Nonnull final EWebSiteResourceType eType, @Nonnull @Nonempty final String sPath)
+  public static EChange removeFromCache (@Nonnull final EWebSiteResourceType eType,
+                                         @Nonnull @Nonempty final String sPath)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notEmpty (sPath, "Path");

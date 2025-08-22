@@ -18,15 +18,12 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.dao.DAOException;
 import com.helger.masterdata.address.IPostalAddress;
 import com.helger.masterdata.currency.ECurrency;
@@ -36,6 +33,9 @@ import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.tenancy.accarea.IAccountingArea;
 import com.helger.tenancy.accarea.IAccountingAreaResolver;
 import com.helger.tenancy.tenant.ITenant;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Manages all available accounting areas.

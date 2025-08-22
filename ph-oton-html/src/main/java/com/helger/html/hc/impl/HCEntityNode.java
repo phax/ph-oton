@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.impl;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.entity.EHTMLEntity;
 import com.helger.html.entity.IHTMLEntity;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroEntityReference;
 import com.helger.xml.microdom.MicroEntityReference;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents an entity reference as HC node.

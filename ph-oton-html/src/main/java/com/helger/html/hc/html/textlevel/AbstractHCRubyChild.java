@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.textlevel;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
+
+import jakarta.annotation.Nonnull;
 
 public abstract class AbstractHCRubyChild <IMPLTYPE extends AbstractHCRubyChild <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                           implements

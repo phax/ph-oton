@@ -16,10 +16,10 @@
  */
 package com.helger.photon.tinymce4.type;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * All TinyMCE4 resize options

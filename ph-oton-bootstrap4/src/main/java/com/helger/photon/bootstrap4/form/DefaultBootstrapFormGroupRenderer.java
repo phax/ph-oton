@@ -18,15 +18,12 @@ package com.helger.photon.bootstrap4.form;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.list.IErrorList;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -43,6 +40,9 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.grid.BootstrapRow;
 import com.helger.photon.uicore.html.formlabel.HCFormLabel;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This is the default implementation of {@link IBootstrapFormGroupRenderer}

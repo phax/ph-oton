@@ -18,16 +18,16 @@ package com.helger.photon.app.mock;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.NonBlockingStack;
-import com.helger.commons.io.file.FileOperationManager;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.collection.stack.NonBlockingStack;
 import com.helger.dao.AbstractDAO;
+import com.helger.io.file.FileOperationManager;
 import com.helger.photon.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.servlet.ServletContextPathHolder;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Non-web scope aware test rule, with a defined storage root directory

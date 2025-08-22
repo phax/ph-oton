@@ -27,12 +27,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.helger.commons.collection.attr.StringMap;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.IUserManager;
+import com.helger.typeconvert.collection.StringMap;
 import com.helger.xml.mock.XMLTestHelper;
 
 /**

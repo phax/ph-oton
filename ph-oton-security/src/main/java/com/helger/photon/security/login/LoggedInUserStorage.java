@@ -18,20 +18,20 @@ package com.helger.photon.security.login;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.io.file.FileOperationManager;
+import com.helger.io.file.FilenameHelper;
 import com.helger.photon.io.WebFileIO;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This class encapsulates the file IO base directory for the current user
@@ -42,8 +42,7 @@ import com.helger.photon.io.WebFileIO;
 public final class LoggedInUserStorage
 {
   /**
-   * The name of the default base directory relative to the WebFileIO where the
-   * data is referenced
+   * The name of the default base directory relative to the WebFileIO where the data is referenced
    */
   public static final String BASE_DIRECTORY = "userdata/";
 
@@ -57,8 +56,7 @@ public final class LoggedInUserStorage
   {}
 
   /**
-   * @return The base directory to be used. By default {@link #BASE_DIRECTORY}
-   *         is used.
+   * @return The base directory to be used. By default {@link #BASE_DIRECTORY} is used.
    */
   @Nonnull
   public static String getBaseDirectory ()
@@ -70,8 +68,7 @@ public final class LoggedInUserStorage
    * Set the base directory to be used.
    *
    * @param sBaseDirectory
-   *        The new base directory. May not be <code>null</code> but maybe
-   *        empty.
+   *        The new base directory. May not be <code>null</code> but maybe empty.
    */
   public static void setBaseDirectory (@Nonnull final String sBaseDirectory)
   {
@@ -92,8 +89,8 @@ public final class LoggedInUserStorage
 
   /**
    * @param sUserID
-   *        the ID of the user for which the user data is requested. May neither
-   *        be <code>null</code> nor empty.
+   *        the ID of the user for which the user data is requested. May neither be
+   *        <code>null</code> nor empty.
    * @return The base directory for all user-related data
    */
   @Nonnull

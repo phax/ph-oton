@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.config;
 
-import com.helger.commons.annotation.IsSPIInterface;
+import com.helger.annotation.style.IsSPIInterface;
 
 /**
  * SPI interface to initialize the {@link HCSettings}.

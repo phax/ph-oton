@@ -62,14 +62,7 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-icon</artifactId>
     </dependency>
-    
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs-annotations</artifactId>
-      <scope>compile</scope>
-      <optional>true</optional>
-    </dependency>
-    
+
     <dependency>
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jetty</artifactId>

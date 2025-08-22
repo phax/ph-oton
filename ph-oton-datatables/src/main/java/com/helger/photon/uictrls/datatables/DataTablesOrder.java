@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.compare.ESortOrder;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.compare.ESortOrder;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.jscode.JSArray;
+
+import jakarta.annotation.Nonnull;
 
 public class DataTablesOrder
 {

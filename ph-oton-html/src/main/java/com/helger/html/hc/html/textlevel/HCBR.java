@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.textlevel;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElement;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;br&gt; element

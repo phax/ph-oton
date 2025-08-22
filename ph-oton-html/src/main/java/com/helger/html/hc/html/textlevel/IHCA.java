@@ -16,11 +16,6 @@
  */
 package com.helger.html.hc.html.textlevel;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.mime.IMimeType;
-import com.helger.commons.url.ISimpleURL;
 import com.helger.html.hc.IHCHasName;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -28,6 +23,11 @@ import com.helger.html.hc.html.IHCHasMedia;
 import com.helger.html.hc.html.links.EHCReferrerPolicy;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
+import com.helger.http.url.ISimpleURL;
+import com.helger.mime.IMimeType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for As

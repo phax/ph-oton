@@ -18,18 +18,18 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.locale.LocaleCache;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.style.OverrideOnDemand;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.json.IJsonObject;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.servlet.response.ResponseHelperSettings;
+import com.helger.text.locale.LocaleCache;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Action executor for providing the DataTables translated texts

@@ -18,10 +18,10 @@ package com.helger.photon.uicore.page.external;
 
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.xml.microdom.IMicroContainer;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for external pages.

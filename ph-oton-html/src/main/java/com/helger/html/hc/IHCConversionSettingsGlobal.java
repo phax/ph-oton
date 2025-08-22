@@ -18,10 +18,7 @@ package com.helger.html.hc;
 
 import java.nio.charset.Charset;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.css.ICSSWriterSettings;
 import com.helger.css.writer.CSSWriterSettings;
 import com.helger.html.EHTMLVersion;
@@ -29,6 +26,9 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Global settings interface that is used to convert HC* nodes to micro nodes.

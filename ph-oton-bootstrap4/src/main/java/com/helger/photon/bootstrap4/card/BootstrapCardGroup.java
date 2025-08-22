@@ -16,14 +16,14 @@
  */
 package com.helger.photon.bootstrap4.card;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Card group

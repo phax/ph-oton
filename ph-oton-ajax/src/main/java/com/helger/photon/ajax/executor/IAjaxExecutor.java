@@ -18,10 +18,10 @@ package com.helger.photon.ajax.executor;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
-
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a single AJAX function handler.

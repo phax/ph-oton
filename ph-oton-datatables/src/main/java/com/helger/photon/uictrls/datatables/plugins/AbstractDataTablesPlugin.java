@@ -16,15 +16,15 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.IDataTablesPlugin;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract implementation of {@link IDataTablesPlugin}.

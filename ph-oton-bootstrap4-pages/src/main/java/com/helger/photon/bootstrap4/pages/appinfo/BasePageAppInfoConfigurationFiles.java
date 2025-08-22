@@ -18,15 +18,8 @@ package com.helger.photon.bootstrap4.pages.appinfo;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.Translatable;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.commons.text.resolve.DefaultTextResolver;
-import com.helger.commons.text.util.TextHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.Translatable;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
@@ -42,6 +35,13 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.prism.EPrismLanguage;
 import com.helger.photon.uictrls.prism.PrismPluginCopyToClipboard;
 import com.helger.photon.uictrls.prism.PrismPluginLineNumbers;
+import com.helger.text.IMultilingualText;
+import com.helger.text.display.IHasDisplayText;
+import com.helger.text.resolve.DefaultTextResolver;
+import com.helger.text.util.TextHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This page displays information about the certificate configured in the SMP

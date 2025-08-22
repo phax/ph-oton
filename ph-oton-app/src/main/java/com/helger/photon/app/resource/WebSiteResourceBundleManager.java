@@ -21,36 +21,36 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.charset.CharsetHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.id.factory.GlobalIDFactory;
-import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.charset.CharsetHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ECSSMedium;
 import com.helger.dao.DAOException;
+import com.helger.io.file.FileOperationManager;
+import com.helger.io.file.FileSystemIterator;
 import com.helger.photon.io.WebFileIO;
 import com.helger.photon.io.dao.AbstractPhotonSimpleDAO;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO implements
                                                 IWebSiteResourceBundleProvider
@@ -133,8 +133,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
           final String sHash = eResource.getAttributeValue (ATTR_CONTENT_HASH);
           final String sCharset = eResource.getAttributeValue (ATTR_CHARSET);
           // Soft migration as charset was added later
-          final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET
-                                                    : CharsetHelper.getCharsetFromName (sCharset);
+          final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET : CharsetHelper
+                                                                                                     .getCharsetFromName (sCharset);
 
           final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
           if (!aNewResource.isExisting ())
@@ -283,8 +283,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
    *
    * @param sBundleID
    *        The bundle ID to be checked. May be <code>null</code>.
-   * @return <code>true</code> if the passed bundle exists, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the passed bundle exists, <code>false</code> otherwise.
    */
   public boolean containsResourceBundleOfID (@Nullable final String sBundleID)
   {
@@ -389,7 +388,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     // Write once at the end
     if (bCreatedAnyBundle)
     {
-      m_aRWLock.writeLocked ( this::markAsChanged);
+      m_aRWLock.writeLocked (this::markAsChanged);
     }
 
     return ret;

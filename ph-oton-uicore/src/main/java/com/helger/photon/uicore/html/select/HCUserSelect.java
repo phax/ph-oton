@@ -20,14 +20,14 @@ import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.name.IHasDisplayName;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.text.compare.ComparatorHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A select for {@link IUser} objects.
@@ -56,7 +56,8 @@ public class HCUserSelect extends HCExtSelect
     this (aRF,
           PhotonSecurityManager.getUserMgr ()
                                .getAllActiveUsers ()
-                               .getSortedInline (IHasDisplayName.getComparatorCollating (aDisplayLocale)),
+                               .getSortedInline (ComparatorHelper.getComparatorCollating (IUser::getDisplayName,
+                                                                                          aDisplayLocale)),
           aFilter,
           aDisplayTextProvider);
   }

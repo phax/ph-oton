@@ -18,9 +18,10 @@ package com.helger.html.jquery;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -105,14 +106,13 @@ public final class JQueryTest
     assertEquals ("$('#abc');", JQuery.idRef ("abc").getJSCode ());
     assertEquals ("$('#abc');", JQuery.idRefMultiple ("abc").getJSCode ());
     assertEquals ("$('#a,#b,#c');", JQuery.idRefMultiple ("a", "b", "c").getJSCode ());
-    assertEquals ("$('#a,#b,#c');", JQuery.idRefMultiple (CollectionHelper.newList ("a", "b", "c")).getJSCode ());
+    assertEquals ("$('#a,#b,#c');", JQuery.idRefMultiple (Arrays.asList ("a", "b", "c")).getJSCode ());
     final ICSSClassProvider aClass = DefaultCSSClassProvider.create ("any");
     final ICSSClassProvider aClass2 = DefaultCSSClassProvider.create ("other");
     assertEquals ("$('.any');", JQuery.classRef (aClass).getJSCode ());
     assertEquals ("$('.any');", JQuery.classRefMultiple (aClass).getJSCode ());
     assertEquals ("$('.any,.other');", JQuery.classRefMultiple (aClass, aClass2).getJSCode ());
-    assertEquals ("$('.any,.other');",
-                  JQuery.classRefMultiple (CollectionHelper.newList (aClass, aClass2)).getJSCode ());
+    assertEquals ("$('.any,.other');", JQuery.classRefMultiple (Arrays.asList (aClass, aClass2)).getJSCode ());
     assertEquals ("$('div');", JQuery.elementNameRef (EHTMLElement.DIV).getJSCode ());
     assertEquals ("$('bla');", JQuery.elementNameRef ("bla").getJSCode ());
     assertEquals ("$('div#foo');", JQuery.elementNameWithIDRef (EHTMLElement.DIV, "foo").getJSCode ());

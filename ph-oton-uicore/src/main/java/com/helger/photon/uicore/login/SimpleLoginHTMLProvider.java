@@ -18,11 +18,7 @@ package com.helger.photon.uicore.login;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.OverrideOnDemand;
-import com.helger.commons.url.SimpleURL;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.HCButton_Submit;
@@ -39,10 +35,14 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
+import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.login.CLogin;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Provide a login screen

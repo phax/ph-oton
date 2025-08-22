@@ -16,16 +16,12 @@
  */
 package com.helger.html.hc.config;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.css.ECSSVersion;
+import com.helger.annotation.OverridingMethodsMustInvokeSuper;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.css.ICSSWriterSettings;
 import com.helger.css.writer.CSSWriterSettings;
 import com.helger.html.EHTMLVersion;
@@ -38,9 +34,12 @@ import com.helger.xml.serialize.write.EXMLSerializeIndent;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * The default implementation of {@link IHCConversionSettings} containing the
- * real settings for HTML output.
+ * The default implementation of {@link IHCConversionSettings} containing the real settings for HTML
+ * output.
  *
  * @author Philip Helger
  */
@@ -49,8 +48,6 @@ public class HCConversionSettings implements IHCConversionSettings
 {
   /** Default indent and align HTML: true */
   public static final boolean DEFAULT_INDENT_AND_ALIGN_HTML = true;
-  /** Default CSS version 3.0 */
-  public static final ECSSVersion DEFAULT_CSS_VERSION = ECSSVersion.CSS30;
   /** Default indent and align CSS: true */
   public static final boolean DEFAULT_INDENT_AND_ALIGN_CSS = true;
   /** Default indent and align JS: true */
@@ -84,7 +81,7 @@ public class HCConversionSettings implements IHCConversionSettings
   @Nonnull
   public static CSSWriterSettings createDefaultCSSWriterSettings ()
   {
-    return new CSSWriterSettings (DEFAULT_CSS_VERSION).setOptimizedOutput (!DEFAULT_INDENT_AND_ALIGN_CSS);
+    return new CSSWriterSettings ().setOptimizedOutput (!DEFAULT_INDENT_AND_ALIGN_CSS);
   }
 
   @Nonnull
@@ -108,8 +105,8 @@ public class HCConversionSettings implements IHCConversionSettings
    *
    * @param aCustomizer
    *        Customizer to check.
-   * @return <code>true</code> if the passed customizer is the default
-   *         customizer, <code>false</code> otherwise.
+   * @return <code>true</code> if the passed customizer is the default customizer,
+   *         <code>false</code> otherwise.
    * @see #createDefaultCustomizer()
    */
   public static boolean isDefaultCustomizer (@Nullable final IHCCustomizer aCustomizer)
@@ -130,8 +127,8 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   /**
-   * Copy constructor. Also creates a copy of the {@link XMLWriterSettings} and
-   * the {@link CSSWriterSettings}.
+   * Copy constructor. Also creates a copy of the {@link XMLWriterSettings} and the
+   * {@link CSSWriterSettings}.
    *
    * @param aBase
    *        Object to copy the settings from. May not be <code>null</code>.
@@ -142,8 +139,8 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   /**
-   * Kind of copy constructor. Also creates a copy of the
-   * {@link XMLWriterSettings} and the {@link CSSWriterSettings}.
+   * Kind of copy constructor. Also creates a copy of the {@link XMLWriterSettings} and the
+   * {@link CSSWriterSettings}.
    *
    * @param aBase
    *        Object to copy the settings from. May not be <code>null</code>.
@@ -167,8 +164,7 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   /**
-   * Change the HTML version. Note: this does NOT change the
-   * {@link XMLWriterSettings}!
+   * Change the HTML version. Note: this does NOT change the {@link XMLWriterSettings}!
    *
    * @param eHTMLVersion
    *        The HTML version to use.
@@ -198,9 +194,9 @@ public class HCConversionSettings implements IHCConversionSettings
   @Nonnull
   public HCConversionSettings setXMLWriterSettingsOptimized (final boolean bOptimized)
   {
-    m_aXMLWriterSettings.setIndent (bOptimized ? EXMLSerializeIndent.NONE
-                                               : DEFAULT_INDENT_AND_ALIGN_HTML ? EXMLSerializeIndent.INDENT_AND_ALIGN
-                                                                               : EXMLSerializeIndent.NONE);
+    m_aXMLWriterSettings.setIndent (bOptimized ? EXMLSerializeIndent.NONE : DEFAULT_INDENT_AND_ALIGN_HTML
+                                                                                                          ? EXMLSerializeIndent.INDENT_AND_ALIGN
+                                                                                                          : EXMLSerializeIndent.NONE);
     // WRITE_TO_FILE_NO_LOG is the quickest version
     m_aXMLWriterSettings.setIncorrectCharacterHandling (bOptimized ? EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG
                                                                    : EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING);
@@ -319,8 +315,8 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   /**
-   * Enable or disable the consistency checks. It is recommended that the
-   * consistency checks are only run in debug mode!
+   * Enable or disable the consistency checks. It is recommended that the consistency checks are
+   * only run in debug mode!
    *
    * @param bConsistencyChecksEnabled
    *        The new value.
@@ -359,8 +355,7 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   /**
-   * Set the global customizer to be used to globally customize created
-   * elements.
+   * Set the global customizer to be used to globally customize created elements.
    *
    * @param aCustomizer
    *        The customizer to be used. May not be <code>null</code>.

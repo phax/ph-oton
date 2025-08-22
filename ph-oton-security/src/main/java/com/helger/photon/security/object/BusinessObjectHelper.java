@@ -16,17 +16,17 @@
  */
 package com.helger.photon.security.object;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.security.authentication.subject.user.CUserID;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Helper class to work with {@link IBusinessObject} implementations.

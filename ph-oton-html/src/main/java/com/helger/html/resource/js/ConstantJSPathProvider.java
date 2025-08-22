@@ -16,18 +16,18 @@
  */
 package com.helger.html.resource.js;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ChangeNextMajorRelease;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.builder.IBuilder;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.ChangeNextMajorRelease;
+import com.helger.base.builder.IBuilder;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.html.script.EHCScriptLoadingMode;
 import com.helger.html.js.JSFilenameHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link IJSPathProvider} using constant paths.

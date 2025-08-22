@@ -19,10 +19,7 @@ package com.helger.photon.uicore.page.system;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.OverrideOnDemand;
+import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HC_Target;
@@ -33,6 +30,9 @@ import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuSeparator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * The default renderer used for {@link BasePageShowChildren}.

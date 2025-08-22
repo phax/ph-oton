@@ -16,16 +16,16 @@
  */
 package com.helger.photon.audit.config;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.audit.AuditItem;
 import com.helger.photon.audit.AuditItemMicroTypeConverter;
 import com.helger.photon.audit.v2.domain.AuditEvent;
 import com.helger.photon.audit.v2.domain.AuditEventMicroTypeConverter;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Register all MicroTypeConverter implementations of this project.

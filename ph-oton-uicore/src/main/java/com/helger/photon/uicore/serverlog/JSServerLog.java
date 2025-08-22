@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.serverlog;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.url.ISimpleURL;
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSInvocation;
+import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+
+import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class JSServerLog

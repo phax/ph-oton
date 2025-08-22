@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode.type;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base class for the JS built-in '*Error' types

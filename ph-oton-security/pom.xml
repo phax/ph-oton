@@ -108,7 +108,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.security</Automatic-Module-Name>
             <Export-Package>com.helger.photon.security.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)",
 osgi.extender; filter:="(osgi.extender=osgi.serviceloader.processor)",
 osgi.serviceloader; filter:="(osgi.serviceloader=com.helger.photon.security.password.hash.IPasswordHashCreatorRegistrarSPI)"; cardinality:=multiple; resolution:=optional</Require-Capability>

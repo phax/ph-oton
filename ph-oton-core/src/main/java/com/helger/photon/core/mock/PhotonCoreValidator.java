@@ -18,12 +18,11 @@ package com.helger.photon.core.mock;
 
 import java.io.File;
 
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.xml.microdom.IMicroDocument;

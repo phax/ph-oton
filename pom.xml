@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>2.1.4</version>
+    <version>3.0.1-SNAPSHOT</version>
     <relativePath />
   </parent>
   <groupId>com.helger.photon</groupId>
@@ -68,9 +68,9 @@
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
     <log4j.version>2.25.1</log4j.version>
-    <jetty.version>11.0.25</jetty.version>
-    <ph-commons.version>11.2.6</ph-commons.version>
-    <ph-poi.version>6.0.4</ph-poi.version>
+    <jetty.version>12.1.0</jetty.version>
+    <ph-commons.version>12.0.0-SNAPSHOT</ph-commons.version>
+    <ph-poi.version>7.0.0-SNAPSHOT</ph-poi.version>
   </properties>
 
   <repositories>
@@ -98,28 +98,28 @@
       <dependency>
         <groupId>com.helger.schedule</groupId>
         <artifactId>ph-schedule-parent-pom</artifactId>
-        <version>5.0.1</version>
+        <version>6.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.masterdata</groupId>
         <artifactId>ph-masterdata-parent-pom</artifactId>
-        <version>7.0.2</version>
+        <version>8.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-css-parent-pom</artifactId>
-        <version>7.0.4</version>
+        <version>8.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>10.5.1</version>
+        <version>11.0.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -254,7 +254,7 @@
       <dependency>
         <groupId>commons-net</groupId>
         <artifactId>commons-net</artifactId>
-        <version>3.11.1</version>
+        <version>3.12.0</version>
       </dependency>       
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
@@ -284,6 +284,11 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+   <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-unittest-support-ext</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -328,7 +333,7 @@
         <plugin>
           <groupId>com.helger.maven</groupId>
           <artifactId>ph-csscompress-maven-plugin</artifactId>
-          <version>7.0.4</version>
+          <version>7.1.0</version>
         </plugin>
       </plugins>
     </pluginManagement>

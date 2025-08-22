@@ -18,10 +18,7 @@ package com.helger.photon.bootstrap4.pages;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.photon.app.PhotonAppManager;
 import com.helger.photon.app.resource.WebSiteResourceBundleManager;
 import com.helger.photon.audit.IAuditManager;
@@ -81,6 +78,9 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.uicore.page.EWebPageText;
 import com.helger.photon.uicore.page.system.BasePageShowChildren;
 import com.helger.smtp.failed.FailedMailQueue;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @Immutable
 public final class BootstrapPagesMenuConfigurator

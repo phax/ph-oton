@@ -56,10 +56,6 @@
   <dependencies>
     <dependency>
       <groupId>com.helger.commons</groupId>
-      <artifactId>ph-commons</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.commons</groupId>
       <artifactId>ph-xml</artifactId>
     </dependency>
     <dependency>
@@ -69,6 +65,10 @@
     <dependency>
       <groupId>com.helger.commons</groupId>
       <artifactId>ph-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-commons</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
@@ -92,7 +92,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.exchange</Automatic-Module-Name>
             <Export-Package>com.helger.photon.exchange.*</Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>

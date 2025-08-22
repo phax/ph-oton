@@ -20,10 +20,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.commons.url.SimpleURL;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.html.JSHtml;
+import com.helger.http.url.SimpleURL;
 
 /**
  * Test class for class {@link TypeaheadRemote}.

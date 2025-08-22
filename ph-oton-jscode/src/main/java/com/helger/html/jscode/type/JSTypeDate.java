@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode.type;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.CodingStyleguideUnaware;
+import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.html.jscode.JSInvocation;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Contains the JS built-in type 'Date'

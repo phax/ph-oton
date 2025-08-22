@@ -16,10 +16,8 @@
  */
 package com.helger.html.hc.html.forms;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.CGlobal;
-import com.helger.commons.equals.EqualsHelper;
+import com.helger.base.CGlobal;
+import com.helger.base.equals.EqualsHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -27,6 +25,8 @@ import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
+
+import jakarta.annotation.Nonnull;
 
 public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                       implements

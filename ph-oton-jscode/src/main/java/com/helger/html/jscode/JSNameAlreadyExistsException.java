@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode;
 
-import javax.annotation.Nonnull;
+import com.helger.base.enforce.ValueEnforcer;
 
-import com.helger.commons.ValueEnforcer;
+import jakarta.annotation.Nonnull;
 
 /**
  * Indicates that a declaration is already created.

@@ -16,10 +16,8 @@
  */
 package com.helger.html.hc.ext;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.state.EContinue;
-import com.helger.commons.wrapper.Wrapper;
+import com.helger.base.state.EContinue;
+import com.helger.base.wrapper.Wrapper;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -30,9 +28,10 @@ import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.html.hc.html.forms.IHCHasFocus;
 import com.helger.html.hc.impl.AbstractHCCustomizer;
 
+import jakarta.annotation.Nonnull;
+
 /**
- * Special customizer that customizes the first input element on the page (if
- * available).
+ * Special customizer that customizes the first input element on the page (if available).
  *
  * @author Philip Helger
  */

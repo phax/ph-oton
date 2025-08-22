@@ -18,14 +18,14 @@ package com.helger.photon.bootstrap4.uictrls.ext;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCExtHelper;
 import com.helger.photon.security.password.GlobalPasswordSettings;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Common methods to render security UI with Bootstrap

@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.datatables;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.jscode.JSAnonymousFunction;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Define how to sum up data tables columns.

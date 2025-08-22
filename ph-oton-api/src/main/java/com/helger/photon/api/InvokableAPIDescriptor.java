@@ -19,27 +19,26 @@ package com.helger.photon.api;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.http.CHttp;
-import com.helger.commons.mime.MimeType;
-import com.helger.commons.mime.MimeTypeParser;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.ICommonsOrderedMap;
+import com.helger.http.CHttp;
+import com.helger.mime.MimeType;
+import com.helger.mime.parse.MimeTypeParser;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
+import jakarta.annotation.Nonnull;
+
 /**
- * An {@link InvokableAPIDescriptor} contains an {@link IAPIDescriptor} as well
- * the original path by which it was called as well as any resolved path
- * variables.
+ * An {@link InvokableAPIDescriptor} contains an {@link IAPIDescriptor} as well the original path by
+ * which it was called as well as any resolved path variables.
  *
  * @author Philip Helger
  */
@@ -59,8 +58,7 @@ public class InvokableAPIDescriptor implements Serializable
    * @param sPath
    *        The URL path requested by the user, relative to the servlet.
    * @param aPathVariables
-   *        All resolved path variables, if the path descriptor contains
-   *        variable elements.
+   *        All resolved path variables, if the path descriptor contains variable elements.
    */
   public InvokableAPIDescriptor (@Nonnull final IAPIDescriptor aDescriptor,
                                  @Nonnull @Nonempty final String sPath,
@@ -85,8 +83,8 @@ public class InvokableAPIDescriptor implements Serializable
   }
 
   /**
-   * @return The URL path requested by the user, relative to the servlet. Never
-   *         <code>null</code> nor empty.
+   * @return The URL path requested by the user, relative to the servlet. Never <code>null</code>
+   *         nor empty.
    */
   @Nonnull
   @Nonempty
@@ -96,8 +94,8 @@ public class InvokableAPIDescriptor implements Serializable
   }
 
   /**
-   * @return All resolved path variables, if the path descriptor contains
-   *         variable elements. Never <code>null</code> but maybe empty.
+   * @return All resolved path variables, if the path descriptor contains variable elements. Never
+   *         <code>null</code> but maybe empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -107,14 +105,14 @@ public class InvokableAPIDescriptor implements Serializable
   }
 
   /**
-   * Check if all pre-requisites are handled correctly. This checks if all
-   * required headers and params are present.
+   * Check if all pre-requisites are handled correctly. This checks if all required headers and
+   * params are present.
    *
    * @param aRequestScope
    *        The request scope to validate.
    * @param aStatusCode
-   *        The mutable int to hold the status code to be returned in case of
-   *        error. Default is HTTP 400, bad request.
+   *        The mutable int to hold the status code to be returned in case of error. Default is HTTP
+   *        400, bad request.
    * @return <code>true</code> if all prerequisites are fulfilled.
    */
   public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -176,9 +174,8 @@ public class InvokableAPIDescriptor implements Serializable
   }
 
   /**
-   * Invoke the Java callback underlying this API descriptor. Note: this method
-   * may only be invoked after
-   * {@link #canExecute(IRequestWebScopeWithoutResponse,MutableInt)} returned
+   * Invoke the Java callback underlying this API descriptor. Note: this method may only be invoked
+   * after {@link #canExecute(IRequestWebScopeWithoutResponse,MutableInt)} returned
    * <code>true</code>!
    *
    * @param aRequestScope

@@ -19,20 +19,20 @@ package com.helger.photon.security.token.user;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.type.ObjectType;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.state.EChange;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
+import com.helger.collection.commons.CommonsArrayList;
 import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.object.AbstractObjectWithAccessToken;
 import com.helger.photon.security.user.IUser;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A single token for granting a machine user access to this application.
@@ -50,13 +50,12 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
    * Constructor for new object.
    *
    * @param sTokenString
-   *        The token string to be used. May be <code>null</code> in which case
-   *        a new one is created.
+   *        The token string to be used. May be <code>null</code> in which case a new one is
+   *        created.
    * @param aCustomAttrs
    *        Custom attributes. May be <code>null</code>.
    * @param aUser
-   *        Related user for which this token can be used. May not be
-   *        <code>null</code>.
+   *        Related user for which this token can be used. May not be <code>null</code>.
    * @param sDescription
    *        Optional description of the User Token. May be <code>null</code>.
    */
@@ -79,8 +78,7 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
    * @param aAccessTokens
    *        Access tokens. May neither be <code>null</code> nor empty.
    * @param aUser
-   *        Related user for which this token can be used. May not be
-   *        <code>null</code>.
+   *        Related user for which this token can be used. May not be <code>null</code>.
    * @param sDescription
    *        Optional description of the User Token. May be <code>null</code>.
    */

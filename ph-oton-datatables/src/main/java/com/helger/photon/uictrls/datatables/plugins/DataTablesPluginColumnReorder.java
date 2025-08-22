@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import javax.annotation.Nullable;
-
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
@@ -26,6 +24,8 @@ import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
+
+import jakarta.annotation.Nullable;
 
 public class DataTablesPluginColumnReorder extends AbstractDataTablesPlugin
 {

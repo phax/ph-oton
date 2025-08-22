@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.helger.base.callback.ICallback;
+import com.helger.base.state.EContinue;
 
-import com.helger.commons.callback.ICallback;
-import com.helger.commons.state.EContinue;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Callback interface to be used when iterating an HC tree.

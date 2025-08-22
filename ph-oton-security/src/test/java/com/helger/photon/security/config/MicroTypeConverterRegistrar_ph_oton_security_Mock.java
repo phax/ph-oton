@@ -16,14 +16,14 @@
  */
 package com.helger.photon.security.config;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.IsSPIImplementation;
+import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
 import com.helger.photon.security.object.tenant.Tenant;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Special micro type converter for this project.

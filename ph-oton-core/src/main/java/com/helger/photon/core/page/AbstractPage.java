@@ -18,18 +18,18 @@ package com.helger.photon.core.page;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.text.IMultilingualText;
+import com.helger.text.ReadOnlyMultilingualText;
+import com.helger.text.locale.LocaleHelper;
+import com.helger.typeconvert.collection.AttributeContainerAny;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.attr.AttributeContainerAny;
-import com.helger.commons.locale.LocaleHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.ReadOnlyMultilingualText;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Abstract base implementation for {@link IPage}.

@@ -18,17 +18,14 @@ package com.helger.photon.bootstrap4.uictrls.treeview;
 
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.NonBlockingStack;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.hierarchy.visit.DefaultHierarchyVisitorCallback;
-import com.helger.commons.hierarchy.visit.EHierarchyVisitorReturn;
-import com.helger.commons.state.ETriState;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ETriState;
+import com.helger.collection.CollectionHelper;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
+import com.helger.collection.hierarchy.visit.EHierarchyVisitorReturn;
+import com.helger.collection.stack.NonBlockingStack;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
@@ -48,6 +45,9 @@ import com.helger.tree.DefaultTree;
 import com.helger.tree.DefaultTreeItem;
 import com.helger.tree.ITreeItem;
 import com.helger.tree.util.TreeVisitor;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap Tree View from https://github.com/jonmiles/bootstrap-treeview

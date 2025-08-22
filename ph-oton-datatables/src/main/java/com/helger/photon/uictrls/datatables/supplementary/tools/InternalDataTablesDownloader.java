@@ -17,24 +17,24 @@
 package com.helger.photon.uictrls.datatables.supplementary.tools;
 
 import java.io.File;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.List;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerByteArray;
+import com.helger.io.file.SimpleFileIO;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Download the DT components from https://www.datatables.net/download/index via
- * the String in the CDN tab. No Minify, no concatenate
+ * Download the DT components from https://www.datatables.net/download/index via the String in the
+ * CDN tab. No Minify, no concatenate
  *
  * @author Philip Helger
  */
@@ -43,8 +43,8 @@ public final class InternalDataTablesDownloader
   private InternalDataTablesDownloader ()
   {}
 
-  public static void downloadDataTables (@Nonnull final String sHTML,
-                                         @Nullable final String sFilenameMustContain) throws Exception
+  public static void downloadDataTables (@Nonnull final String sHTML, @Nullable final String sFilenameMustContain)
+                                                                                                                   throws Exception
   {
     try (HttpClientManager hcm = new HttpClientManager ())
     {
@@ -65,9 +65,9 @@ public final class InternalDataTablesDownloader
 
         System.out.println (sURL);
 
-        final ICommonsList <String> parts = StringHelper.getExploded ('/',
-                                                                      StringHelper.trimStart (sURL,
-                                                                                              "https://cdn.datatables.net/"));
+        final List <String> parts = StringHelper.getExploded ('/',
+                                                              StringHelper.trimStart (sURL,
+                                                                                      "https://cdn.datatables.net/"));
         final String sPlugin, sVersion, sFilename;
         if (parts.size () == 3)
         {
@@ -107,8 +107,7 @@ public final class InternalDataTablesDownloader
                                                                                         "/" +
                                                                                         (bIsJS ? "js" : "css") +
                                                                                         "/" +
-                                                                                        sMinifiedFilename),
-                                aBytes);
+                                                                                        sMinifiedFilename), aBytes);
       }
     }
   }

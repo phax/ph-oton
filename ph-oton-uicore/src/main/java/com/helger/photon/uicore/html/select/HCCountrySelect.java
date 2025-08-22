@@ -19,17 +19,17 @@ package com.helger.photon.uicore.html.select;
 import java.util.Comparator;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.compare.IComparator;
-import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.text.display.IDisplayTextProvider;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.helper.CollectionSort;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.locale.DeprecatedLocaleHandler;
+import com.helger.text.compare.ComparatorHelper;
+import com.helger.text.display.IDisplayTextProvider;
+import com.helger.text.locale.country.CountryCache;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Select box for countries
@@ -115,12 +115,12 @@ public class HCCountrySelect extends HCExtSelect
 
     final Comparator <Locale> aComp;
     if (aDisplayTextProvider == null)
-      aComp = IComparator.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale),
-                                                  aDisplayLocale);
+      aComp = ComparatorHelper.getComparatorCollating (aLocale -> aLocale.getDisplayCountry (aDisplayLocale),
+                                                       aDisplayLocale);
     else
       aComp = aDisplayTextProvider.getComparatorCollating (aDisplayLocale, aDisplayLocale);
 
-    for (final Locale aCountry : CollectionHelper.getSorted (aLocales, aComp))
+    for (final Locale aCountry : CollectionSort.getSorted (aLocales, aComp))
     {
       final String sDisplayCountry = aDisplayTextProvider != null ? aDisplayTextProvider.getDisplayText (aCountry,
                                                                                                          aDisplayLocale)

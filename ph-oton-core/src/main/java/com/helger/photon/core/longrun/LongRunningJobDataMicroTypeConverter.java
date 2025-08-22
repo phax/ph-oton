@@ -19,19 +19,19 @@ package com.helger.photon.core.longrun;
 import java.io.File;
 import java.time.LocalDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.state.ETriState;
-import com.helger.commons.text.IMultilingualText;
-import com.helger.commons.text.ReadOnlyMultilingualText;
-import com.helger.commons.url.SimpleURL;
+import com.helger.base.state.ETriState;
+import com.helger.http.url.SimpleURL;
 import com.helger.json.serialize.JsonReader;
+import com.helger.text.IMultilingualText;
+import com.helger.text.ReadOnlyMultilingualText;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.serialize.MicroReader;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Micro type converter for class {@link LongRunningJobData}.

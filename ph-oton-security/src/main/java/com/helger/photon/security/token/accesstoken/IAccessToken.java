@@ -18,12 +18,12 @@ package com.helger.photon.security.token.accesstoken;
 
 import java.time.LocalDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.datetime.PDTFactory;
+import com.helger.annotation.Nonempty;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class represents a single token. It uniquely belongs to a user token but

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.helger.commons.http.CHttpHeader;
+import com.helger.http.CHttpHeader;
 
 /**
  * Test class for class {@link APIDescriptor}.

@@ -18,12 +18,12 @@ package com.helger.photon.bootstrap4.uictrls.ext;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.menu.IMenuSeparator;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * A special menu item renderer for the footer area, where the items are

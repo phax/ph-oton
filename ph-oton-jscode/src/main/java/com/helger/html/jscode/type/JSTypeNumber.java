@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode.type;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSGlobal;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Contains the JS built-in type 'Number'

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.app.html;
 
-import javax.annotation.Nonnull;
-
 import com.helger.html.hc.html.root.HCHtml;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for an HTML creator

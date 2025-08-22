@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.unittest.support.TestHelper;
 
 /**
  * Test class for class {@link ConstantJSPathProvider}.
@@ -35,7 +35,7 @@ public final class ConstantJSPathProviderTest
     final ConstantJSPathProvider pp = ConstantJSPathProvider.builder ().path ("a.js").minifiedPathFromPath ().build ();
     assertEquals ("a.js", pp.getJSItemPath (true));
     assertEquals ("a.min.js", pp.getJSItemPath (false));
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantJSPathProvider.builder ().path ("a.js").minifiedPathFromPath ().build ());
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantJSPathProvider.builder ().path ("b.js").minifiedPathFromPath ().build ());
+    TestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantJSPathProvider.builder ().path ("a.js").minifiedPathFromPath ().build ());
+    TestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantJSPathProvider.builder ().path ("b.js").minifiedPathFromPath ().build ());
   }
 }
