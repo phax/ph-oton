@@ -24,8 +24,8 @@ import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

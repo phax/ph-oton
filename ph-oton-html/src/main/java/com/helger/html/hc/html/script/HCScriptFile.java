@@ -22,7 +22,7 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 
 import jakarta.annotation.Nonnull;

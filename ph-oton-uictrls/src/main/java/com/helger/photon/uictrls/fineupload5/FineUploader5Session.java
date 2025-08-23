@@ -24,7 +24,7 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -207,7 +207,7 @@ public class FineUploader5Session implements IFineUploader5Part
     if (m_aSessionCustomHeaders.isNotEmpty ())
       aSub.add ("customHeaders", getAsJSAA (m_aSessionCustomHeaders));
     if (m_aSessionEndpoint != null)
-      aSub.add ("endpoint", m_aSessionEndpoint.getAsStringWithEncodedParameters ());
+      aSub.add ("endpoint", m_aSessionEndpoint.getAsString ());
     if (m_aSessionParams.isNotEmpty ())
       aSub.add ("params", getAsJSAA (m_aSessionParams));
     if (m_bSessionRefreshOnReset != DEFAULT_SESSION_REFRESH_ON_RESET)

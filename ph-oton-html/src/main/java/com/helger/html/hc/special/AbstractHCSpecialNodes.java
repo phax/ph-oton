@@ -27,7 +27,7 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.CommonsLinkedHashSet;

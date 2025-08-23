@@ -28,9 +28,9 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.url.IWebURIToURLConverter;
 import com.helger.photon.app.url.StreamOrLocalURIToURLConverter;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

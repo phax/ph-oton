@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.html.JSHtml;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.SimpleURL;
 
 /**
  * Test class for class {@link TypeaheadRemote}.

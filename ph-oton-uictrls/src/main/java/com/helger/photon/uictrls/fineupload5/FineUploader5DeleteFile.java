@@ -25,8 +25,8 @@ import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.http.EHttpMethod;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -230,7 +230,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
     if (m_bDeleteFileEnabled != DEFAULT_DELETE_FILE_ENABLED)
       aSub.add ("enabled", m_bDeleteFileEnabled);
     if (!m_aDeleteFileEndpoint.equals (DEFAULT_DELETE_FILE_ENDPOINT))
-      aSub.add ("endpoint", m_aDeleteFileEndpoint.getAsStringWithEncodedParameters ());
+      aSub.add ("endpoint", m_aDeleteFileEndpoint.getAsString ());
     if (!m_eDeleteFileMethod.equals (DEFAULT_DELETE_FILE_METHOD))
       aSub.add ("method", m_eDeleteFileMethod.getName ());
     if (m_aDeleteFileParams.isNotEmpty ())

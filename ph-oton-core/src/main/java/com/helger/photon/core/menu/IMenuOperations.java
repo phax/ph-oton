@@ -24,11 +24,11 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.collection.commons.ICommonsList;
-import com.helger.http.url.ConstantHasSimpleURL;
-import com.helger.http.url.IHasSimpleURL;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.core.page.IPage;
 import com.helger.text.display.IHasDisplayText;
+import com.helger.url.ConstantHasSimpleURL;
+import com.helger.url.IHasSimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

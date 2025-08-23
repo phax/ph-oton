@@ -33,7 +33,7 @@ import com.helger.base.lang.clazz.ClassHelper;
 import com.helger.base.numeric.MathHelper;
 import com.helger.base.state.EChange;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsHashMap;

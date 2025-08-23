@@ -22,7 +22,7 @@ import javax.xml.XMLConstants;
 
 import com.helger.base.CGlobal;
 import com.helger.base.string.StringHelper;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
@@ -48,12 +48,12 @@ public class FeedLink extends AbstractFeedElement
 
   public FeedLink (@Nonnull final ISimpleURL aHref)
   {
-    this (aHref.getAsStringWithEncodedParameters ());
+    this (aHref.getAsString ());
   }
 
   public FeedLink (@Nonnull final ISimpleURL aHref, @Nullable final String sRel)
   {
-    this (aHref.getAsStringWithEncodedParameters (), sRel);
+    this (aHref.getAsString (), sRel);
   }
 
   public FeedLink (@Nullable final String sHref)

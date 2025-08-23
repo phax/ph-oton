@@ -28,8 +28,8 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsSet;
-import com.helger.http.url.ISimpleURL;
 import com.helger.mime.EMimeContentType;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
@@ -214,7 +214,7 @@ public class FeedEntry extends AbstractFeedElement
     for (final IFeedElement aContributor : m_aContributors)
       aElement.addChild (aContributor.getAsElement ("contributor"));
     if (m_aID != null)
-      aElement.addElementNS (CFeed.XMLNS_ATOM, "id").addText (m_aID.getAsStringWithEncodedParameters ());
+      aElement.addElementNS (CFeed.XMLNS_ATOM, "id").addText (m_aID.getAsString ());
     for (final IFeedElement aLink : m_aLinks)
       aElement.addChild (aLink.getAsElement ("link"));
     if (m_aPublished != null)

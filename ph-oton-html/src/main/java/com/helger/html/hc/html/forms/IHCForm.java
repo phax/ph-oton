@@ -23,9 +23,9 @@ import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
-import com.helger.http.url.ISimpleURL;
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

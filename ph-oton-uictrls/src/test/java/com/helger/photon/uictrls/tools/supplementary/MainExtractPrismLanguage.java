@@ -28,9 +28,9 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.string.StringReplace;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.helper.CollectionSort;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.io.file.SimpleFileIO;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 public final class MainExtractPrismLanguage
 {

@@ -38,7 +38,7 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSStringLiteral;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

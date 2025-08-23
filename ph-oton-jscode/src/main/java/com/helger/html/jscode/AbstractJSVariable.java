@@ -21,7 +21,7 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
 

@@ -19,12 +19,12 @@ package com.helger.photon.uicore.html;
 import com.helger.base.string.StringHelper;
 import com.helger.commons.gfx.ImageDataManager;
 import com.helger.html.hc.html.embedded.AbstractHCImg;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.io.resource.IReadableResource;
 import com.helger.photon.io.WebFileIO;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.request.RequestHelper;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 
@@ -53,7 +53,7 @@ public class HCExtImg extends AbstractHCImg <HCExtImg>
       sCleanPath = sPath.length () > 0 ? sPath : "/";
     }
 
-    final String sPureSrc = new SimpleURL (sCleanPath, aSrc.params (), aSrc.getAnchor ()).getAsStringWithEncodedParameters ();
+    final String sPureSrc = new SimpleURL (sCleanPath, aSrc.params (), aSrc.getAnchor ()).getAsString ();
     m_aImgResource = WebFileIO.getServletContextIO ().getResource (sPureSrc);
     setExtent (ImageDataManager.getInstance ().getImageSize (m_aImgResource));
   }

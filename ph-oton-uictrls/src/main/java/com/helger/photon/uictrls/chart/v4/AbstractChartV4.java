@@ -23,7 +23,7 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ETriState;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.html.jscode.JSAssocArray;
 
 import jakarta.annotation.Nonnull;

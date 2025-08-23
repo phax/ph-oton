@@ -34,12 +34,12 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.html.hc.IHCNode;
-import com.helger.http.url.ISimpleURL;
 import com.helger.io.resource.FileSystemResource;
 import com.helger.mime.IMimeType;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.photon.io.WebFileIO;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

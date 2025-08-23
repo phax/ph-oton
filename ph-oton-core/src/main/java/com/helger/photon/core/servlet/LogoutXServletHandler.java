@@ -19,9 +19,9 @@ package com.helger.photon.core.servlet;
 import java.io.IOException;
 
 import com.helger.annotation.style.OverrideOnDemand;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 

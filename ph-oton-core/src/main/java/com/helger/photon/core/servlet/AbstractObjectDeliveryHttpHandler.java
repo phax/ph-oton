@@ -34,10 +34,10 @@ import com.helger.cache.regex.RegExHelper;
 import com.helger.collection.commons.CommonsLinkedHashSet;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.commons.ICommonsOrderedSet;
-import com.helger.http.url.URLCoder;
 import com.helger.io.file.FilenameHelper;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 

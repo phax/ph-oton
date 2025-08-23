@@ -25,7 +25,7 @@ import org.junit.Test;
 import com.helger.base.state.ETriState;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.html.js.JSWriterSettings;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.SimpleURL;
 
 /**
  * Test class for class {@link TypeaheadDataset}.

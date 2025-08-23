@@ -26,8 +26,8 @@ import com.helger.base.state.ETriState;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -390,7 +390,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   public JSAssocArray getAsJSObject ()
   {
     final JSAssocArray ret = new JSAssocArray ();
-    ret.add (JSON_URL, m_aURL.getAsStringWithEncodedParameters ());
+    ret.add (JSON_URL, m_aURL.getAsString ());
     if (!m_sDataType.equals (DEFAULT_DATA_TYPE))
       ret.add (JSON_DATA_TYPE, m_sDataType);
     if (m_eCache.isDefined ())

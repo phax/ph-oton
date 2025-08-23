@@ -21,8 +21,8 @@ import java.util.Locale;
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.html.embedded.AbstractHCIFrame;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 

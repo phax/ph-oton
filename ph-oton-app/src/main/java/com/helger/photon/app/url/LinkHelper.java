@@ -26,9 +26,9 @@ import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.cache.regex.RegExHelper;
-import com.helger.http.url.SimpleURL;
-import com.helger.http.url.URLProtocolRegistry;
 import com.helger.servlet.ServletContextPathHolder;
+import com.helger.url.SimpleURL;
+import com.helger.url.protocol.URLProtocolRegistry;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 

@@ -43,7 +43,6 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
-import com.helger.http.url.ISimpleURL;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.app.html.PhotonJS;
@@ -58,6 +57,7 @@ import com.helger.photon.tinymce4.type.TinyMCE4ExternalPlugin;
 import com.helger.photon.tinymce4.type.TinyMCE4MenubarItemList;
 import com.helger.photon.tinymce4.type.TinyMCE4ToolbarControlList;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;
@@ -1221,7 +1221,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     if (m_eTinyMCELanguage != null)
       aOptions.add ("language", m_eTinyMCELanguage.getValue ());
     if (m_aLanguageURL != null)
-      aOptions.add ("language_url", m_aLanguageURL.getAsStringWithEncodedParameters ());
+      aOptions.add ("language_url", m_aLanguageURL.getAsString ());
     if (m_eNoWrap.isDefined ())
       aOptions.add ("nowrap", isNoWrap ());
     if (m_eObjectResizing.isDefined ())
@@ -1241,18 +1241,18 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     {
       final IJsonObject aJsonObject = new JsonObject ();
       for (final TinyMCE4ExternalPlugin aExternalPlugin : m_aExternalPlugins)
-        aJsonObject.add (aExternalPlugin.getPluginName (), aExternalPlugin.getPluginURL ().getAsStringWithEncodedParameters ());
+        aJsonObject.add (aExternalPlugin.getPluginName (), aExternalPlugin.getPluginURL ().getAsString ());
       aOptions.add ("external_plugins", aJsonObject);
     }
     aOptions.add ("selector", m_sSelector);
     if (m_eSkin != null)
       aOptions.add ("skin", m_eSkin.getValue ());
     if (m_aSkinURL != null)
-      aOptions.add ("skin_url", m_aSkinURL.getAsStringWithEncodedParameters ());
+      aOptions.add ("skin_url", m_aSkinURL.getAsString ());
     if (m_eTheme != null)
       aOptions.add ("theme", m_eTheme.getValue ());
     if (m_aThemeURL != null)
-      aOptions.add ("theme_url", m_aThemeURL.getAsStringWithEncodedParameters ());
+      aOptions.add ("theme_url", m_aThemeURL.getAsString ());
     if (m_eInline.isDefined ())
       aOptions.add ("inline", isInline ());
     if (m_eHiddenInput.isDefined ())

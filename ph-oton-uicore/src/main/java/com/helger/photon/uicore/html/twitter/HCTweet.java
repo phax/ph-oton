@@ -22,9 +22,9 @@ import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
 import com.helger.html.resource.js.ConstantJSPathProvider;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.html.PhotonJS;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 

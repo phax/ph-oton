@@ -20,9 +20,9 @@ import com.helger.base.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
-import com.helger.http.url.URLValidator;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
+import com.helger.url.validate.URLValidator;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

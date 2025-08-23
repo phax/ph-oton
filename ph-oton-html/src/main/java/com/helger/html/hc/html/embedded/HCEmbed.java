@@ -23,8 +23,8 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
-import com.helger.http.url.ISimpleURL;
 import com.helger.mime.IMimeType;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 
 import jakarta.annotation.Nonnull;

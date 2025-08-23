@@ -21,7 +21,7 @@ import java.math.BigInteger;
 
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;

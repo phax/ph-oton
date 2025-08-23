@@ -24,11 +24,11 @@ import com.helger.html.hc.html.script.HCScriptInlineOnDocumentReady;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.resource.css.ICSSPathProvider;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -155,7 +155,7 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
 
     final JSAssocArray aContent = new JSAssocArray ();
     if (aPolicyLink != null)
-      aContent.add ("href", aPolicyLink.getAsStringWithEncodedParameters ());
+      aContent.add ("href", aPolicyLink.getAsString ());
     aInitOptions.addIf ("content", aContent, JSAssocArray::isNotEmpty);
     return new HCCookieConsent (aInitOptions, eTheme);
   }

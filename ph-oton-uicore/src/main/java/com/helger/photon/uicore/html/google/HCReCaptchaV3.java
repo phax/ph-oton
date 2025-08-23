@@ -29,8 +29,8 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.jscode.JSFunction;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.resource.js.ConstantJSPathProvider;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.html.PhotonJS;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -99,7 +99,7 @@ public class HCReCaptchaV3 extends AbstractHCDiv <HCReCaptchaV3>
     final SimpleURL aURL = new SimpleURL ("https://www.google.com/recaptcha/api.js");
     if (m_sDisplayLanguage != null)
       aURL.add ("hl", m_sDisplayLanguage);
-    final String sURI = aURL.getAsStringWithEncodedParameters ();
+    final String sURI = aURL.getAsString ();
     PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ());
   }
 }

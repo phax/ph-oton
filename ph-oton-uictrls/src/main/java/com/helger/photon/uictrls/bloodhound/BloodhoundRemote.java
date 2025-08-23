@@ -26,8 +26,8 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.jquery.JQueryAjaxBuilder;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -253,7 +253,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   public JSAssocArray getAsJSObject ()
   {
     final JSAssocArray ret = new JSAssocArray ();
-    ret.add (JSON_URL, m_aURL.getAsStringWithEncodedParameters ());
+    ret.add (JSON_URL, m_aURL.getAsString ());
     if (StringHelper.isNotEmpty (m_sWildcard))
       ret.add (JSON_WILDCARD, m_sWildcard);
     if (m_aReplace != null)

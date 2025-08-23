@@ -22,9 +22,9 @@ import java.util.function.Supplier;
 
 import com.helger.annotation.Nonempty;
 import com.helger.base.name.IHasName;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.url.LinkHelper;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;
@@ -115,7 +115,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
       return getInvocationURI (aRequestScope);
     }
 
-    return getInvocationURL (aRequestScope).addAll (aParams).getAsStringWithEncodedParameters ();
+    return getInvocationURL (aRequestScope).addAll (aParams).getAsString ();
   }
 
   /**

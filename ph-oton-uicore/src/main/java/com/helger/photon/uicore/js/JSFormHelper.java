@@ -25,10 +25,10 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;
@@ -78,7 +78,7 @@ public final class JSFormHelper
   @Nonnull
   public static JSInvocation updateElementViaAjax (@Nonnull @Nonempty final String sFieldID, @Nonnull final ISimpleURL aUpdateCallURL)
   {
-    return updateElementViaAjax (sFieldID, aUpdateCallURL.getAsStringWithEncodedParameters ());
+    return updateElementViaAjax (sFieldID, aUpdateCallURL.getAsString ());
   }
 
   @Nonnull
@@ -98,7 +98,7 @@ public final class JSFormHelper
   @Nonnull
   public static JSAssocArray createUpdateParam (@Nonnull @Nonempty final String sFieldID, @Nonnull final ISimpleURL aURL)
   {
-    return new JSAssocArray ().add ("id", sFieldID).add ("url", aURL.getAsStringWithEncodedParameters ());
+    return new JSAssocArray ().add ("id", sFieldID).add ("url", aURL.getAsString ());
   }
 
   /**

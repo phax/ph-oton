@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.debug.GlobalDebug;
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuTree;
@@ -34,6 +33,7 @@ import com.helger.photon.core.requestparam.RequestParameterManager;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.statistics.impl.StatisticsManager;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
@@ -171,10 +171,10 @@ public class GoXServletHandler implements IXServletSimpleHandler
             aTargetURL.add (sParamName, sParamValue);
     }
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
+      LOGGER.debug ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsString ());
     else
       if (GlobalDebug.isDebugMode ())
-        LOGGER.info ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsStringWithEncodedParameters ());
+        LOGGER.info ("Following go-mapping item '" + sKey + "' to " + aTargetURL.getAsString ());
 
     // Main redirect :)
     aUnifiedResponse.setRedirect (aTargetURL);

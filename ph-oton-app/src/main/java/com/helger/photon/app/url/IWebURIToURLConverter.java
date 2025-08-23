@@ -17,9 +17,9 @@
 package com.helger.photon.app.url;
 
 import com.helger.annotation.Nonempty;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.io.resource.IReadableResource;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

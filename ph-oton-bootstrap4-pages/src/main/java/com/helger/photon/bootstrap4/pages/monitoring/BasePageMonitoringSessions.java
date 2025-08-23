@@ -33,7 +33,6 @@ import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.bootstrap4.buttongroup.BootstrapButtonToolbar;
 import com.helger.photon.bootstrap4.form.BootstrapForm;
 import com.helger.photon.bootstrap4.form.BootstrapFormGroup;
@@ -57,6 +56,7 @@ import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayTextWithArgs;
 import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.mgr.WebScopeManager;
 

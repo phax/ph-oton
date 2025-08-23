@@ -19,12 +19,12 @@ package com.helger.photon.core.execcontext;
 import java.util.Locale;
 
 import com.helger.annotation.Nonempty;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.requestparam.RequestParameterManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.servlet.request.IRequestParamMap;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestParamContainer;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 

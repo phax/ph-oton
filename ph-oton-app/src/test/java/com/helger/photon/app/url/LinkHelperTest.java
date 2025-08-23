@@ -42,10 +42,10 @@ public final class LinkHelperTest
     assertEquals (LinkHelper.DEFAULT_STREAM_SERVLET_NAME, LinkHelper.getStreamServletName ());
     LinkHelper.setStreamServletName ("abc");
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
-    assertEquals ("/abc/x", LinkHelper.getStreamURL (aRequestScope, "x").getAsStringWithEncodedParameters ());
+    assertEquals ("/abc/x", LinkHelper.getStreamURL (aRequestScope, "x").getAsString ());
     LinkHelper.setStreamServletName (LinkHelper.DEFAULT_STREAM_SERVLET_NAME);
     assertEquals (LinkHelper.DEFAULT_STREAM_SERVLET_NAME, LinkHelper.getStreamServletName ());
     assertEquals ("/" + LinkHelper.DEFAULT_STREAM_SERVLET_NAME + "/x",
-                  LinkHelper.getStreamURL (aRequestScope, "x").getAsStringWithEncodedParameters ());
+                  LinkHelper.getStreamURL (aRequestScope, "x").getAsString ());
   }
 }

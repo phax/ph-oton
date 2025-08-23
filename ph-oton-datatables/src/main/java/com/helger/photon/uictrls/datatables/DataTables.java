@@ -65,8 +65,6 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.JSParam;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.photon.app.html.PhotonCSS;
@@ -78,6 +76,8 @@ import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginClientSortingDate;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -1306,7 +1306,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         // Load texts from there
         final SimpleURL aFinalURL = new SimpleURL (m_aTextLoadingURL).add (m_sTextLoadingURLLocaleParameterName,
                                                                            m_aDisplayLocale.getLanguage ());
-        aLanguage = new JsonObject ().add ("url", aFinalURL.getAsStringWithEncodedParameters ());
+        aLanguage = new JsonObject ().add ("url", aFinalURL.getAsString ());
       }
       else
       {

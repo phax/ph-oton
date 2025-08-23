@@ -21,8 +21,8 @@ import java.io.Serializable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
-import com.helger.http.url.SimpleURL;
 import com.helger.io.resource.FileSystemResource;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

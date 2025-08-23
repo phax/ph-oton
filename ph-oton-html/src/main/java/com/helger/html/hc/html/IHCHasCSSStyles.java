@@ -19,7 +19,7 @@ package com.helger.html.hc.html;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.misc.DevelopersNote;
 import com.helger.annotation.style.ReturnsMutableCopy;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.css.ICSSWriterSettings;

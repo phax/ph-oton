@@ -33,7 +33,7 @@ import com.helger.html.hc.html.script.HCScriptInline;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.UnparsedJSCodeProvider;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.SimpleURL;
 
 /**
  * Test class for class {@link HCHead}
@@ -69,7 +69,7 @@ public final class HCHeadTest
                   HCRenderer.getAsHTMLString (aHead));
 
     assertSame (aHead, aHead.setBaseHref (new SimpleURL ("/")));
-    assertEquals ("/", aHead.getBaseHref ().getAsStringWithEncodedParameters ());
+    assertEquals ("/", aHead.getBaseHref ().getAsString ());
     assertEquals ("<head xmlns=\"http://www.w3.org/1999/xhtml\" profile=\"any\"><title>Title</title><base href=\"/\" /></head>",
                   HCRenderer.getAsHTMLString (aHead));
 

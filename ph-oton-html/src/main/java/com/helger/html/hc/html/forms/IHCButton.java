@@ -24,9 +24,9 @@ import com.helger.html.hc.html.IHCHasState;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
-import com.helger.http.url.ISimpleURL;
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

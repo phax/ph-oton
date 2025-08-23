@@ -29,7 +29,7 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
-import com.helger.http.url.URLCoder;
+import com.helger.url.codec.URLCoder;
 
 import jakarta.annotation.Nonnull;
 

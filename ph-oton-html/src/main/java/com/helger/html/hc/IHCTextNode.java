@@ -18,7 +18,7 @@ package com.helger.html.hc;
 
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

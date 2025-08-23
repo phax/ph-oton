@@ -21,10 +21,10 @@ import java.util.Locale;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.request.IHCRequestField;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.typeahead.TypeaheadEdit;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 

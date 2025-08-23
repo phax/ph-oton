@@ -51,7 +51,6 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.http.EHttpMethod;
 import com.helger.http.header.HttpHeaderMap;
-import com.helger.http.url.SimpleURL;
 import com.helger.httpclient.HttpClientHelper;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.HttpClientSettings;
@@ -72,6 +71,7 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.column.DTCol;
 import com.helger.text.IMultilingualText;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

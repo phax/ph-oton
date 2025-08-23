@@ -17,8 +17,8 @@
 package com.helger.html.hc.html.embedded;
 
 import com.helger.base.string.StringHelper;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

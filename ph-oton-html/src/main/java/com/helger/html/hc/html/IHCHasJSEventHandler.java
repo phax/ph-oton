@@ -17,7 +17,7 @@
 package com.helger.html.hc.html;
 
 import com.helger.annotation.style.ReturnsMutableObject;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSEventMap;

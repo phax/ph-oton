@@ -29,11 +29,11 @@ import com.helger.base.CGlobal;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
 import com.helger.base.string.StringHelper;
-import com.helger.http.url.SimpleURL;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.HttpClientSettings;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

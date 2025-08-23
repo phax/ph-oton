@@ -18,7 +18,7 @@ package com.helger.html.js;
 
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.PresentForCodeCoverage;
-import com.helger.base.url.EURLProtocol;
+import com.helger.url.protocol.EURLProtocol;
 
 /**
  * JavaScript constants.

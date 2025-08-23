@@ -27,7 +27,7 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.http.EHttpMethod;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -224,7 +224,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
   @Nonnull
   public JQueryAjaxBuilder url (@Nullable final ISimpleURL aURL)
   {
-    return url (aURL == null ? null : aURL.getAsStringWithEncodedParameters ());
+    return url (aURL == null ? null : aURL.getAsString ());
   }
 
   @Nonnull

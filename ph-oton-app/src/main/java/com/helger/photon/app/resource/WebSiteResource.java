@@ -44,7 +44,6 @@ import com.helger.css.decl.visit.CSSVisitor;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.reader.CSSReaderSettings;
 import com.helger.css.writer.CSSWriter;
-import com.helger.http.url.ISimpleURL;
 import com.helger.io.file.FilenameHelper;
 import com.helger.io.resource.IReadableResource;
 import com.helger.io.resource.URLResource;
@@ -52,6 +51,7 @@ import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;
@@ -205,8 +205,7 @@ public class WebSiteResource
         // Not using a requestScope is okay here, because we don't want to link
         // anything right now
         final String sBasePath = FilenameHelper.getPath (PhotonAppSettings.getURIToURLConverter ()
-                                                                          .getAsURL (m_sPath)
-                                                                          .getAsStringWithEncodedParameters ());
+        .getAsURL (m_sPath).getAsString ());
         return _readAndParseCSS (m_aResource, sBasePath, bRegular);
       default:
         throw new IllegalStateException ("Unsupported resource type " + m_eResourceType);

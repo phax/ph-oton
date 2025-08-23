@@ -22,7 +22,7 @@ import com.helger.annotation.CheckReturnValue;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.misc.DevelopersNote;
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

@@ -24,9 +24,9 @@ import com.helger.base.rt.StackTraceHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
-import com.helger.http.url.ISimpleURL;
 import com.helger.json.IJson;
 import com.helger.json.serialize.JsonWriter;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 
@@ -109,7 +109,7 @@ public class LongRunningJobResult
       case TEXT:
         return getResultText ();
       case LINK:
-        return getResultLink ().getAsStringWithEncodedParameters ();
+        return getResultLink ().getAsString ();
       case JSON:
         return new JsonWriter ().writeAsString (getResultJson ());
       default:

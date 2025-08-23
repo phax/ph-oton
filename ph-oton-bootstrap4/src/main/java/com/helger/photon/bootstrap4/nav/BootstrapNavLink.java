@@ -20,9 +20,9 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

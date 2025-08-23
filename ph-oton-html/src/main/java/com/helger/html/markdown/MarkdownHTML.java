@@ -17,11 +17,11 @@
 package com.helger.html.markdown;
 
 import com.helger.base.string.StringHelper;
-import com.helger.base.url.IURLProtocol;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.EHTMLElement;
-import com.helger.http.url.URLProtocolRegistry;
+import com.helger.url.protocol.IURLProtocol;
+import com.helger.url.protocol.URLProtocolRegistry;
 
 import jakarta.annotation.Nullable;
 

@@ -21,7 +21,7 @@ import java.util.EnumSet;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.hc.html.EHCScrolling;
 import com.helger.html.hc.html.IHCElementWithChildren;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

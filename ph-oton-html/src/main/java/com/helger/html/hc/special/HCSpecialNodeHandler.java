@@ -422,7 +422,7 @@ public final class HCSpecialNodeHandler
         if (aLink.getHref () != null)
         {
           // Use the default charset here :|
-          aSpecialNodes.addExternalCSS (aLink.getMedia (), aLink.getHref ().getAsStringWithEncodedParameters ());
+          aSpecialNodes.addExternalCSS (aLink.getMedia (), aLink.getHref ().getAsString ());
         }
       }
       else
@@ -441,7 +441,7 @@ public final class HCSpecialNodeHandler
             if (aScriptFile.getSrc () != null)
             {
               // Use the default charset here :|
-              aSpecialNodes.addExternalJS (aScriptFile.getSrc ().getAsStringWithEncodedParameters ());
+              aSpecialNodes.addExternalJS (aScriptFile.getSrc ().getAsString ());
             }
           }
           else

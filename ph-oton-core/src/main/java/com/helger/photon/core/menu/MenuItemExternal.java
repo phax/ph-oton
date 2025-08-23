@@ -23,8 +23,8 @@ import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.http.url.IHasSimpleURL;
 import com.helger.text.display.IHasDisplayText;
+import com.helger.url.IHasSimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

@@ -19,7 +19,7 @@ package com.helger.html.hc.html.embedded;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.dimension.SizeInt;
 import com.helger.html.hc.html.IHCMediaElementChild;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

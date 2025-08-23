@@ -19,8 +19,6 @@ package com.helger.photon.bootstrap4.buttongroup;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.EHTMLRole;
 import com.helger.html.js.IHasJSCode;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.base.AbstractBootstrapDiv;
 import com.helger.photon.bootstrap4.button.BootstrapButton;
@@ -28,6 +26,8 @@ import com.helger.photon.bootstrap4.button.BootstrapSubmitButton;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.icon.IIcon;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

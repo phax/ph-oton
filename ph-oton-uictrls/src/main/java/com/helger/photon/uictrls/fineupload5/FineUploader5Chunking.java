@@ -20,7 +20,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -274,7 +274,7 @@ public class FineUploader5Chunking implements IFineUploader5Part
       aSub.add ("paramNames", aParamNames);
 
     if (m_aChunkingSuccessEndpoint != null)
-      aSub.add ("success", new JSAssocArray ().add ("endpoint", m_aChunkingSuccessEndpoint.getAsStringWithEncodedParameters ()));
+      aSub.add ("success", new JSAssocArray ().add ("endpoint", m_aChunkingSuccessEndpoint.getAsString ()));
     return aSub;
   }
 }

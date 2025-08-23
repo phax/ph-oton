@@ -22,7 +22,7 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSMarshaller;
 import com.helger.html.js.UnparsedJSCodeProvider;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 

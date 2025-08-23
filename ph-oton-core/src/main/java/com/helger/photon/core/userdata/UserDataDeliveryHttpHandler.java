@@ -17,9 +17,9 @@
 package com.helger.photon.core.userdata;
 
 import com.helger.annotation.style.OverrideOnDemand;
-import com.helger.http.url.URLCoder;
 import com.helger.io.resource.IReadableResource;
 import com.helger.photon.core.servlet.AbstractResourceDeliveryHttpHandler;
+import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

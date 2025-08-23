@@ -26,11 +26,11 @@ import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
-import com.helger.http.url.SimpleURL;
 import com.helger.io.relative.IFileRelativeIO;
 import com.helger.io.resource.FileSystemResource;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.photon.io.WebFileIO;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

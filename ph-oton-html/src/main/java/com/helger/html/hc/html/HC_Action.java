@@ -26,7 +26,7 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.CJS;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.js.IJSWriterSettings;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroQName;
 

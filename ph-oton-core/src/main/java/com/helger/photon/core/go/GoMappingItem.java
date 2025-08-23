@@ -24,9 +24,9 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.url.LinkHelper;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 
@@ -110,7 +110,7 @@ public class GoMappingItem implements Serializable
   @Nonnull
   public String getTargetURLAsString ()
   {
-    return m_aTargetURL.getAsStringWithEncodedParameters ();
+    return m_aTargetURL.getAsString ();
   }
 
   public boolean isEditable ()

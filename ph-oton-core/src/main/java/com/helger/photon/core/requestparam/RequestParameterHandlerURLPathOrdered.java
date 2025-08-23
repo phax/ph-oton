@@ -26,10 +26,10 @@ import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuTree;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

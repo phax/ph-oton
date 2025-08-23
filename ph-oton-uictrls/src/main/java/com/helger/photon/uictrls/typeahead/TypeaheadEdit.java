@@ -33,8 +33,8 @@ import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSParam;
 import com.helger.html.request.IHCRequestField;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 

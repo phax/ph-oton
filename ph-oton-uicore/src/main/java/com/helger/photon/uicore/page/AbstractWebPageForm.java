@@ -40,8 +40,6 @@ import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCNodeList;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.core.form.FormErrorList;
@@ -57,6 +55,8 @@ import com.helger.photon.uicore.icon.IIcon;
 import com.helger.photon.uicore.page.handler.IWebPageActionHandler;
 import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayText;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

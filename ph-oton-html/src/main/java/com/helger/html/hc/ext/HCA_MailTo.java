@@ -20,9 +20,9 @@ import com.helger.base.email.IEmailAddress;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.base.url.EURLProtocol;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.SimpleURL;
+import com.helger.url.protocol.EURLProtocol;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

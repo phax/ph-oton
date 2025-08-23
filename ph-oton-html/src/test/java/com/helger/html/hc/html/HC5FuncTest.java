@@ -51,7 +51,7 @@ import com.helger.html.hc.html.textlevel.HCRuby;
 import com.helger.html.hc.html.textlevel.HCTime;
 import com.helger.html.hc.html.textlevel.HCWBR;
 import com.helger.html.hc.render.HCRenderer;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.SimpleURL;
 
 /**
  * Instantiate and generate code for all HTML5 elements available

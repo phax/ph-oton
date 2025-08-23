@@ -22,13 +22,13 @@ import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.appid.RequestSettings;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 

@@ -20,10 +20,10 @@ import java.io.File;
 import java.time.LocalDateTime;
 
 import com.helger.base.state.ETriState;
-import com.helger.http.url.SimpleURL;
 import com.helger.json.serialize.JsonReader;
 import com.helger.text.IMultilingualText;
 import com.helger.text.ReadOnlyMultilingualText;
+import com.helger.url.SimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;

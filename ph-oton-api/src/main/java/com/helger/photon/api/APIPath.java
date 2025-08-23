@@ -25,9 +25,9 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.http.EHttpMethod;
-import com.helger.http.url.SimpleURL;
 import com.helger.io.file.FilenameHelper;
 import com.helger.servlet.request.RequestHelper;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

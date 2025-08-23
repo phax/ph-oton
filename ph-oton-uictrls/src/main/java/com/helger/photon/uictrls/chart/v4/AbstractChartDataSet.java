@@ -25,7 +25,7 @@ import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.numeric.mutable.MutableBigDecimal;
 import com.helger.base.string.StringHelper;
-import com.helger.base.traits.IGenericImplTrait;
+import com.helger.base.trait.IGenericImplTrait;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.IJSExpression;

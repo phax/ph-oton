@@ -32,8 +32,8 @@ import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.jscode.type.JSTypeDate;
 import com.helger.html.resource.js.ConstantJSPathProvider;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.app.html.PhotonJS;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 
@@ -94,8 +94,7 @@ public class HCGoogleAnalyticsV4 extends AbstractHCScriptInline <HCGoogleAnalyti
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     final String sURI = new SimpleURL (URL_GTAG).add ("id",
-                                                                                                                   m_sTagID)
-                                                                                                             .getAsStringWithEncodedParameters ();
+     m_sTagID).getAsString ();
     PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ());
   }
 }

@@ -47,7 +47,6 @@ import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.http.EHttpMethod;
 import com.helger.http.EHttpVersion;
-import com.helger.http.url.ISimpleURL;
 import com.helger.json.IJson;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
@@ -66,6 +65,7 @@ import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.EContentDispositionType;
 import com.helger.servlet.response.ERedirectMode;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
@@ -305,12 +305,10 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       for (final ICSSPathProvider aCSS : PhotonCSS.getAllRegisteredCSSIncludesForThisRequest ())
         aSpecialNodes.addExternalCSS (aCSS.getMediaList (),
-                                      PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular)
-                                                       .getAsStringWithEncodedParameters ());
+                                      PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular).getAsString ());
 
       for (final IJSPathProvider aJS : PhotonJS.getAllRegisteredJSIncludesForThisRequest ())
-        aSpecialNodes.addExternalJS (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular)
-                                                      .getAsStringWithEncodedParameters ());
+        aSpecialNodes.addExternalJS (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
     }
 
     @Nonnull

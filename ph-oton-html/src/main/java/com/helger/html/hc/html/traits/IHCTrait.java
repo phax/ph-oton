@@ -36,7 +36,7 @@ import com.helger.html.hc.html.textlevel.HCStrong;
 import com.helger.html.hc.html.textlevel.HCSub;
 import com.helger.html.hc.html.textlevel.HCSup;
 import com.helger.html.hc.impl.HCTextNode;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

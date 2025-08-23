@@ -19,9 +19,9 @@ package com.helger.photon.uicore.serverlog;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSInvocation;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 
@@ -39,7 +39,7 @@ public final class JSServerLog
   @Nonnull
   public static JSInvocation serverLogInit (@Nonnull final ISimpleURL aURL, @Nonnull final String sKey, final boolean bDebugMode)
   {
-    return new JSInvocation ("serverLogInit").arg (aURL.getAsStringWithEncodedParameters ()).arg (sKey).arg (bDebugMode);
+    return new JSInvocation ("serverLogInit").arg (aURL.getAsString ()).arg (sKey).arg (bDebugMode);
   }
 
   @Nonnull

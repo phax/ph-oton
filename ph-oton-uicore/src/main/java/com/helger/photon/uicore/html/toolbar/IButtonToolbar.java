@@ -24,10 +24,10 @@ import com.helger.html.hc.html.forms.IHCButton;
 import com.helger.html.hc.html.grouping.IHCDiv;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.html.JSHtml;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

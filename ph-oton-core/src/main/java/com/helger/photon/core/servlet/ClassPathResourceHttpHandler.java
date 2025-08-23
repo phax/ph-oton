@@ -16,9 +16,9 @@
  */
 package com.helger.photon.core.servlet;
 
-import com.helger.http.url.URLCoder;
 import com.helger.io.resource.ClassPathResource;
 import com.helger.io.resource.IReadableResource;
+import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 import jakarta.annotation.Nonnull;

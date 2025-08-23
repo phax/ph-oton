@@ -22,8 +22,8 @@ import com.helger.html.hc.html.textlevel.IHCA;
 import com.helger.html.js.CJS;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.IHasJSCode;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

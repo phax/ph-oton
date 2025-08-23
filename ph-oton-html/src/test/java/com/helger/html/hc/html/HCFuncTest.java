@@ -108,8 +108,8 @@ import com.helger.html.hc.html.textlevel.HCVar;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.UnparsedJSCodeProvider;
-import com.helger.http.url.SimpleURL;
 import com.helger.mime.CMimeType;
+import com.helger.url.SimpleURL;
 
 /**
  * Instantiate and generate code for all HTML elements available

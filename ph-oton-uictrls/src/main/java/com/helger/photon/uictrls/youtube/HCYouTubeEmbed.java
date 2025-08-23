@@ -20,9 +20,9 @@ import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.embedded.AbstractHCObject;
 import com.helger.html.hc.html.embedded.HCEmbed;
 import com.helger.html.hc.html.embedded.HCParam;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.mime.CMimeType;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 
@@ -54,7 +54,7 @@ public class HCYouTubeEmbed extends AbstractHCObject <HCYouTubeEmbed>
 
     // Build the correct URL based on the passed settings
     final ISimpleURL aURL = new SimpleURL (aBaseURL).add ("hl", "en_US").add ("fs", bAllowFullScreen ? "1" : "0");
-    aParamMovie.setValue (aURL.getAsStringWithEncodedParameters ());
+    aParamMovie.setValue (aURL.getAsString ());
     aEmbed.setSrc (aURL);
   }
 }

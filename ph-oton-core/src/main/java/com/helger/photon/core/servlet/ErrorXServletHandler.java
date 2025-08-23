@@ -20,9 +20,9 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.http.CHttpHeader;
-import com.helger.http.url.SimpleURL;
 import com.helger.servlet.ServletHelper;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 

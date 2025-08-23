@@ -32,7 +32,7 @@ import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -701,7 +701,7 @@ public final class JSHtml
   public static JSAssignment windowLocationHref (@Nonnull final ISimpleURL aURL)
   {
     // Use the version with the default charset - not nice :(
-    return windowLocationHref ().assign (aURL.getAsStringWithEncodedParameters ());
+    return windowLocationHref ().assign (aURL.getAsString ());
   }
 
   @Nonnull
@@ -758,7 +758,7 @@ public final class JSHtml
   @Nonnull
   public static JSInvocation windowLocationReplace (@Nonnull final ISimpleURL aURL)
   {
-    return windowLocationReplace (JSExpr.lit (aURL.getAsStringWithEncodedParameters ()));
+    return windowLocationReplace (JSExpr.lit (aURL.getAsString ()));
   }
 
   @Nonnull

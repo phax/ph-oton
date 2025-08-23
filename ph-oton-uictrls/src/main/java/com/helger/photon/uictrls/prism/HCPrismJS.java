@@ -29,11 +29,11 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.html.hc.html.grouping.AbstractHCPre;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 
 import jakarta.annotation.Nonnull;
@@ -110,7 +110,7 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
     if (m_aSrc != null)
     {
       // External source provided
-      aPreElement.setAttribute ("data-src", m_aSrc.getAsStringWithEncodedParameters ());
+      aPreElement.setAttribute ("data-src", m_aSrc.getAsString ());
 
       // NO nested code element
       super.fillMicroElement (aPreElement, aConversionSettings);

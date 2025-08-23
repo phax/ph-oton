@@ -23,7 +23,7 @@ import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -63,7 +63,7 @@ public final class PDFObjectJS
     ValueEnforcer.notNull (aURL, "URL");
     ValueEnforcer.notNull (aTarget, "Target");
 
-    final JSInvocation ret = pdfObject ().invoke ("embed").arg (aURL.getAsStringWithEncodedParameters ()).arg (aTarget);
+    final JSInvocation ret = pdfObject ().invoke ("embed").arg (aURL.getAsString ()).arg (aTarget);
     if (aOptions != null)
       ret.arg (aOptions.getAsJSObject ());
     return ret;

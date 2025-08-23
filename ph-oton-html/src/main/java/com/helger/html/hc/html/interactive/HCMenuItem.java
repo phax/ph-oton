@@ -25,7 +25,7 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.grouping.IHCLI;
-import com.helger.http.url.ISimpleURL;
+import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 
 import jakarta.annotation.Nonnull;

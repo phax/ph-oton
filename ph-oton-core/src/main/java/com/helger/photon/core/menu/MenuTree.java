@@ -32,12 +32,12 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.collection.hierarchy.visit.EHierarchyVisitorReturn;
-import com.helger.http.url.IHasSimpleURL;
 import com.helger.photon.core.page.IPage;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
+import com.helger.url.IHasSimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

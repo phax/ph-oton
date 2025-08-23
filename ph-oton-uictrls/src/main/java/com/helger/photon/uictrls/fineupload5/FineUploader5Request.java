@@ -25,8 +25,8 @@ import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.http.EHttpMethod;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -349,7 +349,7 @@ public class FineUploader5Request implements IFineUploader5Part
     if (m_aRequestCustomHeaders.isNotEmpty ())
       aSub.add ("customHeaders", getAsJSAA (m_aRequestCustomHeaders));
     if (!m_aRequestEndpoint.equals (DEFAULT_REQUEST_ENDPOINT))
-      aSub.add ("endpoint", m_aRequestEndpoint.getAsStringWithEncodedParameters ());
+      aSub.add ("endpoint", m_aRequestEndpoint.getAsString ());
     if (!m_sRequestFilenameParam.equals (DEFAULT_REQUEST_FILENAME_PARAM))
       aSub.add ("filenameParam", m_sRequestFilenameParam);
     if (m_bRequestForceMultipart != DEFAULT_REQUEST_FORCE_MULTIPART)

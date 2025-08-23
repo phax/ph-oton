@@ -27,10 +27,10 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.html.metadata.HCLink;
 import com.helger.html.hc.html.script.HCScriptFile;
 import com.helger.html.js.CJS;
-import com.helger.http.url.ISimpleURL;
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.photon.app.csrf.CSRFSessionManager;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

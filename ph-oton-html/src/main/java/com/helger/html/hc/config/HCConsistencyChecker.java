@@ -23,8 +23,8 @@ import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.PresentForCodeCoverage;
 import com.helger.base.debug.GlobalDebug;
 import com.helger.base.string.StringHelper;
-import com.helger.http.url.URLCoder;
-import com.helger.http.url.URLParameterDecoder;
+import com.helger.url.codec.URLCoder;
+import com.helger.url.codec.URLParameterDecoder;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

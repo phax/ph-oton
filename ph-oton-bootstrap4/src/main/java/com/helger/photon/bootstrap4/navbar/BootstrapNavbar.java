@@ -26,9 +26,9 @@ import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.sections.AbstractHCNav;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCSpan;
-import com.helger.http.url.ISimpleURL;
 import com.helger.photon.bootstrap4.CBootstrapCSS;
 import com.helger.photon.bootstrap4.utils.EBootstrapBackgroundType;
+import com.helger.url.ISimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

@@ -23,8 +23,8 @@ import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.appid.PhotonGlobalState;
+import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 

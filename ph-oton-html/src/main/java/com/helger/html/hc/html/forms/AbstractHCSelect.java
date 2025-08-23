@@ -249,13 +249,13 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   @Nonnegative
   public final int getOptionCount ()
   {
-    return m_aOptions.getCount (HCOption.class::isInstance);
+    return m_aOptions.size (HCOption.class::isInstance);
   }
 
   @Nonnegative
   public final int getOptionGroupCount ()
   {
-    return m_aOptions.getCount (HCOptGroup.class::isInstance);
+    return m_aOptions.size (HCOptGroup.class::isInstance);
   }
 
   @Nonnull
@@ -313,7 +313,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   @Nonnegative
   public final int getSelectedOptionCount ()
   {
-    return m_aOptions.getCount (PRED_SELECTED_OPTION);
+    return m_aOptions.size (PRED_SELECTED_OPTION);
   }
 
   public final boolean hasSelectedOption ()

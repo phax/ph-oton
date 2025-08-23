@@ -21,10 +21,10 @@ import java.util.Map;
 
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.IHCNode;
-import com.helger.http.url.ISimpleURL;
-import com.helger.http.url.SimpleURL;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.page.IPage;
+import com.helger.url.ISimpleURL;
+import com.helger.url.SimpleURL;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.xservlet.forcedredirect.ForcedRedirectManager;
 
