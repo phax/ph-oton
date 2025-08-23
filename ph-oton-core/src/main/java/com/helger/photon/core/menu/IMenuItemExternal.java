@@ -16,8 +16,8 @@
  */
 package com.helger.photon.core.menu;
 
-import com.helger.url.IHasSimpleURL;
 import com.helger.url.ISimpleURL;
+import com.helger.url.provider.IHasSimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

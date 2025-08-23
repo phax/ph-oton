@@ -37,7 +37,7 @@ import com.helger.text.display.IHasDisplayText;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
-import com.helger.url.IHasSimpleURL;
+import com.helger.url.provider.IHasSimpleURL;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
