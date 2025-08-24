@@ -26,9 +26,9 @@ import com.helger.base.tostring.ToStringGenerator;
 import jakarta.annotation.Nonnull;
 
 /**
- * This class encapsulates a single MetaTag. It consists of a name, a locale and
- * a value. If the meta tag is locale independent, the constant
- * {@link com.helger.commons.locale.LocaleHelper#LOCALE_INDEPENDENT} is used.
+ * This class encapsulates a single MetaTag. It consists of a name, a locale and a value. If the
+ * meta tag is locale independent, the constant
+ * {@link com.helger.text.locale.LocaleHelper#LOCALE_INDEPENDENT} is used.
  *
  * @author Philip Helger
  */
@@ -97,7 +97,11 @@ public class MetaElementValue implements IMetaElementValue
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eType).append (m_sName).append (m_aContentLocale).append (m_sContent).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eType)
+                                       .append (m_sName)
+                                       .append (m_aContentLocale)
+                                       .append (m_sContent)
+                                       .getHashCode ();
   }
 
   @Override
