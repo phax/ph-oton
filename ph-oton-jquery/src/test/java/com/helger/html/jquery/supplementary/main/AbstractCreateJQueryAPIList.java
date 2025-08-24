@@ -339,7 +339,7 @@ abstract class AbstractCreateJQueryAPIList
     @Nonnegative
     public int getOptionalArgumentCount ()
     {
-      return m_aArgs.size (Argument::isOptional);
+      return m_aArgs.getCount (Argument::isOptional);
     }
 
     public boolean containsArgumentWithName (final String sArgName)
@@ -350,7 +350,7 @@ abstract class AbstractCreateJQueryAPIList
     @Nonnegative
     public int getArgumentsWithMultipleJavaTypesCount ()
     {
-      return m_aArgs.size (aArg -> aArg.getJavaTypeCount () > 1);
+      return m_aArgs.getCount (aArg -> aArg.getJavaTypeCount () > 1);
     }
 
     @Override
