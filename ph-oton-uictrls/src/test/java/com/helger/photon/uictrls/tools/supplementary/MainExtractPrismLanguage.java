@@ -46,7 +46,7 @@ public final class MainExtractPrismLanguage
 
     // Languages
     {
-      final String sLanguages = aURL.params ().getFirstParamValue ("languages");
+      final String sLanguages = aURL.getFirstParamValue ("languages");
       final List <String> aLanguages = CollectionSort.getSortedInline (StringHelper.getExploded ('+', sLanguages));
       // Special "none" language
       aLanguages.add (0, "none");
@@ -58,7 +58,7 @@ public final class MainExtractPrismLanguage
 
     // Plugins
     {
-      final String sPlugins = aURL.params ().getFirstParamValue ("plugins");
+      final String sPlugins = aURL.getFirstParamValue ("plugins");
       final ICommonsList <String> aPlugins = CollectionSort.getSorted (StringHelper.getExploded ('+', sPlugins));
       for (final String sPlugin : aPlugins)
         aSB.append (StringReplace.replaceAll (sPlugin, '-', '_').toUpperCase (Locale.US))

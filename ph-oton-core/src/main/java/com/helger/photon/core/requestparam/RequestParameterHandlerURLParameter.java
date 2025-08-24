@@ -32,8 +32,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * An implementation of {@link IRequestParameterHandler} that takes the request
- * parameters from the URL parameters. It build URLs in the form
+ * An implementation of {@link IRequestParameterHandler} that takes the request parameters from the
+ * URL parameters. It build URLs in the form
  * <code>basePath[[?&amp;]<i>paramName</i>=<i>paramValue</i>]*</code>
  *
  * @author Philip Helger
@@ -51,18 +51,21 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
                                                            @Nonnull final IMenuTree aMenuTree)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
-    ret.setLocaleFromString (GlobalLocaleManager.getInstance (), aRequestScope.params ().getAsString (getRequestParamNameLocale ()));
+    ret.setLocaleFromString (GlobalLocaleManager.getInstance (),
+                             aRequestScope.params ().getAsString (getRequestParamNameLocale ()));
     ret.setMenuItemFromString (aMenuTree, aRequestScope.params ().getAsString (getRequestParamNameMenuItem ()));
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL, @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
+                                                       @Nonnull final IMenuTree aMenuTree)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
-    ret.setLocaleFromString (GlobalLocaleManager.getInstance (), aURL.params ().getFirstParamValue (getRequestParamNameLocale ()));
-    ret.setMenuItemFromString (aMenuTree, aURL.params ().getFirstParamValue (getRequestParamNameMenuItem ()));
+    ret.setLocaleFromString (GlobalLocaleManager.getInstance (),
+                             aURL.getFirstParamValue (getRequestParamNameLocale ()));
+    ret.setMenuItemFromString (aMenuTree, aURL.getFirstParamValue (getRequestParamNameMenuItem ()));
     return ret;
   }
 

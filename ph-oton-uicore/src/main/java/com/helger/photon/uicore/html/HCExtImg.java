@@ -24,7 +24,6 @@ import com.helger.photon.io.WebFileIO;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.url.ISimpleURL;
-import com.helger.url.SimpleURL;
 
 import jakarta.annotation.Nonnull;
 
@@ -53,14 +52,14 @@ public class HCExtImg extends AbstractHCImg <HCExtImg>
       sCleanPath = sPath.length () > 0 ? sPath : "/";
     }
 
-    final String sPureSrc = new SimpleURL (sCleanPath, aSrc.params (), aSrc.getAnchor ()).getAsString ();
+    final String sPureSrc = aSrc.getWithPath (sCleanPath).getAsString ();
     m_aImgResource = WebFileIO.getServletContextIO ().getResource (sPureSrc);
     setExtent (ImageDataManager.getInstance ().getImageSize (m_aImgResource));
   }
 
   /**
-   * @return The readable resource that was used to determine the image size. It
-   *         might be a non-existing resource.
+   * @return The readable resource that was used to determine the image size. It might be a
+   *         non-existing resource.
    * @since 8.2.10
    */
   @Nonnull

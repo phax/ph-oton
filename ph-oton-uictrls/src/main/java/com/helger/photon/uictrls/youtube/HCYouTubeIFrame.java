@@ -20,9 +20,12 @@ import java.util.Locale;
 
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.html.hc.IHCConversionSettingsToNode;
+import com.helger.html.hc.IHCHasChildrenMutable;
+import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.embedded.AbstractHCIFrame;
 import com.helger.url.ISimpleURL;
-import com.helger.url.SimpleURL;
+import com.helger.url.URLBuilder;
 
 import jakarta.annotation.Nonnull;
 
@@ -36,12 +39,11 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
 {
   private static final String PREFIX = "http://www.youtube.com/embed/";
 
-  private final SimpleURL m_aVideoURL;
+  private final URLBuilder m_aVideoURL;
 
   public HCYouTubeIFrame (@Nonnull @Nonempty final String sVideoID)
   {
-    m_aVideoURL = new SimpleURL (PREFIX + sVideoID);
-    setSrc (m_aVideoURL);
+    m_aVideoURL = URLBuilder.of (PREFIX + sVideoID);
   }
 
   public HCYouTubeIFrame (final int nWidth, final int nHeight, @Nonnull @Nonempty final String sVideoID)
@@ -54,33 +56,27 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
   @Nonnull
   public ISimpleURL getVideoURL ()
   {
-    return m_aVideoURL;
+    return m_aVideoURL.build ();
   }
 
   @Nonnull
   public HCYouTubeIFrame setAutoPlay (final boolean bAutoplay)
   {
-    m_aVideoURL.params ().remove ("autoplay");
-    m_aVideoURL.params ().add ("autoplay", bAutoplay ? "1" : "0");
-    setSrc (m_aVideoURL);
+    m_aVideoURL.param ("autoplay", bAutoplay ? "1" : "0");
     return this;
   }
 
   @Nonnull
   public HCYouTubeIFrame setAllowFullscreen (final boolean bAllowFullscreen)
   {
-    m_aVideoURL.params ().remove ("fs");
-    m_aVideoURL.params ().add ("fs", bAllowFullscreen ? "1" : "0");
-    setSrc (m_aVideoURL);
+    m_aVideoURL.param ("fs", bAllowFullscreen ? "1" : "0");
     return this;
   }
 
   @Nonnull
   public HCYouTubeIFrame setShowRelated (final boolean bShowRelated)
   {
-    m_aVideoURL.params ().remove ("rel");
-    m_aVideoURL.params ().add ("rel", bShowRelated ? "1" : "0");
-    setSrc (m_aVideoURL);
+    m_aVideoURL.param ("rel", bShowRelated ? "1" : "0");
     return this;
   }
 
@@ -90,9 +86,16 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
     ValueEnforcer.notNull (aLocale, "Locale");
     ValueEnforcer.notEmpty (aLocale.getLanguage (), "Locale.getLanguage");
 
-    m_aVideoURL.params ().remove ("hl");
-    m_aVideoURL.add ("hl", aLocale.getLanguage ());
-    setSrc (m_aVideoURL);
+    m_aVideoURL.param ("hl", aLocale.getLanguage ());
     return this;
+  }
+
+  @Override
+  protected void onFinalizeNodeState (final IHCConversionSettingsToNode aConversionSettings,
+                                      final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  {
+    super.onFinalizeNodeState (aConversionSettings, aTargetNode);
+
+    setSrc (m_aVideoURL.build ());
   }
 }
