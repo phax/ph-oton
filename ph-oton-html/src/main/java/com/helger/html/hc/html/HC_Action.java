@@ -90,7 +90,7 @@ public class HC_Action implements ICloneable <HC_Action>
     }
     else
       if (m_aActionURL != null)
-        aElement.setAttribute (aAttributeName, m_aActionURL.getAsStringWithEncodedParameters (aCharset));
+        aElement.setAttribute (aAttributeName, m_aActionURL.getWithCharset (aCharset).getAsString ());
   }
 
   @Nonnull

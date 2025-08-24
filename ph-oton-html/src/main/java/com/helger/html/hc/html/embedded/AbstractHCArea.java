@@ -39,7 +39,8 @@ import jakarta.annotation.Nullable;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCArea <IMPLTYPE extends AbstractHCArea <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE> implements
+public abstract class AbstractHCArea <IMPLTYPE extends AbstractHCArea <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE>
+                                     implements
                                      IHCArea <IMPLTYPE>
 {
   private String m_sAlt;
@@ -195,7 +196,7 @@ public abstract class AbstractHCArea <IMPLTYPE extends AbstractHCArea <IMPLTYPE>
       aElement.setAttribute (CHTMLAttributes.SHAPE, m_sShape);
     if (m_aHref != null)
     {
-      final String sHref = m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ());
+      final String sHref = m_aHref.getWithCharset (aConversionSettings.getCharset ()).getAsString ();
       aElement.setAttribute (CHTMLAttributes.HREF, sHref);
     }
     if (m_aTarget != null)
@@ -208,7 +209,7 @@ public abstract class AbstractHCArea <IMPLTYPE extends AbstractHCArea <IMPLTYPE>
       aElement.setAttribute (CHTMLAttributes.DOWNLOAD, m_sDownload);
     if (m_aPing != null)
     {
-      final String sPing = m_aPing.getAsStringWithEncodedParameters (aConversionSettings.getCharset ());
+      final String sPing = m_aPing.getWithCharset (aConversionSettings.getCharset ()).getAsString ();
       aElement.setAttribute (CHTMLAttributes.PING, sPing);
     }
     if (StringHelper.isNotEmpty (m_sRel))

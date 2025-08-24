@@ -16,8 +16,6 @@
  */
 package com.helger.html.jscode.html;
 
-import java.nio.charset.Charset;
-
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.misc.DevelopersNote;
@@ -704,12 +702,6 @@ public final class JSHtml
     return windowLocationHref ().assign (aURL.getAsString ());
   }
 
-  @Nonnull
-  public static JSAssignment windowLocationHref (@Nonnull final ISimpleURL aURL, @Nonnull final Charset aCharset)
-  {
-    return windowLocationHref ().assign (aURL.getAsStringWithEncodedParameters (aCharset));
-  }
-
   /**
    * @return <code>window.location.pathname</code>
    */
@@ -1064,8 +1056,8 @@ public final class JSHtml
    * window.onbeforeunload
    *
    * @param aCallback
-   *        Callback function with one parameter (the event) and return type
-   *        string to display a message or null to display none.
+   *        Callback function with one parameter (the event) and return type string to display a
+   *        message or null to display none.
    * @return The JS assignment
    */
   @Nonnull

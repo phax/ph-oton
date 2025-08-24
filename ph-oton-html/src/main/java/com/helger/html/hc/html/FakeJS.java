@@ -47,7 +47,8 @@ public final class FakeJS
   public static IHasJSCode windowLocationHref (@Nonnull final ISimpleURL aURL)
   {
     return new UnparsedJSCodeProvider ("window.location.href='" +
-                                       JSMarshaller.javaScriptEscape (aURL.getAsStringWithEncodedParameters (HCSettings.getHTMLCharset ())) +
+                                       JSMarshaller.javaScriptEscape (aURL.getWithCharset (HCSettings.getHTMLCharset ())
+                                                                          .getAsString ()) +
                                        "';");
   }
 }

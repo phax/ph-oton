@@ -33,7 +33,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaElement <IMPLTYPE>> extends
-                                             AbstractHCElementWithInternalChildren <IMPLTYPE, IHCMediaElementChild <?>> implements
+                                             AbstractHCElementWithInternalChildren <IMPLTYPE, IHCMediaElementChild <?>>
+                                             implements
                                              IHCMediaElement <IMPLTYPE>
 {
   /** By default auto play is disabled */
@@ -190,7 +191,8 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     if (m_bMuted)
       aElement.setAttribute (CHTMLAttributes.MUTED, CHTMLAttributeValues.MUTED);
     if (m_aSrc != null)
-      aElement.setAttribute (CHTMLAttributes.SRC, m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.SRC,
+                             m_aSrc.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (m_eCrossOrigin != null)
       aElement.setAttribute (CHTMLAttributes.CROSSORIGIN, m_eCrossOrigin);
   }

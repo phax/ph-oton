@@ -513,7 +513,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
       aElement.setAttribute (CHTMLAttributes.SIZE, m_nSize);
     if (m_aSrc != null)
       aElement.setAttribute (CHTMLAttributes.SRC,
-                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+                             m_aSrc.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (StringHelper.isNotEmpty (m_sStep))
       aElement.setAttribute (CHTMLAttributes.STEP, m_sStep);
     if (m_sValue != null)

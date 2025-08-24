@@ -148,8 +148,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
   }
 
   /**
-   * Scales the image so that neither with nor height are exceeded, keeping the
-   * aspect ratio.
+   * Scales the image so that neither with nor height are exceeded, keeping the aspect ratio.
    *
    * @param nMaxWidth
    *        Maximum with
@@ -210,7 +209,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aSrc != null)
       aElement.setAttribute (CHTMLAttributes.SRC,
-                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+                             m_aSrc.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (StringHelper.isNotEmpty (m_sSrcSet))
       aElement.setAttribute (CHTMLAttributes.SRCSET, m_sSrcSet);
     if (StringHelper.isNotEmpty (m_sSizes))

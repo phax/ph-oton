@@ -66,8 +66,8 @@ public class HCLink extends AbstractHCElement <HCLink>
   }
 
   /**
-   * @return <code>true</code> if this &lt;link&gt;-element is a CSS Stylesheet,
-   *         <code>false</code> if not
+   * @return <code>true</code> if this &lt;link&gt;-element is a CSS Stylesheet, <code>false</code>
+   *         if not
    */
   public final boolean isCSSLink ()
   {
@@ -292,7 +292,7 @@ public class HCLink extends AbstractHCElement <HCLink>
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
     if (m_aHref != null)
       aElement.setAttribute (CHTMLAttributes.HREF,
-                             m_aHref.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+                             m_aHref.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (StringHelper.isNotEmpty (m_sHrefLang))
       aElement.setAttribute (CHTMLAttributes.HREFLANG, m_sHrefLang);
     if (StringHelper.isNotEmpty (m_sCharset))

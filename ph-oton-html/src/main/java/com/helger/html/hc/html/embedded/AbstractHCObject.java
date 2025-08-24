@@ -39,8 +39,8 @@ import jakarta.annotation.Nullable;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                       implements
+public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLTYPE>> extends
+                                       AbstractHCElementWithChildren <IMPLTYPE> implements
                                        IHCObject <IMPLTYPE>
 {
   /** By default declare is disabled */
@@ -282,7 +282,8 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
+                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_nWidth > 0)
@@ -302,11 +303,13 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     if (StringHelper.isNotEmpty (m_sClassID))
       aElement.setAttribute (CHTMLAttributes.CLASSID, m_sClassID);
     if (m_aCodeBase != null)
-      aElement.setAttribute (CHTMLAttributes.CODEBASE, m_aCodeBase.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.CODEBASE,
+                             m_aCodeBase.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (m_aCodeType != null)
       aElement.setAttribute (CHTMLAttributes.CODETYPE, m_aCodeType.getAsString ());
     if (m_aData != null)
-      aElement.setAttribute (CHTMLAttributes.DATA, m_aData.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+      aElement.setAttribute (CHTMLAttributes.DATA,
+                             m_aData.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (m_bDeclare)
       aElement.setAttribute (CHTMLAttributes.DECLARE, CHTMLAttributeValues.DECLARE);
     if (StringHelper.isNotEmpty (m_sName))

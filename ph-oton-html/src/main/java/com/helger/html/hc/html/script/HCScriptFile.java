@@ -29,8 +29,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
- * Represents an HTML &lt;script&gt; element that loads the code from a source
- * URL.
+ * Represents an HTML &lt;script&gt; element that loads the code from a source URL.
  *
  * @author Philip Helger
  * @see HCScriptInline
@@ -109,7 +108,7 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_aSrc != null)
       aElement.setAttribute (CHTMLAttributes.SRC,
-                             m_aSrc.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+                             m_aSrc.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (m_bDefer)
       aElement.setAttribute (CHTMLAttributes.DEFER, CHTMLAttributeValues.DEFER);
     if (m_bAsync)
