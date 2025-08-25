@@ -25,11 +25,6 @@ Contained subprojects are:
 * ph-oton-datatables- Datatables.net wrapper
 * ph-oton-uictrls - misc web UI controls
 * ph-oton-jetty - wrapper for Jetty to simply use as main 
-* ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
-* ph-oton-bootstrap4-uictrls - special UI controls for Bootstrap 4
-* ph-oton-bootstrap4-pages - predefined UI pages with Bootstrap 4 styling
-* ph-oton-bootstrap4-stub - Servlet stub for Bootstrap 4 web applications
-* ph-oton-bootstrap4-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
 
 # Requirements
 
