@@ -6,30 +6,30 @@
 This set of Java libraries forms a package to build Java web applications.
 
 Contained subprojects are:
-  * ph-oton-html - Java wrapper for all HTML elements and attributes
-  * ph-oton-jscode - a Java code model to build structured JS code
-  * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
-  * ph-oton-atom - ATOM newsfeed stuff
-  * ph-oton-io - basic IO stuff (since 9.2.0; previously in ph-oton-app)
-  * ph-oton-app - basic application stuff
-  * ph-oton-audit - basic auditing stuff
-  * ph-oton-ajax - basic AJAX stuff
-  * ph-oton-api - basic API stuff
-  * ph-oton-security - security elements (user, user groups, roles etc.)
-  * ph-oton-exchange - data exchange (import and export)
-  * ph-oton-connect - connectivity modules
-  * ph-oton-core - basic web stuff
-  * ph-oton-uicore - basic web UI stuff
-  * ph-oton-icon - icon library
-  * ph-oton-tinymce4 - TinyMCE4 wrapper
-  * ph-oton-datatables- Datatables.net wrapper
-  * ph-oton-uictrls - misc web UI controls
-  * ph-oton-jetty - wrapper for Jetty to simply use as main 
-  * ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
-  * ph-oton-bootstrap4-uictrls - special UI controls for Bootstrap 4
-  * ph-oton-bootstrap4-pages - predefined UI pages with Bootstrap 4 styling
-  * ph-oton-bootstrap4-stub - Servlet stub for Bootstrap 4 web applications
-  * ph-oton-bootstrap4-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
+* ph-oton-html - Java wrapper for all HTML elements and attributes
+* ph-oton-jscode - a Java code model to build structured JS code
+* ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
+* ph-oton-atom - ATOM newsfeed stuff
+* ph-oton-io - basic IO stuff (since 9.2.0; previously in ph-oton-app)
+* ph-oton-app - basic application stuff
+* ph-oton-audit - basic auditing stuff
+* ph-oton-ajax - basic AJAX stuff
+* ph-oton-api - basic API stuff
+* ph-oton-security - security elements (user, user groups, roles etc.)
+* ph-oton-exchange - data exchange (import and export)
+* ph-oton-connect - connectivity modules
+* ph-oton-core - basic web stuff
+* ph-oton-uicore - basic web UI stuff
+* ph-oton-icon - icon library
+* ph-oton-tinymce4 - TinyMCE4 wrapper
+* ph-oton-datatables- Datatables.net wrapper
+* ph-oton-uictrls - misc web UI controls
+* ph-oton-jetty - wrapper for Jetty to simply use as main 
+* ph-oton-bootstrap4 - placeholder for Bootstrap 4 controls (still alpha) 
+* ph-oton-bootstrap4-uictrls - special UI controls for Bootstrap 4
+* ph-oton-bootstrap4-pages - predefined UI pages with Bootstrap 4 styling
+* ph-oton-bootstrap4-stub - Servlet stub for Bootstrap 4 web applications
+* ph-oton-bootstrap4-demo - a standalone demo web application to be run in Tomcat or in provided Jetty
 
 # Requirements
 
@@ -78,7 +78,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 
-v10.0.0 - work in progress
+v10.0.0 - 2025-08-25
 * Requires Java 17 as the minimum version
 * Updated to ph-commons 12.0.0
 * Updated to Jetty 12.1.0

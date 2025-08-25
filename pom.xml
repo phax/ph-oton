@@ -70,14 +70,13 @@
     <commonsnet.version>3.12.0</commonsnet.version>
     <log4j.version>2.25.1</log4j.version>
     <jetty.version>12.1.0</jetty.version>
-    <ph-commons.version>12.0.0-SNAPSHOT</ph-commons.version>
-    <ph-poi.version>7.0.0-SNAPSHOT</ph-poi.version>
+    <ph-commons.version>12.0.0</ph-commons.version>
+    <ph-poi.version>7.0.0</ph-poi.version>
   </properties>
 
   <repositories>
   <!-- Enable when using a SNAPSHOT version: -->
   <!--
-  -->
     <repository>
       <name>Central Portal Snapshots</name>
       <id>central-portal-snapshots</id>
@@ -89,6 +88,7 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
+  -->
 
   <!-- Enable for Jetty Snapshots -->
   <!--
@@ -117,28 +117,28 @@
       <dependency>
         <groupId>com.helger.schedule</groupId>
         <artifactId>ph-schedule-parent-pom</artifactId>
-        <version>6.0.0-SNAPSHOT</version>
+        <version>6.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.masterdata</groupId>
         <artifactId>ph-masterdata-parent-pom</artifactId>
-        <version>8.0.0-SNAPSHOT</version>
+        <version>8.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-css-parent-pom</artifactId>
-        <version>8.0.0-SNAPSHOT</version>
+        <version>8.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>11.0.0-SNAPSHOT</version>
+        <version>11.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -337,12 +337,12 @@
         <plugin>
           <groupId>com.helger.maven</groupId>
           <artifactId>ph-jscompress-maven-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>com.helger.maven</groupId>
           <artifactId>ph-csscompress-maven-plugin</artifactId>
-          <version>7.1.0</version>
+          <version>8.0.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
