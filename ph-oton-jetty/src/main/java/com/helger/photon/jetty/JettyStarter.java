@@ -32,11 +32,11 @@ import org.eclipse.jetty.ee10.webapp.WebAppContext;
 import org.eclipse.jetty.ee10.webapp.WebInfConfiguration;
 import org.eclipse.jetty.ee10.webapp.WebXmlConfiguration;
 import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.session.DefaultSessionCache;
 import org.eclipse.jetty.session.FileSessionDataStore;
 import org.eclipse.jetty.util.resource.PathResourceFactory;
@@ -611,14 +611,14 @@ public class JettyStarter
   }
 
   /**
-   * Customize the {@link HandlerList}
+   * Customize the {@link Handler.Sequence}
    *
    * @param aHandlerList
-   *        The {@link HandlerList}. Never <code>null</code>.
+   *        The {@link Handler.Sequence}. Never <code>null</code>.
    * @throws Exception
    *         in case of error
    */
-  protected void customizeHandlerList (@Nonnull final ContextHandlerCollection aHandlerList) throws Exception
+  protected void customizeHandlerList (@Nonnull final Handler.Sequence aHandlerList) throws Exception
   {}
 
   /**
@@ -685,7 +685,7 @@ public class JettyStarter
 
     final WebAppContext aWebAppCtx = createWebAppContext (m_sContextPath);
 
-    final ContextHandlerCollection aHandlerList = new ContextHandlerCollection ();
+    final Handler.Sequence aHandlerList = new Handler.Sequence ();
     aHandlerList.addHandler (aWebAppCtx);
     // Allow for additional web app contexts ;-)
     customizeHandlerList (aHandlerList);
