@@ -84,6 +84,7 @@ v10.0.0 - 2025-08-25
 * Updated to Jetty 12.1.0
 * Removed all code marked as deprecated for removal
 * Made two constructors of `Tenant` and `AccountingArea` public
+* Moved the Bootstrap 4 binding to https://github.com/phax/ph-oton-bootstrap4
 
 v9.3.2 - 2025-05-31
 * Updated to Jetty 11.0.25
