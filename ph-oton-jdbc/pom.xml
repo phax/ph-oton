@@ -52,10 +52,6 @@
       <url>https://www.helger.com</url>
     </developer>
   </developers>
-  
-  <properties>
-    <ph-db.version>8.0.0-SNAPSHOT</ph-db.version>
-  </properties>
 
   <dependencies>
     <dependency>
