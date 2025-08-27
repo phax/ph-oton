@@ -42,9 +42,6 @@ public class SpringBootURIToURLConverter implements IWebURIToURLConverter
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (SpringBootURIToURLConverter.class);
 
-  private static final String PREFIX = "/static/";
-  private static final int PREFIX_LEN = PREFIX.length ();
-
   public SpringBootURIToURLConverter ()
   {}
 
@@ -58,7 +55,7 @@ public class SpringBootURIToURLConverter implements IWebURIToURLConverter
    */
   public static final boolean isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
   {
-    return StringHelper.startsWith (sURI, PREFIX);
+    return StringHelper.startsWith (sURI, '/');
   }
 
   @Nonnull
@@ -87,7 +84,7 @@ public class SpringBootURIToURLConverter implements IWebURIToURLConverter
       if (isProjectRelativeURI (sURI))
       {
         // Cut "/" to avoid recognition as absolute file on Linux!
-        ret = WebFileIO.getServletContextIO ().getResource (sURI.substring (PREFIX_LEN));
+        ret = WebFileIO.getServletContextIO ().getResource (sURI);
       }
       else
       {
@@ -120,7 +117,7 @@ public class SpringBootURIToURLConverter implements IWebURIToURLConverter
       if (isProjectRelativeURI (sURI))
       {
         // Just add the context
-        ret = LinkHelper.getURLWithContext (sURI.substring (PREFIX_LEN - 1));
+        ret = LinkHelper.getURLWithContext (sURI);
       }
       else
       {
@@ -128,7 +125,7 @@ public class SpringBootURIToURLConverter implements IWebURIToURLConverter
         final StringBuilder sPrefix = new StringBuilder ().append (LinkHelper.getStreamServletPath ());
         if (!StringHelper.startsWith (sURI, '/'))
           sPrefix.append ('/');
-        ret = LinkHelper.getURLWithContext (sPrefix.append (sURI).toString ());
+        ret = LinkHelper.getURLWithContext (sPrefix.append (StringHelper.trimStart (sURI, "static/")).toString ());
       }
     }
     return ret;
@@ -158,12 +155,12 @@ public class SpringBootURIToURLConverter implements IWebURIToURLConverter
       // Absolute paths stay
       if (isProjectRelativeURI (sURI))
       {
-        ret = LinkHelper.getURLWithContext (aRequestScope, sURI.substring (PREFIX_LEN - 1));
+        ret = LinkHelper.getURLWithContext (aRequestScope, sURI);
       }
       else
       {
         // Relative paths will get streamed
-        ret = LinkHelper.getStreamURL (aRequestScope, sURI);
+        ret = LinkHelper.getStreamURL (aRequestScope, StringHelper.trimStart (sURI, "static/"));
       }
     }
     return ret;
