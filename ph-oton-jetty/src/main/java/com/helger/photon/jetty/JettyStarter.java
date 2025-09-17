@@ -90,7 +90,7 @@ public class JettyStarter
   private static final String CONTAINER_JAR_PATTERN = "org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern";
   private static final String WEBINF_JAR_PATTERN = "org.eclipse.jetty.server.webapp.WebInfIncludeJarPattern";
 
-  private final ResourceFactory m_aRF = new PathResourceFactory ();
+  private ResourceFactory m_aRF = new PathResourceFactory ();
   private final String m_sAppName;
   private final String m_sDirBaseName;
   private int m_nPort = DEFAULT_PORT;
@@ -127,6 +127,20 @@ public class JettyStarter
 
     // Must be directly called on System to have an effect!
     System.setProperty ("log4j2.disable.jmx", "true");
+  }
+
+  @Nonnull
+  public ResourceFactory getResourceFactory ()
+  {
+    return m_aRF;
+  }
+
+  @Nonnull
+  public final JettyStarter setResourceFactory (@Nonnull final ResourceFactory a)
+  {
+    ValueEnforcer.notNull (a, "ResourceFactory");
+    m_aRF = a;
+    return this;
   }
 
   /**
