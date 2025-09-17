@@ -39,7 +39,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.session.DefaultSessionCache;
 import org.eclipse.jetty.session.FileSessionDataStore;
-import org.eclipse.jetty.util.resource.PathResourceFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
@@ -90,7 +89,8 @@ public class JettyStarter
   private static final String CONTAINER_JAR_PATTERN = "org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern";
   private static final String WEBINF_JAR_PATTERN = "org.eclipse.jetty.server.webapp.WebInfIncludeJarPattern";
 
-  private ResourceFactory m_aRF = new PathResourceFactory ();
+  private final PhotonFileSystemCache m_aFSCache = new PhotonFileSystemCache ();
+  private ResourceFactory m_aRF = new PhotonResourceFactory (m_aFSCache);
   private final String m_sAppName;
   private final String m_sDirBaseName;
   private int m_nPort = DEFAULT_PORT;
@@ -782,6 +782,9 @@ public class JettyStarter
           // Running the server!
           aServer.join ();
         }
+
+      // close all loaded FileSystems
+      m_aFSCache.close ();
     }
   }
 }

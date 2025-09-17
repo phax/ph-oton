@@ -40,7 +40,7 @@ import com.helger.io.resource.ClassPathResource;
 public final class JettyFuncTest
 {
   @Test
-  public void testResources () throws Exception
+  public void testResourcesManual () throws Exception
   {
     final MountedPathResourceFactory aRF = new MountedPathResourceFactory ();
     // Make sure to pick a resource that is provided in a JAR file
@@ -59,6 +59,20 @@ public final class JettyFuncTest
     // Explicitly load as file system
     try (final FileSystem aFS = FileSystems.newFileSystem (aURI, Collections.emptyMap ()))
     {
+      assertNotNull (aRF.newResource (aURI));
+    }
+  }
+
+  @Test
+  public void testResourcesPhoton () throws Exception
+  {
+    try (final PhotonFileSystemCache aFSCache = new PhotonFileSystemCache ())
+    {
+      final PhotonResourceFactory aRF = new PhotonResourceFactory (aFSCache);
+      // Make sure to pick a resource that is provided in a JAR file
+      final URI aURI = new ClassPathResource (ClassHelper.getPathFromClass (CGlobal.class) + ".class",
+                                              CGlobal.class.getClassLoader ()).getAsURL ().toURI ();
+      // Works automagically
       assertNotNull (aRF.newResource (aURI));
     }
   }
