@@ -70,7 +70,7 @@
     <commonsnet.version>3.12.0</commonsnet.version>
     <log4j.version>2.25.1</log4j.version>
     <jetty.version>12.1.1</jetty.version>
-    <ph-commons.version>12.0.0</ph-commons.version>
+    <ph-commons.version>12.0.1</ph-commons.version>
     <ph-db.version>8.0.0</ph-db.version>
     <ph-poi.version>7.0.0</ph-poi.version>
   </properties>
@@ -125,7 +125,7 @@
       <dependency>
         <groupId>com.helger.masterdata</groupId>
         <artifactId>ph-masterdata-parent-pom</artifactId>
-        <version>8.0.0</version>
+        <version>8.0.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
