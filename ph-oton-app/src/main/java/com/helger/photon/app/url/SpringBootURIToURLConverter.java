@@ -34,9 +34,10 @@ import jakarta.annotation.Nonnull;
 
 /**
  * The implementation of {@link IWebURIToURLConverter} to work with SpringBoot, assuming the
- * resources are located in the <code>/static/<code> folder.
+ * resources are located in the <code>/static/</code> folder.
  *
  * @author Philip Helger
+ * @since 10.0.1
  */
 public class SpringBootURIToURLConverter implements IWebURIToURLConverter
 {
