@@ -1,7 +1,7 @@
 # ph-oton
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.helger.photon/ph-oton-parent-pom)](https://img.shields.io/maven-central/v/com.helger.photon/ph-oton-parent-pom)
 [![javadoc](https://javadoc.io/badge2/com.helger.photon/ph-oton-parent-pom/javadoc.svg)](https://javadoc.io/doc/com.helger.photon/ph-oton-parent-pom)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.helger.photon/ph-oton-parent-pom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.helger.photon/ph-oton-parent-pom) 
 
 This set of Java libraries forms a package to build Java web applications.
 
