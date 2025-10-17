@@ -72,7 +72,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.0.2 - work in progress
+* Updated to Jetty 12.1.2
+
 v10.0.1 - 2025-09-19
+* Updated to Jetty 12.1.1
 * Made `JettyStarter` `ResourceFactory` customizable
 * Created new class `PhotonResourceFactory` and using it as the default in `JettyStarter`
 * Added new class `SpringBootURIToURLConverter`
