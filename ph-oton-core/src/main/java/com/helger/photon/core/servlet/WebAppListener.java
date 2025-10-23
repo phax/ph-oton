@@ -659,7 +659,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
           final URL aURL = URLHelper.getAsURL (sInitParameter);
           if (aURL != null)
           {
-            StaticServerInfo.init (aURL.getProtocol (), aURL.getHost (), aURL.getPort (), aSC.getContextPath ());
+            // Use all information from the provided URL only
+            StaticServerInfo.init (aURL.getProtocol (), aURL.getHost (), aURL.getPort (), aURL.getPath ());
           }
           else
             LOGGER.error ("The init-parameter for the server URL" +
