@@ -122,12 +122,16 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   {
     private String m_sPath;
     private String m_sMinifiedPath;
-    private String m_sConditionalComment = DEFAULT_CONDITIONAL_COMMENT;
-    private ICSSMediaList m_aCSSMediaList = DEFAULT_CSS_MEDIA_LIST;
-    private boolean m_bIsBundlable = DEFAULT_IS_BUNDLABLE;
+    private String m_sConditionalComment;
+    private ICSSMediaList m_aCSSMediaList;
+    private boolean m_bIsBundlable;
 
     public Builder ()
-    {}
+    {
+      conditionalComment (DEFAULT_CONDITIONAL_COMMENT);
+      cssMediaList (DEFAULT_CSS_MEDIA_LIST);
+      bundlable (DEFAULT_IS_BUNDLABLE);
+    }
 
     @Nonnull
     public Builder path (@Nullable final String s)
