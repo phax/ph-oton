@@ -29,15 +29,14 @@ import com.helger.base.hashcode.IHashCodeGenerator;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.cache.regex.RegExHelper;
-import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.CommonsConcurrentHashMap;
 import com.helger.collection.commons.ICommonsMap;
 
 import jakarta.annotation.Nonnull;
 
 /**
- * Default implementation of the {@link ICSSClassProvider} interface. Uses an
- * internal cache to reuse existing objects. Use
- * {@link DefaultCSSClassProvider#create(String)} to create objects!
+ * Default implementation of the {@link ICSSClassProvider} interface. Uses an internal cache to
+ * reuse existing objects. Use {@link DefaultCSSClassProvider#create(String)} to create objects!
  *
  * @author Philip Helger
  */
@@ -45,7 +44,8 @@ import jakarta.annotation.Nonnull;
 public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultCSSClassProvider.class);
-  private static final ICommonsMap <String, DefaultCSSClassProvider> KNOWN = new CommonsHashMap <> ();
+  // Must be concurrent
+  private static final ICommonsMap <String, DefaultCSSClassProvider> KNOWN = new CommonsConcurrentHashMap <> ();
 
   private final String m_sCSSClass;
   // Status vars
@@ -110,7 +110,7 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("cssClass", m_sCSSClass).getToString ();
+    return new ToStringGenerator (null).append ("CssClass", m_sCSSClass).getToString ();
   }
 
   @Nonnull

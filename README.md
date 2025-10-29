@@ -72,6 +72,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.0.3 - work in progress
+* Made sure the `DefaultCSSClassProvider` uses a thread-safe map internally
+
 v10.0.2 - 2025-10-23
 * Updated to Jetty 12.1.3
 * In case an application uses a custom server URL, the `StaticServerInfo` is now also using the path component from the provided URL instead of the `ServletContext` path
