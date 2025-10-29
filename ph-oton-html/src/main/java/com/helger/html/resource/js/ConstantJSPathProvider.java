@@ -139,12 +139,16 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   {
     private String m_sPath;
     private String m_sMinifiedPath;
-    private String m_sConditionalComment = DEFAULT_CONDITIONAL_COMMENT;
-    private boolean m_bIsBundlable = DEFAULT_IS_BUNDLABLE;
-    private EHCScriptLoadingMode m_eScriptLoadingMode = EHCScriptLoadingMode.DEFAULT;
+    private String m_sConditionalComment;
+    private boolean m_bIsBundlable;
+    private EHCScriptLoadingMode m_eScriptLoadingMode;
 
     public Builder ()
-    {}
+    {
+      conditionalComment (DEFAULT_CONDITIONAL_COMMENT);
+      bundlable (DEFAULT_IS_BUNDLABLE);
+      scriptLoadingMode (EHCScriptLoadingMode.DEFAULT);
+    }
 
     @Nonnull
     public Builder path (@Nullable final String s)
